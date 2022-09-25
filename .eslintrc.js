@@ -17,6 +17,7 @@ module.exports = {
         "vue",
     ],
     rules: {
+        "no-unused-vars": "off",
         quotes: [
             "error",
             "double",
