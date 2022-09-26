@@ -2,6 +2,9 @@
   "name": "cat-communication-app",
   "private": true,
   "version": "1.0.0",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
@@ -43,7 +46,7 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^9.5.1",
-    "typescript": "*",
+    "typescript": "^4.8.3",
     "vite": "^2.9.14"
   }
 }

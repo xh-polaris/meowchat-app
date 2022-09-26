@@ -7,25 +7,24 @@
   </view>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from "vue"
+<script lang="ts" setup>
+import { ref } from "vue";
 
-const title = ref("Hello")
-onMounted(() => console.log(1))
+const title = ref("Hello");
 </script>
 
-<style>
+<style scoped lang="scss">
 .content {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 }
 
 .logo {
-  height: 200 rpx;
-  width: 200 rpx;
-  margin: 200 rpx auto 50 rpx;
+  height: 200rpx;
+  margin: 200rpx auto 50rpx;
+  width: 200rpx;
 }
 
 .text-area {
@@ -34,7 +33,7 @@ onMounted(() => console.log(1))
 }
 
 .title {
-  font-size: 36 rpx;
   color: #8f8f94;
+  font-size: 36rpx;
 }
 </style>
