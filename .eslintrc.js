@@ -24,7 +24,7 @@ module.exports = {
     "promise"
   ],
   rules: {
-    semi: "error",
+    semi: "off",
     quotes: [
       "error",
       "double",
