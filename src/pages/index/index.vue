@@ -13,7 +13,7 @@ import { ref } from "vue";
 const title = ref("Hello");
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .content {
   align-items: center;
   display: flex;
