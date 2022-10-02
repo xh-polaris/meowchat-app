@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref } from "vue"
 
-const title = ref("Hello");
+const title = ref("Hello")
 </script>
 
 <style lang="scss" scoped>
