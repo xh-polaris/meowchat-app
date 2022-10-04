@@ -25,10 +25,6 @@ module.exports = {
   ],
   rules: {
     semi: "off",
-    quotes: [
-      "error",
-      "double",
-    ],
     "vue/multi-word-component-names": "off",
     "n/no-unpublished-import": "off"
   }
