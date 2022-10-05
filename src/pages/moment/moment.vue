@@ -9,11 +9,15 @@
 
 <script lang="ts" setup>
 import { ref } from "vue"
+import { signIn } from "@/apis/account/account"
 
-const title = ref("Hello")
 const onClickImage = () => {
-  uni.navigateTo({ url: "/pages/moment/moment" })
+  signIn({
+    authType: "wechat",
+    authValue: "123"
+  })
 }
+const title = ref("Hello")
 </script>
 
 <style lang="scss" scoped>

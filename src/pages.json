@@ -18,6 +18,12 @@
       "style": {
         "navigationBarTitleText": "个人中心"
       }
+    },
+    {
+      "path": "pages/moment/moment",
+      "style": {
+        "navigationBarTitleText": "动态详情"
+      }
     }
   ],
   "globalStyle": {

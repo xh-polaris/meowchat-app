@@ -14,8 +14,14 @@
       "dom"
     ],
     "types": [
-      "@dcloudio/types"
-    ]
+      "@dcloudio/types",
+      "node"
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts",

@@ -1,15 +1,17 @@
 <script lang="ts" setup>
-import { onHide, onLaunch, onShow } from "@dcloudio/uni-app";
 
-onLaunch(() => {
-  console.log("App Launch");
-});
-onShow(() => {
-  console.log("App Show");
-});
-onHide(() => {
-  console.log("App Hide");
-});
+uni.addInterceptor("request", {
+  invoke (args: UniNamespace.RequestOptions) {
+    args.url = "https://auth.xhpolaris.com" + args.url
+    args.timeout = 5000
+  },
+  success (res) {
+    console.log(res)
+  },
+  fail (err) {
+    console.log(err)
+  }
+})
 </script>
 <style>
 

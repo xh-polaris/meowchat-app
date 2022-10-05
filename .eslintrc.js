@@ -7,7 +7,6 @@ module.exports = {
   extends: [
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "plugin:n/recommended",
     "plugin:vue/vue3-essential",
     "plugin:promise/recommended",
     "@vue/typescript/recommended"
@@ -19,13 +18,21 @@ module.exports = {
   },
   plugins: [
     "import",
-    "n",
     "vue",
     "promise"
   ],
   rules: {
     semi: "off",
     "vue/multi-word-component-names": "off",
-    "n/no-unpublished-import": "off"
+  },
+  settings: {
+    "import/resolver": {
+      alias: {
+        map: [
+          ["@", "./src"]
+        ],
+        extensions: [".ts", ".js", ".jsx", ".tsx"]
+      }
+    }
   }
 };
