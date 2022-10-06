@@ -1,8 +1,10 @@
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png"/>
+    <image class="logo" src="/static/logo.png" />
     <view class="text-area">
-      <text class="title">{{ title }}</text>
+      <text class="title">
+        {{ title }}
+      </text>
     </view>
   </view>
 </template>
