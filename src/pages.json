@@ -24,6 +24,12 @@
       "style": {
         "navigationBarTitleText": "动态详情"
       }
+    },
+    {
+      "path": "pages/detail/detail",
+      "style": {
+        "navigationBarTitleText": ""
+      }
     }
   ],
   "globalStyle": {
@@ -40,20 +46,20 @@
     "list": [
       {
         "pagePath": "pages/community/community",
-        "iconPath": "static/image/community.png",
-        "selectedIconPath": "static/image/community_HL.png",
+        "iconPath": "static/images/community.png",
+        "selectedIconPath": "static/images/community_HL.png",
         "text": "喵友圈"
       },
       {
         "pagePath": "pages/collection/collection",
-        "iconPath": "static/image/collection.png",
-        "selectedIconPath": "static/image/collection_HL.png",
+        "iconPath": "static/images/collection.png",
+        "selectedIconPath": "static/images/collection_HL.png",
         "text": "图鉴"
       },
       {
         "pagePath": "pages/profile/profile",
-        "iconPath": "static/image/profile.png",
-        "selectedIconPath": "static/image/profile_HL.png",
+        "iconPath": "static/images/profile.png",
+        "selectedIconPath": "static/images/profile_HL.png",
         "text": "我的"
       }
     ]
