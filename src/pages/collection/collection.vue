@@ -60,7 +60,6 @@ let defaultCats = reactive([{
 }])
 
 const onClickCatBox = (e: any) => {
-  console.log(e)
   uni.navigateTo({
     url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}`
   })
