@@ -13,7 +13,7 @@
 
       </view>
     </view>
-    <view class="out" >
+    <view class="out" v-for="index of 5" :key="index">
       <view class="row" >
         <catsbox  ></catsbox>
       </view>
