@@ -14,8 +14,8 @@
 
     <view v-if="defaultCats.length > 0">
       <view v-for="cat of defaultCats" :key="cat.id" class="out">
-        <view class="row">
-          <cat-box :data-id="cat.id" :cat="cat" @click="onClickCatBox" />
+        <view class="row" :data-id="cat.id" @click="onClickCatBox">
+          <cat-box :cat="cat" />
         </view>
       </view>
     </view>
