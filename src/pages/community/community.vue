@@ -22,11 +22,30 @@
       </swiper-item>
     </swiper>
   </view>
+  <waterfall
+    v-for="list in lists" column-count="2"
+    column-gap="normal"
+    column-width="auto"
+  >
+    <cell
+      v-for="num in list"
+      style="background:skyblue"
+    >
+      <text>{{ num }}</text>
+    </cell>
+    <cell>
+      111
+    </cell>
+    <cell>
+      222
+    </cell>
+  </waterfall>
 </template>
 
 <script lang="ts" setup>
 import {ref} from "vue";
 
+const lists = ref([["A", "B", "C", "D", "E"], [1, 2, 3, 4, 5]]);
 const title = ref("Hello");
 const onClickImage = () => {
   uni.navigateTo({url: "/pages/moment/moment"});
