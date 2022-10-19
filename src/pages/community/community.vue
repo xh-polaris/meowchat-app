@@ -1,59 +1,52 @@
 <template>
-  <view class="uni-margin-wrap">
-    <swiper
-      :autoplay="true" :indicator-dots="true"
-      :interval="2000"
-      circular class="swiper"
-    >
-      <swiper-item>
-        <view class="swiper-item" style="background:blue">
-          A
-        </view>
-      </swiper-item>
-      <swiper-item>
-        <view class="swiper-item" style="background:green">
-          B
-        </view>
-      </swiper-item>
-      <swiper-item>
-        <view class="swiper-item" style="background:blue">
-          C
-        </view>
-      </swiper-item>
-    </swiper>
+  <!--  -->
+  <view>
+    <view class="uni-margin-wrap">
+      <swiper
+        :autoplay="true" :indicator-dots="true"
+        :interval="2000"
+        circular class="swiper"
+      >
+        <swiper-item>
+          <view class="swiper-item" style="background:skyblue">
+            A
+          </view>
+        </swiper-item>
+        <swiper-item>
+          <view class="swiper-item" style="background:green">
+            B
+          </view>
+        </swiper-item>
+        <swiper-item>
+          <view class="swiper-item" style="background:pink">
+            C
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
   </view>
-  <waterfall
-    v-for="list in lists" column-count="2"
-    column-gap="normal"
-    column-width="auto"
-  >
-    <cell
-      v-for="num in list"
-      style="background:skyblue"
-    >
-      <text>{{ num }}</text>
-    </cell>
-    <cell>
-      111
-    </cell>
-    <cell>
-      222
-    </cell>
-  </waterfall>
+  <view style="margin-top:10px">
+    <water-fall />
+    <view />
+  </view>
 </template>
 
 <script lang="ts" setup>
 import {ref} from "vue";
+import WaterFall from "@/pages/community/waterFall.vue";
 
-const lists = ref([["A", "B", "C", "D", "E"], [1, 2, 3, 4, 5]]);
+const list = ref(["A", "B", "C", "D", "E"]);
 const title = ref("Hello");
+
 const onClickImage = () => {
   uni.navigateTo({url: "/pages/moment/moment"});
 };
+
 </script>
-<style>
+
+<style lang="scss" scoped>
 .uni-margin-wrap {
-  width: 690 rpx;
+  width: 690rpx;
   width: 100%;
 }
 
@@ -67,10 +60,6 @@ const onClickImage = () => {
   line-height: 15vh;
   text-align: center;
 }
-
-</style>
-
-<style lang="scss" scoped>
 
 .content {
   align-items: center;
