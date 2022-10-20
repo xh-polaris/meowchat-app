@@ -7,7 +7,7 @@
         class="flex-wrap"
       >
         <image
-          :src="srcURL+item"
+          :src="src"
           mode="widthFix"
           @click="clickImg"
         />
@@ -29,14 +29,14 @@ const imgList = ref(["collect.png", "collect_HL.png", "collection.png"]);
 const srcURL = ref("/static/images/");
 const src = ref("https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/6acec660-4f31-11eb-a16f-5b3e54966275.jpg");
 
-const clickImg = (event) => {
-  let imgURL = event.currentTarget.dataset.src;
-  let currentUrl = event.currentTarget.dataset.src;   //获取点击图片的地址, **对应<template>里面的 :data-src="item.src"
-  uni.previewImage({
-    urls: [imgURL],    //这里是单图 . 需要预览的全部图片地址,这个数组是必须的,要用[]
-    current: currentUrl, //当前显示图片的地址
-  });
-};
+// const clickImg = (event) => {
+//   let imgURL = event.currentTarget.dataset.src;
+//   let currentUrl = event.currentTarget.dataset.src;   //获取点击图片的地址, **对应<template>里面的 :data-src="item.src"
+//   uni.previewImage({
+//     urls: [imgURL],    //这里是单图 . 需要预览的全部图片地址,这个数组是必须的,要用[]
+//     current: currentUrl, //当前显示图片的地址
+//   });
+// };
 </script>
 
 <style>
