@@ -1,5 +1,23 @@
 <template>
   <!--  -->
+  <view class="school-box">
+    <view class="school-select-box">
+      <view class="school-name">
+        {{ school.name }}
+      </view>
+      <view class="switch-box">
+        <button plain="true" style="width:100px; font-size:small; margin:10px 10px;" type="primary">
+          切换学校
+        </button>
+      </view>
+    </view>
+    <view class="school-select-box">
+      <view v-for="item in school.campuses">
+        {{ item }}
+      </view>
+    </view>
+  </view>
+
   <view class="swiper-box">
     <swiper
       :autoplay="swiper.autoplay" :duration="swiper.duration"
@@ -16,13 +34,18 @@
 
   <view style="margin-top:10px">
     <water-fall />
-    <view />
   </view>
 </template>
 
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
 import WaterFall from "@/pages/community/waterFall.vue";
+
+const school = reactive({
+  name: "华东师范大学",
+  campuses: ["中北校区", "闵行校区", "不限"],
+  No: 0
+});
 
 const swiper = reactive({
   // 依次为 自动播放、是否显示面板指示点、自动切换时长、滑动动画时长
@@ -42,6 +65,29 @@ const onClickImage = () => {
 </script>
 
 <style lang="scss" scoped>
+.switch-box {
+  margin-left: auto;
+}
+
+.school-box {
+  height: 12vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.school-select-box {
+  height: 8vh;
+  display: flex;
+  flex-direction: row
+}
+
+.school-name {
+  margin: 10px 20px;
+  font-weight: bold;
+  border-bottom: 4px solid skyblue;
+  font-size: large;
+}
+
 .swiper-box {
   width: 100vw;
 }
