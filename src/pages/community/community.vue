@@ -12,7 +12,7 @@
       </view>
     </view>
     <view class="school-select-box">
-      <view v-for="item in school.campuses">
+      <view v-for="item in school.campuses" :key="item">
         {{ item }}
       </view>
     </view>
@@ -24,7 +24,7 @@
       :indicator-dots="swiper.indicatorDots" :interval="swiper.interval"
       circular class="swiper"
     >
-      <swiper-item v-for="item in list">
+      <swiper-item v-for="item in list" :key="item">
         <view class="swiper-item" style="background:skyblue">
           {{ item }}
         </view>
@@ -56,11 +56,7 @@ const swiper = reactive({
 });
 
 const list = ref(["A", "B", "C", "D", "E"]);
-const title = ref("Hello");
-
-const onClickImage = () => {
-  uni.navigateTo({url: "/pages/moment/moment"});
-};
+// const title = ref("Hello");
 
 </script>
 

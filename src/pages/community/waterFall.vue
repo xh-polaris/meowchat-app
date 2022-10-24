@@ -27,7 +27,7 @@ import {ref} from "vue";
 
 const imgList = ref(["collect.png", "collect_HL.png", "collection.png"]);
 const srcURL = ref("/static/images/");
-const src = ref("https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/6acec660-4f31-11eb-a16f-5b3e54966275.jpg");
+// const src = ref("https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/6acec660-4f31-11eb-a16f-5b3e54966275.jpg");
 
 const clickImg = (event) => {
   let imgURL = event.currentTarget.dataset.src;
@@ -50,9 +50,8 @@ const clickImg = (event) => {
   width: 98%;
   margin-left: 3%;
   margin-bottom: 3%;
-  padding: 2%;
-  padding-top: 5%;
-  border: 0px solid #cc22b0; /* 边框 */
+  padding: 5% 2% 2%;
+  border: 0 solid #cc22b0; /* 边框 */
   border-radius: 10px;
   box-shadow: 0 2px 2px rgba(34, 25, 25, 0.4); /* 框阴影 */
   text-align: center; /* 框内元素居中对齐 */
@@ -76,10 +75,10 @@ const clickImg = (event) => {
   text-align: right;
 }
 
-/* 回到顶部 */
+/* 回到顶部
 .top {
   position: relative;
-  display: none; /* 先将元素隐藏 */
+  display: none; /* 先将元素隐藏
 }
 
 .topc {
@@ -88,6 +87,6 @@ const clickImg = (event) => {
   position: fixed;
   right: 0;
   top: 70%;
-}
+}*/
 </style>
 
