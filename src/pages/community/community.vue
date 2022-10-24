@@ -38,14 +38,14 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import WaterFall from "@/pages/community/waterFall.vue";
+import { reactive, ref } from "vue"
+import WaterFall from "@/pages/community/water-fall.vue"
 
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
   No: 0
-});
+})
 
 const swiper = reactive({
   // 依次为 自动播放、是否显示面板指示点、自动切换时长、滑动动画时长
@@ -53,9 +53,9 @@ const swiper = reactive({
   indicatorDots: true,
   interval: 2000,
   duration: 500,
-});
+})
 
-const list = ref(["A", "B", "C", "D", "E"]);
+const list = ref(["A", "B", "C", "D", "E"])
 // const title = ref("Hello");
 
 </script>

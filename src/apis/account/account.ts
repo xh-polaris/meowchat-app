@@ -1,6 +1,6 @@
-import * as components from "./accountComponents"
+import * as components from "./account-components"
 
-export * from "./accountComponents"
+export * from "./account-components"
 
 /**
  * @description
