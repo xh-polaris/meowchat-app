@@ -14,7 +14,7 @@
 
     <view v-if="defaultCats.length > 0">
       <view v-for="cat of defaultCats" :key="cat.id" class="out">
-        <view class="row" :data-id="cat.id" @click="onClickCatBox">
+        <view class="row" @click="onClickCatBox">
           <cat-box :cat="cat" />
         </view>
       </view>
@@ -59,9 +59,9 @@ let defaultCats = reactive([{
   collected: true,
 }])
 
-const onClickCatBox = (e: any) => {
+const onClickCatBox = (id: string) => {
   uni.navigateTo({
-    url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}`
+    url: `/pages/detail/detail?id=${id}`
   })
 }
 </script>
