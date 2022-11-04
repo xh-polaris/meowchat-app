@@ -28,7 +28,29 @@
     {
       "path": "pages/detail/detail",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "123",
+        //"navigationStyle": "custom",
+        "app-plus": {
+          "bounce": "none",
+          //关闭窗口回弹效果
+          "titleNView": {
+            "buttons": [
+              //原生标题栏按钮配置,
+              {
+                "type": "none",
+                // "text": "\u2713",
+                "float": "right"
+              },
+              {
+                "text": "城市",
+                "fontSrc": "",
+                "fontSize": "16",
+                "float": "left",
+                "color": "#101010"
+              }
+            ]
+          }
+        }
       }
     }
   ],
