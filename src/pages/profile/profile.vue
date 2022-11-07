@@ -5,7 +5,10 @@
       <!-- 用户信息：昵称、权限、单位 -->
       <view class="fot-xh">
         <view class="pic">
-          <image src="/static/logo.png" style="width: 130rpx; height: 130rpx;border-radius: 50%;" />
+          <image
+            src="https://static.xhpolaris.com/cat_world.jpg"
+            style="width: 130rpx; height: 130rpx;border-radius: 50%;"
+          />
         </view>
         <view class="txt">
           <view class="info">

@@ -1,15 +1,15 @@
 <template>
   <view class="cats-box">
     <view class="pic">
-      <image :src="cat.picture" mode="aspectFill" />
+      <image :src="cat.avatars[0]" mode="aspectFill" />
     </view>
     <view class="text">
       <view class="title">
-        <text>{{ cat.title }}</text>
+        <text>{{ cat.name }}</text>
         <view class="collect">
           <image
-            :src="cat.collected?'/static/images/collect.png':'/static/images/collect_HL.png'"
-            mode="aspectFill" @click.stop="onClickCollect"
+            :src="cat.isCollected?'/static/images/collect.png':'/static/images/collect_HL.png'"
+            mode="aspectFill" @click.stop="onClickCollect(cat)"
           />
         </view>
       </view>
@@ -17,7 +17,7 @@
         <text>花色：{{ cat.color }}</text>
       </view>
       <view class="data">
-        <text>出没地区： {{ cat.place }}</text>
+        <text>出没地区： {{ cat.area }}</text>
       </view>
     </view>
   </view>
@@ -25,22 +25,11 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue"
+import { CollectionCat } from "@/apis/community/community-components"
+import { onClickCollect } from "@/pages/collection/event"
 
-interface Cat {
-  id: string,
-  title: string,
-  color: string,
-  place: string,
-  picture: string,
-  collected: boolean
-}
-
-const props = defineProps<{ cat: Cat }>()
+const props = defineProps<{ cat: CollectionCat }>()
 const cat = reactive(props.cat)
-
-const onClickCollect = () => {
-  cat.collected = !cat.collected
-}
 </script>
 
 <style lang="scss" scoped>

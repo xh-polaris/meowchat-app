@@ -1,5 +1,4 @@
 <template>
-  <!--  -->
   <view class="school-box">
     <view class="school-select-box">
       <view class="school-name">
@@ -20,14 +19,14 @@
 
   <view class="swiper-box">
     <swiper
-      :autoplay="swiper.autoplay" :duration="swiper.duration"
-      :indicator-dots="swiper.indicatorDots" :interval="swiper.interval"
+      autoplay indicator-dots
       circular class="swiper"
     >
-      <swiper-item v-for="item in list" :key="item">
-        <view class="swiper-item" style="background:skyblue">
-          {{ item }}
-        </view>
+      <swiper-item v-for="carousel in carousels" :key="carousel">
+        <view
+          class="swiper-item" :style="`background-image: url('${carousel.imageUrl}')`"
+          @click="onClickCarousel(carousel.linkUrl)"
+        />
       </swiper-item>
     </swiper>
   </view>
@@ -38,8 +37,10 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue"
-import WaterFall from "@/pages/community/water-fall.vue"
+import { reactive } from "vue"
+import WaterFall from "@/pages/community/water-fall"
+import { Carousel, getCarousel } from "@/apis/community/community"
+import { onClickCarousel } from "@/pages/community/event"
 
 const school = reactive({
   name: "华东师范大学",
@@ -47,16 +48,12 @@ const school = reactive({
   No: 0
 })
 
-const swiper = reactive({
-  // 依次为 自动播放、是否显示面板指示点、自动切换时长、滑动动画时长
-  autoplay: true,
-  indicatorDots: true,
-  interval: 2000,
-  duration: 500,
+const carousels: Carousel[] = reactive([])
+getCarousel().then(res => {
+  for (const carousel of res.carousels) {
+    carousels.push(carousel)
+  }
 })
-
-const list = ref(["A", "B", "C", "D", "E"])
-// const title = ref("Hello");
 
 </script>
 

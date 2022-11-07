@@ -9,7 +9,6 @@ module.exports = {
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:vue/vue3-recommended",
-    "plugin:promise/recommended",
     "plugin:@typescript-eslint/recommended",
   ],
   overrides: [
@@ -39,7 +38,6 @@ module.exports = {
   plugins: [
     "import",
     "vue",
-    "promise",
   ],
   rules: {
     semi: "off",
@@ -63,4 +61,4 @@ module.exports = {
       }
     },
   },
-};
+}

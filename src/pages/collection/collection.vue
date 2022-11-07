@@ -12,9 +12,9 @@
       </view>
     </view>
 
-    <view v-if="defaultCats.length > 0">
-      <view v-for="cat of defaultCats" :key="cat.id" class="out">
-        <view class="row" @click="onClickCatBox">
+    <view v-if="cats.length > 0">
+      <view v-for="cat of cats" :key="cat.id" class="out">
+        <view class="row" :data-id="cat.id" @click="onClickCatBox(cat.id)">
           <cat-box :cat="cat" />
         </view>
       </view>
@@ -26,44 +26,19 @@
 </template>
 
 <script lang="ts" setup>
-import CatBox from "@/pages/collection/cat-box/cat-box.vue"
+import CatBox from "@/pages/collection/cat-box"
 import { reactive } from "vue"
+import { CollectionCat } from "@/apis/community/community-components"
+import { onClickCatBox } from "@/pages/collection/event"
+import { getCats } from "@/apis/community/community"
 
-let defaultCats = reactive([{
-  id: "1",
-  title: "默认猫咪",
-  color: "无色",
-  place: "中北校区",
-  picture: "https://static.xhpolaris.com/dog.jpg",
-  collected: true,
-}, {
-  id: "2",
-  title: "默认猫咪",
-  color: "无色",
-  place: "中北校区",
-  picture: "https://static.xhpolaris.com/dog.jpg",
-  collected: false,
-}, {
-  id: "3",
-  title: "默认猫咪",
-  color: "无色",
-  place: "中北校区",
-  picture: "https://static.xhpolaris.com/dog.jpg",
-  collected: true,
-}, {
-  id: "4",
-  title: "默认猫咪",
-  color: "白色",
-  place: "中北校区",
-  picture: "https://static.xhpolaris.com/dog.jpg",
-  collected: true,
-}])
+const cats: CollectionCat[] = reactive([])
+getCats().then(res => {
+  for (const cat of res.cats) {
+    cats.push(cat)
+  }
+})
 
-const onClickCatBox = (id: string) => {
-  uni.navigateTo({
-    url: `/pages/detail/detail?id=${id}`
-  })
-}
 </script>
 
 <style lang="scss" scoped>
