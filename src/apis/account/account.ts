@@ -13,12 +13,12 @@ export async function signIn (req: components.SignInReq): Promise<components.Sig
       data: req,
       method: "POST",
       success (res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode != 200) {
+          reject(res)
+        }
         const data = res.data as components.SignInResp
         resolve(data)
       },
-      fail (err: UniNamespace.GeneralCallbackResult) {
-        reject(err)
-      }
     })
   })
 }
@@ -34,12 +34,12 @@ export async function setPassword (req: components.SetPasswordReq): Promise<comp
       data: req,
       method: "POST",
       success (res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode != 200) {
+          reject(res)
+        }
         const data = res.data as components.SetPasswordResp
         resolve(data)
       },
-      fail (err: UniNamespace.GeneralCallbackResult) {
-        reject(err)
-      }
     })
   })
 }

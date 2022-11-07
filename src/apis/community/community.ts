@@ -12,12 +12,12 @@ export async function getCarousel (): Promise<components.GetCarouselResp> {
       url: "/get_carousel",
       method: "GET",
       success (res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode != 200) {
+          reject(res)
+        }
         const data = res.data as components.GetCarouselResp
         resolve(data)
       },
-      fail (err: UniNamespace.GeneralCallbackResult) {
-        reject(err)
-      }
     })
   })
 }
@@ -28,12 +28,12 @@ export async function getCats (): Promise<components.GetCatsResp> {
       url: "/collection/get_cats",
       method: "GET",
       success (res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode != 200) {
+          reject(res)
+        }
         const data = res.data as components.GetCatsResp
         resolve(data)
       },
-      fail (err: UniNamespace.GeneralCallbackResult) {
-        reject(err)
-      }
     })
   })
 }
