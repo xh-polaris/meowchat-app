@@ -12,7 +12,7 @@
     </view>
     <view class="school-select-box">
       <view v-for="item in school.campuses" :key="item">
-        {{ item }} 
+        {{ item }}
       </view>
     </view>
   </view>
