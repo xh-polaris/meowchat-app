@@ -12,7 +12,7 @@
     </view>
     <view class="school-select-box">
       <view v-for="item in school.campuses" :key="item">
-        {{ item }}
+        {{ item }} 
       </view>
     </view>
   </view>
@@ -71,7 +71,8 @@ getCarousel().then(res => {
 .school-select-box {
   height: 8vh;
   display: flex;
-  flex-direction: row
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .school-name {
