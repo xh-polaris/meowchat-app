@@ -32,15 +32,18 @@
   </view>
 
   <view style="margin-top:10px">
-    <water-fall />
+<!--    <water-fall />-->
+    <masonry/>
   </view>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from "vue"
 import WaterFall from "@/pages/community/water-fall"
+import Masonry from "@/pages/community/masonry"
 import { Carousel, getCarousel } from "@/apis/community/community"
 import { onClickCarousel } from "@/pages/community/event"
+import {onReachBottom} from "@dcloudio/uni-app";
 
 const school = reactive({
   name: "华东师范大学",
@@ -52,6 +55,8 @@ const carousels = reactive<Carousel[]>([])
 getCarousel().then(res => {
   carousels.push(...res.carousels)
 })
+
+onReachBottom(() => {}) //哪怕是空的 父组件也得有这个 才能让子组件的onReachBottom生效
 
 </script>
 
