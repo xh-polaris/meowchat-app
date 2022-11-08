@@ -2,36 +2,30 @@
   <view>
     <view class="free-WaterfallFlow">
       <view
-        v-for="(item,index) in imgList"
-        :key="index"
+        v-for="moment in moments"
+        :key="moment.id"
         class="flex-wrap"
       >
         <image
-          :src="srcURL+item"
+          :src="moment.coverUrl"
           mode="widthFix"
-          @click="clickImg"
         />
-        <view>评论</view>
-        <view>时间</view>
+        <view>{{ moment.title }}</view>
+        <view>{{ moment.createAt }}</view>
       </view>
     </view>
   </view>
 </template>
 
-<script setup>
-import { ref } from "vue"
+<script lang="ts" setup>
+import { getMomentPreviews, MomentPreview } from "@/apis/community/community"
+import { reactive } from "vue"
 
-const imgList = ref(["collect.png", "collect_HL.png", "collection.png"])
-const srcURL = ref("/static/images/")
-
-const clickImg = (event) => {
-  let imgURL = event.currentTarget.dataset.src
-  let currentUrl = event.currentTarget.dataset.src   //获取点击图片的地址, **对应<template>里面的 :data-src="item.src"
-  uni.previewImage({
-    urls: [imgURL],    //这里是单图 . 需要预览的全部图片地址,这个数组是必须的,要用[]
-    current: currentUrl, //当前显示图片的地址
-  })
-}
+const moments = reactive<MomentPreview[]>([])
+getMomentPreviews().then(res => {
+  moments.push(...res.moments)
+})
+getMomentPreviews()
 </script>
 
 <style>
@@ -49,7 +43,6 @@ const clickImg = (event) => {
   border: 0 solid #cc22b0; /* 边框 */
   border-radius: 10px;
   box-shadow: 0 2px 2px rgba(34, 25, 25, 0.4); /* 框阴影 */
-  text-align: center; /* 框内元素居中对齐 */
 }
 
 .flex-wrap image {

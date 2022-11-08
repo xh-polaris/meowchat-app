@@ -22,16 +22,32 @@ export async function getCarousel (): Promise<components.GetCarouselResp> {
   })
 }
 
-export async function getCats (): Promise<components.GetCatsResp> {
-  return new Promise<components.GetCatsResp>(function (resolve, reject) {
+export async function getCatPreviews (): Promise<components.GetCatPreviewsResp> {
+  return new Promise<components.GetCatPreviewsResp>(function (resolve, reject) {
     uni.request({
-      url: "/collection/get_cats",
+      url: "/collection/get_cat_previews",
       method: "GET",
       success (res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode != 200) {
           reject(res)
         }
-        const data = res.data as components.GetCatsResp
+        const data = res.data as components.GetCatPreviewsResp
+        resolve(data)
+      },
+    })
+  })
+}
+
+export async function getMomentPreviews (): Promise<components.GetMomentPreviewsResp> {
+  return new Promise<components.GetMomentPreviewsResp>(function (resolve, reject) {
+    uni.request({
+      url: "/moment/get_moment_previews",
+      method: "GET",
+      success (res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode != 200) {
+          reject(res)
+        }
+        const data = res.data as components.GetMomentPreviewsResp
         resolve(data)
       },
     })

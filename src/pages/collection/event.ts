@@ -1,4 +1,4 @@
-import { CollectionCat } from "@/apis/community/community-components"
+import { CatPreview } from "@/apis/community/community-components"
 
 export function onClickCatBox (id: string) {
   uni.navigateTo({
@@ -6,6 +6,6 @@ export function onClickCatBox (id: string) {
   })
 }
 
-export function onClickCollect (cat: CollectionCat) {
+export function onClickCollect (cat: CatPreview) {
   cat.isCollected = !cat.isCollected
 }

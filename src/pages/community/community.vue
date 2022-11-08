@@ -22,7 +22,7 @@
       autoplay indicator-dots
       circular class="swiper"
     >
-      <swiper-item v-for="carousel in carousels" :key="carousel">
+      <swiper-item v-for="carousel in carousels" :key="carousel.id">
         <view
           class="swiper-item" :style="`background-image: url('${carousel.imageUrl}')`"
           @click="onClickCarousel(carousel.linkUrl)"
@@ -48,11 +48,9 @@ const school = reactive({
   No: 0
 })
 
-const carousels: Carousel[] = reactive([])
+const carousels = reactive<Carousel[]>([])
 getCarousel().then(res => {
-  for (const carousel of res.carousels) {
-    carousels.push(carousel)
-  }
+  carousels.push(...res.carousels)
 })
 
 </script>

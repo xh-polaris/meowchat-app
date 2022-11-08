@@ -14,7 +14,7 @@
 
     <view v-if="cats.length > 0">
       <view v-for="cat of cats" :key="cat.id" class="out">
-        <view class="row" :data-id="cat.id" @click="onClickCatBox(cat.id)">
+        <view class="row" @click="onClickCatBox(cat.id)">
           <cat-box :cat="cat" />
         </view>
       </view>
@@ -28,15 +28,13 @@
 <script lang="ts" setup>
 import CatBox from "@/pages/collection/cat-box"
 import { reactive } from "vue"
-import { CollectionCat } from "@/apis/community/community-components"
+import { CatPreview } from "@/apis/community/community-components"
 import { onClickCatBox } from "@/pages/collection/event"
-import { getCats } from "@/apis/community/community"
+import { getCatPreviews } from "@/apis/community/community"
 
-const cats: CollectionCat[] = reactive([])
-getCats().then(res => {
-  for (const cat of res.cats) {
-    cats.push(cat)
-  }
+const cats = reactive<CatPreview[]>([])
+getCatPreviews().then(res => {
+  cats.push(...res.cats)
 })
 
 </script>

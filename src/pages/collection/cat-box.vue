@@ -1,7 +1,7 @@
 <template>
   <view class="cats-box">
     <view class="pic">
-      <image :src="cat.avatars[0]" mode="aspectFill" />
+      <image :src="cat.coverUrl" mode="aspectFill" />
     </view>
     <view class="text">
       <view class="title">
@@ -25,10 +25,10 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue"
-import { CollectionCat } from "@/apis/community/community-components"
+import { CatPreview } from "@/apis/community/community-components"
 import { onClickCollect } from "@/pages/collection/event"
 
-const props = defineProps<{ cat: CollectionCat }>()
+const props = defineProps<{ cat: CatPreview }>()
 const cat = reactive(props.cat)
 </script>
 
