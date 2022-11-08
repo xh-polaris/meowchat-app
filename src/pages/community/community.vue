@@ -69,7 +69,8 @@ getCarousel().then(res => {
 .school-select-box {
   height: 8vh;
   display: flex;
-  flex-direction: row
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .school-name {
