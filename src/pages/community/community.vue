@@ -32,18 +32,16 @@
   </view>
 
   <view style="margin-top:10px">
-<!--    <water-fall />-->
     <masonry/>
   </view>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from "vue"
-import WaterFall from "@/pages/community/water-fall"
 import Masonry from "@/pages/community/masonry"
 import { Carousel, getCarousel } from "@/apis/community/community"
 import { onClickCarousel } from "@/pages/community/event"
-import {onReachBottom} from "@dcloudio/uni-app";
+import { onReachBottom } from "@dcloudio/uni-app";
 
 const school = reactive({
   name: "华东师范大学",
