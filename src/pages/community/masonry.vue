@@ -2,26 +2,29 @@
 <view class="masonry">
   <view class="column-left">
     <block v-for="(tile, index) in leftTiles" :key="tile.index">
-      <image mode="widthFix" :src="tile.url" class="img" @load.once="tile.onLoad"></image>
+      <view class="tile">
+        <image mode="widthFix" :src="tile.url" class="img" @load.once="tile.onLoad"></image>
+        <view class="description">{{tile.title}}</view>
+      </view>
     </block>
   </view>
   <view class="column-right">
     <block v-for="(tile, index) in rightTiles" :key="tile.index">
-      <image mode="widthFix" :src="tile.url" class="img" @load.once="tile.onLoad"></image>
+      <view class="tile">
+        <image mode="widthFix" :src="tile.url" class="img" @load.once="tile.onLoad"></image>
+        <view class="description">{{tile.title}}</view>
+      </view>
     </block>
   </view>
 </view>
 
 </template>
 
-<script setup>
+<script lang="ts" setup>
 
-import {onMounted, reactive, ref} from "vue";
-import {onReachBottom} from "@dcloudio/uni-app";
-
-function log() {
-  console.log("ok")
-}
+import { onMounted, reactive, ref } from "vue";
+import { onReachBottom } from "@dcloudio/uni-app";
+import { getCatPreviews, getMomentPreviews } from "../../apis/community/community";
 
 const query = uni.createSelectorQuery()
 
@@ -40,48 +43,46 @@ function isLeftTallerThanRight() {
   }
 }
 
-
-
 const leftTiles = reactive([])
 const rightTiles = reactive([])
 
 
 onReachBottom(() => {
   if (isBatchLoaded) {
-    console.log("ok")
     isBatchLoaded = false
     addBatch()
   }
 })
 
-const firstLoadingAmount = 4
-const secondLoadingAmount = 3
+const batchLoadingAmount = 20
+const firstLoadingAmount = 16
+const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount
 
 let index = 0
 let loadedAmount = 0
 let isBatchLoaded = false
 
-function addTile(catUrl, side) {
-  console.log("Added a tile")
+function addTile(tileIndex, side) {
+  const tileData = batchTilesData[tileIndex]
   const tile = {
-    index: index,
-    url: catUrl,
+    index: tileData.id,
+    url: tileData.coverUrl,
+    title: tileData.area,
     onLoad: () => {
       isBatchLoaded = false
       loadedAmount += 1
-      console.log(loadedAmount)
       if (loadedAmount >= firstLoadingAmount) {
         if (loadedAmount < firstLoadingAmount + secondLoadingAmount) {
-          executeAddTile("either")
+          executeAddTile(index,"either")
+          index += 1
         } else {
           loadedAmount = 0
+          index = 0
           isBatchLoaded = true
         }
       }
     }
   }
-
-  index += 1
 
   if (side === "left") {
     leftTiles.push(tile)
@@ -97,23 +98,25 @@ function addTile(catUrl, side) {
 }
 
 
-async function executeAddTile(side) {
-  addTile(await getCatImgUrl(), side)
+let batchTilesData
+
+async function executeAddTile(index, side) {
+  addTile(index, side)
 }
 
-function addBatch() {
+async function addBatch() {
+  batchTilesData = (await getCatPreviews()).cats
   for (let i = 0; i < firstLoadingAmount/2; i++) {
-    executeAddTile("left")
-    executeAddTile("right")
+    executeAddTile(index,"left")
+    index += 1
+    executeAddTile(index,"right")
+    index += 1
   }
 }
 
 addBatch()
 
-async function getCatImgUrl() {
-  const obj = await fetch("https://api.thecatapi.com/v1/images/search").then(res => res.json())
-  return obj[0].url
-}
+
 
 
 </script>
@@ -124,7 +127,7 @@ $gapWidth: 3vw;
 
 .masonry {
   display: flex;
-  background-color: #CCC;
+  background-color: transparent;
   padding-top: $gapWidth;
 }
 .column-left {
@@ -140,9 +143,21 @@ $gapWidth: 3vw;
   height: fit-content;
 }
 
-.img {
-  width: calc(50vw - $gapWidth*1.5);
-  margin-bottom: $gapWidth;
+.tile {
+  margin-bottom: calc($gapWidth - 2px);
+  
+  .img {
+    width: calc(50vw - $gapWidth*1.5);
+    display: block;
+    border-radius: 4vw 4vw 0 0;
+  }
+  .description {
+    background-color: #BBB;
+    font-size: 4vw;
+    padding: 2vw;
+    border-radius: 0 0 4vw 4vw;
+    transform: translateY(-2px);
+  }
 }
 
 .debug {
