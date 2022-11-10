@@ -6,7 +6,7 @@
 			}" @click="navTo">
       <slot/>
     </view>
-    <i v-if="separatorClass" :class="separatorClass" class="uni-breadcrumb-item--separator"/>
+    <i v-if="separatorClass" class="uni-breadcrumb-item--separator" :class="separatorClass"/>
     <text v-else class="uni-breadcrumb-item--separator">{{ separator }}</text>
   </view>
 </template>

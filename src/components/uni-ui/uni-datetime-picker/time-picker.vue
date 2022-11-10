@@ -2,8 +2,8 @@
   <view class="uni-datetime-picker">
     <view @click="initTimePicker">
       <slot>
-        <view :class="{'uni-datetime-picker-disabled': disabled, 'uni-datetime-picker-timebox': border}"
-              class="uni-datetime-picker-timebox-pointer">
+        <view class="uni-datetime-picker-timebox-pointer"
+              :class="{'uni-datetime-picker-disabled': disabled, 'uni-datetime-picker-timebox': border}">
           <text class="uni-datetime-picker-text">{{ time }}</text>
           <view v-if="!time" class="uni-datetime-picker-time">
             <text class="uni-datetime-picker-text">{{ selectTimeText }}</text>
@@ -12,26 +12,26 @@
       </slot>
     </view>
     <view v-if="visible" id="mask" class="uni-datetime-picker-mask" @click="tiggerTimePicker"></view>
-    <view v-if="visible" :class="[dateShow && timeShow ? '' : 'fix-nvue-height']" :style="fixNvueBug"
-          class="uni-datetime-picker-popup">
+    <view v-if="visible" class="uni-datetime-picker-popup" :class="[dateShow && timeShow ? '' : 'fix-nvue-height']"
+          :style="fixNvueBug">
       <view class="uni-title">
         <text class="uni-datetime-picker-text">{{ selectTimeText }}</text>
       </view>
       <view v-if="dateShow" class="uni-datetime-picker__container-box">
-        <picker-view :indicator-style="indicatorStyle" :value="ymd" class="uni-datetime-picker-view"
+        <picker-view class="uni-datetime-picker-view" :indicator-style="indicatorStyle" :value="ymd"
                      @change="bindDateChange">
           <picker-view-column>
-            <view v-for="(item,index) in years" :key="index" class="uni-datetime-picker-item">
+            <view class="uni-datetime-picker-item" v-for="(item,index) in years" :key="index">
               <text class="uni-datetime-picker-item">{{ lessThanTen(item) }}</text>
             </view>
           </picker-view-column>
           <picker-view-column>
-            <view v-for="(item,index) in months" :key="index" class="uni-datetime-picker-item">
+            <view class="uni-datetime-picker-item" v-for="(item,index) in months" :key="index">
               <text class="uni-datetime-picker-item">{{ lessThanTen(item) }}</text>
             </view>
           </picker-view-column>
           <picker-view-column>
-            <view v-for="(item,index) in days" :key="index" class="uni-datetime-picker-item">
+            <view class="uni-datetime-picker-item" v-for="(item,index) in days" :key="index">
               <text class="uni-datetime-picker-item">{{ lessThanTen(item) }}</text>
             </view>
           </picker-view-column>
@@ -41,26 +41,26 @@
         <text class="uni-datetime-picker-sign sign-right">-</text>
       </view>
       <view v-if="timeShow" class="uni-datetime-picker__container-box">
-        <picker-view :class="[hideSecond ? 'time-hide-second' : '']" :indicator-style="indicatorStyle"
-                     :value="hms" class="uni-datetime-picker-view" @change="bindTimeChange">
+        <picker-view class="uni-datetime-picker-view" :class="[hideSecond ? 'time-hide-second' : '']"
+                     :indicator-style="indicatorStyle" :value="hms" @change="bindTimeChange">
           <picker-view-column>
-            <view v-for="(item,index) in hours" :key="index" class="uni-datetime-picker-item">
+            <view class="uni-datetime-picker-item" v-for="(item,index) in hours" :key="index">
               <text class="uni-datetime-picker-item">{{ lessThanTen(item) }}</text>
             </view>
           </picker-view-column>
           <picker-view-column>
-            <view v-for="(item,index) in minutes" :key="index" class="uni-datetime-picker-item">
+            <view class="uni-datetime-picker-item" v-for="(item,index) in minutes" :key="index">
               <text class="uni-datetime-picker-item">{{ lessThanTen(item) }}</text>
             </view>
           </picker-view-column>
           <picker-view-column v-if="!hideSecond">
-            <view v-for="(item,index) in seconds" :key="index" class="uni-datetime-picker-item">
+            <view class="uni-datetime-picker-item" v-for="(item,index) in seconds" :key="index">
               <text class="uni-datetime-picker-item">{{ lessThanTen(item) }}</text>
             </view>
           </picker-view-column>
         </picker-view>
         <!-- 兼容 nvue 不支持伪类 -->
-        <text :class="[hideSecond ? 'sign-center' : 'sign-left']" class="uni-datetime-picker-sign">:</text>
+        <text class="uni-datetime-picker-sign" :class="[hideSecond ? 'sign-center' : 'sign-left']">:</text>
         <text v-if="!hideSecond" class="uni-datetime-picker-sign sign-right">:</text>
       </view>
       <view class="uni-datetime-picker-btn">

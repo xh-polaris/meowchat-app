@@ -6,13 +6,13 @@
     <view :class="{ 'uni-list-item--disabled': disabled }"
           :hover-class="(!clickable && !link) || disabled || showSwitch ? '' : 'uni-list-item--hover'"
           class="uni-list-item" @click="onClick">
-      <view v-if="!isFirstChild" :class="{ 'uni-list--border': border }" class="border--left"></view>
-      <view :class="{ 'container--right': showArrow || link, 'flex--direction': direction === 'column' }"
-            class="uni-list-item__container">
+      <view v-if="!isFirstChild" class="border--left" :class="{ 'uni-list--border': border }"></view>
+      <view class="uni-list-item__container"
+            :class="{ 'container--right': showArrow || link, 'flex--direction': direction === 'column' }">
         <slot name="header">
           <view class="uni-list-item__header">
             <view v-if="thumb" class="uni-list-item__icon">
-              <image :class="['uni-list--' + thumbSize]" :src="thumb" class="uni-list-item__icon-img"/>
+              <image :src="thumb" class="uni-list-item__icon-img" :class="['uni-list--' + thumbSize]"/>
             </view>
             <view v-else-if="showExtraIcon" class="uni-list-item__icon">
               <uni-icons :color="extraIcon.color" :size="extraIcon.size" :type="extraIcon.type"/>
@@ -20,20 +20,20 @@
           </view>
         </slot>
         <slot name="body">
-          <view :class="{ 'uni-list-item__content--center': thumb || showExtraIcon || showBadge || showSwitch }"
-                class="uni-list-item__content">
-            <text v-if="title" :class="[ellipsis !== 0 && ellipsis <= 2 ? 'uni-ellipsis-' + ellipsis : '']"
-                  class="uni-list-item__content-title">{{ title }}
+          <view class="uni-list-item__content"
+                :class="{ 'uni-list-item__content--center': thumb || showExtraIcon || showBadge || showSwitch }">
+            <text v-if="title" class="uni-list-item__content-title"
+                  :class="[ellipsis !== 0 && ellipsis <= 2 ? 'uni-ellipsis-' + ellipsis : '']">{{ title }}
             </text>
             <text v-if="note" class="uni-list-item__content-note">{{ note }}</text>
           </view>
         </slot>
         <slot name="footer">
-          <view v-if="rightText || showBadge || showSwitch" :class="{ 'flex--justify': direction === 'column' }"
-                class="uni-list-item__extra">
+          <view v-if="rightText || showBadge || showSwitch" class="uni-list-item__extra"
+                :class="{ 'flex--justify': direction === 'column' }">
             <text v-if="rightText" class="uni-list-item__extra-text">{{ rightText }}</text>
-            <uni-badge v-if="showBadge" :custom-style="badgeStyle" :text="badgeText" :type="badgeType"/>
-            <switch v-if="showSwitch" :checked="switchChecked" :disabled="disabled"
+            <uni-badge v-if="showBadge" :type="badgeType" :text="badgeText" :custom-style="badgeStyle"/>
+            <switch v-if="showSwitch" :disabled="disabled" :checked="switchChecked"
                     @change="onSwitchChange"/>
           </view>
         </slot>

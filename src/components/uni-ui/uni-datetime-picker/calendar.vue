@@ -1,15 +1,14 @@
 <template>
   <view class="uni-calendar" @mouseleave="leaveCale">
-    <view v-if="!insert&&show" :class="{'uni-calendar--mask-show':aniMaskShow}" class="uni-calendar__mask"
+    <view v-if="!insert&&show" class="uni-calendar__mask" :class="{'uni-calendar--mask-show':aniMaskShow}"
           @click="clean();maskClick()"></view>
-    <view v-if="insert || show"
-          :class="{'uni-calendar--fixed':!insert,'uni-calendar--ani-show':aniMaskShow, 'uni-calendar__content-mobile': aniMaskShow}"
-          class="uni-calendar__content">
-      <view :class="{'uni-calendar__header-mobile' :!insert}" class="uni-calendar__header">
+    <view v-if="insert || show" class="uni-calendar__content"
+          :class="{'uni-calendar--fixed':!insert,'uni-calendar--ani-show':aniMaskShow, 'uni-calendar__content-mobile': aniMaskShow}">
+      <view class="uni-calendar__header" :class="{'uni-calendar__header-mobile' :!insert}">
         <view v-if="left" class="uni-calendar__header-btn-box" @click.stop="pre">
           <view class="uni-calendar__header-btn uni-calendar--left"></view>
         </view>
-        <picker :value="date" fields="month" mode="date" @change="bindDateChange">
+        <picker mode="date" :value="date" fields="month" @change="bindDateChange">
           <text
               class="uni-calendar__header-text">
             {{ (nowDate.year || "") + yearText + (nowDate.month || "") + monthText }}
@@ -52,10 +51,10 @@
             <text class="uni-calendar__weeks-day-text">{{ SATText }}</text>
           </view>
         </view>
-        <view v-for="(item,weekIndex) in weeks" :key="weekIndex" class="uni-calendar__weeks">
-          <view v-for="(weeks,weeksIndex) in item" :key="weeksIndex" class="uni-calendar__weeks-item">
-            <calendar-item :calendar="calendar" :checkHover="range" :lunar="lunar"
-                           :selected="selected" :weeks="weeks" class="uni-calendar-item--hook" @change="choiceDate"
+        <view class="uni-calendar__weeks" v-for="(item,weekIndex) in weeks" :key="weekIndex">
+          <view class="uni-calendar__weeks-item" v-for="(weeks,weeksIndex) in item" :key="weeksIndex">
+            <calendar-item class="uni-calendar-item--hook" :weeks="weeks" :calendar="calendar"
+                           :selected="selected" :lunar="lunar" :checkHover="range" @change="choiceDate"
                            @handleMouse="handleMouse">
             </calendar-item>
           </view>
@@ -64,8 +63,8 @@
       <view v-if="!insert && !range && typeHasTime" class="uni-date-changed uni-calendar--fixed-top"
             style="padding: 0 80px;">
         <view class="uni-date-changed--time-date">{{ tempSingleDate ? tempSingleDate : selectDateText }}</view>
-        <time-picker v-model="time" :border="false" :disabled="!tempSingleDate" :end="reactEndTime"
-                     :hide-second="hideSecond" :start="reactStartTime" class="time-picker-style" type="time">
+        <time-picker type="time" :start="reactStartTime" :end="reactEndTime" v-model="time"
+                     :disabled="!tempSingleDate" :border="false" :hide-second="hideSecond" class="time-picker-style">
         </time-picker>
       </view>
 
@@ -73,16 +72,15 @@
         <view class="uni-date-changed--time-start">
           <view class="uni-date-changed--time-date">{{ tempRange.before ? tempRange.before : startDateText }}
           </view>
-          <time-picker v-model="timeRange.startTime" :border="false" :disabled="!tempRange.before"
-                       :hide-second="hideSecond"
-                       :start="reactStartTime" class="time-picker-style" type="time">
+          <time-picker type="time" :start="reactStartTime" v-model="timeRange.startTime" :border="false"
+                       :hide-second="hideSecond" :disabled="!tempRange.before" class="time-picker-style">
           </time-picker>
         </view>
-        <uni-icons color="#999" style="line-height: 50px;" type="arrowthinright"></uni-icons>
+        <uni-icons type="arrowthinright" color="#999" style="line-height: 50px;"></uni-icons>
         <view class="uni-date-changed--time-end">
           <view class="uni-date-changed--time-date">{{ tempRange.after ? tempRange.after : endDateText }}</view>
-          <time-picker v-model="timeRange.endTime" :border="false" :disabled="!tempRange.after" :end="reactEndTime"
-                       :hide-second="hideSecond" class="time-picker-style" type="time">
+          <time-picker type="time" :end="reactEndTime" v-model="timeRange.endTime" :border="false"
+                       :hide-second="hideSecond" :disabled="!tempRange.after" class="time-picker-style">
           </time-picker>
         </view>
       </view>
@@ -100,7 +98,9 @@
 import Calendar from "./util.js"
 import calendarItem from "./calendar-item.vue"
 import timePicker from "./time-picker.vue"
-import { initVueI18n } from "@dcloudio/uni-i18n"
+import {
+  initVueI18n
+} from "@dcloudio/uni-i18n"
 import messages from "./i18n/index.js"
 
 const {

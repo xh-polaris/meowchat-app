@@ -1,48 +1,43 @@
 <template>
-  <view :style="{'margin-top':isTop+'px'}" class="uni-data-checklist">
+  <view class="uni-data-checklist" :style="{'margin-top':isTop+'px'}">
     <template v-if="!isLocal">
       <view class="uni-data-loading">
-        <uni-load-more v-if="!mixinDatacomErrorMessage" :content-text="contentText" :iconSize="18" iconType="snow"
-                       status="loading"></uni-load-more>
-        <text v-else>{{ mixinDatacomErrorMessage }}</text>
+        <uni-load-more v-if="!mixinDatacomErrorMessage" status="loading" iconType="snow" :iconSize="18"
+                       :content-text="contentText"></uni-load-more>
+        <text v-else>{{mixinDatacomErrorMessage}}</text>
       </view>
     </template>
     <template v-else>
-      <checkbox-group v-if="multiple" :class="{'is-list':mode==='list' || wrap}" class="checklist-group"
+      <checkbox-group v-if="multiple" class="checklist-group" :class="{'is-list':mode==='list' || wrap}"
                       @change="chagne">
-        <label v-for="(item,index) in dataList"
-               :key="index"
+        <label class="checklist-box"
                :class="['is--'+mode,item.selected?'is-checked':'',(disabled || !!item.disabled)?'is-disable':'',index!==0&&mode==='list'?'is-list-border':'']"
-               :style="item.styleBackgroud" class="checklist-box">
-          <checkbox :checked="item.selected" :disabled="disabled || !!item.disabled" :value="item[map.value]+''"
-                    class="hidden"
-                    hidden/>
+               :style="item.styleBackgroud" v-for="(item,index) in dataList" :key="index">
+          <checkbox class="hidden" hidden :disabled="disabled || !!item.disabled" :value="item[map.value]+''"
+                    :checked="item.selected"/>
           <view v-if="(mode !=='tag' && mode !== 'list') || ( mode === 'list' && icon === 'left')"
-                :style="item.styleIcon" class="checkbox__inner">
+                class="checkbox__inner" :style="item.styleIcon">
             <view class="checkbox__inner-icon"></view>
           </view>
-          <view :class="{'list-content':mode === 'list' && icon ==='left'}" class="checklist-content">
-            <text :style="item.styleIconText" class="checklist-text">{{ item[map.text] }}</text>
-            <view v-if="mode === 'list' && icon === 'right'" :style="item.styleBackgroud" class="checkobx__list"></view>
+          <view class="checklist-content" :class="{'list-content':mode === 'list' && icon ==='left'}">
+            <text class="checklist-text" :style="item.styleIconText">{{item[map.text]}}</text>
+            <view v-if="mode === 'list' && icon === 'right'" class="checkobx__list" :style="item.styleBackgroud"></view>
           </view>
         </label>
       </checkbox-group>
-      <radio-group v-else :class="{'is-list':mode==='list','is-wrap':wrap}" class="checklist-group" @change="chagne">
+      <radio-group v-else class="checklist-group" :class="{'is-list':mode==='list','is-wrap':wrap}" @change="chagne">
         <!-- -->
-        <label v-for="(item,index) in dataList"
-               :key="index"
+        <label class="checklist-box"
                :class="['is--'+mode,item.selected?'is-checked':'',(disabled || !!item.disabled)?'is-disable':'',index!==0&&mode==='list'?'is-list-border':'']"
-               :style="item.styleBackgroud" class="checklist-box">
-          <radio :checked="item.selected" :disabled="disabled || item.disabled" :value="item[map.value]+''"
-                 class="hidden"
-                 hidden/>
-          <view v-if="(mode !=='tag' && mode !== 'list') || ( mode === 'list' && icon === 'left')"
-                :style="item.styleBackgroud"
-                class="radio__inner">
-            <view :style="item.styleIcon" class="radio__inner-icon"></view>
+               :style="item.styleBackgroud" v-for="(item,index) in dataList" :key="index">
+          <radio class="hidden" hidden :disabled="disabled || item.disabled" :value="item[map.value]+''"
+                 :checked="item.selected"/>
+          <view v-if="(mode !=='tag' && mode !== 'list') || ( mode === 'list' && icon === 'left')" class="radio__inner"
+                :style="item.styleBackgroud">
+            <view class="radio__inner-icon" :style="item.styleIcon"></view>
           </view>
-          <view :class="{'list-content':mode === 'list' && icon ==='left'}" class="checklist-content">
-            <text :style="item.styleIconText" class="checklist-text">{{ item[map.text] }}</text>
+          <view class="checklist-content" :class="{'list-content':mode === 'list' && icon ==='left'}">
+            <text class="checklist-text" :style="item.styleIconText">{{item[map.text]}}</text>
             <view v-if="mode === 'list' && icon === 'right'" :style="item.styleRightIcon" class="checkobx__list"></view>
           </view>
         </label>

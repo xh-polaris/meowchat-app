@@ -1,22 +1,22 @@
 <template>
   <view class="uni-pagination">
     <!-- #ifndef MP -->
-    <picker v-if="showPageSize === true || showPageSize === 'true'" :range="pageSizeRange" :value="pageSizeIndex"
-            class="select-picker" mode="selector" @cancel="pickerClick" @change="pickerChange"
+    <picker v-if="showPageSize === true || showPageSize === 'true'" class="select-picker" mode="selector"
+            :value="pageSizeIndex" :range="pageSizeRange" @change="pickerChange" @cancel="pickerClick"
             @click.native="pickerClick">
-      <button :plain="true" size="mini" type="default">
-        <text>{{ pageSizeRange[pageSizeIndex] }} {{ piecePerPage }}</text>
-        <uni-icons class="select-picker-icon" color="#999" size="12" type="arrowdown"></uni-icons>
+      <button type="default" size="mini" :plain="true">
+        <text>{{pageSizeRange[pageSizeIndex]}} {{piecePerPage}}</text>
+        <uni-icons class="select-picker-icon" type="arrowdown" size="12" color="#999"></uni-icons>
       </button>
     </picker>
     <!-- #endif -->
     <!-- #ifndef APP-NVUE -->
     <view class="uni-pagination__total is-phone-hide">共 {{ total }} 条</view>
     <!-- #endif -->
-    <view :class="currentIndex === 1 ? 'uni-pagination--disabled' : 'uni-pagination--enabled'"
-          :hover-class="currentIndex === 1 ? '' : 'uni-pagination--hover'"
-          :hover-start-time="20" :hover-stay-time="70"
-          class="uni-pagination__btn" @click="clickLeft">
+    <view class="uni-pagination__btn"
+          :class="currentIndex === 1 ? 'uni-pagination--disabled' : 'uni-pagination--enabled'"
+          :hover-class="currentIndex === 1 ? '' : 'uni-pagination--hover'" :hover-start-time="20"
+          :hover-stay-time="70" @click="clickLeft">
       <template v-if="showIcon === true || showIcon === 'true'">
         <uni-icons color="#666" size="16" type="left"/>
       </template>
@@ -37,10 +37,10 @@
 
       </view>
     </view>
-    <view :class="currentIndex >= maxPage ? 'uni-pagination--disabled' : 'uni-pagination--enabled'"
-          :hover-class="currentIndex === maxPage ? '' : 'uni-pagination--hover'"
-          :hover-start-time="20" :hover-stay-time="70"
-          class="uni-pagination__btn" @click="clickRight">
+    <view class="uni-pagination__btn"
+          :class="currentIndex >= maxPage ? 'uni-pagination--disabled' : 'uni-pagination--enabled'"
+          :hover-class="currentIndex === maxPage ? '' : 'uni-pagination--hover'" :hover-start-time="20"
+          :hover-stay-time="70" @click="clickRight">
       <template v-if="showIcon === true || showIcon === 'true'">
         <uni-icons color="#666" size="16" type="right"/>
       </template>

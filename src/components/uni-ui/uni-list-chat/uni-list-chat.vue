@@ -6,26 +6,25 @@
       <view :class="{ 'uni-list--border': border, 'uni-list-chat--first': isFirstChild }"></view>
       <view class="uni-list-chat__container">
         <view class="uni-list-chat__header-warp">
-          <view v-if="avatarCircle || avatarList.length === 0" :class="{ 'header--circle': avatarCircle }"
-                class="uni-list-chat__header">
-            <image :class="{ 'header--circle': avatarCircle }" :src="avatar" class="uni-list-chat__header-image"
+          <view v-if="avatarCircle || avatarList.length === 0" class="uni-list-chat__header"
+                :class="{ 'header--circle': avatarCircle }">
+            <image class="uni-list-chat__header-image" :class="{ 'header--circle': avatarCircle }" :src="avatar"
                    mode="aspectFill"></image>
           </view>
           <!-- 头像组 -->
           <view v-else class="uni-list-chat__header">
-            <view v-for="(item, index) in avatarList" :key="index" :class="computedAvatar"
-                  :style="{ width: imageWidth + 'px', height: imageWidth + 'px' }"
-                  class="uni-list-chat__header-box">
-              <image :src="item.url"
-                     :style="{ width: imageWidth + 'px', height: imageWidth + 'px' }"
-                     class="uni-list-chat__header-image"
+            <view v-for="(item, index) in avatarList" :key="index" class="uni-list-chat__header-box"
+                  :class="computedAvatar"
+                  :style="{ width: imageWidth + 'px', height: imageWidth + 'px' }">
+              <image class="uni-list-chat__header-image"
+                     :style="{ width: imageWidth + 'px', height: imageWidth + 'px' }" :src="item.url"
                      mode="aspectFill"></image>
             </view>
           </view>
         </view>
-        <view v-if="badgeText && badgePositon === 'left'" :class="[isSingle]"
-              class="uni-list-chat__badge uni-list-chat__badge-pos">
-          <text class="uni-list-chat__badge-text">{{ badgeText === "dot" ? "" : badgeText }}</text>
+        <view v-if="badgeText && badgePositon === 'left'" class="uni-list-chat__badge uni-list-chat__badge-pos"
+              :class="[isSingle]">
+          <text class="uni-list-chat__badge-text">{{ badgeText === 'dot' ? '' : badgeText }}</text>
         </view>
         <view class="uni-list-chat__content">
           <view class="uni-list-chat__content-main">
@@ -35,10 +34,9 @@
           <view class="uni-list-chat__content-extra">
             <slot>
               <text class="uni-list-chat__content-extra-text">{{ time }}</text>
-              <view v-if="badgeText && badgePositon === 'right'"
-                    :class="[isSingle, badgePositon === 'right' ? 'uni-list-chat--right' : '']"
-                    class="uni-list-chat__badge">
-                <text class="uni-list-chat__badge-text">{{ badgeText === "dot" ? "" : badgeText }}</text>
+              <view v-if="badgeText && badgePositon === 'right'" class="uni-list-chat__badge"
+                    :class="[isSingle, badgePositon === 'right' ? 'uni-list-chat--right' : '']">
+                <text class="uni-list-chat__badge-text">{{ badgeText === 'dot' ? '' : badgeText }}</text>
               </view>
             </slot>
           </view>
