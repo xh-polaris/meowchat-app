@@ -51,7 +51,7 @@ import {onReachBottom} from "@dcloudio/uni-app";
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
-  No: 0
+  No: 1
 });
 
 const carousels = reactive<Carousel[]>([]);
