@@ -6,16 +6,16 @@ export * from "./community-components"
  * @description
  * @param req
  */
-export async function getCarousel (): Promise<components.GetCarouselResp> {
-  return new Promise<components.GetCarouselResp>(function (resolve, reject) {
+export async function getNews (): Promise<components.GetNewsResp> {
+  return new Promise<components.GetNewsResp>(function (resolve, reject) {
     uni.request({
-      url: "/get_carousel",
+      url: "/notice/get_news",
       method: "GET",
       success (res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode != 200) {
           reject(res)
         }
-        const data = res.data as components.GetCarouselResp
+        const data = res.data as components.GetNewsResp
         resolve(data)
       },
     })

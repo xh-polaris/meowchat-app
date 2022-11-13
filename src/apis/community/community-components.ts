@@ -1,14 +1,14 @@
-export interface Carousel {
+export interface News {
   id: string
   imageUrl: string
   linkUrl: string
   linkType: string
 }
 
-export interface GetCarouselResp {
+export interface GetNewsResp {
   code: number
   msg: string
-  carousels: Carousel[]
+  news: News[]
 }
 
 export interface Cat {
