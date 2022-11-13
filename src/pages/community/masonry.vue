@@ -22,19 +22,17 @@
 
 <script lang="ts" setup>
 
-import { onMounted, reactive, ref } from "vue";
+import { getCurrentInstance, onMounted, reactive, ref } from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { getCatPreviews, getMomentPreviews } from "../../apis/community/community";
-
-const query = uni.createSelectorQuery()
 
 function isLeftTallerThanRight() {
   try {
     let leftHeight, rightHeight
-    query.select(".column-left").boundingClientRect(rect => {
+    uni.createSelectorQuery().in(this).select(".column-left").boundingClientRect(rect => {
       leftHeight = rect.height
     }).exec()
-    query.select(".column-right").boundingClientRect(rect => {
+    uni.createSelectorQuery().in(this).select(".column-right").boundingClientRect(rect => {
       rightHeight = rect.height
     }).exec()
     return leftHeight > rightHeight
