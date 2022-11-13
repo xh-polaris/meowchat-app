@@ -4,9 +4,9 @@
     <view class="search-bar">
       <view class="search-bar-box">
         <input
-          type="text" value=""
-          placeholder="搜索猫咪"
           class="search-text" maxlength="10"
+          placeholder="搜索猫咪"
+          type="text" value=""
         >
         <image class="search-span" src="/static/images/search_span.png" />
       </view>
@@ -26,16 +26,16 @@
 </template>
 
 <script lang="ts" setup>
-import CatBox from "@/pages/collection/cat-box"
-import { reactive } from "vue"
-import { CatPreview } from "@/apis/community/community-components"
-import { onClickCatBox } from "@/pages/collection/event"
-import { getCatPreviews } from "@/apis/community/community"
+import CatBox from "@/pages/collection/cat-box";
+import {reactive} from "vue";
+import {CatPreview} from "@/apis/collection/collection-components";
+import {onClickCatBox} from "@/pages/collection/event";
+import {getCatPreviews} from "@/apis/collection/collection";
 
-const cats = reactive<CatPreview[]>([])
+const cats = reactive<CatPreview[]>([]);
 getCatPreviews().then(res => {
-  cats.push(...res.cats)
-})
+  cats.push(...res.cats);
+});
 
 </script>
 
