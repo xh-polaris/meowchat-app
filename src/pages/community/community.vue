@@ -32,14 +32,14 @@
   </view>
 
   <view style="margin-top:10px">
-    <masonry />
+    <masonry/>
   </view>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from "vue"
 import Masonry from "@/pages/community/masonry"
-import { getNews, News } from "@/apis/community/community"
+import { getNews, News, getComments } from "@/apis/community/community"
 import { onClickCarousel } from "@/pages/community/event"
 import { onReachBottom } from "@dcloudio/uni-app"
 
@@ -56,6 +56,9 @@ getNews().then(res => {
 
 onReachBottom(() => {
 }) //哪怕是空的 父组件也得有这个 才能让子组件的onReachBottom生效
+getComments({id: "1"}).then(res => {
+  console.log(res.comments);
+});
 
 </script>
 
