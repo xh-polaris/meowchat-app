@@ -1,12 +1,12 @@
 <template>
   <view class="uni-section">
     <view class="uni-section-header" @click="onClick">
-      <view v-if="type" :class="type" class="uni-section-header__decoration"/>
+      <view class="uni-section-header__decoration" v-if="type" :class="type"/>
       <slot v-else name="decoration"></slot>
 
       <view class="uni-section-header__content">
-        <text :class="{'distraction':!subTitle}" :style="{'font-size':titleFontSize,'color':titleColor}"
-              class="uni-section__content-title">{{ title }}
+        <text :style="{'font-size':titleFontSize,'color':titleColor}" class="uni-section__content-title"
+              :class="{'distraction':!subTitle}">{{ title }}
         </text>
         <text v-if="subTitle" :style="{'font-size':subTitleFontSize,'color':subTitleColor}"
               class="uni-section-header__content-sub">{{ subTitle }}
@@ -18,7 +18,7 @@
       </view>
     </view>
 
-    <view :style="{padding: _padding}" class="uni-section-content">
+    <view class="uni-section-content" :style="{padding: _padding}">
       <slot/>
     </view>
   </view>

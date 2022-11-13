@@ -2,99 +2,96 @@
   <view class="uni-date">
     <view class="uni-date-editor" @click="show">
       <slot>
-        <view :class="{'uni-date-editor--x__disabled': disabled,
-		'uni-date-x--border': border}" class="uni-date-editor--x">
+        <view class="uni-date-editor--x" :class="{'uni-date-editor--x__disabled': disabled,
+		'uni-date-x--border': border}">
           <view v-if="!isRange" class="uni-date-x uni-date-single">
-            <uni-icons color="#c0c4cc" size="22" type="calendar"></uni-icons>
-            <input v-model="singleVal" :disabled="true" :placeholder="singlePlaceholderText"
-                   class="uni-date__x-input" type="text"/>
+            <uni-icons type="calendar" color="#c0c4cc" size="22"></uni-icons>
+            <input class="uni-date__x-input" type="text" v-model="singleVal"
+                   :placeholder="singlePlaceholderText" :disabled="true"/>
           </view>
           <view v-else class="uni-date-x uni-date-range">
-            <uni-icons color="#c0c4cc" size="22" type="calendar"></uni-icons>
-            <input v-model="range.startDate" :disabled="true" :placeholder="startPlaceholderText"
-                   class="uni-date__x-input t-c" type="text"/>
+            <uni-icons type="calendar" color="#c0c4cc" size="22"></uni-icons>
+            <input class="uni-date__x-input t-c" type="text" v-model="range.startDate"
+                   :placeholder="startPlaceholderText" :disabled="true"/>
             <slot>
-              <view class="">{{ rangeSeparator }}</view>
+              <view class="">{{rangeSeparator}}</view>
             </slot>
-            <input v-model="range.endDate" :disabled="true" :placeholder="endPlaceholderText"
-                   class="uni-date__x-input t-c" type="text"/>
+            <input class="uni-date__x-input t-c" type="text" v-model="range.endDate"
+                   :placeholder="endPlaceholderText" :disabled="true"/>
           </view>
           <view v-if="showClearIcon" class="uni-date__icon-clear" @click.stop="clear">
-            <uni-icons color="#c0c4cc" size="24" type="clear"></uni-icons>
+            <uni-icons type="clear" color="#c0c4cc" size="24"></uni-icons>
           </view>
         </view>
       </slot>
     </view>
 
     <view v-show="popup" class="uni-date-mask" @click="close"></view>
-    <view v-if="!isPhone" v-show="popup" ref="datePicker" class="uni-date-picker__container">
-      <view v-if="!isRange" :style="popover" class="uni-date-single--x">
+    <view v-if="!isPhone" ref="datePicker" v-show="popup" class="uni-date-picker__container">
+      <view v-if="!isRange" class="uni-date-single--x" :style="popover">
         <view class="uni-popper__arrow"></view>
         <view v-if="hasTime" class="uni-date-changed popup-x-header">
-          <input v-model="tempSingleDate" :placeholder="selectDateText" class="uni-date__input t-c"
-                 type="text"/>
-          <time-picker v-model="time" :border="false" :disabled="!tempSingleDate" :end="reactEndTime"
-                       :hideSecond="hideSecond" :start="reactStartTime" style="width: 100%;" type="time">
-            <input v-model="time" :disabled="!tempSingleDate" :placeholder="selectTimeText" class="uni-date__input t-c"
-                   type="text"/>
+          <input class="uni-date__input t-c" type="text" v-model="tempSingleDate"
+                 :placeholder="selectDateText"/>
+          <time-picker type="time" v-model="time" :border="false" :disabled="!tempSingleDate"
+                       :start="reactStartTime" :end="reactEndTime" :hideSecond="hideSecond" style="width: 100%;">
+            <input class="uni-date__input t-c" type="text" v-model="time" :placeholder="selectTimeText"
+                   :disabled="!tempSingleDate"/>
           </time-picker>
         </view>
-        <calendar ref="pcSingle" :date="defSingleDate" :end-date="caleRange.endDate"
-                  :showMonth="false" :start-date="caleRange.startDate" style="padding: 0 8px;"
-                  @change="singleChange"/>
+        <calendar ref="pcSingle" :showMonth="false" :start-date="caleRange.startDate"
+                  :end-date="caleRange.endDate" :date="defSingleDate" @change="singleChange"
+                  style="padding: 0 8px;"/>
         <view v-if="hasTime" class="popup-x-footer">
           <!-- <text class="">此刻</text> -->
-          <text class="confirm" @click="confirmSingleChange">{{ okText }}</text>
+          <text class="confirm" @click="confirmSingleChange">{{okText}}</text>
         </view>
         <view class="uni-date-popper__arrow"></view>
       </view>
 
-      <view v-else :style="popover" class="uni-date-range--x">
+      <view v-else class="uni-date-range--x" :style="popover">
         <view class="uni-popper__arrow"></view>
         <view v-if="hasTime" class="popup-x-header uni-date-changed">
           <view class="popup-x-header--datetime">
-            <input v-model="tempRange.startDate" :placeholder="startDateText"
-                   class="uni-date__input uni-date-range__input"
-                   type="text"/>
-            <time-picker v-model="tempRange.startTime" :border="false" :disabled="!tempRange.startDate"
-                         :hideSecond="hideSecond"
-                         :start="reactStartTime" type="time">
-              <input v-model="tempRange.startTime" :disabled="!tempRange.startDate"
-                     :placeholder="startTimeText" class="uni-date__input uni-date-range__input"
-                     type="text"/>
+            <input class="uni-date__input uni-date-range__input" type="text" v-model="tempRange.startDate"
+                   :placeholder="startDateText"/>
+            <time-picker type="time" v-model="tempRange.startTime" :start="reactStartTime" :border="false"
+                         :disabled="!tempRange.startDate" :hideSecond="hideSecond">
+              <input class="uni-date__input uni-date-range__input" type="text"
+                     v-model="tempRange.startTime" :placeholder="startTimeText"
+                     :disabled="!tempRange.startDate"/>
             </time-picker>
           </view>
-          <uni-icons color="#999" style="line-height: 40px;" type="arrowthinright"></uni-icons>
+          <uni-icons type="arrowthinright" color="#999" style="line-height: 40px;"></uni-icons>
           <view class="popup-x-header--datetime">
-            <input v-model="tempRange.endDate" :placeholder="endDateText" class="uni-date__input uni-date-range__input"
-                   type="text"/>
-            <time-picker v-model="tempRange.endTime" :border="false" :disabled="!tempRange.endDate" :end="reactEndTime"
-                         :hideSecond="hideSecond" type="time">
-              <input v-model="tempRange.endTime" :disabled="!tempRange.endDate" :placeholder="endTimeText"
-                     class="uni-date__input uni-date-range__input" type="text"/>
+            <input class="uni-date__input uni-date-range__input" type="text" v-model="tempRange.endDate"
+                   :placeholder="endDateText"/>
+            <time-picker type="time" v-model="tempRange.endTime" :end="reactEndTime" :border="false"
+                         :disabled="!tempRange.endDate" :hideSecond="hideSecond">
+              <input class="uni-date__input uni-date-range__input" type="text" v-model="tempRange.endTime"
+                     :placeholder="endTimeText" :disabled="!tempRange.endDate"/>
             </time-picker>
           </view>
         </view>
         <view class="popup-x-body">
-          <calendar ref="left" :end-date="caleRange.endDate" :pleStatus="endMultipleStatus"
-                    :range="true" :showMonth="false" :start-date="caleRange.startDate" style="padding: 0 8px;"
-                    @change="leftChange" @firstEnterCale="updateRightCale" @monthSwitch="leftMonthSwitch"/>
-          <calendar ref="right" :end-date="caleRange.endDate" :pleStatus="startMultipleStatus"
-                    :range="true" :showMonth="false" :start-date="caleRange.startDate"
-                    style="padding: 0 8px;border-left: 1px solid #F1F1F1;" @change="rightChange"
-                    @firstEnterCale="updateLeftCale" @monthSwitch="rightMonthSwitch"/>
+          <calendar ref="left" :showMonth="false" :start-date="caleRange.startDate"
+                    :end-date="caleRange.endDate" :range="true" @change="leftChange" :pleStatus="endMultipleStatus"
+                    @firstEnterCale="updateRightCale" @monthSwitch="leftMonthSwitch" style="padding: 0 8px;"/>
+          <calendar ref="right" :showMonth="false" :start-date="caleRange.startDate"
+                    :end-date="caleRange.endDate" :range="true" @change="rightChange"
+                    :pleStatus="startMultipleStatus" @firstEnterCale="updateLeftCale"
+                    @monthSwitch="rightMonthSwitch" style="padding: 0 8px;border-left: 1px solid #F1F1F1;"/>
         </view>
         <view v-if="hasTime" class="popup-x-footer">
-          <text class="" @click="clear">{{ clearText }}</text>
-          <text class="confirm" @click="confirmRangeChange">{{ okText }}</text>
+          <text class="" @click="clear">{{clearText}}</text>
+          <text class="confirm" @click="confirmRangeChange">{{okText}}</text>
         </view>
       </view>
     </view>
     <calendar v-show="isPhone" ref="mobile" :clearDate="false" :date="defSingleDate" :defTime="reactMobDefTime"
-              :end-date="caleRange.endDate" :hideSecond="hideSecond" :insert="false"
-              :pleStatus="endMultipleStatus" :range="isRange" :selectableTimes="mobSelectableTime" :showMonth="false"
-              :start-date="caleRange.startDate"
-              :typeHasTime="hasTime" @confirm="mobileChange" @maskClose="close"/>
+              :start-date="caleRange.startDate" :end-date="caleRange.endDate" :selectableTimes="mobSelectableTime"
+              :pleStatus="endMultipleStatus" :showMonth="false" :range="isRange" :typeHasTime="hasTime" :insert="false"
+              :hideSecond="hideSecond" @confirm="mobileChange" @maskClose="close"/>
   </view>
 </template>
 <script>
@@ -120,7 +117,9 @@
  **/
 import calendar from "./calendar.vue"
 import timePicker from "./time-picker.vue"
-import { initVueI18n } from "@dcloudio/uni-i18n"
+import {
+  initVueI18n
+} from "@dcloudio/uni-i18n"
 import messages from "./i18n/index.js"
 
 const {

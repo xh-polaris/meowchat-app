@@ -1,37 +1,34 @@
 <template>
-  <view :class="{'uni-easyinput-error':msg}" :style="boxStyle" class="uni-easyinput">
-    <view :class="inputContentClass" :style="inputContentStyle" class="uni-easyinput__content">
-      <uni-icons v-if="prefixIcon" :type="prefixIcon" class="content-clear-icon" color="#c0c4cc"
-                 size="22" @click="onClickIcon('prefix')"></uni-icons>
-      <textarea v-if="type === 'textarea'" :autoHeight="autoHeight"
-                :class="{'input-padding':inputBorder}" :disabled="disabled" :focus="focused" :maxlength="inputMaxlength"
-                :name="name" :placeholder="placeholder"
-                :placeholderStyle="placeholderStyle" :value="val" class="uni-easyinput__content-textarea"
-                placeholder-class="uni-easyinput__placeholder-class" @blur="_Blur" @confirm="onConfirm" @focus="_Focus"
-                @input="onInput"></textarea>
-      <input v-else :confirmType="confirmType" :disabled="disabled"
-             :focus="focused" :maxlength="inputMaxlength" :name="name" :password="!showPassword && type === 'password'"
+  <view class="uni-easyinput" :class="{'uni-easyinput-error':msg}" :style="boxStyle">
+    <view class="uni-easyinput__content" :class="inputContentClass" :style="inputContentStyle">
+      <uni-icons v-if="prefixIcon" class="content-clear-icon" :type="prefixIcon" color="#c0c4cc"
+                 @click="onClickIcon('prefix')" size="22"></uni-icons>
+      <textarea v-if="type === 'textarea'" class="uni-easyinput__content-textarea"
+                :class="{'input-padding':inputBorder}" :name="name" :value="val" :placeholder="placeholder"
+                :placeholderStyle="placeholderStyle" :disabled="disabled"
+                placeholder-class="uni-easyinput__placeholder-class" :maxlength="inputMaxlength" :focus="focused"
+                :autoHeight="autoHeight" @input="onInput" @blur="_Blur" @focus="_Focus" @confirm="onConfirm"></textarea>
+      <input v-else :type="type === 'password'?'text':type" class="uni-easyinput__content-input"
+             :style="inputStyle" :name="name" :value="val" :password="!showPassword && type === 'password'"
              :placeholder="placeholder" :placeholderStyle="placeholderStyle"
-             :style="inputStyle" :type="type === 'password'?'text':type" :value="val"
-             class="uni-easyinput__content-input" placeholder-class="uni-easyinput__placeholder-class" @blur="_Blur"
-             @confirm="onConfirm" @focus="_Focus"
-             @input="onInput"/>
+             placeholder-class="uni-easyinput__placeholder-class" :disabled="disabled" :maxlength="inputMaxlength"
+             :focus="focused" :confirmType="confirmType" @focus="_Focus" @blur="_Blur" @input="onInput"
+             @confirm="onConfirm"/>
       <template v-if="type === 'password' && passwordIcon">
         <!-- 开启密码时显示小眼睛 -->
-        <uni-icons v-if="isVal" :class="{'is-textarea-icon':type==='textarea'}" :color="focusShow?'#2979ff':'#c0c4cc'"
-                   :size="22" :type="showPassword?'eye-slash-filled':'eye-filled'"
-                   class="content-clear-icon" @click="onEyes">
+        <uni-icons v-if="isVal" class="content-clear-icon" :class="{'is-textarea-icon':type==='textarea'}"
+                   :type="showPassword?'eye-slash-filled':'eye-filled'" :size="22"
+                   :color="focusShow?'#2979ff':'#c0c4cc'" @click="onEyes">
         </uni-icons>
       </template>
       <template v-else-if="suffixIcon">
-        <uni-icons v-if="suffixIcon" :type="suffixIcon" class="content-clear-icon" color="#c0c4cc"
-                   size="22" @click="onClickIcon('suffix')"></uni-icons>
+        <uni-icons v-if="suffixIcon" class="content-clear-icon" :type="suffixIcon" color="#c0c4cc"
+                   @click="onClickIcon('suffix')" size="22"></uni-icons>
       </template>
       <template v-else>
-        <uni-icons v-if="clearable && isVal && !disabled  && type !== 'textarea'"
-                   :class="{'is-textarea-icon':type==='textarea'}"
-                   :color="msg?'#dd524d':(focusShow?'#2979ff':'#c0c4cc')" :size="clearSize" class="content-clear-icon"
-                   type="clear" @click="onClear"></uni-icons>
+        <uni-icons v-if="clearable && isVal && !disabled  && type !== 'textarea'" class="content-clear-icon"
+                   :class="{'is-textarea-icon':type==='textarea'}" type="clear" :size="clearSize"
+                   :color="msg?'#dd524d':(focusShow?'#2979ff':'#c0c4cc')" @click="onClear"></uni-icons>
       </template>
       <slot name="right"></slot>
     </view>
