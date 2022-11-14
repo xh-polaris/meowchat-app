@@ -154,7 +154,53 @@ export interface GetChildCommentsResp {
     comments: Array<ChildComment>;
 }
 
+/**
+ * school
+ */
+export interface School {
+    /**
+     * 学校Id
+     */
+    id: string;
+    /**
+     * 学校姓名
+     */
+    schoolName: string;
+}
 
+export interface GetAllSchoolsResp {
+    code: string;
+    msg: string;
+    comments: Array<School>;
+}
+
+/**
+ * campus
+ */
+export interface Campus {
+    /**
+     * 校区名字
+     */
+    campusName: string;
+    /**
+     * 校区Id
+     */
+    id: string;
+    /**
+     * 所属学校Id
+     */
+    schoolId: string;
+}
+
+export interface GetCampusesBySchoolReq {
+    schoolId: string;
+}
+
+export interface GetCampusesBySchoolResp {
+    code: string;
+    msg: string;
+    comments: Array<Campus>;
+}
 
 
 

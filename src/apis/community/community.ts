@@ -123,4 +123,37 @@ export async function getComments(req: components.GetCommentsReq): Promise<compo
     });
 }
 
+export async function getAllSchool(): Promise<components.GetAllSchoolsResp> {
+    return new Promise<components.GetAllSchoolsResp>(function (resolve, reject) {
+        uni.request({
+            url: "/school/get_all_schools",
+            method: "GET",
+            success(res: UniNamespace.RequestSuccessCallbackResult) {
+                if (res.statusCode != 200) {
+                    reject(res);
+                }
+                const data = res.data as components.GetAllSchoolsResp;
+                resolve(data);
+            },
+        });
+    });
+}
+
+export async function getCampusesBySchool(req: components.GetCampusesBySchoolReq): Promise<components.GetCampusesBySchoolResp> {
+    return new Promise<components.GetCampusesBySchoolResp>(function (resolve, reject) {
+        uni.request({
+            url: "/school/get_campuses_by_school",
+            data: req,
+            method: "GET",
+            success(res: UniNamespace.RequestSuccessCallbackResult) {
+                if (res.statusCode != 200) {
+                    reject(res);
+                }
+                const data = res.data as components.GetCampusesBySchoolResp;
+                resolve(data);
+            },
+        });
+    });
+}
+
 

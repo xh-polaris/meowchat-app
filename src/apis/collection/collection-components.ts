@@ -55,3 +55,7 @@ export interface GetCatPreviewsResp {
     msg: string;
     cats: Array<CatPreview>;
 }
+
+export interface GetAllCatPreviewsByCampusReq {
+    campusId: string;
+}

@@ -54,11 +54,12 @@ getNews().then(res => {
   news.push(...res.news)
 })
 
-onReachBottom(() => {
-}) //哪怕是空的 父组件也得有这个 才能让子组件的onReachBottom生效
-getComments({id: "1"}).then(res => {
+getComments({momentId: "1"}).then(res => {
   console.log(res.comments);
 });
+
+onReachBottom(() => {
+}); //哪怕是空的 父组件也得有这个 才能让子组件的onReachBottom生效
 
 </script>
 

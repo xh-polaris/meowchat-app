@@ -41,16 +41,16 @@ function isLeftTallerThanRight() {
   }
 }
 
-const leftTiles = reactive([])
-const rightTiles = reactive([])
+const leftTiles = reactive([]);
+const rightTiles = reactive([]);
 
 
 onReachBottom(() => {
   if (isBatchLoaded) {
-    isBatchLoaded = false
-    addBatch()
+    isBatchLoaded = false;
+    addBatch();
   }
-})
+});
 
 const batchLoadingAmount = 20
 const firstLoadingAmount = 16
@@ -128,27 +128,30 @@ $gapWidth: 3vw;
   background-color: transparent;
   padding-top: $gapWidth;
 }
+
 .column-left {
-  width: calc(50vw - $gapWidth*1.5);
+  width: calc(50vw - $gapWidth * 1.5);
   margin-left: $gapWidth;
-  margin-right: calc($gapWidth/2);
+  margin-right: calc($gapWidth / 2);
   height: fit-content;
 }
+
 .column-right {
-  width: calc(50vw - $gapWidth*1.5);
-  margin-left: calc($gapWidth/2);
+  width: calc(50vw - $gapWidth * 1.5);
+  margin-left: calc($gapWidth / 2);
   margin-right: $gapWidth;
   height: fit-content;
 }
 
 .tile {
   margin-bottom: calc($gapWidth - 2px);
-  
+
   .img {
-    width: calc(50vw - $gapWidth*1.5);
+    width: calc(50vw - $gapWidth * 1.5);
     display: block;
     border-radius: 4vw 4vw 0 0;
   }
+
   .description {
     background-color: #BBB;
     font-size: 4vw;
