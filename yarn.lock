@@ -489,6 +489,11 @@
   resolved "https://registry.yarnpkg.com/@dcloudio/uni-components/-/uni-components-3.0.0-alpha-3060320220917001.tgz#77754edcfde7bb92ed8214480ed71e99872aaa40"
   integrity sha512-deGo+eVlIZtYgoPZA224eg96ML+2AZVvH8QGEgrVc6JGVuv904rP69DbqKJ09E9yjuGEjlN7Qsz5iQQiQP33Zg==
 
+"@dcloudio/uni-components@3.0.0-alpha-3060920221118001":
+  version "3.0.0-alpha-3060920221118001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-components/-/uni-components-3.0.0-alpha-3060920221118001.tgz#da5cdd036f5dc6a7bae9698b1413d04da7f84500"
+  integrity sha512-WoWpegNWy1UvHmm3xv16rFOr36b1+0LuW51qYYhvmM8L9rhgBq4J1uSrCpHTEAurtAzcVTB6D7DGgXK9b/eO3w==
+
 "@dcloudio/uni-h5-vite@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
   resolved "https://registry.yarnpkg.com/@dcloudio/uni-h5-vite/-/uni-h5-vite-3.0.0-alpha-3060320220917001.tgz#44110f96b99a7711db1e296590c02cb2c6424a2a"
