@@ -1,7 +1,4 @@
 <template>
-  <!--  <div>-->
-  <!--    {{ props.id }}-->
-  <!--  </div>-->
   <view>
     <image src="https://static.xhpolaris.com/dog.jpg" class="img" />
     <view class="selector">
