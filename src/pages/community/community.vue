@@ -17,18 +17,8 @@
     </view>
   </view>
 
-  <view class="swiper-box">
-    <swiper
-      autoplay indicator-dots
-      circular class="swiper"
-    >
-      <swiper-item v-for="carousel in news" :key="carousel.id">
-        <view
-          class="swiper-item" :style="`background-image: url('${carousel.imageUrl}')`"
-          @click="onClickCarousel(carousel.linkUrl)"
-        />
-      </swiper-item>
-    </swiper>
+  <view>
+    <carousel />
   </view>
 
   <view style="margin-top:10px">
@@ -39,6 +29,7 @@
 <script lang="ts" setup>
 import { reactive } from "vue"
 import Masonry from "@/pages/community/masonry"
+import Carousel from "@/pages/community/carousel"
 import { getNews, News } from "@/apis/community/community"
 import { onClickCarousel } from "@/pages/community/event"
 import { onReachBottom } from "@dcloudio/uni-app"
