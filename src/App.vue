@@ -16,4 +16,9 @@ uni.getProvider({
 </script>
 <style>
 
+body {
+  font-family: sans-serif;
+  background-color: #FAFCFF;
+}
+
 </style>
