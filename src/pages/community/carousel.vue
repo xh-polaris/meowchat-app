@@ -127,6 +127,10 @@ $backgroundColor: #F5F5F5;
   height: $slideHeightLarge + $verticalPaddingOfCarousel*2;
 }
 .slide {
+  font-family: sans-serif;
+  text-align: center;
+  line-height: $slideHeightLarge;
+
   background-color: #E5E9EE;
   position: absolute;
   width: $slideWidthSmall;
