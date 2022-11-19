@@ -17,7 +17,6 @@ uni.getProvider({
 <style>
 
 body {
-  font-family: sans-serif;
   background-color: #FAFCFF;
 }
 
