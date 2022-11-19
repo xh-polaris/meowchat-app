@@ -166,7 +166,7 @@ $backgroundColor: #F5F5F5;
   z-index: 0;
 }
 .carousel-background {
-  background-color: #FAFCFF;
+  background-color: white;
   position: absolute;
   width: 100vw;
   height: $verticalPaddingOfCarousel * 2 + $slideHeightLarge;
