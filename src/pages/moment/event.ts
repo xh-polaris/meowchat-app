@@ -11,5 +11,3 @@ export const enterMask = uni.createAnimation({
     timingFunction: 'ease',
     delay: 0,
 });
-
-
