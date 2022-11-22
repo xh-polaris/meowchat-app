@@ -381,17 +381,17 @@
     qrcode-terminal "^0.12.0"
     ws "^8.4.2"
 
-"@dcloudio/uni-cli-shared@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-cli-shared/-/uni-cli-shared-3.0.0-alpha-3060320220917001.tgz#c1e508fb88c4744a5f5f9223da5728c1dfa35944"
-  integrity sha512-FvdFKx27gIegk9URkHM7iGuljYnwJ4dOrgEdJR9r7PWnnR1fa457unaq+VZgSOVa9zPDyBBEoDQpY2HNxq15og==
+"@dcloudio/uni-cli-shared@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-cli-shared/-/uni-cli-shared-3.0.0-3060520221121001.tgz#7f6ce08d650d37c8e565fe9369496629741ebdb3"
+  integrity sha512-VcvqVuzAO9PWS1/fWhlAuEFHKrInKgkNkattIYdcFWcAitASYJYazZxMk2mOHyVCS5DrRZ9W0mCwj6cxvw2kMw==
   dependencies:
     "@ampproject/remapping" "^2.1.2"
     "@babel/core" "^7.17.9"
     "@babel/parser" "^7.17.9"
     "@babel/types" "^7.17.0"
-    "@dcloudio/uni-i18n" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-i18n" "3.0.0-3060520221121001"
+    "@dcloudio/uni-shared" "3.0.0-3060520221121001"
     "@intlify/core-base" "9.1.9"
     "@intlify/shared" "9.1.9"
     "@intlify/vue-devtools" "9.1.9"
@@ -401,7 +401,7 @@
     "@vue/compiler-sfc" "3.2.39"
     "@vue/server-renderer" "3.2.39"
     "@vue/shared" "3.2.39"
-    autoprefixer "^10.4.9"
+    autoprefixer "^10.4.12"
     base64url "^3.0.1"
     chokidar "^3.5.3"
     compare-versions "^3.6.0"
@@ -427,17 +427,17 @@
     tapable "^2.2.0"
     xregexp "3.1.0"
 
-"@dcloudio/uni-cli-shared@3.0.0-alpha-3060420220922001":
-  version "3.0.0-alpha-3060420220922001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-cli-shared/-/uni-cli-shared-3.0.0-alpha-3060420220922001.tgz#b3844ba9c6961467a87ba140f183b25bfb1c2d72"
-  integrity sha512-GD2aBWth7EJ+eKgyZHZ+IxIqSPbz6cDUfH3CQfx1BYlRq3ebUbiuvlHjuB7LqZSL8pltehj+RapHZOdJde5WEA==
+"@dcloudio/uni-cli-shared@3.0.0-alpha-3060320220917001":
+  version "3.0.0-alpha-3060320220917001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-cli-shared/-/uni-cli-shared-3.0.0-alpha-3060320220917001.tgz#c1e508fb88c4744a5f5f9223da5728c1dfa35944"
+  integrity sha512-FvdFKx27gIegk9URkHM7iGuljYnwJ4dOrgEdJR9r7PWnnR1fa457unaq+VZgSOVa9zPDyBBEoDQpY2HNxq15og==
   dependencies:
     "@ampproject/remapping" "^2.1.2"
     "@babel/core" "^7.17.9"
     "@babel/parser" "^7.17.9"
     "@babel/types" "^7.17.0"
-    "@dcloudio/uni-i18n" "3.0.0-alpha-3060420220922001"
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060420220922001"
+    "@dcloudio/uni-i18n" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
     "@intlify/core-base" "9.1.9"
     "@intlify/shared" "9.1.9"
     "@intlify/vue-devtools" "9.1.9"
@@ -447,7 +447,7 @@
     "@vue/compiler-sfc" "3.2.39"
     "@vue/server-renderer" "3.2.39"
     "@vue/shared" "3.2.39"
-    autoprefixer "^10.4.12"
+    autoprefixer "^10.4.9"
     base64url "^3.0.1"
     chokidar "^3.5.3"
     compare-versions "^3.6.0"
@@ -534,15 +534,15 @@
     vue-router "^4.1.5"
     xmlhttprequest "^1.8.0"
 
+"@dcloudio/uni-i18n@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-i18n/-/uni-i18n-3.0.0-3060520221121001.tgz#86d431758fcdf5324e699a6ef2e76e6fcaacfea8"
+  integrity sha512-5YwAPDpgKONZ4jD/yonPLS7mwXMC4gcRePHYKyA1lGtv+ES/VfIYL0Yh8zsJvx6QjC+s+UEeQb8s7nIW5SHPOA==
+
 "@dcloudio/uni-i18n@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
   resolved "https://registry.yarnpkg.com/@dcloudio/uni-i18n/-/uni-i18n-3.0.0-alpha-3060320220917001.tgz#f571b6c25bc219749fcea00b4df89ef0e6d8da0a"
   integrity sha512-/QuZw7hqs7bimY1ZemdgS0O+IUeE7myYIsMOxyb5tjTnAdJ5u2Fsmk/oE+Max9PG/Rjlilh2Gz62MfrI0uhoYQ==
-
-"@dcloudio/uni-i18n@3.0.0-alpha-3060420220922001":
-  version "3.0.0-alpha-3060420220922001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-i18n/-/uni-i18n-3.0.0-alpha-3060420220922001.tgz#9064fff6940ab39713c73f3c6021fddf92e5cb0f"
-  integrity sha512-yLDT2YI6P6+V31e5z0Jc2Q31YBqhHUce+TkG8t9i/TI6cg/9MzG3tRLWAJxOtE27DcZIwsrSzNqjEYWSkie2jA==
 
 "@dcloudio/uni-mp-compiler@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
@@ -609,17 +609,17 @@
   dependencies:
     "@dcloudio/uni-cli-shared" "3.0.0-alpha-3060320220917001"
 
+"@dcloudio/uni-shared@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-shared/-/uni-shared-3.0.0-3060520221121001.tgz#eaa67e2d538cd9a6558f54c13bb861a06704b4d0"
+  integrity sha512-8TdhoWhRSkaWuKH2J2N8z6H12ZciZOBMc1xQj5fLk4mSzD5oOLu/rwMoKnUrA+2pj/pf0l1U8gH4hwMgKxSpmg==
+  dependencies:
+    "@vue/shared" "3.2.39"
+
 "@dcloudio/uni-shared@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
   resolved "https://registry.yarnpkg.com/@dcloudio/uni-shared/-/uni-shared-3.0.0-alpha-3060320220917001.tgz#55a2a07c897026ba4aa97b2a49c2cc936b9563a3"
   integrity sha512-6619xHUlM6ZJar2AY0gXRzWMYgW26SPZO9hhROPUFxfWlQU2Dm0h0NczTBQhbmfMgqMU1k1/E/HoZSEjWbz1wQ==
-  dependencies:
-    "@vue/shared" "3.2.39"
-
-"@dcloudio/uni-shared@3.0.0-alpha-3060420220922001":
-  version "3.0.0-alpha-3060420220922001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-shared/-/uni-shared-3.0.0-alpha-3060420220922001.tgz#17e33aa88438fd9e9afd08e774d63ad57ccd4dbb"
-  integrity sha512-OYy+yhUCfoWhScTjabXTP3GujzdIlquYn+MGlArMmh/X0CbNiPGnxEW5+0jYF8jkZRHk4KzAE3kcwCZSWwtEyA==
   dependencies:
     "@vue/shared" "3.2.39"
 
@@ -691,16 +691,16 @@
     "@dcloudio/uts-win32-ia32-msvc" "3.0.0-alpha-3060320220917001"
     "@dcloudio/uts-win32-x64-msvc" "3.0.0-alpha-3060320220917001"
 
-"@dcloudio/vite-plugin-uni@3.0.0-alpha-3060420220922001":
-  version "3.0.0-alpha-3060420220922001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/vite-plugin-uni/-/vite-plugin-uni-3.0.0-alpha-3060420220922001.tgz#3fbbad954ff3f8990820fd19b5318b5b5f6b6c0c"
-  integrity sha512-QkzjRuOiQvhpcylbSdufhugWB8mjzCiQxiWmlXlrPaZCeknf78Zlsz/ga4iSr2c6BWXhrI1/tqfuXjItWPt9EQ==
+"@dcloudio/vite-plugin-uni@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/vite-plugin-uni/-/vite-plugin-uni-3.0.0-3060520221121001.tgz#787a9b250ecd857a9a7b5eb000739cb79ab07977"
+  integrity sha512-sEBg2T5WMbYHPpFkCwk727fFX3Uisw6hoIZYJT4h6e1paT0rIOv63wGke6fflYv7T9vuEAT6ze/oYQzbF+Ks5Q==
   dependencies:
     "@babel/core" "^7.17.9"
     "@babel/plugin-syntax-import-meta" "^7.10.4"
     "@babel/plugin-transform-typescript" "^7.16.8"
-    "@dcloudio/uni-cli-shared" "3.0.0-alpha-3060420220922001"
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060420220922001"
+    "@dcloudio/uni-cli-shared" "3.0.0-3060520221121001"
+    "@dcloudio/uni-shared" "3.0.0-3060520221121001"
     "@rollup/pluginutils" "^4.2.0"
     "@vitejs/plugin-legacy" "^1.8.2"
     "@vitejs/plugin-vue" "^2.3.3"
