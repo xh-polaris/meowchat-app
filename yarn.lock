@@ -623,10 +623,10 @@
   dependencies:
     "@vue/shared" "3.2.39"
 
-"@dcloudio/uni-stacktracey@3.0.0-alpha-3060920221118001":
-  version "3.0.0-alpha-3060920221118001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-stacktracey/-/uni-stacktracey-3.0.0-alpha-3060920221118001.tgz#58c2c7afa6711739ffa11d8595c49d808664b818"
-  integrity sha512-HIruyDlT1r2ejdEI/NKxL+4sxuJro8F5pU//PkiDl6s6kww9SMilLlEg3gE20wxFJ+WGnVwqxghpxMye4PlfKg==
+"@dcloudio/uni-stacktracey@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-stacktracey/-/uni-stacktracey-3.0.0-3060520221121001.tgz#e07af46af84565e8a1dbd303257f21bb7c6ef1de"
+  integrity sha512-faNivEMjZ98ftPWArDa2mkpSUREjD8VSt95Yr020E8O40uJFkOYajIsBCBYoUtkH9YNX9PL62d6v9ryu6sEpbA==
 
 "@dcloudio/uni-stat@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
