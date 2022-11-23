@@ -484,15 +484,15 @@
     "@vue/shared" "3.2.39"
     fast-glob "^3.2.11"
 
+"@dcloudio/uni-components@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-components/-/uni-components-3.0.0-3060520221121001.tgz#ae3c4374941292222daa3e3ebd3c3b326f12eaa0"
+  integrity sha512-3x0OGXjM5OuJ/rgoQapO+6lUGbF63qetdC59AJzHFoR/BUo2rqUpfwWfkH24FPoCu4zzmfCL6VIBuNW4jCqYUg==
+
 "@dcloudio/uni-components@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
   resolved "https://registry.yarnpkg.com/@dcloudio/uni-components/-/uni-components-3.0.0-alpha-3060320220917001.tgz#77754edcfde7bb92ed8214480ed71e99872aaa40"
   integrity sha512-deGo+eVlIZtYgoPZA224eg96ML+2AZVvH8QGEgrVc6JGVuv904rP69DbqKJ09E9yjuGEjlN7Qsz5iQQiQP33Zg==
-
-"@dcloudio/uni-components@3.0.0-alpha-3060920221118001":
-  version "3.0.0-alpha-3060920221118001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-components/-/uni-components-3.0.0-alpha-3060920221118001.tgz#da5cdd036f5dc6a7bae9698b1413d04da7f84500"
-  integrity sha512-WoWpegNWy1UvHmm3xv16rFOr36b1+0LuW51qYYhvmM8L9rhgBq4J1uSrCpHTEAurtAzcVTB6D7DGgXK9b/eO3w==
 
 "@dcloudio/uni-h5-vite@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
