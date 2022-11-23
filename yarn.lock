@@ -318,25 +318,25 @@
   resolved "https://registry.yarnpkg.com/@dcloudio/types/-/types-3.0.15.tgz#ec72fadb8b276c9e35f97ff74af7cd3170301118"
   integrity sha512-3ngPB4X1Nql8OxWn3sjXgGYAB57mPnAzzmlOBv1nppYGJMD/Hn/oet1LUK72IdJKxiCU5kMBftWylDPQAx6Y7g==
 
-"@dcloudio/uni-app-plus@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-app-plus/-/uni-app-plus-3.0.0-alpha-3060320220917001.tgz#06550e56e0861b473cf7a91d738e86d517989b22"
-  integrity sha512-5nMLawpsDyCp3rL0QbepqdkhXuMylI9BHs4c03JeAr9UGjd5u7s6PqCDRtSTNEl/mqWK54byk/svRw1KsLOl/g==
+"@dcloudio/uni-app-plus@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-app-plus/-/uni-app-plus-3.0.0-3060520221121001.tgz#66a2db9bd82b8a032818ddeb999b5b00536db0d2"
+  integrity sha512-QPRuP15B0C2vyzIxsYYI2V8m0iwgaUgu1pd5cKHNr0Kv37dYRaz/JCZGO7qLSYpW5LDMMa7GNXF7fGipeafcVQ==
   dependencies:
-    "@dcloudio/uni-app-vite" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-app-vue" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-uts-vite" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-app-vite" "3.0.0-3060520221121001"
+    "@dcloudio/uni-app-vue" "3.0.0-3060520221121001"
+    "@dcloudio/uni-uts-vite" "3.0.0-3060520221121001"
 
-"@dcloudio/uni-app-vite@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-app-vite/-/uni-app-vite-3.0.0-alpha-3060320220917001.tgz#dcb591429ca264e5c6eff0aa8297738ec259f5be"
-  integrity sha512-qoEgma5Lti3wPOqt8NVoTRxF+7k06PjMBg5+7aEwvb7RhKQGM7RCfUyq+tdKpk2tX1qlxUC0Tml+jPmKvPnPAA==
+"@dcloudio/uni-app-vite@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-app-vite/-/uni-app-vite-3.0.0-3060520221121001.tgz#485b129c96f4ad95d04b863c19a23b47ad14ea6e"
+  integrity sha512-vJE3Z8fajo5IB+02yhLyLOy6YPc7yawX8DX6/FU26QpEw+1SAkB3B6ehRIFMb2Tsla5AO93Xpmar7hCQp4Cz4w==
   dependencies:
-    "@dcloudio/uni-cli-shared" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-i18n" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-nvue-styler" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uts" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-cli-shared" "3.0.0-3060520221121001"
+    "@dcloudio/uni-i18n" "3.0.0-3060520221121001"
+    "@dcloudio/uni-nvue-styler" "3.0.0-3060520221121001"
+    "@dcloudio/uni-shared" "3.0.0-3060520221121001"
+    "@dcloudio/uts" "3.0.0-3060520221121001"
     "@rollup/pluginutils" "^4.2.0"
     "@vitejs/plugin-vue" "^2.3.3"
     "@vue/compiler-dom" "3.2.39"
@@ -346,10 +346,10 @@
     picocolors "^1.0.0"
     rollup "^2.59.0"
 
-"@dcloudio/uni-app-vue@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-app-vue/-/uni-app-vue-3.0.0-alpha-3060320220917001.tgz#26a54fd07bf2b6236440d1b7ea39b90c1c52c5bc"
-  integrity sha512-gkhBP6lZt4fhvlCI4Uxi+Wu4TQkKuajjEmFfL3Guj3f9rki0qIOho8g8KkG+1RhKvDEbHoMQKZ27nXiTwd8/aw==
+"@dcloudio/uni-app-vue@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-app-vue/-/uni-app-vue-3.0.0-3060520221121001.tgz#930736f91a7eb5fedaedd496a49b008c2c0ff777"
+  integrity sha512-KtH1bRpwg0oSH97u8dFX9c6m4B/n5k92z13eImgj+zbY8Xvi3subTWhPrGqnf1JwQG5lYBsMH2OAQ4ouvgmdjg==
 
 "@dcloudio/uni-app@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
@@ -593,10 +593,10 @@
     "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
     "@vue/shared" "3.2.39"
 
-"@dcloudio/uni-nvue-styler@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-nvue-styler/-/uni-nvue-styler-3.0.0-alpha-3060320220917001.tgz#aca36819597c6389dd16790c53b391438839d41f"
-  integrity sha512-bOjdh4lqiskc2FadRP9mW8BUnJx2r2LE2IpF+E/JeXvVcWt6jEBDqDkjHzyd4y0TFxYJiP/tUY21k2bAlhheXA==
+"@dcloudio/uni-nvue-styler@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-nvue-styler/-/uni-nvue-styler-3.0.0-3060520221121001.tgz#af3b93f362f242db33bc5939fa748408aa26664a"
+  integrity sha512-c1fAFtCKfYGF4hi6rZIoxzgAp/5xM5LdK9OVgjwVnZGx4MKI2vjr1l/K1B1daO5NTSv/KFhOmQrG/8LKOt6XiQ==
   dependencies:
     "@vue/shared" "3.2.39"
     parse-css-font "^4.0.0"
@@ -642,43 +642,43 @@
   resolved "https://registry.yarnpkg.com/@dcloudio/uni-ui/-/uni-ui-1.4.22.tgz#f0f42e341275c2a9bb97757b14ef316de490fca3"
   integrity sha512-+ymdGhp+If+iZXzgf8rOQNz7mIKenTbzO9T6zkte5YC7WuBQyH4pwWpWRTpatR81XHZwJ2zES1DvJexzSS0Huw==
 
-"@dcloudio/uni-uts-vite@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-uts-vite/-/uni-uts-vite-3.0.0-alpha-3060320220917001.tgz#a67edc7f766cb74f287dc08712425542bef90074"
-  integrity sha512-TgqyWdI7sLCMHUdWwpZjMuyGub0vcSyIBQJrCjCDQ9VEZ7VeuwEUuoVXY1urh2oZc1AKTbvJZU0iY8TPcqG9EA==
+"@dcloudio/uni-uts-vite@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-uts-vite/-/uni-uts-vite-3.0.0-3060520221121001.tgz#b6b3e21a3eae93cbb57714d0fc4c6b4a9952fcd2"
+  integrity sha512-uLBfEPwcze+wYyBAAVBjsqlpM5n+Rkbmm/WsdFI1pxHdHVbfi75tHMn58KwX84rc53f5laZPeYvPNrhKopDu+Q==
   dependencies:
-    "@dcloudio/uni-cli-shared" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uts" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-cli-shared" "3.0.0-3060520221121001"
+    "@dcloudio/uni-shared" "3.0.0-3060520221121001"
+    "@dcloudio/uts" "3.0.0-3060520221121001"
     adm-zip "^0.5.9"
     execa "^5.1.1"
     fast-glob "^3.2.11"
     fs-extra "^10.0.0"
 
-"@dcloudio/uts-darwin-arm64@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uts-darwin-arm64/-/uts-darwin-arm64-3.0.0-alpha-3060320220917001.tgz#d1ca40bf99194079eb24fa01daa59cc4033bf301"
-  integrity sha512-m3wsNVpqXqJqAYEupKZj7mdeAmhqZnhruPy4gHohI0ILwI/CXJtoXCyDHwqu17qLY2VxzlaL995tZze930k7Xw==
+"@dcloudio/uts-darwin-arm64@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uts-darwin-arm64/-/uts-darwin-arm64-3.0.0-3060520221121001.tgz#3baf3a3e229e71c718405d924e95b4b86712e388"
+  integrity sha512-EckCcBlvjbeBPvdT/GzRrx1YxZS5Gsb0l4+KJK/pn9g9Br+P8t3DbGmgFuSRkcWensfRDmS6Zgl76KS037+ytQ==
 
-"@dcloudio/uts-darwin-x64@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uts-darwin-x64/-/uts-darwin-x64-3.0.0-alpha-3060320220917001.tgz#e05aef473c248a544fcb36b5072c63b564ffd541"
-  integrity sha512-IolFcqf2Kf94hyM5jNQ1rNqOz+7nlGvv7924Yaei12Z3lwdejOBbnc9U/VGWIZajzfoy5ijpyVMTUKp5fbpPsw==
+"@dcloudio/uts-darwin-x64@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uts-darwin-x64/-/uts-darwin-x64-3.0.0-3060520221121001.tgz#588ff96ac0949e499967de80d69a838366d6dcc5"
+  integrity sha512-PNcXfERoIpYJ5u5f0gQSQytXTdYUxtcRlwiALkJUshqxmmxQj5CoikmawJcL3wtrdm1R4LJZj84zyHmETTNMXw==
 
-"@dcloudio/uts-win32-ia32-msvc@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uts-win32-ia32-msvc/-/uts-win32-ia32-msvc-3.0.0-alpha-3060320220917001.tgz#d814847a1956130e02c686b14731a9f091149d64"
-  integrity sha512-vW+8ryfvuE4W7h8d2bC9/TXxgIORhenY6ASbkCGQSyoagWjINE57px/8H259gsT9UDO01VCZMeFsx1z0oSWuAg==
+"@dcloudio/uts-win32-ia32-msvc@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uts-win32-ia32-msvc/-/uts-win32-ia32-msvc-3.0.0-3060520221121001.tgz#3df1cd31efca4b7c2b8f1d6ddc764b61e0034d2a"
+  integrity sha512-EJIw39vQ0ucx7KTlD95aVUtxS8x2GPTdeYwuyyGCsn50zLADT8tyFA4X7nmyHy5iSx5Ba2Faerul0+LefXnPKw==
 
-"@dcloudio/uts-win32-x64-msvc@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uts-win32-x64-msvc/-/uts-win32-x64-msvc-3.0.0-alpha-3060320220917001.tgz#f1eca5774ee344b5009de67749aa4969be7df054"
-  integrity sha512-wabkJRny3xnLXeXYaEPXX4IlX43bBvSIdPrkO5QNyjX7r7GXdKz5hUl4PrB2z8lB2Y/CUqbdxr5JIdIFa8qZFQ==
+"@dcloudio/uts-win32-x64-msvc@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uts-win32-x64-msvc/-/uts-win32-x64-msvc-3.0.0-3060520221121001.tgz#d264c7b9901062b7da87aeb8e381e88b75659c15"
+  integrity sha512-mV07e+t/PiSipwSfRKY3IljYQU0IEd8OnOjrspRcRPsdEVYraqUIRgIZmCfS1TyjrMRP80lEctjXI3I9Axtg1Q==
 
-"@dcloudio/uts@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uts/-/uts-3.0.0-alpha-3060320220917001.tgz#95ecd4c7e64d5bea4c6b79490f522d9967af5029"
-  integrity sha512-0SXPfMihiQ37R8AAo9V5ykXyfIv2OBCruIY82XMI3uod1Bl6RzHbbFaHmQNMwv8fIvRVpepJMq/ouB5yqiC3Eg==
+"@dcloudio/uts@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uts/-/uts-3.0.0-3060520221121001.tgz#eed61823c68b143e90b261180a0e7fb273d80d11"
+  integrity sha512-K2ZExHAM2hFjWEYW+jwK1gShCOh6cUEJ46lGL1gK+5L72lY5A2SYCrLgR0nlmu6ZVUuOJ/n9GqBuki2rAF0Zkg==
   dependencies:
     cac "6.7.9"
     chokidar "^3.5.3"
@@ -686,10 +686,10 @@
     fs-extra "^10.0.0"
     picocolors "^1.0.0"
   optionalDependencies:
-    "@dcloudio/uts-darwin-arm64" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uts-darwin-x64" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uts-win32-ia32-msvc" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uts-win32-x64-msvc" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uts-darwin-arm64" "3.0.0-3060520221121001"
+    "@dcloudio/uts-darwin-x64" "3.0.0-3060520221121001"
+    "@dcloudio/uts-win32-ia32-msvc" "3.0.0-3060520221121001"
+    "@dcloudio/uts-win32-x64-msvc" "3.0.0-3060520221121001"
 
 "@dcloudio/vite-plugin-uni@3.0.0-3060520221121001":
   version "3.0.0-3060520221121001"
