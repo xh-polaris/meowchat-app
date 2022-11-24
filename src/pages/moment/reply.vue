@@ -49,17 +49,17 @@
     </view>
   </view>
 </template>
-  
+
 <script lang="ts" setup>
-import { Comment } from "@apis/moment/moment-components"
-import { reactive } from "vue";
+import { Comment } from "@/apis/moment/moment-components"
+import { reactive } from "vue"
 
-const props = defineProps<{ replies: Comment }>();
+const props = defineProps<{ replies: Comment }>()
 
-const replies = reactive(props.replies);
+const replies = reactive(props.replies)
 
 </script>
-  
+
 <style lang="scss" scoped>
 .reply-container {
   border-radius: 8% 8% 0 0;
@@ -138,7 +138,6 @@ const replies = reactive(props.replies);
       }
     }
   }
-
 
 
   .replies-box {

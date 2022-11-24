@@ -26,18 +26,6 @@
       }
     },
     {
-      "path": "pages/moment/moment-detail",
-      "style": {
-        "navigationBarTitleText": "动态详情"
-      }
-    },
-    {
-      "path": "pages/moment/reply",
-      "style": {
-        "navigationBarTitleText": "动态详情"
-      }
-    },
-    {
       "path": "pages/detail/detail",
       "style": {
         "navigationBarTitleText": "123",
