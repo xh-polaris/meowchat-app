@@ -544,53 +544,53 @@
   resolved "https://registry.yarnpkg.com/@dcloudio/uni-i18n/-/uni-i18n-3.0.0-alpha-3060320220917001.tgz#f571b6c25bc219749fcea00b4df89ef0e6d8da0a"
   integrity sha512-/QuZw7hqs7bimY1ZemdgS0O+IUeE7myYIsMOxyb5tjTnAdJ5u2Fsmk/oE+Max9PG/Rjlilh2Gz62MfrI0uhoYQ==
 
-"@dcloudio/uni-mp-compiler@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-mp-compiler/-/uni-mp-compiler-3.0.0-alpha-3060320220917001.tgz#6066f602931d487d7b9d31ffa71af1af561360a7"
-  integrity sha512-fqHBojxwfYhmeMk4Bdf4U7kmMtDqQMbn7Q08CewZRIEZnqdKKy6HTZfGomVNIi4dFyiaQHRbA2nSsyX+7AAIBQ==
+"@dcloudio/uni-mp-compiler@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-mp-compiler/-/uni-mp-compiler-3.0.0-3060520221121001.tgz#92a0e5cddd9fd8ff69730a55e3a150c4db9e11a6"
+  integrity sha512-Opru4/2s/anI+qDNZQ9sMuTCGLXwkHaqvcbahQTG/NBG5WkziNU9FINAoAx6MPTx6wO5CFTbDZucdKtnabxJ2g==
   dependencies:
     "@babel/generator" "^7.17.9"
     "@babel/parser" "^7.17.9"
     "@babel/types" "^7.17.0"
-    "@dcloudio/uni-cli-shared" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-cli-shared" "3.0.0-3060520221121001"
+    "@dcloudio/uni-shared" "3.0.0-3060520221121001"
     "@vue/compiler-core" "3.2.39"
     "@vue/compiler-dom" "3.2.39"
     "@vue/shared" "3.2.39"
     estree-walker "^2.0.2"
 
-"@dcloudio/uni-mp-vite@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-mp-vite/-/uni-mp-vite-3.0.0-alpha-3060320220917001.tgz#4613b030e5092525830b1c5d7f588d732862d7da"
-  integrity sha512-9TepMQUsyF1DxNSJjIJ2RXC/4RjrUfa6e3Z/5veo/jsCqGhUTArUJLoEoKxTf1sfSQn2hLJkYxDwR2U6sM6/JQ==
+"@dcloudio/uni-mp-vite@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-mp-vite/-/uni-mp-vite-3.0.0-3060520221121001.tgz#b70f454274cbe7fba1fc34ddcbf5b0d74709b0b8"
+  integrity sha512-OG5+Y88UrP7r/s6PET6HcjqxzDuWg0cQznSDN7A/DpMSvX17tkBGcs74Yd45DzVmZF4Kgl5Rqac7nuJQATyp/A==
   dependencies:
-    "@dcloudio/uni-cli-shared" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-i18n" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-mp-compiler" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-mp-vue" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-cli-shared" "3.0.0-3060520221121001"
+    "@dcloudio/uni-i18n" "3.0.0-3060520221121001"
+    "@dcloudio/uni-mp-compiler" "3.0.0-3060520221121001"
+    "@dcloudio/uni-mp-vue" "3.0.0-3060520221121001"
+    "@dcloudio/uni-shared" "3.0.0-3060520221121001"
     "@vue/compiler-sfc" "3.2.39"
     "@vue/shared" "3.2.39"
     debug "^4.3.3"
     magic-string "^0.26.1"
 
-"@dcloudio/uni-mp-vue@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-mp-vue/-/uni-mp-vue-3.0.0-alpha-3060320220917001.tgz#7ac1914b3c926956d8d60654f6ec1005e0d1cd8f"
-  integrity sha512-XVexK4yvklUqC0iLNGjdxz4JAoZHPf+7SEDGKPfJQ3p60PtrXHLhAUu2/2kmjXVct/cnSiXCYih/CUm5ZCtWCA==
+"@dcloudio/uni-mp-vue@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-mp-vue/-/uni-mp-vue-3.0.0-3060520221121001.tgz#89aa12a74306f652512e582ca4e1b38b7190d5ff"
+  integrity sha512-rVT4fMRSzlAqU4KxYO8C9xn2KUdUoND7b/9Yti1PBVGN/x20QmQ/7beFCjhEvKG9UsAbCKbJ2DGKiQTDMFQblA==
   dependencies:
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-shared" "3.0.0-3060520221121001"
     "@vue/shared" "3.2.39"
 
-"@dcloudio/uni-mp-weixin@3.0.0-alpha-3060320220917001":
-  version "3.0.0-alpha-3060320220917001"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-mp-weixin/-/uni-mp-weixin-3.0.0-alpha-3060320220917001.tgz#89bdab2a5032398b86023f8b553992ee9d6481e9"
-  integrity sha512-B8oPJOg/AO6y6e0eDHj5qaYwudF2wRcorC+c52uS3rV7NT2eoFZCrPVQ/V424QRWW5vikNmzMB3GJ8RzHeFjRg==
+"@dcloudio/uni-mp-weixin@3.0.0-3060520221121001":
+  version "3.0.0-3060520221121001"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-mp-weixin/-/uni-mp-weixin-3.0.0-3060520221121001.tgz#7b2e6989ea288c358fd36d86cc6410d6b99185ed"
+  integrity sha512-fYdYD0jm6AG1KD+wLaEbxC3xyZfFFrsJJP9dWPHx/KEaGgmiL5hKDjd9T+yCc1UwweO9muDbXcup3pP7SecpaQ==
   dependencies:
-    "@dcloudio/uni-cli-shared" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-mp-vite" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-mp-vue" "3.0.0-alpha-3060320220917001"
-    "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
+    "@dcloudio/uni-cli-shared" "3.0.0-3060520221121001"
+    "@dcloudio/uni-mp-vite" "3.0.0-3060520221121001"
+    "@dcloudio/uni-mp-vue" "3.0.0-3060520221121001"
+    "@dcloudio/uni-shared" "3.0.0-3060520221121001"
     "@vue/shared" "3.2.39"
 
 "@dcloudio/uni-nvue-styler@3.0.0-alpha-3060320220917001":
