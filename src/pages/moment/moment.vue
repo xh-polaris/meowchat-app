@@ -44,10 +44,10 @@
           <text @click="onClickReplies(index)">
             {{ item.reply.length }}条相关回复
           </text>
-          <image class="arrow-right" src="/static/images/arrow_right_blue.png" />
+          <image class="arrow-right" src="/static/images/arrow_right_blue.svg" />
         </view>
         <view class="like-box">
-          <image class="like-icon" src="/static/images/like.png" mode="widthFix" />
+          <image class="like-icon" src="/static/images/like.svg" mode="widthFix" />
           <text class="like-num">
             {{ item.likes }}
           </text>
@@ -58,7 +58,7 @@
     <view class="write-comment-box">
       <input class="write-comment" type="text" placeholder="发表评论...">
       <view class="like-box">
-        <image class="like-icon" src="/static/images/like.png" mode="widthFix" />
+        <image class="like-icon" src="/static/images/like.svg" mode="widthFix" />
         <view class="like-num">
           {{ post.likes }}
         </view>
@@ -285,8 +285,9 @@ function leaveReply () {
         align-items: center;
 
         .arrow-right {
-          width: 15px;
-          height: 15px;
+          margin-left: 5px;
+          width: 6px;
+          height: 10px;
         }
       }
 
@@ -299,6 +300,7 @@ function leaveReply () {
         }
 
         .like-num {
+          font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
           color: #aaa;
