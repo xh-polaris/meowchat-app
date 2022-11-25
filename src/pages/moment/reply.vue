@@ -15,7 +15,7 @@
           {{ replies.text }}
         </view>
         <view class="like-box">
-          <image src="/static/images/like.png" class="like-icon" mode="widthFix" />
+          <image src="/static/images/like.svg" class="like-icon" mode="widthFix" />
           <text class="like-num">
             {{ replies.likes }}
           </text>
@@ -39,7 +39,7 @@
             {{ item.text }}
           </view>
           <view class="like-box">
-            <image src="/static/images/like.png" class="like-icon" mode="widthFix" />
+            <image src="/static/images/like.svg" class="like-icon" mode="widthFix" />
             <text class="like-num">
               {{ item.likes }}
             </text>
@@ -129,7 +129,7 @@ const replies = reactive(props.replies)
 
         .like-num {
           width: 40px;
-          font-size: 12px;
+          font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -207,7 +207,7 @@ const replies = reactive(props.replies)
 
           .like-num {
             width: 40px;
-            font-size: 12px;
+            font-size: 14px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
