@@ -30,12 +30,15 @@
 import { reactive } from "vue"
 import Masonry from "@/pages/community/masonry"
 import Carousel from "@/pages/community/carousel"
+import { onReachBottom } from "@dcloudio/uni-app";
 
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
   No: 0
 })
+
+onReachBottom(() => {}) //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
 
 </script>
 
