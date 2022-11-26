@@ -34,12 +34,13 @@
 import { reactive } from "vue"
 import { getMomentPreviews, MomentPreview } from "@/apis/community/community"
 import { onClickMoment } from "@/pages/community/event"
+import { onReachBottom } from "@dcloudio/uni-app";
 
 const isLeftTallerThanRight = () => {
   try {
     let leftHeight = 0, rightHeight = 0
     uni.createSelectorQuery().in(this).select(".column-left").boundingClientRect(rect => {
-      console.log(rect)
+      // console.log(rect)
       const info = rect as UniNamespace.NodeInfo
       leftHeight = info.height as number
     }).exec()
@@ -56,6 +57,10 @@ const isLeftTallerThanRight = () => {
 
 const leftMoments = reactive<MomentPreview[]>([])
 const rightMoments = reactive<MomentPreview[]>([])
+
+onReachBottom(() => {
+  onMasonryReachBottom()
+})
 
 const onMasonryReachBottom = () => {
   if (isBatchLoaded) {
