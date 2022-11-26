@@ -30,23 +30,12 @@
 import { reactive } from "vue"
 import Masonry from "@/pages/community/masonry"
 import Carousel from "@/pages/community/carousel"
-import { getNews, News } from "@/apis/community/community"
-import { onClickCarousel } from "@/pages/community/event"
-import { onReachBottom } from "@dcloudio/uni-app"
 
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
   No: 0
 })
-
-const news = reactive<News[]>([])
-getNews().then(res => {
-  news.push(...res.news)
-})
-
-onReachBottom(() => {
-}) //哪怕是空的 父组件也得有这个 才能让子组件的onReachBottom生效
 
 </script>
 
