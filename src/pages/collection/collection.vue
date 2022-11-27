@@ -2,7 +2,7 @@
   <view class="content">
     <!-- 搜索框 -->
     <view class="search-bar">
-      <view class="search-bar-box">
+      <view class="search-bar-box" @click="onClickSearch">
         <input
           type="text" value=""
           placeholder="搜索猫咪"
@@ -26,16 +26,16 @@
 </template>
 
 <script lang="ts" setup>
-import CatBox from "@/pages/collection/cat-box"
-import { reactive } from "vue"
-import { CatPreview } from "@/apis/community/community-components"
-import { onClickCatBox } from "@/pages/collection/event"
-import { getCatPreviews } from "@/apis/community/community"
+import CatBox from "@/pages/collection/cat-box";
+import {reactive} from "vue";
+import {CatPreview} from "@/apis/community/community-components";
+import {onClickCatBox, onClickSearch} from "@/pages/collection/event";
+import {getCatPreviews} from "@/apis/community/community";
 
-const cats = reactive<CatPreview[]>([])
+const cats = reactive<CatPreview[]>([]);
 getCatPreviews().then(res => {
-  cats.push(...res.cats)
-})
+  cats.push(...res.cats);
+});
 
 </script>
 
