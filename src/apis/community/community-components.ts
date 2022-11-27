@@ -63,31 +63,33 @@ export interface GetMomentPreviewsResp {
    * 状态码
    */
   code: number;
-  moments: MomentPreview[];
+  moments: Moment[];
   /**
    * 错误信息
    */
   msg: string;
 }
 
-/**
- * MomentPreview
- */
-export interface MomentPreview {
+export interface Moment {
   /**
    * 是否以某猫咪身份发布
    */
   catId?: string;
-  /**
-   * 封面
-   */
-  coverUrl: string;
   createAt: string;
   id: string;
+  /**
+   * 第一张做封面
+   */
+  imageUrls: string[];
+  /**
+   * 文本
+   */
+  text: string;
   /**
    * 标题
    */
   title: string;
+  updateAt: string;
   /**
    * 发布用户预览
    */
