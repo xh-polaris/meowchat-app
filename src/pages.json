@@ -58,6 +58,12 @@
           }
         }
       }
+    },
+    {
+      "path": "pages/draft/draft",
+      "style": {
+        "navigationBarTitleText": "发动态"
+      }
     }
   ],
   "globalStyle": {
