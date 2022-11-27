@@ -4,7 +4,7 @@
       <block v-for="moment in i===1?leftMoments:rightMoments" :key="moment.id">
         <view class="tile" @click="onClickMoment(moment.id)">
           <image
-            mode="widthFix" :src="moment.coverUrl"
+            mode="widthFix" :src="moment.imageUrls[0]"
             class="img"
             @load.once="onLoad"
           />
@@ -32,7 +32,7 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue"
-import { getMomentPreviews, MomentPreview } from "@/apis/community/community"
+import { getMomentPreviews, Moment } from "@/apis/community/community"
 import { onClickMoment } from "@/pages/community/event"
 import { onReachBottom } from "@dcloudio/uni-app";
 
@@ -55,8 +55,8 @@ const isLeftTallerThanRight = () => {
   }
 }
 
-const leftMoments = reactive<MomentPreview[]>([])
-const rightMoments = reactive<MomentPreview[]>([])
+const leftMoments = reactive<Moment[]>([])
+const rightMoments = reactive<Moment[]>([])
 
 onReachBottom(() => {
   onMasonryReachBottom()
@@ -108,7 +108,7 @@ const addTile = (tileIndex: number, side: string) => {
   }
 }
 
-let moments: MomentPreview[]
+let moments: Moment[]
 
 const addBatch = async () => {
   moments = (await getMomentPreviews()).moments
