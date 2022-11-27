@@ -11,7 +11,7 @@
         <text>桥遇</text>
       </view>
       <progress
-        :percent="73" :stroke-width="10"
+        :percent="percent" :stroke-width="10"
         backgroundColor="#F5F5F5" border-radius="6px"
       />
       <view class="text-box2">
@@ -78,7 +78,7 @@
 
 <script lang="ts" setup>
 
-let percent: 73;
+let percent = 73;
 
 
 const props = defineProps<{
