@@ -32,6 +32,12 @@
       }
     },
     {
+      "path": "pages/world/postDetail/postDetail",
+      "style": {
+        "navigationBarTitleText": "帖子详情"
+      }
+    },
+    {
       "path": "pages/detail/detail",
       "style": {
         "navigationBarTitleText": "123",

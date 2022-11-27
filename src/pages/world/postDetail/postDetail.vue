@@ -1,0 +1,256 @@
+<template>
+  <view class="header">
+    <view class="title">
+      {{ post.title }}
+    </view>
+    <view class="head-info">
+      {{ post.createTime }} ·{{ post.commentsNum }}条回复
+    </view>
+    <view class="tags">
+      <image class="tagIcon" src="/static/images/tag.png" />
+      <view v-for="(item, index) in post.tags" :key="index" class="tag">
+        {{ item.tagName }}
+      </view>
+    </view>
+  </view>
+
+  <view class="post">
+    <view class="user">
+      <image :src="post.user.avatar" class="avatar" />
+      <view class="name">
+        {{ post.user.name }}
+      </view>
+    </view>
+    <view class="text">
+      {{ post.text }}
+    </view>
+    <view style="height:100px" />
+  </view>
+  <view class="write-comment-box">
+    <input class="write-comment" placeholder="发表评论..." type="text">
+    <view class="like-box">
+      <image class="like-icon" mode="widthFix" src="/static/images/like.svg" />
+      <view class="like-num">
+        {{ post.likes }}
+      </view>
+    </view>
+    <view class="send-comment-btn">
+      发布
+    </view>
+  </view>
+</template>
+<script setup>
+import {ref} from "vue";
+
+const post = ref({
+  id: "111",
+  title: "如何应对校园流浪猫",
+  createTime: "2022-10-31",
+  commentsNum: 23,
+  tags: [
+    {tagName: "流浪猫"},
+    {tagName: "新手"}
+  ],
+  isAnonymous: true,
+  user: {
+    avatar: "https://static.xhpolaris.com/cat_world.jpg",
+    name: "111"
+  },
+  text: "首先针对回答说几点:\n" +
+      "①别见猫就撸\n" +
+      "  猫没那么可怕，但是每只猫的性格不一样，有的温顺有的易怒。对于接触一只流浪猫，最好还是先给吃的，不摸。多给几次，每天给，等猫咪对你有了信任，有了安全感，再去撸猫，别说背，(*~3)心肚子轻而易举就摸到啦~\n" +
+      "就像我们校园，有只小花猫，不对，这只大花猫(具体原因看后文)就比较温顺，见谁让谁撸;但还有只橘猫就不一样了，平时也不发脾气，但要逼他做自己不喜欢的事，就开始上爪了……无比锋利的爪子(x_x)……不愧是公的。\n" +
+      "\n" +
+      "2结孔\n" +
+      " 很多回合里有提到结孔。这的确是一个好的措施，只是对于校园里的学生来说，没几个人有能力花钱给猫咪结扎，可能有钱的没爱心，可能有爱心的没钱，我就属于后者吧……学校对于流浪动物有不给予保护。因此，只能说，可以靠学生自己组织小团体专门为流浪猫狗结扎，但估计只能是一个公益项目了。\n" +
+      "\n" +
+      "③能喂就喂别乱喂\n" +
+      "  曾经我为了校园里的童鞋们不爱心泛滥乱投食，在表白墙上发过一篇注意事项，解释了猫不能吃的种种东西。有些东西对猫咪是致命的，有些虽不致命，但也是对身体有害，人体需要的营养猫咪不一定需要。因此，希望每个人在要喂猫咪之前先想想自己喂的东西，对猫咪有没有好处。\n" +
+      "\n" +
+      "④喜欢请善待，不喜勿伤害\n" +
+      "  很多流浪猫狗对人类持以戒心，原因大家心知肚明，总是有些内心不正常的人对流浪猫狗施以残忍的虐待，才让许多流浪动物们不敢接近人类。好好善待他们，让他们感受一份温暖。他们也是生命，世界不仅仅属于人类，也有它们的一份!\n" +
+      "\n" +
+      "⑤不要对他们带有偏见\n" +
+      "  许多人觉得猫咪不好，特别是流浪猫。平时它们也被我们叫一个很难听的名字:\"野猫子\"，说不要招惹野猫\n" +
+      "子。尤其有些人对于黑猫，是更觉得不好的。但是恰恰相反，就算是迷信，黑猫也是吉祥之物。当然，不迷信最好。\n" +
+      "匿名用户 知乎 \n" +
+      "\n" +
+      "应如何对待校园里的流浪猫?长按识别二维码阅读全文",
+  likes: 123
+});
+
+</script>
+
+<style lang="scss" scoped>
+$headerHeight: 113px;
+$headerPadding: 21px;
+
+.header {
+  padding: $headerPadding $headerPadding 15px;
+  border-bottom: #c0c0c0 1px solid;
+
+  .title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 142% */
+
+    letter-spacing: 1px;
+  }
+
+  .head-info {
+    margin-top: 5px;
+    display: flex;
+    align-items: baseline;
+    font-size: 12px;
+    line-height: 17px;
+    /* or 142% */
+
+    letter-spacing: 0.5px;
+
+    /* grey03 */
+
+    color: #B8B8B8;
+  }
+
+  .tags {
+    display: flex;
+    color: #1FA1FF;
+    height: 21px;
+    line-height: 18px;
+    margin-top: 5px;
+
+    .tagIcon {
+      width: 23px;
+      height: 21px;
+      margin-right: 10px;
+    }
+
+    .tag {
+      margin-top: 3px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 17px;
+      /* or 170% */
+      text-align: center;
+      letter-spacing: 0.5px;
+      /* blue02 */
+      color: #1FA1FF;
+
+      min-width: 28px;
+      padding: 0 6px;
+      border: #1FA1FF 1px solid;
+      border-radius: 9px;
+      margin-right: 8px;
+    }
+  }
+}
+
+$postPadding: 15px 27px 0 21px;
+.post {
+  padding: $postPadding;
+
+  .user {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .avatar {
+      width: 60rpx;
+      height: 60rpx;
+      max-width: 35px;
+      max-height: 35px;
+      min-width: 27px;
+      min-height: 27px;
+
+      margin-right: 9px;
+      border-radius: 50%;
+    }
+
+    .name {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      /* or 121% */
+
+      letter-spacing: 0.5px;
+
+      /* darkgrey02 */
+
+      color: #353535;
+    }
+  }
+
+  .text {
+    white-space: pre-line;
+    font-size: 14px;
+    line-height: 22px;
+    /* or 157% */
+
+    /* darkgrey02 */
+    color: #353535;
+  }
+}
+
+.write-comment-box {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 -1px 2px #eee;
+  padding: 10px;
+
+  .write-comment {
+    width: 64%;
+    height: 36px;
+    background-color: #fafafa;
+    border-radius: 35rpx;
+    padding-left: 30rpx;
+    margin-right: 12px;
+
+    .uni-input-placeholder {
+      color: #d1d1d1;
+    }
+  }
+
+  .like-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 12px;
+
+    .like-icon {
+      width: 22px;
+    }
+
+    .like-num {
+      max-width: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px;
+      color: #c8c8c8;
+    }
+  }
+
+  .send-comment-btn {
+    background-color: #63bdff;
+    border-radius: 39rpx;
+    width: 132rpx;
+    padding: 0 10rpx;
+    line-height: 35px;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+  }
+
+}
+</style>
