@@ -96,14 +96,14 @@ const addBatch = async () => {
   }
 }
 
-const onLoadLeft = (ev: { target: any; }) => {
-  leftHeight = ev.target.offsetTop + (ev.target?.offsetHeight ? ev.target.offsetHeight : 0)
-  console.log("leftHeight " + leftHeight)
+const onLoadLeft = (ev: Event) => {
+  const target = ev.target as HTMLImageElement
+  leftHeight = target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0)
   onLoad()
 }
-const onLoadRight = (ev: { target: any; }) => {
-  rightHeight = ev.target.offsetTop + (ev.target?.offsetHeight ? ev.target.offsetHeight : 0)
-  console.log("rightHeight " + rightHeight)
+const onLoadRight = (ev: Event) => {
+  const target = ev.target as HTMLImageElement
+  rightHeight = target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0)
   onLoad()
 }
 
