@@ -4,9 +4,16 @@
       <block v-for="moment in i===1?leftMoments:rightMoments" :key="moment.id">
         <view class="tile" @click="onClickMoment(moment.id)">
           <image
-            mode="widthFix" :src="moment.imageUrls[0]"
-            class="img"
-            @load.once="onLoad"
+            v-if="i === 1"
+            :src="moment.imageUrls[0]" class="img"
+            mode="widthFix"
+            @load.once="onLoadLeft"
+          />
+          <image
+            v-else
+            :src="moment.imageUrls[0]" class="img"
+            mode="widthFix"
+            @load.once="onLoadRight"
           />
           <view class="tile-info">
             <view class="title">
@@ -36,38 +43,9 @@ import { getMomentPreviews, Moment } from "@/apis/community/community"
 import { onClickMoment } from "@/pages/community/event"
 import { onReachBottom } from "@dcloudio/uni-app";
 
-const isLeftTallerThanRight = () => {
-  try {
-    let leftHeight = 0, rightHeight = 0
-    uni.createSelectorQuery().in(this).select(".column-left").boundingClientRect(rect => {
-      // console.log(rect)
-      const info = rect as UniNamespace.NodeInfo
-      leftHeight = info.height as number
-    }).exec()
-    uni.createSelectorQuery().in(this).select(".column-right").boundingClientRect(rect => {
-      const info = rect as UniNamespace.NodeInfo
-      rightHeight = info.height as number
-    }).exec()
-    return leftHeight > rightHeight
-  } catch (e) {
-    console.log(e)
-    return false
-  }
-}
-
+let moments: Moment[]
 const leftMoments = reactive<Moment[]>([])
 const rightMoments = reactive<Moment[]>([])
-
-onReachBottom(() => {
-  onMasonryReachBottom()
-})
-
-const onMasonryReachBottom = () => {
-  if (isBatchLoaded) {
-    isBatchLoaded = false
-    addBatch()
-  }
-}
 
 const batchLoadingAmount = 20
 const firstLoadingAmount = 16
@@ -76,6 +54,58 @@ const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount
 let index = 0
 let loadedAmount = 0
 let isBatchLoaded = false
+/*
+* 大致逻辑：
+* batch是每一批加上去的moment，分为first和second
+* first是左边n个右边n个直接放
+* first放上去但图片还没加载完，放的那些图片加载完毕时触发来放second的东西
+*
+* 具体步骤：batch 20, first 16, second 4
+* 最开始index=0, loadedAmount=0, isBatchLoaded=true
+* 这时addBatch()，moments变成新的20个moments
+* 放first，左边8个右边8个，每放一个就加一下index，很快index加到16
+* 具体每一个放上去调用的是addTile()
+* 这些放上去的tile在图片加载出来时都会触发公共的onLoad()函数
+* onLoad()函数每次都会把isBatchLoaded变成false，同时loadedAmount+1
+* 当loadedAmount达到第一批的量，又还没达到第二批的量时，就开始把剩下的moment加上去
+* 第16个tile加载好了，才触发放第17个；第17个加载好后，才触发第18个……直到第二批放完
+* 第二次每次放的时候都会判断之前左右高低情况
+* 所有的moment都放完后，又初始化为index=0, loadedAmount=0, isBatchLoaded=true
+* */
+
+let leftHeight: number, rightHeight: number
+
+const isLeftTallerThanRight = () => {
+  return leftHeight > rightHeight
+}
+
+onReachBottom(() => {
+  if (isBatchLoaded) {
+    isBatchLoaded = false
+    addBatch()
+  }
+})
+
+const addBatch = async () => {
+  moments = (await getMomentPreviews()).moments
+  for (let i = 0; i < firstLoadingAmount / 2; i++) {
+    addTile(index, "left")
+    index += 1
+    addTile(index, "right")
+    index += 1
+  }
+}
+
+const onLoadLeft = (ev: { target: any; }) => {
+  leftHeight = ev.target.offsetTop + (ev.target?.offsetHeight ? ev.target.offsetHeight : 0)
+  console.log("leftHeight " + leftHeight)
+  onLoad()
+}
+const onLoadRight = (ev: { target: any; }) => {
+  rightHeight = ev.target.offsetTop + (ev.target?.offsetHeight ? ev.target.offsetHeight : 0)
+  console.log("rightHeight " + rightHeight)
+  onLoad()
+}
 
 const onLoad = () => {
   isBatchLoaded = false
@@ -94,7 +124,6 @@ const onLoad = () => {
 
 const addTile = (tileIndex: number, side: string) => {
   const tile = moments[tileIndex]
-
   if (side === "left") {
     leftMoments.push(tile)
   } else if (side === "right") {
@@ -108,20 +137,7 @@ const addTile = (tileIndex: number, side: string) => {
   }
 }
 
-let moments: Moment[]
-
-const addBatch = async () => {
-  moments = (await getMomentPreviews()).moments
-  for (let i = 0; i < firstLoadingAmount / 2; i++) {
-    addTile(index, "left")
-    index += 1
-    addTile(index, "right")
-    index += 1
-  }
-}
-
 addBatch()
-
 
 </script>
 
@@ -207,13 +223,9 @@ $avatarWidth: calc(21 / 390 * 100vw);
 
 }
 
-.debug {
-  position: absolute;
-  color: gold;
-  transform: translateY(-12vw);
-  font-family: sans-serif;
-  font-size: 10vw;
-  z-index: 100
+.get-dom {
+  width: 1px;
+  height: 1px;
 }
 
 
