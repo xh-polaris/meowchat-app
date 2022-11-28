@@ -1,27 +1,29 @@
 <template>
-  <view class="carousel-background" />
-  <view class="slides" @touchstart="touchStart" @touchmove="touchEnd">
-    <view :class="slidesStyle[0]">
-      {{ displayContents[0] }}
+  <view class="carousel">
+    <view class="carousel-background" />
+    <view class="slides" @touchmove="touchEnd" @touchstart="touchStart">
+      <view :class="slidesStyle[0]">
+        {{ displayContents[0] }}
+      </view>
+      <view :class="slidesStyle[1]">
+        {{ displayContents[1] }}
+      </view>
+      <view :class="slidesStyle[2]">
+        {{ displayContents[2] }}
+      </view>
+      <view :class="slidesStyle[3]">
+        {{ displayContents[3] }}
+      </view>
+      <view :class="slidesStyle[4]">
+        {{ displayContents[4] }}
+      </view>
     </view>
-    <view :class="slidesStyle[1]">
-      {{ displayContents[1] }}
+    <view class="pagination-dots">
+      <view
+        v-for="(content, index) in contents"
+        :key="index" :class="'pagination-dot ' + (index === currentContent ? 'current' : '')"
+      />
     </view>
-    <view :class="slidesStyle[2]">
-      {{ displayContents[2] }}
-    </view>
-    <view :class="slidesStyle[3]">
-      {{ displayContents[3] }}
-    </view>
-    <view :class="slidesStyle[4]">
-      {{ displayContents[4] }}
-    </view>
-  </view>
-  <view class="pagination-dots">
-    <view
-      v-for="(content, index) in contents"
-      :key="index" :class="'pagination-dot ' + (index === currentContent ? 'current' : '')"
-    />
   </view>
 </template>
 
@@ -61,11 +63,11 @@ const displayContents = [
 let touchStartX
 let isSlidesMoving = false
 
-function touchStart (ev) {
+function touchStart(ev) {
   touchStartX = ev.touches[0].clientX
 }
 
-function touchEnd (ev) {
+function touchEnd(ev) {
   if (!isSlidesMoving) {
     if (ev.touches[0].clientX - touchStartX > 30) {
       isSlidesMoving = true
@@ -88,7 +90,7 @@ const slidesStyle = reactive([
   "slide slide-rightest"
 ])
 
-function leftward () {
+function leftward() {
   const index = (currentSlide.value + 1) % 5
   slidesStyle[(index + 3) % 5] = "slide slide-leftest"
   slidesStyle[(index + 4) % 5] = "slide slide-left"
@@ -100,7 +102,7 @@ function leftward () {
   displayContents[(index + 2) % 5] = contents[(currentContent.value + contents.length + 2) % contents.length].id
 }
 
-function rightward () {
+function rightward() {
   const index = (currentSlide.value + 4) % 5
   slidesStyle[(index + 3) % 5] = "slide slide-leftest"
   slidesStyle[(index + 4) % 5] = "slide slide-left"
@@ -131,6 +133,10 @@ $paginationCapsuleWidth: calc(15 / 390 * 100vw);
 
 $transitionDuration: 1s;
 $backgroundColor: #F5F5F5;
+
+.carousel {
+  overflow-x: hidden;
+}
 
 .slides {
   display: flex;
