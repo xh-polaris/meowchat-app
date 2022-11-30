@@ -12,9 +12,11 @@
     </view>
     <view class="school-select-box">
       <view class="navbar">
-        <button v-for="item in school.campuses" :key="item" :class="'navbtn '+(currentNavBtn===item?'current':'')">
+        <view @click="setBranch(item)" v-for="item in school.campuses"
+                :key="item"
+                :class="'navbtn '+(currentNavBtn===item?'current':'')">
           {{ item }}
-        </button>
+        </view>
       </view>
     </view>
   </view>
@@ -40,6 +42,10 @@ const school = reactive({
 })
 
 const currentNavBtn = ref("中北校区")
+
+function setBranch(e: string) {
+  currentNavBtn.value = e
+}
 
 onReachBottom(() => {}) //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
 
@@ -67,6 +73,7 @@ onReachBottom(() => {}) //这里的空的onReachBottom别删！！！有了这�
   &.current {
     color: #FFFFFF;
     background-color: #1FA1FF;
+    padding: 5px;
     border-radius: 1em 1em;
     font-size: calc(10 / 390 * 100vw);
     font-weight: bold;
