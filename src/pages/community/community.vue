@@ -11,12 +11,15 @@
       </view>
     </view>
     <view class="school-select-box">
-      <view v-for="item in school.campuses" :key="item">
-        {{ item }}
+      <view class="navbar">
+        <view @click="setBranch(item)" v-for="item in school.campuses"
+                :key="item"
+                :class="'navbtn '+(currentNavBtn===item?'current':'')">
+          {{ item }}
+        </view>
       </view>
     </view>
   </view>
-
   <view>
     <carousel />
   </view>
@@ -27,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue"
+import { reactive, ref } from "vue"
 import Masonry from "@/pages/community/masonry"
 import Carousel from "@/pages/community/carousel"
 import { onReachBottom } from "@dcloudio/uni-app";
@@ -38,11 +41,45 @@ const school = reactive({
   No: 0
 })
 
+const currentNavBtn = ref("中北校区")
+
+function setBranch(e: string) {
+  currentNavBtn.value = e
+}
+
 onReachBottom(() => {}) //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
 
 </script>
 
 <style lang="scss" scoped>
+.navbar {
+  position: fixed;
+  background-color: #FAFCFF;
+  display: flex;
+  color: #B8B8B8;
+  font-size: calc(13 / 390 * 100vw);
+  align-items: baseline;
+  width: 100vw;
+  padding-top: calc(2 / 390 * 100vw);
+  padding-bottom: calc(16 / 390 * 100vw);
+  transition-duration: 0.4s;
+}
+
+.navbtn {
+  color: #939393;
+  font-size: calc(10 / 390 * 100vw);
+  margin: 0 calc(10 / 390 * 100vw);
+
+  &.current {
+    color: #FFFFFF;
+    background-color: #1FA1FF;
+    padding: 5px;
+    border-radius: 1em 1em;
+    font-size: calc(10 / 390 * 100vw);
+    font-weight: bold;
+  }
+}
+
 .switch-box {
   margin-left: auto;
 }
