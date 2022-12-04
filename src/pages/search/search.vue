@@ -43,6 +43,7 @@
 import {onClickCancel} from "@/pages/collection/event";
 import {reactive} from "vue";
 
+
 const data = reactive({
   show: true,
   hisList: ["123", "ddd"] as any
@@ -50,10 +51,20 @@ const data = reactive({
 
 //let show = true;
 //let hisList = ["Google", "Runoob", "Taobao"];
-
+try {
+  const res = uni.getStorageInfoSync();
+  console.log(res.keys);
+ 
+} catch (e) {
+  // error
+}
 
 function changevalue(e: any) {
-
+  try {
+    uni.setStorageSync("storage_key", "e.target.value");
+  } catch (e) {
+    // error
+  }
   data.hisList.push(e.target.value);
   // 获取到输入框的值
   console.log(data.hisList);

@@ -11,11 +11,11 @@
         <text>桥遇</text>
       </view>
       <progress
-        :percent="percent" :stroke-width="10"
+        :percent="data.percent" :stroke-width="10"
         backgroundColor="#F5F5F5" border-radius="6px"
       />
       <view class="text-box2">
-        <text>{{ percent }}人气值</text>
+        <text>{{ data.percent }}人气值</text>
       </view>
     </view>
     <view class="info">
@@ -70,15 +70,64 @@
         </view>
       </view>
     </view>
-    <view class="dd">
-      撸猫指南：胆小怕生
+    <view class="divider" />
+    <view class="photo">
+      <text>
+        猫片(99+)
+      </text>
+      <view class="dd">
+        撸猫指南：胆小怕生
+      </view>
+      <view class="imgs">
+        <text>
+          11月
+        </text>
+        <view class="qz_imgs qz_imgs3 clearfix">
+          <view :v-for="index in data.num">
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+          </view>
+        </view>
+      </view>
+      <view class="imgs">
+        <text>
+          11月
+        </text>
+        <view class="qz_imgs qz_imgs3 clearfix">
+          <view :v-for="index in data.num">
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+          </view>
+        </view>
+      </view>
+      <view class="imgs">
+        <text>
+          11月
+        </text>
+        <view class="qz_imgs qz_imgs3 clearfix">
+          <view :v-for="index in data.num">
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
+import {reactive} from "vue";
 
-let percent = 73;
+const data = reactive({
+  percent: 73,
+  num: 5
+});
 
 
 const props = defineProps<{
@@ -154,14 +203,66 @@ const props = defineProps<{
   }
 }
 
-.dd {
-  border-radius: 6px !important;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50rpx;
-  width: 90%;
-  height: 60rpx;
-  color: white;
-  background: linear-gradient(90deg, #06abf3, white);
+.divider {
+  background: #E0E3DA;
+  width: 100%;
+  height: 10rpx;
+  margin-top: 30rpx;
 }
+
+.photo {
+  margin-top: 50rpx;
+
+  text {
+    color: #212223;
+    font-size: 50rpx;
+    margin-left: 20rpx;
+
+  }
+
+  .dd {
+    border-radius: 6px !important;
+    margin-left: 20rpx;
+    margin-right: auto;
+    margin-top: 40rpx;
+    width: 90%;
+    height: 60rpx;
+    color: white;
+    background: linear-gradient(90deg, #0688f3, white);
+  }
+
+  .imgs {
+    margin-top: 40rpx;
+
+    text {
+      color: #212223;
+      font-size: 30rpx;
+      margin-left: 20rpx;
+
+    }
+
+    .qz_imgs {
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      // justify-content: space-between;
+      // flex-wrap: wrap;
+      &.qz_imgs3 {
+        image {
+          width: 212rpx;
+          height: 212rpx;
+          object-fit: cover;
+          border-radius: 3px;
+          float: left;
+          margin: 5px;
+        }
+      }
+
+
+    }
+  }
+
+}
+
+
 </style>
