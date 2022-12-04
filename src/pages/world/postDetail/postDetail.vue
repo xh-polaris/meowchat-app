@@ -74,6 +74,7 @@
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
 import {enterMask, enterReply} from "../../moment/event";
+import Reply from "@/pages/moment/reply";
 
 const post = ref({
   id: "111",
@@ -433,5 +434,25 @@ $postPadding: 15px 27px 0 21px;
     color: #fff;
   }
 
+}
+
+.reply-mask {
+  position: fixed;
+  z-index: 20;
+  width: 0;
+  height: 0;
+  background-color: #000;
+  opacity: 0;
+}
+
+.more-reply {
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  height: 0rpx;
+  bottom: 56px;
+  opacity: 1;
+  overflow-y: scroll;
 }
 </style>
