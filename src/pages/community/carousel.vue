@@ -2,21 +2,12 @@
   <view class="carousel">
     <view class="carousel-background" />
     <view class="slides" @touchmove="touchEnd" @touchstart="touchStart">
-      <view :class="slidesStyle[0]">
-        {{ displayContents[0] }}
-      </view>
-      <view :class="slidesStyle[1]">
-        {{ displayContents[1] }}
-      </view>
-      <view :class="slidesStyle[2]">
-        {{ displayContents[2] }}
-      </view>
-      <view :class="slidesStyle[3]">
-        {{ displayContents[3] }}
-      </view>
-      <view :class="slidesStyle[4]">
-        {{ displayContents[4] }}
-      </view>
+      <block v-for="i in 5" :key="i">
+        <view
+          :class="slidesStyle[i-1]"
+          :style="{backgroundImage: 'url('+displayContents[i-1].imageUrl+')'}"
+        />
+      </block>
     </view>
     <view class="pagination-dots">
       <view
@@ -31,34 +22,40 @@
 
 import { reactive, ref } from "vue"
 
-const contents = [
-  {
-    id: 1
-  }, {
-    id: 2
-  }, {
-    id: 3
-  }, {
-    id: 4
-  }, {
-    id: 5
-  }, {
-    id: 6
-  }, {
-    id: 7
-  }, {
-    id: 8
-  },
-]
+const props = defineProps({
+  contents: {
+    type: Array,
+    default() {
+      return [
+        {
+          id: 1,
+          imageUrl: "",
+          linkUrl: "",
+        }, {
+          id: 2,
+          imageUrl: "",
+          linkUrl: "",
+        }, {
+          id: 3,
+          imageUrl: "",
+          linkUrl: "",
+        }
+      ]
+    }
+  }
+})
+
+// eslint-disable-next-line vue/no-setup-props-destructure
+const contents = props.contents
 
 const currentContent = ref(0)
-const displayContents = [
-  contents[(currentContent.value + contents.length - 2) % contents.length].id,
-  contents[(currentContent.value + contents.length - 1) % contents.length].id,
-  contents[currentContent.value].id,
-  contents[(currentContent.value + 1) % contents.length].id,
-  contents[(currentContent.value + 2) % contents.length].id,
-]
+const displayContents = reactive([
+  contents[(currentContent.value + contents.length - 2) % contents.length],
+  contents[(currentContent.value + contents.length - 1) % contents.length],
+  contents[currentContent.value],
+  contents[(currentContent.value + 1) % contents.length],
+  contents[(currentContent.value + 2) % contents.length],
+])
 
 let touchStartX
 let isSlidesMoving = false
@@ -99,7 +96,7 @@ function leftward() {
   slidesStyle[(index + 2) % 5] = "slide slide-rightest"
   currentSlide.value = index
   currentContent.value = (currentContent.value + 1) % contents.length
-  displayContents[(index + 2) % 5] = contents[(currentContent.value + contents.length + 2) % contents.length].id
+  displayContents[(index + 2) % 5] = contents[(currentContent.value + contents.length + 2) % contents.length]
 }
 
 function rightward() {
@@ -111,7 +108,7 @@ function rightward() {
   slidesStyle[(index + 2) % 5] = "slide slide-rightest"
   currentSlide.value = index
   currentContent.value = (currentContent.value - 1 + contents.length) % contents.length
-  displayContents[(index + 3) % 5] = contents[(currentContent.value + contents.length - 2) % contents.length].id
+  displayContents[(index + 3) % 5] = contents[(currentContent.value + contents.length - 2) % contents.length]
 }
 
 const currentSlide = ref(2)
@@ -149,7 +146,8 @@ $backgroundColor: #F5F5F5;
   text-align: center;
   line-height: $slideHeightLarge;
 
-  background-color: #E5E9EE;
+  //background-color: #E5E9EE;
+  background-size: 100% 100%;
   position: absolute;
   width: $slideWidthSmall;
   height: $slideHeightSmall;

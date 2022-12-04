@@ -12,16 +12,18 @@
     </view>
     <view class="school-select-box">
       <view class="navbar">
-        <view @click="setBranch(item)" v-for="item in school.campuses"
-                :key="item"
-                :class="'navbtn '+(currentNavBtn===item?'current':'')">
+        <view
+          v-for="item in school.campuses" :key="item"
+          :class="'navbtn '+(currentNavBtn===item?'current':'')"
+          @click="setBranch(item)"
+        >
           {{ item }}
         </view>
       </view>
     </view>
   </view>
   <view>
-    <carousel />
+    <carousel v-if="isCarouselInitialized" :contents="carouselContents" />
   </view>
 
   <view style="margin-top:10px">
@@ -34,6 +36,8 @@ import { reactive, ref } from "vue"
 import Masonry from "@/pages/community/masonry"
 import Carousel from "@/pages/community/carousel"
 import { onReachBottom } from "@dcloudio/uni-app";
+import { News } from "@/apis/community/community-components";
+import { getNews } from "@/apis/community/community";
 
 const school = reactive({
   name: "华东师范大学",
@@ -47,7 +51,26 @@ function setBranch(e: string) {
   currentNavBtn.value = e
 }
 
-onReachBottom(() => {}) //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+onReachBottom(() => {
+}) //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
+
+const isCarouselInitialized = ref(false)
+
+const carouselContents = reactive<News[]>([])
+
+async function initCarouselContents() {
+  let newsAmount = 0
+  let newsArray: News[] = []
+  while (newsAmount < 3) {
+    newsArray = (await getNews()).news
+    newsAmount = newsArray.length
+  }
+  newsArray.map(news => carouselContents.push(news))
+  isCarouselInitialized.value = true
+}
+
+initCarouselContents()
 
 </script>
 
@@ -127,9 +150,9 @@ onReachBottom(() => {}) //这里的空的onReachBottom别删！！！有了这�
 }
 
 .logo {
-  height: 200rpx;
-  margin: 200rpx auto 50rpx;
-  width: 200rpx;
+  height: 200 rpx;
+  margin: 200 rpx auto 50 rpx;
+  width: 200 rpx;
 }
 
 .text-area {
@@ -139,6 +162,6 @@ onReachBottom(() => {}) //这里的空的onReachBottom别删！！！有了这�
 
 .title {
   color: #8f8f94;
-  font-size: 36rpx;
+  font-size: 36 rpx;
 }
 </style>
