@@ -1,12 +1,13 @@
 <template>
   <view class="school-box">
     <view class="school-select-box">
+      <image class="arrow" src="../../static/images/location.png" />
       <view class="school-name">
         {{ school.name }}
       </view>
       <view class="switch-box">
-        <button plain="true" style="width:100px; font-size:small; margin:10px 10px;" type="primary">
-          切换学校
+        <button class="switch" size="mini">
+          ⇌ 切换学校
         </button>
       </view>
     </view>
@@ -22,6 +23,7 @@
       </view>
     </view>
   </view>
+
   <view>
     <carousel v-if="isCarouselInitialized" :contents="carouselContents" />
   </view>
@@ -75,16 +77,29 @@ initCarouselContents()
 </script>
 
 <style lang="scss" scoped>
+.arrow {
+  width: 50rpx;
+  height: 50rpx;
+  margin: 25rpx 0rpx 30rpx 20rpx;
+}
+
+.switch {
+  border-radius: 20px;
+  margin-right: 20rpx;
+  color: #1fa1ff;
+  font-size: 10px;
+  background: white;
+  border: solid #1fa1ff 1px;
+}
+
 .navbar {
-  position: fixed;
-  background-color: #FAFCFF;
+  background-color: #FFFFFF;
   display: flex;
   color: #B8B8B8;
-  font-size: calc(13 / 390 * 100vw);
+  font-size: calc(15 / 390 * 100vw);
   align-items: baseline;
   width: 100vw;
-  padding-top: calc(2 / 390 * 100vw);
-  padding-bottom: calc(16 / 390 * 100vw);
+  margin: 0rpx 0rpx 0rpx 60rpx;
   transition-duration: 0.4s;
 }
 
@@ -96,15 +111,16 @@ initCarouselContents()
   &.current {
     color: #FFFFFF;
     background-color: #1FA1FF;
-    padding: 5px;
-    border-radius: 1em 1em;
-    font-size: calc(10 / 390 * 100vw);
-    font-weight: bold;
+    padding: 10rpx 15rpx 10rpx 15rpx;
+    border-radius: 15rpx;
+    font-size: calc(15 / 390 * 100vw);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
   }
 }
 
 .switch-box {
   margin-left: auto;
+  margin-top: 20rpx;
 }
 
 .school-box {
@@ -121,9 +137,9 @@ initCarouselContents()
 }
 
 .school-name {
-  margin: 10px 20px;
+  margin: 20rpx 10rpx 30rpx 10rpx;
   font-weight: bold;
-  border-bottom: 4px solid skyblue;
+  border-bottom: 2px solid skyblue;
   font-size: large;
 }
 
