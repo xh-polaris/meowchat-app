@@ -2,7 +2,7 @@
   <view class="content">
     <!-- 搜索框 -->
     <view class="search-bar">
-      <view class="search-bar-box">
+      <view class="search-bar-box" @click="onClickSearch">
         <input
           type="text" value=""
           placeholder="搜索猫咪"
@@ -11,7 +11,29 @@
         <image class="search-span" src="/static/images/search_span.png" />
       </view>
     </view>
-
+    <view class="school-box">
+      <view class="school-select-box">
+        <view class="school-name">
+          {{ school.name }}
+        </view>
+        <view class="switch-box">
+          <button plain="true" style="width:100px; font-size:small; margin:10px 10px;" type="primary">
+            切换学校
+          </button>
+        </view>
+      </view>
+      <view class="school-select-box">
+        <view class="navbar">
+          <view
+            v-for="item in school.campuses" :key="item"
+            :class="'navbtn '+(currentNavBtn===item?'current':'')"
+            @click="setBranch(item)"
+          >
+            {{ item }}
+          </view>
+        </view>
+      </view>
+    </view>
     <view v-if="cats.length > 0">
       <view v-for="cat of cats" :key="cat.id" class="out">
         <view class="row" @click="onClickCatBox(cat.id)">
@@ -26,17 +48,49 @@
 </template>
 
 <script lang="ts" setup>
-import CatBox from "@/pages/collection/cat-box"
-import { reactive } from "vue"
-import { CatPreview } from "@/apis/community/community-components"
-import { onClickCatBox } from "@/pages/collection/event"
-import { getCatPreviews } from "@/apis/community/community"
+import CatBox from "@/pages/collection/cat-box";
+import {reactive, ref} from "vue";
+import {CatPreview, News} from "@/apis/community/community-components";
+import {onClickCatBox, onClickSearch} from "@/pages/collection/event";
+import {getCatPreviews, getNews} from "@/apis/community/community";
+import {onReachBottom} from "@dcloudio/uni-app";
 
-const cats = reactive<CatPreview[]>([])
+const cats = reactive<CatPreview[]>([]);
 getCatPreviews().then(res => {
-  cats.push(...res.cats)
-})
+  cats.push(...res.cats);
+});
+const school = reactive({
+  name: "华东师范大学",
+  campuses: ["中北校区", "闵行校区", "不限"],
+  No: 0
+});
 
+const currentNavBtn = ref("中北校区");
+
+function setBranch(e: string) {
+  currentNavBtn.value = e;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+onReachBottom(() => {
+}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
+
+const isCarouselInitialized = ref(false);
+
+const carouselContents = reactive<News[]>([]);
+
+async function initCarouselContents() {
+  let newsAmount = 0;
+  let newsArray: News[] = [];
+  while (newsAmount < 3) {
+    newsArray = (await getNews()).news;
+    newsAmount = newsArray.length;
+  }
+  newsArray.map(news => carouselContents.push(news));
+  isCarouselInitialized.value = true;
+}
+
+initCarouselContents();
 </script>
 
 <style lang="scss" scoped>
@@ -45,6 +99,73 @@ getCatPreviews().then(res => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.navbar {
+  position: fixed;
+  background-color: #FAFCFF;
+  display: flex;
+  color: #B8B8B8;
+  font-size: calc(13 / 390 * 100vw);
+  align-items: baseline;
+  width: 100vw;
+  padding-top: calc(2 / 390 * 100vw);
+  padding-bottom: calc(16 / 390 * 100vw);
+  transition-duration: 0.4s;
+}
+
+.navbtn {
+  color: #939393;
+  font-size: calc(10 / 390 * 100vw);
+  margin: 0 calc(10 / 390 * 100vw);
+
+  &.current {
+    color: #FFFFFF;
+    background-color: #1FA1FF;
+    padding: 5px;
+    border-radius: 1em 1em;
+    font-size: calc(10 / 390 * 100vw);
+    font-weight: bold;
+  }
+}
+
+.switch-box {
+  margin-left: auto;
+}
+
+.school-box {
+  height: 12vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.school-select-box {
+  height: 8vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.school-name {
+  margin: 10px 20px;
+  font-weight: bold;
+  border-bottom: 4px solid skyblue;
+  font-size: large;
+}
+
+.swiper-box {
+  width: 100vw;
+}
+
+.swiper {
+  height: 20vh;
+}
+
+.swiper-item {
+  display: block;
+  height: 20vh;
+  line-height: 15vh;
+  text-align: center;
 }
 
 // 搜索框

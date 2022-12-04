@@ -66,6 +66,17 @@
       }
     },
     {
+      "path": "pages/search/search",
+      "style": {
+        "navigationBarTitleText": "搜索",
+        "app-plus": {
+          "titleNView": {
+            "autoBackButton": "false"
+          }
+        }
+      }
+    },
+    {
       "path": "pages/draft/draft",
       "style": {
         "navigationBarTitleText": "发动态"
