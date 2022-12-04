@@ -1,4 +1,7 @@
 <template>
+  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
+  <reply :animation="enterReplyData" :replies="comments[selectedReply]" class="more-reply" />
+
   <view class="header">
     <view class="title">
       {{ post.title }}
@@ -24,6 +27,35 @@
     <view class="text">
       {{ post.text }}
     </view>
+
+    <view class="comments-box">
+      <view v-for="(item, index) in comments" :key="index" class="comment-box">
+        <view class="commenter-info-box">
+          <image :src="item.profile" class="commenter-profile" />
+          <text class="commenter-name">
+            {{ item.id }}
+          </text>
+          <text class="comment-time">
+            ·{{ item.time }}
+          </text>
+        </view>
+        <view class="comment-content">
+          {{ item.text }}
+        </view>
+        <view v-if="item.reply.length > 0" class="reply-info">
+          <text @click="onClickReplies(index)">
+            {{ item.reply.length }}条相关回复
+          </text>
+          <image class="arrow-right" src="/static/images/arrow_right_blue.svg" />
+        </view>
+        <view class="like-box">
+          <image class="like-icon" mode="widthFix" src="/static/images/like.svg" />
+          <text class="like-num">
+            {{ item.likes }}
+          </text>
+        </view>
+      </view>
+    </view>
     <view style="height:100px" />
   </view>
   <view class="write-comment-box">
@@ -39,8 +71,9 @@
     </view>
   </view>
 </template>
-<script setup>
-import {ref} from "vue";
+<script lang="ts" setup>
+import {reactive, ref} from "vue";
+import {enterMask, enterReply} from "../../moment/event";
 
 const post = ref({
   id: "111",
@@ -79,6 +112,74 @@ const post = ref({
   likes: 123
 });
 
+function isAnonymous() {
+  if (post.value.isAnonymous) {
+    post.value.user.name = "匿名用户";
+    post.value.user.avatar = "/static/images/anonymous.png";
+  }
+}
+
+isAnonymous();
+
+const comments = reactive([
+  {
+    id: "Pinlunrenyi",
+    profile: "https://static.xhpolaris.com/cat_world.jpg",
+    time: " 3小时前",
+    text: "我做了猫猫月饼，请学校的猫猫来吃!",
+    likes: 666,
+    reply: [
+      {
+        id: "Jiezheshuo1",
+        profile: "https://static.xhpolaris.com/cat_world.jpg",
+        time: " 2小时前",
+        text: "猫居然也有月饼吃",
+        likes: 333,
+      },
+      {
+        id: "Jiezheshuo2",
+        profile: "https://static.xhpolaris.com/cat_world.jpg",
+        time: " 2小时前",
+        text: "猫为啥没有月饼吃",
+        likes: 888,
+      },
+      {
+        id: "Jiezheshuo3",
+        profile: "https://static.xhpolaris.com/cat_world.jpg",
+        time: " 1小时前",
+        text: "猫当然有月饼吃",
+        likes: 222222,
+      }
+    ]
+  },
+  {
+    id: "Dianpinger",
+    profile: "https://static.xhpolaris.com/cat_world.jpg",
+    time: " 4小时前",
+    text: "祝大家中秋节快乐哦~",
+    likes: 8888,
+    reply: []
+  },
+]);
+
+let selectedReply = ref(0);
+let enterMaskData = ref(null);
+let enterReplyData = ref(null);
+
+function onClickReplies(idx: number) {
+  selectedReply.value = idx;
+  enterMask.width("100%").height("100%").opacity(0.5).step();
+  enterMaskData.value = enterMask.export();
+  enterReply.height("70%").step();
+  enterReplyData.value = enterReply.export();
+}
+
+function leaveReply() {
+  enterMask.width("0%").height("0%").opacity(0).step();
+  enterMaskData.value = enterMask.export();
+  enterReply.height("0%").step();
+  enterReplyData.value = enterReply.export();
+}
 </script>
 
 <style lang="scss" scoped>
@@ -158,12 +259,12 @@ $postPadding: 15px 27px 0 21px;
     margin-bottom: 16px;
 
     .avatar {
-      width: 60rpx;
-      height: 60rpx;
-      max-width: 35px;
-      max-height: 35px;
-      min-width: 27px;
-      min-height: 27px;
+      width: 80rpx;
+      height: 80rpx;
+      max-width: 45px;
+      max-height: 45px;
+      min-width: 35px;
+      min-height: 35px;
 
       margin-right: 9px;
       border-radius: 50%;
@@ -171,7 +272,7 @@ $postPadding: 15px 27px 0 21px;
 
     .name {
       font-style: normal;
-      font-weight: 500;
+      font-weight: bold;
       font-size: 14px;
       line-height: 17px;
       /* or 121% */
@@ -192,6 +293,86 @@ $postPadding: 15px 27px 0 21px;
 
     /* darkgrey02 */
     color: #353535;
+    margin-bottom: 30px;
+  }
+
+  .comments-box {
+
+    .comment-box {
+      background-color: #fff;
+      box-shadow: 0 0 4px #ddd;
+      border-radius: 30rpx;
+      margin-bottom: 15px;
+      padding: 30rpx 20rpx;
+
+      &:last-child {
+        margin-bottom: 120rpx;
+      }
+
+      .commenter-info-box {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .commenter-profile {
+          width: 80rpx;
+          height: 80rpx;
+          margin-right: 24rpx;
+        }
+
+        .commenter-name {
+          margin-right: 12px;
+          font-weight: bold;
+          font-size: 14px;
+        }
+
+        .comment-time {
+          color: #aaa;
+          font-size: 12px;
+        }
+      }
+
+      .comment-content {
+        margin-left: 104rpx;
+        margin-bottom: 15px;
+        line-height: 1.5em;
+        letter-spacing: 0.05em;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .reply-info {
+        margin-left: 104rpx;
+        color: #63bdff;
+        font-size: 12px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+
+        .arrow-right {
+          margin-left: 5px;
+          width: 6px;
+          height: 10px;
+        }
+      }
+
+      .like-box {
+        margin-left: 104rpx;
+
+        .like-icon {
+          width: 15px;
+          margin-right: 8px;
+        }
+
+        .like-num {
+          font-size: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: #aaa;
+        }
+
+      }
+    }
   }
 }
 
