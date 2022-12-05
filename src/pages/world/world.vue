@@ -20,7 +20,7 @@
   <view class="top-padding" />
 
   <block v-for="(post) in postsData" :key="post.id">
-    <view class="post">
+    <view class="post" @click="onClickPost(post.id)">
       <view class="upper">
         <view :class="'main '+(post.hasImage?'hasImage':'')">
           <view class="title">
@@ -65,46 +65,47 @@
 
 <script setup>
 
-import { reactive, ref } from "vue";
-import { onReachBottom } from "@dcloudio/uni-app";
+import {reactive, ref} from "vue";
+import {onReachBottom} from "@dcloudio/uni-app";
+import {onClickPost} from "./event";
 
-const currentNavBtn = ref("推荐")
+const currentNavBtn = ref("推荐");
 
 function recommend() {
-  console.log("推荐")
+  console.log("推荐");
 }
 
 function trend() {
-  console.log("热门")
+  console.log("热门");
 }
 
 function local() {
-  console.log("同城")
+  console.log("同城");
 }
 
 function followed() {
-  console.log("关注")
+  console.log("关注");
 }
 
-const postsData = reactive([])
+const postsData = reactive([]);
 
 function createPostsDataBatch() {
-  let data = []
+  let data = [];
   for (let i = 0; i < 10; i++) {
     data.push({
       id: Math.random(),
       isAnonymous: Math.random() > 0.7,
       hasImage: Math.random() > 0.3
-    })
+    });
   }
-  postsData.push(...data)
+  postsData.push(...data);
 }
 
-createPostsDataBatch()
+createPostsDataBatch();
 
 onReachBottom(() => {
-  createPostsDataBatch()
-})
+  createPostsDataBatch();
+});
 
 </script>
 
