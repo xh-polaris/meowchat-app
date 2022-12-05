@@ -86,6 +86,7 @@ initCarouselContents()
   margin: 25rpx 0rpx 30rpx 20rpx;
 }
 
+
 .campus-name {
   color: #7f7f81;
   margin: 25rpx 10rpx 20rpx 5rpx;
@@ -95,6 +96,7 @@ initCarouselContents()
 .switch {
   border-radius: 20px;
   margin-top: 5rpx;
+
   margin-right: 20rpx;
   color: #1fa1ff;
   font-size: 10px;
@@ -148,6 +150,7 @@ initCarouselContents()
 
 .school-name {
   margin: 25rpx 10rpx 30rpx 10rpx;
+
   font-weight: bold;
   border-bottom: 2px solid skyblue;
   font-size: large;
