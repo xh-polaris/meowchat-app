@@ -5,23 +5,26 @@
       <view class="school-name">
         {{ school.name }}
       </view>
+      <view class="campus-name">
+        ({{ currentNavBtn }})
+      </view>
       <view class="switch-box">
         <button class="switch" size="mini">
           ⇌ 切换学校
         </button>
       </view>
     </view>
-    <view class="school-select-box">
-      <view class="navbar">
-        <view
-          v-for="item in school.campuses" :key="item"
-          :class="'navbtn '+(currentNavBtn===item?'current':'')"
-          @click="setBranch(item)"
-        >
-          {{ item }}
-        </view>
-      </view>
-    </view>
+<!--    <view class="school-select-box">-->
+<!--      <view class="navbar">-->
+<!--        <view-->
+<!--          v-for="item in school.campuses" :key="item"-->
+<!--          :class="'navbtn '+(currentNavBtn===item?'current':'')"-->
+<!--          @click="setBranch(item)"-->
+<!--        >-->
+<!--          {{ item }}-->
+<!--        </view>-->
+<!--      </view>-->
+<!--    </view>-->
   </view>
 
   <view>
@@ -83,8 +86,15 @@ initCarouselContents()
   margin: 25rpx 0rpx 30rpx 20rpx;
 }
 
+.campus-name {
+  color: #7f7f81;
+  margin: 25rpx 10rpx 20rpx 5rpx;
+  font-weight: bold;
+  font-size: middle;
+}
 .switch {
   border-radius: 20px;
+  margin-top: 5rpx;
   margin-right: 20rpx;
   color: #1fa1ff;
   font-size: 10px;
@@ -124,7 +134,7 @@ initCarouselContents()
 }
 
 .school-box {
-  height: 12vh;
+  height: 8vh;
   display: flex;
   flex-direction: column;
 }
@@ -137,7 +147,7 @@ initCarouselContents()
 }
 
 .school-name {
-  margin: 20rpx 10rpx 30rpx 10rpx;
+  margin: 25rpx 10rpx 30rpx 10rpx;
   font-weight: bold;
   border-bottom: 2px solid skyblue;
   font-size: large;
