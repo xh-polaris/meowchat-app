@@ -25,6 +25,36 @@
         "navigationBarTitleText": "个人中心"
       }
     },
+	{
+	  "path": "pages/profile/quick_contact",
+	  "style": {
+	    "navigationBarTitleText": "快速联系"
+	  }
+	},
+	{
+	  "path": "pages/profile/apply_adopt",
+	  "style": {
+	    "navigationBarTitleText": "申请领养"
+	  }
+	},
+	{
+	  "path": "pages/profile/apply_admin",
+	  "style": {
+	    "navigationBarTitleText": "申请管理"
+	  }
+	},
+	{
+	  "path": "pages/profile/about_us",
+	  "style": {
+	    "navigationBarTitleText": "关于我们"
+	  }
+	},
+	{
+	  "path": "pages/profile/apply_adopt_questionnaire",
+	  "style": {
+	    "navigationBarTitleText": "领养问卷"
+	  }
+	},
     {
       "path": "pages/moment/moment",
       "style": {
@@ -32,7 +62,7 @@
       }
     },
     {
-      "path": "pages/world/post-detail/post-detail",
+      "path": "pages/world/postDetail/postDetail",
       "style": {
         "navigationBarTitleText": "帖子详情"
       }
