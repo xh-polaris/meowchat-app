@@ -62,7 +62,7 @@
       }
     },
     {
-      "path": "pages/world/post-detail/post-detail",
+      "path": "pages/world/postDetail/postDetail",
       "style": {
         "navigationBarTitleText": "帖子详情"
       }
