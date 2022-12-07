@@ -2,15 +2,15 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
-      "path": "pages/world/world",
-      "style": {
-        "navigationBarTitleText": "喵世界"
-      }
-    },
-    {
       "path": "pages/community/community",
       "style": {
         "navigationBarTitleText": "喵社区"
+      }
+    },
+    {
+      "path": "pages/world/world",
+      "style": {
+        "navigationBarTitleText": "喵世界"
       }
     },
     {
@@ -96,27 +96,27 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/world/world",
-        "iconPath": "static/images/community.png",
-        "selectedIconPath": "static/images/community_HL.png",
-        "text": "世界"
-      },
-      {
         "pagePath": "pages/community/community",
-        "iconPath": "static/images/community.png",
-        "selectedIconPath": "static/images/community_HL.png",
+        "iconPath": "static/images/community-grey.svg",
+        "selectedIconPath": "static/images/community-blue.svg",
         "text": "社区"
       },
       {
         "pagePath": "pages/collection/collection",
-        "iconPath": "static/images/collection.png",
-        "selectedIconPath": "static/images/collection_HL.png",
+        "iconPath": "static/images/collection-grey.svg",
+        "selectedIconPath": "static/images/collection-blue.svg",
         "text": "图鉴"
       },
       {
+        "pagePath": "pages/world/world",
+        "iconPath": "static/images/world-grey.svg",
+        "selectedIconPath": "static/images/world-blue.svg",
+        "text": "世界"
+      },
+      {
         "pagePath": "pages/profile/profile",
-        "iconPath": "static/images/profile.png",
-        "selectedIconPath": "static/images/profile_HL.png",
+        "iconPath": "static/images/mine-grey.svg",
+        "selectedIconPath": "static/images/mine-blue.svg",
         "text": "我的"
       }
     ]
