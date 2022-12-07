@@ -4,18 +4,16 @@
       推荐
     </view>
     |
-    <view :class="'navbtn '+(currentNavBtn==='热门'?'current':'')" @click.prevent="trend">
-      热门
-    </view>
-    |
-    <view :class="'navbtn '+(currentNavBtn==='同城'?'current':'')" @click.prevent="local">
-      同城
+    <view :class="'navbtn '+(currentNavBtn==='全部'?'current':'')" @click.prevent="all">
+      全部
     </view>
     |
     <view :class="'navbtn '+(currentNavBtn==='关注'?'current':'')" @click.prevent="followed">
       关注
     </view>
+    <view class="search" @click.prevent="search"></view>
   </view>
+
 
   <view class="top-padding" />
 
@@ -75,16 +73,16 @@ function recommend() {
   console.log("推荐");
 }
 
-function trend() {
-  console.log("热门");
-}
-
-function local() {
-  console.log("同城");
+function all() {
+  console.log("全部");
 }
 
 function followed() {
   console.log("关注");
+}
+
+function search() {
+  console.log("搜索")
 }
 
 const postsData = reactive([]);
@@ -141,6 +139,17 @@ body {
     border-bottom: calc(1 / 390 * 100vw) #1FA1FF solid;
     font-weight: bold;
   }
+}
+
+.search {
+  width: calc(35 / 390 * 100vw);
+  height: calc(35 / 390 * 100vw);
+  background-image: url('../../static/images/search-grey.svg');
+  background-size: 100% 100%;
+  position: fixed;
+  z-index: 10;
+  right: calc(18 / 390 * 100vw);
+  transform: translateY(calc(-4 / 390 * 100vw));
 }
 
 .top-padding {
