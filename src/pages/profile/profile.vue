@@ -221,6 +221,7 @@ const superAdminOptions = [
 	  float:left;
     }
     .cell-text {
+	  width: 400rpx;
       color: #666;
       font-size: 28rpx;
       margin-left: 20rpx;
