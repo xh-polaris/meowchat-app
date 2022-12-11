@@ -1,6 +1,10 @@
 <template>
   <view class="all">
     <view class="main">
+
+      <input type="text" placeholder="输入标题" />
+      <textarea type="text" maxlength="5000" placeholder="说点什么吧！&#10内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待" />
+
       <view class="images">
         <block v-for="(image) in imagesData" :key="image.id">
           <view class="added-image" />
@@ -10,41 +14,10 @@
       <view class="image-num">
         {{ imagesData.length }}/8
       </view>
-      <textarea placeholder="说点什么吧！" />
 
-      <view class="choose-cats-bar">
-        <view class="choose-cats">
-          选择猫咪
-        </view>
-        <view class="right-arrow" />
-        <view class="choose-followed-cats">
-          选择关注的猫咪
-        </view>
-      </view>
-      <view class="cat-names">
-        <view class="cat-name selected">
-          咕咕
-        </view>
-        <view class="cat-name">
-          噜噜
-        </view>
-        <view class="cat-name">
-          噗噗噗
-        </view>
-      </view>
     </view>
 
     <view class="panel">
-      <view class="toggle-bar">
-        <view class="toggle-text">
-          同步到猫咪图鉴
-        </view>
-        <view :class="'toggle '+(isSyncToCollection?'active':'')" @click="toggleSyncToCollection">
-          <view class="toggle-capsule">
-            <view class="toggle-circle" />
-          </view>
-        </view>
-      </view>
       <view class="toggle-bar">
         <view class="toggle-text">
           匿名信息
@@ -56,7 +29,7 @@
         </view>
       </view>
       <view class="publish">
-        发布动态
+        发布帖子
       </view>
       <view class="notice">
         发布前请先阅读
@@ -147,6 +120,10 @@ body {
 .new-image {
   background-color: #FAFAFA;
   border: #D1D1D1 solid calc(1 / 390 * 100vw);
+  background-image: url("../../static/images/plus-lightgrey.png");
+  background-size: 24% 24%;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .image-num {
@@ -156,20 +133,33 @@ body {
   margin-bottom: calc(20 / 390 * 100vw);
 }
 
-textarea {
+input, textarea {
   background-color: #FAFAFA;
   border-radius: calc(10 / 390 * 100vw);
   width: calc(100vw - $margin * 2);
+  box-sizing: border-box;
   margin: 0 $margin;
   padding: calc(10 / 390 * 100vw);
-  color: #939393;
-  margin-bottom: calc(28 / 390 * 100vw);
+  color: black;
   font-size: calc(14 / 390 * 100vw);
+}
+
+input {
+  margin-top: calc(20 / 390 * 100vw);
+  margin-bottom: calc(10 / 390 * 100vw);
+  height: calc(40 / 390 * 100vw);;
+}
+
+textarea {
+  margin-bottom: calc(10 / 390 * 100vw);
 }
 
 textarea ::selection {
   background-color: #939393;
   color: white;
+}
+::placeholder {
+  color: #939393;
 }
 
 .choose-cats-bar {
@@ -181,6 +171,13 @@ textarea ::selection {
   .choose-cats {
     color: #1FA1FF;
     font-size: calc(14 / 390 * 100vw);
+    margin-right: calc(5 / 390 * 100vw);
+  }
+
+  .right-arrow {
+    width: calc(7 / 390 * 100vw);
+    height: calc(11 / 390 * 100vw);
+    background-image: url("../../static/images/right-blue.png");
     margin-right: calc(16 / 390 * 100vw);
   }
 

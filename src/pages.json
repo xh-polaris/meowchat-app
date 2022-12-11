@@ -107,9 +107,21 @@
       }
     },
     {
-      "path": "pages/draft/draft",
+      "path": "pages/draft/draft_post",
+      "style": {
+        "navigationBarTitleText": "发帖子"
+      }
+    },
+    {
+      "path": "pages/draft/draft_moment",
       "style": {
         "navigationBarTitleText": "发动态"
+      }
+    },
+    {
+      "path": "pages/notification/notification",
+      "style": {
+        "navigationBarTitleText": "我的消息"
       }
     }
   ],
