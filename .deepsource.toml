@@ -1,0 +1,10 @@
+version = 1
+
+exclude_patterns = ["/src/components/uni-ui/**"]
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+  [analyzers.meta]
+  plugins = ["vue"]
