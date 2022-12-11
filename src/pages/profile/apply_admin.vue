@@ -21,10 +21,10 @@
 		</view>
 		<view class="apply-wrap">
 			<view class="input-wrap">
-				<input class="uni-input" type="name" placeholder="  请填写你名字" placeholder-style="font-size:24rpx;color: #B8B8B8;"/>
+				<input class="uni-input" type="name" placeholder="  请填写你名字" placeholder-style="color: #B8B8B8;"/>
 			</view>
 			<cover-view class="input-wrap">
-			    <textarea class="textarea-inherit" type="name" placeholder="请填写你的申请信息，如申请理由、个人介绍等" placeholder-style="font-size:24rpx;color: #B8B8B8;">
+			    <textarea class="textarea-inherit" type="name" placeholder="请填写你的申请信息，如申请理由、个人介绍等" placeholder-style="color: #B8B8B8;">
 				</textarea>
 			</cover-view>
 			<button type="primary" class="confirm">提交申请</button>
@@ -87,6 +87,7 @@
 		}	
 	}
 	.apply-wrap{
+		font-size:24rpx;
 		box-shadow: 0 0 10rpx #EEEEEE;
 		padding: 20rpx;
 		margin-top:50rpx;
@@ -96,12 +97,14 @@
 		border-radius: 21rpx;
 		background-color: #FFFFFF;	
 		.input-wrap{
+			font-size:24rpx;
 			display: flex;
 			background-color:#FAFAFA ;
 			margin-left: 10rpx;
 			margin-right: 10rpx;
 			margin-top:10rpx;
 			margin-bottom: 40rpx;
+			
 		}	
 		.confirm{
 			background-color: #1FA1FF;

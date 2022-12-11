@@ -10,11 +10,17 @@
 					<view class="position">{{item.position}}</view>
 					<view class="content">
 						<view class="info">微信:  {{item.wechat}}</view>
-						<image class="copy" src="/static/images/copy.png" @click="CopyToClipboard(item.wechat)"/>
+						<image class="copy" src="/static/images/copy.png" @click="CopyToClipboard(item.wechat)"
+						style="width:7%;"
+						mode="widthFix"
+						/>
 						</view>
 					<view class="content">
 						<view class="info">电话:  {{item.phoneNumber}}</view>
-						<image class="copy" src="/static/images/copy.png" @click="CopyToClipboard(item.phoneNumber)"/>
+						<image class="copy" src="/static/images/copy.png" @click="CopyToClipboard(item.phoneNumber)"
+						style="width:7%;"
+						mode="widthFix"
+						/>
 						</view>
 					</view>
 					</view>
@@ -69,11 +75,9 @@
 				margin-top: 30rpx;
 				float: left;
 				margin-left: 10rpx;
-				margin-right: 20rpx;
-				height: 46px;
-				width: 46px;
-				left: 38px;
-				top: 171px;
+				margin-right: 30rpx;
+				height: 92rpx;
+				width: 92rpx;
 				border-radius: 50%;
 			}
 			.right {
@@ -90,18 +94,21 @@
 					color: #939393;
 				}
 				.content {
+					 height: 30rpx;
+					 display: flex;
 					.info{
 						margin-top: 10rpx;
 						font-size :35rpx;
 						float:left;
+						height:30rpx;
+						width:350rpx;
 					}
 					.copy {
 					  width: 30rpx;
 					  height: 30rpx;
 					  right: 30rpx;
 					  margin-top: 15rpx;
-					  margin-left: 100rpx;
-					  float:left;
+					  float:right;
 					}
 					border-top: 1px solid #EEEEEE;
 					margin-bottom: 60rpx;

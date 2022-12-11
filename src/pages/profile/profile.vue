@@ -7,7 +7,8 @@
         <view class="pic">
           <image
             src="https://static.xhpolaris.com/cat_world.jpg"
-            style="width: 130rpx; height: 130rpx;border-radius: 50%;"
+            style="width: 100%;border-radius: 50%;"
+			mode="widthFix"
           />
         </view>
         <view class="txt">
@@ -32,7 +33,7 @@
               <view class="cell-left">
                 <image
                   class="cell-icon" :src="item.icon"
-                  style="width: 70rpx;border-radius: 50%;"
+                  style="width:15%;border-radius: 50%;"
                   mode="widthFix"
                 />
                 <view class="cell-text">
@@ -52,7 +53,7 @@
               <view class="cell-left">
                 <image
                   class="cell-icon" :src="item.icon"
-                  style="width: 70rpx;border-radius: 50%;"
+                  style="width:15%;border-radius: 50%;"
                   mode="widthFix"
                 />
                 <view class="cell-text">
@@ -75,7 +76,7 @@
               <view class="cell-left">
                 <image
                   class="cell-icon" :src="item.icon"
-                  style="width: 70rpx;border-radius: 50%;"
+                  style="width: 15%;border-radius: 50%;"
                   mode="widthFix"
                 />
                 <view class="cell-text">
@@ -157,6 +158,8 @@ const superAdminOptions = [
 }
 .fot-xh .pic {
   float: left;
+  height: 100rpx;
+  width: 100rpx;
   margin-right: 50rpx;
   margin-left: 50rpx;
   margin-top: 60rpx;
@@ -171,15 +174,21 @@ const superAdminOptions = [
   display: block;
 }
 .fot-xh .txt .info .nickname {
+  height: 30rpx;
+  width: 600rpx;
   font-size: 35rpx;
   margin-bottom: 13rpx;
   font-weight: bold;
 }
 .fot-xh .txt .info .right {
+  height: 28rpx;
+  width:600rpx;
   font-size: 20rpx;
   margin-bottom: 5rpx;
 }
 .fot-xh .txt .info .unit {
+  height: 28rpx;
+  width:600rpx;
   font-size: 20rpx;
   margin-bottom: 5rpx;
 }
@@ -221,7 +230,7 @@ const superAdminOptions = [
 	  float:left;
     }
     .cell-text {
-	  width: 400rpx;
+	  width: 600rpx;
       color: #666;
       font-size: 28rpx;
       margin-left: 20rpx;
@@ -230,7 +239,6 @@ const superAdminOptions = [
 	  width: 30rpx;
 	  height: 30rpx;
 	  right: 30rpx;
-	  margin-left:450rpx;
 	}
   }
   .iconfont {
