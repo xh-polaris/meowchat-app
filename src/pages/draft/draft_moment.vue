@@ -10,7 +10,7 @@
       <view class="image-num">
         {{ imagesData.length }}/8
       </view>
-      <textarea placeholder="说点什么吧！" />
+      <textarea maxlength="5000" type="text" placeholder="说点什么吧！" />
 
       <view class="choose-cats-bar">
         <view class="choose-cats">
@@ -147,6 +147,10 @@ body {
 .new-image {
   background-color: #FAFAFA;
   border: #D1D1D1 solid calc(1 / 390 * 100vw);
+  background-image: url("../../static/images/plus-lightgrey.png");
+  background-size: 24% 24%;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .image-num {
@@ -162,9 +166,13 @@ textarea {
   width: calc(100vw - $margin * 2);
   margin: 0 $margin;
   padding: calc(10 / 390 * 100vw);
-  color: #939393;
+  color: black;
   margin-bottom: calc(28 / 390 * 100vw);
   font-size: calc(14 / 390 * 100vw);
+  box-sizing: border-box;
+}
+::placeholder {
+  color: #939393;
 }
 
 textarea ::selection {
@@ -181,6 +189,13 @@ textarea ::selection {
   .choose-cats {
     color: #1FA1FF;
     font-size: calc(14 / 390 * 100vw);
+    margin-right: calc(5 / 390 * 100vw);
+  }
+
+  .right-arrow {
+    width: calc(7 / 390 * 100vw);
+    height: calc(11 / 390 * 100vw);
+    background-image: url("../../static/images/right-blue.png");
     margin-right: calc(16 / 390 * 100vw);
   }
 
