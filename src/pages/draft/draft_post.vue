@@ -3,7 +3,7 @@
     <view class="main">
 
       <input type="text" placeholder="输入标题" />
-      <textarea type="text" maxlength="5000" placeholder="说点什么吧！&#10内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待" />
+      <textarea type="text" maxlength="5000" placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待" />
 
       <view class="images">
         <block v-for="(image) in imagesData" :key="image.id">
@@ -74,6 +74,7 @@ for (let i = 0; i < imageNum; i++) {
   addImageData()
 }
 
+console.logg("语法错误测试")
 
 </script>
 
