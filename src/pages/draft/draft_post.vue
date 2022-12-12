@@ -74,8 +74,6 @@ for (let i = 0; i < imageNum; i++) {
   addImageData()
 }
 
-console.logg("语法错误测试")
-
 </script>
 
 <style lang="scss" scoped>
