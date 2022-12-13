@@ -144,7 +144,7 @@ body {
 .search {
   width: calc(35 / 390 * 100vw);
   height: calc(35 / 390 * 100vw);
-  background-image: url('../../static/images/search-grey.svg');
+  background-image: url('../../static/images/search-grey.png');
   background-size: 100% 100%;
   position: fixed;
   z-index: 10;
