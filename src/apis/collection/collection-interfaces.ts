@@ -2,7 +2,7 @@ import {Cat} from "../schemas";
 
 export interface GetCatPreviewsReq {
     page: number;
-    name: string; // 条件
+    communityId: string;
 }
 
 export interface GetCatPreviewsResp {
@@ -22,7 +22,7 @@ export interface GetCatDetailResp {
 }
 
 export interface NewCatReq {
-    id: string;
+    id?: string;
     age: string;
     communityId: string;
     color: string;

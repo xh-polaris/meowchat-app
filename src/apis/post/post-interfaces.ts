@@ -32,6 +32,7 @@ export interface NewPostReq {
 export interface NewPostResp {
     code: number;
     msg: string;
+    postId: string;
 }
 
 export interface DeletePostReq {
