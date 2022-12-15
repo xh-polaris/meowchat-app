@@ -3,13 +3,13 @@ import * as components from "./community-interfaces"
 export * from "./community-interfaces"
 
 
-export async function getMomentPreviews(): Promise<components.GetMomentPreviewsResp> {
+export function getMomentPreviews(): Promise<components.GetMomentPreviewsResp> {
     return new Promise<components.GetMomentPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/moment/get_moment_previews",
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res)
                 }
                 const data = res.data as components.GetMomentPreviewsResp
@@ -19,13 +19,13 @@ export async function getMomentPreviews(): Promise<components.GetMomentPreviewsR
     })
 }
 
-export async function getCatPreviews(): Promise<components.GetCatPreviewsResp> {
+export function getCatPreviews(): Promise<components.GetCatPreviewsResp> {
     return new Promise<components.GetCatPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/collection/get_cat_previews",
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res)
                 }
                 const data = res.data as components.GetCatPreviewsResp
@@ -35,13 +35,13 @@ export async function getCatPreviews(): Promise<components.GetCatPreviewsResp> {
     })
 }
 
-export async function getNews(): Promise<components.GetNewsResp> {
+export function getNews(): Promise<components.GetNewsResp> {
     return new Promise<components.GetNewsResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_news",
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res)
                 }
                 const data = res.data as components.GetNewsResp

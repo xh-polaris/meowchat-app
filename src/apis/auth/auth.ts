@@ -16,14 +16,14 @@ import {
  * @description
  * @param req
  */
-export async function signIn(req: SignInReq): Promise<SignInResp> {
+export function signIn(req: SignInReq): Promise<SignInResp> {
     return new Promise<SignInResp>((resolve, reject) => {
         uni.request({
             url: "/api/sign_in",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res)
                 }
                 const data = res.data as SignInResp
@@ -37,14 +37,14 @@ export async function signIn(req: SignInReq): Promise<SignInResp> {
  * @description
  * @param req
  */
-export async function setPassword(req: SetPasswordReq): Promise<SetPasswordResp> {
+export function setPassword(req: SetPasswordReq): Promise<SetPasswordResp> {
     return new Promise((resolve, reject) => {
         uni.request({
             url: "/api/set_password",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res)
                 }
                 const data = res.data as SetPasswordResp
@@ -58,7 +58,7 @@ export async function setPassword(req: SetPasswordReq): Promise<SetPasswordResp>
  * @description
  * @param req
  */
-export async function sendVerifyCode(req: SendVerifyCodeReq): Promise<SendVerifyCodeResp> {
+export function sendVerifyCode(req: SendVerifyCodeReq): Promise<SendVerifyCodeResp> {
     return new Promise((resolve, reject) => {
         uni.request({
             url: "/api/send_verify_code",
