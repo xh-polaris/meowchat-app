@@ -5,13 +5,13 @@
         <view class="tile" @click="onClickMoment(moment.id)">
           <image
             v-if="i === 1"
-            :src="moment.imageUrls[0]" class="img"
+            :src="moment.photos[0]" class="img"
             mode="widthFix"
             @load.once="onLoadLeft"
           />
           <image
             v-else
-            :src="moment.imageUrls[0]" class="img"
+            :src="moment.photos[0]" class="img"
             mode="widthFix"
             @load.once="onLoadRight"
           />
@@ -39,7 +39,8 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue"
-import { getMomentPreviews, Moment } from "@/apis/community/community"
+import { getMomentPreviews } from "@/apis/moment/moment"
+import { Moment } from "@/apis/schemas"
 import { onClickMoment } from "@/pages/community/event"
 import { onReachBottom } from "@dcloudio/uni-app";
 

@@ -1,4 +1,4 @@
-import {CatPreview} from "@/apis/community/community-components";
+import { CatPreview } from "@/apis/community/community-interfaces";
 
 export function onClickCatBox(id: string) {
     uni.navigateTo({
