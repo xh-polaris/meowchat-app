@@ -12,7 +12,7 @@ import {
  * @description
  */
 export async function getNews(): Promise<GetNewsResp> {
-    return new Promise<GetNewsResp>((resolve, reject) => {
+    return await new Promise<GetNewsResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_news",
             method: "GET",
@@ -31,7 +31,7 @@ export async function getNews(): Promise<GetNewsResp> {
  * @description
  */
 export async function getAdmins(): Promise<GetAdminsResp> {
-    return new Promise<GetAdminsResp>((resolve, reject) => {
+    return await new Promise<GetAdminsResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_admins",
             method: "GET",
@@ -50,7 +50,7 @@ export async function getAdmins(): Promise<GetAdminsResp> {
  * @description
  */
 export async function getNotices(): Promise<GetNoticesResp> {
-    return new Promise<GetNoticesResp>((resolve, reject) => {
+    return await new Promise<GetNoticesResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_notices",
             method: "GET",
@@ -70,7 +70,7 @@ export async function getNotices(): Promise<GetNoticesResp> {
  * @param req
  */
 export async function newNotice(req: NewNoticeReq): Promise<NewNoticeResp> {
-    return new Promise<NewNoticeResp>((resolve, reject) => {
+    return await new Promise<NewNoticeResp>((resolve, reject) => {
         uni.request({
             url: "/notice/new_notice",
             data: req,
@@ -91,7 +91,7 @@ export async function newNotice(req: NewNoticeReq): Promise<NewNoticeResp> {
  * @param req
  */
 export async function newNew(req: NewNewReq): Promise<NewNewResp> {
-    return new Promise<NewNewResp>((resolve, reject) => {
+    return await new Promise<NewNewResp>((resolve, reject) => {
         uni.request({
             url: "/notice/new_new",
             data: req,

@@ -14,7 +14,7 @@ import {
  * @param req
  */
 export async function deleteMoment(req: DeleteMomentReq): Promise<DeleteMomentResp> {
-    return new Promise<DeleteMomentResp>((resolve, reject) => {
+    return await new Promise<DeleteMomentResp>((resolve, reject) => {
         uni.request({
             url: "/moment/delete_moment",
             data: req,
@@ -35,7 +35,7 @@ export async function deleteMoment(req: DeleteMomentReq): Promise<DeleteMomentRe
  * @param req
  */
 export async function newMoment(req: NewMomentReq): Promise<NewMomentResp> {
-    return new Promise<NewMomentResp>((resolve, reject) => {
+    return await new Promise<NewMomentResp>((resolve, reject) => {
         uni.request({
             url: "/moment/new_moment",
             data: req,
@@ -56,7 +56,7 @@ export async function newMoment(req: NewMomentReq): Promise<NewMomentResp> {
  * @param req
  */
 export async function getMomentPreviews(req: GetMomentPreviewsReq): Promise<GetMomentPreviewsResp> {
-    return new Promise<GetMomentPreviewsResp>((resolve, reject) => {
+    return await new Promise<GetMomentPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/moment/get_moment_previews",
             data: req,
@@ -77,7 +77,7 @@ export async function getMomentPreviews(req: GetMomentPreviewsReq): Promise<GetM
  * @param req
  */
 export async function getMomentDetail(req: GetMomentDetailReq): Promise<GetMomentDetailResp> {
-    return new Promise<GetMomentDetailResp>((resolve, reject) => {
+    return await new Promise<GetMomentDetailResp>((resolve, reject) => {
         uni.request({
             url: "/moment/get_moment_detail",
             data: req,

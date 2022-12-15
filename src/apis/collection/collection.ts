@@ -10,7 +10,7 @@ import {
 } from "./collection-interfaces";
 
 export async function deleteCat(req: DeleteCatReq): Promise<DeleteCatResp> {
-    return new Promise<DeleteCatResp>((resolve, reject) => {
+    return await new Promise<DeleteCatResp>((resolve, reject) => {
         uni.request({
             url: "/collection/delete_cat",
             data: req,
@@ -31,7 +31,7 @@ export async function deleteCat(req: DeleteCatReq): Promise<DeleteCatResp> {
  * @param req
  */
 export async function newCat(req: NewCatReq): Promise<NewCatResp> {
-    return new Promise<NewCatResp>((resolve, reject) => {
+    return await new Promise<NewCatResp>((resolve, reject) => {
         uni.request({
             url: "/collection/new_cat",
             data: req,
@@ -52,7 +52,7 @@ export async function newCat(req: NewCatReq): Promise<NewCatResp> {
  * @param req
  */
 export async function getCatPreviews(req: GetCatPreviewsReq): Promise<GetCatPreviewsResp> {
-    return new Promise<GetCatPreviewsResp>((resolve, reject) => {
+    return await new Promise<GetCatPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/collection/get_cat_previews",
             data: req,
@@ -73,7 +73,7 @@ export async function getCatPreviews(req: GetCatPreviewsReq): Promise<GetCatPrev
  * @param req
  */
 export async function getCatDetail(req: GetCatDetailReq): Promise<GetCatDetailResp> {
-    return new Promise<GetCatDetailResp>((resolve, reject) => {
+    return await new Promise<GetCatDetailResp>((resolve, reject) => {
         uni.request({
             url: "/collection/get_cat_detail",
             data: req,

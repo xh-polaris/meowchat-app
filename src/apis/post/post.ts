@@ -30,7 +30,7 @@ export function getPostPreviews(): Promise<GetPostPreviewsResp> {
  * @param req
  */
 export async function deletePost(req: DeletePostReq): Promise<DeletePostResp> {
-    return new Promise<DeletePostResp>((resolve, reject) => {
+    return await new Promise<DeletePostResp>((resolve, reject) => {
         uni.request({
             url: "/post/delete_post",
             data: req,
@@ -51,7 +51,7 @@ export async function deletePost(req: DeletePostReq): Promise<DeletePostResp> {
  * @param req
  */
 export async function newPost(req: NewPostReq): Promise<NewPostResp> {
-    return new Promise<NewPostResp>((resolve, reject) => {
+    return await new Promise<NewPostResp>((resolve, reject) => {
         uni.request({
             url: "/post/new_post",
             data: req,
@@ -72,7 +72,7 @@ export async function newPost(req: NewPostReq): Promise<NewPostResp> {
  * @param req
  */
 export async function getPostDetail(req: GetPostDetailReq): Promise<GetPostDetailResp> {
-    return new Promise<GetPostDetailResp>((resolve, reject) => {
+    return await new Promise<GetPostDetailResp>((resolve, reject) => {
         uni.request({
             url: "/post/get_post_detail",
             data: req,

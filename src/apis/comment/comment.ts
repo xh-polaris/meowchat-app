@@ -1,7 +1,7 @@
 import {GetCommentsReq, GetCommentsResp, NewCommentReq, NewCommentResp} from "@/apis/comment/comment-interfaces";
 
 export async function newComment(req: NewCommentReq): Promise<NewCommentResp> {
-    return new Promise<NewCommentResp>((resolve, reject) => {
+    return await new Promise<NewCommentResp>((resolve, reject) => {
         uni.request({
             url: "/comment/new_comment",
             data: req,
@@ -23,7 +23,7 @@ export async function newComment(req: NewCommentReq): Promise<NewCommentResp> {
  * @param req
  */
 export async function getComments(req: GetCommentsReq): Promise<GetCommentsResp> {
-    return new Promise<GetCommentsResp>((resolve, reject) => {
+    return await new Promise<GetCommentsResp>((resolve, reject) => {
         uni.request({
             url: "/comment/get_comments",
             data: req,
