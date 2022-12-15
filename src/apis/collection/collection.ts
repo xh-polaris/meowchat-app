@@ -1,67 +1,92 @@
-import * as components from "@/apis/collection/collection-components";
+import {
+    DeleteCatReq,
+    DeleteCatResp,
+    GetCatDetailReq,
+    GetCatDetailResp,
+    GetCatPreviewsReq,
+    GetCatPreviewsResp,
+    NewCatReq,
+    NewCatResp
+} from "@/apis/collection/collection-components";
 
-export async function deleteCat(req: components.DeleteCatReq): Promise<components.DeleteCatResp> {
-    return new Promise<components.DeleteCatResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function deleteCat(req: DeleteCatReq): Promise<DeleteCatResp> {
+    return await new Promise<DeleteCatResp>((resolve, reject) => {
         uni.request({
             url: "/collection/delete_cat",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.DeleteCatResp;
+                const data = res.data as DeleteCatResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function newCat(req: components.NewCatReq): Promise<components.NewCatResp> {
-    return new Promise<components.NewCatResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function newCat(req: NewCatReq): Promise<NewCatResp> {
+    return await new Promise<NewCatResp>((resolve, reject) => {
         uni.request({
             url: "/collection/new_cat",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.NewCatResp;
+                const data = res.data as NewCatResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getCatPreviews(req: components.GetCatPreviewsReq): Promise<components.GetCatPreviewsResp> {
-    return new Promise<components.GetCatPreviewsResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function getCatPreviews(req: GetCatPreviewsReq): Promise<GetCatPreviewsResp> {
+    return await new Promise<GetCatPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/collection/get_cat_previews",
             data: req,
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetCatPreviewsResp;
+                const data = res.data as GetCatPreviewsResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getCatDetail(req: components.GetCatDetailReq): Promise<components.GetCatDetailResp> {
-    return new Promise<components.GetCatDetailResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function getCatDetail(req: GetCatDetailReq): Promise<GetCatDetailResp> {
+    return await new Promise<GetCatDetailResp>((resolve, reject) => {
         uni.request({
             url: "/collection/get_cat_detail",
             data: req,
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetCatDetailResp;
+                const data = res.data as GetCatDetailResp;
                 resolve(data);
             },
         });

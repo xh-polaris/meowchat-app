@@ -1,67 +1,92 @@
-import * as components from "@/apis/moment/moment-components";
+import {
+    DeleteMomentReq,
+    DeleteMomentResp,
+    GetMomentDetailReq,
+    GetMomentDetailResp,
+    GetMomentPreviewsReq,
+    GetMomentPreviewsResp,
+    NewMomentReq,
+    NewMomentResp
+} from "@/apis/moment/moment-components";
 
-export async function deleteMoment(req: components.DeleteMomentReq): Promise<components.DeleteMomentResp> {
-    return new Promise<components.DeleteMomentResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function deleteMoment(req: DeleteMomentReq): Promise<DeleteMomentResp> {
+    return await new Promise<DeleteMomentResp>((resolve, reject) => {
         uni.request({
             url: "/moment/delete_moment",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.DeleteMomentResp;
+                const data = res.data as DeleteMomentResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function newMoment(req: components.NewMomentReq): Promise<components.NewMomentResp> {
-    return new Promise<components.NewMomentResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function newMoment(req: NewMomentReq): Promise<NewMomentResp> {
+    return await new Promise<NewMomentResp>((resolve, reject) => {
         uni.request({
             url: "/moment/new_moment",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.NewMomentResp;
+                const data = res.data as NewMomentResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getMomentPreviews(req: components.GetMomentPreviewsReq): Promise<components.GetMomentPreviewsResp> {
-    return new Promise<components.GetMomentPreviewsResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function getMomentPreviews(req: GetMomentPreviewsReq): Promise<GetMomentPreviewsResp> {
+    return await new Promise<GetMomentPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/moment/get_moment_previews",
             data: req,
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetMomentPreviewsResp;
+                const data = res.data as GetMomentPreviewsResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getMomentDetail(req: components.GetMomentDetailReq): Promise<components.GetMomentDetailResp> {
-    return new Promise<components.GetMomentDetailResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function getMomentDetail(req: GetMomentDetailReq): Promise<GetMomentDetailResp> {
+    return await new Promise<GetMomentDetailResp>((resolve, reject) => {
         uni.request({
             url: "/moment/get_moment_detail",
             data: req,
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetMomentDetailResp;
+                const data = res.data as GetMomentDetailResp;
                 resolve(data);
             },
         });

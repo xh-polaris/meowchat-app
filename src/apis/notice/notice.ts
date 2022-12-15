@@ -1,85 +1,106 @@
-import * as components from "./notice-components";
+import {
+    GetAdminsResp,
+    GetNewsResp,
+    GetNoticesResp,
+    NewNewReq,
+    NewNewResp,
+    NewNoticeReq,
+    NewNoticeResp
+} from "@/apis/notice/notice-components";
 
 /**
  * @description
- * @param
  */
-export async function getNews(): Promise<components.GetNewsResp> {
-    return new Promise<components.GetNewsResp>(function (resolve, reject) {
+export async function getNews(): Promise<GetNewsResp> {
+    return await new Promise<GetNewsResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_news",
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetNewsResp;
+                const data = res.data as GetNewsResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getAdmins(): Promise<components.GetAdminsResp> {
-    return new Promise<components.GetAdminsResp>(function (resolve, reject) {
+/**
+ * @description
+ */
+export async function getAdmins(): Promise<GetAdminsResp> {
+    return await new Promise<GetAdminsResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_admins",
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetAdminsResp;
+                const data = res.data as GetAdminsResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getNotices(): Promise<components.GetNoticesResp> {
-    return new Promise<components.GetNoticesResp>(function (resolve, reject) {
+/**
+ * @description
+ */
+export async function getNotices(): Promise<GetNoticesResp> {
+    return await new Promise<GetNoticesResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_notices",
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetNoticesResp;
+                const data = res.data as GetNoticesResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function newNotice(req: components.NewNoticeReq): Promise<components.NewNoticeResp> {
-    return new Promise<components.NewNoticeResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function newNotice(req: NewNoticeReq): Promise<NewNoticeResp> {
+    return await new Promise<NewNoticeResp>((resolve, reject) => {
         uni.request({
             url: "/notice/new_notice",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.NewNoticeResp;
+                const data = res.data as NewNoticeResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function newNew(req: components.NewNewReq): Promise<components.NewNewResp> {
-    return new Promise<components.NewNewResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function newNew(req: NewNewReq): Promise<NewNewResp> {
+    return await new Promise<NewNewResp>((resolve, reject) => {
         uni.request({
             url: "/notice/new_new",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.NewNewResp;
+                const data = res.data as NewNewResp;
                 resolve(data);
             },
         });

@@ -1,33 +1,42 @@
-import * as components from "./comment-components";
+import {GetCommentsReq, GetCommentsResp, NewCommentReq, NewCommentResp} from "@/apis/comment/comment-components";
 
-export async function newComment(req: components.NewCommentReq): Promise<components.NewCommentResp> {
-    return new Promise<components.NewCommentResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function newComment(req: NewCommentReq): Promise<NewCommentResp> {
+    return await new Promise<NewCommentResp>((resolve, reject) => {
         uni.request({
             url: "/comment/new_comment",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.NewCommentResp;
+                const data = res.data as NewCommentResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getComments(req: components.GetCommentsReq): Promise<components.GetCommentsResp> {
-    return new Promise<components.GetCommentsResp>(function (resolve, reject) {
+
+/**
+ * @description
+ * @param req
+ */
+export async function getComments(req: GetCommentsReq): Promise<GetCommentsResp> {
+    return await new Promise<GetCommentsResp>((resolve, reject) => {
         uni.request({
             url: "/comment/get_comments",
             data: req,
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetCommentsResp;
+                const data = res.data as GetCommentsResp;
                 resolve(data);
             },
         });

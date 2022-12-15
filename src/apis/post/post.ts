@@ -1,67 +1,92 @@
-import * as components from "./post-components";
+import {
+    DeletePostReq,
+    DeletePostResp,
+    GetPostDetailReq,
+    GetPostDetailResp,
+    GetPostPreviewsReq,
+    GetPostPreviewsResp,
+    NewPostReq,
+    NewPostResp
+} from "@/apis/post/post-components";
 
-export async function deletePost(req: components.DeletePostReq): Promise<components.DeletePostResp> {
-    return new Promise<components.DeletePostResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function deletePost(req: DeletePostReq): Promise<DeletePostResp> {
+    return await new Promise<DeletePostResp>((resolve, reject) => {
         uni.request({
             url: "/post/delete_post",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.DeletePostResp;
+                const data = res.data as DeletePostResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function newPost(req: components.NewPostReq): Promise<components.NewPostResp> {
-    return new Promise<components.NewPostResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function newPost(req: NewPostReq): Promise<NewPostResp> {
+    return await new Promise<NewPostResp>((resolve, reject) => {
         uni.request({
             url: "/post/new_post",
             data: req,
             method: "POST",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.NewPostResp;
+                const data = res.data as NewPostResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getPostPreviews(req: components.GetPostPreviewsReq): Promise<components.GetPostPreviewsResp> {
-    return new Promise<components.GetPostPreviewsResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function getPostPreviews(req: GetPostPreviewsReq): Promise<GetPostPreviewsResp> {
+    return await new Promise<GetPostPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/post/get_post_previews",
             data: req,
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetPostPreviewsResp;
+                const data = res.data as GetPostPreviewsResp;
                 resolve(data);
             },
         });
     });
 }
 
-export async function getPostDetail(req: components.GetPostDetailReq): Promise<components.GetPostDetailResp> {
-    return new Promise<components.GetPostDetailResp>(function (resolve, reject) {
+/**
+ * @description
+ * @param req
+ */
+export async function getPostDetail(req: GetPostDetailReq): Promise<GetPostDetailResp> {
+    return await new Promise<GetPostDetailResp>((resolve, reject) => {
         uni.request({
             url: "/post/get_post_detail",
             data: req,
             method: "GET",
             success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     reject(res);
                 }
-                const data = res.data as components.GetPostDetailResp;
+                const data = res.data as GetPostDetailResp;
                 resolve(data);
             },
         });
