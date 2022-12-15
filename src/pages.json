@@ -68,6 +68,12 @@
       }
     },
     {
+      "path": "pages/community/school_select",
+      "style": {
+        "navigationBarTitleText": "切换学校"
+      }
+    },
+    {
       "path": "pages/detail/detail",
       "style": {
         "navigationBarTitleText": "123",

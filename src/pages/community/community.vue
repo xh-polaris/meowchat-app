@@ -9,22 +9,11 @@
         ({{ currentNavBtn }})
       </view>
       <view class="switch-box">
-        <button class="switch" size="mini">
+        <button class="switch" size="mini" @click="onClickSwitch">
           ⇌ 切换学校
         </button>
       </view>
     </view>
-<!--    <view class="school-select-box">-->
-<!--      <view class="navbar">-->
-<!--        <view-->
-<!--          v-for="item in school.campuses" :key="item"-->
-<!--          :class="'navbtn '+(currentNavBtn===item?'current':'')"-->
-<!--          @click="setBranch(item)"-->
-<!--        >-->
-<!--          {{ item }}-->
-<!--        </view>-->
-<!--      </view>-->
-<!--    </view>-->
   </view>
 
   <view>
@@ -54,6 +43,12 @@ const currentNavBtn = ref("中北校区")
 
 function setBranch(e: string) {
   currentNavBtn.value = e
+}
+
+function onClickSwitch() {
+  uni.navigateTo({
+    url: `/pages/community/school_select`
+  });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
