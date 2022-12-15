@@ -2,16 +2,9 @@ import * as components from "./community-interfaces"
 
 export * from "./community-interfaces"
 
-/**
- * @description
- * @param req
- */
-
-
-
 
 export async function getMomentPreviews(): Promise<components.GetMomentPreviewsResp> {
-    return new Promise<components.GetMomentPreviewsResp>(function (resolve, reject) {
+    return new Promise<components.GetMomentPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/moment/get_moment_previews",
             method: "GET",
@@ -27,7 +20,7 @@ export async function getMomentPreviews(): Promise<components.GetMomentPreviewsR
 }
 
 export async function getCatPreviews(): Promise<components.GetCatPreviewsResp> {
-    return new Promise<components.GetCatPreviewsResp>(function (resolve, reject) {
+    return new Promise<components.GetCatPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/collection/get_cat_previews",
             method: "GET",
@@ -43,7 +36,7 @@ export async function getCatPreviews(): Promise<components.GetCatPreviewsResp> {
 }
 
 export async function getNews(): Promise<components.GetNewsResp> {
-    return new Promise<components.GetNewsResp>(function (resolve, reject) {
+    return new Promise<components.GetNewsResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_news",
             method: "GET",

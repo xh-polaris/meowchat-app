@@ -1,7 +1,7 @@
 import { GetNewsResp } from "./notice-interfaces"
 
 export async function getNews(): Promise<GetNewsResp> {
-    return new Promise<GetNewsResp>(function (resolve, reject) {
+    return new Promise<GetNewsResp>((resolve, reject) => {
         uni.request({
             url: "/notice/get_news",
             method: "GET",

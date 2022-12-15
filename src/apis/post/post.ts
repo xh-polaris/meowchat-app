@@ -1,7 +1,7 @@
 import { GetPostPreviewsResp } from "@/apis/post/post-interfaces";
 
 export async function getPostPreviews(): Promise<GetPostPreviewsResp> {
-    return new Promise<GetPostPreviewsResp>(function (resolve, reject) {
+    return new Promise<GetPostPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/post/get_post_previews",
             method: "GET",

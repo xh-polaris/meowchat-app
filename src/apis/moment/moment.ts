@@ -1,7 +1,7 @@
 import { GetMomentPreviewsResp } from "./moment-components"
 
 export async function getMomentPreviews(): Promise<GetMomentPreviewsResp> {
-    return new Promise<GetMomentPreviewsResp>(function (resolve, reject) {
+    return new Promise<GetMomentPreviewsResp>((resolve, reject) => {
         uni.request({
             url: "/moment/get_moment_previews",
             method: "GET",

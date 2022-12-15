@@ -17,7 +17,7 @@ import {
  * @param req
  */
 export async function signIn(req: SignInReq): Promise<SignInResp> {
-    return new Promise<SignInResp>(function (resolve, reject) {
+    return new Promise<SignInResp>((resolve, reject) => {
         uni.request({
             url: "/api/sign_in",
             data: req,
@@ -38,7 +38,7 @@ export async function signIn(req: SignInReq): Promise<SignInResp> {
  * @param req
  */
 export async function setPassword(req: SetPasswordReq): Promise<SetPasswordResp> {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         uni.request({
             url: "/api/set_password",
             data: req,
@@ -59,7 +59,7 @@ export async function setPassword(req: SetPasswordReq): Promise<SetPasswordResp>
  * @param req
  */
 export async function sendVerifyCode(req: SendVerifyCodeReq): Promise<SendVerifyCodeResp> {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         uni.request({
             url: "/api/send_verify_code",
             data: req,
