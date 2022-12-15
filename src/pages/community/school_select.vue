@@ -1,8 +1,8 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template>
   <view class="content2">
     <view class="search-bar">
       <image class="cancel" src="../../static/images/cancel.png" />
-      <view class="search-bar-box" @click="onClickSearch">
+      <view class="search-bar-box">
         <input
           type="text" value=""
           placeholder="输入学校名称或拼音查询"
