@@ -4,9 +4,9 @@
     <view class="search-bar">
       <view class="search-bar-box" @click="onClickSearch">
         <input
-          type="text" value=""
-          placeholder="搜索猫咪"
           class="search-text" maxlength="10"
+          placeholder="搜索猫咪"
+          type="text" value=""
         >
         <image class="search-span" src="/static/images/search_span.png" />
       </view>
@@ -26,9 +26,9 @@
       <view class="school-select-box">
         <view class="navbar">
           <view
-              v-for="item in school.campuses" :key="item"
-              :class="'navbtn '+(currentNavBtn===item?'current':'')"
-              @click="setBranch(item)"
+            v-for="item in school.campuses" :key="item"
+            :class="'navbtn '+(currentNavBtn===item?'current':'')"
+            @click="setBranch(item)"
           >
             {{ item }}
           </view>
@@ -50,11 +50,11 @@
 
 <script lang="ts" setup>
 import CatBox from "@/pages/collection/cat-box";
-import {reactive, ref} from "vue";
-import {CatPreview, News} from "@/apis/community/community-components";
-import {onClickCatBox, onClickSearch} from "@/pages/collection/event";
-import {getCatPreviews, getNews} from "@/apis/community/community";
-import {onReachBottom} from "@dcloudio/uni-app";
+import { reactive, ref } from "vue";
+import { CatPreview, News } from "@/apis/community/community-interfaces";
+import { onClickCatBox, onClickSearch } from "@/pages/collection/event";
+import { getCatPreviews, getNews } from "@/apis/community/community";
+import { onReachBottom } from "@dcloudio/uni-app";
 
 const cats = reactive<CatPreview[]>([]);
 getCatPreviews().then(res => {
@@ -144,7 +144,7 @@ initCarouselContents();
     padding: 10rpx 15rpx 10rpx 15rpx;
     border-radius: 15rpx;
     font-size: calc(15 / 390 * 100vw);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   }
 }
 
