@@ -62,7 +62,7 @@
       }
     },
     {
-      "path": "pages/world/postDetail/postDetail",
+      "path": "pages/world/post-detail/post-detail",
       "style": {
         "navigationBarTitleText": "帖子详情"
       }
@@ -107,7 +107,7 @@
         "navigationBarTitleText": "搜索",
         "app-plus": {
           "titleNView": {
-            "autoBackButton": "false"
+            "autoBackButton": false
           }
         }
       }
