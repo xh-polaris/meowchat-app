@@ -1,41 +1,43 @@
-import { Admins, News, Notice } from "../schemas"
+import {Admin, New, Notice} from "../schemas";
 
 export interface GetNewsResp {
-    code: number
-    msg: string
-    news: Array<News>
+    code: number;
+    msg: string;
+    news: New[];
 }
 
 export interface GetAdminsResp {
-    code: number
-    msg: string
-    admins: Array<Admins>
+    code: number;
+    msg: string;
+    admins: Admin[];
 }
 
-export interface GetNoticeResp {
-    code: number
-    msg: string
-    notices: Array<Notice>
+export interface GetNoticesResp {
+    code: number;
+    msg: string;
+    notices: Notice[];
 }
 
 export interface NewNoticeReq {
-    id?: string
-    text: string
+    id?: string;
+    text: string;
 }
 
 export interface NewNoticeResp {
-    code: number
-    msg: string
+    code: number;
+    msg: string;
+    noticeId: string;
 }
 
-export interface NewNewsReq {
-    id?: string
-    imageUrl: string
-    linkUrl: string
-    type: string
+export interface NewNewReq {
+    id?: string;
+    imageURL: string;
+    linkUrl: string;
+    type: string;
 }
 
-export interface NewNewsResp {
-    code: number
-    msg: string
+export interface NewNewResp {
+    code: number;
+    msg: string;
+    newId: string;
 }
