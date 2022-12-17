@@ -1,47 +1,47 @@
-import { Moment } from "../schemas"
+import {Moment} from "../schemas";
 
 export interface DeleteMomentReq {
-    momentId: string
+    momentId: string;
 }
 
 export interface DeleteMomentResp {
-    code: number
-    msg: string
+    code: number;
+    msg: string;
 }
 
 export interface NewMomentReq {
-    id?: string
-    title: string
-    catId?: string
-    communityId: string
-    text: string
-    photos: Array<string>
+    id?: string; // 留空表示创建
+    title: string;
+    catId?: string; // 是否以猫咪身份发布
+    communityId: string;
+    text: string;
+    photos: string[];
 }
 
 export interface NewMomentResp {
-    code: number
-    msg: string
-    momentId: string
+    code: number;
+    msg: string;
+    momentId: string;
 }
 
-export interface GetMomentPreviewsReqParams {
-    page: number
-    communityId: string
+export interface GetMomentPreviewsReq {
+    page: number;
+    communityId: string;
 }
 
 export interface GetMomentPreviewsResp {
-    code: number
-    msg: string
-    moments: Array<Moment>
+    code: number;
+    msg: string;
+    moments: Moment[];
 }
 
-export interface GetMomentDetailReqParams {
-    momentId: string
+export interface GetMomentDetailReq {
+    momentId: string;
 }
 
 export interface GetMomentDetailResp {
-    moment: Moment
-    code: number
-    msg: string
+    moment: Moment;
+    code: number;
+    msg: string;
 }
 
