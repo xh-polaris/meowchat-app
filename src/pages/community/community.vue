@@ -9,22 +9,11 @@
         ({{ currentNavBtn }})
       </view>
       <view class="switch-box">
-        <button class="switch" size="mini">
+        <button class="switch" size="mini" @click="onClickSwitch">
           ⇌ 切换学校
         </button>
       </view>
     </view>
-<!--    <view class="school-select-box">-->
-<!--      <view class="navbar">-->
-<!--        <view-->
-<!--          v-for="item in school.campuses" :key="item"-->
-<!--          :class="'navbtn '+(currentNavBtn===item?'current':'')"-->
-<!--          @click="setBranch(item)"-->
-<!--        >-->
-<!--          {{ item }}-->
-<!--        </view>-->
-<!--      </view>-->
-<!--    </view>-->
   </view>
 
   <view>
@@ -41,8 +30,8 @@ import { reactive, ref } from "vue"
 import Masonry from "@/pages/community/masonry"
 import Carousel from "@/pages/community/carousel"
 import { onReachBottom } from "@dcloudio/uni-app";
-import { News } from "@/apis/community/community-components";
-import { getNews } from "@/apis/community/community";
+import { News } from "@/apis/schemas";
+import { getNews } from "@/apis/notice/notice";
 
 const school = reactive({
   name: "华东师范大学",
@@ -54,6 +43,12 @@ const currentNavBtn = ref("中北校区")
 
 function setBranch(e: string) {
   currentNavBtn.value = e
+}
+
+function onClickSwitch() {
+  uni.navigateTo({
+    url: `/pages/community/school_select`
+  });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -90,8 +85,9 @@ initCarouselContents()
   color: #7f7f81;
   margin: 25rpx 10rpx 20rpx 5rpx;
   font-weight: bold;
-  font-size: middle;
+  //这里原先谁写的font-size: middle？？？
 }
+
 .switch {
   border-radius: 20px;
   margin-top: 5rpx;
@@ -124,7 +120,7 @@ initCarouselContents()
     padding: 10rpx 15rpx 10rpx 15rpx;
     border-radius: 15rpx;
     font-size: calc(15 / 390 * 100vw);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   }
 }
 
@@ -176,9 +172,9 @@ initCarouselContents()
 }
 
 .logo {
-  height: 200 rpx;
-  margin: 200 rpx auto 50 rpx;
-  width: 200 rpx;
+  height: 200rpx;
+  margin: 200rpx auto 50rpx;
+  width: 200rpx;
 }
 
 .text-area {
@@ -188,6 +184,6 @@ initCarouselContents()
 
 .title {
   color: #8f8f94;
-  font-size: 36 rpx;
+  font-size: 36rpx;
 }
 </style>

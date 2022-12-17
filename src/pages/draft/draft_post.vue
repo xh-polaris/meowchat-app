@@ -1,9 +1,22 @@
 <template>
   <view class="all">
     <view class="main">
+      <input placeholder="输入标题" type="text">
+      <!-- #ifdef H5 -->
+      <textarea
+        maxlength="5000"
+        placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+        type="text"
+      />
+      <!-- #endif -->
+      <!-- #ifdef MP-WEIXIN -->
+      <textarea
+        maxlength="5000"
+        placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+        type="text"
+      />
+      <!-- #endif -->
 
-      <input type="text" placeholder="输入标题" />
-      <textarea type="text" maxlength="5000" placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待" />
 
       <view class="images">
         <block v-for="(image) in imagesData" :key="image.id">
@@ -14,7 +27,6 @@
       <view class="image-num">
         {{ imagesData.length }}/8
       </view>
-
     </view>
 
     <view class="panel">
@@ -59,14 +71,9 @@ function addImageData() {
 }
 
 const isAnonymous = ref(false)
-const isSyncToCollection = ref(false)
 
 function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value
-}
-
-function toggleSyncToCollection() {
-  isSyncToCollection.value = !isSyncToCollection.value
 }
 
 const imageNum = Math.floor(Math.random() * 9)
@@ -151,12 +158,15 @@ input {
 
 textarea {
   margin-bottom: calc(10 / 390 * 100vw);
+  word-wrap: break-word;
+  white-space: pre-line;
 }
 
 textarea ::selection {
   background-color: #939393;
   color: white;
 }
+
 ::placeholder {
   color: #939393;
 }

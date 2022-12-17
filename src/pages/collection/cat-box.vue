@@ -25,7 +25,7 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue"
-import { CatPreview } from "@/apis/community/community-components"
+import { CatPreview } from "@/apis/community/community-interfaces"
 import { onClickCollect } from "@/pages/collection/event"
 
 const props = defineProps<{ cat: CatPreview }>()
