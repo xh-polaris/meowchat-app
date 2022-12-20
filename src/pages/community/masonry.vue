@@ -192,12 +192,12 @@ $avatarWidth: calc(21 / 390 * 100vw);
     font-size: $smallFontSize;
     color: #696969;
     font-weight: 500;
-    padding: calc(12 / 390 * 100vw) calc(12 / 390 * 100vw) calc(6 / 390 * 100vw);
+    padding: calc(4 / 390 * 100vw) calc(12 / 390 * 100vw) calc(6 / 390 * 100vw);
 
     .title {
       font-size: $titleFontSize;
       color: #000000;
-      line-height: $titleFontSize;
+      line-height: calc ($titleFontSize * 1.5);
       margin-bottom: calc(12 / 390 * 100vw);
     }
 

@@ -1,11 +1,15 @@
 <template>
   <view class="navbar">
-    <view :class="'navbtn '+(currentNavBtn==='推荐'?'current':'')" @click.prevent="recommend">
-      推荐
+    <view :class="'navbtn '+(currentNavBtn==='官方'?'current':'')" @click.prevent="official">
+      官方
     </view>
     |
-    <view :class="'navbtn '+(currentNavBtn==='全部'?'current':'')" @click.prevent="all">
-      全部
+    <view :class="'navbtn '+(currentNavBtn==='热度'?'current':'')" @click.prevent="hot">
+      热度
+    </view>
+    |
+    <view :class="'navbtn '+(currentNavBtn==='最新'?'current':'')" @click.prevent="latest">
+      最新
     </view>
     |
     <view :class="'navbtn '+(currentNavBtn==='关注'?'current':'')" @click.prevent="followed">
@@ -75,14 +79,18 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
 import { getPostPreviews } from "../../apis/post/post";
 
-const currentNavBtn = ref("推荐");
+const currentNavBtn = ref("热度");
 
-function recommend() {
-  console.log("推荐");
+function official() {
+  console.log("官方");
 }
 
-function all() {
-  console.log("全部");
+function hot() {
+  console.log("热度");
+}
+
+function latest() {
+  console.log("最新");
 }
 
 function followed() {
@@ -164,8 +172,8 @@ body {
 
 .post {
   background-color: #FFFFFF;
-  border-top: 1px #EEEEEE solid;
-  border-bottom: 1px #EEEEEE solid;
+  border-top: 1px #F5F5F5 solid;
+  border-bottom: 1px #F5F5F5 solid;
   margin-bottom: calc(6 / 390 * 100vw);
   padding: calc(16 / 390 * 100vw);
 }
