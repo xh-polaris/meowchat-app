@@ -9,6 +9,7 @@
     <view class="progress-box">
       <view class="text-box1">
         <text>桥遇</text>
+<!--        <text>{{cat.name}}</text>-->
       </view>
       <progress
         :percent="data.percent" :stroke-width="10"
@@ -122,17 +123,31 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
+import {Cat} from "@/apis/schemas";
+import {getCatDetail, getCatPreviews} from "@/apis/collection/collection";
+import {GetCatDetailReq, GetCatPreviewsReq} from "@/apis/collection/collection-interfaces";
+
+const props = defineProps< {
+  id: string
+} >()
+const getCatDetailReq = reactive<GetCatDetailReq>({
+  catId: props.id,
+})
+
+// let cat2: Cat
+// const cat = ref<Cat>()
+// getCatDetail(getCatDetailReq).then(res => {
+//   cat.push = res.cat
+//   // cat.value.name = (res.cat.name)
+//   console.log(cat)
+// })
+
 
 const data = reactive({
   percent: 73,
-  num: 5
+  num: [1, 2, 3, 4, 5]
 });
-
-
-const props = defineProps<{
-  id: string
-}>();
 
 </script>
 
@@ -188,15 +203,18 @@ const props = defineProps<{
   margin-top: 40rpx;
 
   .combination {
+    width: 250rpx;
     margin-left: auto;
     margin-right: auto;
 
     .attribute {
+      text-align: center;
       color: #007aff;
       font-size: 30rpx;
     }
 
     .content {
+      text-align: center;
       color: #37393a;
       font-size: 40rpx;
     }
@@ -230,6 +248,7 @@ const props = defineProps<{
     color: white;
     background: linear-gradient(90deg, #0688f3, white);
   }
+
 
   .imgs {
     margin-top: 40rpx;

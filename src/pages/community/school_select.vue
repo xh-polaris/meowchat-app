@@ -22,10 +22,10 @@
         </view>
       </view>
 <!--      目前效果不够理想-->
-      <select class="select">
-        <option class="select" value="中山北路校区">中山北路校区</option>
-        <option class="select" value="闵行校区">闵行校区</option>
-        <option class="select" value="全部">全部</option>
+      <select>
+        <option value="中山北路校区">中山北路校区</option>
+        <option value="闵行校区">闵行校区</option>
+        <option value="全部">全部</option>
       </select>
 <!--      暂时废弃的下拉选框-->
 <!--      <view class="container" tabIndex=-1>-->
@@ -297,14 +297,26 @@ const school = reactive({
 
 }
 // 下拉菜单
-.select {
-  font-size: 1rpx;
-  padding-left: 10rpx;
+select {
+  font-size: 10rpx;
+  font-weight: bold;
+  padding-left: 15rpx;
   border-radius: 20px;
   position: relative;
   width: 250rpx;
   margin-top: 20rpx;
   margin-right: 20rpx;
+  outline: none;
+}
+option {
+  font-size: 10rpx;
+  color: #afafaf;
+  background-color: #FFFFFF;
+}
+
+option:checked {
+  color: black;
+  font-weight: bold;
 }
 
 .container {
