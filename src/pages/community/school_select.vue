@@ -4,9 +4,9 @@
       <image class="cancel" src="../../static/images/cancel.png" />
       <view class="search-bar-box">
         <input
-          type="text" value=""
-          placeholder="输入学校名称或拼音查询"
           class="search-text" maxlength="10"
+          placeholder="输入学校名称或拼音查询"
+          type="text" value=""
         >
       </view>
     </view>
@@ -21,24 +21,29 @@
           华东师范大学
         </view>
       </view>
-<!--      目前效果不够理想-->
+      <!--      目前效果不够理想-->
       <select>
-        <option value="中山北路校区">中山北路校区</option>
-        <option value="闵行校区">闵行校区</option>
-        <option value="全部">全部</option>
+        <option value="中山北路校区">
+          中山北路校区
+        </option>
+        <option value="闵行校区">
+          闵行校区
+        </option>
+        <option value="全部">
+          全部
+        </option>
       </select>
-<!--      暂时废弃的下拉选框-->
-<!--      <view class="container" tabIndex=-1>-->
-<!--        <view class="menu-button">中山北路校区</view>-->
-<!--        <view class="menu-list">-->
-<!--          <view class="menu">中山北路校区</view>-->
-<!--          <view class="menu">全部</view>-->
-<!--          <view class="menu">闵行校区</view>-->
-<!--          <view class="menu">闵行校区</view>-->
-<!--          <view class="menu">闵行校区</view>-->
-<!--        </view>-->
-<!--      </view>-->
-
+      <!--      暂时废弃的下拉选框-->
+      <!--      <view class="container" tabIndex=-1>-->
+      <!--        <view class="menu-button">中山北路校区</view>-->
+      <!--        <view class="menu-list">-->
+      <!--          <view class="menu">中山北路校区</view>-->
+      <!--          <view class="menu">全部</view>-->
+      <!--          <view class="menu">闵行校区</view>-->
+      <!--          <view class="menu">闵行校区</view>-->
+      <!--          <view class="menu">闵行校区</view>-->
+      <!--        </view>-->
+      <!--      </view>-->
     </view>
     <view class="search-bar">
       <view class="small">
@@ -78,7 +83,7 @@
     </view>
   </view>
 
-  <view class="blank"></view>
+  <view class="blank" />
 
   <view class="content2">
     <view class="search-bar">
@@ -87,8 +92,8 @@
       </view>
     </view>
     <view
-        class="school"
-        v-for="item in school.name" :key="item"
+      v-for="item in school.name"
+      :key="item" class="school"
     >
       {{ item }}
     </view>
@@ -98,8 +103,8 @@
       </view>
     </view>
     <view
-        class="school"
-        v-for="item in school.name" :key="item"
+      v-for="item in school.name"
+      :key="item" class="school"
     >
       {{ item }}
     </view>
@@ -109,8 +114,8 @@
       </view>
     </view>
     <view
-        class="school"
-        v-for="item in school.name" :key="item"
+      v-for="item in school.name"
+      :key="item" class="school"
     >
       {{ item }}
     </view>
@@ -120,8 +125,8 @@
       </view>
     </view>
     <view
-        class="school"
-        v-for="item in school.name" :key="item"
+      v-for="item in school.name"
+      :key="item" class="school"
     >
       {{ item }}
     </view>
@@ -131,8 +136,8 @@
       </view>
     </view>
     <view
-        class="school"
-        v-for="item in school.name" :key="item"
+      v-for="item in school.name"
+      :key="item" class="school"
     >
       {{ item }}
     </view>
@@ -142,21 +147,19 @@
       </view>
     </view>
     <view
-        class="school"
-        v-for="item in school.name" :key="item"
+      v-for="item in school.name"
+      :key="item" class="school"
     >
       {{ item }}
     </view>
-
-
   </view>
 </template>
 
 <script lang="ts" setup>
-import {reactive} from "vue";
+import { reactive } from "vue";
 
 const school = reactive({
-  alpha: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",],
+  alpha: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
   No: 0
 });
@@ -175,6 +178,7 @@ const school = reactive({
   padding-bottom: 15rpx;
   border-bottom: 1px solid #f6f6f6;
 }
+
 // 分隔栏
 .blank {
   background-color: #f6f6f6;
@@ -296,6 +300,7 @@ const school = reactive({
   }
 
 }
+
 // 下拉菜单
 select {
   font-size: 10rpx;
@@ -308,6 +313,7 @@ select {
   margin-right: 20rpx;
   outline: none;
 }
+
 option {
   font-size: 10rpx;
   color: #afafaf;
