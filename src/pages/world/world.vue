@@ -1,19 +1,19 @@
 <template>
   <view class="navbar">
-    <view :class="'navbtn '+(currentNavBtn==='官方'?'current':'')" @click.prevent="official">
-      官方
+    <view :class="types[0].className" @click.prevent="types[0].onClick">
+      {{ types[0].name }}
     </view>
     |
-    <view :class="'navbtn '+(currentNavBtn==='热度'?'current':'')" @click.prevent="hot">
-      热度
+    <view :class="types[1].className" @click.prevent="types[1].onClick">
+      {{ types[1].name }}
     </view>
     |
-    <view :class="'navbtn '+(currentNavBtn==='最新'?'current':'')" @click.prevent="latest">
-      最新
+    <view :class="types[2].className" @click.prevent="types[2].onClick">
+      {{ types[2].name }}
     </view>
     |
-    <view :class="'navbtn '+(currentNavBtn==='关注'?'current':'')" @click.prevent="followed">
-      关注
+    <view :class="types[3].className" @click.prevent="types[3].onClick">
+      {{ types[3].name }}
     </view>
     <view class="search" @click.prevent="search" />
   </view>
@@ -42,19 +42,19 @@
           <view class="tags">
             <block v-if="post.tags.length > 4">
               <view class="tag">
-                {{ post.tags[0].name }}
+                {{ post.tags[0] }}
               </view>
               <view class="tag">
-                {{ post.tags[1].name }}
+                {{ post.tags[1] }}
               </view>
               <view class="tag">
-                {{ post.tags[2].name }}
+                {{ post.tags[2] }}
               </view>
             </block>
             <block v-else>
               <block v-for="(tag) in post.tags" :key="tag.id">
                 <view class="tag">
-                  {{ tag.name }}
+                  {{ tag }}
                 </view>
               </block>
             </block>
@@ -74,32 +74,10 @@
 
 <script setup>
 
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
 import { getPostPreviews } from "../../apis/post/post";
-
-const currentNavBtn = ref("热度");
-
-function official() {
-  console.log("官方");
-}
-
-function hot() {
-  console.log("热度");
-}
-
-function latest() {
-  console.log("最新");
-}
-
-function followed() {
-  console.log("关注");
-}
-
-function search() {
-  console.log("搜索")
-}
 
 const postsData = reactive([]);
 
@@ -119,6 +97,53 @@ onReachBottom(() => {
   createPostsDataBatch();
 });
 
+const types = reactive([
+  {
+    name: "官方",
+    isCurrent: false,
+    className: "navbtn",
+    onClick: ev => {
+      toggleSelf("官方")
+    }
+  },
+  {
+    name: "热度",
+    isCurrent: true,
+    className: "navbtn current",
+    onClick: ev => {
+      toggleSelf("热度")
+    }
+  },
+  {
+    name: "最新",
+    isCurrent: false,
+    className: "navbtn",
+    onClick: ev => {
+      toggleSelf("最新")
+    }
+  },
+  {
+    name: "关注",
+    isCurrent: false,
+    className: "navbtn",
+    onClick: ev => {
+      toggleSelf("关注")
+    }
+  }
+])
+
+const toggleSelf = name => {
+  if (!types.filter(type => type.name === name)[0].isCurrent) {
+    types.map(type => {
+      type.isCurrent = false;
+      type.className = "navbtn"
+    })
+    const currentType = types.filter(type => type.name === name)[0]
+    currentType.isCurrent = true
+    currentType.className = "navbtn current"
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -134,7 +159,7 @@ body {
   display: flex;
   color: #B8B8B8;
   font-size: calc(13 / 390 * 100vw);
-  align-items: baseline;
+  align-items: center;
   width: 100vw;
   padding-top: calc(10 / 390 * 100vw);
   padding-bottom: calc(16 / 390 * 100vw);
@@ -219,23 +244,27 @@ body {
     height: calc(34 / 390 * 100vw);
     font-size: calc(12 / 390 * 100vw);
     line-height: calc(17 / 390 * 100vw);
-    margin-bottom: calc(6 / 390 * 100vw);
   }
 
   .tags {
     display: flex;
+    flex-wrap: wrap;
     color: #1FA1FF;
     font-size: calc(10 / 390 * 100vw);
-    height: calc(18 / 390 * 100vw);
+    //height: calc(18 / 390 * 100vw);
     line-height: calc(18 / 390 * 100vw);
 
     .tag {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       text-align: center;
       min-width: calc(28 / 390 * 100vw);
       padding: 0 calc(6 / 390 * 100vw);
       border: #1FA1FF 1px solid;
       border-radius: calc(9 / 390 * 100vw);
       margin-right: calc(8 / 390 * 100vw);
+      margin-top: calc(6 / 390 * 100vw);
     }
   }
 }
