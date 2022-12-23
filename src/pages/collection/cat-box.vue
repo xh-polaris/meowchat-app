@@ -5,7 +5,9 @@
     </view>
     <view class="text">
       <view class="title">
-        <view class="name">{{ cat.name }}</view>
+        <view class="name">
+          {{ cat.name }}
+        </view>
         <view class="collect">
           <image
             :src="cat.isCollected?'/static/images/collect.png':'/static/images/collect_HL.png'"
@@ -26,7 +28,7 @@
 <script lang="ts" setup>
 import { reactive } from "vue"
 // import { CatPreview } from "@/apis/community/community-interfaces"
-import {Cat} from "@/apis/schemas";
+import { Cat } from "@/apis/schemas";
 import { onClickCollect } from "@/pages/collection/event"
 
 const props = defineProps<{ cat: Cat }>()
@@ -37,6 +39,7 @@ const cat = reactive(props.cat)
 
 .cats-box {
   display: flex;
+  font-family: sans-serif;
 
   image {
     width: 150rpx;
