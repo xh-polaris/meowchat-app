@@ -11,6 +11,7 @@
         <image class="search-span" src="/static/images/search_span.png" />
       </view>
     </view>
+    <!-- 校区选择框   -->
     <view class="school-box">
       <view class="school-select-box">
         <image class="arrow" src="../../static/images/location.png" />
@@ -51,15 +52,26 @@
 <script lang="ts" setup>
 import CatBox from "@/pages/collection/cat-box";
 import { reactive, ref } from "vue";
-import { CatPreview, News } from "@/apis/community/community-interfaces";
+import { News } from "@/apis/community/community-interfaces";
 import { onClickCatBox, onClickSearch } from "@/pages/collection/event";
-import { getCatPreviews, getNews } from "@/apis/community/community";
+import { getNews } from "@/apis/community/community";
+import { getCatPreviews } from "@/apis/collection/collection";
 import { onReachBottom } from "@dcloudio/uni-app";
+import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces";
+import { Cat } from "@/apis/schemas";
 
-const cats = reactive<CatPreview[]>([]);
-getCatPreviews().then(res => {
+const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
+  page: 0,
+  communityId: "0",
+})
+
+const cats = reactive<Cat[]>([])
+
+getCatPreviews(getCatPreviewsReq).then(res => {
   cats.push(...res.cats);
-});
+})
+
+
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
@@ -221,12 +233,12 @@ initCarouselContents();
 }
 
 .out {
-  padding: 20rpx 30rpx 30rpx;
+  padding: 20rpx 30rpx 10rpx;
 
   .row {
     border-radius: 25px;
     border: 1px solid #dad6d6;
-    padding: 20rpx 0;
+    padding: 10rpx 0;
 
   }
 }
