@@ -83,6 +83,7 @@ const currentNavBtn = ref("中北校区");
 function setBranch(e: string) {
   currentNavBtn.value = e;
 }
+
 function onClickSwitch() {
   uni.navigateTo({
     url: `/pages/community/school_select`
@@ -114,7 +115,7 @@ initCarouselContents();
 <style lang="scss" scoped>
 
 .arrow {
-  width: 50rpx;
+  width: 44rpx;
   height: 50rpx;
   margin: 25rpx 0rpx 30rpx 20rpx;
 }
