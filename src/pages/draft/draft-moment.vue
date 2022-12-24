@@ -10,7 +10,7 @@
       <view class="image-num">
         {{ imagesData.length }}/8
       </view>
-      <textarea maxlength="5000" type="text" placeholder="说点什么吧！" />
+      <textarea maxlength="5000" placeholder="说点什么吧！" type="text" />
 
       <view class="choose-cats-bar">
         <view class="choose-cats">
@@ -18,18 +18,7 @@
         </view>
         <view class="right-arrow" />
         <view class="choose-followed-cats">
-          选择关注的猫咪
-        </view>
-      </view>
-      <view class="cat-names">
-        <view class="cat-name selected">
-          咕咕
-        </view>
-        <view class="cat-name">
-          噜噜
-        </view>
-        <view class="cat-name">
-          噗噗噗
+          不选择猫咪
         </view>
       </view>
     </view>
@@ -171,6 +160,7 @@ textarea {
   font-size: calc(14 / 390 * 100vw);
   box-sizing: border-box;
 }
+
 ::placeholder {
   color: #939393;
 }
@@ -202,31 +192,6 @@ textarea ::selection {
   .choose-followed-cats {
     color: #B8B8B8;
     font-size: calc(12 / 390 * 100vw);
-  }
-}
-
-.cat-names {
-  display: flex;
-  align-items: center;
-  margin: 0 $margin;
-
-  .cat-name {
-    color: #939393;
-    font-size: calc(14 / 390 * 100vw);
-    border: #D1D1D1 calc(1 / 390 * 100vw) solid;
-    line-height: calc(16 / 390 * 100vw);
-    height: calc(16 / 390 * 100vw);
-    border-radius: calc(8 / 390 * 100vw);
-    padding: 0 calc(4 / 390 * 100vw);
-    margin-right: calc(8 / 390 * 100vw);
-    text-align: center;
-    min-width: calc(36 / 390 * 100vw);
-
-
-    &.selected {
-      color: #1FA1FF;
-      border: #1FA1FF calc(1 / 390 * 100vw) solid;
-    }
   }
 }
 
