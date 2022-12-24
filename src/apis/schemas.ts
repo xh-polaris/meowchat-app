@@ -65,7 +65,7 @@ export interface Notice {
     user: User;
 }
 
-export interface New {
+export interface News {
     id: string;
     imageUrl: string;
     linkUrl: string;

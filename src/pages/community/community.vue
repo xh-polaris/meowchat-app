@@ -1,17 +1,20 @@
 <template>
   <view class="school-box">
     <view class="school-select-box">
-      <image class="arrow" src="../../static/images/location.png" />
-      <view class="school-name">
-        {{ school.name }}
-      </view>
-      <view class="campus-name">
-        ({{ currentNavBtn }})
+      <image class="arrow" src="../../static/images/location.png" @click="onClickSwitch" />
+      <view class="names" @click="onClickSwitch">
+        <view class="school-name">
+          {{ school.name }}
+        </view>
+        <view class="campus-name">
+          ({{ currentNavBtn }})
+        </view>
       </view>
       <view class="switch-box">
-        <button class="switch" size="mini" @click="onClickSwitch">
-          ⇌ 切换学校
-        </button>
+        <view class="switch-icon" />
+        <view class="switch" size="mini" @click="onClickSwitch">
+          切换学校
+        </view>
       </view>
     </view>
   </view>
@@ -76,26 +79,9 @@ initCarouselContents()
 
 <style lang="scss" scoped>
 .arrow {
-  width: 50rpx;
+  width: 44rpx;
   height: 50rpx;
-  margin: 25rpx 0rpx 30rpx 20rpx;
-}
-
-.campus-name {
-  color: #7f7f81;
-  margin: 25rpx 10rpx 20rpx 5rpx;
-  font-weight: bold;
-  //这里原先谁写的font-size: middle？？？
-}
-
-.switch {
-  border-radius: 20px;
-  margin-top: 5rpx;
-  margin-right: 20rpx;
-  color: #1fa1ff;
-  font-size: 10px;
-  background: white;
-  border: solid #1fa1ff 1px;
+  margin: 30rpx 0rpx 30rpx 20rpx;
 }
 
 .navbar {
@@ -124,29 +110,65 @@ initCarouselContents()
   }
 }
 
-.switch-box {
-  margin-left: auto;
-  margin-top: 20rpx;
-}
-
 .school-box {
-  height: 8vh;
+  height: 14vw;
   display: flex;
   flex-direction: column;
+  font-family: sans-serif;
 }
 
 .school-select-box {
-  height: 8vh;
+  height: 14vw;
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: space-around;
 }
 
-.school-name {
-  margin: 25rpx 10rpx 30rpx 10rpx;
-  font-weight: bold;
-  border-bottom: 2px solid skyblue;
-  font-size: large;
+.names {
+  display: flex;
+  align-items: baseline;
+  font-size: calc(18 / 390 * 100vw);
+
+  .school-name {
+    font-weight: bold;
+    border-bottom: 2px solid #1FA1FF;
+    line-height: calc(18 / 390 * 100vw);
+    margin-left: calc(8 / 390 * 100vw);
+    padding-bottom: calc(4 / 390 * 100vw);
+  }
+
+  .campus-name {
+    color: #7f7f81;
+    font-weight: bold;
+    margin-left: calc(8 / 390 * 100vw);
+  }
+}
+
+.switch-box {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  border: solid #1fa1ff calc(1 / 390 * 100vw);
+  padding: 0 calc(8 / 390 * 100vw);
+  height: calc(22 / 390 * 100vw);
+  border-radius: calc(11 / 390 * 100vw);
+  margin-right: calc(12 / 390 * 100vw);
+
+  .switch-icon {
+    width: calc(12 / 390 * 100vw);
+    height: calc(12 / 390 * 100vw);
+    background-image: url("@/static/images/switch-blue.png");
+    background-size: 100% 100%;
+  }
+
+  .switch {
+    outline-style: none;
+    color: #1fa1ff;
+    font-size: calc(12 / 390 * 100vw);
+    line-height: calc(12 / 390 * 100vw);
+    margin-left: calc(8 / 390 * 100vw);
+  }
+
 }
 
 .swiper-box {

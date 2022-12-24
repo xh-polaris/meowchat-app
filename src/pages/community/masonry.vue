@@ -1,4 +1,22 @@
 <template>
+  <view class="header">
+    <view class="title">
+      最新动态
+    </view>
+    <view class="toggle">
+      <view :class="types[0].className" @click.prevent="types[0].onClick">
+        {{ types[0].name }}
+      </view>
+      |
+      <view :class="types[1].className" @click.prevent="types[1].onClick">
+        {{ types[1].name }}
+      </view>
+      |
+      <view :class="types[2].className" @click.prevent="types[2].onClick">
+        {{ types[2].name }}
+      </view>
+    </view>
+  </view>
   <view class="masonry">
     <view v-for="i in 2" :key="i" :class="i===1?'column-left':'column-right'">
       <block v-for="moment in i===1?leftMoments:rightMoments" :key="moment.id">
@@ -140,6 +158,45 @@ const addTile = (tileIndex: number, side: string) => {
 
 addBatch()
 
+const types = reactive([
+  {
+    name: "热门",
+    isCurrent: true,
+    className: "label current",
+    onClick: (ev: Event) => {
+      toggleSelf("热门")
+    }
+  },
+  {
+    name: "最新",
+    isCurrent: false,
+    className: "label",
+    onClick: (ev: Event) => {
+      toggleSelf("最新")
+    }
+  },
+  {
+    name: "关注",
+    isCurrent: false,
+    className: "label",
+    onClick: (ev: Event) => {
+      toggleSelf("关注")
+    }
+  }
+])
+
+const toggleSelf = (name: string) => {
+  if (!types.filter(type => type.name === name)[0].isCurrent) {
+    types.map(type => {
+      type.isCurrent = false;
+      type.className = "label"
+    })
+    const currentType = types.filter(type => type.name === name)[0]
+    currentType.isCurrent = true
+    currentType.className = "label current"
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -153,10 +210,42 @@ $titleFontSize: calc(12 / 390 * 100vw);
 $smallFontSize: calc(8 / 390 * 100vw);
 $avatarWidth: calc(21 / 390 * 100vw);
 
+.header {
+  margin: 0 calc(12 / 390 * 100vw);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    color: #353535;
+    font-weight: bold;
+    font-size: calc(18 / 390 * 100vw);
+  }
+
+  .toggle {
+    display: flex;
+    align-items: center;
+    color: #B8B8B8;
+    font-size: calc(10 / 390 * 100vw);
+    transform: translateX(calc(9 / 390 * 100vw));
+
+    .label {
+      color: #939393;
+      font-size: calc(12 / 390 * 100vw);
+      padding: 0 calc(9 / 390 * 100vw);
+
+      &.current {
+        color: #353535;
+      }
+    }
+  }
+}
+
+
 .masonry {
   display: flex;
   background-color: transparent;
-  padding-top: 10vw;
+  padding-top: calc(12 / 390 * 100vw);
 }
 
 .column-left {
