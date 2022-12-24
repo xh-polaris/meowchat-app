@@ -26,6 +26,8 @@
   <view style="margin-top:10px">
     <masonry />
   </view>
+
+  <draft-button type="moment" />
 </template>
 
 <script lang="ts" setup>
@@ -35,6 +37,7 @@ import Carousel from "@/pages/community/carousel"
 import { onReachBottom } from "@dcloudio/uni-app";
 import { News } from "@/apis/schemas";
 import { getNews } from "@/apis/notice/notice";
+import DraftButton from "@/pages/draft/draft-button"
 
 const school = reactive({
   name: "华东师范大学",
