@@ -637,10 +637,10 @@
     "@dcloudio/uni-shared" "3.0.0-alpha-3060320220917001"
     debug "^4.3.3"
 
-"@dcloudio/uni-ui@^1.4.22":
-  version "1.4.22"
-  resolved "https://registry.yarnpkg.com/@dcloudio/uni-ui/-/uni-ui-1.4.22.tgz#f0f42e341275c2a9bb97757b14ef316de490fca3"
-  integrity sha512-+ymdGhp+If+iZXzgf8rOQNz7mIKenTbzO9T6zkte5YC7WuBQyH4pwWpWRTpatR81XHZwJ2zES1DvJexzSS0Huw==
+"@dcloudio/uni-ui@^1.4.23":
+  version "1.4.23"
+  resolved "https://registry.yarnpkg.com/@dcloudio/uni-ui/-/uni-ui-1.4.23.tgz#f7d4bb5fbb75ecffcd930499d2c65d0c38f6d6df"
+  integrity sha512-FJRkhL240gin9WvOunY38Yi2/0FzTLVlEI3dxcjzaV1oYa81o+IWEf/29YDiRrsHuvYDk9g600QgiZLC+A6ycA==
 
 "@dcloudio/uni-uts-vite@3.0.0-alpha-3060320220917001":
   version "3.0.0-alpha-3060320220917001"
