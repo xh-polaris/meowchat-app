@@ -9,3 +9,9 @@ export function onClickMoment (id: string) {
     url: `/pages/moment/moment?id=${id}`
   })
 }
+
+export function onClickSwitch () {
+  uni.navigateTo({
+    url: `/pages/community/school_select`
+  })
+}

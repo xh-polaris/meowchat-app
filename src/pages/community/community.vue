@@ -20,11 +20,11 @@
   </view>
 
   <view>
-    <carousel v-if="isCarouselInitialized" :contents="carouselContents" />
+    <carousel v-if="init" />
   </view>
 
   <view style="margin-top:10px">
-    <masonry />
+    <masonry v-if="init" />
   </view>
 
   <draft-button type="moment" />
@@ -34,9 +34,9 @@
 import { reactive, ref } from "vue"
 import Masonry from "@/pages/community/masonry"
 import Carousel from "@/pages/community/carousel"
-import { onReachBottom } from "@dcloudio/uni-app";
-import { News } from "@/apis/schemas";
-import { getNews } from "@/apis/notice/notice";
+import { onReachBottom } from "@dcloudio/uni-app"
+import { onClickSwitch } from "@/pages/community/event"
+import { signIn } from "@/apis/auth/auth"
 import DraftButton from "@/pages/draft/draft-button"
 
 const school = reactive({
@@ -47,36 +47,46 @@ const school = reactive({
 
 const currentNavBtn = ref("中北校区")
 
-function setBranch(e: string) {
-  currentNavBtn.value = e
-}
-
-function onClickSwitch() {
-  uni.navigateTo({
-    url: `/pages/community/school_select`
-  });
-}
-
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 onReachBottom(() => {
 }) //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
 
-const isCarouselInitialized = ref(false)
+const init = ref(false)
 
-const carouselContents = reactive<News[]>([])
-
-async function initCarouselContents() {
-  let newsAmount = 0
-  let newsArray: News[] = []
-  while (newsAmount < 3) {
-    newsArray = (await getNews()).news
-    newsAmount = newsArray.length
-  }
-  newsArray.map(news => carouselContents.push(news))
-  isCarouselInitialized.value = true
+if (!uni.getStorageSync("communityId")) {
+  uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84")
 }
 
-initCarouselContents()
+uni.getProvider({
+  service: "oauth",
+  success (res: UniNamespace.GetProviderRes) {
+    if (res.provider[0] === "weixin") {
+      uni.login({
+        provider: "weixin",
+        success (res: UniNamespace.LoginRes) {
+          signIn({
+            authType: "wechat",
+            authId: "123",
+            params: [res.code]
+          }).then(res => {
+            uni.setStorageSync("accessToken", res.accessToken)
+            init.value = true
+          })
+        }
+      })
+    } else {
+      signIn({
+        authType: "email",
+        authId: "test@test.com",
+        params: ["1234"]
+      }).then(res => {
+        uni.setStorageSync("accessToken", res.accessToken)
+        init.value = true
+      })
+    }
+
+  },
+})
 
 </script>
 
