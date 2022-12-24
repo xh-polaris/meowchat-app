@@ -113,13 +113,13 @@
       }
     },
     {
-      "path": "pages/draft/draft_post",
+      "path": "pages/draft/draft-post",
       "style": {
         "navigationBarTitleText": "发帖子"
       }
     },
     {
-      "path": "pages/draft/draft_moment",
+      "path": "pages/draft/draft-moment",
       "style": {
         "navigationBarTitleText": "发动态"
       }
