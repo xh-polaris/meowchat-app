@@ -1,4 +1,6 @@
 <template>
+  <status-bar title="喵世界" message-count="23" />
+  <tabbar id="3" />
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
       {{ types[0].name }}
@@ -81,6 +83,8 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
 import { getPostPreviews } from "../../apis/post/post";
 import DraftButton from "@/pages/draft/draft-button"
+import StatusBar from "@/pages/tabbar/status_bar";
+import Tabbar from "@/pages/tabbar/tabbar";
 
 const postsData = reactive([]);
 

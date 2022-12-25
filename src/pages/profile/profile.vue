@@ -1,4 +1,6 @@
 <template>
+  <general-status-bar title="个人中心" back-icon="false" />
+  <tabbar id="4" />
   <view class="container">
     <image class="bg-set" src="https://static.xhpolaris.com/profile_background.png" />
     <view class="content">
@@ -94,6 +96,8 @@
 </template>
 
 <script lang="ts" setup>
+import GeneralStatusBar from "@/pages/tabbar/general_status_bar";
+import Tabbar from "@/pages/tabbar/tabbar";
 const userOptions = [
   {
     title: "我的发布",

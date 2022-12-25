@@ -1,4 +1,5 @@
 <template>
+  <general-status-bar title="喵世界" back-icon="true" />
   <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
   <reply :animation="enterReplyData" :replies="comments[selectedReply]" class="more-reply" />
 
@@ -75,6 +76,7 @@
 import {reactive, ref} from "vue";
 import {enterMask, enterReply} from "../../moment/event";
 import Reply from "@/pages/moment/reply";
+import GeneralStatusBar from "@/pages/tabbar/general_status_bar"
 
 const post = ref({
   id: "111",

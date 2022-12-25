@@ -1,4 +1,5 @@
 <template>
+  <status-bar-text-left title="猫猫名字" back-icon="true" />
   <view>
     <image src="https://static.xhpolaris.com/dog.jpg" class="img" />
     <view class="selector">
@@ -127,6 +128,7 @@ import {reactive, ref} from "vue";
 import {Cat} from "@/apis/schemas";
 import {getCatDetail, getCatPreviews} from "@/apis/collection/collection";
 import {GetCatDetailReq, GetCatPreviewsReq} from "@/apis/collection/collection-interfaces";
+import StatusBarTextLeft from "@/pages/tabbar/status_bar_text_left";import {Cat} from "@/apis/schemas";
 
 const props = defineProps< {
   id: string

@@ -1,5 +1,5 @@
 <template>
-
+  <general-status-bar title="我的消息" back-icon="true" />
   <view class="read-all-frame">
     <view class="read-all">全部已读</view>
   </view>
@@ -45,8 +45,9 @@
 </template>
 
 <script setup>
-</script>
+import GeneralStatusBar from "@/pages/tabbar/general_status_bar";
 
+</script>
 <style lang="scss" scoped>
 
 body {
