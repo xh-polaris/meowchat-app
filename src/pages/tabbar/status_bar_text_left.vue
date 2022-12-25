@@ -2,7 +2,7 @@
   <view class="status-bar">
     <image
       v-if="backIcon==='true'" class="back-icon"
-      src="/static/images/left-black.svg"
+      src="/static/images/left-black.png"
       @click="back"
     />
     <view class="title">

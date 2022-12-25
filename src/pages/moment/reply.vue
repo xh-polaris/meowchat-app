@@ -15,7 +15,7 @@
           {{ replies.text }}
         </view>
         <view class="like-box">
-          <image src="/static/images/like.svg" class="like-icon" mode="widthFix" />
+          <image src="/static/images/like.png" class="like-icon" mode="widthFix" />
           <text class="like-num">
             {{ replies.likes }}
           </text>
@@ -39,7 +39,7 @@
             {{ item.text }}
           </view>
           <view class="like-box">
-            <image src="/static/images/like.svg" class="like-icon" mode="widthFix" />
+            <image src="/static/images/like.png" class="like-icon" mode="widthFix" />
             <text class="like-num">
               {{ item.likes }}
             </text>

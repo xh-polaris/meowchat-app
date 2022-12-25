@@ -41,7 +41,7 @@ $nav-height: 44px;
         width: 23px;
         height: 17px;
         margin-left: 15px;
-        background: url("../../static/images/status_message.svg");
+        background: url("../../static/images/status_message.png");
         position: relative;
 
         .badge{

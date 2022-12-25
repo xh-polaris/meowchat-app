@@ -17,34 +17,34 @@
   const tabbarContent = [
       {
           id: "1",
-          icon: "/static/images/nav_community_gray.svg",
-          activeIcon: "/static/images/nav_community_blue.svg",
+          icon: "/static/images/nav_community_gray.png",
+          activeIcon: "/static/images/nav_community_blue.png",
           url:"/pages/community/community"
       },
       {
           id: "2",
-          icon: "/static/images/nav_collection_gray.svg",
-          activeIcon: "/static/images/nav_collection_blue.svg",
+          icon: "/static/images/nav_collection_gray.png",
+          activeIcon: "/static/images/nav_collection_blue.png",
           url:"/pages/collection/collection"
       },
       {
           id: "0",
-          icon: "/static/images/nav_add_moment.svg",
-          activeIcon: "/static/images/nav_add_moment.svg",
+          icon: "/static/images/nav_add_moment.png",
+          activeIcon: "/static/images/nav_add_moment.png",
           url:"/pages/add_moment/add_moment"
   
       },
       {
           id: "3",
-          icon: "/static/images/nav_world_gray.svg",
-          activeIcon: "/static/images/nav_world_blue.svg",
+          icon: "/static/images/nav_world_gray.png",
+          activeIcon: "/static/images/nav_world_blue.png",
           url:"/pages/world/world"
   
       },
       {
           id: "4",
-          icon: "/static/images/nav_profile_gray.svg",
-          activeIcon: "/static/images/nav_profile_blue.svg",
+          icon: "/static/images/nav_profile_gray.png",
+          activeIcon: "/static/images/nav_profile_blue.png",
           url:"/pages/profile/profile"
   
       },
