@@ -1,4 +1,6 @@
 <template>
+  <general-status-bar title="图鉴" back-icon="false" />
+  <tabbar id="2" />
   <view class="content">
     <!-- 搜索框 -->
     <view class="search-bar">
@@ -59,6 +61,8 @@ import { getCatPreviews } from "@/apis/collection/collection";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces";
 import { Cat } from "@/apis/schemas";
+import GeneralStatusBar from "@/pages/tabbar/general_status_bar";
+import Tabbar from "@/pages/tabbar/tabbar";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,

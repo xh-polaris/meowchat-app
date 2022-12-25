@@ -1,4 +1,6 @@
 <template>
+  <status-bar title="喵社区" message-count="23" />
+  <tabbar id="1" />
   <view class="school-box">
     <view class="school-select-box">
       <image class="arrow" src="../../static/images/location.png" @click="onClickSwitch" />
@@ -38,6 +40,8 @@ import { onReachBottom } from "@dcloudio/uni-app"
 import { onClickSwitch } from "@/pages/community/event"
 import { signIn } from "@/apis/auth/auth"
 import DraftButton from "@/pages/draft/draft-button"
+import StatusBar from "@/pages/tabbar/status_bar";
+import Tabbar from "@/pages/tabbar/tabbar";
 
 const school = reactive({
   name: "华东师范大学",
