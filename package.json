@@ -30,6 +30,7 @@
     "@dcloudio/uni-ui": "^1.4.22",
     "@types/node": "^18.11.9",
     "good-storage": "^1.1.1",
+    "moment": "^2.29.4",
     "postcss": "^8.0.0",
     "vue": "3.2.45",
     "vue-i18n": "^9.1.9",

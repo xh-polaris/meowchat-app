@@ -70,6 +70,8 @@
       </view>
     </view>
   </block>
+
+  <draft-button type="post" />
 </template>
 
 <script setup>
@@ -78,6 +80,7 @@ import { reactive } from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
 import { getPostPreviews } from "../../apis/post/post";
+import DraftButton from "@/pages/draft/draft-button"
 
 const postsData = reactive([]);
 

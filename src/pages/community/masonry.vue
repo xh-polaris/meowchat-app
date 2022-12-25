@@ -45,7 +45,7 @@
                 </view>
               </view>
               <view class="time">
-                {{ moment.createAt }}
+                {{ displayTime(moment.createAt * 1000) }}
               </view>
             </view>
           </view>
@@ -60,7 +60,8 @@ import { reactive } from "vue"
 import { getMomentPreviews } from "@/apis/moment/moment"
 import { Moment } from "@/apis/schemas"
 import { onClickMoment } from "@/pages/community/event"
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onReachBottom } from "@dcloudio/uni-app"
+import { displayTime } from "@/components/utils/time"
 
 let moments: Moment[]
 const leftMoments = reactive<Moment[]>([])
@@ -73,6 +74,7 @@ const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount
 let index = 0
 let loadedAmount = 0
 let isBatchLoaded = false
+let page = 0 //每往下翻页一次page加1直到没有内容
 /*
 * 大致逻辑：
 * batch是每一批加上去的moment，分为first和second
@@ -106,12 +108,18 @@ onReachBottom(() => {
 })
 
 const addBatch = async () => {
-  moments = (await getMomentPreviews()).moments
-  for (let i = 0; i < firstLoadingAmount / 2; i++) {
-    addTile(index, "left")
-    index += 1
-    addTile(index, "right")
-    index += 1
+  moments = (await getMomentPreviews({
+    page,
+    communityId: uni.getStorageSync("communityId"),
+  })).moments
+  if (moments) {
+    page += 1
+    for (let i = 0; i < firstLoadingAmount / 2; i++) {
+      addTile(index, "left")
+      index += 1
+      addTile(index, "right")
+      index += 1
+    }
   }
 }
 
@@ -188,7 +196,7 @@ const types = reactive([
 const toggleSelf = (name: string) => {
   if (!types.filter(type => type.name === name)[0].isCurrent) {
     types.map(type => {
-      type.isCurrent = false;
+      type.isCurrent = false
       type.className = "label"
     })
     const currentType = types.filter(type => type.name === name)[0]

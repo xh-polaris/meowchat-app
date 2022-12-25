@@ -21,32 +21,14 @@
 <script setup>
 
 import { reactive, ref } from "vue"
-
-const props = defineProps({
-  contents: {
-    type: Array,
-    default() {
-      return [
-        {
-          id: 1,
-          imageUrl: "",
-          linkUrl: "",
-        }, {
-          id: 2,
-          imageUrl: "",
-          linkUrl: "",
-        }, {
-          id: 3,
-          imageUrl: "",
-          linkUrl: "",
-        }
-      ]
-    }
-  }
-})
+import { getNews } from "@/apis/notice/notice"
 
 // eslint-disable-next-line vue/no-setup-props-destructure
-const contents = props.contents
+const contents = reactive([])
+
+getNews({ communityId: uni.getStorageSync("communityId") }).then(res => {
+  contents.push(...res.news)
+})
 
 const currentContent = ref(0)
 const displayContents = reactive([
@@ -60,11 +42,11 @@ const displayContents = reactive([
 let touchStartX
 let isSlidesMoving = false
 
-function touchStart(ev) {
+function touchStart (ev) {
   touchStartX = ev.touches[0].clientX
 }
 
-function touchEnd(ev) {
+function touchEnd (ev) {
   if (!isSlidesMoving) {
     if (ev.touches[0].clientX - touchStartX > 30) {
       isSlidesMoving = true
@@ -87,7 +69,7 @@ const slidesStyle = reactive([
   "slide slide-rightest"
 ])
 
-function leftward() {
+function leftward () {
   const index = (currentSlide.value + 1) % 5
   slidesStyle[(index + 3) % 5] = "slide slide-leftest"
   slidesStyle[(index + 4) % 5] = "slide slide-left"
@@ -99,7 +81,7 @@ function leftward() {
   displayContents[(index + 2) % 5] = contents[(currentContent.value + contents.length + 2) % contents.length]
 }
 
-function rightward() {
+function rightward () {
   const index = (currentSlide.value + 4) % 5
   slidesStyle[(index + 3) % 5] = "slide slide-leftest"
   slidesStyle[(index + 4) % 5] = "slide slide-left"
