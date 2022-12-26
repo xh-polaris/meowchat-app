@@ -50,66 +50,36 @@
 </template>
 
 <script lang="ts" setup>
-import CatBox from "@/pages/collection/cat-box";
-import { reactive, ref } from "vue";
-import { News } from "@/apis/community/community-interfaces";
-import { onClickCatBox, onClickSearch } from "@/pages/collection/event";
-import { getNews } from "@/apis/community/community";
-import { getCatPreviews } from "@/apis/collection/collection";
-import { onReachBottom } from "@dcloudio/uni-app";
-import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces";
-import { Cat } from "@/apis/schemas";
+import CatBox from "@/pages/collection/cat-box"
+import { reactive, ref } from "vue"
+import { onClickCatBox, onClickSearch, onClickSwitch } from "@/pages/collection/event"
+import { getCatPreviews } from "@/apis/collection/collection"
+import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces"
+import { CatPreview } from "@/apis/schemas"
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
-  communityId: "0",
+  communityId: uni.getStorageSync("communityId"),
 })
 
-const cats = reactive<Cat[]>([])
+const cats = reactive<CatPreview[]>([])
 
 getCatPreviews(getCatPreviewsReq).then(res => {
-  cats.push(...res.cats);
+  cats.push(...res.cats)
 })
-
 
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
   No: 0
-});
+})
 
-const currentNavBtn = ref("中北校区");
+const currentNavBtn = ref("中北校区")
 
-function setBranch(e: string) {
-  currentNavBtn.value = e;
+function setBranch (e: string) {
+  currentNavBtn.value = e
 }
 
-function onClickSwitch() {
-  uni.navigateTo({
-    url: `/pages/community/school_select`
-  });
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-onReachBottom(() => {
-}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
-
-const isCarouselInitialized = ref(false);
-
-const carouselContents = reactive<News[]>([]);
-
-async function initCarouselContents() {
-  let newsAmount = 0;
-  let newsArray: News[] = [];
-  while (newsAmount < 3) {
-    newsArray = (await getNews()).news;
-    newsAmount = newsArray.length;
-  }
-  newsArray.map(news => carouselContents.push(news));
-  isCarouselInitialized.value = true;
-}
-
-initCarouselContents();
 </script>
 
 <style lang="scss" scoped>

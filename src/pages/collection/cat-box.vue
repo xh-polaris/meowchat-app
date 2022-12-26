@@ -11,7 +11,7 @@
         <view class="collect">
           <image
             :src="cat.isCollected?'/static/images/collect.png':'/static/images/collect_HL.png'"
-            mode="aspectFill" @click.stop="onClickCollect(cat)"
+            mode="aspectFill" @click.stop="onClickCollect"
           />
         </view>
       </view>
@@ -27,11 +27,10 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue"
-// import { CatPreview } from "@/apis/community/community-interfaces"
-import { Cat } from "@/apis/schemas";
+import { CatPreview } from "@/apis/schemas"
 import { onClickCollect } from "@/pages/collection/event"
 
-const props = defineProps<{ cat: Cat }>()
+const props = defineProps<{ cat: CatPreview }>()
 const cat = reactive(props.cat)
 </script>
 

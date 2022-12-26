@@ -1,52 +1,52 @@
-import {Cat} from "../schemas";
+import { Cat, CatPreview } from "../schemas"
 
 export interface GetCatPreviewsReq {
-    page: number;
-    communityId: string;
+  page: number;
+  communityId: string;
 }
 
 export interface GetCatPreviewsResp {
-    cats: Cat[];
-    code: number;
-    msg: string;
+  cats: CatPreview[];
+  code: number;
+  msg: string;
 }
 
 export interface GetCatDetailReq {
-    catId: string;
+  catId: string;
 }
 
 export interface GetCatDetailResp {
-    cat: Cat;
-    code: number;
-    msg: string;
+  cat: Cat;
+  code: number;
+  msg: string;
 }
 
 export interface NewCatReq {
-    id?: string;
-    age: string;
-    communityId: string;
-    color: string;
-    details: string;
-    name: string;
-    popularity: number;
-    sex: string;
-    area: string;
-    isSnipped: boolean;
-    isSterilized: boolean;
-    avatars: string[];
+  id?: string;
+  age: string;
+  communityId: string;
+  color: string;
+  details: string;
+  name: string;
+  popularity: number;
+  sex: string;
+  area: string;
+  isSnipped: boolean;
+  isSterilized: boolean;
+  avatars: string[];
 }
 
 export interface NewCatResp {
-    code: number;
-    msg: string;
-    catId: string;
+  code: number;
+  msg: string;
+  catId: string;
 }
 
 export interface DeleteCatReq {
-    catId: string;
+  catId: string;
 }
 
 export interface DeleteCatResp {
-    code: number;
-    msg: string;
+  code: number;
+  msg: string;
 }

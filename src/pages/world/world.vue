@@ -76,29 +76,28 @@
 
 <script setup>
 
-import { reactive } from "vue";
-import { onReachBottom } from "@dcloudio/uni-app";
-import { onClickPost } from "./event";
-import { getPostPreviews } from "../../apis/post/post";
+import { reactive } from "vue"
+import { onReachBottom } from "@dcloudio/uni-app"
+import { onClickPost } from "./event"
+import { getPostPreviews } from "../../apis/post/post"
 import DraftButton from "@/pages/draft/draft-button"
 
-const postsData = reactive([]);
-
+const postsData = reactive([])
 
 const getPostPreviewsAsync = async () => {
-  return (await getPostPreviews()).posts
+  return (await getPostPreviews({ page: 0 })).posts
 }
 
-async function createPostsDataBatch() {
+async function createPostsDataBatch () {
   const posts = await getPostPreviewsAsync()
-  postsData.push(...posts);
+  postsData.push(...posts)
 }
 
-createPostsDataBatch();
+createPostsDataBatch()
 
 onReachBottom(() => {
-  createPostsDataBatch();
-});
+  createPostsDataBatch()
+})
 
 const types = reactive([
   {
@@ -138,7 +137,7 @@ const types = reactive([
 const toggleSelf = name => {
   if (!types.filter(type => type.name === name)[0].isCurrent) {
     types.map(type => {
-      type.isCurrent = false;
+      type.isCurrent = false
       type.className = "navbtn"
     })
     const currentType = types.filter(type => type.name === name)[0]
