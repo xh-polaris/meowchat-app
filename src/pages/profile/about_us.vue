@@ -8,62 +8,31 @@
 	<view class="develop-team">from: 开发团队 华师小世界</view>
 	<view class ="version-wrap">
 		<view class="version-text">当前版本</view>
-		<view v-for="(item, index) in versionInformation" :key="index" class="version-info">
-			<view class="version-number">{{item.number}}</view>
-			<view class="update-time">{{item.time}}</view>
-			<view class="content">{{item.content}}</view>
+		<view v-for="(item, index) in versionInformation.slice(0,1)"  :key="index" class="version-info">
+			<view class="version-number">{{item.createAt}}</view>
+			<view class="update-time">更新时间:{{item.createAt}}</view>
+			<view class="content">{{item.text}}</view>
 		</view>
 		<view class="version-text">历史版本</view>
-		<view v-for="(item, index) in historyVersionInformation" :key="index" class="version-info">
-			<view class="version-number">{{item.number}}</view>
-			<view class="update-time">{{item.time}}</view>
-			<view class="content">{{item.content}}</view>
+		<view v-for="(item, index) in versionInformation.slice(1)" :key="index" class="version-info">
+			<view class="version-number">{{item.createAt}}</view>
+			<view class="update-time">更新时间:{{item.createAt}}</view>
+			<view class="content">{{item.text}}</view>
 		</view>
 	</view>
-	
 </view>
 </template>
 
-<script lang="ts" setup>
-  const versionInformation = [
-    {
-      number: "1.8.13",
-      time: "更新时间：2022.3.22",
-	    content:"修复了3",
-    }
-  ]
-  const historyVersionInformation = [
-    {
-      number: "1.8.12",
-      time: "更新时间：2022.3.21",
-      content:"修复了2",
-    },
-   {
-     number: "1.8.11",
-     time: "更新时间：2022.3.20",
-     content:"修复了1",
-   },
-   {
-      number: "1.8.12",
-      time: "更新时间：2022.3.21",
-    content:"修复了2",
-    },
-   {
-     number: "1.8.11",
-     time: "更新时间：2022.3.20",
-     content:"修复了1",
-   },
-   {
-      number: "1.8.12",
-      time: "更新时间：2022.3.21",
-    content:"修复了2",
-    },
-   {
-     number: "1.8.11",
-     time: "更新时间：2022.3.20",
-     content:"修复了1",
-   }
-  ]
+<script lang="ts" setup>//暂时用公告替代
+	import { reactive } from 'vue';
+	import { Notice } from "@/apis/schemas";
+	import {getNotices}from"@/apis/notice/notice"
+    const versionInformation=reactive<Notice[]>([])
+	getNotices().then(res=>{
+		versionInformation.push(...res.notices)
+	}
+	)
+  
 </script>
 
 <style lang="scss" scoped>
@@ -166,6 +135,7 @@
 			line-height: 150%;
 			color: #939393;
 			margin-left:20rpx;
+			max-lines: 1;
 		}	
 	}
 }

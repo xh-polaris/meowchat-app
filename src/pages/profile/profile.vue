@@ -4,26 +4,22 @@
     <view class="content">
       <!-- 用户信息：昵称、权限、单位 -->
       <view class="fot-xh">
+	 <navigator url="/pages/profile/edit_info" hover-class="none">
         <view class="pic">
           <image
-            mode="widthFix"
-            src="https://static.xhpolaris.com/cat_world.jpg"
-            style="width: 100%;border-radius: 50%;"
+            :src="userInfo.avatarUrl"
+            style="width: 100%;height:100%;border-radius: 50%;"
           />
         </view>
         <view class="txt">
           <view class="info">
-            <view class="nickname">
-              <text>nickname</text>
-            </view>
-            <view class="right">
-              <text>管理员</text>
-            </view>
+            <view class="nickname">{{userInfo.nickname}}</view>
             <view class="unit">
               <text>华东师范大学</text>
             </view>
           </view>
         </view>
+		</navigator>
       </view>
       <!-- 功能栏 -->
       <view class="com-item">
@@ -94,6 +90,16 @@
 </template>
 
 <script lang="ts" setup>
+import { reactive } from 'vue';
+import {getUserInfo}from"@/apis/user/user"
+import { User } from '@/apis/schemas';
+const userInfo=reactive<User>({id:"",nickname:"微信用户",avatarUrl:"https://static.xhpolaris.com/cat_world.jpg"})
+getUserInfo().then(res=>{
+	userInfo.id=res.user.id
+	userInfo.nickname=res.user.nickname
+	userInfo.avatarUrl=res.user.avatarUrl
+}
+)
 const userOptions = [
   {
     title: "我的发布",
@@ -155,14 +161,15 @@ const superAdminOptions = [
   top: 0;
   left: 0;
   z-index: -1;
+  opacity: 0.9;//设置透明度
 }
 
 .fot-xh .pic {
   float: left;
-  height: 100rpx;
-  width: 100rpx;
+  height: 160rpx;
+  width: 160rpx;
   margin-right: 50rpx;
-  margin-left: 50rpx;
+  margin-left: 38rpx;
   margin-top: 60rpx;
 }
 
@@ -173,7 +180,7 @@ const superAdminOptions = [
 }
 
 .fot-xh .txt .info {
-  margin-top: 55rpx;
+  margin-top: 80rpx;
   position: absolute;
   display: block;
 }
@@ -182,28 +189,28 @@ const superAdminOptions = [
   height: 30rpx;
   width: 600rpx;
   font-size: 35rpx;
-  margin-bottom: 13rpx;
+  margin-bottom: 26rpx;
   font-weight: bold;
 }
 
 .fot-xh .txt .info .right {
   height: 28rpx;
   width: 600rpx;
-  font-size: 20rpx;
-  margin-bottom: 5rpx;
+  font-size: 25rpx;
+  margin-bottom: 13rpx;
 }
 
 .fot-xh .txt .info .unit {
   height: 28rpx;
   width: 600rpx;
-  font-size: 20rpx;
-  margin-bottom: 5rpx;
+  font-size: 25rpx;
+  margin-bottom: 13rpx;
 }
 
 .com-item {
   padding-left: 20rpx;
   padding-right: 20rpx;
-  margin-top: 200rpx;
+  margin-top: 250rpx;
   margin-bottom: 20rpx;
 }
 
@@ -224,7 +231,7 @@ const superAdminOptions = [
 }
 
 .cell {
-  height: 80rpx;
+  height: 100rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
   margin-top: 0;
@@ -233,7 +240,6 @@ const superAdminOptions = [
   align-items: center;
   background: #fff;
   border-bottom: 1px solid #f8f8f8;
-
   .cell-left {
     display: flex;
     align-items: center;
@@ -245,7 +251,7 @@ const superAdminOptions = [
     }
 
     .cell-text {
-      width: 600rpx;
+      width: 610rpx;
       color: #666;
       font-size: 28rpx;
       margin-left: 20rpx;
@@ -254,7 +260,6 @@ const superAdminOptions = [
     .arrow {
       width: 30rpx;
       height: 30rpx;
-      right: 30rpx;
     }
   }
 

@@ -4,10 +4,10 @@
 		<view class="managerlist-wrap">
 		<view v-for="(item, index) in managerList" :key="index" class="manager-wrap">
 			<view class="info-wrap">
-				<image class="avatar" mode="aspectFill" :src="item.avatar"></image>
+				<image class="avatar" mode="aspectFill" :src="item.avatarUrl"></image>
 				<view class="right">
 					<view class="name">{{item.name}}</view>
-					<view class="position">{{item.position}}</view>
+					<view class="position">管理员</view>
 					<view class="content">
 						<view class="info">微信:  {{item.wechat}}</view>
 						<image class="copy" src="/static/images/copy.png" @click="CopyToClipboard(item.wechat)"
@@ -16,8 +16,8 @@
 						/>
 						</view>
 					<view class="content">
-						<view class="info">电话:  {{item.phoneNumber}}</view>
-						<image class="copy" src="/static/images/copy.png" @click="CopyToClipboard(item.phoneNumber)"
+						<view class="info">电话:  {{item.phone}}</view>
+						<image class="copy" src="/static/images/copy.png" @click="CopyToClipboard(item.phone)"
 						style="width:7%;"
 						mode="widthFix"
 						/>
@@ -31,22 +31,14 @@
 
 <script lang="ts" setup>
 	import {CopyToClipboard} from "@/pages/profile/event"
-	const managerList = [
-	  {
-	    avatar: "https://static.xhpolaris.com/profile_background.png",
-	    name: "林霁",
-		position:"开发负责人",
-		wechat:"123456789",
-		phoneNumber:"987654321",
-	  },
-	  {
-	    avatar: "https://static.xhpolaris.com/profile_background.png",
-	    name: "敖凌越",
-	    position:"闵行本科生公寓负责人",
-	    wechat:"123456789",
-	    phoneNumber:"987654321",
-	  }
-	]		
+	import { reactive } from 'vue';
+	import {Admin} from "@/apis/schemas";
+	import {getAdmins}from"@/apis/notice/notice"
+	const managerList=reactive<Admin[]>([])
+	getAdmins().then(res=>{
+		managerList.push(...res.admins)
+	}
+	)	
 </script>
 
 <style lang="scss" scoped>
@@ -76,8 +68,8 @@
 				float: left;
 				margin-left: 10rpx;
 				margin-right: 30rpx;
-				height: 92rpx;
-				width: 92rpx;
+				height: 112rpx;
+				width: 112rpx;
 				border-radius: 50%;
 			}
 			.right {
