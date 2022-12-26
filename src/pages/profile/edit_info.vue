@@ -34,7 +34,7 @@
 					this.nickName= e.detail.value
 	            },
 				onClickConfirm(){
-					let userInfo:UpdateUserReq={
+					const userInfo:UpdateUserReq={
 						avatarUrl:this.avatarUrl,
 						nickname:this.nickName
 					}
