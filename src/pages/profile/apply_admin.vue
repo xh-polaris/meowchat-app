@@ -27,8 +27,11 @@
 			    <textarea class="textarea-inherit" type="name" placeholder="请填写你的申请信息，如申请理由、个人介绍等" placeholder-style="color: #B8B8B8;">
 				</textarea>
 			</cover-view>
-			<button type="primary" class="confirm">提交申请</button>
+			<button type="primary" class="confirm">
+				<view class="send">提交申请</view>
+			</button>
 		</view>
+		
 	</view>
 </template>
 
@@ -91,7 +94,7 @@
 		box-shadow: 0 0 10rpx #EEEEEE;
 		padding: 20rpx;
 		margin-top:50rpx;
-		margin-bottom: 10rpx;
+		margin-bottom: 30rpx;
 		margin-left: 30rpx;
 		margin-right: 30rpx;
 		border-radius: 21rpx;
@@ -104,12 +107,21 @@
 			margin-right: 10rpx;
 			margin-top:10rpx;
 			margin-bottom: 40rpx;
-			
 		}	
 		.confirm{
+			margin-top:30rpx;
 			background-color: #1FA1FF;
+			border-radius:30px;	
+			height:88rpx;
+			width:660rpx;
+			.send{
+			margin-top:-6rpx;
+			height:44rpx;
+			font-size: 36rpx;
+			}
 		}
 	}
+	
 	 .textarea-inherit {
 	        width: 100%;
 	        overflow: auto;

@@ -55,6 +55,12 @@
         "navigationBarTitleText": "领养问卷"
       }
     },
+	{
+	  "path": "pages/profile/edit_info",
+	  "style": {
+	    "navigationBarTitleText": "修改个人信息"
+	  }
+	},
     {
       "path": "pages/moment/moment",
       "style": {
@@ -130,7 +136,7 @@
         "navigationBarTitleText": "我的消息"
       }
     }
-  ],
+    ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "喵世界",
