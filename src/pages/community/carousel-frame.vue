@@ -12,7 +12,6 @@ let isCarouselInitialized = ref(false)
 let carouselContents
 getNews({communityId: uni.getStorageSync("communityId")}).then(res => {
   carouselContents = res.news
-  console.log(res.news)
   isCarouselInitialized.value = true
 })
 

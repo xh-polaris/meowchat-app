@@ -22,7 +22,6 @@
 
 import { reactive, ref } from "vue"
 
-
 const props = defineProps({
   contents: {
     type: Array,
@@ -34,16 +33,6 @@ const props = defineProps({
 
 // eslint-disable-next-line vue/no-setup-props-destructure
 const contents = props.contents
-
-
-//
-// getNews({communityId: uni.getStorageSync("communityId")}).then(res => {
-//   // contents.push(...res.news)
-//   console.log(res.news)
-//
-//
-//
-// })
 
 let touchStartX
 let isSlidesMoving = false
