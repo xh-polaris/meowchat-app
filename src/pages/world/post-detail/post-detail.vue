@@ -46,10 +46,10 @@
           <text @click="onClickReplies(index)">
             {{ item.reply.length }}条相关回复
           </text>
-          <image class="arrow-right" src="/static/images/arrow_right_blue.svg" />
+          <image class="arrow-right" src="/static/images/arrow_right_blue.png" />
         </view>
         <view class="like-box">
-          <image class="like-icon" mode="widthFix" src="/static/images/like.svg" />
+          <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
           <text class="like-num">
             {{ item.likes }}
           </text>
@@ -61,7 +61,7 @@
   <view class="write-comment-box">
     <input class="write-comment" placeholder="发表评论..." type="text">
     <view class="like-box">
-      <image class="like-icon" mode="widthFix" src="/static/images/like.svg" />
+      <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
       <view class="like-num">
         {{ post.likes }}
       </view>
@@ -72,9 +72,9 @@
   </view>
 </template>
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import {enterMask, enterReply} from "../../moment/event";
-import Reply from "@/pages/moment/reply";
+import { reactive, ref } from "vue"
+import { enterMask, enterReply } from "../../moment/event"
+import Reply from "@/pages/moment/reply"
 
 const post = ref({
   id: "111",
@@ -82,8 +82,8 @@ const post = ref({
   createTime: "2022-10-31",
   commentsNum: 23,
   tags: [
-    {tagName: "流浪猫"},
-    {tagName: "新手"}
+    { tagName: "流浪猫" },
+    { tagName: "新手" }
   ],
   isAnonymous: true,
   user: {
@@ -111,16 +111,16 @@ const post = ref({
       "\n" +
       "应如何对待校园里的流浪猫?长按识别二维码阅读全文",
   likes: 123
-});
+})
 
-function isAnonymous() {
+function isAnonymous () {
   if (post.value.isAnonymous) {
-    post.value.user.name = "匿名用户";
-    post.value.user.avatar = "/static/images/anonymous.png";
+    post.value.user.name = "匿名用户"
+    post.value.user.avatar = "/static/images/anonymous.png"
   }
 }
 
-isAnonymous();
+isAnonymous()
 
 const comments = reactive([
   {
@@ -161,25 +161,25 @@ const comments = reactive([
     likes: 8888,
     reply: []
   },
-]);
+])
 
-let selectedReply = ref(0);
-let enterMaskData = ref(null);
-let enterReplyData = ref(null);
+let selectedReply = ref(0)
+let enterMaskData = ref(null)
+let enterReplyData = ref(null)
 
-function onClickReplies(idx: number) {
-  selectedReply.value = idx;
-  enterMask.width("100%").height("100%").opacity(0.5).step();
-  enterMaskData.value = enterMask.export();
-  enterReply.height("70%").step();
-  enterReplyData.value = enterReply.export();
+function onClickReplies (idx: number) {
+  selectedReply.value = idx
+  enterMask.width("100%").height("100%").opacity(0.5).step()
+  enterMaskData.value = enterMask.export()
+  enterReply.height("70%").step()
+  enterReplyData.value = enterReply.export()
 }
 
-function leaveReply() {
-  enterMask.width("0%").height("0%").opacity(0).step();
-  enterMaskData.value = enterMask.export();
-  enterReply.height("0%").step();
-  enterReplyData.value = enterReply.export();
+function leaveReply () {
+  enterMask.width("0%").height("0%").opacity(0).step()
+  enterMaskData.value = enterMask.export()
+  enterReply.height("0%").step()
+  enterReplyData.value = enterReply.export()
 }
 </script>
 
