@@ -52,9 +52,7 @@
 <script lang="ts" setup>
 import CatBox from "@/pages/collection/cat-box";
 import { reactive, ref } from "vue";
-import { News } from "@/apis/community/community-interfaces";
 import { onClickCatBox} from "@/pages/collection/event";
-import { getNews } from "@/apis/community/community";
 import { getCatPreviews, searchCatPreviews } from "@/apis/collection/collection";
 import {onReachBottom } from "@dcloudio/uni-app";
 import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces";
@@ -102,22 +100,6 @@ function onClickSearch(){
   })
 }
 
-
-
-const isCarouselInitialized = ref(false);
-
-const carouselContents = reactive<News[]>([]);
-
-async function initCarouselContents() {
-  let newsAmount = 0;
-  let newsArray: News[] = [];
-  while (newsAmount < 3) {
-    newsArray = (await getNews()).news;
-    newsAmount = newsArray.length;
-  }
-  newsArray.map(news => carouselContents.push(news));
-  isCarouselInitialized.value = true;
-}
 onReachBottom(() =>{
 		if(!wheatherSearch)
 		{
@@ -145,7 +127,6 @@ onReachBottom(() =>{
 			})
 		}
 	});
-initCarouselContents();
 </script>
 
 <style lang="scss" scoped>
@@ -219,7 +200,8 @@ initCarouselContents();
   margin: 20rpx 10rpx 30rpx 10rpx;
   font-weight: bold;
   border-bottom: 2px solid skyblue;
-  font-size: large;
+  height:55rpx;
+  font-size: 40rpx;
 }
 
 .swiper-box {
