@@ -71,15 +71,19 @@
         </view>
       </view>
     </view>
-    <!-- <view class="divider" />
+    <view class="divider" />
     <view class="photo">
       <text>
-        猫片
+        详情
       </text>
       <view class="dd">
-        撸猫指南：胆小怕生
+        <text class="detail_info">
+			{{Cat.details}}
+		</text>
       </view>
-      <view class="imgs">
+	  <view class="end">
+	  </view>
+      <!--<view class="imgs">
         <text>
           11月
         </text>
@@ -116,8 +120,8 @@
                     <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
                     <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
                 </view>
-              </view>
-            </view> -->
+              </view>-->
+            </view>
           </view>
 </template>
 
@@ -260,31 +264,42 @@ getCatDetail(getCatDetailReq).then(res=>{
   background: #E0E3DA;
   width: 100%;
   height: 10rpx;
-  margin-top: 30rpx;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
 }
 
 .photo {
-  margin-top: 50rpx;
-
+  text-align: center;
+  margin-top: 40rpx;
   text {
     color: #212223;
     font-size: 50rpx;
     margin-left: 20rpx;
-
   }
 
   .dd {
-    border-radius: 6px !important;
-    margin-left: 20rpx;
+	text-align: center;
     margin-right: auto;
-    margin-top: 40rpx;
-    width: 90%;
-    height: 60rpx;
+    margin-top: 20rpx;
+    width: 100%;
     color: white;
     background: linear-gradient(90deg, #0688f3, white);
   }
-
-
+	.end {
+	  text-align: center;
+	  margin-right: auto;
+	  width: 100%;
+	  height: 30rpx;
+	  color: white;
+	 background: linear-gradient(90deg, #0688f3, white);
+	}
+.detail_info{
+	font-size: 40rpx;
+	font-weight: 400;
+	 width: 100%;
+	 margin-bottom: 30rpx;
+	
+}
   .imgs {
     margin-top: 40rpx;
 
