@@ -30,7 +30,7 @@ const type = ref(props.type)
 .button {
   position: fixed;
   right: calc(20 / 390 * 100vw);
-  bottom: calc(70 / 390 * 100vw);
+  bottom: calc(20 / 390 * 100vw);
   z-index: 100;
 
   background-color: #1fa1ff;
