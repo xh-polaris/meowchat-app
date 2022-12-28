@@ -20,7 +20,7 @@
   </view>
 
   <view>
-    <carousel v-if="init" />
+    <carousel-frame v-if="init" />
   </view>
 
   <view style="margin-top:10px">
@@ -33,7 +33,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue"
 import Masonry from "@/pages/community/masonry"
-import Carousel from "@/pages/community/carousel"
+import CarouselFrame from "@/pages/community/carousel-frame"
 import { onReachBottom } from "@dcloudio/uni-app"
 import { onClickSwitch } from "@/pages/community/event"
 import { signIn } from "@/apis/auth/auth"
@@ -59,11 +59,11 @@ if (!uni.getStorageSync("communityId")) {
 
 uni.getProvider({
   service: "oauth",
-  success (res: UniNamespace.GetProviderRes) {
+  success(res: UniNamespace.GetProviderRes) {
     if (res.provider[0] === "weixin") {
       uni.login({
         provider: "weixin",
-        success (res: UniNamespace.LoginRes) {
+        success(res: UniNamespace.LoginRes) {
           signIn({
             authType: "wechat",
             authId: "123",
