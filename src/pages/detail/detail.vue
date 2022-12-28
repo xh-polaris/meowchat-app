@@ -1,31 +1,31 @@
 <template>
   <view>
-    <image src="https://static.xhpolaris.com/dog.jpg" class="img" />
-    <view class="selector">
+    <image :src="Cat.avatars[0]" class="img" />
+    <!-- <view class="selector">
       <image src="https://static.xhpolaris.com/dog.jpg" />
       <image src="https://static.xhpolaris.com/dog.jpg" />
       <image src="https://static.xhpolaris.com/dog.jpg" />
-    </view>
+    </view>-->
     <view class="progress-box">
       <view class="text-box1">
-        <text>桥遇</text>
+        <text>{{Cat.name}}</text>
 <!--        <text>{{cat.name}}</text>-->
       </view>
-      <progress
-        :percent="data.percent" :stroke-width="10"
+      <!--<progress
+        :percent="Cat.popularity" :stroke-width="10"
         backgroundColor="#F5F5F5" border-radius="6px"
       />
       <view class="text-box2">
-        <text>{{ data.percent }}人气值</text>
-      </view>
+        <text>{{Cat.popularity}}人气值</text>
+      </view> -->
     </view>
     <view class="info">
       <view class="combination">
         <view class="attribute">
-          生日
+          年龄
         </view>
         <view class="content">
-          成猫
+          {{Cat.age}}
         </view>
       </view>
       <view class="combination">
@@ -33,25 +33,25 @@
           花色
         </view>
         <view class="content">
-          橘色
+          {{Cat.color}}
         </view>
       </view>
       <view class="combination">
         <view class="attribute">
-          状况
+          当前地区
         </view>
-        <view class="content">
-          在读
+        <view class="area_content">
+          {{Cat.area}}
         </view>
       </view>
     </view>
     <view class="info">
       <view class="combination">
         <view class="attribute">
-          校区
+          性别
         </view>
         <view class="content">
-          中北
+          {{Cat.sex}}
         </view>
       </view>
       <view class="combination">
@@ -59,22 +59,22 @@
           绝育情况
         </view>
         <view class="content">
-          已绝育
+          {{Sterilized}}
         </view>
       </view>
       <view class="combination">
         <view class="attribute">
-          出没地区
+          是否剪耳
         </view>
         <view class="content">
-          六舍
+          {{Snipped}}
         </view>
       </view>
     </view>
-    <view class="divider" />
+    <!-- <view class="divider" />
     <view class="photo">
       <text>
-        猫片(99+)
+        猫片
       </text>
       <view class="dd">
         撸猫指南：胆小怕生
@@ -83,50 +83,49 @@
         <text>
           11月
         </text>
-        <view class="qz_imgs qz_imgs3 clearfix">
-          <view :v-for="index in data.num">
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-          </view>
-        </view>
       </view>
       <view class="imgs">
         <text>
           11月
         </text>
         <view class="qz_imgs qz_imgs3 clearfix">
-          <view :v-for="index in data.num">
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                </view>
+              </view>
+              <view class="imgs">
+                <text>
+                  11月
+                </text>
+                <view class="qz_imgs qz_imgs3 clearfix">
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                </view>
+              </view>
+              <view class="imgs">
+                <text>
+                  11月
+                </text>
+                <view class="qz_imgs qz_imgs3 clearfix">
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
+                </view>
+              </view>
+            </view> -->
           </view>
-        </view>
-      </view>
-      <view class="imgs">
-        <text>
-          11月
-        </text>
-        <view class="qz_imgs qz_imgs3 clearfix">
-          <view :v-for="index in data.num">
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-            <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
+import {reactive} from "vue";
 import {Cat} from "@/apis/schemas";
-import {getCatDetail, getCatPreviews} from "@/apis/collection/collection";
-import {GetCatDetailReq, GetCatPreviewsReq} from "@/apis/collection/collection-interfaces";
+import {getCatDetail} from "@/apis/collection/collection";
+import {GetCatDetailReq} from "@/apis/collection/collection-interfaces";
 
 const props = defineProps< {
   id: string
@@ -134,7 +133,6 @@ const props = defineProps< {
 const getCatDetailReq = reactive<GetCatDetailReq>({
   catId: props.id,
 })
-
 // let cat2: Cat
 // const cat = ref<Cat>()
 // getCatDetail(getCatDetailReq).then(res => {
@@ -142,20 +140,57 @@ const getCatDetailReq = reactive<GetCatDetailReq>({
 //   // cat.value.name = (res.cat.name)
 //   console.log(cat)
 // })
-
-
-const data = reactive({
-  percent: 73,
-  num: [1, 2, 3, 4, 5]
-});
-
+let Sterilized:String
+let Snipped:String
+let Cat=reactive<Cat>({id:"",
+    createAt:0,
+    age: "",
+    communityId: "",
+    color: "",
+    details: "",
+    name: "",
+    popularity: 0,
+    sex:"",
+    status: 0,
+    area: "",
+    isSnipped: true,
+    isSterilized:true,
+    avatars: []})
+getCatDetail(getCatDetailReq).then(res=>{
+	Cat.id=res.cat.id
+    Cat.createAt=res.cat.createAt
+	Cat.age=res.cat.age
+	Cat.communityId=res.cat.communityId
+	Cat.color=res.cat.color
+	Cat.details=res.cat.details
+	Cat.name=res.cat.name
+	Cat.popularity=res.cat.popularity
+	Cat.sex=res.cat.sex
+	Cat.status=res.cat.status
+	Cat.area=res.cat.area
+	Cat.isSnipped=res.cat.isSnipped
+	Cat.isSterilized=res.cat.isSterilized
+	Cat.avatars=res.cat.avatars
+	if(res.cat.isSterilized)
+	Sterilized="Yes"
+	else
+	Sterilized="No"
+	if(res.cat.isSnipped)
+	Snipped="Yes"
+	else
+	Snipped="No"
+}
+)
 </script>
 
 <style lang="scss" scoped>
 .img {
   width: 100%;
 }
-
+.area_content{
+	text-align: center;
+	font-size: 30rpx;
+}
 .selector {
   display: flex;
   padding-left: 300rpx;

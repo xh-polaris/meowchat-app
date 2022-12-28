@@ -4,24 +4,22 @@
     <view class="content">
       <!-- 用户信息：昵称、权限、单位 -->
       <view class="fot-xh">
-        <navigator url="/pages/profile/edit_info" hover-class="none">
-          <view class="pic">
-            <image
-              :src="userInfo.avatarUrl"
-              style="width: 100%;height:100%;border-radius: 50%;"
-            />
-          </view>
-          <view class="txt">
-            <view class="info">
-              <view class="nickname">
-                {{ userInfo.nickname }}
-              </view>
-              <view class="unit">
-                <text>华东师范大学</text>
-              </view>
+	 <navigator url="/pages/profile/edit_info" hover-class="none">
+        <view class="pic">
+          <image
+            :src="userInfo.avatarUrl"
+            style="width: 100%;height:100%;border-radius: 50%;"
+          />
+        </view>
+        <view class="txt">
+          <view class="info">
+            <view class="nickname">{{userInfo.nickname}}</view>
+            <view class="unit">
+              <text>华东师范大学</text>
             </view>
           </view>
-        </navigator>
+        </view>
+		</navigator>
       </view>
       <!-- 功能栏 -->
       <view class="com-item">
@@ -92,20 +90,15 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue"
-import { getUserInfo } from "@/apis/user/user"
-import { User } from "@/apis/schemas"
-
-const userInfo = reactive<User>({
-  id: "",
-  nickname: "微信用户",
-  avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
-})
-getUserInfo().then(res => {
-      userInfo.id = res.user.id
-      userInfo.nickname = res.user.nickname
-      userInfo.avatarUrl = res.user.avatarUrl
-    }
+import { reactive } from 'vue';
+import {getUserInfo}from"@/apis/user/user"
+import { User } from '@/apis/schemas';
+const userInfo=reactive<User>({id:"",nickname:"微信用户",avatarUrl:"https://static.xhpolaris.com/cat_world.jpg"})
+getUserInfo().then(res=>{
+	userInfo.id=res.user.id
+	userInfo.nickname=res.user.nickname
+	userInfo.avatarUrl=res.user.avatarUrl
+}
 )
 const userOptions = [
   {
@@ -168,7 +161,7 @@ const superAdminOptions = [
   top: 0;
   left: 0;
   z-index: -1;
-  opacity: 0.9; //设置透明度
+  opacity: 0.9;//设置透明度
 }
 
 .fot-xh .pic {
@@ -247,7 +240,6 @@ const superAdminOptions = [
   align-items: center;
   background: #fff;
   border-bottom: 1px solid #f8f8f8;
-
   .cell-left {
     display: flex;
     align-items: center;

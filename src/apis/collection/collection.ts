@@ -6,7 +6,9 @@ import {
     GetCatPreviewsReq,
     GetCatPreviewsResp,
     NewCatReq,
-    NewCatResp
+    NewCatResp,
+	SearchCatPreviewsReq,
+	SearchCatPreviewsResp
 } from "./collection-interfaces";
 
 export async function deleteCat(req: DeleteCatReq): Promise<DeleteCatResp> {
@@ -62,6 +64,27 @@ export async function getCatPreviews(req: GetCatPreviewsReq): Promise<GetCatPrev
                     reject(res);
                 }
                 const data = res.data as GetCatPreviewsResp;
+                resolve(data);
+            },
+        });
+    });
+}
+
+/**
+ * @description
+ * @param req
+ */
+export async function searchCatPreviews(req: SearchCatPreviewsReq): Promise<SearchCatPreviewsResp> {
+    return await new Promise<SearchCatPreviewsResp>((resolve, reject) => {
+        uni.request({
+            url: "/collection/search_cat",
+            data: req,
+            method: "GET",
+            success(res: UniNamespace.RequestSuccessCallbackResult) {
+                if (res.statusCode !== 200) {
+                    reject(res);
+                }
+                const data = res.data as SearchCatPreviewsResp;
                 resolve(data);
             },
         });

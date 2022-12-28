@@ -2,13 +2,13 @@
   <view class="content">
     <!-- 搜索框 -->
     <view class="search-bar">
-      <view class="search-bar-box" @click="onClickSearch">
+      <view class="search-bar-box">
         <input
           class="search-text" maxlength="10"
           placeholder="搜索猫咪"
-          type="text" value=""
+		  v-model="searchCatPreviewsReq.keyword"
         >
-        <image class="search-span" src="/static/images/search_span.png" />
+        <image class="search-span" src="/static/images/search_span.png" @click="onClickSearch"/>
       </view>
     </view>
     <!-- 校区选择框   -->
@@ -50,36 +50,102 @@
 </template>
 
 <script lang="ts" setup>
-import CatBox from "@/pages/collection/cat-box"
-import { reactive, ref } from "vue"
-import { onClickCatBox, onClickSearch, onClickSwitch } from "@/pages/collection/event"
-import { getCatPreviews } from "@/apis/collection/collection"
-import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces"
-import { CatPreview } from "@/apis/schemas"
+import CatBox from "@/pages/collection/cat-box";
+import { reactive, ref } from "vue";
+import { News } from "@/apis/community/community-interfaces";
+import { onClickCatBox} from "@/pages/collection/event";
+import { getNews } from "@/apis/community/community";
+import { getCatPreviews, searchCatPreviews } from "@/apis/collection/collection";
+import {onReachBottom } from "@dcloudio/uni-app";
+import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces";
+import { SearchCatPreviewsReq } from "@/apis/collection/collection-interfaces";
+import { Cat } from "@/apis/schemas";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
-  communityId: uni.getStorageSync("communityId"),
+  communityId: "637ce159b15d9764c31f9c84",
 })
-
-const cats = reactive<CatPreview[]>([])
-
+let searchCatPreviewsReq =reactive<SearchCatPreviewsReq>({
+	communityId: "637ce159b15d9764c31f9c84",
+	page:0,
+	keyword:"",
+})
+let cats = ref<Cat[]>([])
+let wheatherSearch=false
 getCatPreviews(getCatPreviewsReq).then(res => {
-  cats.push(...res.cats)
+  cats.value.push(...res.cats);
 })
+
 
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
   No: 0
-})
+});
 
-const currentNavBtn = ref("中北校区")
+const currentNavBtn = ref("中北校区");
 
-function setBranch (e: string) {
-  currentNavBtn.value = e
+function setBranch(e: string) {
+  currentNavBtn.value = e;
 }
 
+function onClickSwitch() {
+  uni.navigateTo({
+    url: `/pages/community/school_select`
+  });
+}
+function onClickSearch(){
+  searchCatPreviews(searchCatPreviewsReq).then(res => {
+	cats.value=[]
+	cats.value=res.cats  
+	wheatherSearch=true
+  })
+}
+
+
+
+const isCarouselInitialized = ref(false);
+
+const carouselContents = reactive<News[]>([]);
+
+async function initCarouselContents() {
+  let newsAmount = 0;
+  let newsArray: News[] = [];
+  while (newsAmount < 3) {
+    newsArray = (await getNews()).news;
+    newsAmount = newsArray.length;
+  }
+  newsArray.map(news => carouselContents.push(news));
+  isCarouselInitialized.value = true;
+}
+onReachBottom(() =>{
+		if(!wheatherSearch)
+		{
+			getCatPreviewsReq.page++;
+			getCatPreviews(getCatPreviewsReq).then(res => {
+			  if(res.cats.length==0)
+			  {
+				  	uni.stopPullDownRefresh();
+			  }
+			  else{
+				  cats.value.push(...res.cats)
+			  }
+			})
+		}
+		else{
+			searchCatPreviewsReq.page++;
+			searchCatPreviews(searchCatPreviewsReq).then(res => {
+				if(res.cats.length==0)
+				{
+				   uni.stopPullDownRefresh();
+				}
+				else{
+					cats.value.push(...res.cats)
+				}
+			})
+		}
+	});
+initCarouselContents();
 </script>
 
 <style lang="scss" scoped>
@@ -87,7 +153,7 @@ function setBranch (e: string) {
 .arrow {
   width: 44rpx;
   height: 50rpx;
-  margin: 25rpx 0rpx 30rpx 20rpx;
+  margin: 25rpx 0 30rpx 20rpx;
 }
 
 .content {
@@ -112,7 +178,7 @@ function setBranch (e: string) {
   font-size: calc(15 / 390 * 100vw);
   align-items: baseline;
   width: 100vw;
-  margin: 0rpx 0rpx 0rpx 60rpx;
+  margin: 0 0 0 60rpx;
   transition-duration: 0.4s;
 }
 

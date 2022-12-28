@@ -26,11 +26,11 @@
 	            }
 	        },
 	        methods: {
-	            onChooseAvatar(e) {
+	            onChooseAvatar(e:any) {
 	                const { avatarUrl } = e.detail
 					this.avatarUrl=avatarUrl
 	            },
-	            onNickName(e) {
+	            onNickName(e:any) {
 					this.nickName= e.detail.value
 	            },
 				onClickConfirm(){

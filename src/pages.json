@@ -16,7 +16,9 @@
     {
       "path": "pages/collection/collection",
       "style": {
-        "navigationBarTitleText": "图鉴"
+        "navigationBarTitleText": "图鉴",
+		"enablePullDownRefresh": true,
+		"onReachBottomDistance":150
       }
     },
     {
@@ -82,7 +84,7 @@
     {
       "path": "pages/detail/detail",
       "style": {
-        "navigationBarTitleText": "123",
+        "navigationBarTitleText": "喵详情",
         //"navigationStyle": "custom",
         "app-plus": {
           "bounce": "none",
