@@ -2,13 +2,13 @@
   <view class="content">
     <!-- 搜索框 -->
     <view class="search-bar">
-      <view class="search-bar-box" @click="onClickSearch">
+      <view class="search-bar-box">
         <input
           class="search-text" maxlength="10"
           placeholder="搜索猫咪"
-          type="text" value=""
+		  v-model="searchCatPreviewsReq.keyword"
         >
-        <image class="search-span" src="/static/images/search_span.png" />
+        <image class="search-span" src="/static/images/search_span.png" @click="onClickSearch"/>
       </view>
     </view>
     <!-- 校区选择框   -->
@@ -53,22 +53,27 @@
 import CatBox from "@/pages/collection/cat-box";
 import { reactive, ref } from "vue";
 import { News } from "@/apis/community/community-interfaces";
-import { onClickCatBox, onClickSearch } from "@/pages/collection/event";
+import { onClickCatBox} from "@/pages/collection/event";
 import { getNews } from "@/apis/community/community";
-import { getCatPreviews } from "@/apis/collection/collection";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { getCatPreviews, searchCatPreviews } from "@/apis/collection/collection";
+import {onReachBottom } from "@dcloudio/uni-app";
 import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces";
+import { SearchCatPreviewsReq } from "@/apis/collection/collection-interfaces";
 import { Cat } from "@/apis/schemas";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
-  communityId: "0",
+  communityId: "637ce159b15d9764c31f9c84",
 })
-
-const cats = reactive<Cat[]>([])
-
+let searchCatPreviewsReq =reactive<SearchCatPreviewsReq>({
+	communityId: "637ce159b15d9764c31f9c84",
+	page:0,
+	keyword:"",
+})
+let cats = ref<Cat[]>([])
+let wheatherSearch=false
 getCatPreviews(getCatPreviewsReq).then(res => {
-  cats.push(...res.cats);
+  cats.value.push(...res.cats);
 })
 
 
@@ -89,10 +94,15 @@ function onClickSwitch() {
     url: `/pages/community/school_select`
   });
 }
+function onClickSearch(){
+  searchCatPreviews(searchCatPreviewsReq).then(res => {
+	cats.value=[]
+	cats.value=res.cats  
+	wheatherSearch=true
+  })
+}
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-onReachBottom(() => {
-}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
+
 
 const isCarouselInitialized = ref(false);
 
@@ -108,7 +118,33 @@ async function initCarouselContents() {
   newsArray.map(news => carouselContents.push(news));
   isCarouselInitialized.value = true;
 }
-
+onReachBottom(() =>{
+		if(!wheatherSearch)
+		{
+			getCatPreviewsReq.page++;
+			getCatPreviews(getCatPreviewsReq).then(res => {
+			  if(res.cats.length==0)
+			  {
+				  	uni.stopPullDownRefresh();
+			  }
+			  else{
+				  cats.value.push(...res.cats)
+			  }
+			})
+		}
+		else{
+			searchCatPreviewsReq.page++;
+			searchCatPreviews(searchCatPreviewsReq).then(res => {
+				if(res.cats.length==0)
+				{
+				   uni.stopPullDownRefresh();
+				}
+				else{
+					cats.value.push(...res.cats)
+				}
+			})
+		}
+	});
 initCarouselContents();
 </script>
 
@@ -117,7 +153,7 @@ initCarouselContents();
 .arrow {
   width: 44rpx;
   height: 50rpx;
-  margin: 25rpx 0rpx 30rpx 20rpx;
+  margin: 25rpx 0 30rpx 20rpx;
 }
 
 .content {
@@ -142,7 +178,7 @@ initCarouselContents();
   font-size: calc(15 / 390 * 100vw);
   align-items: baseline;
   width: 100vw;
-  margin: 0rpx 0rpx 0rpx 60rpx;
+  margin: 0 0 0 60rpx;
   transition-duration: 0.4s;
 }
 
