@@ -71,9 +71,13 @@ const batchLoadingAmount = 20
 const firstLoadingAmount = 16
 const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount
 
+let isLastBatch = false
+let lastBatchAmount: number
+
 let index = 0
 let loadedAmount = 0
 let isBatchLoaded = false
+let isBatchLoadedAll = false
 let page = 0 //每往下翻页一次page加1直到没有内容
 /*
 * 大致逻辑：
@@ -101,7 +105,7 @@ const isLeftTallerThanRight = () => {
 }
 
 onReachBottom(() => {
-  if (isBatchLoaded) {
+  if (isBatchLoaded && !isBatchLoadedAll) {
     isBatchLoaded = false
     addBatch()
   }
@@ -114,13 +118,23 @@ const addBatch = async () => {
   })).moments
   if (moments) {
     page += 1
-    for (let i = 0; i < firstLoadingAmount / 2; i++) {
-      addTile(index, "left")
-      index += 1
-      addTile(index, "right")
-      index += 1
+    if (moments.length === 20) {
+      for (let i = 0; i < firstLoadingAmount / 2; i++) {
+        addTile(index, "left")
+        index += 1
+        addTile(index, "right")
+        index += 1
+      }
+    } else {
+      isLastBatch = true
+      lastBatchAmount = moments.length
+      onLoad()
+      isBatchLoadedAll = true
     }
+  } else {
+    isBatchLoadedAll = true
   }
+
 }
 
 const onLoadLeft = (ev: Event) => {
@@ -137,8 +151,19 @@ const onLoadRight = (ev: Event) => {
 const onLoad = () => {
   isBatchLoaded = false
   loadedAmount += 1
-  if (loadedAmount >= firstLoadingAmount) {
-    if (loadedAmount < firstLoadingAmount + secondLoadingAmount) {
+  if (!isLastBatch) {
+    if (loadedAmount >= firstLoadingAmount) {
+      if (loadedAmount < firstLoadingAmount + secondLoadingAmount) {
+        addTile(index, "either")
+        index += 1
+      } else {
+        loadedAmount = 0
+        index = 0
+        isBatchLoaded = true
+      }
+    }
+  } else {
+    if (index < lastBatchAmount) {
       addTile(index, "either")
       index += 1
     } else {

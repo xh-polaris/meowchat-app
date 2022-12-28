@@ -21,32 +21,27 @@
 <script setup>
 
 import { reactive, ref } from "vue"
-import { getNews } from "@/apis/notice/notice"
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const contents = reactive([])
-
-getNews({ communityId: uni.getStorageSync("communityId") }).then(res => {
-  contents.push(...res.news)
+const props = defineProps({
+  contents: {
+    type: Array,
+    default() {
+      return []
+    }
+  }
 })
 
-const currentContent = ref(0)
-const displayContents = reactive([
-  contents[(currentContent.value + contents.length - 2) % contents.length],
-  contents[(currentContent.value + contents.length - 1) % contents.length],
-  contents[currentContent.value],
-  contents[(currentContent.value + 1) % contents.length],
-  contents[(currentContent.value + 2) % contents.length],
-])
+// eslint-disable-next-line vue/no-setup-props-destructure
+const contents = props.contents
 
 let touchStartX
 let isSlidesMoving = false
 
-function touchStart (ev) {
+const touchStart = (ev) => {
   touchStartX = ev.touches[0].clientX
 }
 
-function touchEnd (ev) {
+const touchEnd = (ev) => {
   if (!isSlidesMoving) {
     if (ev.touches[0].clientX - touchStartX > 30) {
       isSlidesMoving = true
@@ -58,8 +53,16 @@ function touchEnd (ev) {
       setTimeout(() => isSlidesMoving = false, 1000)
     }
   }
-
 }
+
+const currentContent = ref(0)
+const displayContents = reactive([
+  contents[(currentContent.value + contents.length - 2) % contents.length],
+  contents[(currentContent.value + contents.length - 1) % contents.length],
+  contents[currentContent.value],
+  contents[(currentContent.value + 1) % contents.length],
+  contents[(currentContent.value + 2) % contents.length],
+])
 
 const slidesStyle = reactive([
   "slide slide-leftest",
@@ -69,7 +72,7 @@ const slidesStyle = reactive([
   "slide slide-rightest"
 ])
 
-function leftward () {
+function leftward() {
   const index = (currentSlide.value + 1) % 5
   slidesStyle[(index + 3) % 5] = "slide slide-leftest"
   slidesStyle[(index + 4) % 5] = "slide slide-left"
@@ -81,7 +84,7 @@ function leftward () {
   displayContents[(index + 2) % 5] = contents[(currentContent.value + contents.length + 2) % contents.length]
 }
 
-function rightward () {
+function rightward() {
   const index = (currentSlide.value + 4) % 5
   slidesStyle[(index + 3) % 5] = "slide slide-leftest"
   slidesStyle[(index + 4) % 5] = "slide slide-left"
@@ -94,6 +97,7 @@ function rightward () {
 }
 
 const currentSlide = ref(2)
+
 
 </script>
 
