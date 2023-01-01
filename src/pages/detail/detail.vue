@@ -1,23 +1,38 @@
 <template>
   <view>
-    <image :src="Cat.avatars[0]" class="img" />
+    <!--    <image :src="Cat.avatars[0]" class="img" />-->
     <!-- <view class="selector">
       <image src="https://static.xhpolaris.com/dog.jpg" />
       <image src="https://static.xhpolaris.com/dog.jpg" />
       <image src="https://static.xhpolaris.com/dog.jpg" />
     </view>-->
+
+    <image :src="mainImgUrl" class="img" />
+    <view>
+      <ul class="Img_ul">
+        <li
+          v-for="(item,index) in Cat.avatars" :key="index"
+          class="Img_li"
+          @click="changeImg(item)"
+        >
+          <img :src="item" style="width:50px;height:50px">
+        </li>
+      </ul>
+    </view>
     <view class="progress-box">
       <view class="text-box1">
-        <text>{{Cat.name}}</text>
-<!--        <text>{{cat.name}}</text>-->
+        <text>{{ Cat.name }}</text>
+        <!--        <text>{{cat.name}}</text>-->
       </view>
-      <!--<progress
-        :percent="Cat.popularity" :stroke-width="10"
-        backgroundColor="#F5F5F5" border-radius="6px"
-      />
+
       <view class="text-box2">
-        <text>{{Cat.popularity}}人气值</text>
-      </view> -->
+        <progress
+          :percent="Cat.popularity" :stroke-width="10"
+          backgroundColor="#F5F5F5" border-radius="6px"
+          activeColor="#63A4F9"
+        />
+        <text>{{ Cat.popularity }}人气值</text>
+      </view>
     </view>
     <view class="info">
       <view class="combination">
@@ -25,7 +40,7 @@
           年龄
         </view>
         <view class="content">
-          {{Cat.age}}
+          {{ Cat.age }}
         </view>
       </view>
       <view class="combination">
@@ -33,7 +48,7 @@
           花色
         </view>
         <view class="content">
-          {{Cat.color}}
+          {{ Cat.color }}
         </view>
       </view>
       <view class="combination">
@@ -41,7 +56,7 @@
           当前地区
         </view>
         <view class="area_content">
-          {{Cat.area}}
+          {{ Cat.area }}
         </view>
       </view>
     </view>
@@ -51,7 +66,7 @@
           性别
         </view>
         <view class="content">
-          {{Cat.sex}}
+          {{ Cat.sex }}
         </view>
       </view>
       <view class="combination">
@@ -59,7 +74,7 @@
           绝育情况
         </view>
         <view class="content">
-          {{Sterilized}}
+          {{ Sterilized }}
         </view>
       </view>
       <view class="combination">
@@ -67,7 +82,7 @@
           是否剪耳
         </view>
         <view class="content">
-          {{Snipped}}
+          {{ Snipped }}
         </view>
       </view>
     </view>
@@ -78,11 +93,10 @@
       </text>
       <view class="dd">
         <text class="detail_info">
-			{{Cat.details}}
-		</text>
+          {{ Cat.details }}
+        </text>
       </view>
-	  <view class="end">
-	  </view>
+      <view class="end" />
       <!--<view class="imgs">
         <text>
           11月
@@ -121,22 +135,22 @@
                     <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
                 </view>
               </view>-->
-            </view>
-          </view>
+    </view>
+  </view>
 </template>
 
 <script lang="ts" setup>
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {Cat} from "@/apis/schemas";
 import {getCatDetail} from "@/apis/collection/collection";
 import {GetCatDetailReq} from "@/apis/collection/collection-interfaces";
 
-const props = defineProps< {
+const props = defineProps<{
   id: string
-} >()
+}>();
 const getCatDetailReq = reactive<GetCatDetailReq>({
   catId: props.id,
-})
+});
 // let cat2: Cat
 // const cat = ref<Cat>()
 // getCatDetail(getCatDetailReq).then(res => {
@@ -144,57 +158,94 @@ const getCatDetailReq = reactive<GetCatDetailReq>({
 //   // cat.value.name = (res.cat.name)
 //   console.log(cat)
 // })
-let Sterilized:String
-let Snipped:String
-let Cat=reactive<Cat>({id:"",
-    createAt:0,
-    age: "",
-    communityId: "",
-    color: "",
-    details: "",
-    name: "",
-    popularity: 0,
-    sex:"",
-    status: 0,
-    area: "",
-    isSnipped: true,
-    isSterilized:true,
-    avatars: []})
-getCatDetail(getCatDetailReq).then(res=>{
-	Cat.id=res.cat.id
-    Cat.createAt=res.cat.createAt
-	Cat.age=res.cat.age
-	Cat.communityId=res.cat.communityId
-	Cat.color=res.cat.color
-	Cat.details=res.cat.details
-	Cat.name=res.cat.name
-	Cat.popularity=res.cat.popularity
-	Cat.sex=res.cat.sex
-	Cat.status=res.cat.status
-	Cat.area=res.cat.area
-	Cat.isSnipped=res.cat.isSnipped
-	Cat.isSterilized=res.cat.isSterilized
-	Cat.avatars=res.cat.avatars
-	if(res.cat.isSterilized)
-	Sterilized="Yes"
-	else
-	Sterilized="No"
-	if(res.cat.isSnipped)
-	Snipped="Yes"
-	else
-	Snipped="No"
+let Sterilized: string;
+let Snipped: string;
+let Cat = reactive<Cat>({
+  id: "",
+  createAt: 0,
+  age: "",
+  communityId: "",
+  color: "",
+  details: "",
+  name: "",
+  popularity: 0,
+  sex: "",
+  status: 0,
+  area: "",
+  isSnipped: true,
+  isSterilized: true,
+  avatars: []
+});
+getCatDetail(getCatDetailReq).then(res => {
+      Cat.id = res.cat.id;
+      Cat.createAt = res.cat.createAt;
+      Cat.age = res.cat.age;
+      Cat.communityId = res.cat.communityId;
+      Cat.color = res.cat.color;
+      Cat.details = res.cat.details;
+      Cat.name = res.cat.name;
+      Cat.popularity = res.cat.popularity;
+      Cat.sex = res.cat.sex;
+      Cat.status = res.cat.status;
+      Cat.area = res.cat.area;
+      Cat.isSnipped = res.cat.isSnipped;
+      Cat.isSterilized = res.cat.isSterilized;
+      Cat.avatars = res.cat.avatars;
+      if (res.cat.isSterilized)
+        Sterilized = "Yes";
+      else
+        Sterilized = "No";
+      if (res.cat.isSnipped)
+        Snipped = "Yes";
+      else
+        Snipped = "No";
+    }
+);
+// let imgUrlList = [
+//
+//   "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
+//   "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
+//   "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg"
+// ];
+//Cat.avatars[0] = "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg";
+const mainImgUrl = ref(Cat.avatars[0]);
+
+
+function changeImg(item: string) {
+  mainImgUrl.value = item;
 }
-)
 </script>
 
 <style lang="scss" scoped>
+.Img_ul {
+  position: relative;
+  display: flex;
+  left: 300rpx;
+  width: 360rpx;
+  height: 100rpx;
+  overflow: hidden;
+  list-style: none;
+}
+
+.Img_li {
+  float: left;
+  margin: 0 10rpx;
+  cursor: pointer;
+}
+
+.img_activeBorder {
+  border: 3px solid #06abf3;
+}
+
 .img {
   width: 100%;
 }
-.area_content{
-	text-align: center;
-	font-size: 30rpx;
+
+.area_content {
+  text-align: center;
+  font-size: 30rpx;
 }
+
 .selector {
   display: flex;
   padding-left: 300rpx;
@@ -209,7 +260,7 @@ getCatDetail(getCatDetailReq).then(res=>{
 
 .progress-box {
   //border-radius: 10rpx !important;
-  margin-top: 50rpx;
+  margin-top: 20rpx;
   width: 300rpx;
   //text-align: center;
   margin-left: auto;
@@ -220,6 +271,7 @@ getCatDetail(getCatDetailReq).then(res=>{
     text-align: center;
     color: #37393a;
     font-size: 50rpx;
+
   }
 
   .text-box2 {
@@ -230,8 +282,9 @@ getCatDetail(getCatDetailReq).then(res=>{
   }
 
   progress {
+    margin-top: 20rpx;
     border-radius: 6px !important;
-    background: linear-gradient(to right, #05A081, #87CBCB);
+    background: linear-gradient(to right, #CCE9DB, #a40707);
   }
 
 
@@ -271,6 +324,7 @@ getCatDetail(getCatDetailReq).then(res=>{
 .photo {
   text-align: center;
   margin-top: 40rpx;
+
   text {
     color: #212223;
     font-size: 50rpx;
@@ -278,28 +332,31 @@ getCatDetail(getCatDetailReq).then(res=>{
   }
 
   .dd {
-	text-align: center;
+    text-align: center;
     margin-right: auto;
     margin-top: 20rpx;
     width: 100%;
     color: white;
     background: linear-gradient(90deg, #0688f3, white);
   }
-	.end {
-	  text-align: center;
-	  margin-right: auto;
-	  width: 100%;
-	  height: 30rpx;
-	  color: white;
-	 background: linear-gradient(90deg, #0688f3, white);
-	}
-.detail_info{
-	font-size: 40rpx;
-	font-weight: 400;
-	 width: 100%;
-	 margin-bottom: 30rpx;
-	
-}
+
+  .end {
+    text-align: center;
+    margin-right: auto;
+    width: 100%;
+    height: 30rpx;
+    color: white;
+    background: linear-gradient(90deg, #0688f3, white);
+  }
+
+  .detail_info {
+    font-size: 40rpx;
+    font-weight: 400;
+    width: 100%;
+    margin-bottom: 30rpx;
+
+  }
+
   .imgs {
     margin-top: 40rpx;
 

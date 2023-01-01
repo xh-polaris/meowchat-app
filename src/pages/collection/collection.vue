@@ -4,11 +4,11 @@
     <view class="search-bar">
       <view class="search-bar-box">
         <input
-          class="search-text" maxlength="10"
+          v-model="searchCatPreviewsReq.keyword" class="search-text"
+          maxlength="10"
           placeholder="搜索猫咪"
-		  v-model="searchCatPreviewsReq.keyword"
         >
-        <image class="search-span" src="/static/images/search_span.png" @click="onClickSearch"/>
+        <image class="search-span" src="/static/images/search_span.png" @click="onClickSearch" />
       </view>
     </view>
     <!-- 校区选择框   -->
@@ -51,28 +51,27 @@
 
 <script lang="ts" setup>
 import CatBox from "@/pages/collection/cat-box";
-import { reactive, ref } from "vue";
-import { onClickCatBox} from "@/pages/collection/event";
-import { getCatPreviews, searchCatPreviews } from "@/apis/collection/collection";
-import {onReachBottom } from "@dcloudio/uni-app";
-import { GetCatPreviewsReq } from "@/apis/collection/collection-interfaces";
-import { SearchCatPreviewsReq } from "@/apis/collection/collection-interfaces";
-import { Cat } from "@/apis/schemas";
+import {reactive, ref} from "vue";
+import {onClickCatBox} from "@/pages/collection/event";
+import {getCatPreviews, searchCatPreviews} from "@/apis/collection/collection";
+import {onReachBottom} from "@dcloudio/uni-app";
+import {GetCatPreviewsReq, SearchCatPreviewsReq} from "@/apis/collection/collection-interfaces";
+import {Cat} from "@/apis/schemas";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
   communityId: "637ce159b15d9764c31f9c84",
-})
-let searchCatPreviewsReq =reactive<SearchCatPreviewsReq>({
-	communityId: "637ce159b15d9764c31f9c84",
-	page:0,
-	keyword:"",
-})
-let cats = ref<Cat[]>([])
-let wheatherSearch=false
+});
+let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
+  communityId: "637ce159b15d9764c31f9c84",
+  page: 0,
+  keyword: "",
+});
+let cats = ref<Cat[]>([]);
+let wheatherSearch = false;
 getCatPreviews(getCatPreviewsReq).then(res => {
   cats.value.push(...res.cats);
-})
+});
 
 
 const school = reactive({
@@ -92,41 +91,36 @@ function onClickSwitch() {
     url: `/pages/community/school_select`
   });
 }
-function onClickSearch(){
+
+function onClickSearch() {
   searchCatPreviews(searchCatPreviewsReq).then(res => {
-	cats.value=[]
-	cats.value=res.cats  
-	wheatherSearch=true
-  })
+    cats.value = [];
+    cats.value = res.cats;
+    wheatherSearch = true;
+  });
 }
 
-onReachBottom(() =>{
-		if(!wheatherSearch)
-		{
-			getCatPreviewsReq.page++;
-			getCatPreviews(getCatPreviewsReq).then(res => {
-			  if(res.cats.length==0)
-			  {
-				  	uni.stopPullDownRefresh();
-			  }
-			  else{
-				  cats.value.push(...res.cats)
-			  }
-			})
-		}
-		else{
-			searchCatPreviewsReq.page++;
-			searchCatPreviews(searchCatPreviewsReq).then(res => {
-				if(res.cats.length==0)
-				{
-				   uni.stopPullDownRefresh();
-				}
-				else{
-					cats.value.push(...res.cats)
-				}
-			})
-		}
-	});
+onReachBottom(() => {
+  if (!wheatherSearch) {
+    getCatPreviewsReq.page++;
+    getCatPreviews(getCatPreviewsReq).then(res => {
+      if (res.cats.length == 0) {
+        uni.stopPullDownRefresh();
+      } else {
+        cats.value.push(...res.cats);
+      }
+    });
+  } else {
+    searchCatPreviewsReq.page++;
+    searchCatPreviews(searchCatPreviewsReq).then(res => {
+      if (res.cats.length == 0) {
+        uni.stopPullDownRefresh();
+      } else {
+        cats.value.push(...res.cats);
+      }
+    });
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -200,7 +194,7 @@ onReachBottom(() =>{
   margin: 20rpx 10rpx 30rpx 10rpx;
   font-weight: bold;
   border-bottom: 2px solid skyblue;
-  height:55rpx;
+  height: 55rpx;
   font-size: 40rpx;
 }
 
