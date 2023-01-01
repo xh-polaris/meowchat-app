@@ -4,13 +4,13 @@
 
 <script setup>
 
-import { ref } from "vue";
+import { ref } from "vue"
 import Carousel from "./carousel"
-import { getNews } from "@/apis/notice/notice";
+import { getNews } from "@/apis/notice/notice"
 
 let isCarouselInitialized = ref(false)
 let carouselContents
-getNews({communityId: uni.getStorageSync("communityId")}).then(res => {
+getNews({ communityId: uni.getStorageSync("communityId") }).then(res => {
   carouselContents = res.news
   isCarouselInitialized.value = true
 })

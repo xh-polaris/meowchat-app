@@ -73,8 +73,8 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from "vue"
-import { enterMask, enterReply } from "../../moment/event"
-import Reply from "@/pages/moment/reply"
+import { enterMask, enterReply } from "../moment/event"
+import Reply from "@/pages/moment/reply.vue"
 
 const post = ref({
   id: "111",

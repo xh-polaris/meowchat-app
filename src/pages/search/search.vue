@@ -5,10 +5,10 @@
       <view class="search-bar-box">
         <input
           ref="getValue" v-model="keywords"
-          type="text"
-          placeholder="搜索猫咪"
           class="search-text"
-          maxlength="10"
+          maxlength="20"
+          placeholder="搜索猫咪"
+          type="text"
           @input="changevalue($event)"
         >
         <image class="search-span" src="/static/images/search_span.png" />
@@ -40,40 +40,39 @@
 </template>
 
 <script lang="ts" setup>
-import {onClickCancel} from "@/pages/collection/event";
-import {reactive} from "vue";
-
+import { onClickCancel } from "@/pages/collection/event"
+import { reactive } from "vue"
 
 const data = reactive({
   show: false,
   hisList: ["123", "ddd"] as any
-});
+})
 
 //let show = true;
 //let hisList = ["Google", "Runoob", "Taobao"];
 try {
-  const res = uni.getStorageInfoSync();
-  console.log(res.keys);
- 
+  const res = uni.getStorageInfoSync()
+  console.log(res.keys)
+
 } catch (e) {
   // error
 }
 
-function changevalue(e: any) {
+function changevalue (e: any) {
   try {
-    uni.setStorageSync("storage_key", "e.target.value");
+    uni.setStorageSync("storage_key", "e.target.value")
   } catch (e) {
     // error
   }
-  data.hisList.push(e.target.value);
+  data.hisList.push(e.target.value)
   // 获取到输入框的值
-  console.log(data.hisList);
+  console.log(data.hisList)
   if (e.target.value.length > 0) {
-    console.log(data.hisList);
-    data.show = false;
+    console.log(data.hisList)
+    data.show = false
   } else {
-    data.show = true;
-    data.hisList = [];
+    data.show = true
+    data.hisList = []
   }
   /* keywords = e.target.value;
    // 判断

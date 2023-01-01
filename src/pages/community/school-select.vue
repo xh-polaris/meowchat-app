@@ -33,17 +33,6 @@
           全部
         </option>
       </select>
-      <!--      暂时废弃的下拉选框-->
-      <!--      <view class="container" tabIndex=-1>-->
-      <!--        <view class="menu-button">中山北路校区</view>-->
-      <!--        <view class="menu-list">-->
-      <!--          <view class="menu">中山北路校区</view>-->
-      <!--          <view class="menu">全部</view>-->
-      <!--          <view class="menu">闵行校区</view>-->
-      <!--          <view class="menu">闵行校区</view>-->
-      <!--          <view class="menu">闵行校区</view>-->
-      <!--        </view>-->
-      <!--      </view>-->
     </view>
     <view class="search-bar">
       <view class="small">
@@ -156,13 +145,13 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive } from "vue"
 
 const school = reactive({
   alpha: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
   No: 0
-});
+})
 
 </script>
 

@@ -1,4 +1,5 @@
 import {
+  GetAdminsReq,
   GetAdminsResp,
   GetNewsReq,
   GetNewsResp,
@@ -32,10 +33,11 @@ export async function getNews (req: GetNewsReq): Promise<GetNewsResp> {
 /**
  * @description
  */
-export async function getAdmins (): Promise<GetAdminsResp> {
+export async function getAdmins (req: GetAdminsReq): Promise<GetAdminsResp> {
   return await new Promise<GetAdminsResp>((resolve, reject) => {
     uni.request({
       url: "/notice/get_admins",
+      data: req,
       method: "GET",
       success (res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode !== 200) {

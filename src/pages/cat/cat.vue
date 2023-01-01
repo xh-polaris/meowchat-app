@@ -1,19 +1,12 @@
 <template>
   <view>
-    <!--    <image :src="Cat.avatars[0]" class="img" />-->
-    <!-- <view class="selector">
-      <image src="https://static.xhpolaris.com/dog.jpg" />
-      <image src="https://static.xhpolaris.com/dog.jpg" />
-      <image src="https://static.xhpolaris.com/dog.jpg" />
-    </view>-->
-
     <image :src="mainImgUrl" class="img" />
     <view>
-      <ul class="Img_ul">
+      <ul class="img-ul">
         <li
-          v-for="(item,index) in Cat.avatars" :key="index"
-          class="Img_li"
-          @click="changeImg(item)"
+          v-for="(item,index) in cat.avatars" :key="index"
+          class="img-li"
+          @click="()=>{mainImgUrl.value = item}"
         >
           <img :src="item" style="width:50px;height:50px">
         </li>
@@ -21,17 +14,16 @@
     </view>
     <view class="progress-box">
       <view class="text-box1">
-        <text>{{ Cat.name }}</text>
-        <!--        <text>{{cat.name}}</text>-->
+        <text>{{ cat.name }}</text>
       </view>
 
       <view class="text-box2">
         <progress
-          :percent="Cat.popularity" :stroke-width="10"
-          backgroundColor="#F5F5F5" border-radius="6px"
-          activeColor="#63A4F9"
+          :percent="cat.popularity" :stroke-width="10"
+          activeColor="#63A4F9" backgroundColor="#F5F5F5"
+          border-radius="6px"
         />
-        <text>{{ Cat.popularity }}人气值</text>
+        <text>{{ cat.popularity }}人气值</text>
       </view>
     </view>
     <view class="info">
@@ -40,7 +32,7 @@
           年龄
         </view>
         <view class="content">
-          {{ Cat.age }}
+          {{ cat.age }}
         </view>
       </view>
       <view class="combination">
@@ -48,15 +40,15 @@
           花色
         </view>
         <view class="content">
-          {{ Cat.color }}
+          {{ cat.color }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute">
           当前地区
         </view>
-        <view class="area_content">
-          {{ Cat.area }}
+        <view class="area-content">
+          {{ cat.area }}
         </view>
       </view>
     </view>
@@ -66,7 +58,7 @@
           性别
         </view>
         <view class="content">
-          {{ Cat.sex }}
+          {{ cat.sex }}
         </view>
       </view>
       <view class="combination">
@@ -93,74 +85,29 @@
       </text>
       <view class="dd">
         <text class="detail_info">
-          {{ Cat.details }}
+          {{ cat.details }}
         </text>
       </view>
       <view class="end" />
-      <!--<view class="imgs">
-        <text>
-          11月
-        </text>
-      </view>
-      <view class="imgs">
-        <text>
-          11月
-        </text>
-        <view class="qz_imgs qz_imgs3 clearfix">
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                </view>
-              </view>
-              <view class="imgs">
-                <text>
-                  11月
-                </text>
-                <view class="qz_imgs qz_imgs3 clearfix">
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                </view>
-              </view>
-              <view class="imgs">
-                <text>
-                  11月
-                </text>
-                <view class="qz_imgs qz_imgs3 clearfix">
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                    <image src="https://static.xhpolaris.com/dog.jpg" mode="aspectFill" />
-                </view>
-              </view>-->
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import {Cat} from "@/apis/schemas";
-import {getCatDetail} from "@/apis/collection/collection";
-import {GetCatDetailReq} from "@/apis/collection/collection-interfaces";
+import { reactive, ref } from "vue"
+import { Cat } from "@/apis/schemas"
+import { getCatDetail } from "@/apis/collection/collection"
+import { GetCatDetailReq } from "@/apis/collection/collection-interfaces"
 
 const props = defineProps<{
   id: string
-}>();
+}>()
 const getCatDetailReq = reactive<GetCatDetailReq>({
   catId: props.id,
-});
-// let cat2: Cat
-// const cat = ref<Cat>()
-// getCatDetail(getCatDetailReq).then(res => {
-//   cat.push = res.cat
-//   // cat.value.name = (res.cat.name)
-//   console.log(cat)
-// })
-let Sterilized: string;
-let Snipped: string;
-let Cat = reactive<Cat>({
+})
+let Sterilized: string
+let Snipped: string
+let cat = reactive<Cat>({
   id: "",
   createAt: 0,
   age: "",
@@ -175,49 +122,40 @@ let Cat = reactive<Cat>({
   isSnipped: true,
   isSterilized: true,
   avatars: []
-});
+})
+const mainImgUrl = ref("")
 getCatDetail(getCatDetailReq).then(res => {
-      Cat.id = res.cat.id;
-      Cat.createAt = res.cat.createAt;
-      Cat.age = res.cat.age;
-      Cat.communityId = res.cat.communityId;
-      Cat.color = res.cat.color;
-      Cat.details = res.cat.details;
-      Cat.name = res.cat.name;
-      Cat.popularity = res.cat.popularity;
-      Cat.sex = res.cat.sex;
-      Cat.status = res.cat.status;
-      Cat.area = res.cat.area;
-      Cat.isSnipped = res.cat.isSnipped;
-      Cat.isSterilized = res.cat.isSterilized;
-      Cat.avatars = res.cat.avatars;
-      if (res.cat.isSterilized)
-        Sterilized = "Yes";
-      else
-        Sterilized = "No";
-      if (res.cat.isSnipped)
-        Snipped = "Yes";
-      else
-        Snipped = "No";
+      cat.id = res.cat.id
+      cat.createAt = res.cat.createAt
+      cat.age = res.cat.age
+      cat.communityId = res.cat.communityId
+      cat.color = res.cat.color
+      cat.details = res.cat.details
+      cat.name = res.cat.name
+      cat.popularity = res.cat.popularity
+      cat.sex = res.cat.sex
+      cat.status = res.cat.status
+      cat.area = res.cat.area
+      cat.isSnipped = res.cat.isSnipped
+      cat.isSterilized = res.cat.isSterilized
+      cat.avatars = res.cat.avatars
+      if (res.cat.isSterilized) {
+        Sterilized = "是"
+      } else {
+        Sterilized = "否"
+      }
+      if (res.cat.isSnipped) {
+        Snipped = "是"
+      } else {
+        Snipped = "否"
+      }
+      mainImgUrl.value = cat.avatars[0]
     }
-);
-// let imgUrlList = [
-//
-//   "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-//   "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
-//   "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg"
-// ];
-//Cat.avatars[0] = "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg";
-const mainImgUrl = ref(Cat.avatars[0]);
-
-
-function changeImg(item: string) {
-  mainImgUrl.value = item;
-}
+)
 </script>
 
 <style lang="scss" scoped>
-.Img_ul {
+.img-ul {
   position: relative;
   display: flex;
   left: 300rpx;
@@ -227,13 +165,13 @@ function changeImg(item: string) {
   list-style: none;
 }
 
-.Img_li {
+.img-li {
   float: left;
   margin: 0 10rpx;
   cursor: pointer;
 }
 
-.img_activeBorder {
+.img-activeBorder {
   border: 3px solid #06abf3;
 }
 
@@ -241,7 +179,7 @@ function changeImg(item: string) {
   width: 100%;
 }
 
-.area_content {
+.area-content {
   text-align: center;
   font-size: 30rpx;
 }

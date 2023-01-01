@@ -2,7 +2,7 @@
   <view class="reply-container">
     <view class="comment-box">
       <view class="commenter-info-box">
-        <image class="commenter-profile" :src="replies.profile" />
+        <image :src="replies.profile" class="commenter-profile" />
         <text class="commenter-name">
           {{ replies.id }}
         </text>
@@ -15,7 +15,7 @@
           {{ replies.text }}
         </view>
         <view class="like-box">
-          <image src="/static/images/like.svg" class="like-icon" mode="widthFix" />
+          <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
           <text class="like-num">
             {{ replies.likes }}
           </text>
@@ -26,7 +26,7 @@
     <view class="replies-box">
       <view v-for="(item, index) in replies.reply" :key="index" class="reply-box">
         <view class="replier-info-box">
-          <image class="replier-profile" :src="item.profile" />
+          <image :src="item.profile" class="replier-profile" />
           <text class="replier-name">
             {{ item.id }}
           </text>
@@ -39,7 +39,7 @@
             {{ item.text }}
           </view>
           <view class="like-box">
-            <image src="/static/images/like.svg" class="like-icon" mode="widthFix" />
+            <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
             <text class="like-num">
               {{ item.likes }}
             </text>
@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Comment } from "@/apis/moment/moment-components"
+import { Comment } from "@/apis/schemas"
 import { reactive } from "vue"
 
 const props = defineProps<{ replies: Comment }>()

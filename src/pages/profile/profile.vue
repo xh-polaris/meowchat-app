@@ -4,22 +4,24 @@
     <view class="content">
       <!-- 用户信息：昵称、权限、单位 -->
       <view class="fot-xh">
-	 <navigator url="/pages/profile/edit_info" hover-class="none">
-        <view class="pic">
-          <image
-            :src="userInfo.avatarUrl"
-            style="width: 100%;height:100%;border-radius: 50%;"
-          />
-        </view>
-        <view class="txt">
-          <view class="info">
-            <view class="nickname">{{userInfo.nickname}}</view>
-            <view class="unit">
-              <text>华东师范大学</text>
+        <navigator hover-class="none" url="/pages/profile/edit-info/edit-info">
+          <view class="pic">
+            <image
+              :src="userInfo.avatarUrl"
+              style="width: 100%;height:100%;border-radius: 50%;"
+            />
+          </view>
+          <view class="txt">
+            <view class="info">
+              <view class="nickname">
+                {{ userInfo.nickname }}
+              </view>
+              <view class="unit">
+                <text>华东师范大学</text>
+              </view>
             </view>
           </view>
-        </view>
-		</navigator>
+        </navigator>
       </view>
       <!-- 功能栏 -->
       <view class="com-item">
@@ -90,15 +92,20 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
-import {getUserInfo}from"@/apis/user/user"
-import { User } from '@/apis/schemas';
-const userInfo=reactive<User>({id:"",nickname:"微信用户",avatarUrl:"https://static.xhpolaris.com/cat_world.jpg"})
-getUserInfo().then(res=>{
-	userInfo.id=res.user.id
-	userInfo.nickname=res.user.nickname
-	userInfo.avatarUrl=res.user.avatarUrl
-}
+import { reactive } from "vue"
+import { getUserInfo } from "@/apis/user/user"
+import { User } from "@/apis/schemas"
+
+const userInfo = reactive<User>({
+  id: "",
+  nickname: "微信用户",
+  avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
+})
+getUserInfo().then(res => {
+      userInfo.id = res.user.id
+      userInfo.nickname = res.user.nickname
+      userInfo.avatarUrl = res.user.avatarUrl
+    }
 )
 const userOptions = [
   {
@@ -109,24 +116,24 @@ const userOptions = [
   {
     title: "快速联系",
     icon: "/static/images/quick_contact.png",
-    url: "/pages/profile/quick_contact",
+    url: "/pages/profile/quick-contact/quick-contact",
   },
   {
     title: "申请领养",
     icon: "/static/images/apply_adopt.png",
-    url: "/pages/profile/apply_adopt",
+    url: "/pages/profile/apply-adopt/apply-adopt",
   }
 ]
 const adminOptions = [
   {
     title: "申请管理",
     icon: "/static/images/apply_admin.png",
-    url: "/pages/profile/apply_admin",
+    url: "/pages/profile/apply-admin/apply-admin",
   },
   {
     title: "关于我们",
     icon: "/static/images/about_us.png",
-    url: "/pages/profile/about_us",
+    url: "/pages/profile/about-us/about-us",
   }
 ]
 const superAdminOptions = [
@@ -161,7 +168,7 @@ const superAdminOptions = [
   top: 0;
   left: 0;
   z-index: -1;
-  opacity: 0.9;//设置透明度
+  opacity: 0.9; //设置透明度
 }
 
 .fot-xh .pic {
@@ -240,6 +247,7 @@ const superAdminOptions = [
   align-items: center;
   background: #fff;
   border-bottom: 1px solid #f8f8f8;
+
   .cell-left {
     display: flex;
     align-items: center;

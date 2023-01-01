@@ -1,11 +1,11 @@
 <template>
-  <view class="reply-mask" :animation="enterMaskData" @click="leaveReply()" />
-  <reply :replies="comments[selectedReply]" class="more-reply" :animation="enterReplyData" />
+  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
+  <reply :animation="enterReplyData" :replies="comments[selectedReply]" class="more-reply" />
 
   <view class="container">
     <view class="post-info-box">
       <view class="poster-info-box">
-        <image class="poster-profile" :src="post.profile" />
+        <image :src="post.profile" class="poster-profile" />
         <text class="poster-name">
           {{ post.id }}
         </text>
@@ -21,15 +21,15 @@
       </view>
       <image
         v-for="(item, index) in post.images" :key="index"
-        class="post-image"
-        :src="item" mode="widthFix"
+        :src="item"
+        class="post-image" mode="widthFix"
       />
     </view>
 
     <view class="comments-box">
       <view v-for="(item, index) in comments" :key="index" class="comment-box">
         <view class="commenter-info-box">
-          <image class="commenter-profile" :src="item.profile" />
+          <image :src="item.profile" class="commenter-profile" />
           <text class="commenter-name">
             {{ item.id }}
           </text>
@@ -47,7 +47,7 @@
           <image class="arrow-right" src="/static/images/arrow_right_blue.png" />
         </view>
         <view class="like-box">
-          <image class="like-icon" src="/static/images/like.png" mode="widthFix" />
+          <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
           <text class="like-num">
             {{ item.likes }}
           </text>
@@ -56,9 +56,9 @@
     </view>
 
     <view class="write-comment-box">
-      <input class="write-comment" type="text" placeholder="发表评论...">
+      <input class="write-comment" placeholder="发表评论..." type="text">
       <view class="like-box">
-        <image class="like-icon" src="/static/images/like.png" mode="widthFix" />
+        <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
         <view class="like-num">
           {{ post.likes }}
         </view>

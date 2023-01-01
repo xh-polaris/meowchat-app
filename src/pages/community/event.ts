@@ -12,6 +12,6 @@ export function onClickMoment (id: string) {
 
 export function onClickSwitch () {
   uni.navigateTo({
-    url: `/pages/community/school_select`
+    url: `/pages/community/school-select`
   })
 }

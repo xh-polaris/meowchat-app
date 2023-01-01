@@ -1,29 +1,29 @@
 import { CatPreview } from "@/apis/community/community-interfaces"
 
 export function onClickCatBox (id: string) {
-    uni.navigateTo({
-        url: `/pages/detail/detail?id=${id}`
-    })
+  uni.navigateTo({
+    url: `/pages/cat/cat?id=${id}`
+  })
 }
 
 export function onClickSearch () {
-    uni.navigateTo({
-        url: `/pages/search/search`
-    })
+  uni.navigateTo({
+    url: `/pages/search/search`
+  })
 }
 
 export function onClickCancel () {
-    uni.navigateTo({
-        url: `/pages/collection/collection`
-    })
+  uni.navigateTo({
+    url: `/pages/collection/collection`
+  })
 }
 
 export function onClickCollect (cat: CatPreview) {
-    cat.isCollected = !cat.isCollected
+  cat.isCollected = !cat.isCollected
 }
 
 export function onClickSwitch () {
-    uni.navigateTo({
-        url: `/pages/community/school_select`
-    })
+  uni.navigateTo({
+    url: `/pages/community/school_select`
+  })
 }

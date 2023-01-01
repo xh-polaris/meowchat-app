@@ -10,6 +10,10 @@ export interface GetNewsResp {
   news: News[];
 }
 
+export interface GetAdminsReq {
+  communityId: string
+}
+
 export interface GetAdminsResp {
   code: number;
   msg: string;

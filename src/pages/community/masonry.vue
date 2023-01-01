@@ -61,7 +61,7 @@ import { getMomentPreviews } from "@/apis/moment/moment"
 import { Moment } from "@/apis/schemas"
 import { onClickMoment } from "@/pages/community/event"
 import { onReachBottom } from "@dcloudio/uni-app"
-import { displayTime } from "@/components/utils/time"
+import { displayTime } from "@/utils/time"
 
 let moments: Moment[]
 const leftMoments = reactive<Moment[]>([])

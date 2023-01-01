@@ -59,11 +59,11 @@ if (!uni.getStorageSync("communityId")) {
 
 uni.getProvider({
   service: "oauth",
-  success(res: UniNamespace.GetProviderRes) {
+  success (res: UniNamespace.GetProviderRes) {
     if (res.provider[0] === "weixin") {
       uni.login({
         provider: "weixin",
-        success(res: UniNamespace.LoginRes) {
+        success (res: UniNamespace.LoginRes) {
           signIn({
             authType: "wechat",
             authId: "123",

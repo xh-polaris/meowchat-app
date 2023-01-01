@@ -25,7 +25,7 @@ import { reactive, ref } from "vue"
 const props = defineProps({
   contents: {
     type: Array,
-    default() {
+    default () {
       return []
     }
   }
@@ -72,7 +72,7 @@ const slidesStyle = reactive([
   "slide slide-rightest"
 ])
 
-function leftward() {
+function leftward () {
   const index = (currentSlide.value + 1) % 5
   slidesStyle[(index + 3) % 5] = "slide slide-leftest"
   slidesStyle[(index + 4) % 5] = "slide slide-left"
@@ -84,7 +84,7 @@ function leftward() {
   displayContents[(index + 2) % 5] = contents[(currentContent.value + contents.length + 2) % contents.length]
 }
 
-function rightward() {
+function rightward () {
   const index = (currentSlide.value + 4) % 5
   slidesStyle[(index + 3) % 5] = "slide slide-leftest"
   slidesStyle[(index + 4) % 5] = "slide slide-left"

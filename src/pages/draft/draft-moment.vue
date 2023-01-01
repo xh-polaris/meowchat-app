@@ -64,11 +64,11 @@
 
 <script setup>
 
-import { reactive, ref } from "vue";
+import { reactive, ref } from "vue"
 
 const imagesData = reactive([])
 
-function addImageData() {
+function addImageData () {
   imagesData.push({
     id: Math.random()
   })
@@ -77,11 +77,11 @@ function addImageData() {
 const isAnonymous = ref(false)
 const isSyncToCollection = ref(false)
 
-function toggleAnonymous() {
+function toggleAnonymous () {
   isAnonymous.value = !isAnonymous.value
 }
 
-function toggleSyncToCollection() {
+function toggleSyncToCollection () {
   isSyncToCollection.value = !isSyncToCollection.value
 }
 

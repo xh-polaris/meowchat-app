@@ -60,11 +60,11 @@
 
 <script setup>
 
-import { reactive, ref } from "vue";
+import { reactive, ref } from "vue"
 
 const imagesData = reactive([])
 
-function addImageData() {
+function addImageData () {
   imagesData.push({
     id: Math.random()
   })
@@ -72,7 +72,7 @@ function addImageData() {
 
 const isAnonymous = ref(false)
 
-function toggleAnonymous() {
+function toggleAnonymous () {
   isAnonymous.value = !isAnonymous.value
 }
 
