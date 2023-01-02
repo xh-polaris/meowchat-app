@@ -87,7 +87,7 @@ function setBranch (e: string) {
 
 function onClickSwitch () {
   uni.navigateTo({
-    url: `/pages/community/school_select`
+    url: `/pages/community/school-select`
   })
 }
 
@@ -140,7 +140,7 @@ onReachBottom(() => {
   border-radius: 20px;
   margin-right: 20rpx;
   color: #1fa1ff;
-  font-size: 10px;
+  font-size: 25rpx;
   background: white;
   border: solid #1fa1ff 1px;
 }
@@ -158,16 +158,16 @@ onReachBottom(() => {
 
 .navbtn {
   color: #939393;
-  font-size: calc(10 / 390 * 100vw);
-  margin: 0 calc(10 / 390 * 100vw);
+  font-size: 20rpx;
+  margin: 0 20rpx;
 
   &.current {
     color: #FFFFFF;
     background-color: #1FA1FF;
     padding: 10rpx 15rpx 10rpx 15rpx;
     border-radius: 15rpx;
-    font-size: calc(15 / 390 * 100vw);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    font-size: 25rpx;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   }
 }
 
