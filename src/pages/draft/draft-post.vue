@@ -20,9 +20,9 @@
 
       <view class="images">
         <block v-for="(image) in imagesData" :key="image.id">
-          <view class="added-image" />
+          <view :style="{backgroundImage: 'url('+image.url+')'}" class="added-image" />
         </block>
-        <view class="new-image" />
+        <view v-if="imagesData.length < 8" class="new-image" @click="addImage" />
       </view>
       <view class="image-num">
         {{ imagesData.length }}/8
@@ -64,21 +64,36 @@ import { reactive, ref } from "vue"
 
 const imagesData = reactive([])
 
-function addImageData () {
-  imagesData.push({
-    id: Math.random()
-  })
-}
-
 const isAnonymous = ref(false)
 
-function toggleAnonymous () {
+function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value
 }
 
-const imageNum = Math.floor(Math.random() * 9)
-for (let i = 0; i < imageNum; i++) {
-  addImageData()
+function addImage() {
+  uni.chooseImage({
+    success: (chooseImageRes) => {
+      let isTooManyImages = false
+      let tempFilePaths = chooseImageRes.tempFilePaths;
+      if (imagesData.length + tempFilePaths.length > 8) {
+        isTooManyImages = true
+        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length)
+      }
+      tempFilePaths.map(path => {
+        imagesData.push({
+          id: path,
+          url: path
+        })
+      })
+      if (isTooManyImages) {
+        uni.showToast({
+          title: "最多可上传8张图片！",
+          icon: "error"
+        })
+      }
+
+    }
+  })
 }
 
 </script>
@@ -119,7 +134,8 @@ body {
 }
 
 .added-image {
-  background-color: #e1e1e1;
+  background-size: cover;
+  background-position: center;
 }
 
 
