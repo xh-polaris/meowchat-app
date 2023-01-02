@@ -85,10 +85,10 @@ import DraftButton from "@/pages/draft/draft-button"
 const postsData = reactive([])
 
 const getPostPreviewsAsync = async () => {
-  return (await getPostPreviews({ page: 0 })).posts
+  return (await getPostPreviews({page: 0})).posts
 }
 
-async function createPostsDataBatch () {
+async function createPostsDataBatch() {
   const posts = await getPostPreviewsAsync()
   postsData.push(...posts)
 }
@@ -276,7 +276,8 @@ body {
   height: calc(93 / 390 * 100vw);
   border-radius: calc(6 / 390 * 100vw);
   margin-left: calc(16 / 390 * 100vw);
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: center;
 
   //text-align: center;
   //line-height: calc(93 / 390 * 100vw);
