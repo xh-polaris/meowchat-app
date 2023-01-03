@@ -1,38 +1,47 @@
 <template>
   <view class="uni-popup-dialog">
     <view class="uni-dialog-title">
-      <text class="uni-dialog-title-text" :class="['uni-popup__'+dialogType]">{{titleText}}</text>
+      <text
+        class="uni-dialog-title-text"
+        :class="['uni-popup__' + dialogType]"
+        >{{ titleText }}</text
+      >
     </view>
     <view v-if="mode === 'base'" class="uni-dialog-content">
       <slot>
-        <text class="uni-dialog-content-text">{{content}}</text>
+        <text class="uni-dialog-content-text">{{ content }}</text>
       </slot>
     </view>
     <view v-else class="uni-dialog-content">
       <slot>
-        <input class="uni-dialog-input" v-model="val" type="text" :placeholder="placeholderText" :focus="focus">
+        <input
+          class="uni-dialog-input"
+          v-model="val"
+          type="text"
+          :placeholder="placeholderText"
+          :focus="focus"
+        />
       </slot>
     </view>
     <view class="uni-dialog-button-group">
       <view class="uni-dialog-button" @click="closeDialog">
-        <text class="uni-dialog-button-text">{{closeText}}</text>
+        <text class="uni-dialog-button-text">{{ closeText }}</text>
       </view>
       <view class="uni-dialog-button uni-border-left" @click="onOk">
-        <text class="uni-dialog-button-text uni-button-color">{{okText}}</text>
+        <text class="uni-dialog-button-text uni-button-color">{{
+          okText
+        }}</text>
       </view>
     </view>
-
   </view>
 </template>
 
 <script>
-import popup from "../uni-popup/popup.js"
-import {
-  initVueI18n
-} from "@dcloudio/uni-i18n"
-import messages from "../uni-popup/i18n/index.js"
+import popup from "../uni-popup/popup.js";
+import { initVueI18n } from "@dcloudio/uni-i18n";
+import messages from "../uni-popup/i18n/index.js";
 
-const { t } = initVueI18n(messages)
+const { t } = initVueI18n(messages);
 /**
  * PopUp 弹出层-对话框样式
  * @description 弹出层-对话框样式
@@ -60,115 +69,115 @@ export default {
   props: {
     value: {
       type: [String, Number],
-      default: ""
+      default: "",
     },
     placeholder: {
       type: [String, Number],
-      default: ""
+      default: "",
     },
     type: {
       type: String,
-      default: "error"
+      default: "error",
     },
     mode: {
       type: String,
-      default: "base"
+      default: "base",
     },
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     content: {
       type: String,
-      default: ""
+      default: "",
     },
     beforeClose: {
       type: Boolean,
-      default: false
+      default: false,
     },
     cancelText: {
       type: String,
-      default: ""
+      default: "",
     },
     confirmText: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
-  data () {
+  data() {
     return {
       dialogType: "error",
       focus: false,
-      val: ""
-    }
+      val: "",
+    };
   },
   computed: {
-    okText () {
-      return this.confirmText || t("uni-popup.ok")
+    okText() {
+      return this.confirmText || t("uni-popup.ok");
     },
-    closeText () {
-      return this.cancelText || t("uni-popup.cancel")
+    closeText() {
+      return this.cancelText || t("uni-popup.cancel");
     },
-    placeholderText () {
-      return this.placeholder || t("uni-popup.placeholder")
+    placeholderText() {
+      return this.placeholder || t("uni-popup.placeholder");
     },
-    titleText () {
-      return this.title || t("uni-popup.title")
-    }
+    titleText() {
+      return this.title || t("uni-popup.title");
+    },
   },
   watch: {
-    type (val) {
-      this.dialogType = val
+    type(val) {
+      this.dialogType = val;
     },
-    mode (val) {
+    mode(val) {
       if (val === "input") {
-        this.dialogType = "info"
+        this.dialogType = "info";
       }
     },
-    value (val) {
-      this.val = val
-    }
+    value(val) {
+      this.val = val;
+    },
   },
-  created () {
+  created() {
     // 对话框遮罩不可点击
-    this.popup.disableMask()
+    this.popup.disableMask();
     // this.popup.closeMask()
     if (this.mode === "input") {
-      this.dialogType = "info"
-      this.val = this.value
+      this.dialogType = "info";
+      this.val = this.value;
     } else {
-      this.dialogType = this.type
+      this.dialogType = this.type;
     }
   },
-  mounted () {
-    this.focus = true
+  mounted() {
+    this.focus = true;
   },
   methods: {
     /**
      * 点击确认按钮
      */
-    onOk () {
+    onOk() {
       if (this.mode === "input") {
-        this.$emit("confirm", this.val)
+        this.$emit("confirm", this.val);
       } else {
-        this.$emit("confirm")
+        this.$emit("confirm");
       }
-      if (this.beforeClose) return
-      this.popup.close()
+      if (this.beforeClose) return;
+      this.popup.close();
     },
     /**
      * 点击取消按钮
      */
-    closeDialog () {
-      this.$emit("close")
-      if (this.beforeClose) return
-      this.popup.close()
+    closeDialog() {
+      this.$emit("close");
+      if (this.beforeClose) return;
+      this.popup.close();
     },
-    close () {
-      this.popup.close()
-    }
-  }
-}
+    close() {
+      this.popup.close();
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -204,7 +213,7 @@ export default {
 
 .uni-dialog-content-text {
   font-size: 14px;
-  color: #6C6C6C;
+  color: #6c6c6c;
 }
 
 .uni-dialog-button-group {

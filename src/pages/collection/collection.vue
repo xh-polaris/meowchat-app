@@ -4,11 +4,16 @@
     <view class="search-bar">
       <view class="search-bar-box">
         <input
-          v-model="searchCatPreviewsReq.keyword" class="search-text"
+          v-model="searchCatPreviewsReq.keyword"
+          class="search-text"
           maxlength="20"
           placeholder="搜索猫咪"
-        >
-        <image class="search-span" src="/static/images/search_span.png" @click="onClickSearch" />
+        />
+        <image
+          class="search-span"
+          src="/static/images/search_span.png"
+          @click="onClickSearch"
+        />
       </view>
     </view>
     <!-- 校区选择框   -->
@@ -27,8 +32,9 @@
       <view class="school-select-box">
         <view class="navbar">
           <view
-            v-for="item in school.campuses" :key="item"
-            :class="'navbtn '+(currentNavBtn===item?'current':'')"
+            v-for="item in school.campuses"
+            :key="item"
+            :class="'navbtn ' + (currentNavBtn === item ? 'current' : '')"
             @click="setBranch(item)"
           >
             {{ item }}
@@ -50,80 +56,85 @@
 </template>
 
 <script lang="ts" setup>
-import CatBox from "@/pages/collection/cat-box"
-import { reactive, ref } from "vue"
-import { onClickCatBox } from "@/pages/collection/event"
-import { getCatPreviews, searchCatPreviews } from "@/apis/collection/collection"
-import { onReachBottom } from "@dcloudio/uni-app"
-import { GetCatPreviewsReq, SearchCatPreviewsReq } from "@/apis/collection/collection-interfaces"
-import { Cat } from "@/apis/schemas"
+import CatBox from "@/pages/collection/cat-box";
+import { reactive, ref } from "vue";
+import { onClickCatBox } from "@/pages/collection/event";
+import {
+  getCatPreviews,
+  searchCatPreviews,
+} from "@/apis/collection/collection";
+import { onReachBottom } from "@dcloudio/uni-app";
+import {
+  GetCatPreviewsReq,
+  SearchCatPreviewsReq,
+} from "@/apis/collection/collection-interfaces";
+import { Cat } from "@/apis/schemas";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
   communityId: "637ce159b15d9764c31f9c84",
-})
+});
 let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
   communityId: "637ce159b15d9764c31f9c84",
   page: 0,
   keyword: "",
-})
-let cats = ref<Cat[]>([])
-let wheatherSearch = false
-getCatPreviews(getCatPreviewsReq).then(res => {
-  cats.value.push(...res.cats)
-})
+});
+let cats = ref<Cat[]>([]);
+let wheatherSearch = false;
+getCatPreviews(getCatPreviewsReq).then((res) => {
+  cats.value.push(...res.cats);
+});
 
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
-  No: 0
-})
+  No: 0,
+});
 
-const currentNavBtn = ref("中北校区")
+const currentNavBtn = ref("中北校区");
 
-function setBranch (e: string) {
-  currentNavBtn.value = e
+function setBranch(e: string) {
+  currentNavBtn.value = e;
 }
 
-function onClickSwitch () {
+function onClickSwitch() {
   uni.navigateTo({
     url: `/pages/community/school-select`
   })
 }
 
-function onClickSearch () {
-  searchCatPreviews(searchCatPreviewsReq).then(res => {
-    cats.value = []
-    cats.value = res.cats
-    wheatherSearch = true
-  })
+function onClickSearch() {
+  searchCatPreviews(searchCatPreviewsReq).then((res) => {
+    cats.value = [];
+    cats.value = res.cats;
+    wheatherSearch = true;
+  });
 }
 
 onReachBottom(() => {
   if (!wheatherSearch) {
-    getCatPreviewsReq.page++
-    getCatPreviews(getCatPreviewsReq).then(res => {
+    getCatPreviewsReq.page++;
+    getCatPreviews(getCatPreviewsReq).then((res) => {
       if (res.cats.length == 0) {
-        uni.stopPullDownRefresh()
+        uni.stopPullDownRefresh();
       } else {
-        cats.value.push(...res.cats)
+        cats.value.push(...res.cats);
       }
-    })
+    });
   } else {
-    searchCatPreviewsReq.page++
-    searchCatPreviews(searchCatPreviewsReq).then(res => {
+    searchCatPreviewsReq.page++;
+    searchCatPreviews(searchCatPreviewsReq).then((res) => {
       if (res.cats.length == 0) {
-        uni.stopPullDownRefresh()
+        uni.stopPullDownRefresh();
       } else {
-        cats.value.push(...res.cats)
+        cats.value.push(...res.cats);
       }
-    })
+    });
   }
-})
+});
 </script>
 
 <style lang="scss" scoped>
-
 .arrow {
   width: 44rpx;
   height: 50rpx;
@@ -146,9 +157,9 @@ onReachBottom(() => {
 }
 
 .navbar {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
-  color: #B8B8B8;
+  color: #b8b8b8;
   font-size: calc(15 / 390 * 100vw);
   align-items: baseline;
   width: 100vw;
@@ -162,8 +173,8 @@ onReachBottom(() => {
   margin: 0 20rpx;
 
   &.current {
-    color: #FFFFFF;
-    background-color: #1FA1FF;
+    color: #ffffff;
+    background-color: #1fa1ff;
     padding: 10rpx 15rpx 10rpx 15rpx;
     border-radius: 15rpx;
     font-size: 25rpx;
@@ -233,7 +244,6 @@ onReachBottom(() => {
   height: 56rpx;
   margin-top: 6rpx;
   margin-right: 30rpx;
-
 }
 
 .search-text {
@@ -251,9 +261,6 @@ onReachBottom(() => {
     border-radius: 25px;
     border: 1px solid #dad6d6;
     padding: 10rpx 0;
-
   }
 }
-
-
 </style>

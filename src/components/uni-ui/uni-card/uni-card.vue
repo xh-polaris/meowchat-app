@@ -1,10 +1,26 @@
 <template>
-  <view class="uni-card" :class="{ 'uni-card--full': isFull, 'uni-card--shadow': isShadow,'uni-card--border':border}"
-        :style="{'margin':isFull?0:margin,'padding':spacing,'box-shadow':isShadow?shadow:''}">
+  <view
+    class="uni-card"
+    :class="{
+      'uni-card--full': isFull,
+      'uni-card--shadow': isShadow,
+      'uni-card--border': border,
+    }"
+    :style="{
+      margin: isFull ? 0 : margin,
+      padding: spacing,
+      'box-shadow': isShadow ? shadow : '',
+    }"
+  >
     <!-- 封面 -->
     <slot name="cover">
       <view v-if="cover" class="uni-card__cover">
-        <image class="uni-card__cover-image" mode="widthFix" @click="onClick('cover')" :src="cover"></image>
+        <image
+          class="uni-card__cover-image"
+          mode="widthFix"
+          @click="onClick('cover')"
+          :src="cover"
+        ></image>
       </view>
     </slot>
     <slot name="title">
@@ -12,12 +28,20 @@
         <!-- 卡片标题 -->
         <view class="uni-card__header-box" @click="onClick('title')">
           <view v-if="thumbnail" class="uni-card__header-avatar">
-            <image class="uni-card__header-avatar-image" :src="thumbnail" mode="aspectFit"/>
+            <image
+              class="uni-card__header-avatar-image"
+              :src="thumbnail"
+              mode="aspectFit"
+            />
           </view>
           <view class="uni-card__header-content">
-            <text class="uni-card__header-content-title uni-ellipsis">{{ title }}</text>
-            <text v-if="title&&subTitle"
-                  class="uni-card__header-content-subtitle uni-ellipsis">{{ subTitle }}
+            <text class="uni-card__header-content-title uni-ellipsis">{{
+              title
+            }}</text>
+            <text
+              v-if="title && subTitle"
+              class="uni-card__header-content-subtitle uni-ellipsis"
+              >{{ subTitle }}
             </text>
           </view>
         </view>
@@ -27,7 +51,11 @@
       </view>
     </slot>
     <!-- 卡片内容 -->
-    <view class="uni-card__content" :style="{padding:padding}" @click="onClick('content')">
+    <view
+      class="uni-card__content"
+      :style="{ padding: padding }"
+      @click="onClick('content')"
+    >
       <slot></slot>
     </view>
     <view class="uni-card__actions" @click="onClick('actions')">
@@ -61,66 +89,70 @@ export default {
   props: {
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     subTitle: {
       type: String,
-      default: ""
+      default: "",
     },
     padding: {
       type: String,
-      default: "10px"
+      default: "10px",
     },
     margin: {
       type: String,
-      default: "15px"
+      default: "15px",
     },
     spacing: {
       type: String,
-      default: "0 10px"
+      default: "0 10px",
     },
     extra: {
       type: String,
-      default: ""
+      default: "",
     },
     cover: {
       type: String,
-      default: ""
+      default: "",
     },
     thumbnail: {
       type: String,
-      default: ""
+      default: "",
     },
     isFull: {
       // 内容区域是否通栏
       type: Boolean,
-      default: false
+      default: false,
     },
     isShadow: {
       // 是否开启阴影
       type: Boolean,
-      default: true
+      default: true,
     },
     shadow: {
       type: String,
-      default: "0px 0px 3px 1px rgba(0, 0, 0, 0.08)"
+      default: "0px 0px 3px 1px rgba(0, 0, 0, 0.08)",
     },
     border: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   methods: {
-    onClick (type) {
-      this.$emit("click", type)
-    }
-  }
-}
+    onClick(type) {
+      this.$emit("click", type);
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-$uni-border-3: #EBEEF5 !default;
-$uni-shadow-base: 0 0px 6px 1px rgba($color: #a5a5a5, $alpha: 0.2) !default;
+$uni-border-3: #ebeef5 !default;
+$uni-shadow-base: 0 0px 6px 1px
+  rgba(
+    $color: #a5a5a5,
+    $alpha: 0.2,
+  ) !default;
 $uni-main-color: #3a3a3a !default;
 $uni-base-color: #6a6a6a !default;
 $uni-secondary-color: #909399 !default;
@@ -139,7 +171,8 @@ $uni-card-content-color: $uni-base-color;
   padding: 0 $uni-spacing-sm;
   border-radius: 4px;
   overflow: hidden;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+    Microsoft YaHei, SimSun, sans-serif;
   background-color: #fff;
   flex: 1;
 

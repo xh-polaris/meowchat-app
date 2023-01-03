@@ -1,39 +1,78 @@
 <template>
-  <view class="uni-navbar" :class="{'uni-dark':dark, 'uni-nvue-fixed': fixed}">
-    <view :class="{ 'uni-navbar--fixed': fixed, 'uni-navbar--shadow': shadow, 'uni-navbar--border': border }"
-          :style="{ 'background-color': themeBgColor }" class="uni-navbar__content">
-      <status-bar v-if="statusBar"/>
-      <view :style="{ color: themeColor,backgroundColor: themeBgColor ,height:navbarHeight}"
-            class="uni-navbar__header">
-        <view @tap="onClickLeft" class="uni-navbar__header-btns uni-navbar__header-btns-left"
-              :style="{width:leftIconWidth}">
+  <view
+    class="uni-navbar"
+    :class="{ 'uni-dark': dark, 'uni-nvue-fixed': fixed }"
+  >
+    <view
+      :class="{
+        'uni-navbar--fixed': fixed,
+        'uni-navbar--shadow': shadow,
+        'uni-navbar--border': border,
+      }"
+      :style="{ 'background-color': themeBgColor }"
+      class="uni-navbar__content"
+    >
+      <status-bar v-if="statusBar" />
+      <view
+        :style="{
+          color: themeColor,
+          backgroundColor: themeBgColor,
+          height: navbarHeight,
+        }"
+        class="uni-navbar__header"
+      >
+        <view
+          @tap="onClickLeft"
+          class="uni-navbar__header-btns uni-navbar__header-btns-left"
+          :style="{ width: leftIconWidth }"
+        >
           <slot name="left">
             <view class="uni-navbar__content_view" v-if="leftIcon.length > 0">
-              <uni-icons :color="themeColor" :type="leftIcon" size="20"/>
+              <uni-icons :color="themeColor" :type="leftIcon" size="20" />
             </view>
-            <view :class="{ 'uni-navbar-btn-icon-left': !leftIcon.length > 0 }" class="uni-navbar-btn-text"
-                  v-if="leftText.length">
-              <text :style="{ color: themeColor, fontSize: '12px' }">{{ leftText }}</text>
+            <view
+              :class="{ 'uni-navbar-btn-icon-left': !leftIcon.length > 0 }"
+              class="uni-navbar-btn-text"
+              v-if="leftText.length"
+            >
+              <text :style="{ color: themeColor, fontSize: '12px' }">{{
+                leftText
+              }}</text>
             </view>
           </slot>
         </view>
-        <view class="uni-navbar__header-container " @tap="onClickTitle">
+        <view class="uni-navbar__header-container" @tap="onClickTitle">
           <slot>
-            <view class="uni-navbar__header-container-inner" v-if="title.length>0">
-              <text class="uni-nav-bar-text uni-ellipsis-1"
-                    :style="{color: themeColor }">{{ title }}
+            <view
+              class="uni-navbar__header-container-inner"
+              v-if="title.length > 0"
+            >
+              <text
+                class="uni-nav-bar-text uni-ellipsis-1"
+                :style="{ color: themeColor }"
+                >{{ title }}
               </text>
             </view>
           </slot>
         </view>
-        <view @click="onClickRight" class="uni-navbar__header-btns uni-navbar__header-btns-right"
-              :style="{width:rightIconWidth}">
+        <view
+          @click="onClickRight"
+          class="uni-navbar__header-btns uni-navbar__header-btns-right"
+          :style="{ width: rightIconWidth }"
+        >
           <slot name="right">
             <view v-if="rightIcon.length">
-              <uni-icons :color="themeColor" :type="rightIcon" size="22"/>
+              <uni-icons :color="themeColor" :type="rightIcon" size="22" />
             </view>
-            <view class="uni-navbar-btn-text" v-if="rightText.length && !rightIcon.length">
-              <text class="uni-nav-bar-right-text" :style="{ color: themeColor}">{{ rightText }}</text>
+            <view
+              class="uni-navbar-btn-text"
+              v-if="rightText.length && !rightIcon.length"
+            >
+              <text
+                class="uni-nav-bar-right-text"
+                :style="{ color: themeColor }"
+                >{{ rightText }}</text
+              >
             </view>
           </slot>
         </view>
@@ -41,17 +80,20 @@
     </view>
     /* #ifndef APP-NVUE */
     <view class="uni-navbar__placeholder" v-if="fixed">
-      <status-bar v-if="statusBar"/>
-      <view class="uni-navbar__placeholder-view" :style="{ height:navbarHeight}"/>
+      <status-bar v-if="statusBar" />
+      <view
+        class="uni-navbar__placeholder-view"
+        :style="{ height: navbarHeight }"
+      />
     </view>
     /* #endif */
   </view>
 </template>
 
 <script>
-import statusBar from "./uni-status-bar.vue"
+import statusBar from "./uni-status-bar.vue";
 
-const getVal = (val) => typeof val === "number" ? val + "px" : val
+const getVal = (val) => (typeof val === "number" ? val + "px" : val);
 
 /**
  *
@@ -78,125 +120,125 @@ const getVal = (val) => typeof val === "number" ? val + "px" : val
 export default {
   name: "UniNavBar",
   components: {
-    statusBar
+    statusBar,
   },
   emits: ["clickLeft", "clickRight", "clickTitle"],
   props: {
     dark: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     leftText: {
       type: String,
-      default: ""
+      default: "",
     },
     rightText: {
       type: String,
-      default: ""
+      default: "",
     },
     leftIcon: {
       type: String,
-      default: ""
+      default: "",
     },
     rightIcon: {
       type: String,
-      default: ""
+      default: "",
     },
     fixed: {
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     color: {
       type: String,
-      default: ""
+      default: "",
     },
     backgroundColor: {
       type: String,
-      default: ""
+      default: "",
     },
     statusBar: {
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     shadow: {
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     border: {
       type: [Boolean, String],
-      default: true
+      default: true,
     },
     height: {
       type: [Number, String],
-      default: 44
+      default: 44,
     },
     leftWidth: {
       type: [Number, String],
-      default: 60
+      default: 60,
     },
     rightWidth: {
       type: [Number, String],
-      default: 60
+      default: 60,
     },
     stat: {
       type: [Boolean, String],
-      default: ""
-    }
+      default: "",
+    },
   },
   computed: {
-    themeBgColor () {
+    themeBgColor() {
       if (this.dark) {
         // 默认值
         if (this.backgroundColor) {
-          return this.backgroundColor
+          return this.backgroundColor;
         } else {
-          return this.dark ? "#333" : "#FFF"
+          return this.dark ? "#333" : "#FFF";
         }
       }
-      return this.backgroundColor || "#FFF"
+      return this.backgroundColor || "#FFF";
     },
-    themeColor () {
+    themeColor() {
       if (this.dark) {
         // 默认值
         if (this.color) {
-          return this.color
+          return this.color;
         } else {
-          return this.dark ? "#fff" : "#333"
+          return this.dark ? "#fff" : "#333";
         }
       }
-      return this.color || "#333"
+      return this.color || "#333";
     },
-    navbarHeight () {
-      return getVal(this.height)
+    navbarHeight() {
+      return getVal(this.height);
     },
-    leftIconWidth () {
-      return getVal(this.leftWidth)
+    leftIconWidth() {
+      return getVal(this.leftWidth);
     },
-    rightIconWidth () {
-      return getVal(this.rightWidth)
-    }
+    rightIconWidth() {
+      return getVal(this.rightWidth);
+    },
   },
-  mounted () {
+  mounted() {
     if (uni.report && this.stat && this.title !== "") {
-      uni.report("title", this.title)
+      uni.report("title", this.title);
     }
   },
   methods: {
-    onClickLeft () {
-      this.$emit("clickLeft")
+    onClickLeft() {
+      this.$emit("clickLeft");
     },
-    onClickRight () {
-      this.$emit("clickRight")
+    onClickRight() {
+      this.$emit("clickRight");
     },
-    onClickTitle () {
-      this.$emit("clickTitle")
-    }
-  }
-}
+    onClickTitle() {
+      this.$emit("clickTitle");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -314,7 +356,6 @@ $nav-height: 44px;
   // box-sizing: border-box;
 }
 
-
 .uni-navbar__placeholder-view {
   height: $nav-height;
 }
@@ -330,7 +371,6 @@ $nav-height: 44px;
   left: 0;
   right: 0;
   /* #endif */
-
 }
 
 .uni-navbar--shadow {

@@ -1,34 +1,93 @@
 <template>
-  <view class="uni-easyinput" :class="{'uni-easyinput-error':msg}" :style="boxStyle">
-    <view class="uni-easyinput__content" :class="inputContentClass" :style="inputContentStyle">
-      <uni-icons v-if="prefixIcon" class="content-clear-icon" :type="prefixIcon" color="#c0c4cc"
-                 @click="onClickIcon('prefix')" size="22"></uni-icons>
-      <textarea v-if="type === 'textarea'" class="uni-easyinput__content-textarea"
-                :class="{'input-padding':inputBorder}" :name="name" :value="val" :placeholder="placeholder"
-                :placeholderStyle="placeholderStyle" :disabled="disabled"
-                placeholder-class="uni-easyinput__placeholder-class" :maxlength="inputMaxlength" :focus="focused"
-                :autoHeight="autoHeight" @input="onInput" @blur="_Blur" @focus="_Focus" @confirm="onConfirm"></textarea>
-      <input v-else :type="type === 'password'?'text':type" class="uni-easyinput__content-input"
-             :style="inputStyle" :name="name" :value="val" :password="!showPassword && type === 'password'"
-             :placeholder="placeholder" :placeholderStyle="placeholderStyle"
-             placeholder-class="uni-easyinput__placeholder-class" :disabled="disabled" :maxlength="inputMaxlength"
-             :focus="focused" :confirmType="confirmType" @focus="_Focus" @blur="_Blur" @input="onInput"
-             @confirm="onConfirm"/>
+  <view
+    class="uni-easyinput"
+    :class="{ 'uni-easyinput-error': msg }"
+    :style="boxStyle"
+  >
+    <view
+      class="uni-easyinput__content"
+      :class="inputContentClass"
+      :style="inputContentStyle"
+    >
+      <uni-icons
+        v-if="prefixIcon"
+        class="content-clear-icon"
+        :type="prefixIcon"
+        color="#c0c4cc"
+        @click="onClickIcon('prefix')"
+        size="22"
+      ></uni-icons>
+      <textarea
+        v-if="type === 'textarea'"
+        class="uni-easyinput__content-textarea"
+        :class="{ 'input-padding': inputBorder }"
+        :name="name"
+        :value="val"
+        :placeholder="placeholder"
+        :placeholderStyle="placeholderStyle"
+        :disabled="disabled"
+        placeholder-class="uni-easyinput__placeholder-class"
+        :maxlength="inputMaxlength"
+        :focus="focused"
+        :autoHeight="autoHeight"
+        @input="onInput"
+        @blur="_Blur"
+        @focus="_Focus"
+        @confirm="onConfirm"
+      ></textarea>
+      <input
+        v-else
+        :type="type === 'password' ? 'text' : type"
+        class="uni-easyinput__content-input"
+        :style="inputStyle"
+        :name="name"
+        :value="val"
+        :password="!showPassword && type === 'password'"
+        :placeholder="placeholder"
+        :placeholderStyle="placeholderStyle"
+        placeholder-class="uni-easyinput__placeholder-class"
+        :disabled="disabled"
+        :maxlength="inputMaxlength"
+        :focus="focused"
+        :confirmType="confirmType"
+        @focus="_Focus"
+        @blur="_Blur"
+        @input="onInput"
+        @confirm="onConfirm"
+      />
       <template v-if="type === 'password' && passwordIcon">
         <!-- 开启密码时显示小眼睛 -->
-        <uni-icons v-if="isVal" class="content-clear-icon" :class="{'is-textarea-icon':type==='textarea'}"
-                   :type="showPassword?'eye-slash-filled':'eye-filled'" :size="22"
-                   :color="focusShow?'#2979ff':'#c0c4cc'" @click="onEyes">
+        <uni-icons
+          v-if="isVal"
+          class="content-clear-icon"
+          :class="{ 'is-textarea-icon': type === 'textarea' }"
+          :type="showPassword ? 'eye-slash-filled' : 'eye-filled'"
+          :size="22"
+          :color="focusShow ? '#2979ff' : '#c0c4cc'"
+          @click="onEyes"
+        >
         </uni-icons>
       </template>
       <template v-else-if="suffixIcon">
-        <uni-icons v-if="suffixIcon" class="content-clear-icon" :type="suffixIcon" color="#c0c4cc"
-                   @click="onClickIcon('suffix')" size="22"></uni-icons>
+        <uni-icons
+          v-if="suffixIcon"
+          class="content-clear-icon"
+          :type="suffixIcon"
+          color="#c0c4cc"
+          @click="onClickIcon('suffix')"
+          size="22"
+        ></uni-icons>
       </template>
       <template v-else>
-        <uni-icons v-if="clearable && isVal && !disabled  && type !== 'textarea'" class="content-clear-icon"
-                   :class="{'is-textarea-icon':type==='textarea'}" type="clear" :size="clearSize"
-                   :color="msg?'#dd524d':(focusShow?'#2979ff':'#c0c4cc')" @click="onClear"></uni-icons>
+        <uni-icons
+          v-if="clearable && isVal && !disabled && type !== 'textarea'"
+          class="content-clear-icon"
+          :class="{ 'is-textarea-icon': type === 'textarea' }"
+          type="clear"
+          :size="clearSize"
+          :color="msg ? '#dd524d' : focusShow ? '#2979ff' : '#c0c4cc'"
+          @click="onClear"
+        ></uni-icons>
       </template>
       <slot name="right"></slot>
     </view>
@@ -77,44 +136,55 @@
  * @event {Function}  iconClick  点击图标时触发
  * @example <uni-easyinput v-model="mobile"></uni-easyinput>
  */
-function obj2strClass (obj) {
-  let classess = ""
+function obj2strClass(obj) {
+  let classess = "";
   for (let key in obj) {
-    const val = obj[key]
+    const val = obj[key];
     if (val) {
-      classess += `${key} `
+      classess += `${key} `;
     }
   }
-  return classess
+  return classess;
 }
 
-function obj2strStyle (obj) {
-  let style = ""
+function obj2strStyle(obj) {
+  let style = "";
   for (let key in obj) {
-    const val = obj[key]
-    style += `${key}:${val};`
+    const val = obj[key];
+    style += `${key}:${val};`;
   }
-  return style
+  return style;
 }
 
 export default {
   name: "uni-easyinput",
-  emits: ["click", "iconClick", "update:modelValue", "input", "focus", "blur", "confirm", "clear", "eyes", "change"],
+  emits: [
+    "click",
+    "iconClick",
+    "update:modelValue",
+    "input",
+    "focus",
+    "blur",
+    "confirm",
+    "clear",
+    "eyes",
+    "change",
+  ],
   model: {
     prop: "modelValue",
-    event: "update:modelValue"
+    event: "update:modelValue",
   },
   options: {
-    virtualHost: true
+    virtualHost: true,
   },
   inject: {
     form: {
       from: "uniForm",
-      default: null
+      default: null,
     },
     formItem: {
       from: "uniFormItem",
-      default: null
+      default: null,
     },
   },
   props: {
@@ -123,77 +193,77 @@ export default {
     modelValue: [Number, String],
     type: {
       type: String,
-      default: "text"
+      default: "text",
     },
     clearable: {
       type: Boolean,
-      default: true
+      default: true,
     },
     autoHeight: {
       type: Boolean,
-      default: false
+      default: false,
     },
     placeholder: {
       type: String,
-      default: " "
+      default: " ",
     },
     placeholderStyle: String,
     focus: {
       type: Boolean,
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     maxlength: {
       type: [Number, String],
-      default: 140
+      default: 140,
     },
     confirmType: {
       type: String,
-      default: "done"
+      default: "done",
     },
     clearSize: {
       type: [Number, String],
-      default: 24
+      default: 24,
     },
     inputBorder: {
       type: Boolean,
-      default: true
+      default: true,
     },
     prefixIcon: {
       type: String,
-      default: ""
+      default: "",
     },
     suffixIcon: {
       type: String,
-      default: ""
+      default: "",
     },
     trim: {
       type: [Boolean, String],
-      default: true
+      default: true,
     },
     passwordIcon: {
       type: Boolean,
-      default: true
+      default: true,
     },
     styles: {
       type: Object,
-      default () {
+      default() {
         return {
           color: "#333",
           disableColor: "#F7F6F6",
-          borderColor: "#e5e5e5"
-        }
-      }
+          borderColor: "#e5e5e5",
+        };
+      },
     },
     errorMessage: {
       type: [String, Boolean],
-      default: ""
-    }
+      default: "",
+    },
   },
-  data () {
+  data() {
     return {
       focused: false,
       val: "",
@@ -203,103 +273,108 @@ export default {
       showClearIcon: false,
       showPassword: false,
       focusShow: false,
-      localMsg: ""
-    }
+      localMsg: "",
+    };
   },
   computed: {
     // 输入框内是否有值
-    isVal () {
-      const val = this.val
+    isVal() {
+      const val = this.val;
       // fixed by mehaotian 处理值为0的情况，字符串0不在处理范围
       if (val || val === 0) {
-        return true
+        return true;
       }
-      return false
+      return false;
     },
 
-    msg () {
+    msg() {
       // console.log('computed', this.form, this.formItem);
       // if (this.form) {
       // 	return this.errorMessage || this.formItem.errMsg;
       // }
       // TODO 处理头条 formItem 中 errMsg 不更新的问题
-      return this.localMsg || this.errorMessage
+      return this.localMsg || this.errorMessage;
     },
     // 因为uniapp的input组件的maxlength组件必须要数值，这里转为数值，用户可以传入字符串数值
-    inputMaxlength () {
-      return Number(this.maxlength)
+    inputMaxlength() {
+      return Number(this.maxlength);
     },
 
     // 处理外层样式的style
-    boxStyle () {
-      return `color:${this.inputBorder && this.msg ? "#e43d33" : this.styles.color};`
+    boxStyle() {
+      return `color:${
+        this.inputBorder && this.msg ? "#e43d33" : this.styles.color
+      };`;
     },
     // input 内容的类和样式处理
-    inputContentClass () {
+    inputContentClass() {
       return obj2strClass({
         "is-input-border": this.inputBorder,
         "is-input-error-border": this.inputBorder && this.msg,
         "is-textarea": this.type === "textarea",
-        "is-disabled": this.disabled
-      })
+        "is-disabled": this.disabled,
+      });
     },
-    inputContentStyle () {
-      const focusColor = this.focusShow ? "#2979ff" : this.styles.borderColor
-      const borderColor = this.inputBorder && this.msg ? "#dd524d" : focusColor
+    inputContentStyle() {
+      const focusColor = this.focusShow ? "#2979ff" : this.styles.borderColor;
+      const borderColor = this.inputBorder && this.msg ? "#dd524d" : focusColor;
       return obj2strStyle({
         "border-color": borderColor || "#e5e5e5",
-        "background-color": this.disabled ? this.styles.disableColor : "#fff"
-      })
+        "background-color": this.disabled ? this.styles.disableColor : "#fff",
+      });
     },
     // input右侧样式
-    inputStyle () {
-      const paddingRight = this.type === "password" || this.clearable || this.prefixIcon ? "" : "10px"
+    inputStyle() {
+      const paddingRight =
+        this.type === "password" || this.clearable || this.prefixIcon
+          ? ""
+          : "10px";
       return obj2strStyle({
         "padding-right": paddingRight,
-        "padding-left": this.prefixIcon ? "" : "10px"
-      })
-    }
+        "padding-left": this.prefixIcon ? "" : "10px",
+      });
+    },
   },
   watch: {
-    value (newVal) {
-      this.val = newVal
+    value(newVal) {
+      this.val = newVal;
     },
-    modelValue (newVal) {
-      this.val = newVal
+    modelValue(newVal) {
+      this.val = newVal;
     },
-    focus (newVal) {
+    focus(newVal) {
       this.$nextTick(() => {
-        this.focused = this.focus
-        this.focusShow = this.focus
-      })
-    }
+        this.focused = this.focus;
+        this.focusShow = this.focus;
+      });
+    },
   },
-  created () {
-    this.init()
+  created() {
+    this.init();
     // TODO 处理头条vue3 computed 不监听 inject 更改的问题（formItem.errMsg）
     if (this.form && this.formItem) {
       this.$watch("formItem.errMsg", (newVal) => {
-        this.localMsg = newVal
-      })
+        this.localMsg = newVal;
+      });
     }
   },
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
-      this.focused = this.focus
-      this.focusShow = this.focus
-    })
+      this.focused = this.focus;
+      this.focusShow = this.focus;
+    });
   },
   methods: {
     /**
      * 初始化变量值
      */
-    init () {
+    init() {
       if (this.value || this.value === 0) {
-        this.val = this.value
+        this.val = this.value;
       } else if (this.modelValue || this.modelValue === 0) {
-        this.val = this.modelValue
+        this.val = this.modelValue;
       } else {
-        this.val = null
+        this.val = null;
       }
     },
 
@@ -307,40 +382,40 @@ export default {
      * 点击图标时触发
      * @param {Object} type
      */
-    onClickIcon (type) {
-      this.$emit("iconClick", type)
+    onClickIcon(type) {
+      this.$emit("iconClick", type);
     },
 
     /**
      * 显示隐藏内容，密码框时生效
      */
-    onEyes () {
-      this.showPassword = !this.showPassword
-      this.$emit("eyes", this.showPassword)
+    onEyes() {
+      this.showPassword = !this.showPassword;
+      this.$emit("eyes", this.showPassword);
     },
 
     /**
      * 输入时触发
      * @param {Object} event
      */
-    onInput (event) {
-      let value = event.detail.value
+    onInput(event) {
+      let value = event.detail.value;
       // 判断是否去除空格
       if (this.trim) {
-        if (typeof (this.trim) === "boolean" && this.trim) {
-          value = this.trimStr(value)
+        if (typeof this.trim === "boolean" && this.trim) {
+          value = this.trimStr(value);
         }
-        if (typeof (this.trim) === "string") {
-          value = this.trimStr(value, this.trim)
+        if (typeof this.trim === "string") {
+          value = this.trimStr(value, this.trim);
         }
       }
 
-      if (this.errMsg) this.errMsg = ""
-      this.val = value
+      if (this.errMsg) this.errMsg = "";
+      this.val = value;
       // TODO 兼容 vue2
-      this.$emit("input", value)
+      this.$emit("input", value);
       // TODO　兼容　vue3
-      this.$emit("update:modelValue", value)
+      this.$emit("update:modelValue", value);
     },
 
     /**
@@ -348,16 +423,16 @@ export default {
      * 获取焦点时触发
      * @param {Object} event
      */
-    onFocus () {
+    onFocus() {
       this.$nextTick(() => {
-        this.focused = true
-      })
-      this.$emit("focus", null)
+        this.focused = true;
+      });
+      this.$emit("focus", null);
     },
 
-    _Focus (event) {
-      this.focusShow = true
-      this.$emit("focus", event)
+    _Focus(event) {
+      this.focusShow = true;
+      this.$emit("focus", event);
     },
 
     /**
@@ -365,23 +440,21 @@ export default {
      * 失去焦点时触发
      * @param {Object} event
      */
-    onBlur () {
-      this.focused = false
-      this.$emit("focus", null)
+    onBlur() {
+      this.focused = false;
+      this.$emit("focus", null);
     },
-    _Blur (event) {
-      let value = event.detail.value
-      this.focusShow = false
-      this.$emit("blur", event)
+    _Blur(event) {
+      let value = event.detail.value;
+      this.focusShow = false;
+      this.$emit("blur", event);
       // 根据类型返回值，在event中获取的值理论上讲都是string
-      this.$emit("change", this.val)
+      this.$emit("change", this.val);
       // 失去焦点时参与表单校验
       if (this.form && this.formItem) {
-        const {
-          validateTrigger
-        } = this.form
+        const { validateTrigger } = this.form;
         if (validateTrigger === "blur") {
-          this.formItem.onFieldChange()
+          this.formItem.onFieldChange();
         }
       }
     },
@@ -390,54 +463,54 @@ export default {
      * 按下键盘的发送键
      * @param {Object} e
      */
-    onConfirm (e) {
-      this.$emit("confirm", this.val)
-      this.$emit("change", this.val)
+    onConfirm(e) {
+      this.$emit("confirm", this.val);
+      this.$emit("change", this.val);
     },
 
     /**
      * 清理内容
      * @param {Object} event
      */
-    onClear (event) {
-      this.val = ""
+    onClear(event) {
+      this.val = "";
       // TODO 兼容 vue2
-      this.$emit("input", "")
+      this.$emit("input", "");
       // TODO 兼容 vue2
       // TODO　兼容　vue3
-      this.$emit("update:modelValue", "")
+      this.$emit("update:modelValue", "");
       // 点击叉号触发
-      this.$emit("clear")
+      this.$emit("clear");
     },
 
     /**
      * 去除空格
      */
-    trimStr (str, pos = "both") {
+    trimStr(str, pos = "both") {
       if (pos === "both") {
-        return str.trim()
+        return str.trim();
       } else if (pos === "left") {
-        return str.trimLeft()
+        return str.trimLeft();
       } else if (pos === "right") {
-        return str.trimRight()
+        return str.trimRight();
       } else if (pos === "start") {
-        return str.trimStart()
+        return str.trimStart();
       } else if (pos === "end") {
-        return str.trimEnd()
+        return str.trimEnd();
       } else if (pos === "all") {
-        return str.replace(/\s+/g, "")
+        return str.replace(/\s+/g, "");
       } else if (pos === "none") {
-        return str
+        return str;
       }
-      return str
-    }
-  }
-}
+      return str;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
 $uni-error: #e43d33;
-$uni-border-1: #DCDFE6 !default;
+$uni-border-1: #dcdfe6 !default;
 
 .uni-easyinput {
   /* #ifndef APP-NVUE */
@@ -557,10 +630,9 @@ $uni-border-1: #DCDFE6 !default;
   border-color: $uni-error;
 
   .uni-easyinput__placeholder-class {
-    color: mix(#fff, $uni-error, 50%);;
+    color: mix(#fff, $uni-error, 50%);
   }
 }
-
 
 .uni-easyinput--border {
   margin-bottom: 0;
@@ -583,11 +655,11 @@ $uni-border-1: #DCDFE6 !default;
 }
 
 .is-disabled {
-  background-color: #F7F6F6;
-  color: #D5D5D5;
+  background-color: #f7f6f6;
+  color: #d5d5d5;
 
   .uni-easyinput__placeholder-class {
-    color: #D5D5D5;
+    color: #d5d5d5;
     font-size: 12px;
   }
 }

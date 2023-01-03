@@ -1,32 +1,37 @@
 <template>
   <view class="uni-popup-share">
     <view class="uni-share-title">
-      <text class="uni-share-title-text">{{shareTitleText}}</text>
+      <text class="uni-share-title-text">{{ shareTitleText }}</text>
     </view>
     <view class="uni-share-content">
       <view class="uni-share-content-box">
-        <view class="uni-share-content-item" v-for="(item,index) in bottomData" :key="index"
-              @click.stop="select(item,index)">
-          <image class="uni-share-image" :src="item.icon" mode="aspectFill"></image>
-          <text class="uni-share-text">{{item.text}}</text>
+        <view
+          class="uni-share-content-item"
+          v-for="(item, index) in bottomData"
+          :key="index"
+          @click.stop="select(item, index)"
+        >
+          <image
+            class="uni-share-image"
+            :src="item.icon"
+            mode="aspectFill"
+          ></image>
+          <text class="uni-share-text">{{ item.text }}</text>
         </view>
-
       </view>
     </view>
     <view class="uni-share-button-box">
-      <button class="uni-share-button" @click="close">{{cancelText}}</button>
+      <button class="uni-share-button" @click="close">{{ cancelText }}</button>
     </view>
   </view>
 </template>
 
 <script>
-import popup from "../uni-popup/popup.js"
-import {
-  initVueI18n
-} from "@dcloudio/uni-i18n"
-import messages from "../uni-popup/i18n/index.js"
+import popup from "../uni-popup/popup.js";
+import { initVueI18n } from "@dcloudio/uni-i18n";
+import messages from "../uni-popup/i18n/index.js";
 
-const { t } = initVueI18n(messages)
+const { t } = initVueI18n(messages);
 export default {
   name: "UniPopupShare",
   mixins: [popup],
@@ -34,34 +39,35 @@ export default {
   props: {
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     beforeClose: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
-      bottomData: [{
-        text: "微信",
-        icon: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/c2b17470-50be-11eb-b680-7980c8a877b8.png",
-        name: "wx"
-      },
+      bottomData: [
+        {
+          text: "微信",
+          icon: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/c2b17470-50be-11eb-b680-7980c8a877b8.png",
+          name: "wx",
+        },
         {
           text: "支付宝",
           icon: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/d684ae40-50be-11eb-8ff1-d5dcf8779628.png",
-          name: "wx"
+          name: "wx",
         },
         {
           text: "QQ",
           icon: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/e7a79520-50be-11eb-b997-9918a5dda011.png",
-          name: "qq"
+          name: "qq",
         },
         {
           text: "新浪",
           icon: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/0dacdbe0-50bf-11eb-8ff1-d5dcf8779628.png",
-          name: "sina"
+          name: "sina",
         },
         // {
         // 	text: '百度',
@@ -73,40 +79,38 @@ export default {
         // 	icon: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/2e0fdfe0-50bf-11eb-b997-9918a5dda011.png',
         // 	name: 'more'
         // }
-      ]
-    }
+      ],
+    };
   },
-  created () {
-  },
+  created() {},
   computed: {
-    cancelText () {
-      return t("uni-popup.cancel")
+    cancelText() {
+      return t("uni-popup.cancel");
     },
-    shareTitleText () {
-      return this.title || t("uni-popup.shareTitle")
-    }
+    shareTitleText() {
+      return this.title || t("uni-popup.shareTitle");
+    },
   },
   methods: {
     /**
      * 选择内容
      */
-    select (item, index) {
+    select(item, index) {
       this.$emit("select", {
         item,
-        index
-      })
-      this.close()
-
+        index,
+      });
+      this.close();
     },
     /**
      * 关闭窗口
      */
-    close () {
-      if (this.beforeClose) return
-      this.popup.close()
-    }
-  }
-}
+    close() {
+      if (this.beforeClose) return;
+      this.popup.close();
+    },
+  },
+};
 </script>
 <style lang="scss">
 .uni-popup-share {
@@ -171,7 +175,7 @@ export default {
 .uni-share-text {
   margin-top: 10px;
   font-size: 14px;
-  color: #3B4144;
+  color: #3b4144;
 }
 
 .uni-share-button-box {

@@ -1,24 +1,48 @@
 <template>
-  <view v-if="showPopup" class="uni-popup" :class="[popupstyle, isDesktop ? 'fixforpc-z-index' : '']">
+  <view
+    v-if="showPopup"
+    class="uni-popup"
+    :class="[popupstyle, isDesktop ? 'fixforpc-z-index' : '']"
+  >
     <view @touchstart="touchstart">
-      <uni-transition key="1" v-if="maskShow" name="mask" mode-class="fade" :styles="maskClass"
-                      :duration="duration" :show="showTrans" @click="onTap"/>
-      <uni-transition key="2" :mode-class="ani" name="content" :styles="transClass" :duration="duration"
-                      :show="showTrans" @click="onTap">
-        <view class="uni-popup__wrapper" :style="{ backgroundColor: bg }" :class="[popupstyle]" @click="clear">
-          <slot/>
+      <uni-transition
+        key="1"
+        v-if="maskShow"
+        name="mask"
+        mode-class="fade"
+        :styles="maskClass"
+        :duration="duration"
+        :show="showTrans"
+        @click="onTap"
+      />
+      <uni-transition
+        key="2"
+        :mode-class="ani"
+        name="content"
+        :styles="transClass"
+        :duration="duration"
+        :show="showTrans"
+        @click="onTap"
+      >
+        <view
+          class="uni-popup__wrapper"
+          :style="{ backgroundColor: bg }"
+          :class="[popupstyle]"
+          @click="clear"
+        >
+          <slot />
         </view>
       </uni-transition>
     </view>
     <!-- #ifdef H5 -->
-    <keypress v-if="maskShow" @esc="onTap"/>
+    <keypress v-if="maskShow" @esc="onTap" />
     <!-- #endif -->
   </view>
 </template>
 
 <script>
 // #ifdef H5
-import keypress from "./keypress.js"
+import keypress from "./keypress.js";
 // #endif
 
 /**
@@ -48,7 +72,7 @@ export default {
   name: "uniPopup",
   components: {
     // #ifdef H5
-    keypress
+    keypress,
     // #endif
   },
   emits: ["change", "maskClick"],
@@ -56,35 +80,35 @@ export default {
     // 开启动画
     animation: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 弹出层类型，可选值，top: 顶部弹出层；bottom：底部弹出层；center：全屏弹出层
     // message: 消息提示 ; dialog : 对话框
     type: {
       type: String,
-      default: "center"
+      default: "center",
     },
     // maskClick
     isMaskClick: {
       type: Boolean,
-      default: null
+      default: null,
     },
     // TODO 2 个版本后废弃属性 ，使用 isMaskClick
     maskClick: {
       type: Boolean,
-      default: null
+      default: null,
     },
     backgroundColor: {
       type: String,
-      default: "none"
+      default: "none",
     },
     safeArea: {
       type: Boolean,
-      default: true
+      default: true,
     },
     maskBackgroundColor: {
       type: String,
-      default: "rgba(0, 0, 0, 0.4)"
+      default: "rgba(0, 0, 0, 0.4)",
     },
   },
 
@@ -94,17 +118,17 @@ export default {
      */
     type: {
       handler: function (type) {
-        if (!this.config[type]) return
-        this[this.config[type]](true)
+        if (!this.config[type]) return;
+        this[this.config[type]](true);
       },
-      immediate: true
+      immediate: true,
     },
     isDesktop: {
       handler: function (newVal) {
-        if (!this.config[newVal]) return
-        this[this.config[this.type]](true)
+        if (!this.config[newVal]) return;
+        this[this.config[this.type]](true);
       },
-      immediate: true
+      immediate: true,
     },
     /**
      * 监听遮罩是否可点击
@@ -112,25 +136,27 @@ export default {
      */
     maskClick: {
       handler: function (val) {
-        this.mkclick = val
+        this.mkclick = val;
       },
-      immediate: true
+      immediate: true,
     },
     isMaskClick: {
       handler: function (val) {
-        this.mkclick = val
+        this.mkclick = val;
       },
-      immediate: true
+      immediate: true,
     },
     // H5 下禁止底部滚动
-    showPopup (show) {
+    showPopup(show) {
       // #ifdef H5
       // fix by mehaotian 处理 h5 滚动穿透的问题
-      document.getElementsByTagName("body")[0].style.overflow = show ? "hidden" : "visible"
+      document.getElementsByTagName("body")[0].style.overflow = show
+        ? "hidden"
+        : "visible";
       // #endif
-    }
+    },
   },
-  data () {
+  data() {
     return {
       duration: 300,
       ani: [],
@@ -146,7 +172,7 @@ export default {
         right: "right",
         message: "top",
         dialog: "center",
-        share: "bottom"
+        share: "bottom",
       },
       maskClass: {
         position: "fixed",
@@ -154,30 +180,30 @@ export default {
         top: 0,
         left: 0,
         right: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.4)"
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
       },
       transClass: {
         position: "fixed",
         left: 0,
-        right: 0
+        right: 0,
       },
       maskShow: true,
       mkclick: true,
-      popupstyle: this.isDesktop ? "fixforpc-top" : "top"
-    }
+      popupstyle: this.isDesktop ? "fixforpc-top" : "top",
+    };
   },
   computed: {
-    isDesktop () {
-      return this.popupWidth >= 500 && this.popupHeight >= 500
+    isDesktop() {
+      return this.popupWidth >= 500 && this.popupHeight >= 500;
     },
-    bg () {
+    bg() {
       if (this.backgroundColor === "" || this.backgroundColor === "none") {
-        return "transparent"
+        return "transparent";
       }
-      return this.backgroundColor
-    }
+      return this.backgroundColor;
+    },
   },
-  mounted () {
+  mounted() {
     const fixSize = () => {
       const {
         windowWidth,
@@ -185,23 +211,23 @@ export default {
         windowTop,
         safeArea,
         screenHeight,
-        safeAreaInsets
-      } = uni.getSystemInfoSync()
-      this.popupWidth = windowWidth
-      this.popupHeight = windowHeight + (windowTop || 0)
+        safeAreaInsets,
+      } = uni.getSystemInfoSync();
+      this.popupWidth = windowWidth;
+      this.popupHeight = windowHeight + (windowTop || 0);
       // TODO fix by mehaotian 是否适配底部安全区 ,目前微信ios 、和 app ios 计算有差异，需要框架修复
       if (safeArea && this.safeArea) {
         // #ifdef MP-WEIXIN
-        this.safeAreaInsets = screenHeight - safeArea.bottom
+        this.safeAreaInsets = screenHeight - safeArea.bottom;
         // #endif
         // #ifndef MP-WEIXIN
-        this.safeAreaInsets = safeAreaInsets.bottom
+        this.safeAreaInsets = safeAreaInsets.bottom;
         // #endif
       } else {
-        this.safeAreaInsets = 0
+        this.safeAreaInsets = 0;
       }
-    }
-    fixSize()
+    };
+    fixSize();
     // #ifdef H5
     // window.addEventListener('resize', fixSize)
     // this.$once('hook:beforeDestroy', () => {
@@ -211,156 +237,166 @@ export default {
   },
   // #ifndef VUE3
   // TODO vue2
-  destroyed () {
-    this.setH5Visible()
+  destroyed() {
+    this.setH5Visible();
   },
   // #endif
   // #ifdef VUE3
   // TODO vue3
-  unmounted () {
-    this.setH5Visible()
+  unmounted() {
+    this.setH5Visible();
   },
   // #endif
-  created () {
+  created() {
     // this.mkclick =  this.isMaskClick || this.maskClick
     if (this.isMaskClick === null && this.maskClick === null) {
-      this.mkclick = true
+      this.mkclick = true;
     } else {
-      this.mkclick = this.isMaskClick !== null ? this.isMaskClick : this.maskClick
+      this.mkclick =
+        this.isMaskClick !== null ? this.isMaskClick : this.maskClick;
     }
     if (this.animation) {
-      this.duration = 300
+      this.duration = 300;
     } else {
-      this.duration = 0
+      this.duration = 0;
     }
     // TODO 处理 message 组件生命周期异常的问题
-    this.messageChild = null
+    this.messageChild = null;
     // TODO 解决头条冒泡的问题
-    this.clearPropagation = false
-    this.maskClass.backgroundColor = this.maskBackgroundColor
+    this.clearPropagation = false;
+    this.maskClass.backgroundColor = this.maskBackgroundColor;
   },
   methods: {
-    setH5Visible () {
+    setH5Visible() {
       // #ifdef H5
       // fix by mehaotian 处理 h5 滚动穿透的问题
-      document.getElementsByTagName("body")[0].style.overflow = "visible"
+      document.getElementsByTagName("body")[0].style.overflow = "visible";
       // #endif
     },
     /**
      * 公用方法，不显示遮罩层
      */
-    closeMask () {
-      this.maskShow = false
+    closeMask() {
+      this.maskShow = false;
     },
     /**
      * 公用方法，遮罩层禁止点击
      */
-    disableMask () {
-      this.mkclick = false
+    disableMask() {
+      this.mkclick = false;
     },
     // TODO nvue 取消冒泡
-    clear (e) {
+    clear(e) {
       // #ifndef APP-NVUE
-      e.stopPropagation()
+      e.stopPropagation();
       // #endif
-      this.clearPropagation = true
+      this.clearPropagation = true;
     },
 
-    open (direction) {
+    open(direction) {
       // fix by mehaotian 处理快速打开关闭的情况
       if (this.showPopup) {
-        clearTimeout(this.timer)
-        this.showPopup = false
+        clearTimeout(this.timer);
+        this.showPopup = false;
       }
-      let innerType = ["top", "center", "bottom", "left", "right", "message", "dialog", "share"]
+      let innerType = [
+        "top",
+        "center",
+        "bottom",
+        "left",
+        "right",
+        "message",
+        "dialog",
+        "share",
+      ];
       if (!(direction && innerType.indexOf(direction) !== -1)) {
-        direction = this.type
+        direction = this.type;
       }
       if (!this.config[direction]) {
-        console.error("缺少类型：", direction)
-        return
+        console.error("缺少类型：", direction);
+        return;
       }
-      this[this.config[direction]]()
+      this[this.config[direction]]();
       this.$emit("change", {
         show: true,
-        type: direction
-      })
+        type: direction,
+      });
     },
-    close (type) {
-      this.showTrans = false
+    close(type) {
+      this.showTrans = false;
       this.$emit("change", {
         show: false,
-        type: this.type
-      })
-      clearTimeout(this.timer)
+        type: this.type,
+      });
+      clearTimeout(this.timer);
       // // 自定义关闭事件
       // this.customOpen && this.customClose()
       this.timer = setTimeout(() => {
-        this.showPopup = false
-      }, 300)
+        this.showPopup = false;
+      }, 300);
     },
     // TODO 处理冒泡事件，头条的冒泡事件有问题 ，先这样兼容
-    touchstart () {
-      this.clearPropagation = false
+    touchstart() {
+      this.clearPropagation = false;
     },
 
-    onTap () {
+    onTap() {
       if (this.clearPropagation) {
         // fix by mehaotian 兼容 nvue
-        this.clearPropagation = false
-        return
+        this.clearPropagation = false;
+        return;
       }
-      this.$emit("maskClick")
-      if (!this.mkclick) return
-      this.close()
+      this.$emit("maskClick");
+      if (!this.mkclick) return;
+      this.close();
     },
     /**
      * 顶部弹出样式处理
      */
-    top (type) {
-      this.popupstyle = this.isDesktop ? "fixforpc-top" : "top"
-      this.ani = ["slide-top"]
+    top(type) {
+      this.popupstyle = this.isDesktop ? "fixforpc-top" : "top";
+      this.ani = ["slide-top"];
       this.transClass = {
         position: "fixed",
         left: 0,
         right: 0,
-        backgroundColor: this.bg
-      }
+        backgroundColor: this.bg,
+      };
       // TODO 兼容 type 属性 ，后续会废弃
-      if (type) return
-      this.showPopup = true
-      this.showTrans = true
+      if (type) return;
+      this.showPopup = true;
+      this.showTrans = true;
       this.$nextTick(() => {
         if (this.messageChild && this.type === "message") {
-          this.messageChild.timerClose()
+          this.messageChild.timerClose();
         }
-      })
+      });
     },
     /**
      * 底部弹出样式处理
      */
-    bottom (type) {
-      this.popupstyle = "bottom"
-      this.ani = ["slide-bottom"]
+    bottom(type) {
+      this.popupstyle = "bottom";
+      this.ani = ["slide-bottom"];
       this.transClass = {
         position: "fixed",
         left: 0,
         right: 0,
         bottom: 0,
         paddingBottom: this.safeAreaInsets + "px",
-        backgroundColor: this.bg
-      }
+        backgroundColor: this.bg,
+      };
       // TODO 兼容 type 属性 ，后续会废弃
-      if (type) return
-      this.showPopup = true
-      this.showTrans = true
+      if (type) return;
+      this.showPopup = true;
+      this.showTrans = true;
     },
     /**
      * 中间弹出样式处理
      */
-    center (type) {
-      this.popupstyle = "center"
-      this.ani = ["zoom-out", "fade"]
+    center(type) {
+      this.popupstyle = "center";
+      this.ani = ["zoom-out", "fade"];
       this.transClass = {
         position: "fixed",
         /* #ifndef APP-NVUE */
@@ -372,16 +408,16 @@ export default {
         right: 0,
         top: 0,
         justifyContent: "center",
-        alignItems: "center"
-      }
+        alignItems: "center",
+      };
       // TODO 兼容 type 属性 ，后续会废弃
-      if (type) return
-      this.showPopup = true
-      this.showTrans = true
+      if (type) return;
+      this.showPopup = true;
+      this.showTrans = true;
     },
-    left (type) {
-      this.popupstyle = "left"
-      this.ani = ["slide-left"]
+    left(type) {
+      this.popupstyle = "left";
+      this.ani = ["slide-left"];
       this.transClass = {
         position: "fixed",
         left: 0,
@@ -390,17 +426,17 @@ export default {
         backgroundColor: this.bg,
         /* #ifndef APP-NVUE */
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
         /* #endif */
-      }
+      };
       // TODO 兼容 type 属性 ，后续会废弃
-      if (type) return
-      this.showPopup = true
-      this.showTrans = true
+      if (type) return;
+      this.showPopup = true;
+      this.showTrans = true;
     },
-    right (type) {
-      this.popupstyle = "right"
-      this.ani = ["slide-right"]
+    right(type) {
+      this.popupstyle = "right";
+      this.ani = ["slide-right"];
       this.transClass = {
         position: "fixed",
         bottom: 0,
@@ -409,16 +445,16 @@ export default {
         backgroundColor: this.bg,
         /* #ifndef APP-NVUE */
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
         /* #endif */
-      }
+      };
       // TODO 兼容 type 属性 ，后续会废弃
-      if (type) return
-      this.showPopup = true
-      this.showTrans = true
-    }
-  }
-}
+      if (type) return;
+      this.showPopup = true;
+      this.showTrans = true;
+    },
+  },
+};
 </script>
 <style lang="scss">
 .uni-popup {

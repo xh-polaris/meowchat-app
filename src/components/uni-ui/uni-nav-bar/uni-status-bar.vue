@@ -1,21 +1,21 @@
 <template>
   <view :style="{ height: statusBarHeight }" class="uni-status-bar">
-    <slot/>
+    <slot />
   </view>
 </template>
 
 <script>
 export default {
   name: "UniStatusBar",
-  data () {
+  data() {
     return {
-      statusBarHeight: 20
-    }
+      statusBarHeight: 20,
+    };
   },
-  mounted () {
-    this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight + "px"
-  }
-}
+  mounted() {
+    this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight + "px";
+  },
+};
 </script>
 
 <style lang="scss">

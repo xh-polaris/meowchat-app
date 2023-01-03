@@ -1,6 +1,10 @@
 <template>
   <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
-  <reply :animation="enterReplyData" :replies="comments[selectedReply]" class="more-reply" />
+  <reply
+    :animation="enterReplyData"
+    :replies="comments[selectedReply]"
+    class="more-reply"
+  />
 
   <view class="container">
     <view class="post-info-box">
@@ -9,20 +13,18 @@
         <text class="poster-name">
           {{ post.id }}
         </text>
-        <text class="post-time">
-          ·{{ post.time }}
-        </text>
+        <text class="post-time"> ·{{ post.time }} </text>
       </view>
       <view class="post-content">
         {{ post.text }}
       </view>
-      <view class="like-info">
-        {{ post.likes }} 位喵友觉得很赞
-      </view>
+      <view class="like-info"> {{ post.likes }} 位喵友觉得很赞 </view>
       <image
-        v-for="(item, index) in post.images" :key="index"
+        v-for="(item, index) in post.images"
+        :key="index"
         :src="item"
-        class="post-image" mode="widthFix"
+        class="post-image"
+        mode="widthFix"
       />
     </view>
 
@@ -33,9 +35,7 @@
           <text class="commenter-name">
             {{ item.id }}
           </text>
-          <text class="comment-time">
-            ·{{ item.time }}
-          </text>
+          <text class="comment-time"> ·{{ item.time }} </text>
         </view>
         <view class="comment-content">
           {{ item.text }}
@@ -44,10 +44,17 @@
           <text @click="onClickReplies(index)">
             {{ item.reply.length }}条相关回复
           </text>
-          <image class="arrow-right" src="/static/images/arrow_right_blue.png" />
+          <image
+            class="arrow-right"
+            src="/static/images/arrow_right_blue.png"
+          />
         </view>
         <view class="like-box">
-          <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
+          <image
+            class="like-icon"
+            mode="widthFix"
+            src="/static/images/like.png"
+          />
           <text class="like-num">
             {{ item.likes }}
           </text>
@@ -56,35 +63,35 @@
     </view>
 
     <view class="write-comment-box">
-      <input class="write-comment" placeholder="发表评论..." type="text">
+      <input class="write-comment" placeholder="发表评论..." type="text" />
       <view class="like-box">
-        <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
+        <image
+          class="like-icon"
+          mode="widthFix"
+          src="/static/images/like.png"
+        />
         <view class="like-num">
           {{ post.likes }}
         </view>
       </view>
-      <view class="send-comment-btn">
-        发布
-      </view>
+      <view class="send-comment-btn"> 发布 </view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue"
-import { enterMask, enterReply } from "@/pages/moment/event"
-import Reply from "@/pages/moment/reply"
+import { reactive, ref } from "vue";
+import { enterMask, enterReply } from "@/pages/moment/event";
+import Reply from "@/pages/moment/reply";
 
 const post = reactive({
   id: "Gnomeshgh",
   profile: "https://static.xhpolaris.com/cat_world.jpg",
   time: " 3小时前",
   text: "睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!",
-  images: [
-    "https://static.xhpolaris.com/cat_world.jpg"
-  ],
-  likes: 3333333
-})
+  images: ["https://static.xhpolaris.com/cat_world.jpg"],
+  likes: 3333333,
+});
 
 const comments = reactive([
   {
@@ -114,8 +121,8 @@ const comments = reactive([
         time: " 1小时前",
         text: "猫当然有月饼吃",
         likes: 222222,
-      }
-    ]
+      },
+    ],
   },
   {
     id: "Dianpinger",
@@ -123,30 +130,28 @@ const comments = reactive([
     time: " 4小时前",
     text: "祝大家中秋节快乐哦~",
     likes: 8888,
-    reply: []
+    reply: [],
   },
-])
+]);
 
-let selectedReply = ref(0)
-let enterMaskData = ref(null)
-let enterReplyData = ref(null)
+let selectedReply = ref(0);
+let enterMaskData = ref(null);
+let enterReplyData = ref(null);
 
-function onClickReplies (idx: number) {
-  selectedReply.value = idx
-  enterMask.width("100%").height("100%").opacity(0.5).step()
-  enterMaskData.value = enterMask.export()
-  enterReply.height("70%").step()
-  enterReplyData.value = enterReply.export()
+function onClickReplies(idx: number) {
+  selectedReply.value = idx;
+  enterMask.width("100%").height("100%").opacity(0.5).step();
+  enterMaskData.value = enterMask.export();
+  enterReply.height("70%").step();
+  enterReplyData.value = enterReply.export();
 }
 
-function leaveReply () {
-  enterMask.width("0%").height("0%").opacity(0).step()
-  enterMaskData.value = enterMask.export()
-  enterReply.height("0%").step()
-  enterReplyData.value = enterReply.export()
+function leaveReply() {
+  enterMask.width("0%").height("0%").opacity(0).step();
+  enterMaskData.value = enterMask.export();
+  enterReply.height("0%").step();
+  enterReplyData.value = enterReply.export();
 }
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -172,14 +177,12 @@ function leaveReply () {
 
 .container {
   padding: 20px 15px;
-  background-color: #FAFCFF;
-
+  background-color: #fafcff;
 
   .post-info-box {
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-
 
     .poster-info-box {
       display: flex;
@@ -232,7 +235,6 @@ function leaveReply () {
   }
 
   .comments-box {
-
     .comment-box {
       background-color: #fff;
       box-shadow: 0px 0px 4px #ddd;
@@ -305,7 +307,6 @@ function leaveReply () {
           text-overflow: ellipsis;
           color: #aaa;
         }
-
       }
     }
   }
@@ -366,8 +367,6 @@ function leaveReply () {
       text-align: center;
       color: #fff;
     }
-
   }
-
 }
 </style>

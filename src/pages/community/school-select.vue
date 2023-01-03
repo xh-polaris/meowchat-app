@@ -4,22 +4,20 @@
       <image class="cancel" src="../../static/images/cancel.png" />
       <view class="search-bar-box">
         <input
-          class="search-text" maxlength="10"
+          class="search-text"
+          maxlength="10"
           placeholder="输入学校名称或拼音查询"
-          type="text" value=""
-        >
+          type="text"
+          value=""
+        />
       </view>
     </view>
     <view class="search-bar">
-      <view class="small">
-        当前选择
-      </view>
+      <view class="small"> 当前选择 </view>
     </view>
     <view class="school-select-box">
       <view class="current_school">
-        <view class="current_school_text">
-          华东师范大学
-        </view>
+        <view class="current_school_text"> 华东师范大学 </view>
       </view>
       <view v-if="sel" class="select" @click="change">
         <text>{{ currentNavBtn }}</text>
@@ -41,39 +39,23 @@
       </view>
     </view>
     <view class="search-bar">
-      <view class="small">
-        定位/历史记录
-      </view>
+      <view class="small"> 定位/历史记录 </view>
     </view>
     <view class="big">
       <view>
-        <view class="bubble">
-          华东师范大学（中山北路校区）
-        </view>
-        <view class="bubble">
-          华东师范大学（闵行校区）
-        </view>
+        <view class="bubble"> 华东师范大学（中山北路校区） </view>
+        <view class="bubble"> 华东师范大学（闵行校区） </view>
       </view>
     </view>
     <view class="search-bar">
-      <view class="small">
-        热门学校
-      </view>
+      <view class="small"> 热门学校 </view>
     </view>
     <view class="big">
       <view>
-        <view class="bubble">
-          华东师范大学
-        </view>
-        <view class="bubble">
-          上海交通大学
-        </view>
-        <view class="bubble">
-          上海大学
-        </view>
-        <view class="bubble">
-          上海工程技术大学
-        </view>
+        <view class="bubble"> 华东师范大学 </view>
+        <view class="bubble"> 上海交通大学 </view>
+        <view class="bubble"> 上海大学 </view>
+        <view class="bubble"> 上海工程技术大学 </view>
       </view>
     </view>
   </view>
@@ -82,69 +64,39 @@
 
   <view class="content2">
     <view class="search-bar">
-      <view class="small">
-        A
-      </view>
+      <view class="small"> A </view>
     </view>
-    <view
-      v-for="item in school.name"
-      :key="item" class="school"
-    >
+    <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small">
-        B
-      </view>
+      <view class="small"> B </view>
     </view>
-    <view
-      v-for="item in school.name"
-      :key="item" class="school"
-    >
+    <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small">
-        C
-      </view>
+      <view class="small"> C </view>
     </view>
-    <view
-      v-for="item in school.name"
-      :key="item" class="school"
-    >
+    <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small">
-        D
-      </view>
+      <view class="small"> D </view>
     </view>
-    <view
-      v-for="item in school.name"
-      :key="item" class="school"
-    >
+    <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small">
-        E
-      </view>
+      <view class="small"> E </view>
     </view>
-    <view
-      v-for="item in school.name"
-      :key="item" class="school"
-    >
+    <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small">
-        F
-      </view>
+      <view class="small"> F </view>
     </view>
-    <view
-      v-for="item in school.name"
-      :key="item" class="school"
-    >
+    <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
   </view>
@@ -154,7 +106,34 @@
 import {reactive, ref} from "vue"
 
 const school = reactive({
-  alpha: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",],
+  alpha: [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
   campuses: ["闵行校区", "全部"],
   No: 0
@@ -306,7 +285,6 @@ const currentNavBtn = ref("中山北路校区")
     margin-top: 6rpx;
     margin-right: 30rpx;
   }
-
 }
 
 // 下拉菜单

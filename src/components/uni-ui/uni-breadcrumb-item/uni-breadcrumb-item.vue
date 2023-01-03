@@ -1,12 +1,19 @@
 <template>
   <view class="uni-breadcrumb-item">
-    <view :class="{
-			'uni-breadcrumb-item--slot': true,
-			'uni-breadcrumb-item--slot-link': to && currentPage !== to
-			}" @click="navTo">
-      <slot/>
+    <view
+      :class="{
+        'uni-breadcrumb-item--slot': true,
+        'uni-breadcrumb-item--slot-link': to && currentPage !== to,
+      }"
+      @click="navTo"
+    >
+      <slot />
     </view>
-    <i v-if="separatorClass" class="uni-breadcrumb-item--separator" :class="separatorClass"/>
+    <i
+      v-if="separatorClass"
+      class="uni-breadcrumb-item--separator"
+      :class="separatorClass"
+    />
     <text v-else class="uni-breadcrumb-item--separator">{{ separator }}</text>
   </view>
 </template>
@@ -17,66 +24,66 @@
  * @property {Boolean} replace 在使用 to 进行路由跳转时，启用 replace 将不会向 history 添加新记录(仅 h5 支持）
  */
 export default {
-  data () {
+  data() {
     return {
-      currentPage: ""
-    }
+      currentPage: "",
+    };
   },
   options: {
-    virtualHost: true
+    virtualHost: true,
   },
   props: {
     to: {
       type: String,
-      default: ""
+      default: "",
     },
     replace: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   inject: {
     uniBreadcrumb: {
       from: "uniBreadcrumb",
-      default: null
-    }
+      default: null,
+    },
   },
-  created () {
-    const pages = getCurrentPages()
-    const page = pages[pages.length - 1]
+  created() {
+    const pages = getCurrentPages();
+    const page = pages[pages.length - 1];
 
     if (page) {
-      this.currentPage = `/${page.route}`
+      this.currentPage = `/${page.route}`;
     }
   },
   computed: {
-    separator () {
-      return this.uniBreadcrumb.separator
+    separator() {
+      return this.uniBreadcrumb.separator;
     },
-    separatorClass () {
-      return this.uniBreadcrumb.separatorClass
-    }
+    separatorClass() {
+      return this.uniBreadcrumb.separatorClass;
+    },
   },
   methods: {
-    navTo () {
-      const { to } = this
+    navTo() {
+      const { to } = this;
 
       if (!to || this.currentPage === to) {
-        return
+        return;
       }
 
       if (this.replace) {
         uni.redirectTo({
-          url: to
-        })
+          url: to,
+        });
       } else {
         uni.navigateTo({
-          url: to
-        })
+          url: to,
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss">
 $uni-primary: #2979ff !default;

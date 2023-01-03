@@ -1,21 +1,21 @@
-import { createSSRApp } from "vue"
-import App from "./App.vue"
+import { createSSRApp } from "vue";
+import App from "./App.vue";
 
 uni.addInterceptor("request", {
-  invoke (args: UniNamespace.RequestOptions) {
-    args.url = "https://meowchat.xhpolaris.com" + args.url
+  invoke(args: UniNamespace.RequestOptions) {
+    args.url = "https://meowchat.xhpolaris.com" + args.url;
     args.header = {
-      "Authorization": uni.getStorageSync("accessToken")
-    }
+      Authorization: uni.getStorageSync("accessToken"),
+    };
   },
-  fail (err: UniNamespace.GeneralCallbackResult) {
-    console.log(err)
-  }
-})
+  fail(err: UniNamespace.GeneralCallbackResult) {
+    console.log(err);
+  },
+});
 
-export function createApp () {
-  const app = createSSRApp(App)
+export function createApp() {
+  const app = createSSRApp(App);
   return {
     app,
-  }
+  };
 }

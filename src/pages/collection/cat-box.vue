@@ -10,8 +10,13 @@
         </view>
         <view class="collect">
           <image
-            :src="cat.isCollected?'/static/images/collect.png':'/static/images/collect_HL.png'"
-            mode="aspectFill" @click.stop="onClickCollect"
+            :src="
+              cat.isCollected
+                ? '/static/images/collect.png'
+                : '/static/images/collect_HL.png'
+            "
+            mode="aspectFill"
+            @click.stop="onClickCollect"
           />
         </view>
       </view>
@@ -26,16 +31,15 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue"
-import { CatPreview } from "@/apis/schemas"
-import { onClickCollect } from "@/pages/collection/event"
+import { reactive } from "vue";
+import { CatPreview } from "@/apis/schemas";
+import { onClickCollect } from "@/pages/collection/event";
 
-const props = defineProps<{ cat: CatPreview }>()
-const cat = reactive(props.cat)
+const props = defineProps<{ cat: CatPreview }>();
+const cat = reactive(props.cat);
 </script>
 
 <style lang="scss" scoped>
-
 .cats-box {
   display: flex;
   font-family: sans-serif;

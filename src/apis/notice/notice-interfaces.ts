@@ -1,7 +1,7 @@
-import { Admin, News, Notice } from "../schemas"
+import { Admin, News, Notice } from "../schemas";
 
 export interface GetNewsReq {
-  communityId: string
+  communityId: string;
 }
 
 export interface GetNewsResp {
@@ -11,7 +11,7 @@ export interface GetNewsResp {
 }
 
 export interface GetAdminsReq {
-  communityId: string
+  communityId: string;
 }
 
 export interface GetAdminsResp {

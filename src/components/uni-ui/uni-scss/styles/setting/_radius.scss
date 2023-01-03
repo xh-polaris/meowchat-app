@@ -1,7 +1,7 @@
-@mixin radius($r,$d:null ,$important: false) {
+@mixin radius($r, $d: null, $important: false) {
   $radius-value: map-get($uni-radius, $r) if($important, !important, null);
   // Key exists within the $uni-radius variable
-  @if (map-has-key($uni-radius, $r) and  $d) {
+  @if (map-has-key($uni-radius, $r) and $d) {
     @if $d == t {
       border-top-left-radius: $radius-value;
       border-top-right-radius: $radius-value;
@@ -31,11 +31,11 @@
 @each $key, $child in $uni-radius {
   @if ($key) {
     .uni-radius-#{"" + $key} {
-      @include radius($key)
+      @include radius($key);
     }
   } @else {
     .uni-radius {
-      @include radius($key)
+      @include radius($key);
     }
   }
 }
@@ -44,11 +44,11 @@
   @each $key, $child in $uni-radius {
     @if ($key) {
       .uni-radius-#{"" + $direction}-#{"" + $key} {
-        @include radius($key, $direction, false)
+        @include radius($key, $direction, false);
       }
     } @else {
       .uni-radius-#{$direction} {
-        @include radius($key, $direction, false)
+        @include radius($key, $direction, false);
       }
     }
   }

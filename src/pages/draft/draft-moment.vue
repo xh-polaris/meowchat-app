@@ -2,51 +2,52 @@
   <view class="all">
     <view class="main">
       <view class="images">
-        <block v-for="(image) in imagesData" :key="image.id">
-          <view :style="{backgroundImage: 'url('+image.url+')'}" class="added-image" />
+        <block v-for="image in imagesData" :key="image.id">
+          <view
+            :style="{ backgroundImage: 'url(' + image.url + ')' }"
+            class="added-image"
+          />
         </block>
-        <view v-if="imagesData.length < 8" class="new-image" @click="addImage" />
+        <view
+          v-if="imagesData.length < 8"
+          class="new-image"
+          @click="addImage"
+        />
       </view>
-      <view class="image-num">
-        {{ imagesData.length }}/8
-      </view>
+      <view class="image-num"> {{ imagesData.length }}/8 </view>
       <textarea maxlength="5000" placeholder="说点什么吧！" type="text" />
 
       <view class="choose-cats-bar">
-        <view class="choose-cats">
-          选择猫咪
-        </view>
+        <view class="choose-cats"> 选择猫咪 </view>
         <view class="right-arrow" />
-        <view class="choose-followed-cats">
-          不选择猫咪
-        </view>
+        <view class="choose-followed-cats"> 不选择猫咪 </view>
       </view>
     </view>
 
     <view class="panel">
       <view class="toggle-bar">
-        <view class="toggle-text">
-          同步到猫咪图鉴
-        </view>
-        <view :class="'toggle '+(isSyncToCollection?'active':'')" @click="toggleSyncToCollection">
+        <view class="toggle-text"> 同步到猫咪图鉴 </view>
+        <view
+          :class="'toggle ' + (isSyncToCollection ? 'active' : '')"
+          @click="toggleSyncToCollection"
+        >
           <view class="toggle-capsule">
             <view class="toggle-circle" />
           </view>
         </view>
       </view>
       <view class="toggle-bar">
-        <view class="toggle-text">
-          匿名信息
-        </view>
-        <view :class="'toggle '+(isAnonymous?'active':'')" @click="toggleAnonymous">
+        <view class="toggle-text"> 匿名信息 </view>
+        <view
+          :class="'toggle ' + (isAnonymous ? 'active' : '')"
+          @click="toggleAnonymous"
+        >
           <view class="toggle-capsule">
             <view class="toggle-circle" />
           </view>
         </view>
       </view>
-      <view class="publish">
-        发布动态
-      </view>
+      <view class="publish"> 发布动态 </view>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -63,52 +64,48 @@
 </template>
 
 <script setup>
+import { reactive, ref } from "vue";
 
-import { reactive, ref } from "vue"
+const imagesData = reactive([]);
 
-const imagesData = reactive([])
-
-const isAnonymous = ref(false)
-const isSyncToCollection = ref(false)
+const isAnonymous = ref(false);
+const isSyncToCollection = ref(false);
 
 function toggleAnonymous() {
-  isAnonymous.value = !isAnonymous.value
+  isAnonymous.value = !isAnonymous.value;
 }
 
 function toggleSyncToCollection() {
-  isSyncToCollection.value = !isSyncToCollection.value
+  isSyncToCollection.value = !isSyncToCollection.value;
 }
 
 function addImage() {
   uni.chooseImage({
     success: (chooseImageRes) => {
-      let isTooManyImages = false
+      let isTooManyImages = false;
       let tempFilePaths = chooseImageRes.tempFilePaths;
       if (imagesData.length + tempFilePaths.length > 8) {
-        isTooManyImages = true
-        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length)
+        isTooManyImages = true;
+        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length);
       }
-      tempFilePaths.map(path => {
+      tempFilePaths.map((path) => {
         imagesData.push({
           id: path,
-          url: path
-        })
-      })
+          url: path,
+        });
+      });
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传8张图片！",
-          icon: "error"
-        })
+          icon: "error",
+        });
       }
-
-    }
-  })
+    },
+  });
 }
-
 </script>
 
 <style lang="scss" scoped>
-
 $margin: calc(20 / 390 * 100vw);
 $imagesWidth: calc(100vw - $margin * 2);
 $imageWidth: calc(110 / 390 * 100vw);
@@ -133,7 +130,8 @@ body {
   flex-wrap: wrap;
 }
 
-.added-image, .new-image {
+.added-image,
+.new-image {
   box-sizing: border-box;
   width: $imageWidth;
   height: $imageWidth;
@@ -147,10 +145,9 @@ body {
   background-position: center;
 }
 
-
 .new-image {
-  background-color: #FAFAFA;
-  border: #D1D1D1 solid calc(1 / 390 * 100vw);
+  background-color: #fafafa;
+  border: #d1d1d1 solid calc(1 / 390 * 100vw);
   background-image: url("../../static/images/plus-lightgrey.png");
   background-size: 24% 24%;
   background-repeat: no-repeat;
@@ -159,13 +156,13 @@ body {
 
 .image-num {
   font-size: calc(12 / 390 * 100vw);
-  color: #B8B8B8;
+  color: #b8b8b8;
   margin-left: calc(32 / 390 * 100vw);
   margin-bottom: calc(20 / 390 * 100vw);
 }
 
 textarea {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   border-radius: calc(10 / 390 * 100vw);
   width: calc(100vw - $margin * 2);
   margin: 0 $margin;
@@ -192,7 +189,7 @@ textarea ::selection {
   margin-bottom: calc(10 / 390 * 100vw);
 
   .choose-cats {
-    color: #1FA1FF;
+    color: #1fa1ff;
     font-size: calc(14 / 390 * 100vw);
     margin-right: calc(5 / 390 * 100vw);
   }
@@ -205,7 +202,7 @@ textarea ::selection {
   }
 
   .choose-followed-cats {
-    color: #B8B8B8;
+    color: #b8b8b8;
     font-size: calc(12 / 390 * 100vw);
   }
 }
@@ -216,7 +213,6 @@ textarea ::selection {
 }
 
 .toggle-bar {
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -231,7 +227,7 @@ textarea ::selection {
       width: calc(38 / 390 * 100vw);
       height: calc(20 / 390 * 100vw);
       border-radius: calc(19 / 390 * 100vw);
-      background-color: #EEEEEE;
+      background-color: #eeeeee;
       display: flex;
       align-items: center;
       transition-duration: 0.1s;
@@ -241,14 +237,14 @@ textarea ::selection {
         height: calc(18 / 390 * 100vw);
         margin-left: calc(1 / 390 * 100vw);
         border-radius: 50%;
-        background-color: #FFFFFF;
+        background-color: #ffffff;
         transition-duration: 0.1s;
       }
     }
 
     &.active {
       .toggle-capsule {
-        background-color: #1FA1FF;
+        background-color: #1fa1ff;
       }
 
       .toggle-circle {
@@ -262,8 +258,8 @@ textarea ::selection {
   margin-top: calc(25 / 390 * 100vw);
   margin-bottom: calc(19 / 390 * 100vw);
   width: 100%;
-  background-color: #1FA1FF;
-  color: #FFFFFF;
+  background-color: #1fa1ff;
+  color: #ffffff;
   font-size: calc(16 / 390 * 100vw);
   text-align: center;
   height: calc(44 / 390 * 100vw);
@@ -273,7 +269,7 @@ textarea ::selection {
 }
 
 .publish:active {
-  background-color: #BAE2FF;
+  background-color: #bae2ff;
 }
 
 .notice {
@@ -282,7 +278,6 @@ textarea ::selection {
 
 .nobody-will-read {
   display: inline;
-  color: #1FA1FF;
+  color: #1fa1ff;
 }
-
 </style>

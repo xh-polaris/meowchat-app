@@ -1,8 +1,8 @@
-@mixin get-styles($k,$c) {
+@mixin get-styles($k, $c) {
   @if $k == size or $k == weight {
-    font-#{$k}: #{$c}
+    font-#{$k}: #{$c};
   } @else {
-    #{$k}: #{$c}
+    #{$k}: #{$c};
   }
 }
 
@@ -10,14 +10,14 @@
   /* #ifndef APP-NVUE */
   .uni-#{$key} {
     @each $k, $c in $child {
-      @include get-styles($k, $c)
+      @include get-styles($k, $c);
     }
   }
   /* #endif */
   /* #ifdef APP-NVUE */
   .container .uni-#{$key} {
     @each $k, $c in $child {
-      @include get-styles($k, $c)
+      @include get-styles($k, $c);
     }
   }
   /* #endif */

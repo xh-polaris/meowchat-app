@@ -6,16 +6,18 @@
         <text class="commenter-name">
           {{ replies.id }}
         </text>
-        <text class="comment-time">
-          ·{{ replies.time }}
-        </text>
+        <text class="comment-time"> ·{{ replies.time }} </text>
       </view>
       <view class="comment-content">
         <view class="comment-text">
           {{ replies.text }}
         </view>
         <view class="like-box">
-          <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
+          <image
+            class="like-icon"
+            mode="widthFix"
+            src="/static/images/like.png"
+          />
           <text class="like-num">
             {{ replies.likes }}
           </text>
@@ -24,22 +26,28 @@
     </view>
 
     <view class="replies-box">
-      <view v-for="(item, index) in replies.reply" :key="index" class="reply-box">
+      <view
+        v-for="(item, index) in replies.reply"
+        :key="index"
+        class="reply-box"
+      >
         <view class="replier-info-box">
           <image :src="item.profile" class="replier-profile" />
           <text class="replier-name">
             {{ item.id }}
           </text>
-          <text class="reply-time">
-            ·{{ item.time }}
-          </text>
+          <text class="reply-time"> ·{{ item.time }} </text>
         </view>
         <view class="reply-content">
           <view class="reply-text">
             {{ item.text }}
           </view>
           <view class="like-box">
-            <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
+            <image
+              class="like-icon"
+              mode="widthFix"
+              src="/static/images/like.png"
+            />
             <text class="like-num">
               {{ item.likes }}
             </text>
@@ -51,13 +59,12 @@
 </template>
 
 <script lang="ts" setup>
-import { Comment } from "@/apis/schemas"
-import { reactive } from "vue"
+import { Comment } from "@/apis/schemas";
+import { reactive } from "vue";
 
-const props = defineProps<{ replies: Comment }>()
+const props = defineProps<{ replies: Comment }>();
 
-const replies = reactive(props.replies)
-
+const replies = reactive(props.replies);
 </script>
 
 <style lang="scss" scoped>
@@ -111,7 +118,6 @@ const replies = reactive(props.replies)
       line-height: 1.3em;
       letter-spacing: 0.05em;
 
-
       .comment-text {
         width: 75%;
       }
@@ -138,7 +144,6 @@ const replies = reactive(props.replies)
       }
     }
   }
-
 
   .replies-box {
     background: #fff;
@@ -177,7 +182,6 @@ const replies = reactive(props.replies)
         }
       }
 
-
       .reply-content {
         display: flex;
         align-items: flex-start;
@@ -188,7 +192,6 @@ const replies = reactive(props.replies)
 
         padding-bottom: 30rpx;
         border-bottom: 1px solid #eee;
-
 
         .reply-text {
           width: 75%;

@@ -9,13 +9,24 @@
     $parent-is-map: $parent-type == map;
     $child-is-map: $child-type == map;
 
-    @if (not $parent-has-key) or ($parent-type != $child-type) or (not ($parent-is-map and $child-is-map)) {
-      $result: map-merge($result, ($key: $child));
+    @if (not $parent-has-key) or
+      ($parent-type != $child-type) or
+      (not ($parent-is-map and $child-is-map))
+    {
+      $result: map-merge(
+        $result,
+        (
+          $key: $child,
+        )
+      );
     } @else {
-      $result: map-merge($result, ($key: map-deep-merge($parent-value, $child)));
+      $result: map-merge(
+        $result,
+        (
+          $key: map-deep-merge($parent-value, $child),
+        )
+      );
     }
   }
   @return $result;
-}
-
-;
+} ;

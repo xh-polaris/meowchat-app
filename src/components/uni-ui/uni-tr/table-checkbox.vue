@@ -1,6 +1,10 @@
 <template>
   <view class="uni-table-checkbox" @click="selected">
-    <view v-if="!indeterminate" class="checkbox__inner" :class="{'is-checked':isChecked,'is-disable':isDisabled}">
+    <view
+      v-if="!indeterminate"
+      class="checkbox__inner"
+      :class="{ 'is-checked': isChecked, 'is-disable': isDisabled }"
+    >
       <view class="checkbox__inner-icon"></view>
     </view>
     <view v-else class="checkbox__inner checkbox--indeterminate">
@@ -16,69 +20,69 @@ export default {
   props: {
     indeterminate: {
       type: Boolean,
-      default: false
+      default: false,
     },
     checked: {
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     index: {
       type: Number,
-      default: -1
+      default: -1,
     },
     cellData: {
       type: Object,
-      default () {
-        return {}
-      }
-    }
+      default() {
+        return {};
+      },
+    },
   },
   watch: {
-    checked (newVal) {
+    checked(newVal) {
       if (typeof this.checked === "boolean") {
-        this.isChecked = newVal
+        this.isChecked = newVal;
       } else {
-        this.isChecked = true
+        this.isChecked = true;
       }
     },
-    indeterminate (newVal) {
-      this.isIndeterminate = newVal
-    }
+    indeterminate(newVal) {
+      this.isIndeterminate = newVal;
+    },
   },
-  data () {
+  data() {
     return {
       isChecked: false,
       isDisabled: false,
-      isIndeterminate: false
-    }
+      isIndeterminate: false,
+    };
   },
-  created () {
+  created() {
     if (typeof this.checked === "boolean") {
-      this.isChecked = this.checked
+      this.isChecked = this.checked;
     }
-    this.isDisabled = this.disabled
+    this.isDisabled = this.disabled;
   },
   methods: {
-    selected () {
-      if (this.isDisabled) return
-      this.isIndeterminate = false
-      this.isChecked = !this.isChecked
+    selected() {
+      if (this.isDisabled) return;
+      this.isIndeterminate = false;
+      this.isChecked = !this.isChecked;
       this.$emit("checkboxSelected", {
         checked: this.isChecked,
-        data: this.cellData
-      })
-    }
-  }
-}
+        data: this.cellData,
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
 $checked-color: #007aff;
-$border-color: #DCDFE6;
+$border-color: #dcdfe6;
 $disable: 0.4;
 
 .uni-table-checkbox {
@@ -156,7 +160,7 @@ $disable: 0.4;
       /* #ifdef H5 */
       cursor: not-allowed;
       /* #endif */
-      background-color: #F2F6FC;
+      background-color: #f2f6fc;
       border-color: $border-color;
     }
 
@@ -175,7 +179,6 @@ $disable: 0.4;
         opacity: $disable;
       }
     }
-
   }
 }
 </style>

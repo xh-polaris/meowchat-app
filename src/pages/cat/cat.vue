@@ -4,11 +4,16 @@
     <view>
       <ul class="img-ul">
         <li
-          v-for="(item,index) in cat.avatars" :key="index"
+          v-for="(item, index) in cat.avatars"
+          :key="index"
           class="img-li"
-          @click="()=>{mainImgUrl.value = item}"
+          @click="
+            () => {
+              mainImgUrl.value = item;
+            }
+          "
         >
-          <img :src="item" style="width:50px;height:50px">
+          <img :src="item" style="width: 50px; height: 50px" />
         </li>
       </ul>
     </view>
@@ -19,8 +24,10 @@
 
       <view class="text-box2">
         <progress
-          :percent="cat.popularity" :stroke-width="10"
-          activeColor="#63A4F9" backgroundColor="#F5F5F5"
+          :percent="cat.popularity"
+          :stroke-width="10"
+          activeColor="#63A4F9"
+          backgroundColor="#F5F5F5"
           border-radius="6px"
         />
         <text>{{ cat.popularity }}人气值</text>
@@ -28,25 +35,19 @@
     </view>
     <view class="info">
       <view class="combination">
-        <view class="attribute">
-          年龄
-        </view>
+        <view class="attribute"> 年龄 </view>
         <view class="content">
           {{ cat.age }}
         </view>
       </view>
       <view class="combination">
-        <view class="attribute">
-          花色
-        </view>
+        <view class="attribute"> 花色 </view>
         <view class="content">
           {{ cat.color }}
         </view>
       </view>
       <view class="combination">
-        <view class="attribute">
-          当前地区
-        </view>
+        <view class="attribute"> 当前地区 </view>
         <view class="area-content">
           {{ cat.area }}
         </view>
@@ -54,25 +55,19 @@
     </view>
     <view class="info">
       <view class="combination">
-        <view class="attribute">
-          性别
-        </view>
+        <view class="attribute"> 性别 </view>
         <view class="content">
           {{ cat.sex }}
         </view>
       </view>
       <view class="combination">
-        <view class="attribute">
-          绝育情况
-        </view>
+        <view class="attribute"> 绝育情况 </view>
         <view class="content">
           {{ Sterilized }}
         </view>
       </view>
       <view class="combination">
-        <view class="attribute">
-          是否剪耳
-        </view>
+        <view class="attribute"> 是否剪耳 </view>
         <view class="content">
           {{ Snipped }}
         </view>
@@ -80,9 +75,7 @@
     </view>
     <view class="divider" />
     <view class="photo">
-      <text>
-        详情
-      </text>
+      <text> 详情 </text>
       <view class="dd">
         <text class="detail_info">
           {{ cat.details }}
@@ -94,19 +87,19 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue"
-import { Cat } from "@/apis/schemas"
-import { getCatDetail } from "@/apis/collection/collection"
-import { GetCatDetailReq } from "@/apis/collection/collection-interfaces"
+import { reactive, ref } from "vue";
+import { Cat } from "@/apis/schemas";
+import { getCatDetail } from "@/apis/collection/collection";
+import { GetCatDetailReq } from "@/apis/collection/collection-interfaces";
 
 const props = defineProps<{
-  id: string
-}>()
+  id: string;
+}>();
 const getCatDetailReq = reactive<GetCatDetailReq>({
   catId: props.id,
-})
-let Sterilized: string
-let Snipped: string
+});
+let Sterilized: string;
+let Snipped: string;
 let cat = reactive<Cat>({
   id: "",
   createAt: 0,
@@ -121,37 +114,36 @@ let cat = reactive<Cat>({
   area: "",
   isSnipped: true,
   isSterilized: true,
-  avatars: []
-})
-const mainImgUrl = ref("")
-getCatDetail(getCatDetailReq).then(res => {
-      cat.id = res.cat.id
-      cat.createAt = res.cat.createAt
-      cat.age = res.cat.age
-      cat.communityId = res.cat.communityId
-      cat.color = res.cat.color
-      cat.details = res.cat.details
-      cat.name = res.cat.name
-      cat.popularity = res.cat.popularity
-      cat.sex = res.cat.sex
-      cat.status = res.cat.status
-      cat.area = res.cat.area
-      cat.isSnipped = res.cat.isSnipped
-      cat.isSterilized = res.cat.isSterilized
-      cat.avatars = res.cat.avatars
-      if (res.cat.isSterilized) {
-        Sterilized = "是"
-      } else {
-        Sterilized = "否"
-      }
-      if (res.cat.isSnipped) {
-        Snipped = "是"
-      } else {
-        Snipped = "否"
-      }
-      mainImgUrl.value = cat.avatars[0]
-    }
-)
+  avatars: [],
+});
+const mainImgUrl = ref("");
+getCatDetail(getCatDetailReq).then((res) => {
+  cat.id = res.cat.id;
+  cat.createAt = res.cat.createAt;
+  cat.age = res.cat.age;
+  cat.communityId = res.cat.communityId;
+  cat.color = res.cat.color;
+  cat.details = res.cat.details;
+  cat.name = res.cat.name;
+  cat.popularity = res.cat.popularity;
+  cat.sex = res.cat.sex;
+  cat.status = res.cat.status;
+  cat.area = res.cat.area;
+  cat.isSnipped = res.cat.isSnipped;
+  cat.isSterilized = res.cat.isSterilized;
+  cat.avatars = res.cat.avatars;
+  if (res.cat.isSterilized) {
+    Sterilized = "是";
+  } else {
+    Sterilized = "否";
+  }
+  if (res.cat.isSnipped) {
+    Snipped = "是";
+  } else {
+    Snipped = "否";
+  }
+  mainImgUrl.value = cat.avatars[0];
+});
 </script>
 
 <style lang="scss" scoped>
@@ -188,7 +180,6 @@ getCatDetail(getCatDetailReq).then(res => {
   display: flex;
   padding-left: 300rpx;
 
-
   image {
     width: 100rpx;
     height: 100rpx;
@@ -209,7 +200,6 @@ getCatDetail(getCatDetailReq).then(res => {
     text-align: center;
     color: #37393a;
     font-size: 50rpx;
-
   }
 
   .text-box2 {
@@ -222,10 +212,8 @@ getCatDetail(getCatDetailReq).then(res => {
   progress {
     margin-top: 20rpx;
     border-radius: 6px !important;
-    background: linear-gradient(to right, #CCE9DB, #a40707);
+    background: linear-gradient(to right, #cce9db, #a40707);
   }
-
-
 }
 
 .info {
@@ -252,7 +240,7 @@ getCatDetail(getCatDetailReq).then(res => {
 }
 
 .divider {
-  background: #E0E3DA;
+  background: #e0e3da;
   width: 100%;
   height: 10rpx;
   margin-top: 10rpx;
@@ -292,7 +280,6 @@ getCatDetail(getCatDetailReq).then(res => {
     font-weight: 400;
     width: 100%;
     margin-bottom: 30rpx;
-
   }
 
   .imgs {
@@ -302,7 +289,6 @@ getCatDetail(getCatDetailReq).then(res => {
       color: #212223;
       font-size: 30rpx;
       margin-left: 20rpx;
-
     }
 
     .qz_imgs {
@@ -321,12 +307,7 @@ getCatDetail(getCatDetailReq).then(res => {
           margin: 5px;
         }
       }
-
-
     }
   }
-
 }
-
-
 </style>

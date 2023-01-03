@@ -1,7 +1,7 @@
 <template>
   <!-- #ifdef H5 -->
   <tbody>
-  <slot></slot>
+    <slot></slot>
   </tbody>
   <!-- #endif -->
   <!-- #ifndef H5 -->
@@ -15,16 +15,14 @@
 export default {
   name: "uniBody",
   options: {
-    virtualHost: true
+    virtualHost: true,
   },
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  created () {
-  },
-  methods: {}
-}
+  created() {},
+  methods: {},
+};
 </script>
 
-<style>
-</style>
+<style></style>
