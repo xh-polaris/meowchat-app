@@ -21,18 +21,24 @@
           华东师范大学
         </view>
       </view>
-      <!--      目前效果不够理想-->
-      <select>
-        <option value="中山北路校区">
-          中山北路校区
-        </option>
-        <option value="闵行校区">
-          闵行校区
-        </option>
-        <option value="全部">
-          全部
-        </option>
-      </select>
+      <view v-if="sel" class="select" @click="change">
+        <text>{{ currentNavBtn }}</text>
+        <image class="arrow" src="../../static/images/down-black.svg"  />
+      </view>
+      <view v-else class="box">
+        <view class="select2" @click="change">
+          <text>{{ currentNavBtn }}</text>
+          <image class="arrow" src="../../static/images/up-black.svg" />
+        </view>
+        <view class="option" @click="change">
+          <text
+            v-for="item in school.campuses" :key="item"
+            @click="setBranch(item)"
+          >
+            {{ item }}
+          </text>
+        </view>
+      </view>
     </view>
     <view class="search-bar">
       <view class="small">
@@ -145,13 +151,26 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue"
+import {reactive, ref} from "vue"
 
 const school = reactive({
   alpha: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
+  campuses: ["闵行校区", "全部"],
   No: 0
 })
+
+const sel = ref(true)
+
+function change () {
+  sel.value = !sel.value
+}
+
+const currentNavBtn = ref("中山北路校区")
+
+// function setBranch (e: string) {
+//   currentNavBtn.value = e
+// }
 
 </script>
 
@@ -162,7 +181,7 @@ const school = reactive({
 
 .school {
   margin: 30rpx 50rpx 0rpx 50rpx;
-  font-size: 5rpx;
+  font-size: 25rpx;
   text-align: left;
   padding-bottom: 15rpx;
   border-bottom: 1px solid #f6f6f6;
@@ -186,7 +205,7 @@ const school = reactive({
   background-color: #f6f6f6;
   margin-left: 50rpx;
   margin-top: 20rpx;
-  font-size: 5rpx;
+  font-size: 25rpx;
   text-align: center;
   display: inline-block;
   padding: 20rpx 30rpx 20rpx 30rpx;
@@ -205,7 +224,7 @@ const school = reactive({
 }
 
 .current_school_text {
-  margin-left: 40rpx;
+  margin-left: 50rpx;
   margin-top: 20rpx;
   font-weight: bold;
   border-bottom: 2px solid skyblue;
@@ -220,7 +239,7 @@ const school = reactive({
   position: absolute;
   margin-top: 40rpx;
   margin-left: 50rpx;
-  font-size: 5rpx;
+  font-size: 25rpx;
   color: #afafaf;
 }
 
@@ -291,75 +310,87 @@ const school = reactive({
 }
 
 // 下拉菜单
-select {
-  font-size: 10rpx;
-  font-weight: bold;
-  padding-left: 15rpx;
+.select {
+  padding: 10rpx 10rpx 10rpx 20rpx;
+  border: black 1px solid;
   border-radius: 20px;
   position: relative;
-  width: 250rpx;
-  margin-top: 20rpx;
+  margin-top: 10rpx;
   margin-right: 20rpx;
   outline: none;
-}
+  display: flex;
 
-option {
-  font-size: 10rpx;
-  color: #afafaf;
-  background-color: #FFFFFF;
-}
+  text {
+    font-size: 25rpx;
+    font-weight: bold;
+    width: 200rpx;
+  }
 
-option:checked {
-  color: black;
-  font-weight: bold;
 }
-
-.container {
+.select2 {
+  padding: 10rpx 10rpx 10rpx 20rpx;
+  border: black 1px solid;
+  border-bottom: none;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   position: relative;
-  width: 250rpx;
-  margin-top: 20rpx;
+  margin-top: 10rpx;
   margin-right: 20rpx;
-}
-
-.container:focus {
   outline: none;
+  display: flex;
+
+  text {
+    font-size: 25rpx;
+    font-weight: bold;
+    width: 200rpx;
+  }
+
+}
+.box {
+  flex-direction: column;
 }
 
-.menu-list {
-  display: none;
-  background: #fff;
+
+.arrow {
+  width: 25rpx;
+  height: 25rpx;
+  padding-right: 10rpx;
+}
+
+.option {
+  border: black 1px solid;
+  border-top: none;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
   position: absolute;
-  font-size: 5rpx;
-  left: 0;
-  right: 0;
-  line-height: 1.5;
-  text-align: left;
-  padding-left: 20rpx;
-  border-radius: 10px;
-  border: 1px solid #1D1D1D;
+  line-height: 60rpx;
+  margin-right: 25rpx;
+  flex-direction: row;
+
+
+
+  text {
+    padding: 0rpx 10rpx 0rpx 20rpx;
+    color: #7f7f81;
+    font-size: 25rpx;
+    font-weight: bold;
+    width: 235rpx;
+    position: relative;
+    display: inline-block;
+
+  }
+
+  text::before {
+    content: "";
+    position: absolute;
+    left: 5%;
+    top: 0;
+    width: 90%;
+    height: 1rpx;
+    background-color: black;
+  }
+
 }
 
-.container:focus .menu-list {
-  display: block;
-}
-
-.menu-button {
-  background: #FFFFFF;
-  text-align: left;
-  padding-left: 20rpx;
-  font-size: 5rpx;
-  color: #000000;
-  line-height: 1.5;
-  border-radius: 20px;
-  border: 1px solid #1D1D1D;
-
-}
-
-.menu:hover {
-  background: #eee;
-  cursor: pointer;
-  user-select: none;
-  padding: 0 4px;
-}
 
 </style>
