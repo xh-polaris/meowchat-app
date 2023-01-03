@@ -1,9 +1,9 @@
 <template>
-  <text>{{dateShow}}</text>
+  <text>{{ dateShow }}</text>
 </template>
 
 <script>
-import { friendlyDate } from "./date-format.js"
+import { friendlyDate } from "./date-format.js";
 
 /**
  * Dateformat 日期格式化
@@ -21,9 +21,9 @@ export default {
   props: {
     date: {
       type: [Object, String, Number],
-      default () {
-        return "-"
-      }
+      default() {
+        return "-";
+      },
     },
     locale: {
       type: String,
@@ -31,59 +31,57 @@ export default {
     },
     threshold: {
       type: Array,
-      default () {
-        return [0, 0]
-      }
+      default() {
+        return [0, 0];
+      },
     },
     format: {
       type: String,
-      default: "yyyy/MM/dd hh:mm:ss"
+      default: "yyyy/MM/dd hh:mm:ss",
     },
     // refreshRate使用不当可能导致性能问题，谨慎使用
     refreshRate: {
       type: [Number, String],
-      default: 0
-    }
+      default: 0,
+    },
   },
-  data () {
+  data() {
     return {
-      refreshMark: 0
-    }
+      refreshMark: 0,
+    };
   },
   computed: {
-    dateShow () {
-      this.refreshMark
+    dateShow() {
+      this.refreshMark;
       return friendlyDate(this.date, {
         locale: this.locale,
         threshold: this.threshold,
-        format: this.format
-      })
-    }
+        format: this.format,
+      });
+    },
   },
   watch: {
     refreshRate: {
-      handler () {
-        this.setAutoRefresh()
+      handler() {
+        this.setAutoRefresh();
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
-    refresh () {
-      this.refreshMark++
+    refresh() {
+      this.refreshMark++;
     },
-    setAutoRefresh () {
-      clearInterval(this.refreshInterval)
+    setAutoRefresh() {
+      clearInterval(this.refreshInterval);
       if (this.refreshRate) {
         this.refreshInterval = setInterval(() => {
-          this.refresh()
-        }, parseInt(this.refreshRate))
+          this.refresh();
+        }, parseInt(this.refreshRate));
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -3,12 +3,11 @@
     <slot></slot>
     <view v-if="content || $slots.content" class="uni-tooltip-popup">
       <slot name="content">
-        {{content}}
+        {{ content }}
       </slot>
     </view>
   </view>
 </template>
-
 
 <script>
 /**
@@ -19,24 +18,23 @@
  * @property {String}  placement出现位置, 目前只支持 left
  */
 
-
 export default {
   name: "uni-tooltip",
-  data () {
-    return {}
+  data() {
+    return {};
   },
   props: {
     content: {
       type: String,
-      default: ""
+      default: "",
     },
 
     placement: {
       type: String,
-      default: "bottom"
+      default: "bottom",
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -58,7 +56,6 @@ export default {
   line-height: 16px;
   padding: 12px;
 }
-
 
 .uni-tooltip:hover .uni-tooltip-popup {
   display: block;

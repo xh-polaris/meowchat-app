@@ -1,10 +1,10 @@
 import {
-    DoLikeReq,
-    DoLikeResp,
-    GetCountReq,
-    GetCountResp,
-    GetUserLikedReq,
-    GetUserLikedResp
+  DoLikeReq,
+  DoLikeResp,
+  GetCountReq,
+  GetCountResp,
+  GetUserLikedReq,
+  GetUserLikedResp,
 } from "@/apis/like/like-interface";
 
 /**
@@ -13,20 +13,20 @@ import {
  * @param req
  */
 export async function doLike(req: DoLikeReq): Promise<DoLikeResp> {
-    return await new Promise<DoLikeResp>((resolve, reject) => {
-        uni.request({
-            url: "/like/do_like",
-            data: req,
-            method: "POST",
-            success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode !== 200) {
-                    reject(res);
-                }
-                const data = res.data as DoLikeResp;
-                resolve(data);
-            }
-        });
+  return await new Promise<DoLikeResp>((resolve, reject) => {
+    uni.request({
+      url: "/like/do_like",
+      data: req,
+      method: "POST",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as DoLikeResp;
+        resolve(data);
+      },
     });
+  });
 }
 
 /**
@@ -34,21 +34,23 @@ export async function doLike(req: DoLikeReq): Promise<DoLikeResp> {
  * 获取当前用户是否点赞
  * @param req
  */
-export async function getUserLiked(req: GetUserLikedReq): Promise<GetUserLikedResp> {
-    return await new Promise<GetUserLikedResp>((resolve, reject) => {
-        uni.request({
-            url: "/like/get_user_liked",
-            data: req,
-            method: "POST",
-            success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode !== 200) {
-                    reject(res);
-                }
-                const data = res.data as GetUserLikedResp;
-                resolve(data);
-            }
-        });
+export async function getUserLiked(
+  req: GetUserLikedReq
+): Promise<GetUserLikedResp> {
+  return await new Promise<GetUserLikedResp>((resolve, reject) => {
+    uni.request({
+      url: "/like/get_user_liked",
+      data: req,
+      method: "POST",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as GetUserLikedResp;
+        resolve(data);
+      },
     });
+  });
 }
 
 /**
@@ -57,18 +59,18 @@ export async function getUserLiked(req: GetUserLikedReq): Promise<GetUserLikedRe
  * @param req
  */
 export async function getCount(req: GetCountReq): Promise<GetCountResp> {
-    return await new Promise<GetCountResp>((resolve, reject) => {
-        uni.request({
-            url: "/like/get_count",
-            data: req,
-            method: "POST",
-            success(res: UniNamespace.RequestSuccessCallbackResult) {
-                if (res.statusCode !== 200) {
-                    reject(res);
-                }
-                const data = res.data as GetCountResp;
-                resolve(data);
-            }
-        });
+  return await new Promise<GetCountResp>((resolve, reject) => {
+    uni.request({
+      url: "/like/get_count",
+      data: req,
+      method: "POST",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as GetCountResp;
+        resolve(data);
+      },
     });
+  });
 }

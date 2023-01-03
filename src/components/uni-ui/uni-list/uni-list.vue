@@ -2,13 +2,18 @@
   <!-- #ifndef APP-NVUE -->
   <view class="uni-list uni-border-top-bottom">
     <view v-if="border" class="uni-list--border-top"></view>
-    <slot/>
+    <slot />
     <view v-if="border" class="uni-list--border-bottom"></view>
   </view>
   <!-- #endif -->
   <!-- #ifdef APP-NVUE -->
-  <list class="uni-list" :class="{ 'uni-list--border': border }" :enableBackToTop="enableBackToTop" loadmoreoffset="15">
-    <slot/>
+  <list
+    class="uni-list"
+    :class="{ 'uni-list--border': border }"
+    :enableBackToTop="enableBackToTop"
+    loadmoreoffset="15"
+  >
+    <slot />
   </list>
   <!-- #endif -->
 </template>
@@ -24,37 +29,37 @@ export default {
   name: "uniList",
   "mp-weixin": {
     options: {
-      multipleSlots: false
-    }
+      multipleSlots: false,
+    },
   },
   props: {
     enableBackToTop: {
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     scrollY: {
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     border: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   // provide() {
   // 	return {
   // 		list: this
   // 	};
   // },
-  created () {
-    this.firstChildAppend = false
+  created() {
+    this.firstChildAppend = false;
   },
   methods: {
-    loadMore (e) {
-      this.$emit("scrolltolower")
-    }
-  }
-}
+    loadMore(e) {
+      this.$emit("scrolltolower");
+    },
+  },
+};
 </script>
 <style lang="scss">
 $uni-bg-color: #ffffff;

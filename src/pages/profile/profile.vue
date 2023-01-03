@@ -1,6 +1,9 @@
 <template>
   <view class="container">
-    <image class="bg-set" src="https://static.xhpolaris.com/profile_background.png" />
+    <image
+      class="bg-set"
+      src="https://static.xhpolaris.com/profile_background.png"
+    />
     <view class="content">
       <!-- 用户信息：昵称、权限、单位 -->
       <view class="fot-xh">
@@ -8,7 +11,7 @@
           <view class="pic">
             <image
               :src="userInfo.avatarUrl"
-              style="width: 100%;height:100%;border-radius: 50%;"
+              style="width: 100%; height: 100%; border-radius: 50%"
             />
           </view>
           <view class="txt">
@@ -30,9 +33,10 @@
             <navigator :url="item.url" hover-class="none">
               <view class="cell-left">
                 <image
-                  :src="item.icon" class="cell-icon"
+                  :src="item.icon"
+                  class="cell-icon"
                   mode="widthFix"
-                  style="width:15%;border-radius: 50%;"
+                  style="width: 15%; border-radius: 50%"
                 />
                 <view class="cell-text">
                   {{ item.title }}
@@ -50,9 +54,10 @@
             <navigator :url="item.url" hover-class="none">
               <view class="cell-left">
                 <image
-                  :src="item.icon" class="cell-icon"
+                  :src="item.icon"
+                  class="cell-icon"
                   mode="widthFix"
-                  style="width:15%;border-radius: 50%;"
+                  style="width: 15%; border-radius: 50%"
                 />
                 <view class="cell-text">
                   {{ item.title }}
@@ -69,13 +74,18 @@
       </view>
       <view class="com-item1">
         <view class="com-wrap">
-          <view v-for="(item, index) in superAdminOptions" :key="index" class="cell">
+          <view
+            v-for="(item, index) in superAdminOptions"
+            :key="index"
+            class="cell"
+          >
             <navigator :url="item.url" hover-class="none">
               <view class="cell-left">
                 <image
-                  :src="item.icon" class="cell-icon"
+                  :src="item.icon"
+                  class="cell-icon"
                   mode="widthFix"
-                  style="width: 15%;border-radius: 50%;"
+                  style="width: 15%; border-radius: 50%"
                 />
                 <view class="cell-text">
                   {{ item.title }}
@@ -92,21 +102,20 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue"
-import { getUserInfo } from "@/apis/user/user"
-import { User } from "@/apis/schemas"
+import { reactive } from "vue";
+import { getUserInfo } from "@/apis/user/user";
+import { User } from "@/apis/schemas";
 
 const userInfo = reactive<User>({
   id: "",
   nickname: "微信用户",
-  avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
-})
-getUserInfo().then(res => {
-      userInfo.id = res.user.id
-      userInfo.nickname = res.user.nickname
-      userInfo.avatarUrl = res.user.avatarUrl
-    }
-)
+  avatarUrl: "https://static.xhpolaris.com/cat_world.jpg",
+});
+getUserInfo().then((res) => {
+  userInfo.id = res.user.id;
+  userInfo.nickname = res.user.nickname;
+  userInfo.avatarUrl = res.user.avatarUrl;
+});
 const userOptions = [
   {
     title: "我的发布",
@@ -122,8 +131,8 @@ const userOptions = [
     title: "申请领养",
     icon: "/static/images/apply_adopt.png",
     url: "/pages/profile/apply-adopt/apply-adopt",
-  }
-]
+  },
+];
 const adminOptions = [
   {
     title: "申请管理",
@@ -134,8 +143,8 @@ const adminOptions = [
     title: "关于我们",
     icon: "/static/images/about_us.png",
     url: "/pages/profile/about-us/about-us",
-  }
-]
+  },
+];
 const superAdminOptions = [
   {
     title: "发布公告",
@@ -156,8 +165,8 @@ const superAdminOptions = [
     title: "轮播设置",
     icon: "/static/images/carousel_setting.png",
     url: "/pages/profile/quick_contact",
-  }
-]
+  },
+];
 </script>
 
 <style lang="scss" scoped>

@@ -1,39 +1,61 @@
 <template>
   <view class="uni-searchbar">
-    <view :style="{borderRadius:radius+'px',backgroundColor: bgColor}" class="uni-searchbar__box"
-          @click="searchClick">
+    <view
+      :style="{ borderRadius: radius + 'px', backgroundColor: bgColor }"
+      class="uni-searchbar__box"
+      @click="searchClick"
+    >
       <view class="uni-searchbar__box-icon-search">
         <slot name="searchIcon">
-          <uni-icons color="#c0c4cc" size="18" type="search"/>
+          <uni-icons color="#c0c4cc" size="18" type="search" />
         </slot>
       </view>
-      <input v-if="show || searchVal" :focus="showSync" :disabled="readonly" :placeholder="placeholderText"
-             :maxlength="maxlength"
-             class="uni-searchbar__box-search-input" confirm-type="search" type="text" v-model="searchVal"
-             @confirm="confirm" @blur="blur" @focus="emitFocus"/>
-      <text v-else class="uni-searchbar__text-placeholder">{{ placeholder }}</text>
-      <view v-if="show && (clearButton==='always'||clearButton==='auto'&&searchVal!=='') &&!readonly"
-            class="uni-searchbar__box-icon-clear" @click="clear">
+      <input
+        v-if="show || searchVal"
+        :focus="showSync"
+        :disabled="readonly"
+        :placeholder="placeholderText"
+        :maxlength="maxlength"
+        class="uni-searchbar__box-search-input"
+        confirm-type="search"
+        type="text"
+        v-model="searchVal"
+        @confirm="confirm"
+        @blur="blur"
+        @focus="emitFocus"
+      />
+      <text v-else class="uni-searchbar__text-placeholder">{{
+        placeholder
+      }}</text>
+      <view
+        v-if="
+          show &&
+          (clearButton === 'always' ||
+            (clearButton === 'auto' && searchVal !== '')) &&
+          !readonly
+        "
+        class="uni-searchbar__box-icon-clear"
+        @click="clear"
+      >
         <slot name="clearIcon">
-          <uni-icons color="#c0c4cc" size="20" type="clear"/>
+          <uni-icons color="#c0c4cc" size="20" type="clear" />
         </slot>
       </view>
     </view>
-    <text @click="cancel" class="uni-searchbar__cancel"
-          v-if="cancelButton ==='always' || show && cancelButton ==='auto'">{{cancelTextI18n}}
+    <text
+      @click="cancel"
+      class="uni-searchbar__cancel"
+      v-if="cancelButton === 'always' || (show && cancelButton === 'auto')"
+      >{{ cancelTextI18n }}
     </text>
   </view>
 </template>
 
 <script>
-import {
-  initVueI18n
-} from "@dcloudio/uni-i18n"
-import messages from "./i18n/index.js"
+import { initVueI18n } from "@dcloudio/uni-i18n";
+import messages from "./i18n/index.js";
 
-const {
-  t
-} = initVueI18n(messages)
+const { t } = initVueI18n(messages);
 
 /**
  * SearchBar 搜索栏
@@ -63,169 +85,177 @@ const {
 
 export default {
   name: "UniSearchBar",
-  emits: ["input", "update:modelValue", "clear", "cancel", "confirm", "blur", "focus"],
+  emits: [
+    "input",
+    "update:modelValue",
+    "clear",
+    "cancel",
+    "confirm",
+    "blur",
+    "focus",
+  ],
   props: {
     placeholder: {
       type: String,
-      default: ""
+      default: "",
     },
     radius: {
       type: [Number, String],
-      default: 5
+      default: 5,
     },
     clearButton: {
       type: String,
-      default: "auto"
+      default: "auto",
     },
     cancelButton: {
       type: String,
-      default: "auto"
+      default: "auto",
     },
     cancelText: {
       type: String,
-      default: "取消"
+      default: "取消",
     },
     bgColor: {
       type: String,
-      default: "#F8F8F8"
+      default: "#F8F8F8",
     },
     maxlength: {
       type: [Number, String],
-      default: 100
+      default: 100,
     },
     value: {
       type: [Number, String],
-      default: ""
+      default: "",
     },
     modelValue: {
       type: [Number, String],
-      default: ""
+      default: "",
     },
     focus: {
       type: Boolean,
-      default: false
+      default: false,
     },
     readonly: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
       show: false,
       showSync: false,
-      searchVal: ""
-    }
+      searchVal: "",
+    };
   },
   computed: {
-    cancelTextI18n () {
-      return this.cancelText || t("uni-search-bar.cancel")
+    cancelTextI18n() {
+      return this.cancelText || t("uni-search-bar.cancel");
     },
-    placeholderText () {
-      return this.placeholder || t("uni-search-bar.placeholder")
-    }
+    placeholderText() {
+      return this.placeholder || t("uni-search-bar.placeholder");
+    },
   },
   watch: {
     // #ifndef VUE3
     value: {
       immediate: true,
-      handler (newVal) {
-        this.searchVal = newVal
+      handler(newVal) {
+        this.searchVal = newVal;
         if (newVal) {
-          this.show = true
+          this.show = true;
         }
-      }
+      },
     },
     // #endif
     // #ifdef VUE3
     modelValue: {
       immediate: true,
-      handler (newVal) {
-        this.searchVal = newVal
+      handler(newVal) {
+        this.searchVal = newVal;
         if (newVal) {
-          this.show = true
+          this.show = true;
         }
-      }
+      },
     },
     // #endif
     focus: {
       immediate: true,
-      handler (newVal) {
+      handler(newVal) {
         if (newVal) {
-          if (this.readonly) return
-          this.show = true
+          if (this.readonly) return;
+          this.show = true;
           this.$nextTick(() => {
-            this.showSync = true
-          })
+            this.showSync = true;
+          });
         }
-      }
+      },
     },
-    searchVal (newVal, oldVal) {
-      this.$emit("input", newVal)
+    searchVal(newVal, oldVal) {
+      this.$emit("input", newVal);
       // #ifdef VUE3
-      this.$emit("update:modelValue", newVal)
+      this.$emit("update:modelValue", newVal);
       // #endif
-    }
+    },
   },
   methods: {
-    searchClick () {
-      if (this.readonly) return
+    searchClick() {
+      if (this.readonly) return;
       if (this.show) {
-        return
+        return;
       }
-      this.show = true
+      this.show = true;
       this.$nextTick(() => {
-        this.showSync = true
-      })
+        this.showSync = true;
+      });
     },
-    clear () {
+    clear() {
       this.$emit("clear", {
-        value: this.searchVal
-      })
-      this.searchVal = ""
+        value: this.searchVal,
+      });
+      this.searchVal = "";
     },
-    cancel () {
-      if (this.readonly) return
+    cancel() {
+      if (this.readonly) return;
       this.$emit("cancel", {
-        value: this.searchVal
-      })
-      this.searchVal = ""
-      this.show = false
-      this.showSync = false
+        value: this.searchVal,
+      });
+      this.searchVal = "";
+      this.show = false;
+      this.showSync = false;
       // #ifndef APP-PLUS
-      uni.hideKeyboard()
+      uni.hideKeyboard();
       // #endif
       // #ifdef APP-PLUS
-      plus.key.hideSoftKeybord()
+      plus.key.hideSoftKeybord();
       // #endif
     },
-    confirm () {
+    confirm() {
       // #ifndef APP-PLUS
-      uni.hideKeyboard()
+      uni.hideKeyboard();
       // #endif
       // #ifdef APP-PLUS
-      plus.key.hideSoftKeybord()
+      plus.key.hideSoftKeybord();
       // #endif
       this.$emit("confirm", {
-        value: this.searchVal
-      })
+        value: this.searchVal,
+      });
     },
-    blur () {
+    blur() {
       // #ifndef APP-PLUS
-      uni.hideKeyboard()
+      uni.hideKeyboard();
       // #endif
       // #ifdef APP-PLUS
-      plus.key.hideSoftKeybord()
+      plus.key.hideSoftKeybord();
       // #endif
       this.$emit("blur", {
-        value: this.searchVal
-      })
+        value: this.searchVal,
+      });
     },
-    emitFocus (e) {
-      this.$emit("focus", e.detail)
-    }
-  }
-}
+    emitFocus(e) {
+      this.$emit("focus", e.detail);
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -265,7 +295,7 @@ $uni-searchbar-height: 36px;
   padding: 0 8px;
   justify-content: center;
   align-items: center;
-  color: #B3B3B3;
+  color: #b3b3b3;
 }
 
 .uni-searchbar__box-search-input {
@@ -285,7 +315,7 @@ $uni-searchbar-height: 36px;
 
 .uni-searchbar__text-placeholder {
   font-size: 14px;
-  color: #B3B3B3;
+  color: #b3b3b3;
   margin-left: 5px;
 }
 

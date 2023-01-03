@@ -1,9 +1,16 @@
 <template>
   <view class="container">
-    <image class="bg-set" src="https://static.xhpolaris.com/profile_background.png" />
+    <image
+      class="bg-set"
+      src="https://static.xhpolaris.com/profile_background.png"
+    />
     <view class="content">
       <view class="choose-avatar-row">
-        <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+        <button
+          class="avatar-wrapper"
+          open-type="chooseAvatar"
+          @chooseavatar="onChooseAvatar"
+        >
           <image :src="avatarUrl" class="avatar" />
         </button>
         <text>点击选择头像</text>
@@ -11,55 +18,52 @@
       <view class="choose-nickname-row">
         <text>新昵称:</text>
         <input
-          class="title" placeholder="请输入昵称"
+          class="title"
+          placeholder="请输入昵称"
           type="nickname"
           @blur="onNickName"
-        >
+        />
       </view>
     </view>
-    <button class="confirm-change" @click="onClickConfirm()">
-      确认更改
-    </button>
+    <button class="confirm-change" @click="onClickConfirm()">确认更改</button>
   </view>
 </template>
 
 <script lang="ts">
-import { updateUserInfo } from "@/apis/user/user"
-import { UpdateUserReq } from "@/apis/user/user-interfaces"
+import { updateUserInfo } from "@/apis/user/user";
+import { UpdateUserReq } from "@/apis/user/user-interfaces";
 
 export default {
-  data () {
+  data() {
     return {
       avatarUrl: "https://static.xhpolaris.com/cat_world.jpg",
-      nickName: ""
-    }
+      nickName: "",
+    };
   },
   methods: {
-    onChooseAvatar (e: any) {
-      const { avatarUrl } = e.detail
-      this.avatarUrl = avatarUrl
+    onChooseAvatar(e: any) {
+      const { avatarUrl } = e.detail;
+      this.avatarUrl = avatarUrl;
     },
-    onNickName (e: any) {
-      this.nickName = e.detail.value
+    onNickName(e: any) {
+      this.nickName = e.detail.value;
     },
-    onClickConfirm () {
+    onClickConfirm() {
       const userInfo: UpdateUserReq = {
         avatarUrl: this.avatarUrl,
-        nickname: this.nickName
-      }
-      updateUserInfo(userInfo).then(res => {
+        nickname: this.nickName,
+      };
+      updateUserInfo(userInfo).then((res) => {
         uni.showToast({
-          title: res.msg
-        })
-      })
+          title: res.msg,
+        });
+      });
       uni.reLaunch({
         url: "./profile",
-      })
-    }
-  }
-}
-
-
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -74,12 +78,12 @@ export default {
 }
 
 .content {
-  box-shadow: 0 0 10rpx #EEEEEE;
+  box-shadow: 0 0 10rpx #eeeeee;
   margin: 60rpx;
   padding: 20rpx;
   margin-top: 30rpx;
   border-radius: 20rpx;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .choose-avatar-row {

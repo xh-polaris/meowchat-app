@@ -1,78 +1,54 @@
 <template>
   <view class="read-all-frame">
-    <view class="read-all">
-      全部已读
-    </view>
+    <view class="read-all"> 全部已读 </view>
   </view>
 
   <view class="public">
     <view class="header">
       <view class="notice-icon" />
-      <view class="title">
-        公告
-      </view>
+      <view class="title"> 公告 </view>
       <view class="right-arrow-icon" />
     </view>
     <view class="description">
       公告内容公告内容公告，公告内容公告内容，公告内容公告内容公告内容，公告内容公告内容公告内容。
     </view>
-    <view class="time">
-      2022-3-1 发布
-    </view>
+    <view class="time"> 2022-3-1 发布 </view>
   </view>
 
   <view class="moment">
     <view class="avatar" />
     <view class="content">
       <view class="info">
-        <view class="user-name">
-          Username
-        </view>
-        <view class="type-text">
-          回复了你的动态
-        </view>
+        <view class="user-name"> Username </view>
+        <view class="type-text"> 回复了你的动态 </view>
       </view>
       <view class="description">
         今天我们大家之所以欢聚在这里，是为我们的好朋友小猫猫，庆祝它的生日。
       </view>
-      <view class="time">
-        3小时前
-      </view>
+      <view class="time"> 3小时前 </view>
     </view>
-    <view class="picture">
-      图片
-    </view>
+    <view class="picture"> 图片 </view>
   </view>
 
   <view class="moment">
     <view class="avatar" />
     <view class="content">
       <view class="info">
-        <view class="user-name">
-          Username
-        </view>
-        <view class="type-text">
-          点赞了你的动态
-        </view>
+        <view class="user-name"> Username </view>
+        <view class="type-text"> 点赞了你的动态 </view>
       </view>
       <view class="description" />
-      <view class="time">
-        3小时前
-      </view>
+      <view class="time"> 3小时前 </view>
     </view>
-    <view class="picture">
-      图片
-    </view>
+    <view class="picture"> 图片 </view>
   </view>
 
   <view class="horizontal-border-line" />
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
-
 body {
   font-family: sans-serif;
 }
@@ -91,7 +67,7 @@ body {
 }
 
 .public {
-  background-color: #FAFCFF;
+  background-color: #fafcff;
   border-radius: calc(10 / 390 * 100vw);
   margin: 0 calc(22 / 390 * 100vw);
   padding: calc(20 / 390 * 100vw);
@@ -101,7 +77,6 @@ body {
   margin-bottom: calc(16 / 390 * 100vw);
 
   .header {
-
     display: flex;
     align-items: center;
 
@@ -117,7 +92,7 @@ body {
       font-size: calc(16 / 390 * 100vw);
       margin-left: calc(10 / 390 * 100vw);
       flex: auto;
-      color: #1D1D1D;
+      color: #1d1d1d;
     }
 
     .right-arrow-icon {
@@ -127,7 +102,6 @@ body {
       background-size: 100% 100%;
       margin-right: calc(14 / 390 * 100vw);
     }
-
   }
 
   .description {
@@ -137,25 +111,23 @@ body {
 
   .time {
     margin-top: calc(4 / 390 * 100vw);
-    color: #AFAFAF
+    color: #afafaf;
   }
 }
 
 .moment {
   font-size: calc(12 / 390 * 100vw);
   line-height: calc(18 / 390 * 100vw);
-  border-top: #EEEEEE calc(1 / 390 * 100vw) solid;
+  border-top: #eeeeee calc(1 / 390 * 100vw) solid;
   display: flex;
   padding: calc(11 / 390 * 100vw) calc(22 / 390 * 100vw);
 
   .avatar {
-
     width: calc(32 / 390 * 100vw);
     height: calc(32 / 390 * 100vw);
     border-radius: 50%;
     background-image: url("../../static/images/avatar-default.png");
     background-size: 100% 100%;
-
   }
 
   .content {
@@ -168,31 +140,27 @@ body {
       .user-name {
         color: #353535;
         margin-right: calc(12 / 390 * 100vw);
-
       }
 
       .type-text {
         color: #939393;
-
       }
     }
 
     .description {
-      color: #1D1D1D;
+      color: #1d1d1d;
       padding: calc(14 / 390 * 100vw) 0;
-
     }
 
     .time {
-      color: #B8B8B8;
-
+      color: #b8b8b8;
     }
   }
 
   .picture {
     width: calc(60 / 390 * 100vw);
     height: calc(60 / 390 * 100vw);
-    background-color: #EEE;
+    background-color: #eee;
     text-align: center;
     line-height: calc(60 / 390 * 100vw);
     color: white;
@@ -200,7 +168,6 @@ body {
 }
 
 .horizontal-border-line {
-  border-bottom: #EEEEEE calc(1 / 390 * 100vw) solid;
+  border-bottom: #eeeeee calc(1 / 390 * 100vw) solid;
 }
-
 </style>

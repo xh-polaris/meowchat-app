@@ -1,25 +1,61 @@
 <template>
-  <view :class="[styleType === 'text'?'segmented-control--text' : 'segmented-control--button' ]"
-        :style="{ borderColor: styleType === 'text' ? '' : activeColor }" class="segmented-control">
-    <view v-for="(item, index) in values" :class="[ styleType === 'text' ? '': 'segmented-control__item--button',
-		index === currentIndex&&styleType === 'button' ? 'segmented-control__item--button--active': '',
-		index === 0&&styleType === 'button' ? 'segmented-control__item--button--first': '',
-			index === values.length - 1&&styleType === 'button' ? 'segmented-control__item--button--last': '' ]" :key="index"
-          :style="{ backgroundColor: index === currentIndex && styleType === 'button' ? activeColor : '',borderColor: index === currentIndex&&styleType === 'text'||styleType === 'button'?activeColor:'transparent' }"
-          class="segmented-control__item" @click="_onClick(index)">
+  <view
+    :class="[
+      styleType === 'text'
+        ? 'segmented-control--text'
+        : 'segmented-control--button',
+    ]"
+    :style="{ borderColor: styleType === 'text' ? '' : activeColor }"
+    class="segmented-control"
+  >
+    <view
+      v-for="(item, index) in values"
+      :class="[
+        styleType === 'text' ? '' : 'segmented-control__item--button',
+        index === currentIndex && styleType === 'button'
+          ? 'segmented-control__item--button--active'
+          : '',
+        index === 0 && styleType === 'button'
+          ? 'segmented-control__item--button--first'
+          : '',
+        index === values.length - 1 && styleType === 'button'
+          ? 'segmented-control__item--button--last'
+          : '',
+      ]"
+      :key="index"
+      :style="{
+        backgroundColor:
+          index === currentIndex && styleType === 'button' ? activeColor : '',
+        borderColor:
+          (index === currentIndex && styleType === 'text') ||
+          styleType === 'button'
+            ? activeColor
+            : 'transparent',
+      }"
+      class="segmented-control__item"
+      @click="_onClick(index)"
+    >
       <view>
-        <text :style="{color:
-				    index === currentIndex
-				      ? styleType === 'text'
-				        ? activeColor
-				        : '#fff'
-				      : styleType === 'text'
-				        ? '#000'
-				        : activeColor}" class="segmented-control__text"
-              :class="styleType === 'text' && index === currentIndex ? 'segmented-control__item--text': ''">{{ item }}
+        <text
+          :style="{
+            color:
+              index === currentIndex
+                ? styleType === 'text'
+                  ? activeColor
+                  : '#fff'
+                : styleType === 'text'
+                ? '#000'
+                : activeColor,
+          }"
+          class="segmented-control__text"
+          :class="
+            styleType === 'text' && index === currentIndex
+              ? 'segmented-control__item--text'
+              : ''
+          "
+          >{{ item }}
         </text>
       </view>
-
     </view>
   </view>
 </template>
@@ -44,49 +80,49 @@ export default {
   props: {
     current: {
       type: Number,
-      default: 0
+      default: 0,
     },
     values: {
       type: Array,
-      default () {
-        return []
-      }
+      default() {
+        return [];
+      },
     },
     activeColor: {
       type: String,
-      default: "#2979FF"
+      default: "#2979FF",
     },
     styleType: {
       type: String,
-      default: "button"
-    }
+      default: "button",
+    },
   },
-  data () {
+  data() {
     return {
-      currentIndex: 0
-    }
+      currentIndex: 0,
+    };
   },
   watch: {
-    current (val) {
+    current(val) {
       if (val !== this.currentIndex) {
-        this.currentIndex = val
+        this.currentIndex = val;
       }
-    }
+    },
   },
-  created () {
-    this.currentIndex = this.current
+  created() {
+    this.currentIndex = this.current;
   },
   methods: {
-    _onClick (index) {
+    _onClick(index) {
       if (this.currentIndex !== index) {
-        this.currentIndex = index
+        this.currentIndex = index;
         this.$emit("clickItem", {
-          currentIndex: index
-        })
+          currentIndex: index,
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

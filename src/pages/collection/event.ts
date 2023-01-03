@@ -1,29 +1,29 @@
-import { CatPreview } from "@/apis/community/community-interfaces"
+import { CatPreview } from "@/apis/community/community-interfaces";
 
-export function onClickCatBox (id: string) {
+export function onClickCatBox(id: string) {
   uni.navigateTo({
-    url: `/pages/cat/cat?id=${id}`
-  })
+    url: `/pages/cat/cat?id=${id}`,
+  });
 }
 
-export function onClickSearch () {
+export function onClickSearch() {
   uni.navigateTo({
-    url: `/pages/search/search`
-  })
+    url: `/pages/search/search`,
+  });
 }
 
-export function onClickCancel () {
+export function onClickCancel() {
   uni.navigateTo({
-    url: `/pages/collection/collection`
-  })
+    url: `/pages/collection/collection`,
+  });
 }
 
-export function onClickCollect (cat: CatPreview) {
-  cat.isCollected = !cat.isCollected
+export function onClickCollect(cat: CatPreview) {
+  cat.isCollected = !cat.isCollected;
 }
 
-export function onClickSwitch () {
+export function onClickSwitch() {
   uni.navigateTo({
-    url: `/pages/community/school_select`
-  })
+    url: `/pages/community/school_select`,
+  });
 }

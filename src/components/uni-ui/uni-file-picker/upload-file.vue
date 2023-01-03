@@ -4,32 +4,56 @@
       <slot></slot>
     </view>
     <!-- :class="{'is-text-box':showType === 'list'}" -->
-    <view v-if="list.length > 0" class="uni-file-picker__lists is-text-box" :style="borderStyle">
+    <view
+      v-if="list.length > 0"
+      class="uni-file-picker__lists is-text-box"
+      :style="borderStyle"
+    >
       <!-- ,'is-list-card':showType === 'list-card' -->
 
-      <view class="uni-file-picker__lists-box" v-for="(item ,index) in list" :key="index" :class="{
-				'files-border':index !== 0 && styles.dividline}"
-            :style="index !== 0 && styles.dividline &&borderLineStyle">
+      <view
+        class="uni-file-picker__lists-box"
+        v-for="(item, index) in list"
+        :key="index"
+        :class="{
+          'files-border': index !== 0 && styles.dividline,
+        }"
+        :style="index !== 0 && styles.dividline && borderLineStyle"
+      >
         <view class="uni-file-picker__item">
           <!-- :class="{'is-text-image':showType === 'list'}" -->
           <!-- 	<view class="files__image is-text-image">
             <image class="header-image" :src="item.logo" mode="aspectFit"></image>
           </view> -->
-          <view class="files__name">{{item.name}}</view>
-          <view v-if="delIcon&&!readonly" class="icon-del-box icon-files" @click="delFile(index)">
+          <view class="files__name">{{ item.name }}</view>
+          <view
+            v-if="delIcon && !readonly"
+            class="icon-del-box icon-files"
+            @click="delFile(index)"
+          >
             <view class="icon-del icon-files"></view>
             <view class="icon-del rotate"></view>
           </view>
         </view>
-        <view v-if="(item.progress && item.progress !== 100) ||item.progress===0 " class="file-picker__progress">
-          <progress class="file-picker__progress-item" :percent="item.progress === -1?0:item.progress" stroke-width="4"
-                    :backgroundColor="item.errMsg?'#ff5a5f':'#EBEBEB'"/>
+        <view
+          v-if="(item.progress && item.progress !== 100) || item.progress === 0"
+          class="file-picker__progress"
+        >
+          <progress
+            class="file-picker__progress-item"
+            :percent="item.progress === -1 ? 0 : item.progress"
+            stroke-width="4"
+            :backgroundColor="item.errMsg ? '#ff5a5f' : '#EBEBEB'"
+          />
         </view>
-        <view v-if="item.status === 'error'" class="file-picker__mask" @click.stop="uploadFiles(item,index)">
+        <view
+          v-if="item.status === 'error'"
+          class="file-picker__mask"
+          @click.stop="uploadFiles(item, index)"
+        >
           点击重试
         </view>
       </view>
-
     </view>
   </view>
 </template>
@@ -41,138 +65,133 @@ export default {
   props: {
     filesList: {
       type: Array,
-      default () {
-        return []
-      }
+      default() {
+        return [];
+      },
     },
     delIcon: {
       type: Boolean,
-      default: true
+      default: true,
     },
     limit: {
       type: [Number, String],
-      default: 9
+      default: 9,
     },
     showType: {
       type: String,
-      default: ""
+      default: "",
     },
     listStyles: {
       type: Object,
-      default () {
+      default() {
         return {
           // 是否显示边框
           border: true,
           // 是否显示分隔线
           dividline: true,
           // 线条样式
-          borderStyle: {}
-        }
-      }
+          borderStyle: {},
+        };
+      },
     },
     readonly: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    list () {
-      let files = []
-      this.filesList.forEach(v => {
-        files.push(v)
-      })
-      return files
+    list() {
+      let files = [];
+      this.filesList.forEach((v) => {
+        files.push(v);
+      });
+      return files;
     },
-    styles () {
+    styles() {
       let styles = {
         border: true,
         dividline: true,
-        "border-style": {}
-      }
-      return Object.assign(styles, this.listStyles)
+        "border-style": {},
+      };
+      return Object.assign(styles, this.listStyles);
     },
-    borderStyle () {
-      let {
-        borderStyle,
-        border
-      } = this.styles
-      let obj = {}
+    borderStyle() {
+      let { borderStyle, border } = this.styles;
+      let obj = {};
       if (!border) {
-        obj.border = "none"
+        obj.border = "none";
       } else {
-        let width = (borderStyle && borderStyle.width) || 1
-        width = this.value2px(width)
-        let radius = (borderStyle && borderStyle.radius) || 5
-        radius = this.value2px(radius)
+        let width = (borderStyle && borderStyle.width) || 1;
+        width = this.value2px(width);
+        let radius = (borderStyle && borderStyle.radius) || 5;
+        radius = this.value2px(radius);
         obj = {
           "border-width": width,
           "border-style": (borderStyle && borderStyle.style) || "solid",
           "border-color": (borderStyle && borderStyle.color) || "#eee",
-          "border-radius": radius
-        }
+          "border-radius": radius,
+        };
       }
-      let classles = ""
+      let classles = "";
       for (let i in obj) {
-        classles += `${i}:${obj[i]};`
+        classles += `${i}:${obj[i]};`;
       }
-      return classles
+      return classles;
     },
-    borderLineStyle () {
-      let obj = {}
-      let {
-        borderStyle
-      } = this.styles
+    borderLineStyle() {
+      let obj = {};
+      let { borderStyle } = this.styles;
       if (borderStyle && borderStyle.color) {
-        obj["border-color"] = borderStyle.color
+        obj["border-color"] = borderStyle.color;
       }
       if (borderStyle && borderStyle.width) {
-        let width = borderStyle && borderStyle.width || 1
-        let style = borderStyle && borderStyle.style || 0
+        let width = (borderStyle && borderStyle.width) || 1;
+        let style = (borderStyle && borderStyle.style) || 0;
         if (typeof width === "number") {
-          width += "px"
+          width += "px";
         } else {
-          width = width.indexOf("px") ? width : width + "px"
+          width = width.indexOf("px") ? width : width + "px";
         }
-        obj["border-width"] = width
+        obj["border-width"] = width;
 
         if (typeof style === "number") {
-          style += "px"
+          style += "px";
         } else {
-          style = style.indexOf("px") ? style : style + "px"
+          style = style.indexOf("px") ? style : style + "px";
         }
-        obj["border-top-style"] = style
+        obj["border-top-style"] = style;
       }
-      let classles = ""
+      let classles = "";
       for (let i in obj) {
-        classles += `${i}:${obj[i]};`
+        classles += `${i}:${obj[i]};`;
       }
-      return classles
-    }
+      return classles;
+    },
   },
 
   methods: {
-    uploadFiles (item, index) {
+    uploadFiles(item, index) {
       this.$emit("uploadFiles", {
         item,
-        index
-      })
+        index,
+      });
     },
-    choose () {
-      this.$emit("choose")
+    choose() {
+      this.$emit("choose");
     },
-    delFile (index) {
-      this.$emit("delFile", index)
+    delFile(index) {
+      this.$emit("delFile", index);
     },
-    value2px (value) {
+    value2px(value) {
       if (typeof value === "number") {
-        value += "px"
+        value += "px";
       } else {
-        value = value.indexOf("px") !== -1 ? value : value + "px"
+        value = value.indexOf("px") !== -1 ? value : value + "px";
       }
-      return value
-    }
-  }
-}
+      return value;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -251,7 +270,6 @@ export default {
 // 	width: 12px;
 // 	height: 1px;
 // }
-
 
 .is-list-card {
   border: 1px #eee solid;

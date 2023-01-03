@@ -1,20 +1,22 @@
 <template>
-  <web-view :webview-styles="webviewStyles" src="https://www.wjx.cn/vj/mBnSgB8.aspx " />
+  <web-view
+    :webview-styles="webviewStyles"
+    src="https://www.wjx.cn/vj/mBnSgB8.aspx "
+  />
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       webviewStyles: {
         progress: {
-          color: "#FF3333"
-        }
-      }
-    }
-  }
-}
+          color: "#FF3333",
+        },
+      },
+    };
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>

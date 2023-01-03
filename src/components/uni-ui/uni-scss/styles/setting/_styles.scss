@@ -32,7 +32,6 @@ $-color-black: #000;
       background-color: mix($color, $-color-white);
     }
   }
-
 }
 
 @mixin base-plain-style($color) {
@@ -70,14 +69,13 @@ $-color-black: #000;
   }
 }
 
-
 .uni-btn {
   margin: 5px;
   color: #393939;
   border: 1px solid #ccc;
   font-size: 16px;
   font-weight: 200;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   // TODO 暂时处理边框隐藏一边的问题
   overflow: visible;
 
@@ -85,7 +83,8 @@ $-color-black: #000;
     border: none;
   }
 
-  &:not([type]), &[type=default] {
+  &:not([type]),
+  &[type="default"] {
     color: #999;
 
     &[loading] {
@@ -95,7 +94,6 @@ $-color-black: #000;
         margin-right: 5px;
       }
     }
-
 
     &[disabled] {
       color: mix($-color-white, #999, 60%);
@@ -137,12 +135,11 @@ $-color-black: #000;
     color: mix($-color-white, $-color-black, 50%);
   }
 
-  &[size=mini] {
+  &[size="mini"] {
     font-size: 16px;
     font-weight: 200;
     border-radius: 8px;
   }
-
 
   &.uni-btn-small {
     font-size: 14px;
@@ -156,29 +153,29 @@ $-color-black: #000;
     border-radius: 999px;
   }
 
-  &[type=primary] {
+  &[type="primary"] {
     @include is-color($uni-primary);
-    @include is-plain($uni-primary)
+    @include is-plain($uni-primary);
   }
 
-  &[type=success] {
+  &[type="success"] {
     @include is-color($uni-success);
-    @include is-plain($uni-success)
+    @include is-plain($uni-success);
   }
 
-  &[type=error] {
+  &[type="error"] {
     @include is-color($uni-error);
-    @include is-plain($uni-error)
+    @include is-plain($uni-error);
   }
 
-  &[type=warning] {
+  &[type="warning"] {
     @include is-color($uni-warning);
-    @include is-plain($uni-warning)
+    @include is-plain($uni-warning);
   }
 
-  &[type=info] {
+  &[type="info"] {
     @include is-color($uni-info);
-    @include is-plain($uni-info)
+    @include is-plain($uni-info);
   }
 }
 

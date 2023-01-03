@@ -1,24 +1,44 @@
 <template>
   <view class="uni-pagination">
     <!-- #ifndef MP -->
-    <picker v-if="showPageSize === true || showPageSize === 'true'" class="select-picker" mode="selector"
-            :value="pageSizeIndex" :range="pageSizeRange" @change="pickerChange" @cancel="pickerClick"
-            @click.native="pickerClick">
+    <picker
+      v-if="showPageSize === true || showPageSize === 'true'"
+      class="select-picker"
+      mode="selector"
+      :value="pageSizeIndex"
+      :range="pageSizeRange"
+      @change="pickerChange"
+      @cancel="pickerClick"
+      @click.native="pickerClick"
+    >
       <button type="default" size="mini" :plain="true">
-        <text>{{pageSizeRange[pageSizeIndex]}} {{piecePerPage}}</text>
-        <uni-icons class="select-picker-icon" type="arrowdown" size="12" color="#999"></uni-icons>
+        <text>{{ pageSizeRange[pageSizeIndex] }} {{ piecePerPage }}</text>
+        <uni-icons
+          class="select-picker-icon"
+          type="arrowdown"
+          size="12"
+          color="#999"
+        ></uni-icons>
       </button>
     </picker>
     <!-- #endif -->
     <!-- #ifndef APP-NVUE -->
     <view class="uni-pagination__total is-phone-hide">共 {{ total }} 条</view>
     <!-- #endif -->
-    <view class="uni-pagination__btn"
-          :class="currentIndex === 1 ? 'uni-pagination--disabled' : 'uni-pagination--enabled'"
-          :hover-class="currentIndex === 1 ? '' : 'uni-pagination--hover'" :hover-start-time="20"
-          :hover-stay-time="70" @click="clickLeft">
+    <view
+      class="uni-pagination__btn"
+      :class="
+        currentIndex === 1
+          ? 'uni-pagination--disabled'
+          : 'uni-pagination--enabled'
+      "
+      :hover-class="currentIndex === 1 ? '' : 'uni-pagination--hover'"
+      :hover-start-time="20"
+      :hover-stay-time="70"
+      @click="clickLeft"
+    >
       <template v-if="showIcon === true || showIcon === 'true'">
-        <uni-icons color="#666" size="16" type="left"/>
+        <uni-icons color="#666" size="16" type="left" />
       </template>
       <template v-else>
         <text class="uni-pagination__child-btn">{{ prevPageText }}</text>
@@ -26,23 +46,40 @@
     </view>
     <view class="uni-pagination__num uni-pagination__num-flex-none">
       <view class="uni-pagination__num-current">
-        <text class="uni-pagination__num-current-text is-pc-hide current-index-text">{{ currentIndex }}</text>
-        <text class="uni-pagination__num-current-text is-pc-hide">/{{ maxPage || 0 }}</text>
+        <text
+          class="uni-pagination__num-current-text is-pc-hide current-index-text"
+          >{{ currentIndex }}</text
+        >
+        <text class="uni-pagination__num-current-text is-pc-hide"
+          >/{{ maxPage || 0 }}</text
+        >
         <!-- #ifndef APP-NVUE -->
-        <view v-for="(item, index) in paper" :key="index" :class="{ 'page--active': item === currentIndex }"
-              class="uni-pagination__num-tag tag--active is-phone-hide" @click.top="selectPage(item, index)">
+        <view
+          v-for="(item, index) in paper"
+          :key="index"
+          :class="{ 'page--active': item === currentIndex }"
+          class="uni-pagination__num-tag tag--active is-phone-hide"
+          @click.top="selectPage(item, index)"
+        >
           <text>{{ item }}</text>
         </view>
         <!-- #endif -->
-
       </view>
     </view>
-    <view class="uni-pagination__btn"
-          :class="currentIndex >= maxPage ? 'uni-pagination--disabled' : 'uni-pagination--enabled'"
-          :hover-class="currentIndex === maxPage ? '' : 'uni-pagination--hover'" :hover-start-time="20"
-          :hover-stay-time="70" @click="clickRight">
+    <view
+      class="uni-pagination__btn"
+      :class="
+        currentIndex >= maxPage
+          ? 'uni-pagination--disabled'
+          : 'uni-pagination--enabled'
+      "
+      :hover-class="currentIndex === maxPage ? '' : 'uni-pagination--hover'"
+      :hover-start-time="20"
+      :hover-stay-time="70"
+      @click="clickRight"
+    >
       <template v-if="showIcon === true || showIcon === 'true'">
-        <uni-icons color="#666" size="16" type="right"/>
+        <uni-icons color="#666" size="16" type="right" />
       </template>
       <template v-else>
         <text class="uni-pagination__child-btn">{{ nextPageText }}</text>
@@ -69,25 +106,21 @@
  * * @event {Function} pageSizeChange 当前每页条数改变时触发 ,e={pageSize} pageSize 为当前所选的每页条数
  */
 
-import {
-  initVueI18n
-} from "@dcloudio/uni-i18n"
-import messages from "./i18n/index.js"
+import { initVueI18n } from "@dcloudio/uni-i18n";
+import messages from "./i18n/index.js";
 
-const {
-  t
-} = initVueI18n(messages)
+const { t } = initVueI18n(messages);
 export default {
   name: "UniPagination",
   emits: ["update:modelValue", "input", "change", "pageSizeChange"],
   props: {
     value: {
       type: [Number, String],
-      default: 1
+      default: 1,
     },
     modelValue: {
       type: [Number, String],
-      default: 1
+      default: 1,
     },
     prevText: {
       type: String,
@@ -96,219 +129,225 @@ export default {
       type: String,
     },
     piecePerPageText: {
-      type: String
+      type: String,
     },
     current: {
       type: [Number, String],
-      default: 1
+      default: 1,
     },
     total: {
       // 数据总量
       type: [Number, String],
-      default: 0
+      default: 0,
     },
     pageSize: {
       // 每页数据量
       type: [Number, String],
-      default: 10
+      default: 10,
     },
     showIcon: {
       // 是否以 icon 形式展示按钮
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     showPageSize: {
       // 是否以 icon 形式展示按钮
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     pagerCount: {
       type: Number,
-      default: 7
+      default: 7,
     },
     pageSizeRange: {
       type: Array,
-      default: () => [20, 50, 100, 500]
-    }
+      default: () => [20, 50, 100, 500],
+    },
   },
-  data () {
+  data() {
     return {
       pageSizeIndex: 0,
       currentIndex: 1,
       paperData: [],
-      pickerShow: false
-    }
+      pickerShow: false,
+    };
   },
   computed: {
-    piecePerPage () {
-      return this.piecePerPageText || t("uni-pagination.piecePerPage")
+    piecePerPage() {
+      return this.piecePerPageText || t("uni-pagination.piecePerPage");
     },
-    prevPageText () {
-      return this.prevText || t("uni-pagination.prevText")
+    prevPageText() {
+      return this.prevText || t("uni-pagination.prevText");
     },
-    nextPageText () {
-      return this.nextText || t("uni-pagination.nextText")
+    nextPageText() {
+      return this.nextText || t("uni-pagination.nextText");
     },
-    maxPage () {
-      let maxPage = 1
-      let total = Number(this.total)
-      let pageSize = Number(this.pageSize)
+    maxPage() {
+      let maxPage = 1;
+      let total = Number(this.total);
+      let pageSize = Number(this.pageSize);
       if (total && pageSize) {
-        maxPage = Math.ceil(total / pageSize)
+        maxPage = Math.ceil(total / pageSize);
       }
-      return maxPage
+      return maxPage;
     },
-    paper () {
-      const num = this.currentIndex
+    paper() {
+      const num = this.currentIndex;
       // TODO 最大页数
-      const pagerCount = this.pagerCount
+      const pagerCount = this.pagerCount;
       // const total = 181
-      const total = this.total
-      const pageSize = this.pageSize
-      let totalArr = []
-      let showPagerArr = []
-      let pagerNum = Math.ceil(total / pageSize)
+      const total = this.total;
+      const pageSize = this.pageSize;
+      let totalArr = [];
+      let showPagerArr = [];
+      let pagerNum = Math.ceil(total / pageSize);
       for (let i = 0; i < pagerNum; i++) {
-        totalArr.push(i + 1)
+        totalArr.push(i + 1);
       }
-      showPagerArr.push(1)
-      const totalNum = totalArr[totalArr.length - (pagerCount + 1) / 2]
+      showPagerArr.push(1);
+      const totalNum = totalArr[totalArr.length - (pagerCount + 1) / 2];
       totalArr.forEach((item, index) => {
         if ((pagerCount + 1) / 2 >= num) {
           if (item < pagerCount + 1 && item > 1) {
-            showPagerArr.push(item)
+            showPagerArr.push(item);
           }
         } else if (num + 2 <= totalNum) {
-          if (item > num - (pagerCount + 1) / 2 && item < num + (pagerCount + 1) / 2) {
-            showPagerArr.push(item)
+          if (
+            item > num - (pagerCount + 1) / 2 &&
+            item < num + (pagerCount + 1) / 2
+          ) {
+            showPagerArr.push(item);
           }
         } else {
-          if ((item > num - (pagerCount + 1) / 2 || pagerNum - pagerCount < item) && item < totalArr[
-          totalArr.length - 1]) {
-            showPagerArr.push(item)
+          if (
+            (item > num - (pagerCount + 1) / 2 ||
+              pagerNum - pagerCount < item) &&
+            item < totalArr[totalArr.length - 1]
+          ) {
+            showPagerArr.push(item);
           }
         }
-      })
+      });
       if (pagerNum > pagerCount) {
         if ((pagerCount + 1) / 2 >= num) {
-          showPagerArr[showPagerArr.length - 1] = "..."
+          showPagerArr[showPagerArr.length - 1] = "...";
         } else if (num + 2 <= totalNum) {
-          showPagerArr[1] = "..."
-          showPagerArr[showPagerArr.length - 1] = "..."
+          showPagerArr[1] = "...";
+          showPagerArr[showPagerArr.length - 1] = "...";
         } else {
-          showPagerArr[1] = "..."
+          showPagerArr[1] = "...";
         }
-        showPagerArr.push(totalArr[totalArr.length - 1])
+        showPagerArr.push(totalArr[totalArr.length - 1]);
       } else {
         if ((pagerCount + 1) / 2 >= num) {
         } else if (num + 2 <= totalNum) {
         } else {
-          showPagerArr.shift()
-          showPagerArr.push(totalArr[totalArr.length - 1])
+          showPagerArr.shift();
+          showPagerArr.push(totalArr[totalArr.length - 1]);
         }
       }
 
-      return showPagerArr
-    }
+      return showPagerArr;
+    },
   },
   watch: {
     current: {
       immediate: true,
-      handler (val, old) {
+      handler(val, old) {
         if (val < 1) {
-          this.currentIndex = 1
+          this.currentIndex = 1;
         } else {
-          this.currentIndex = val
+          this.currentIndex = val;
         }
-      }
+      },
     },
     value: {
       immediate: true,
-      handler (val) {
-        if (Number(this.current) !== 1) return
+      handler(val) {
+        if (Number(this.current) !== 1) return;
         if (val < 1) {
-          this.currentIndex = 1
+          this.currentIndex = 1;
         } else {
-          this.currentIndex = val
+          this.currentIndex = val;
         }
-      }
+      },
     },
-    pageSizeIndex (val) {
-      this.$emit("pageSizeChange", this.pageSizeRange[val])
-    }
+    pageSizeIndex(val) {
+      this.$emit("pageSizeChange", this.pageSizeRange[val]);
+    },
   },
   methods: {
-    pickerChange (e) {
-      this.pageSizeIndex = e.detail.value
-      this.pickerClick()
+    pickerChange(e) {
+      this.pageSizeIndex = e.detail.value;
+      this.pickerClick();
     },
-    pickerClick () {
+    pickerClick() {
       // #ifdef H5
-      const body = document.querySelector("body")
-      if (!body) return
+      const body = document.querySelector("body");
+      if (!body) return;
 
-      const className = "uni-pagination-picker-show"
-      this.pickerShow = !this.pickerShow
+      const className = "uni-pagination-picker-show";
+      this.pickerShow = !this.pickerShow;
 
       if (this.pickerShow) {
-        body.classList.add(className)
+        body.classList.add(className);
       } else {
-        setTimeout(() => body.classList.remove(className), 300)
+        setTimeout(() => body.classList.remove(className), 300);
       }
       // #endif
     },
     // 选择标签
-    selectPage (e, index) {
+    selectPage(e, index) {
       if (parseInt(e)) {
-        this.currentIndex = e
-        this.change("current")
+        this.currentIndex = e;
+        this.change("current");
       } else {
-        let pagerNum = Math.ceil(this.total / this.pageSize)
+        let pagerNum = Math.ceil(this.total / this.pageSize);
         // let pagerNum = Math.ceil(181 / this.pageSize)
         // 上一页
         if (index <= 1) {
           if (this.currentIndex - 5 > 1) {
-            this.currentIndex -= 5
+            this.currentIndex -= 5;
           } else {
-            this.currentIndex = 1
+            this.currentIndex = 1;
           }
-          return
+          return;
         }
         // 下一页
         if (index >= 6) {
           if (this.currentIndex + 5 > pagerNum) {
-            this.currentIndex = pagerNum
+            this.currentIndex = pagerNum;
           } else {
-            this.currentIndex += 5
+            this.currentIndex += 5;
           }
-          return
+          return;
         }
       }
     },
-    clickLeft () {
+    clickLeft() {
       if (Number(this.currentIndex) === 1) {
-        return
+        return;
       }
-      this.currentIndex -= 1
-      this.change("prev")
+      this.currentIndex -= 1;
+      this.change("prev");
     },
-    clickRight () {
+    clickRight() {
       if (Number(this.currentIndex) >= this.maxPage) {
-        return
+        return;
       }
-      this.currentIndex += 1
-      this.change("next")
+      this.currentIndex += 1;
+      this.change("next");
     },
-    change (e) {
-      this.$emit("input", this.currentIndex)
-      this.$emit("update:modelValue", this.currentIndex)
+    change(e) {
+      this.$emit("input", this.currentIndex);
+      this.$emit("update:modelValue", this.currentIndex);
       this.$emit("change", {
         type: e,
-        current: this.currentIndex
-      })
-    }
-  }
-}
+        current: this.currentIndex,
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -339,7 +378,7 @@ $uni-primary: #2979ff !default;
   line-height: 30px;
   font-size: 12px;
   position: relative;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   flex-direction: row;
   justify-content: center;
   align-items: center;

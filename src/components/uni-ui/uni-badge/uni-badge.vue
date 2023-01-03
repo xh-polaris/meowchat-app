@@ -1,8 +1,13 @@
 <template>
   <view class="uni-badge--x">
-    <slot/>
-    <text v-if="text" :class="classNames" :style="[positionStyle, customStyle, dotStyle]"
-          class="uni-badge" @click="onClick()">{{ displayValue }}
+    <slot />
+    <text
+      v-if="text"
+      :class="classNames"
+      :style="[positionStyle, customStyle, dotStyle]"
+      class="uni-badge"
+      @click="onClick()"
+      >{{ displayValue }}
     </text>
   </view>
 </template>
@@ -39,123 +44,114 @@ export default {
   props: {
     type: {
       type: String,
-      default: "error"
+      default: "error",
     },
     inverted: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isDot: {
       type: Boolean,
-      default: false
+      default: false,
     },
     maxNum: {
       type: Number,
-      default: 99
+      default: 99,
     },
     absolute: {
       type: String,
-      default: ""
+      default: "",
     },
     offset: {
       type: Array,
-      default () {
-        return [0, 0]
-      }
+      default() {
+        return [0, 0];
+      },
     },
     text: {
       type: [String, Number],
-      default: ""
+      default: "",
     },
     size: {
       type: String,
-      default: "small"
+      default: "small",
     },
     customStyle: {
       type: Object,
-      default () {
-        return {}
-      }
-    }
+      default() {
+        return {};
+      },
+    },
   },
-  data () {
-    return {}
+  data() {
+    return {};
   },
   computed: {
-    width () {
-      return String(this.text).length * 8 + 12
+    width() {
+      return String(this.text).length * 8 + 12;
     },
-    classNames () {
-      const {
-        inverted,
-        type,
-        size,
-        absolute
-      } = this
+    classNames() {
+      const { inverted, type, size, absolute } = this;
       return [
         inverted ? "uni-badge--" + type + "-inverted" : "",
         "uni-badge--" + type,
         "uni-badge--" + size,
-        absolute ? "uni-badge--absolute" : ""
-      ].join(" ")
+        absolute ? "uni-badge--absolute" : "",
+      ].join(" ");
     },
-    positionStyle () {
-      if (!this.absolute) return {}
+    positionStyle() {
+      if (!this.absolute) return {};
       let w = this.width / 2,
-          h = 10
+        h = 10;
       if (this.isDot) {
-        w = 5
-        h = 5
+        w = 5;
+        h = 5;
       }
-      const x = `${-w + this.offset[0]}px`
-      const y = `${-h + this.offset[1]}px`
+      const x = `${-w + this.offset[0]}px`;
+      const y = `${-h + this.offset[1]}px`;
 
       const whiteList = {
         rightTop: {
           right: x,
-          top: y
+          top: y,
         },
         rightBottom: {
           right: x,
-          bottom: y
+          bottom: y,
         },
         leftBottom: {
           left: x,
-          bottom: y
+          bottom: y,
         },
         leftTop: {
           left: x,
-          top: y
-        }
-      }
-      const match = whiteList[this.absolute]
-      return match ? match : whiteList["rightTop"]
+          top: y,
+        },
+      };
+      const match = whiteList[this.absolute];
+      return match ? match : whiteList["rightTop"];
     },
-    dotStyle () {
-      if (!this.isDot) return {}
+    dotStyle() {
+      if (!this.isDot) return {};
       return {
         width: "10px",
         minWidth: "0",
         height: "10px",
         padding: "0",
-        borderRadius: "10px"
-      }
+        borderRadius: "10px",
+      };
     },
-    displayValue () {
-      const {
-        isDot,
-        text,
-        maxNum
-      } = this
-      return isDot ? "" : (Number(text) > maxNum ? `${maxNum}+` : text)
-    }
+    displayValue() {
+      const { isDot, text, maxNum } = this;
+      return isDot ? "" : Number(text) > maxNum ? `${maxNum}+` : text;
+    },
   },
   methods: {
-    onClick () {
-      this.$emit("click")
-    }
-  }
-}
+    onClick() {
+      this.$emit("click");
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -164,7 +160,6 @@ $uni-success: #4cd964 !default;
 $uni-warning: #f0ad4e !default;
 $uni-error: #dd524d !default;
 $uni-info: #909399 !default;
-
 
 $bage-size: 12px;
 $bage-small: scale(0.8);
@@ -206,7 +201,7 @@ $bage-small: scale(0.8);
   background-color: transparent;
   border: 1px solid #fff;
   text-align: center;
-  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-feature-settings: "tnum";
   font-size: $bage-size;
   /* #ifdef H5 */
@@ -264,6 +259,5 @@ $bage-small: scale(0.8);
     color: $uni-error;
     background-color: transparent;
   }
-
 }
 </style>

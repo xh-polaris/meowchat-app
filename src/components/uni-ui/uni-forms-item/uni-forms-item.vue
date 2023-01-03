@@ -1,18 +1,27 @@
 <template>
-  <view class="uni-forms-item"
-        :class="['is-direction-' + localLabelPos ,border?'uni-forms-item--border':'' ,border && isFirstBorder?'is-first-border':'']">
+  <view
+    class="uni-forms-item"
+    :class="[
+      'is-direction-' + localLabelPos,
+      border ? 'uni-forms-item--border' : '',
+      border && isFirstBorder ? 'is-first-border' : '',
+    ]"
+  >
     <slot name="label">
-      <view class="uni-forms-item__label" :class="{'no-label':!label && !isRequired}"
-            :style="{width:localLabelWidth,justifyContent: localLabelAlign}">
+      <view
+        class="uni-forms-item__label"
+        :class="{ 'no-label': !label && !isRequired }"
+        :style="{ width: localLabelWidth, justifyContent: localLabelAlign }"
+      >
         <text v-if="isRequired" class="is-required">*</text>
-        <text>{{label}}</text>
+        <text>{{ label }}</text>
       </view>
     </slot>
     <!-- #ifndef APP-NVUE -->
     <view class="uni-forms-item__content">
       <slot></slot>
-      <view class="uni-forms-item__error" :class="{'msg--active':msg}">
-        <text>{{msg}}</text>
+      <view class="uni-forms-item__error" :class="{ 'msg--active': msg }">
+        <text>{{ msg }}</text>
       </view>
     </view>
     <!-- #endif -->
@@ -21,8 +30,8 @@
       <view class="uni-forms-item__content">
         <slot></slot>
       </view>
-      <view class="uni-forms-item__error" :class="{'msg--active':msg}">
-        <text class="error-text">{{msg}}</text>
+      <view class="uni-forms-item__error" :class="{ 'msg--active': msg }">
+        <text class="error-text">{{ msg }}</text>
       </view>
     </view>
     <!-- #endif -->
@@ -57,54 +66,54 @@
 export default {
   name: "uniFormsItem",
   options: {
-    virtualHost: true
+    virtualHost: true,
   },
-  provide () {
+  provide() {
     return {
-      uniFormItem: this
-    }
+      uniFormItem: this,
+    };
   },
   inject: {
     form: {
       from: "uniForm",
-      default: null
+      default: null,
     },
   },
   props: {
     // 表单校验规则
     rules: {
       type: Array,
-      default () {
-        return null
-      }
+      default() {
+        return null;
+      },
     },
     // 表单域的属性名，在使用校验规则时必填
     name: {
       type: [String, Array],
-      default: ""
+      default: "",
     },
     required: {
       type: Boolean,
-      default: false
+      default: false,
     },
     label: {
       type: String,
-      default: ""
+      default: "",
     },
     // label的宽度 ，默认 80
     labelWidth: {
       type: [String, Number],
-      default: ""
+      default: "",
     },
     // label 居中方式，默认 left 取值 left/center/right
     labelAlign: {
       type: String,
-      default: ""
+      default: "",
     },
     // 强制显示错误信息
     errorMessage: {
       type: [String, Boolean],
-      default: ""
+      default: "",
     },
     // 1.4.0 弃用，统一使用 form 的校验时机
     // validateTrigger: {
@@ -120,10 +129,10 @@ export default {
     leftIcon: String,
     iconColor: {
       type: String,
-      default: "#606266"
+      default: "#606266",
     },
   },
-  data () {
+  data() {
     return {
       errMsg: "",
       isRequired: false,
@@ -133,77 +142,74 @@ export default {
       localLabelPos: "left",
       border: false,
       isFirstBorder: false,
-    }
+    };
   },
   computed: {
     // 处理错误信息
-    msg () {
-      return this.errorMessage || this.errMsg
-    }
+    msg() {
+      return this.errorMessage || this.errMsg;
+    },
   },
   watch: {
     // 规则发生变化通知子组件更新
-    "form.formRules" (val) {
+    "form.formRules"(val) {
       // TODO 处理头条vue3 watch不生效的问题
       // #ifndef MP-TOUTIAO
-      this.init()
+      this.init();
       // #endif
     },
-    "form.labelWidth" (val) {
+    "form.labelWidth"(val) {
       // 宽度
-      this.localLabelWidth = this._labelWidthUnit(val)
-
+      this.localLabelWidth = this._labelWidthUnit(val);
     },
-    "form.labelPosition" (val) {
+    "form.labelPosition"(val) {
       // 标签位置
-      this.localLabelPos = this._labelPosition()
+      this.localLabelPos = this._labelPosition();
     },
-    "form.labelAlign" (val) {
-
-    }
+    "form.labelAlign"(val) {},
   },
-  created () {
-    this.init(true)
+  created() {
+    this.init(true);
     if (this.name && this.form) {
       // TODO 处理头条vue3 watch不生效的问题
       // #ifdef MP-TOUTIAO
       this.$watch("form.formRules", () => {
-        this.init()
-      })
+        this.init();
+      });
       // #endif
 
       // 监听变化
       this.$watch(
-          () => {
-            const val = this.form._getDataValue(this.name, this.form.localData)
-            return val
-          },
-          (value, oldVal) => {
-            const isEqual = this.form._isEqual(value, oldVal)
-            // 简单判断前后值的变化，只有发生变化才会发生校验
-            // TODO  如果 oldVal = undefined ，那么大概率是源数据里没有值导致 ，这个情况不哦校验 ,可能不严谨 ，需要在做观察
-            // fix by mehaotian 暂时取消 && oldVal !== undefined ，如果formData 中不存在，可能会不校验
-            if (!isEqual) {
-              const val = this.itemSetValue(value)
-              this.onFieldChange(val, false)
-            }
-          }, {
-            immediate: false
+        () => {
+          const val = this.form._getDataValue(this.name, this.form.localData);
+          return val;
+        },
+        (value, oldVal) => {
+          const isEqual = this.form._isEqual(value, oldVal);
+          // 简单判断前后值的变化，只有发生变化才会发生校验
+          // TODO  如果 oldVal = undefined ，那么大概率是源数据里没有值导致 ，这个情况不哦校验 ,可能不严谨 ，需要在做观察
+          // fix by mehaotian 暂时取消 && oldVal !== undefined ，如果formData 中不存在，可能会不校验
+          if (!isEqual) {
+            const val = this.itemSetValue(value);
+            this.onFieldChange(val, false);
           }
-      )
+        },
+        {
+          immediate: false,
+        }
+      );
     }
-
   },
   // #ifndef VUE3
-  destroyed () {
-    if (this.__isUnmounted) return
-    this.unInit()
+  destroyed() {
+    if (this.__isUnmounted) return;
+    this.unInit();
   },
   // #endif
   // #ifdef VUE3
-  unmounted () {
-    this.__isUnmounted = true
-    this.unInit()
+  unmounted() {
+    this.__isUnmounted = true;
+    this.unInit();
   },
   // #endif
   methods: {
@@ -212,12 +218,12 @@ export default {
      * 设置规则 ，主要用于小程序自定义检验规则
      * @param {Array} rules 规则源数据
      */
-    setRules (rules = null) {
-      this.userRules = rules
-      this.init(false)
+    setRules(rules = null) {
+      this.userRules = rules;
+      this.init(false);
     },
     // 兼容老版本表单组件
-    setValue () {
+    setValue() {
       // console.log('setValue 方法已经弃用，请使用最新版本的 uni-forms 表单组件以及其他关联组件。');
     },
     /**
@@ -227,7 +233,7 @@ export default {
      * @param {boolean} 是否立即校验
      * @return {Array|null} 校验内容
      */
-    async onFieldChange (value, formtrigger = true) {
+    async onFieldChange(value, formtrigger = true) {
       const {
         formData,
         localData,
@@ -235,69 +241,70 @@ export default {
         validateCheck,
         validateTrigger,
         _isRequiredField,
-        _realName
-      } = this.form
-      const name = _realName(this.name)
+        _realName,
+      } = this.form;
+      const name = _realName(this.name);
       if (!value) {
-        value = this.form.formData[name]
+        value = this.form.formData[name];
       }
       // fixd by mehaotian 不在校验前清空信息，解决闪屏的问题
       // this.errMsg = '';
 
       // fix by mehaotian 解决没有检验规则的情况下，抛出错误的问题
-      const ruleLen = this.itemRules.rules && this.itemRules.rules.length
-      if (!this.validator || !ruleLen || ruleLen === 0) return
+      const ruleLen = this.itemRules.rules && this.itemRules.rules.length;
+      if (!this.validator || !ruleLen || ruleLen === 0) return;
 
       // 检验时机
       // let trigger = this.isTrigger(this.itemRules.validateTrigger, this.validateTrigger, validateTrigger);
-      const isRequiredField = _isRequiredField(this.itemRules.rules || [])
-      let result = null
+      const isRequiredField = _isRequiredField(this.itemRules.rules || []);
+      let result = null;
       // 只有等于 bind 时 ，才能开启时实校验
       if (validateTrigger === "bind" || formtrigger) {
         // 校验当前表单项
-        result = await this.validator.validateUpdate({
-              [name]: value
-            },
-            formData
-        )
+        result = await this.validator.validateUpdate(
+          {
+            [name]: value,
+          },
+          formData
+        );
 
         // 判断是否必填,非必填，不填不校验，填写才校验 ,暂时只处理 undefined  和空的情况
         if (!isRequiredField && (value === undefined || value === "")) {
-          result = null
+          result = null;
         }
 
         // 判断错误信息显示类型
         if (result && result.errorMessage) {
           if (errShowType === "undertext") {
             // 获取错误信息
-            this.errMsg = !result ? "" : result.errorMessage
+            this.errMsg = !result ? "" : result.errorMessage;
           }
           if (errShowType === "toast") {
             uni.showToast({
               title: result.errorMessage || "校验错误",
-              icon: "none"
-            })
+              icon: "none",
+            });
           }
           if (errShowType === "modal") {
             uni.showModal({
               title: "提示",
-              content: result.errorMessage || "校验错误"
-            })
+              content: result.errorMessage || "校验错误",
+            });
           }
         } else {
-          this.errMsg = ""
+          this.errMsg = "";
         }
         // 通知 form 组件更新事件
-        validateCheck(result ? result : null)
+        validateCheck(result ? result : null);
       } else {
-        this.errMsg = ""
+        this.errMsg = "";
       }
-      return result ? result : null
+      return result ? result : null;
     },
     /**
      * 初始组件数据
      */
-    init (type = false) {
+    init(type = false) {
       const {
         validator,
         formRules,
@@ -307,86 +314,81 @@ export default {
         _realName,
         labelWidth,
         _getDataValue,
-        _setDataValue
-      } = this.form || {}
+        _setDataValue,
+      } = this.form || {};
       // 对齐方式
-      this.localLabelAlign = this._justifyContent()
+      this.localLabelAlign = this._justifyContent();
       // 宽度
-      this.localLabelWidth = this._labelWidthUnit(labelWidth)
+      this.localLabelWidth = this._labelWidthUnit(labelWidth);
       // 标签位置
-      this.localLabelPos = this._labelPosition()
-      this.isRequired = this.required
+      this.localLabelPos = this._labelPosition();
+      this.isRequired = this.required;
       // 将需要校验的子组件加入form 队列
-      this.form && type && childrens.push(this)
+      this.form && type && childrens.push(this);
 
-      if (!validator || !formRules) return
+      if (!validator || !formRules) return;
       // 判断第一个 item
       if (!this.form.isFirstBorder) {
-        this.form.isFirstBorder = true
-        this.isFirstBorder = true
+        this.form.isFirstBorder = true;
+        this.isFirstBorder = true;
       }
 
       // 判断 group 里的第一个 item
       if (this.group) {
         if (!this.group.isFirstBorder) {
-          this.group.isFirstBorder = true
-          this.isFirstBorder = true
+          this.group.isFirstBorder = true;
+          this.isFirstBorder = true;
         }
       }
-      this.border = this.form.border
+      this.border = this.form.border;
       // 获取子域的真实名称
-      const name = _realName(this.name)
-      const itemRule = this.userRules || this.rules
+      const name = _realName(this.name);
+      const itemRule = this.userRules || this.rules;
       if (typeof formRules === "object" && itemRule) {
         // 子规则替换父规则
         formRules[name] = {
-          rules: itemRule
-        }
-        validator.updateSchema(formRules)
+          rules: itemRule,
+        };
+        validator.updateSchema(formRules);
       }
       // 注册校验规则
-      const itemRules = formRules[name] || {}
-      this.itemRules = itemRules
+      const itemRules = formRules[name] || {};
+      this.itemRules = itemRules;
       // 注册校验函数
-      this.validator = validator
+      this.validator = validator;
       // 默认值赋予
-      this.itemSetValue(_getDataValue(this.name, localData))
-      this.isRequired = this._isRequired()
-
+      this.itemSetValue(_getDataValue(this.name, localData));
+      this.isRequired = this._isRequired();
     },
-    unInit () {
+    unInit() {
       if (this.form) {
-        const {
-          childrens,
-          formData,
-          _realName
-        } = this.form
+        const { childrens, formData, _realName } = this.form;
         childrens.forEach((item, index) => {
           if (item === this) {
-            this.form.childrens.splice(index, 1)
-            delete formData[_realName(item.name)]
+            this.form.childrens.splice(index, 1);
+            delete formData[_realName(item.name)];
           }
-        })
+        });
       }
     },
     // 设置item 的值
-    itemSetValue (value) {
-      const name = this.form._realName(this.name)
-      const rules = this.itemRules.rules || []
-      const val = this.form._getValue(name, value, rules)
-      this.form._setDataValue(name, this.form.formData, val)
-      return val
+    itemSetValue(value) {
+      const name = this.form._realName(this.name);
+      const rules = this.itemRules.rules || [];
+      const val = this.form._getValue(name, value, rules);
+      this.form._setDataValue(name, this.form.formData, val);
+      return val;
     },
 
     /**
      * 移除该表单项的校验结果
      */
-    clearValidate () {
-      this.errMsg = ""
+    clearValidate() {
+      this.errMsg = "";
     },
 
     // 是否显示星号
-    _isRequired () {
+    _isRequired() {
       // TODO 不根据规则显示 星号，考虑后续兼容
       // if (this.form) {
       // 	if (this.form._isRequiredField(this.itemRules.rules || []) && this.required) {
@@ -394,38 +396,38 @@ export default {
       // 	}
       // 	return false
       // }
-      return this.required
+      return this.required;
     },
 
     // 处理对齐方式
-    _justifyContent () {
+    _justifyContent() {
       if (this.form) {
-        const {
-          labelAlign
-        } = this.form
-        let labelAli = this.labelAlign ? this.labelAlign : labelAlign
-        if (labelAli === "left") return "flex-start"
-        if (labelAli === "center") return "center"
-        if (labelAli === "right") return "flex-end"
+        const { labelAlign } = this.form;
+        let labelAli = this.labelAlign ? this.labelAlign : labelAlign;
+        if (labelAli === "left") return "flex-start";
+        if (labelAli === "center") return "center";
+        if (labelAli === "right") return "flex-end";
       }
-      return "flex-start"
+      return "flex-start";
     },
     // 处理 label宽度单位 ,继承父元素的值
-    _labelWidthUnit (labelWidth) {
-
+    _labelWidthUnit(labelWidth) {
       // if (this.form) {
       // 	const {
       // 		labelWidth
       // 	} = this.form
-      return this.num2px(this.labelWidth ? this.labelWidth : (labelWidth || (this.label ? 65 : "auto")))
+      return this.num2px(
+        this.labelWidth
+          ? this.labelWidth
+          : labelWidth || (this.label ? 65 : "auto")
+      );
       // }
       // return '65px'
     },
     // 处理 label 位置
-    _labelPosition () {
-      if (this.form) return this.form.labelPosition || "left"
-      return "left"
-
+    _labelPosition() {
+      if (this.form) return this.form.labelPosition || "left";
+      return "left";
     },
 
     /**
@@ -434,30 +436,30 @@ export default {
      * @param {Object} itemRlue 当前组件时机
      * @param {Object} parentRule 父组件时机
      */
-    isTrigger (rule, itemRlue, parentRule) {
+    isTrigger(rule, itemRlue, parentRule) {
       //  bind  submit
       if (rule === "submit" || !rule) {
         if (rule === undefined) {
           if (itemRlue !== "bind") {
             if (!itemRlue) {
-              return parentRule === "" ? "bind" : "submit"
+              return parentRule === "" ? "bind" : "submit";
             }
-            return "submit"
+            return "submit";
           }
-          return "bind"
+          return "bind";
         }
-        return "submit"
+        return "submit";
       }
-      return "bind"
+      return "bind";
     },
-    num2px (num) {
+    num2px(num) {
       if (typeof num === "number") {
-        return `${num}px`
+        return `${num}px`;
       }
-      return num
-    }
-  }
-}
+      return num;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -517,7 +519,6 @@ export default {
     }
 
     /* #endif */
-
   }
 
   & .uni-forms-item__nuve-content {
@@ -581,7 +582,6 @@ export default {
   }
 }
 
-
 .uni-forms-item--border {
   margin-bottom: 0;
   padding: 10px 0;
@@ -617,7 +617,6 @@ export default {
   }
 
   /* #endif */
-
 }
 
 .is-first-border {

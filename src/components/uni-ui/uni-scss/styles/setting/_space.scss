@@ -1,12 +1,12 @@
-@mixin fn($space,$direction,$size,$n) {
+@mixin fn($space, $direction, $size, $n) {
   @if $n {
-    #{$space}-#{$direction}: #{$size*$uni-space-root}px
+    #{$space}-#{$direction}: #{$size * $uni-space-root}px;
   } @else {
-    #{$space}-#{$direction}: #{-$size*$uni-space-root}px
+    #{$space}-#{$direction}: #{-$size * $uni-space-root}px;
   }
 }
 
-@mixin get-styles($direction,$i,$space,$n) {
+@mixin get-styles($direction, $i, $space, $n) {
   @if $direction == t {
     @include fn($space, top, $i, $n);
   }
@@ -29,9 +29,9 @@
   }
   @if $direction == a {
     @if $n {
-      #{$space}: #{$i*$uni-space-root}px;
+      #{$space}: #{$i * $uni-space-root}px;
     } @else {
-      #{$space}: #{-$i*$uni-space-root}px;
+      #{$space}: #{-$i * $uni-space-root}px;
     }
   }
 }

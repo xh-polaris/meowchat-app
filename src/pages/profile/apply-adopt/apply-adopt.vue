@@ -1,36 +1,36 @@
 <template>
   <view class="container">
-    <image class="bg-set" src="https://static.xhpolaris.com/profile_background.png" />
+    <image
+      class="bg-set"
+      src="https://static.xhpolaris.com/profile_background.png"
+    />
     <view class="intro_wrap">
-      <view class="intro">
-        您好，我们是华东师范大学小动物保护协会
-      </view>
+      <view class="intro"> 您好，我们是华东师范大学小动物保护协会 </view>
       <view class="intro">
         感谢您选择领养代替购买，但养猫的实际情况可能会和您想象的不太一样，请扫描下方二维码阅读全部内容，认真考虑是否领养，并如实填写问卷
       </view>
     </view>
     <view class="QRcode_content">
       <image
-        class="QRcode" mode="widthFix"
+        class="QRcode"
+        mode="widthFix"
         src="/static/images/qrcode.png"
-        style=" width: 80%"
+        style="width: 80%"
       />
     </view>
     <view class="link_content">
-      <text class="title">
-        问卷链接:
-      </text>
-      <navigator hover-class="none" url="/pages/profile/apply-adopt-questionnaire/apply-adopt-questionnaire">
-        <view class="link">
-          https://www.wjx.cn/vj/mBnSgB8.aspx
-        </view>
+      <text class="title"> 问卷链接: </text>
+      <navigator
+        hover-class="none"
+        url="/pages/profile/apply-adopt-questionnaire/apply-adopt-questionnaire"
+      >
+        <view class="link"> https://www.wjx.cn/vj/mBnSgB8.aspx </view>
       </navigator>
     </view>
   </view>
 </template>
 
-<script>
-</script>
+<script></script>
 
 <style lang="scss" scoped>
 .bg-set {
@@ -55,13 +55,13 @@
 }
 
 .QRcode_content {
-  box-shadow: 0 0 10rpx #EEEEEE;
+  box-shadow: 0 0 10rpx #eeeeee;
   margin: 60rpx;
   padding: 20rpx;
   margin-top: 50rpx;
   margin-bottom: 10rpx;
   border-radius: 21rpx;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   vertical-align: middle;
   text-align: center;
 
@@ -76,13 +76,13 @@
 .link_content {
   height: 36rpx;
   width: 600rpx;
-  box-shadow: 0 0 10rpx #EEEEEE;
+  box-shadow: 0 0 10rpx #eeeeee;
   margin-left: 60rpx;
   padding: 20rpx;
   margin-top: 50rpx;
   margin-bottom: 10rpx;
   border-radius: 21rpx;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
 
   .title {
@@ -95,7 +95,7 @@
   .link {
     height: 36rpx;
     width: 440rpx;
-    color: #007BFF;
+    color: #007bff;
     font-weight: bold;
     font-size: 25rpx;
   }

@@ -1,5 +1,5 @@
-export function onClickPost (id: string) {
+export function onClickPost(id: string) {
   uni.navigateTo({
-    url: `/pages/post/post?id=${id}`
-  })
+    url: `/pages/post/post?id=${id}`,
+  });
 }

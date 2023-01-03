@@ -1,36 +1,39 @@
 <template>
   <view class="container">
-    <image class="bg-set" src="https://static.xhpolaris.com/profile_background.png" />
+    <image
+      class="bg-set"
+      src="https://static.xhpolaris.com/profile_background.png"
+    />
     <view class="managerlist-wrap">
-      <view v-for="(item, index) in managerList" :key="index" class="manager-wrap">
+      <view
+        v-for="(item, index) in managerList"
+        :key="index"
+        class="manager-wrap"
+      >
         <view class="info-wrap">
           <image :src="item.avatarUrl" class="avatar" mode="aspectFill" />
           <view class="right">
             <view class="name">
               {{ item.name }}
             </view>
-            <view class="position">
-              管理员
-            </view>
+            <view class="position"> 管理员 </view>
             <view class="content">
-              <view class="info">
-                微信: {{ item.wechat }}
-              </view>
+              <view class="info"> 微信: {{ item.wechat }} </view>
               <image
-                class="copy" mode="widthFix"
+                class="copy"
+                mode="widthFix"
                 src="/static/images/copy.png"
-                style="width:7%;"
+                style="width: 7%"
                 @click="CopyToClipboard(item.wechat)"
               />
             </view>
             <view class="content">
-              <view class="info">
-                电话: {{ item.phone }}
-              </view>
+              <view class="info"> 电话: {{ item.phone }} </view>
               <image
-                class="copy" mode="widthFix"
+                class="copy"
+                mode="widthFix"
                 src="/static/images/copy.png"
-                style="width:7%;"
+                style="width: 7%"
                 @click="CopyToClipboard(item.phone)"
               />
             </view>
@@ -42,16 +45,15 @@
 </template>
 
 <script lang="ts" setup>
-import { CopyToClipboard } from "@/pages/profile/event"
-import { reactive } from "vue"
-import { Admin } from "@/apis/schemas"
-import { getAdmins } from "@/apis/notice/notice"
+import { CopyToClipboard } from "@/pages/profile/event";
+import { reactive } from "vue";
+import { Admin } from "@/apis/schemas";
+import { getAdmins } from "@/apis/notice/notice";
 
-const managerList = reactive<Admin[]>([])
-getAdmins({ communityId: uni.getStorageSync("communityId") }).then(res => {
-      managerList.push(...res.admins)
-    }
-)
+const managerList = reactive<Admin[]>([]);
+getAdmins({ communityId: uni.getStorageSync("communityId") }).then((res) => {
+  managerList.push(...res.admins);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -68,13 +70,13 @@ getAdmins({ communityId: uni.getStorageSync("communityId") }).then(res => {
   margin-top: 150rpx;
 
   .manager-wrap {
-    box-shadow: 0 0 10rpx #EEEEEE;
+    box-shadow: 0 0 10rpx #eeeeee;
     margin: 60rpx;
     padding: 20rpx;
     margin-top: 30rpx;
     margin-bottom: 30rpx;
     border-radius: 20rpx;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 
     .info-wrap {
       display: flex;
@@ -126,12 +128,11 @@ getAdmins({ communityId: uni.getStorageSync("communityId") }).then(res => {
             float: right;
           }
 
-          border-top: 1px solid #EEEEEE;
+          border-top: 1px solid #eeeeee;
           margin-bottom: 60rpx;
         }
       }
     }
   }
 }
-
 </style>

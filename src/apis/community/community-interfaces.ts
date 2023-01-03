@@ -1,31 +1,31 @@
 export interface News {
-  id: string
-  imageUrl: string
-  linkUrl: string
-  linkType: string
+  id: string;
+  imageUrl: string;
+  linkUrl: string;
+  linkType: string;
 }
 
 export interface GetNewsResp {
-  code: number
-  msg: string
-  news: News[]
+  code: number;
+  msg: string;
+  news: News[];
 }
 
 export interface Cat {
-  id: string
-  createAt: string
-  age: string
-  campusId: string
-  color: string
-  details: string
-  name: string
-  popularity: number
-  sex: string
-  status: number
-  area: string
-  isSnipped: boolean
-  isSterilized: boolean
-  avatars: string[]
+  id: string;
+  createAt: string;
+  age: string;
+  campusId: string;
+  color: string;
+  details: string;
+  name: string;
+  popularity: number;
+  sex: string;
+  status: number;
+  area: string;
+  isSnipped: boolean;
+  isSterilized: boolean;
+  avatars: string[];
 }
 
 export interface CatPreview {
@@ -53,9 +53,9 @@ export interface CatPreview {
 }
 
 export interface GetCatPreviewsResp {
-  code: number
-  msg: string
-  cats: Array<CatPreview>
+  code: number;
+  msg: string;
+  cats: Array<CatPreview>;
 }
 
 export interface GetMomentPreviewsResp {

@@ -1,21 +1,16 @@
 <template>
   <view class="container">
-    <image class="bg-set" src="https://static.xhpolaris.com/profile_background.png" />
+    <image
+      class="bg-set"
+      src="https://static.xhpolaris.com/profile_background.png"
+    />
     <view class="content-wrap">
-      <view class="title">
-        写在前面
-      </view>
+      <view class="title"> 写在前面 </view>
       <image class="rightop" src="/static/images/apply_admin_rightop.png" />
       <view class="text">
-        <view class="Blue">
-          喵社区
-        </view>
-        <view class="Black">
-          是一款致力于
-        </view>
-        <view class="Blue">
-          流浪动物保护的非盈利性小程序
-        </view>
+        <view class="Blue"> 喵社区 </view>
+        <view class="Black"> 是一款致力于 </view>
+        <view class="Blue"> 流浪动物保护的非盈利性小程序 </view>
         <view class="Black">
           社区的维护和建设需要依靠所有人的力量。因此我们需要一些小伙伴成为社区的管理员，一起维护小猫咪们的家。
         </view>
@@ -26,12 +21,8 @@
         </view>
       </view>
       <view class="text">
-        <view class="Black">
-          管理员负责喵社区
-        </view>
-        <view class="Blue">
-          动态的审核和猫咪信息的维护
-        </view>
+        <view class="Black"> 管理员负责喵社区 </view>
+        <view class="Blue"> 动态的审核和猫咪信息的维护 </view>
         <view class="Black">
           ，拥有修改猫咪信息、审核动态、删除动态的权限，如果你也想加入我们，请填写以下信息申请哦。
         </view>
@@ -40,29 +31,28 @@
     <view class="apply-wrap">
       <view class="input-wrap">
         <input
-          class="uni-input" placeholder="  请填写你名字"
+          class="uni-input"
+          placeholder="  请填写你名字"
           placeholder-style="color: #B8B8B8;"
           type="name"
-        >
+        />
       </view>
       <cover-view class="input-wrap">
         <textarea
-          class="textarea-inherit" placeholder="请填写你的申请信息，如申请理由、个人介绍等"
+          class="textarea-inherit"
+          placeholder="请填写你的申请信息，如申请理由、个人介绍等"
           placeholder-style="color: #B8B8B8;"
           type="name"
         />
       </cover-view>
       <button class="confirm" type="primary">
-        <view class="send">
-          提交申请
-        </view>
+        <view class="send"> 提交申请 </view>
       </button>
     </view>
   </view>
 </template>
 
-<script>
-</script>
+<script></script>
 
 <style lang="scss" scoped>
 .bg-set {
@@ -75,14 +65,14 @@
 }
 
 .content-wrap {
-  box-shadow: 0 0 10rpx #EEEEEE;
+  box-shadow: 0 0 10rpx #eeeeee;
   padding: 20rpx;
   margin-top: 50rpx;
   margin-bottom: 10rpx;
   margin-left: 30rpx;
   margin-right: 30rpx;
   border-radius: 21rpx;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
   .rightop {
     position: absolute;
@@ -111,7 +101,7 @@
     margin-bottom: 30rpx;
 
     .Blue {
-      color: #1FA1FF;
+      color: #1fa1ff;
       display: inline;
     }
 
@@ -124,19 +114,19 @@
 
 .apply-wrap {
   font-size: 24rpx;
-  box-shadow: 0 0 10rpx #EEEEEE;
+  box-shadow: 0 0 10rpx #eeeeee;
   padding: 20rpx;
   margin-top: 50rpx;
   margin-bottom: 30rpx;
   margin-left: 30rpx;
   margin-right: 30rpx;
   border-radius: 21rpx;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
   .input-wrap {
     font-size: 24rpx;
     display: flex;
-    background-color: #FAFAFA;
+    background-color: #fafafa;
     margin-left: 10rpx;
     margin-right: 10rpx;
     margin-top: 10rpx;
@@ -145,7 +135,7 @@
 
   .confirm {
     margin-top: 30rpx;
-    background-color: #1FA1FF;
+    background-color: #1fa1ff;
     border-radius: 30px;
     height: 88rpx;
     width: 660rpx;

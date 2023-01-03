@@ -1,13 +1,21 @@
 <template>
   <!-- #ifdef H5 -->
   <thead class="uni-table-thead">
-  <tr class="uni-table-tr">
-    <th :rowspan="rowspan" colspan="1" class="checkbox" :class="{ 'tr-table--border': border }">
-      <table-checkbox :indeterminate="indeterminate" :checked="checked"
-                      @checkboxSelected="checkboxSelected"></table-checkbox>
-    </th>
-  </tr>
-  <slot></slot>
+    <tr class="uni-table-tr">
+      <th
+        :rowspan="rowspan"
+        colspan="1"
+        class="checkbox"
+        :class="{ 'tr-table--border': border }"
+      >
+        <table-checkbox
+          :indeterminate="indeterminate"
+          :checked="checked"
+          @checkboxSelected="checkboxSelected"
+        ></table-checkbox>
+      </th>
+    </tr>
+    <slot></slot>
   </thead>
   <!-- #endif -->
   <!-- #ifndef H5 -->
@@ -18,64 +26,66 @@
 </template>
 
 <script>
-import tableCheckbox from "../uni-tr/table-checkbox.vue"
+import tableCheckbox from "../uni-tr/table-checkbox.vue";
 
 export default {
   name: "uniThead",
   components: {
-    tableCheckbox
+    tableCheckbox,
   },
   options: {
-    virtualHost: true
+    virtualHost: true,
   },
-  data () {
+  data() {
     return {
       border: false,
       selection: false,
       rowspan: 1,
       indeterminate: false,
-      checked: false
-    }
+      checked: false,
+    };
   },
-  created () {
-    this.root = this.getTable()
+  created() {
+    this.root = this.getTable();
     // #ifdef H5
-    this.root.theadChildren = this
+    this.root.theadChildren = this;
     // #endif
-    this.border = this.root.border
-    this.selection = this.root.type
+    this.border = this.root.border;
+    this.selection = this.root.type;
   },
   methods: {
-    init (self) {
-      this.rowspan++
+    init(self) {
+      this.rowspan++;
     },
-    checkboxSelected (e) {
-      this.indeterminate = false
-      const backIndexData = this.root.backIndexData
-      const data = this.root.trChildren.filter(v => !v.disabled && v.keyValue)
+    checkboxSelected(e) {
+      this.indeterminate = false;
+      const backIndexData = this.root.backIndexData;
+      const data = this.root.trChildren.filter(
+        (v) => !v.disabled && v.keyValue
+      );
       if (backIndexData.length === data.length) {
-        this.checked = false
-        this.root.clearSelection()
+        this.checked = false;
+        this.root.clearSelection();
       } else {
-        this.checked = true
-        this.root.selectionAll()
+        this.checked = true;
+        this.root.selectionAll();
       }
     },
     /**
      * 获取父元素实例
      */
-    getTable (name = "uniTable") {
-      let parent = this.$parent
-      let parentName = parent.$options.name
+    getTable(name = "uniTable") {
+      let parent = this.$parent;
+      let parentName = parent.$options.name;
       while (parentName !== name) {
-        parent = parent.$parent
-        if (!parent) return false
-        parentName = parent.$options.name
+        parent = parent.$parent;
+        if (!parent) return false;
+        parentName = parent.$options.name;
       }
-      return parent
-    }
-  }
-}
+      return parent;
+    },
+  },
+};
 </script>
 
 <style lang="scss">

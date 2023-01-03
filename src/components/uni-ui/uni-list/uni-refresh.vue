@@ -1,12 +1,12 @@
 <template>
   <!-- #ifdef APP-NVUE -->
   <refresh :display="display" @refresh="onrefresh" @pullingdown="onpullingdown">
-    <slot/>
+    <slot />
   </refresh>
   <!-- #endif -->
   <!-- #ifndef APP-NVUE -->
   <view ref="uni-refresh" class="uni-refresh" v-show="isShow">
-    <slot/>
+    <slot />
   </view>
   <!-- #endif -->
 </template>
@@ -17,45 +17,44 @@ export default {
   props: {
     display: {
       type: [String],
-      default: "hide"
-    }
+      default: "hide",
+    },
   },
-  data () {
+  data() {
     return {
-      pulling: false
-    }
+      pulling: false,
+    };
   },
   computed: {
-    isShow () {
+    isShow() {
       if (this.display === "show" || this.pulling === true) {
-        return true
+        return true;
       }
-      return false
-    }
+      return false;
+    },
   },
-  created () {
-  },
+  created() {},
   methods: {
-    onchange (value) {
-      this.pulling = value
+    onchange(value) {
+      this.pulling = value;
     },
-    onrefresh (e) {
-      this.$emit("refresh", e)
+    onrefresh(e) {
+      this.$emit("refresh", e);
     },
-    onpullingdown (e) {
+    onpullingdown(e) {
       // #ifdef APP-NVUE
-      this.$emit("pullingdown", e)
+      this.$emit("pullingdown", e);
       // #endif
       // #ifndef APP-NVUE
       var detail = {
         viewHeight: 90,
-        pullingDistance: e.height
-      }
-      this.$emit("pullingdown", detail)
+        pullingDistance: e.height,
+      };
+      this.$emit("pullingdown", detail);
       // #endif
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>

@@ -1,36 +1,67 @@
 <template>
   <view class="uni-collapse-item">
     <!-- onClick(!isOpen) -->
-    <view @click="onClick(!isOpen)" class="uni-collapse-item__title"
-          :class="{'is-open':isOpen &&titleBorder === 'auto' ,'uni-collapse-item-border':titleBorder !== 'none'}">
+    <view
+      @click="onClick(!isOpen)"
+      class="uni-collapse-item__title"
+      :class="{
+        'is-open': isOpen && titleBorder === 'auto',
+        'uni-collapse-item-border': titleBorder !== 'none',
+      }"
+    >
       <view class="uni-collapse-item__title-wrap">
         <slot name="title">
-          <view class="uni-collapse-item__title-box" :class="{'is-disabled':disabled}">
-            <image v-if="thumb" :src="thumb" class="uni-collapse-item__title-img"/>
+          <view
+            class="uni-collapse-item__title-box"
+            :class="{ 'is-disabled': disabled }"
+          >
+            <image
+              v-if="thumb"
+              :src="thumb"
+              class="uni-collapse-item__title-img"
+            />
             <text class="uni-collapse-item__title-text">{{ title }}</text>
           </view>
         </slot>
       </view>
-      <view v-if="showArrow"
-            :class="{ 'uni-collapse-item__title-arrow-active': isOpen, 'uni-collapse-item--animation': showAnimation === true }"
-            class="uni-collapse-item__title-arrow">
-        <uni-icons :color="disabled?'#ddd':'#bbb'" size="14" type="bottom"/>
+      <view
+        v-if="showArrow"
+        :class="{
+          'uni-collapse-item__title-arrow-active': isOpen,
+          'uni-collapse-item--animation': showAnimation === true,
+        }"
+        class="uni-collapse-item__title-arrow"
+      >
+        <uni-icons
+          :color="disabled ? '#ddd' : '#bbb'"
+          size="14"
+          type="bottom"
+        />
       </view>
     </view>
-    <view class="uni-collapse-item__wrap" :class="{'is--transition':showAnimation}"
-          :style="{height: (isOpen?height:0) +'px'}">
-      <view :id="elId" ref="collapse--hook" class="uni-collapse-item__wrap-content"
-            :class="{open:isheight,'uni-collapse-item--border':border&&isOpen}">
+    <view
+      class="uni-collapse-item__wrap"
+      :class="{ 'is--transition': showAnimation }"
+      :style="{ height: (isOpen ? height : 0) + 'px' }"
+    >
+      <view
+        :id="elId"
+        ref="collapse--hook"
+        class="uni-collapse-item__wrap-content"
+        :class="{
+          open: isheight,
+          'uni-collapse-item--border': border && isOpen,
+        }"
+      >
         <slot></slot>
       </view>
     </view>
-
   </view>
 </template>
 
 <script>
 // #ifdef APP-NVUE
-const dom = weex.requireModule("dom")
+const dom = weex.requireModule("dom");
 // #endif
 /**
  * CollapseItem 折叠面板子组件
@@ -51,202 +82,208 @@ export default {
     // 列表标题
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     name: {
       type: [Number, String],
-      default: ""
+      default: "",
     },
     // 是否禁用
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // #ifdef APP-PLUS
     // 是否显示动画,app 端默认不开启动画，卡顿严重
     showAnimation: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // #endif
     // #ifndef APP-PLUS
     // 是否显示动画
     showAnimation: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // #endif
     // 是否展开
     open: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 缩略图
     thumb: {
       type: String,
-      default: ""
+      default: "",
     },
     // 标题分隔线显示类型
     titleBorder: {
       type: String,
-      default: "auto"
+      default: "auto",
     },
     border: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showArrow: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
-  data () {
+  data() {
     // TODO 随机生生元素ID，解决百度小程序获取同一个元素位置信息的bug
-    const elId = `Uni_${Math.ceil(Math.random() * 10e5).toString(36)}`
+    const elId = `Uni_${Math.ceil(Math.random() * 10e5).toString(36)}`;
     return {
       isOpen: false,
       isheight: null,
       height: 0,
       elId,
-      nameSync: 0
-    }
+      nameSync: 0,
+    };
   },
   watch: {
-    open (val) {
-      this.isOpen = val
-      this.onClick(val, "init")
-    }
+    open(val) {
+      this.isOpen = val;
+      this.onClick(val, "init");
+    },
   },
-  updated (e) {
+  updated(e) {
     this.$nextTick(() => {
-      this.init(true)
-    })
+      this.init(true);
+    });
   },
-  created () {
-    this.collapse = this.getCollapse()
-    this.oldHeight = 0
-    this.onClick(this.open, "init")
+  created() {
+    this.collapse = this.getCollapse();
+    this.oldHeight = 0;
+    this.onClick(this.open, "init");
   },
   // #ifndef VUE3
   // TODO vue2
-  destroyed () {
-    if (this.__isUnmounted) return
-    this.uninstall()
+  destroyed() {
+    if (this.__isUnmounted) return;
+    this.uninstall();
   },
   // #endif
   // #ifdef VUE3
   // TODO vue3
-  unmounted () {
-    this.__isUnmounted = true
-    this.uninstall()
+  unmounted() {
+    this.__isUnmounted = true;
+    this.uninstall();
   },
   // #endif
-  mounted () {
-    if (!this.collapse) return
+  mounted() {
+    if (!this.collapse) return;
     if (this.name !== "") {
-      this.nameSync = this.name
+      this.nameSync = this.name;
     } else {
-      this.nameSync = this.collapse.childrens.length + ""
+      this.nameSync = this.collapse.childrens.length + "";
     }
     if (this.collapse.names.indexOf(this.nameSync) === -1) {
-      this.collapse.names.push(this.nameSync)
+      this.collapse.names.push(this.nameSync);
     } else {
-      console.warn(`name 值 ${this.nameSync} 重复`)
+      console.warn(`name 值 ${this.nameSync} 重复`);
     }
     if (this.collapse.childrens.indexOf(this) === -1) {
-      this.collapse.childrens.push(this)
+      this.collapse.childrens.push(this);
     }
-    this.init()
+    this.init();
   },
   methods: {
-    init (type) {
+    init(type) {
       // #ifndef APP-NVUE
-      this.getCollapseHeight(type)
+      this.getCollapseHeight(type);
       // #endif
       // #ifdef APP-NVUE
-      this.getNvueHwight(type)
+      this.getNvueHwight(type);
       // #endif
     },
-    uninstall () {
+    uninstall() {
       if (this.collapse) {
         this.collapse.childrens.forEach((item, index) => {
           if (item === this) {
-            this.collapse.childrens.splice(index, 1)
+            this.collapse.childrens.splice(index, 1);
           }
-        })
+        });
         this.collapse.names.forEach((item, index) => {
           if (item === this.nameSync) {
-            this.collapse.names.splice(index, 1)
+            this.collapse.names.splice(index, 1);
           }
-        })
+        });
       }
     },
-    onClick (isOpen, type) {
-      if (this.disabled) return
-      this.isOpen = isOpen
+    onClick(isOpen, type) {
+      if (this.disabled) return;
+      this.isOpen = isOpen;
       if (this.isOpen && this.collapse) {
-        this.collapse.setAccordion(this)
+        this.collapse.setAccordion(this);
       }
       if (type !== "init") {
-        this.collapse.onChange(isOpen, this)
+        this.collapse.onChange(isOpen, this);
       }
     },
-    getCollapseHeight (type, index = 0) {
-      const views = uni.createSelectorQuery().in(this)
+    getCollapseHeight(type, index = 0) {
+      const views = uni.createSelectorQuery().in(this);
       views
-          .select(`#${this.elId}`)
-          .fields({
-            size: true
-          }, data => {
+        .select(`#${this.elId}`)
+        .fields(
+          {
+            size: true,
+          },
+          (data) => {
             // TODO 百度中可能获取不到节点信息 ，需要循环获取
-            if (index >= 10) return
+            if (index >= 10) return;
             if (!data) {
-              index++
-              this.getCollapseHeight(false, index)
-              return
+              index++;
+              this.getCollapseHeight(false, index);
+              return;
             }
             // #ifdef APP-NVUE
-            this.height = data.height + 1
+            this.height = data.height + 1;
             // #endif
             // #ifndef APP-NVUE
-            this.height = data.height
+            this.height = data.height;
             // #endif
-            this.isheight = true
-            if (type) return
-            this.onClick(this.isOpen, "init")
-          })
-          .exec()
+            this.isheight = true;
+            if (type) return;
+            this.onClick(this.isOpen, "init");
+          }
+        )
+        .exec();
     },
-    getNvueHwight (type) {
-      const result = dom.getComponentRect(this.$refs["collapse--hook"], option => {
-        if (option && option.result && option.size) {
-          // #ifdef APP-NVUE
-          this.height = option.size.height + 1
-          // #endif
-          // #ifndef APP-NVUE
-          this.height = option.size.height
-          // #endif
-          this.isheight = true
-          if (type) return
-          this.onClick(this.open, "init")
+    getNvueHwight(type) {
+      const result = dom.getComponentRect(
+        this.$refs["collapse--hook"],
+        (option) => {
+          if (option && option.result && option.size) {
+            // #ifdef APP-NVUE
+            this.height = option.size.height + 1;
+            // #endif
+            // #ifndef APP-NVUE
+            this.height = option.size.height;
+            // #endif
+            this.isheight = true;
+            if (type) return;
+            this.onClick(this.open, "init");
+          }
         }
-      })
+      );
     },
     /**
      * 获取父元素实例
      */
-    getCollapse (name = "uniCollapse") {
-      let parent = this.$parent
-      let parentName = parent.$options.name
+    getCollapse(name = "uniCollapse") {
+      let parent = this.$parent;
+      let parentName = parent.$options.name;
       while (parentName !== name) {
-        parent = parent.$parent
-        if (!parent) return false
-        parentName = parent.$options.name
+        parent = parent.$parent;
+        if (!parent) return false;
+        parentName = parent.$options.name;
       }
-      return parent
-    }
-  }
-}
+      return parent;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -263,14 +300,13 @@ export default {
     /* #endif */
     flex-direction: row;
     align-items: center;
-    transition: border-bottom-color .3s;
+    transition: border-bottom-color 0.3s;
 
     // transition-property: border-bottom-color;
     // transition-duration: 5s;
     &-wrap {
       width: 100%;
       flex: 1;
-
     }
 
     &-box {
@@ -299,7 +335,6 @@ export default {
           color: #999;
         }
       }
-
     }
 
     &.uni-collapse-item-border {
@@ -346,8 +381,6 @@ export default {
         transform: rotate(-180deg);
       }
     }
-
-
   }
 
   &__wrap {
@@ -368,7 +401,6 @@ export default {
       will-change: height;
       /* #endif */
     }
-
 
     &-content {
       position: absolute;
@@ -396,6 +428,5 @@ export default {
     transition-duration: 0.3s;
     transition-timing-function: ease;
   }
-
 }
 </style>
