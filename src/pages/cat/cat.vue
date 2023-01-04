@@ -2,20 +2,15 @@
   <view>
     <image :src="mainImgUrl" class="img" />
     <view>
-      <ul class="img-ul">
+      <scroll-view scroll-x="true" class="scroll-view-item_H" scroll-left="120">
         <li
-          v-for="(item, index) in cat.avatars"
-          :key="index"
+          v-for="(item,index) in cat.avatars" :key="index"
           class="img-li"
-          @click="
-            () => {
-              mainImgUrl.value = item;
-            }
-          "
+          @click="()=>{mainImgUrl= item,imgActiveIndex=index}"
         >
-          <img :src="item" style="width: 50px; height: 50px" />
+          <img :class="index === imgActiveIndex ? 'img_activeBorder' : ''" :src="item" style="width:50px;height:50px">
         </li>
-      </ul>
+      </scroll-view>
     </view>
     <view class="progress-box">
       <view class="text-box1">
@@ -114,57 +109,71 @@ let cat = reactive<Cat>({
   area: "",
   isSnipped: true,
   isSterilized: true,
-  avatars: [],
+  avatars: []
 });
 const mainImgUrl = ref("");
-getCatDetail(getCatDetailReq).then((res) => {
-  cat.id = res.cat.id;
-  cat.createAt = res.cat.createAt;
-  cat.age = res.cat.age;
-  cat.communityId = res.cat.communityId;
-  cat.color = res.cat.color;
-  cat.details = res.cat.details;
-  cat.name = res.cat.name;
-  cat.popularity = res.cat.popularity;
-  cat.sex = res.cat.sex;
-  cat.status = res.cat.status;
-  cat.area = res.cat.area;
-  cat.isSnipped = res.cat.isSnipped;
-  cat.isSterilized = res.cat.isSterilized;
-  cat.avatars = res.cat.avatars;
-  if (res.cat.isSterilized) {
-    Sterilized = "是";
-  } else {
-    Sterilized = "否";
-  }
-  if (res.cat.isSnipped) {
-    Snipped = "是";
-  } else {
-    Snipped = "否";
-  }
-  mainImgUrl.value = cat.avatars[0];
-});
+const imgActiveIndex = ref(0);
+getCatDetail(getCatDetailReq).then(res => {
+      cat.id = res.cat.id;
+      cat.createAt = res.cat.createAt;
+      cat.age = res.cat.age;
+      cat.communityId = res.cat.communityId;
+      cat.color = res.cat.color;
+      cat.details = res.cat.details;
+      cat.name = res.cat.name;
+      cat.popularity = res.cat.popularity;
+      cat.sex = res.cat.sex;
+      cat.status = res.cat.status;
+      cat.area = res.cat.area;
+      cat.isSnipped = res.cat.isSnipped;
+      cat.isSterilized = res.cat.isSterilized;
+      cat.avatars = res.cat.avatars;
+      if (res.cat.isSterilized) {
+        Sterilized = "是";
+      } else {
+        Sterilized = "否";
+      }
+      if (res.cat.isSnipped) {
+        Snipped = "是";
+      } else {
+        Snipped = "否";
+      }
+      mainImgUrl.value = cat.avatars[0];
+    }
+);
 </script>
 
 <style lang="scss" scoped>
+
+.scroll-view-item_H {
+
+  display: inline-block;
+  width: 330rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  white-space: nowrap;
+  margin-left: 300rpx;
+}
+
 .img-ul {
   position: relative;
   display: flex;
   left: 300rpx;
   width: 360rpx;
-  height: 100rpx;
+  height: 300rpx;
   overflow: hidden;
   list-style: none;
 }
 
 .img-li {
-  float: left;
+  //float: left;
   margin: 0 10rpx;
   cursor: pointer;
+  display: inline-block;
 }
 
-.img-activeBorder {
-  border: 3px solid #06abf3;
+.img_activeBorder {
+  border: 5rpx solid #a4a9ab;
 }
 
 .img {
