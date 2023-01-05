@@ -1,41 +1,41 @@
 <template>
-  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
+  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()"/>
   <reply
-    :animation="enterReplyData"
-    :replies="comments[selectedReply]"
-    class="more-reply"
+      :animation="enterReplyData"
+      :replies="comments[selectedReply]"
+      class="more-reply"
   />
 
   <view class="container">
     <view class="post-info-box">
       <view class="poster-info-box">
-        <image :src="post.profile" class="poster-profile" />
+        <image :src="moment.user.avatarUrl" class="poster-profile"/>
         <text class="poster-name">
-          {{ post.id }}
+          {{ moment.user.nickname }}
         </text>
-        <text class="post-time"> ·{{ post.time }} </text>
+        <text class="post-time"> ·{{ displayTime(moment.createAt * 1000) }}</text>
       </view>
       <view class="post-content">
-        {{ post.text }}
+        {{ moment.text }}
       </view>
-      <view class="like-info"> {{ post.likes }} 位喵友觉得很赞 </view>
+      <view class="like-info"> {{ like.count }} 位喵友觉得很赞</view>
       <image
-        v-for="(item, index) in post.images"
-        :key="index"
-        :src="item"
-        class="post-image"
-        mode="widthFix"
+          v-for="(item, index) in moment.photos"
+          :key="index"
+          :src="item"
+          class="post-image"
+          mode="widthFix"
       />
     </view>
 
     <view class="comments-box">
       <view v-for="(item, index) in comments" :key="index" class="comment-box">
         <view class="commenter-info-box">
-          <image :src="item.profile" class="commenter-profile" />
+          <image :src="item.profile" class="commenter-profile"/>
           <text class="commenter-name">
             {{ item.id }}
           </text>
-          <text class="comment-time"> ·{{ item.time }} </text>
+          <text class="comment-time"> ·{{ item.time }}</text>
         </view>
         <view class="comment-content">
           {{ item.text }}
@@ -45,15 +45,15 @@
             {{ item.reply.length }}条相关回复
           </text>
           <image
-            class="arrow-right"
-            src="/static/images/arrow_right_blue.png"
+              class="arrow-right"
+              src="/static/images/arrow_right_blue.png"
           />
         </view>
         <view class="like-box">
           <image
-            class="like-icon"
-            mode="widthFix"
-            src="/static/images/like.png"
+              class="like-icon"
+              mode="widthFix"
+              src="/static/images/like.png"
           />
           <text class="like-num">
             {{ item.likes }}
@@ -63,35 +63,69 @@
     </view>
 
     <view class="write-comment-box">
-      <input class="write-comment" placeholder="发表评论..." type="text" />
+      <input class="write-comment" placeholder="发表评论..." type="text"/>
       <view class="like-box">
         <image
-          class="like-icon"
-          mode="widthFix"
-          src="/static/images/like.png"
+            class="like-icon"
+            mode="widthFix"
+            src="/static/images/like.png"
         />
         <view class="like-num">
           {{ post.likes }}
         </view>
       </view>
-      <view class="send-comment-btn"> 发布 </view>
+      <view class="send-comment-btn"> 发布</view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
-import { enterMask, enterReply } from "@/pages/moment/event";
+import {reactive, ref} from "vue";
+import {enterMask, enterReply} from "@/pages/moment/event";
 import Reply from "@/pages/moment/reply";
+import {GetMomentDetailReq} from "@/apis/moment/moment-components";
+import {getMomentDetail} from "@/apis/moment/moment";
+import {Moment, TargetType} from "@/apis/schemas";
+import {displayTime} from "@/utils/time";
+import {GetCountReq} from "@/apis/like/like-interface";
+import {getCount, getUserLiked} from "@/apis/like/like";
 
-const post = reactive({
-  id: "Gnomeshgh",
-  profile: "https://static.xhpolaris.com/cat_world.jpg",
-  time: " 3小时前",
-  text: "睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!睡前祝大家中秋节快乐!",
-  images: ["https://static.xhpolaris.com/cat_world.jpg"],
-  likes: 3333333,
-});
+const props = defineProps<{
+  id: string
+}>()
+const getMomentDetailReq = reactive<GetMomentDetailReq>({
+  momentId: props.id
+})
+const getCountReq = reactive<GetCountReq>({
+  targetId: props.id,
+  targetType: TargetType.Moment
+})
+
+const moment = ref<Moment>({
+  id: "",
+  createAt: 0,
+  title: "",
+  catId: "",
+  communityId: "",
+  text: "",
+  user: {
+    id: "",
+    nickname: "",
+    avatarUrl: ""
+  },
+  photos: []
+})
+const like = ref({
+  count: 0,
+  liked: true
+})
+const getData = async () => {
+  moment.value = (await getMomentDetail(getMomentDetailReq)).moment
+  like.value.count = (await getCount(getCountReq)).count
+  like.value.liked = (await getUserLiked(getCountReq)).liked
+  console.log(like)
+}
+getData()
 
 const comments = reactive([
   {
@@ -106,23 +140,23 @@ const comments = reactive([
         profile: "https://static.xhpolaris.com/cat_world.jpg",
         time: " 2小时前",
         text: "猫居然也有月饼吃",
-        likes: 333,
+        likes: 333
       },
       {
         id: "Jiezheshuo2",
         profile: "https://static.xhpolaris.com/cat_world.jpg",
         time: " 2小时前",
         text: "猫为啥没有月饼吃",
-        likes: 888,
+        likes: 888
       },
       {
         id: "Jiezheshuo3",
         profile: "https://static.xhpolaris.com/cat_world.jpg",
         time: " 1小时前",
         text: "猫当然有月饼吃",
-        likes: 222222,
-      },
-    ],
+        likes: 222222
+      }
+    ]
   },
   {
     id: "Dianpinger",
@@ -130,8 +164,8 @@ const comments = reactive([
     time: " 4小时前",
     text: "祝大家中秋节快乐哦~",
     likes: 8888,
-    reply: [],
-  },
+    reply: []
+  }
 ]);
 
 let selectedReply = ref(0);
