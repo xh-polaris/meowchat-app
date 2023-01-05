@@ -71,7 +71,7 @@
             src="/static/images/like.png"
         />
         <view class="like-num">
-          {{ post.likes }}
+          {{ like.count }}
         </view>
       </view>
       <view class="send-comment-btn"> 发布</view>
@@ -123,9 +123,18 @@ const getData = async () => {
   moment.value = (await getMomentDetail(getMomentDetailReq)).moment
   like.value.count = (await getCount(getCountReq)).count
   like.value.liked = (await getUserLiked(getCountReq)).liked
-  console.log(like)
 }
 getData()
+
+// const getCommentsReq = reactive<GetCommentsReq>({
+//   scope: "moment",
+//   page: 0,
+//   id: props.id
+// })
+// const comments = ref<Comment[]>([])
+// getComments(getCommentsReq).then(res => {
+//   comments.value.push(...res.comments)
+// })
 
 const comments = reactive([
   {
