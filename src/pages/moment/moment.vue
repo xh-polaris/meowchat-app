@@ -1,10 +1,10 @@
 <template>
-  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()"/>
-  <reply
-      :animation="enterReplyData"
-      :replies="comments[selectedReply]"
-      class="more-reply"
-  />
+  <!--  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()"/>-->
+  <!--  <reply-->
+  <!--      :animation="enterReplyData"-->
+  <!--      :replies="comments[selectedReply]"-->
+  <!--      class="more-reply"-->
+  <!--  />-->
 
   <view class="container">
     <view class="post-info-box">
@@ -31,18 +31,18 @@
     <view class="comments-box">
       <view v-for="(item, index) in comments" :key="index" class="comment-box">
         <view class="commenter-info-box">
-          <image :src="item.profile" class="commenter-profile"/>
+          <image :src="item.user.avatarUrl" class="commenter-profile"/>
           <text class="commenter-name">
-            {{ item.id }}
+            {{ item.user.nickname }}
           </text>
-          <text class="comment-time"> ·{{ item.time }}</text>
+          <text class="comment-time"> ·{{ displayTime(item.createAt * 1000) }}</text>
         </view>
         <view class="comment-content">
           {{ item.text }}
         </view>
-        <view v-if="item.reply.length > 0" class="reply-info">
+        <view v-if="item.comments > 0" class="reply-info">
           <text @click="onClickReplies(index)">
-            {{ item.reply.length }}条相关回复
+            {{ item.comments }}条相关回复
           </text>
           <image
               class="arrow-right"
@@ -63,7 +63,9 @@
     </view>
 
     <view class="write-comment-box">
-      <input class="write-comment" placeholder="发表评论..." type="text"/>
+      <input v-model="text" class="write-comment"
+             placeholder="发表评论..."
+             type="text"/>
       <view class="like-box">
         <image
             class="like-icon"
@@ -74,7 +76,7 @@
           {{ like.count }}
         </view>
       </view>
-      <view class="send-comment-btn"> 发布</view>
+      <view class="send-comment-btn" @click="createComment(text)"> 发布</view>
     </view>
   </view>
 </template>
@@ -82,23 +84,21 @@
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
 import {enterMask, enterReply} from "@/pages/moment/event";
-import Reply from "@/pages/moment/reply";
 import {GetMomentDetailReq} from "@/apis/moment/moment-components";
 import {getMomentDetail} from "@/apis/moment/moment";
-import {Moment, TargetType} from "@/apis/schemas";
+import {Comment, Moment, TargetType} from "@/apis/schemas";
 import {displayTime} from "@/utils/time";
-import {GetCountReq} from "@/apis/like/like-interface";
-import {getCount, getUserLiked} from "@/apis/like/like";
+import {DoLikeReq, GetCountReq} from "@/apis/like/like-interface";
+import {doLike, getCount, getUserLiked} from "@/apis/like/like";
+import {getComments, newComment} from "@/apis/comment/comment";
+import {GetCommentsReq, NewCommentReq} from "@/apis/comment/comment-interfaces";
+import {onReachBottom} from "@dcloudio/uni-app";
 
 const props = defineProps<{
   id: string
 }>()
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
   momentId: props.id
-})
-const getCountReq = reactive<GetCountReq>({
-  targetId: props.id,
-  targetType: TargetType.Moment
 })
 
 const moment = ref<Moment>({
@@ -115,28 +115,84 @@ const moment = ref<Moment>({
   },
   photos: []
 })
+
+const getData = async () => {
+  moment.value = (await getMomentDetail(getMomentDetailReq)).moment
+
+}
+getData()
+
+
+const getLikeReq = reactive<GetCountReq>({
+  targetId: props.id,
+  targetType: TargetType.Moment
+})
 const like = ref({
   count: 0,
   liked: true
 })
-const getData = async () => {
-  moment.value = (await getMomentDetail(getMomentDetailReq)).moment
-  like.value.count = (await getCount(getCountReq)).count
-  like.value.liked = (await getUserLiked(getCountReq)).liked
+const getLikeData = async () => {
+  like.value.count = (await getCount(getLikeReq)).count
+  like.value.liked = (await getUserLiked(getLikeReq)).liked
 }
-getData()
+getLikeData()
+const doLikeReq = reactive<DoLikeReq>({
+  targetId: props.id,
+  targetType: TargetType.Moment
+})
+const localDoLike = async () => {
+  await doLike(doLikeReq)
+  await getLikeData()
+}
 
-// const getCommentsReq = reactive<GetCommentsReq>({
-//   scope: "moment",
-//   page: 0,
-//   id: props.id
-// })
-// const comments = ref<Comment[]>([])
+const getCommentsReq = reactive<GetCommentsReq>({
+  scope: TargetType.Moment,
+  page: 0,
+  id: props.id
+})
+const comments = reactive<Comment[]>([])
+let allCommentsLoaded = false
+let isCommentsLoaded = false
+const getCommentsData = async () => {
+  let commentsTemp = (await getComments(getCommentsReq)).comments
+  console.log(commentsTemp.length)
+  if (commentsTemp.length > 0) {
+    for (let i = 0; i < commentsTemp.length; i++) {
+      comments.push(commentsTemp[i])
+    }
+    getCommentsReq.page += 1
+  } else {
+    allCommentsLoaded = true
+  }
+  isCommentsLoaded = true
+}
+getCommentsData()
+const newCommentReq = reactive<NewCommentReq>({
+  id: props.id,
+  scope: TargetType.Moment,
+  text: ""
+})
+const text = ref("")
+const createComment = async (text: string) => {
+  console.log(text)
+  newCommentReq.text = text
+  await newComment(newCommentReq)
+}
+
+
+onReachBottom(() => {
+  if (isCommentsLoaded && !allCommentsLoaded) {
+    isCommentsLoaded = false
+    getCommentsData()
+  }
+})
+
+
 // getComments(getCommentsReq).then(res => {
 //   comments.value.push(...res.comments)
 // })
 
-const comments = reactive([
+const comments2 = reactive([
   {
     id: "Pinlunrenyi",
     profile: "https://static.xhpolaris.com/cat_world.jpg",
