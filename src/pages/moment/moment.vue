@@ -1,10 +1,10 @@
 <template>
-  <!--  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()"/>-->
-  <!--  <reply-->
-  <!--      :animation="enterReplyData"-->
-  <!--      :replies="comments[selectedReply]"-->
-  <!--      class="more-reply"-->
-  <!--  />-->
+  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()"/>
+  <reply
+      :animation="enterReplyData"
+      :replies="comments[selectedReply]"
+      class="more-reply"
+  />
 
   <view class="container">
     <view class="post-info-box">
@@ -18,7 +18,7 @@
       <view class="post-content">
         {{ moment.text }}
       </view>
-      <view class="like-info"> {{ like.count }} 位喵友觉得很赞</view>
+      <view class="like-info"> {{ momentLike.count }} 位喵友觉得很赞</view>
       <image
           v-for="(item, index) in moment.photos"
           :key="index"
@@ -50,11 +50,20 @@
           />
         </view>
         <view class="like-box">
-          <image
-              class="like-icon"
-              mode="widthFix"
-              src="/static/images/like.png"
-          />
+          <view v-if="commentLikes[index]">
+            <image
+                :src="likedUrl"
+                class="like-icon"
+                mode="widthFix"
+            />
+          </view>
+          <view v-else>
+            <image
+                :src="unlikeUrl"
+                class="like-icon"
+                mode="widthFix"
+            />
+          </view>
           <text class="like-num">
             {{ item.likes }}
           </text>
@@ -68,12 +77,13 @@
              type="text"/>
       <view class="like-box">
         <image
+            :src="momentLike.likeUrl"
             class="like-icon"
             mode="widthFix"
-            src="/static/images/like.png"
+            @click="momentDoLike()"
         />
         <view class="like-num">
-          {{ like.count }}
+          {{ momentLike.count }}
         </view>
       </view>
       <view class="send-comment-btn" @click="createComment(text)"> 发布</view>
@@ -88,7 +98,7 @@ import {GetMomentDetailReq} from "@/apis/moment/moment-components";
 import {getMomentDetail} from "@/apis/moment/moment";
 import {Comment, Moment, TargetType} from "@/apis/schemas";
 import {displayTime} from "@/utils/time";
-import {DoLikeReq, GetCountReq} from "@/apis/like/like-interface";
+import {GetCountReq} from "@/apis/like/like-interface";
 import {doLike, getCount, getUserLiked} from "@/apis/like/like";
 import {getComments, newComment} from "@/apis/comment/comment";
 import {GetCommentsReq, NewCommentReq} from "@/apis/comment/comment-interfaces";
@@ -100,7 +110,7 @@ const props = defineProps<{
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
   momentId: props.id
 })
-
+console.log(props.id)
 const moment = ref<Moment>({
   id: "",
   createAt: 0,
@@ -118,47 +128,59 @@ const moment = ref<Moment>({
 
 const getData = async () => {
   moment.value = (await getMomentDetail(getMomentDetailReq)).moment
-
 }
 getData()
 
-
-const getLikeReq = reactive<GetCountReq>({
+const likeReq = reactive<GetCountReq>({
   targetId: props.id,
   targetType: TargetType.Moment
 })
-const like = ref({
+const momentLike = ref({
   count: 0,
-  liked: true
+  liked: true,
+  likeUrl: "/static/images/like.png"
 })
-const getLikeData = async () => {
-  like.value.count = (await getCount(getLikeReq)).count
-  like.value.liked = (await getUserLiked(getLikeReq)).liked
+const likedUrl = "/static/images/like.png"
+const unlikeUrl = "/static/images/like_grey_0.png"
+const getLikeUrl = (liked: boolean) => {
+  if (liked) {
+    return likedUrl
+  } else {
+    return unlikeUrl
+  }
 }
-getLikeData()
-const doLikeReq = reactive<DoLikeReq>({
-  targetId: props.id,
-  targetType: TargetType.Moment
-})
-const localDoLike = async () => {
-  await doLike(doLikeReq)
-  await getLikeData()
+const getMomentLikeData = async () => {
+  momentLike.value.count = (await getCount(likeReq)).count
+  momentLike.value.liked = (await getUserLiked(likeReq)).liked
+  momentLike.value.likeUrl = getLikeUrl(momentLike.value.liked)
 }
+getMomentLikeData()
+
+const momentDoLike = async () => {
+  await doLike(likeReq)
+  await getMomentLikeData()
+}
+
 
 const getCommentsReq = reactive<GetCommentsReq>({
-  scope: TargetType.Moment,
+  scope: "moment",
   page: 0,
   id: props.id
 })
 const comments = reactive<Comment[]>([])
+const commentLikes = reactive<boolean[]>([])
 let allCommentsLoaded = false
 let isCommentsLoaded = false
 const getCommentsData = async () => {
   let commentsTemp = (await getComments(getCommentsReq)).comments
-  console.log(commentsTemp.length)
   if (commentsTemp.length > 0) {
     for (let i = 0; i < commentsTemp.length; i++) {
       comments.push(commentsTemp[i])
+      let commentLike = (await getUserLiked({
+        targetId: commentsTemp[i].id,
+        targetType: TargetType.Comment
+      })).liked
+      commentLikes.push(commentLike)
     }
     getCommentsReq.page += 1
   } else {
@@ -169,16 +191,15 @@ const getCommentsData = async () => {
 getCommentsData()
 const newCommentReq = reactive<NewCommentReq>({
   id: props.id,
-  scope: TargetType.Moment,
+  scope: "moment",
   text: ""
 })
 const text = ref("")
 const createComment = async (text: string) => {
   console.log(text)
   newCommentReq.text = text
-  await newComment(newCommentReq)
+  console.log(await newComment(newCommentReq))
 }
-
 
 onReachBottom(() => {
   if (isCommentsLoaded && !allCommentsLoaded) {
@@ -186,7 +207,6 @@ onReachBottom(() => {
     getCommentsData()
   }
 })
-
 
 // getComments(getCommentsReq).then(res => {
 //   comments.value.push(...res.comments)
