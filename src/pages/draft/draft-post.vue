@@ -1,51 +1,51 @@
 <template>
   <view class="all">
     <view class="main">
-      <input placeholder="输入标题" type="text" />
+      <input placeholder="输入标题" type="text"/>
       <!-- #ifdef H5 -->
       <textarea
-        maxlength="5000"
-        placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-        type="text"
+          maxlength="5000"
+          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          type="text"
       />
       <!-- #endif -->
       <!-- #ifdef MP-WEIXIN -->
       <textarea
-        maxlength="5000"
-        placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-        type="text"
+          maxlength="5000"
+          placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          type="text"
       />
       <!-- #endif -->
 
       <view class="images">
         <block v-for="image in imagesData" :key="image.id">
           <view
-            :style="{ backgroundImage: 'url(' + image.url + ')' }"
-            class="added-image"
+              :style="{ backgroundImage: 'url(' + image.url + ')' }"
+              class="added-image"
           />
         </block>
         <view
-          v-if="imagesData.length < 8"
-          class="new-image"
-          @click="addImage"
+            v-if="imagesData.length < 8"
+            class="new-image"
+            @click="addImage"
         />
       </view>
-      <view class="image-num"> {{ imagesData.length }}/8 </view>
+      <view class="image-num"> {{ imagesData.length }}/8</view>
     </view>
 
     <view class="panel">
       <view class="toggle-bar">
-        <view class="toggle-text"> 匿名信息 </view>
+        <view class="toggle-text"> 匿名信息</view>
         <view
-          :class="'toggle ' + (isAnonymous ? 'active' : '')"
-          @click="toggleAnonymous"
+            :class="'toggle ' + (isAnonymous ? 'active' : '')"
+            @click="toggleAnonymous"
         >
           <view class="toggle-capsule">
-            <view class="toggle-circle" />
+            <view class="toggle-circle"/>
           </view>
         </view>
       </view>
-      <view class="publish"> 发布帖子 </view>
+      <view class="publish"> 发布帖子</view>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -159,7 +159,6 @@ textarea {
   background-color: #fafafa;
   border-radius: calc(10 / 390 * 100vw);
   width: calc(100vw - $margin * 2);
-  box-sizing: border-box;
   margin: 0 $margin;
   padding: calc(10 / 390 * 100vw);
   color: black;
@@ -169,10 +168,12 @@ textarea {
 input {
   margin-top: calc(20 / 390 * 100vw);
   margin-bottom: calc(10 / 390 * 100vw);
+  padding: 0 calc(10 / 390 * 100vw);
   height: calc(40 / 390 * 100vw);
 }
 
 textarea {
+  box-sizing: border-box;
   margin-bottom: calc(10 / 390 * 100vw);
   word-wrap: break-word;
   white-space: pre-line;

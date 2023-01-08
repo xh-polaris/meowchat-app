@@ -1,10 +1,10 @@
 <template>
   <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()"/>
-  <reply
-      :animation="enterReplyData"
-      :replies="comments[selectedReply]"
-      class="more-reply"
-  />
+<!--  <reply-->
+<!--      :animation="enterReplyData"-->
+<!--      :replies="comments[selectedReply]"-->
+<!--      class="more-reply"-->
+<!--  />-->
 
   <view class="container">
     <view class="post-info-box">
@@ -89,20 +89,25 @@
       <view class="send-comment-btn" @click="createComment(text)"> 发布</view>
     </view>
   </view>
+  <view v-if="isReplyOpened" class="reply">
+    <reply @closeReply="closeReply"/>
+  </view>
+
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import {enterMask, enterReply} from "@/pages/moment/event";
-import {GetMomentDetailReq} from "@/apis/moment/moment-components";
-import {getMomentDetail} from "@/apis/moment/moment";
-import {Comment, Moment, TargetType} from "@/apis/schemas";
-import {displayTime} from "@/utils/time";
-import {GetCountReq} from "@/apis/like/like-interface";
-import {doLike, getCount, getUserLiked} from "@/apis/like/like";
-import {getComments, newComment} from "@/apis/comment/comment";
-import {GetCommentsReq, NewCommentReq} from "@/apis/comment/comment-interfaces";
-import {onReachBottom} from "@dcloudio/uni-app";
+import { reactive, ref } from "vue";
+import { enterMask, enterReply } from "@/pages/moment/event";
+import { GetMomentDetailReq } from "@/apis/moment/moment-components";
+import { getMomentDetail } from "@/apis/moment/moment";
+import { Comment, Moment, TargetType } from "@/apis/schemas";
+import { displayTime } from "@/utils/time";
+import { GetCountReq } from "@/apis/like/like-interface";
+import { doLike, getCount, getUserLiked } from "@/apis/like/like";
+import { getComments, newComment } from "@/apis/comment/comment";
+import { GetCommentsReq, NewCommentReq } from "@/apis/comment/comment-interfaces";
+import { onReachBottom } from "@dcloudio/uni-app";
+import Reply from "@/pages/moment/reply";
 
 const props = defineProps<{
   id: string
@@ -257,12 +262,21 @@ let selectedReply = ref(0);
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
+const isReplyOpened = ref(false)
+
 function onClickReplies(idx: number) {
-  selectedReply.value = idx;
-  enterMask.width("100%").height("100%").opacity(0.5).step();
-  enterMaskData.value = enterMask.export();
-  enterReply.height("70%").step();
-  enterReplyData.value = enterReply.export();
+  // selectedReply.value = idx;
+  // enterMask.width("100%").height("100%").opacity(0.5).step();
+  // enterMaskData.value = enterMask.export();
+  // enterReply.height("70%").step();
+  // enterReplyData.value = enterReply.export();
+
+  isReplyOpened.value = true
+
+}
+
+function closeReply() {
+  isReplyOpened.value = false
 }
 
 function leaveReply() {
@@ -271,6 +285,8 @@ function leaveReply() {
   enterReply.height("0%").step();
   enterReplyData.value = enterReply.export();
 }
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -413,7 +429,7 @@ function leaveReply() {
       }
 
       .like-box {
-        margin-left: 104rpx;
+        margin-left: 104px;
 
         .like-icon {
           width: 15px;
@@ -488,4 +504,6 @@ function leaveReply() {
     }
   }
 }
+
+
 </style>

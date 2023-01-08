@@ -1,10 +1,10 @@
 <template>
-  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
-  <reply
-    :animation="enterReplyData"
-    :replies="comments[selectedReply]"
-    class="more-reply"
-  />
+  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()"/>
+  <!--  <reply-->
+  <!--    :animation="enterReplyData"-->
+  <!--    :replies="comments[selectedReply]"-->
+  <!--    class="more-reply"-->
+  <!--  />-->
 
   <view class="header">
     <view class="title">
@@ -14,7 +14,7 @@
       {{ post.createTime }} ·{{ post.commentsNum }}条回复
     </view>
     <view class="tags">
-      <image class="tagIcon" src="/static/images/tag.png" />
+      <image class="tagIcon" src="/static/images/tag.png"/>
       <view v-for="(item, index) in post.tags" :key="index" class="tag">
         {{ item.tagName }}
       </view>
@@ -23,7 +23,7 @@
 
   <view class="post">
     <view class="user">
-      <image :src="post.user.avatar" class="avatar" />
+      <image :src="post.user.avatar" class="avatar"/>
       <view class="name">
         {{ post.user.name }}
       </view>
@@ -35,11 +35,11 @@
     <view class="comments-box">
       <view v-for="(item, index) in comments" :key="index" class="comment-box">
         <view class="commenter-info-box">
-          <image :src="item.profile" class="commenter-profile" />
+          <image :src="item.profile" class="commenter-profile"/>
           <text class="commenter-name">
             {{ item.id }}
           </text>
-          <text class="comment-time"> ·{{ item.time }} </text>
+          <text class="comment-time"> ·{{ item.time }}</text>
         </view>
         <view class="comment-content">
           {{ item.text }}
@@ -49,15 +49,15 @@
             {{ item.reply.length }}条相关回复
           </text>
           <image
-            class="arrow-right"
-            src="/static/images/arrow_right_blue.png"
+              class="arrow-right"
+              src="/static/images/arrow_right_blue.png"
           />
         </view>
         <view class="like-box">
           <image
-            class="like-icon"
-            mode="widthFix"
-            src="/static/images/like.png"
+              class="like-icon"
+              mode="widthFix"
+              src="/static/images/like.png"
           />
           <text class="like-num">
             {{ item.likes }}
@@ -65,56 +65,60 @@
         </view>
       </view>
     </view>
-    <view style="height: 100px" />
+    <view style="height: 100px"/>
   </view>
   <view class="write-comment-box">
-    <input class="write-comment" placeholder="发表评论..." type="text" />
+    <input class="write-comment" placeholder="发表评论..." type="text"/>
     <view class="like-box">
-      <image class="like-icon" mode="widthFix" src="/static/images/like.png" />
+      <image class="like-icon" mode="widthFix" src="/static/images/like.png"/>
       <view class="like-num">
         {{ post.likes }}
       </view>
     </view>
-    <view class="send-comment-btn"> 发布 </view>
+    <view class="send-comment-btn"> 发布</view>
   </view>
+  <view v-if="isReplyOpened" class="reply">
+    <reply @closeReply="closeReply"/>
+  </view>
+
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { enterMask, enterReply } from "../moment/event";
-import Reply from "@/pages/moment/reply.vue";
+import Reply from "@/pages/moment/reply"
 
 const post = ref({
   id: "111",
   title: "如何应对校园流浪猫",
   createTime: "2022-10-31",
   commentsNum: 23,
-  tags: [{ tagName: "流浪猫" }, { tagName: "新手" }],
+  tags: [{tagName: "流浪猫"}, {tagName: "新手"}],
   isAnonymous: true,
   user: {
     avatar: "https://static.xhpolaris.com/cat_world.jpg",
     name: "111",
   },
   text:
-    "首先针对回答说几点:\n" +
-    "①别见猫就撸\n" +
-    "  猫没那么可怕，但是每只猫的性格不一样，有的温顺有的易怒。对于接触一只流浪猫，最好还是先给吃的，不摸。多给几次，每天给，等猫咪对你有了信任，有了安全感，再去撸猫，别说背，(*~3)心肚子轻而易举就摸到啦~\n" +
-    "就像我们校园，有只小花猫，不对，这只大花猫(具体原因看后文)就比较温顺，见谁让谁撸;但还有只橘猫就不一样了，平时也不发脾气，但要逼他做自己不喜欢的事，就开始上爪了……无比锋利的爪子(x_x)……不愧是公的。\n" +
-    "\n" +
-    "2结孔\n" +
-    " 很多回合里有提到结孔。这的确是一个好的措施，只是对于校园里的学生来说，没几个人有能力花钱给猫咪结扎，可能有钱的没爱心，可能有爱心的没钱，我就属于后者吧……学校对于流浪动物有不给予保护。因此，只能说，可以靠学生自己组织小团体专门为流浪猫狗结扎，但估计只能是一个公益项目了。\n" +
-    "\n" +
-    "③能喂就喂别乱喂\n" +
-    "  曾经我为了校园里的童鞋们不爱心泛滥乱投食，在表白墙上发过一篇注意事项，解释了猫不能吃的种种东西。有些东西对猫咪是致命的，有些虽不致命，但也是对身体有害，人体需要的营养猫咪不一定需要。因此，希望每个人在要喂猫咪之前先想想自己喂的东西，对猫咪有没有好处。\n" +
-    "\n" +
-    "④喜欢请善待，不喜勿伤害\n" +
-    "  很多流浪猫狗对人类持以戒心，原因大家心知肚明，总是有些内心不正常的人对流浪猫狗施以残忍的虐待，才让许多流浪动物们不敢接近人类。好好善待他们，让他们感受一份温暖。他们也是生命，世界不仅仅属于人类，也有它们的一份!\n" +
-    "\n" +
-    "⑤不要对他们带有偏见\n" +
-    '  许多人觉得猫咪不好，特别是流浪猫。平时它们也被我们叫一个很难听的名字:"野猫子"，说不要招惹野猫\n' +
-    "子。尤其有些人对于黑猫，是更觉得不好的。但是恰恰相反，就算是迷信，黑猫也是吉祥之物。当然，不迷信最好。\n" +
-    "匿名用户 知乎 \n" +
-    "\n" +
-    "应如何对待校园里的流浪猫?长按识别二维码阅读全文",
+      "首先针对回答说几点:\n" +
+      "①别见猫就撸\n" +
+      "  猫没那么可怕，但是每只猫的性格不一样，有的温顺有的易怒。对于接触一只流浪猫，最好还是先给吃的，不摸。多给几次，每天给，等猫咪对你有了信任，有了安全感，再去撸猫，别说背，(*~3)心肚子轻而易举就摸到啦~\n" +
+      "就像我们校园，有只小花猫，不对，这只大花猫(具体原因看后文)就比较温顺，见谁让谁撸;但还有只橘猫就不一样了，平时也不发脾气，但要逼他做自己不喜欢的事，就开始上爪了……无比锋利的爪子(x_x)……不愧是公的。\n" +
+      "\n" +
+      "2结孔\n" +
+      " 很多回合里有提到结孔。这的确是一个好的措施，只是对于校园里的学生来说，没几个人有能力花钱给猫咪结扎，可能有钱的没爱心，可能有爱心的没钱，我就属于后者吧……学校对于流浪动物有不给予保护。因此，只能说，可以靠学生自己组织小团体专门为流浪猫狗结扎，但估计只能是一个公益项目了。\n" +
+      "\n" +
+      "③能喂就喂别乱喂\n" +
+      "  曾经我为了校园里的童鞋们不爱心泛滥乱投食，在表白墙上发过一篇注意事项，解释了猫不能吃的种种东西。有些东西对猫咪是致命的，有些虽不致命，但也是对身体有害，人体需要的营养猫咪不一定需要。因此，希望每个人在要喂猫咪之前先想想自己喂的东西，对猫咪有没有好处。\n" +
+      "\n" +
+      "④喜欢请善待，不喜勿伤害\n" +
+      "  很多流浪猫狗对人类持以戒心，原因大家心知肚明，总是有些内心不正常的人对流浪猫狗施以残忍的虐待，才让许多流浪动物们不敢接近人类。好好善待他们，让他们感受一份温暖。他们也是生命，世界不仅仅属于人类，也有它们的一份!\n" +
+      "\n" +
+      "⑤不要对他们带有偏见\n" +
+      '  许多人觉得猫咪不好，特别是流浪猫。平时它们也被我们叫一个很难听的名字:"野猫子"，说不要招惹野猫\n' +
+      "子。尤其有些人对于黑猫，是更觉得不好的。但是恰恰相反，就算是迷信，黑猫也是吉祥之物。当然，不迷信最好。\n" +
+      "匿名用户 知乎 \n" +
+      "\n" +
+      "应如何对待校园里的流浪猫?长按识别二维码阅读全文",
   likes: 123,
 });
 
@@ -172,12 +176,20 @@ let selectedReply = ref(0);
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
+const isReplyOpened = ref(false)
+
 function onClickReplies(idx: number) {
-  selectedReply.value = idx;
-  enterMask.width("100%").height("100%").opacity(0.5).step();
-  enterMaskData.value = enterMask.export();
-  enterReply.height("70%").step();
-  enterReplyData.value = enterReply.export();
+  // selectedReply.value = idx;
+  // enterMask.width("100%").height("100%").opacity(0.5).step();
+  // enterMaskData.value = enterMask.export();
+  // enterReply.height("70%").step();
+  // enterReplyData.value = enterReply.export();
+
+  isReplyOpened.value = true
+}
+
+function closeReply() {
+  isReplyOpened.value = false
 }
 
 function leaveReply() {
