@@ -11,7 +11,7 @@
       {{ post.title }}
     </view>
     <view class="head-info">
-      {{ displayTime(post.createAt * 1000) }} ·{{ post.comments }}条回复
+      {{ displayTime(post.createAt * 1000) }} · {{ post.comments }}条回复
     </view>
     <view class="tags">
       <image class="tagIcon" src="/static/images/tag.png" />
@@ -40,7 +40,7 @@
             {{ item.user.nickname }}
           </text>
           <text class="comment-time">
-            ·{{ displayTime(item.createAt * 1000) }}</text
+            · {{ displayTime(item.createAt * 1000) }}</text
           >
         </view>
         <view class="comment-content">
@@ -57,11 +57,10 @@
         </view>
         <view class="like-box">
           <view v-if="commentLikes[index]">
-            <image
-              class="likedUrl"
-              mode="widthFix"
-              src="/static/images/like.png"
-            />
+            <image :src="likedUrl" class="like-icon" mode="widthFix" />
+          </view>
+          <view v-else>
+            <image :src="unlikeUrl" class="like-icon" mode="widthFix" />
           </view>
           <text class="like-num">
             {{ item.likes }}
@@ -391,9 +390,9 @@ $headerPadding: 21px;
     .tag {
       margin-top: 3px;
       font-style: normal;
-      font-weight: 400;
+      font-weight: bold;
       font-size: 10px;
-      line-height: 17px;
+      line-height: 13px;
       /* or 170% */
       text-align: center;
       letter-spacing: 0.5px;
@@ -401,7 +400,7 @@ $headerPadding: 21px;
       color: #1fa1ff;
 
       min-width: 28px;
-      padding: 0 6px;
+      padding: 5rpx 10rpx 5rpx 10rpx;
       border: #1fa1ff 1px solid;
       border-radius: 9px;
       margin-right: 8px;
@@ -447,8 +446,8 @@ $postPadding: 15px 27px 0 21px;
 
   .text {
     white-space: pre-line;
-    font-size: 14px;
-    line-height: 22px;
+    font-size: 16px;
+    line-height: 25px;
     /* or 157% */
 
     /* darkgrey02 */
@@ -461,8 +460,8 @@ $postPadding: 15px 27px 0 21px;
       background-color: #fff;
       box-shadow: 0 0 4px #ddd;
       border-radius: 30rpx;
-      margin-bottom: 15px;
-      padding: 30rpx 20rpx;
+      margin-bottom: 10px;
+      padding: 20rpx 20rpx;
 
       &:last-child {
         margin-bottom: 120rpx;
@@ -471,17 +470,18 @@ $postPadding: 15px 27px 0 21px;
       .commenter-info-box {
         display: flex;
         align-items: center;
-        margin-bottom: 10px;
+        margin-bottom: 5rpx;
 
         .commenter-profile {
-          width: 80rpx;
-          height: 80rpx;
+          width: 70rpx;
+          height: 70rpx;
+          border-radius: 35rpx;
           margin-right: 24rpx;
         }
 
         .commenter-name {
-          margin-right: 12px;
-          font-weight: bold;
+          margin-right: 30rpx;
+          color: #7f7f81;
           font-size: 14px;
         }
 
@@ -492,8 +492,8 @@ $postPadding: 15px 27px 0 21px;
       }
 
       .comment-content {
-        margin-left: 104rpx;
-        margin-bottom: 15px;
+        margin-left: 100rpx;
+        margin-bottom: 30rpx;
         line-height: 1.5em;
         letter-spacing: 0.05em;
         font-weight: 500;
@@ -501,7 +501,7 @@ $postPadding: 15px 27px 0 21px;
       }
 
       .reply-info {
-        margin-left: 104rpx;
+        margin-left: 100rpx;
         color: #63bdff;
         font-size: 12px;
         margin-bottom: 10px;
@@ -516,7 +516,7 @@ $postPadding: 15px 27px 0 21px;
       }
 
       .like-box {
-        margin-left: 104rpx;
+        margin-left: 50px;
 
         .like-icon {
           width: 15px;

@@ -67,7 +67,7 @@
       </view>
       <view class="lower">
         <view class="time">
-          {{ post.createAt }}
+          {{ displayTime(post.createAt * 1000) }}
         </view>
         <view>{{ post.comments }}条回复</view>
       </view>
@@ -83,6 +83,7 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
 import { getPostPreviews } from "../../apis/post/post";
 import DraftButton from "@/pages/draft/draft-button";
+import { displayTime } from "@/utils/time";
 
 const postsData = reactive([]);
 
@@ -255,18 +256,25 @@ body {
     font-size: calc(10 / 390 * 100vw);
     //height: calc(18 / 390 * 100vw);
     line-height: calc(18 / 390 * 100vw);
+    padding-top: 10rpx;
 
     .tag {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      margin-top: 3px;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 10px;
+      line-height: 13px;
+      /* or 170% */
       text-align: center;
-      min-width: calc(28 / 390 * 100vw);
-      padding: 0 calc(6 / 390 * 100vw);
+      letter-spacing: 0.5px;
+      /* blue02 */
+      color: #1fa1ff;
+
+      min-width: 28px;
+      padding: 5rpx 10rpx 5rpx 10rpx;
       border: #1fa1ff 1px solid;
-      border-radius: calc(9 / 390 * 100vw);
-      margin-right: calc(8 / 390 * 100vw);
-      margin-top: calc(6 / 390 * 100vw);
+      border-radius: 9px;
+      margin-right: 8px;
     }
   }
 }
