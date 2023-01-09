@@ -1,6 +1,6 @@
 <template>
   <view class="uni-collapse">
-    <slot/>
+    <slot />
   </view>
 </template>
 <script>
@@ -18,119 +18,123 @@ export default {
   props: {
     value: {
       type: [String, Array],
-      default: ""
+      default: "",
     },
     modelValue: {
       type: [String, Array],
-      default: ""
+      default: "",
     },
     accordion: {
       // 是否开启手风琴效果
       type: [Boolean, String],
-      default: false
+      default: false,
     },
   },
-  data () {
-    return {}
+  data() {
+    return {};
   },
   computed: {
     // TODO 兼容 vue2 和 vue3
-    dataValue () {
-      let value = (typeof this.value === "string" && this.value === "") ||
-          (Array.isArray(this.value) && this.value.length === 0)
-      let modelValue = (typeof this.modelValue === "string" && this.modelValue === "") ||
-          (Array.isArray(this.modelValue) && this.modelValue.length === 0)
+    dataValue() {
+      let value =
+        (typeof this.value === "string" && this.value === "") ||
+        (Array.isArray(this.value) && this.value.length === 0);
+      let modelValue =
+        (typeof this.modelValue === "string" && this.modelValue === "") ||
+        (Array.isArray(this.modelValue) && this.modelValue.length === 0);
       if (value) {
-        return this.modelValue
+        return this.modelValue;
       }
       if (modelValue) {
-        return this.value
+        return this.value;
       }
 
-      return this.value
-    }
+      return this.value;
+    },
   },
   watch: {
-    dataValue (val) {
-      this.setOpen(val)
-    }
+    dataValue(val) {
+      this.setOpen(val);
+    },
   },
-  created () {
-    this.childrens = []
-    this.names = []
+  created() {
+    this.childrens = [];
+    this.names = [];
   },
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
-      this.setOpen(this.dataValue)
-    })
+      this.setOpen(this.dataValue);
+    });
   },
   methods: {
-    setOpen (val) {
-      let str = typeof val === "string"
-      let arr = Array.isArray(val)
+    setOpen(val) {
+      let str = typeof val === "string";
+      let arr = Array.isArray(val);
       this.childrens.forEach((vm, index) => {
         if (str) {
           if (val === vm.nameSync) {
             if (!this.accordion) {
-              console.warn("accordion 属性为 false ,v-model 类型应该为 array")
-              return
+              console.warn("accordion 属性为 false ,v-model 类型应该为 array");
+              return;
             }
-            vm.isOpen = true
+            vm.isOpen = true;
           }
         }
         if (arr) {
-          val.forEach(v => {
+          val.forEach((v) => {
             if (v === vm.nameSync) {
               if (this.accordion) {
-                console.warn("accordion 属性为 true ,v-model 类型应该为 string")
-                return
+                console.warn(
+                  "accordion 属性为 true ,v-model 类型应该为 string"
+                );
+                return;
               }
-              vm.isOpen = true
+              vm.isOpen = true;
             }
-          })
+          });
         }
-      })
-      this.emit(val)
+      });
+      this.emit(val);
     },
-    setAccordion (self) {
-      if (!this.accordion) return
+    setAccordion(self) {
+      if (!this.accordion) return;
       this.childrens.forEach((vm, index) => {
         if (self !== vm) {
-          vm.isOpen = false
+          vm.isOpen = false;
         }
-      })
+      });
     },
-    resize () {
+    resize() {
       this.childrens.forEach((vm, index) => {
         // #ifndef APP-NVUE
-        vm.getCollapseHeight()
+        vm.getCollapseHeight();
         // #endif
         // #ifdef APP-NVUE
-        vm.getNvueHwight()
+        vm.getNvueHwight();
         // #endif
-      })
+      });
     },
-    onChange (isOpen, self) {
-      let activeItem = []
+    onChange(isOpen, self) {
+      let activeItem = [];
 
       if (this.accordion) {
-        activeItem = isOpen ? self.nameSync : ""
+        activeItem = isOpen ? self.nameSync : "";
       } else {
         this.childrens.forEach((vm, index) => {
           if (vm.isOpen) {
-            activeItem.push(vm.nameSync)
+            activeItem.push(vm.nameSync);
           }
-        })
+        });
       }
-      this.$emit("change", activeItem)
-      this.emit(activeItem)
+      this.$emit("change", activeItem);
+      this.emit(activeItem);
     },
-    emit (val) {
-      this.$emit("input", val)
-      this.$emit("update:modelValue", val)
-    }
-  }
-}
+    emit(val) {
+      this.$emit("input", val);
+      this.$emit("update:modelValue", val);
+    },
+  },
+};
 </script>
 <style lang="scss">
 .uni-collapse {

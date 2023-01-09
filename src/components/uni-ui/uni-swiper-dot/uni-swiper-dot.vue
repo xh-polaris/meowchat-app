@@ -1,40 +1,114 @@
 <template>
   <view class="uni-swiper__warp">
-    <slot/>
-    <view v-if="mode === 'default'" :style="{'bottom':dots.bottom + 'px'}" class="uni-swiper__dots-box" key='default'>
-      <view v-for="(item,index) in info" @click="clickItem(index)" :style="{
-        'width': (index === current? dots.width*2:dots.width ) + 'px','height':dots.width/2 +'px' ,'background-color':index !== current?dots.backgroundColor:dots.selectedBackgroundColor,'border-radius':'0px'}"
-            :key="index" class="uni-swiper__dots-item uni-swiper__dots-bar"/>
+    <slot />
+    <view
+      v-if="mode === 'default'"
+      :style="{ bottom: dots.bottom + 'px' }"
+      class="uni-swiper__dots-box"
+      key="default"
+    >
+      <view
+        v-for="(item, index) in info"
+        @click="clickItem(index)"
+        :style="{
+          width: (index === current ? dots.width * 2 : dots.width) + 'px',
+          height: dots.width / 2 + 'px',
+          'background-color':
+            index !== current
+              ? dots.backgroundColor
+              : dots.selectedBackgroundColor,
+          'border-radius': '0px',
+        }"
+        :key="index"
+        class="uni-swiper__dots-item uni-swiper__dots-bar"
+      />
     </view>
-    <view v-if="mode === 'dot'" :style="{'bottom':dots.bottom + 'px'}" class="uni-swiper__dots-box" key='dot'>
-      <view v-for="(item,index) in info" @click="clickItem(index)" :style="{
-        'width': dots.width + 'px','height':dots.height +'px' ,'background-color':index !== current?dots.backgroundColor:dots.selectedBackgroundColor,'border':index !==current ? dots.border:dots.selectedBorder}"
-            :key="index" class="uni-swiper__dots-item"/>
+    <view
+      v-if="mode === 'dot'"
+      :style="{ bottom: dots.bottom + 'px' }"
+      class="uni-swiper__dots-box"
+      key="dot"
+    >
+      <view
+        v-for="(item, index) in info"
+        @click="clickItem(index)"
+        :style="{
+          width: dots.width + 'px',
+          height: dots.height + 'px',
+          'background-color':
+            index !== current
+              ? dots.backgroundColor
+              : dots.selectedBackgroundColor,
+          border: index !== current ? dots.border : dots.selectedBorder,
+        }"
+        :key="index"
+        class="uni-swiper__dots-item"
+      />
     </view>
-    <view v-if="mode === 'round'" :style="{'bottom':dots.bottom + 'px'}" class="uni-swiper__dots-box" key='round'>
-      <view v-for="(item,index) in info" @click="clickItem(index)" :class="[index === current&&'uni-swiper__dots-long']"
-            :style="{
-		    'width':(index === current? dots.width*3:dots.width ) + 'px','height':dots.height +'px' ,'background-color':index !== current?dots.backgroundColor:dots.selectedBackgroundColor,'border':index !==current ? dots.border:dots.selectedBorder}"
-            :key="index" class="uni-swiper__dots-item "/>
+    <view
+      v-if="mode === 'round'"
+      :style="{ bottom: dots.bottom + 'px' }"
+      class="uni-swiper__dots-box"
+      key="round"
+    >
+      <view
+        v-for="(item, index) in info"
+        @click="clickItem(index)"
+        :class="[index === current && 'uni-swiper__dots-long']"
+        :style="{
+          width: (index === current ? dots.width * 3 : dots.width) + 'px',
+          height: dots.height + 'px',
+          'background-color':
+            index !== current
+              ? dots.backgroundColor
+              : dots.selectedBackgroundColor,
+          border: index !== current ? dots.border : dots.selectedBorder,
+        }"
+        :key="index"
+        class="uni-swiper__dots-item"
+      />
     </view>
-    <view v-if="mode === 'nav'" key='nav' :style="{'background-color':dotsStyles.backgroundColor,'bottom':'0'}"
-          class="uni-swiper__dots-box uni-swiper__dots-nav">
-      <text :style="{'color':dotsStyles.color}" class="uni-swiper__dots-nav-item">{{ (current+1)+"/"+info.length +' '
-        +info[current][field] }}
+    <view
+      v-if="mode === 'nav'"
+      key="nav"
+      :style="{ 'background-color': dotsStyles.backgroundColor, bottom: '0' }"
+      class="uni-swiper__dots-box uni-swiper__dots-nav"
+    >
+      <text
+        :style="{ color: dotsStyles.color }"
+        class="uni-swiper__dots-nav-item"
+        >{{ current + 1 + "/" + info.length + " " + info[current][field] }}
       </text>
     </view>
-    <view v-if="mode === 'indexes'" key='indexes' :style="{'bottom':dots.bottom + 'px'}" class="uni-swiper__dots-box">
-      <view v-for="(item,index) in info" @click="clickItem(index)" :style="{
-        'width':dots.width + 'px','height':dots.height +'px' ,'color':index === current?dots.selectedColor:dots.color,'background-color':index !== current?dots.backgroundColor:dots.selectedBackgroundColor,'border':index !==current ? dots.border:dots.selectedBorder}"
-            :key="index" class="uni-swiper__dots-item uni-swiper__dots-indexes">
-        <text class="uni-swiper__dots-indexes-text">{{ index+1 }}</text>
+    <view
+      v-if="mode === 'indexes'"
+      key="indexes"
+      :style="{ bottom: dots.bottom + 'px' }"
+      class="uni-swiper__dots-box"
+    >
+      <view
+        v-for="(item, index) in info"
+        @click="clickItem(index)"
+        :style="{
+          width: dots.width + 'px',
+          height: dots.height + 'px',
+          color: index === current ? dots.selectedColor : dots.color,
+          'background-color':
+            index !== current
+              ? dots.backgroundColor
+              : dots.selectedBackgroundColor,
+          border: index !== current ? dots.border : dots.selectedBorder,
+        }"
+        :key="index"
+        class="uni-swiper__dots-item uni-swiper__dots-indexes"
+      >
+        <text class="uni-swiper__dots-indexes-text">{{ index + 1 }}</text>
       </view>
     </view>
   </view>
 </template>
 
 <script>
-
 /**
  * SwiperDod 轮播图指示点
  * @description 自定义轮播图指示点
@@ -57,32 +131,32 @@ export default {
   props: {
     info: {
       type: Array,
-      default () {
-        return []
-      }
+      default() {
+        return [];
+      },
     },
     current: {
       type: Number,
-      default: 0
+      default: 0,
     },
     dotsStyles: {
       type: Object,
-      default () {
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
     // 类型 ：default(默认) indexes long nav
     mode: {
       type: String,
-      default: "default"
+      default: "default",
     },
     // 只在 nav 模式下生效，变量名称
     field: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
-  data () {
+  data() {
     return {
       dots: {
         width: 6,
@@ -92,38 +166,37 @@ export default {
         backgroundColor: "rgba(0, 0, 0, .3)",
         border: "1px rgba(0, 0, 0, .3) solid",
         selectedBackgroundColor: "#333",
-        selectedBorder: "1px rgba(0, 0, 0, .9) solid"
-      }
-    }
+        selectedBorder: "1px rgba(0, 0, 0, .9) solid",
+      },
+    };
   },
   watch: {
-    dotsStyles (newVal) {
-      this.dots = Object.assign(this.dots, this.dotsStyles)
+    dotsStyles(newVal) {
+      this.dots = Object.assign(this.dots, this.dotsStyles);
     },
-    mode (newVal) {
+    mode(newVal) {
       if (newVal === "indexes") {
-        this.dots.width = 14
-        this.dots.height = 14
+        this.dots.width = 14;
+        this.dots.height = 14;
       } else {
-        this.dots.width = 6
-        this.dots.height = 6
+        this.dots.width = 6;
+        this.dots.height = 6;
       }
-    }
-
+    },
   },
-  created () {
+  created() {
     if (this.mode === "indexes") {
-      this.dots.width = 12
-      this.dots.height = 12
+      this.dots.width = 12;
+      this.dots.height = 12;
     }
-    this.dots = Object.assign(this.dots, this.dotsStyles)
+    this.dots = Object.assign(this.dots, this.dotsStyles);
   },
   methods: {
-    clickItem (index) {
-      this.$emit("clickItem", index)
-    }
-  }
-}
+    clickItem(index) {
+      this.$emit("clickItem", index);
+    },
+  },
+};
 </script>
 
 <style lang="scss">

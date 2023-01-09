@@ -1,5 +1,12 @@
 <template>
-  <text class="uni-tag" v-if="text" :class="classes" :style="customStyle" @click="onClick">{{text}}</text>
+  <text
+    class="uni-tag"
+    v-if="text"
+    :class="classes"
+    :style="customStyle"
+    @click="onClick"
+    >{{ text }}</text
+  >
 </template>
 
 <script>
@@ -31,54 +38,46 @@ export default {
     type: {
       // 标签类型default、primary、success、warning、error、royal
       type: String,
-      default: "default"
+      default: "default",
     },
     size: {
       // 标签大小 normal, small
       type: String,
-      default: "normal"
+      default: "normal",
     },
     // 标签内容
     text: {
       type: String,
-      default: ""
+      default: "",
     },
     disabled: {
       // 是否为禁用状态
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     inverted: {
       // 是否为空心
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     circle: {
       // 是否为圆角样式
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     mark: {
       // 是否为标记样式
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     customStyle: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   computed: {
-    classes () {
-      const {
-        type,
-        disabled,
-        inverted,
-        circle,
-        mark,
-        size,
-        isTrue
-      } = this
+    classes() {
+      const { type, disabled, inverted, circle, mark, size, isTrue } = this;
       const classArr = [
         "uni-tag--" + type,
         "uni-tag--" + size,
@@ -88,22 +87,22 @@ export default {
         isTrue(mark) ? "uni-tag--mark" : "",
         // type === 'default' ? 'uni-tag--default' : 'uni-tag-text',
         isTrue(inverted) ? "uni-tag--inverted uni-tag-text--" + type : "",
-        size === "small" ? "uni-tag-text--small" : ""
-      ]
+        size === "small" ? "uni-tag-text--small" : "",
+      ];
       // 返回类的字符串，兼容字节小程序
-      return classArr.join(" ")
-    }
+      return classArr.join(" ");
+    },
   },
   methods: {
-    isTrue (value) {
-      return value === true || value === "true"
+    isTrue(value) {
+      return value === true || value === "true";
     },
-    onClick () {
-      if (this.isTrue(this.disabled)) return
-      this.$emit("click")
-    }
-  }
-}
+    onClick() {
+      if (this.isTrue(this.disabled)) return;
+      this.$emit("click");
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -112,7 +111,6 @@ $uni-success: #18bc37 !default;
 $uni-warning: #f3a73f !default;
 $uni-error: #e43d33 !default;
 $uni-info: #8f939c !default;
-
 
 $tag-default-pd: 4px 7px;
 $tag-small-pd: 2px 5px;
@@ -223,7 +221,6 @@ $tag-mini-pd: 1px 3px;
     /* #endif */
   }
 }
-
 
 .uni-tag-text {
   color: #fff;

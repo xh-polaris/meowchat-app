@@ -120,3 +120,10 @@ export interface Moment {
   user: User;
   photos: Array<string>;
 }
+
+export enum TargetType {
+  Post = 1,
+  Comment,
+  Cat,
+  Moment,
+}

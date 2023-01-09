@@ -13,8 +13,8 @@ export interface GetCommentsResp {
 
 export interface NewCommentReq {
     text: string;
-    ownerId: string;
-    type: string;
+    id: string;
+    scope: string;
 }
 
 export interface NewCommentResp {

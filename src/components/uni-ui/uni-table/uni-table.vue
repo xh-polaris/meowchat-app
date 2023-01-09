@@ -1,24 +1,49 @@
 <template>
-  <view class="uni-table-scroll" :class="{ 'table--border': border, 'border-none': !noData }">
+  <view
+    class="uni-table-scroll"
+    :class="{ 'table--border': border, 'border-none': !noData }"
+  >
     <!-- #ifdef H5 -->
-    <table class="uni-table" border="0" cellpadding="0" cellspacing="0" :class="{ 'table--stripe': stripe }"
-           :style="{ 'min-width': minWidth + 'px' }">
+    <table
+      class="uni-table"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      :class="{ 'table--stripe': stripe }"
+      :style="{ 'min-width': minWidth + 'px' }"
+    >
       <slot></slot>
       <view v-if="noData" class="uni-table-loading">
-        <view class="uni-table-text" :class="{ 'empty-border': border }">{{ emptyText }}</view>
+        <view class="uni-table-text" :class="{ 'empty-border': border }">{{
+          emptyText
+        }}</view>
       </view>
-      <view v-if="loading" class="uni-table-mask" :class="{ 'empty-border': border }">
+      <view
+        v-if="loading"
+        class="uni-table-mask"
+        :class="{ 'empty-border': border }"
+      >
         <div class="uni-table--loader"></div>
       </view>
     </table>
     <!-- #endif -->
     <!-- #ifndef H5 -->
-    <view class="uni-table" :style="{ 'min-width': minWidth + 'px' }" :class="{ 'table--stripe': stripe }">
+    <view
+      class="uni-table"
+      :style="{ 'min-width': minWidth + 'px' }"
+      :class="{ 'table--stripe': stripe }"
+    >
       <slot></slot>
       <view v-if="noData" class="uni-table-loading">
-        <view class="uni-table-text" :class="{ 'empty-border': border }">{{ emptyText }}</view>
+        <view class="uni-table-text" :class="{ 'empty-border': border }">{{
+          emptyText
+        }}</view>
       </view>
-      <view v-if="loading" class="uni-table-mask" :class="{ 'empty-border': border }">
+      <view
+        v-if="loading"
+        class="uni-table-mask"
+        :class="{ 'empty-border': border }"
+      >
         <div class="uni-table--loader"></div>
       </view>
     </view>
@@ -41,205 +66,214 @@
 export default {
   name: "uniTable",
   options: {
-    virtualHost: true
+    virtualHost: true,
   },
   emits: ["selection-change"],
   props: {
     data: {
       type: Array,
-      default () {
-        return []
-      }
+      default() {
+        return [];
+      },
     },
     // 是否有竖线
     border: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 是否显示斑马线
     stripe: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 多选
     type: {
       type: String,
-      default: ""
+      default: "",
     },
     // 没有更多数据
     emptyText: {
       type: String,
-      default: "没有更多数据"
+      default: "没有更多数据",
     },
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     rowKey: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
-  data () {
+  data() {
     return {
       noData: true,
       minWidth: 0,
-      multiTableHeads: []
-    }
+      multiTableHeads: [],
+    };
   },
   watch: {
-    loading (val) {
-    },
-    data (newVal) {
-      let theadChildren = this.theadChildren
-      let rowspan = 1
+    loading(val) {},
+    data(newVal) {
+      let theadChildren = this.theadChildren;
+      let rowspan = 1;
       if (this.theadChildren) {
-        rowspan = this.theadChildren.rowspan
+        rowspan = this.theadChildren.rowspan;
       }
 
       // this.trChildren.length - rowspan
-      this.noData = false
+      this.noData = false;
       // this.noData = newVal.length === 0
-    }
+    },
   },
-  created () {
+  created() {
     // 定义tr的实例数组
-    this.trChildren = []
-    this.thChildren = []
-    this.theadChildren = null
-    this.backData = []
-    this.backIndexData = []
+    this.trChildren = [];
+    this.thChildren = [];
+    this.theadChildren = null;
+    this.backData = [];
+    this.backIndexData = [];
   },
 
   methods: {
-    isNodata () {
-      let theadChildren = this.theadChildren
-      let rowspan = 1
+    isNodata() {
+      let theadChildren = this.theadChildren;
+      let rowspan = 1;
       if (this.theadChildren) {
-        rowspan = this.theadChildren.rowspan
+        rowspan = this.theadChildren.rowspan;
       }
-      this.noData = this.trChildren.length - rowspan <= 0
+      this.noData = this.trChildren.length - rowspan <= 0;
     },
     /**
      * 选中所有
      */
-    selectionAll () {
-      let startIndex = 1
-      let theadChildren = this.theadChildren
+    selectionAll() {
+      let startIndex = 1;
+      let theadChildren = this.theadChildren;
       if (!this.theadChildren) {
-        theadChildren = this.trChildren[0]
+        theadChildren = this.trChildren[0];
       } else {
-        startIndex = theadChildren.rowspan - 1
+        startIndex = theadChildren.rowspan - 1;
       }
-      let isHaveData = this.data && this.data.length.length > 0
-      theadChildren.checked = true
-      theadChildren.indeterminate = false
+      let isHaveData = this.data && this.data.length.length > 0;
+      theadChildren.checked = true;
+      theadChildren.indeterminate = false;
       this.trChildren.forEach((item, index) => {
         if (!item.disabled) {
-          item.checked = true
+          item.checked = true;
           if (isHaveData && item.keyValue) {
-            const row = this.data.find(v => v[this.rowKey] === item.keyValue)
-            if (!this.backData.find(v => v[this.rowKey] === row[this.rowKey])) {
-              this.backData.push(row)
+            const row = this.data.find((v) => v[this.rowKey] === item.keyValue);
+            if (
+              !this.backData.find((v) => v[this.rowKey] === row[this.rowKey])
+            ) {
+              this.backData.push(row);
             }
           }
-          if (index > (startIndex - 1) && this.backIndexData.indexOf(index - startIndex) === -1) {
-            this.backIndexData.push(index - startIndex)
+          if (
+            index > startIndex - 1 &&
+            this.backIndexData.indexOf(index - startIndex) === -1
+          ) {
+            this.backIndexData.push(index - startIndex);
           }
         }
-      })
+      });
       // this.backData = JSON.parse(JSON.stringify(this.data))
       this.$emit("selection-change", {
         detail: {
           value: this.backData,
-          index: this.backIndexData
-        }
-      })
+          index: this.backIndexData,
+        },
+      });
     },
     /**
      * 用于多选表格，切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）
      */
-    toggleRowSelection (row, selected) {
+    toggleRowSelection(row, selected) {
       // if (!this.theadChildren) return
-      row = [].concat(row)
+      row = [].concat(row);
 
       this.trChildren.forEach((item, index) => {
         // if (item.keyValue) {
 
-        const select = row.findIndex(v => {
+        const select = row.findIndex((v) => {
           //
           if (typeof v === "number") {
-            return v === index - 1
+            return v === index - 1;
           } else {
-            return v[this.rowKey] === item.keyValue
+            return v[this.rowKey] === item.keyValue;
           }
-        })
-        let ischeck = item.checked
+        });
+        let ischeck = item.checked;
         if (select !== -1) {
           if (typeof selected === "boolean") {
-            item.checked = selected
+            item.checked = selected;
           } else {
-            item.checked = !item.checked
+            item.checked = !item.checked;
           }
           if (ischeck !== item.checked) {
-            this.check(item.rowData || item, item.checked, item.rowData ? item.keyValue : null, true)
+            this.check(
+              item.rowData || item,
+              item.checked,
+              item.rowData ? item.keyValue : null,
+              true
+            );
           }
         }
         // }
-      })
+      });
       this.$emit("selection-change", {
         detail: {
           value: this.backData,
-          index: this.backIndexData
-        }
-      })
+          index: this.backIndexData,
+        },
+      });
     },
 
     /**
      * 用于多选表格，清空用户的选择
      */
-    clearSelection () {
-      let theadChildren = this.theadChildren
+    clearSelection() {
+      let theadChildren = this.theadChildren;
       if (!this.theadChildren) {
-        theadChildren = this.trChildren[0]
+        theadChildren = this.trChildren[0];
       }
       // if (!this.theadChildren) return
-      theadChildren.checked = false
-      theadChildren.indeterminate = false
-      this.trChildren.forEach(item => {
+      theadChildren.checked = false;
+      theadChildren.indeterminate = false;
+      this.trChildren.forEach((item) => {
         // if (item.keyValue) {
-        item.checked = false
+        item.checked = false;
         // }
-      })
-      this.backData = []
-      this.backIndexData = []
+      });
+      this.backData = [];
+      this.backIndexData = [];
       this.$emit("selection-change", {
         detail: {
           value: [],
-          index: []
-        }
-      })
+          index: [],
+        },
+      });
     },
     /**
      * 用于多选表格，切换所有行的选中状态
      */
-    toggleAllSelection () {
-      let list = []
-      let startIndex = 1
-      let theadChildren = this.theadChildren
+    toggleAllSelection() {
+      let list = [];
+      let startIndex = 1;
+      let theadChildren = this.theadChildren;
       if (!this.theadChildren) {
-        theadChildren = this.trChildren[0]
+        theadChildren = this.trChildren[0];
       } else {
-        startIndex = theadChildren.rowspan - 1
+        startIndex = theadChildren.rowspan - 1;
       }
       this.trChildren.forEach((item, index) => {
         if (!item.disabled) {
-          if (index > (startIndex - 1)) {
-            list.push(index - startIndex)
+          if (index > startIndex - 1) {
+            list.push(index - startIndex);
           }
         }
-      })
-      this.toggleRowSelection(list)
+      });
+      this.toggleRowSelection(list);
     },
 
     /**
@@ -248,60 +282,71 @@ export default {
      * @param {Object} check
      * @param {Object} rowValue
      */
-    check (child, check, keyValue, emit) {
-      let theadChildren = this.theadChildren
+    check(child, check, keyValue, emit) {
+      let theadChildren = this.theadChildren;
       if (!this.theadChildren) {
-        theadChildren = this.trChildren[0]
+        theadChildren = this.trChildren[0];
       }
 
-      let childDomIndex = this.trChildren.findIndex((item, index) => child === item)
+      let childDomIndex = this.trChildren.findIndex(
+        (item, index) => child === item
+      );
       if (childDomIndex < 0) {
-        childDomIndex = this.data.findIndex(v => v[this.rowKey] === keyValue) + 1
+        childDomIndex =
+          this.data.findIndex((v) => v[this.rowKey] === keyValue) + 1;
       }
-      const dataLen = this.trChildren.filter(v => !v.disabled && v.keyValue).length
+      const dataLen = this.trChildren.filter(
+        (v) => !v.disabled && v.keyValue
+      ).length;
       if (childDomIndex === 0) {
-        check ? this.selectionAll() : this.clearSelection()
-        return
+        check ? this.selectionAll() : this.clearSelection();
+        return;
       }
 
       if (check) {
         if (keyValue) {
-          this.backData.push(child)
+          this.backData.push(child);
         }
-        this.backIndexData.push(childDomIndex - 1)
+        this.backIndexData.push(childDomIndex - 1);
       } else {
-        const index = this.backData.findIndex(v => v[this.rowKey] === keyValue)
-        const idx = this.backIndexData.findIndex(item => item === childDomIndex - 1)
+        const index = this.backData.findIndex(
+          (v) => v[this.rowKey] === keyValue
+        );
+        const idx = this.backIndexData.findIndex(
+          (item) => item === childDomIndex - 1
+        );
         if (keyValue) {
-          this.backData.splice(index, 1)
+          this.backData.splice(index, 1);
         }
-        this.backIndexData.splice(idx, 1)
+        this.backIndexData.splice(idx, 1);
       }
 
-      const domCheckAll = this.trChildren.find((item, index) => index > 0 && !item.checked && !item.disabled)
+      const domCheckAll = this.trChildren.find(
+        (item, index) => index > 0 && !item.checked && !item.disabled
+      );
       if (!domCheckAll) {
-        theadChildren.indeterminate = false
-        theadChildren.checked = true
+        theadChildren.indeterminate = false;
+        theadChildren.checked = true;
       } else {
-        theadChildren.indeterminate = true
-        theadChildren.checked = false
+        theadChildren.indeterminate = true;
+        theadChildren.checked = false;
       }
 
       if (this.backIndexData.length === 0) {
-        theadChildren.indeterminate = false
+        theadChildren.indeterminate = false;
       }
 
       if (!emit) {
         this.$emit("selection-change", {
           detail: {
             value: this.backData,
-            index: this.backIndexData
-          }
-        })
+            index: this.backIndexData,
+          },
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

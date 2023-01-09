@@ -1,227 +1,358 @@
 <template>
-  <view class="reply-container">
-    <view class="comment-box">
-      <view class="commenter-info-box">
-        <image class="commenter-profile" :src="replies.profile" />
-        <text class="commenter-name">
-          {{ replies.id }}
-        </text>
-        <text class="comment-time">
-          ·{{ replies.time }}
-        </text>
-      </view>
-      <view class="comment-content">
-        <view class="comment-text">
-          {{ replies.text }}
-        </view>
-        <view class="like-box">
-          <image src="/static/images/like.svg" class="like-icon" mode="widthFix" />
-          <text class="like-num">
-            {{ replies.likes }}
-          </text>
-        </view>
-      </view>
-    </view>
+  <view class="background" @touchmove.stop.prevent @click="closeSelf"></view>
+  <scroll-view class="frame" scroll-y="true" @touchmove.stop>
+    <view class="main">
+      <view class="comment">
+        <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}" class="avatar"></view>
+        <view class="thread">
+          <view class="content">
+            <view class="left">
+              <view class="upper">
+                <view class="username">Username</view>
+                <view class="timestamp">3小时前</view>
+              </view>
+              <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+            </view>
+            <view class="right">
+              <view class="likes-frame">
+                <view class="thumb"></view>
+                <view class="likes">3</view>
+              </view>
 
-    <view class="replies-box">
-      <view v-for="(item, index) in replies.reply" :key="index" class="reply-box">
-        <view class="replier-info-box">
-          <image class="replier-profile" :src="item.profile" />
-          <text class="replier-name">
-            {{ item.id }}
-          </text>
-          <text class="reply-time">
-            ·{{ item.time }}
-          </text>
-        </view>
-        <view class="reply-content">
-          <view class="reply-text">
-            {{ item.text }}
-          </view>
-          <view class="like-box">
-            <image src="/static/images/like.svg" class="like-icon" mode="widthFix" />
-            <text class="like-num">
-              {{ item.likes }}
-            </text>
+            </view>
           </view>
         </view>
+
+      </view>
+      <view class="reply">
+        <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}" class="avatar"></view>
+        <view class="thread">
+          <view class="content">
+            <view class="left">
+              <view class="upper">
+                <view class="username">Username</view>
+                <view class="timestamp">3小时前</view>
+              </view>
+              <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+            </view>
+            <view class="right">
+              <view class="likes-frame">
+                <view class="thumb"></view>
+                <view class="likes">3</view>
+              </view>
+            </view>
+
+          </view>
+          <view class="sub-replies">
+            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
+                  class="avatar"></view>
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">Username</view>
+                  <view class="timestamp">3小时前</view>
+                </view>
+                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              </view>
+              <view class="right">
+                <view class="likes-frame">
+                  <view class="thumb"></view>
+                  <view class="likes">3</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="sub-replies">
+            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
+                  class="avatar"></view>
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">Username</view>
+                  <view class="timestamp">3小时前</view>
+                </view>
+                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              </view>
+              <view class="right">
+                <view class="likes-frame">
+                  <view class="thumb"></view>
+                  <view class="likes">3</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="sub-replies">
+            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
+                  class="avatar"></view>
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">Username</view>
+                  <view class="timestamp">3小时前</view>
+                </view>
+                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              </view>
+              <view class="right">
+                <view class="likes-frame">
+                  <view class="thumb"></view>
+                  <view class="likes">3</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="more-sub-replies">
+            <view>展开更多回复</view>
+            <view class="down-arrow"></view>
+          </view>
+        </view>
+
+
+      </view>
+      <view class="reply">
+        <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}" class="avatar"></view>
+        <view class="thread">
+          <view class="content">
+            <view class="left">
+              <view class="upper">
+                <view class="username">Username</view>
+                <view class="timestamp">3小时前</view>
+              </view>
+              <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+            </view>
+            <view class="right">
+              <view class="likes-frame">
+                <view class="thumb"></view>
+                <view class="likes">3</view>
+              </view>
+            </view>
+
+          </view>
+          <view class="sub-replies">
+            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
+                  class="avatar"></view>
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">Username</view>
+                  <view class="timestamp">3小时前</view>
+                </view>
+                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              </view>
+              <view class="right">
+                <view class="likes-frame">
+                  <view class="thumb"></view>
+                  <view class="likes">3</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="sub-replies">
+            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
+                  class="avatar"></view>
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">Username</view>
+                  <view class="timestamp">3小时前</view>
+                </view>
+                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              </view>
+              <view class="right">
+                <view class="likes-frame">
+                  <view class="thumb"></view>
+                  <view class="likes">3</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="sub-replies">
+            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
+                  class="avatar"></view>
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">Username</view>
+                  <view class="timestamp">3小时前</view>
+                </view>
+                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              </view>
+              <view class="right">
+                <view class="likes-frame">
+                  <view class="thumb"></view>
+                  <view class="likes">3</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="more-sub-replies">
+            <view>展开更多回复</view>
+            <view class="down-arrow"></view>
+          </view>
+        </view>
+
+
       </view>
     </view>
-  </view>
+  </scroll-view>
+
 </template>
 
-<script lang="ts" setup>
-import { Comment } from "@/apis/moment/moment-components"
-import { reactive } from "vue"
+<script setup>
 
-const props = defineProps<{ replies: Comment }>()
+const emits = defineEmits(["closeReply"])
 
-const replies = reactive(props.replies)
+function closeSelf() {
+  emits("closeReply")
+}
 
 </script>
 
 <style lang="scss" scoped>
-.reply-container {
-  border-radius: 8% 8% 0 0;
-  background-color: #eee;
-  padding: 0;
 
-  .comment-box {
-    margin-bottom: 16rpx;
-    background-color: #fff;
-    border-radius: 8% 8% 0 0;
-    padding: 20px 10px 20px 20px;
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #22222288;
+  z-index: 100;
+}
 
-    .commenter-info-box {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
+.frame {
+  overflow: scroll;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  max-height: 75vh;
+  z-index: 102;
+  background-color: #fff;
+  border-radius: 5vw 5vw 0 0;
+}
 
-      .commenter-profile {
-        width: 80rpx;
-        height: 80rpx;
-        margin-right: 24rpx;
-        border-radius: 50%;
-      }
+.main {
 
-      .commenter-name {
-        max-width: 360rpx;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-weight: bold;
-        margin-right: 12px;
-        font-size: 14px;
-      }
+  padding: calc(20 / 390 * 100vw);
+  box-sizing: border-box;
 
-      .comment-time {
-        color: #aaa;
-        max-width: 240rpx;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 12px;
-      }
+  .comment, .reply {
+    display: flex;
+    color: #353535;
+    font-size: calc(12 / 390 * 100vw);
+
+    .avatar {
+      width: calc(32 / 390 * 100vw);
+      height: calc(32 / 390 * 100vw);
+      border-radius: 50%;
+      background-size: 100% 100%;
+      margin-right: calc(11 / 390 * 100vw);
     }
 
-    .comment-content {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-left: 104rpx;
-      line-height: 1.3em;
-      letter-spacing: 0.05em;
+    .thread {
+      flex: auto;
+
+      .content {
+        display: flex;
+
+        .left {
+          flex: auto;
+          width: 0;
+
+          .upper {
+            display: flex;
+            color: #B8B8B8;
+
+            .username {
+              margin-right: calc(10 / 390 * 100vw);
+            }
+          }
+
+          .lower {
+            font-size: calc(14 / 390 * 100vw);
+            margin: calc(8 / 390 * 100vw) 0;
+          }
+        }
+
+        .right {
+          display: flex;
+          width: calc(28 / 390 * 100vw);
+          justify-content: flex-end;
+          padding-top: calc(22 / 390 * 100vw);
 
 
-      .comment-text {
-        width: 75%;
+          .likes-frame {
+            height: calc(20 / 390 * 100vw);
+            display: flex;
+            align-items: center;
+
+            .thumb {
+              background-image: url("../../static/images/like_grey_0.png");
+              width: calc(12 / 390 * 100vw);
+              height: calc(12 / 390 * 100vw);
+              background-size: 100% 100%;
+            }
+
+            .likes {
+              width: calc(12 / 390 * 100vw);
+              text-align: right;
+            }
+          }
+
+
+          color: #B8B8B8;
+        }
+
       }
 
-      .like-box {
-        width: 25%;
+      .sub-replies {
+        display: flex;
+        margin: calc(10 / 390 * 100vw) 0;
+
+        .avatar {
+          width: calc(22 / 390 * 100vw);
+          height: calc(22 / 390 * 100vw);
+        }
+
+        .content {
+          flex: auto;
+          display: flex;
+
+
+          .left {
+            flex: auto;
+            width: 0;
+
+          }
+        }
+      }
+
+      .more-sub-replies {
+        color: #696969;
+        margin-left: calc(33 / 390 * 100vw);
         display: flex;
         align-items: center;
-        justify-content: flex-end;
 
-        .like-icon {
-          width: 16px;
-          margin-right: 6px;
-        }
-
-        .like-num {
-          width: 40px;
-          font-size: 14px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          color: #aaa;
+        .down-arrow {
+          background-image: url("../../static/images/down-black.png");
+          width: calc(8 / 390 * 100vw);
+          height: calc(5 / 390 * 100vw);
+          background-size: 100% 100%;
+          margin-left: calc(8 / 390 * 100vw);
         }
       }
     }
+
+
   }
 
+  .comment {
+    margin-bottom: calc(20 / 390 * 100vw);
+  }
 
-  .replies-box {
-    background: #fff;
-
-    .reply-box {
-      padding: 15px 10px 0 20px;
-
-      .replier-info-box {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-
-        .replier-profile {
-          width: 80rpx;
-          height: 80rpx;
-          margin-right: 24rpx;
-          border-radius: 50%;
-        }
-
-        .replier-name {
-          max-width: 360rpx;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          font-weight: bold;
-          margin-right: 12px;
-          font-size: 14px;
-        }
-
-        .reply-time {
-          color: #aaa;
-          max-width: 240rpx;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          font-size: 12px;
-        }
-      }
-
-
-      .reply-content {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        margin-left: 104rpx;
-        line-height: 1.3em;
-        letter-spacing: 0.05em;
-
-        padding-bottom: 30rpx;
-        border-bottom: 1px solid #eee;
-
-
-        .reply-text {
-          width: 75%;
-        }
-
-        .like-box {
-          width: 25%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-
-          .like-icon {
-            width: 16px;
-            margin-right: 6px;
-          }
-
-          .like-num {
-            width: 40px;
-            font-size: 14px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: #aaa;
-          }
-        }
-      }
-
-      &:last-child {
-        .reply-content {
-          border-bottom: none;
-        }
-      }
-    }
+  .reply {
+    margin: calc(20 / 390 * 100vw) 0;
   }
 }
+
 </style>

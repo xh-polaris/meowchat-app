@@ -1,6 +1,6 @@
 <template>
   <view class="uni-breadcrumb">
-    <slot/>
+    <slot />
   </view>
 </template>
 <script>
@@ -13,26 +13,25 @@
  */
 export default {
   options: {
-    virtualHost: true
+    virtualHost: true,
   },
   props: {
     separator: {
       type: String,
-      default: "/"
+      default: "/",
     },
     separatorClass: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
 
-  provide () {
+  provide() {
     return {
-      uniBreadcrumb: this
-    }
-  }
-
-}
+      uniBreadcrumb: this,
+    };
+  },
+};
 </script>
 <style lang="scss">
 .uni-breadcrumb {

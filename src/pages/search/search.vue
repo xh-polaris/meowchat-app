@@ -4,13 +4,14 @@
     <view class="search-bar">
       <view class="search-bar-box">
         <input
-          ref="getValue" v-model="keywords"
-          type="text"
-          placeholder="搜索猫咪"
+          ref="getValue"
+          v-model="keywords"
           class="search-text"
-          maxlength="10"
+          maxlength="20"
+          placeholder="搜索猫咪"
+          type="text"
           @input="changevalue($event)"
-        >
+        />
         <image class="search-span" src="/static/images/search_span.png" />
       </view>
       <view v-show="data.show" class="cancel" @click="onClickCancel">
@@ -27,11 +28,7 @@
         <image src="/static/images/delete.png" @click="del" />
       </view>
       <view class="hisList">
-        <view
-          v-for="(item,index) in data.hisList"
-          :key="index"
-          class="word"
-        >
+        <view v-for="(item, index) in data.hisList" :key="index" class="word">
           {{ item }}
         </view>
       </view>
@@ -40,13 +37,12 @@
 </template>
 
 <script lang="ts" setup>
-import {onClickCancel} from "@/pages/collection/event";
-import {reactive} from "vue";
-
+import { onClickCancel } from "@/pages/collection/event";
+import { reactive } from "vue";
 
 const data = reactive({
   show: false,
-  hisList: ["123", "ddd"] as any
+  hisList: ["123", "ddd"] as any,
 });
 
 //let show = true;
@@ -54,7 +50,6 @@ const data = reactive({
 try {
   const res = uni.getStorageInfoSync();
   console.log(res.keys);
- 
 } catch (e) {
   // error
 }
@@ -84,12 +79,9 @@ function changevalue(e: any) {
      this.searchList = [];
    }*/
 }
-
-
 </script>
 
 <style lang="scss" scoped>
-
 .search-bar {
   width: 100%;
   height: 100rpx;
@@ -118,10 +110,7 @@ function changevalue(e: any) {
       height: 56rpx;
       margin-top: 6rpx;
       margin-right: 30rpx;
-
     }
-
-
   }
 
   .cancel {
@@ -142,8 +131,6 @@ function changevalue(e: any) {
 }
 
 .history {
-
-
   .historySearch {
     display: flex;
     margin-top: 10px;
@@ -155,7 +142,6 @@ function changevalue(e: any) {
 
       margin-left: 20rpx;
     }
-
   }
 
   .hisList {
@@ -167,7 +153,6 @@ function changevalue(e: any) {
       padding: 10px 20px 10px 20px;
       border-radius: 20px;
     }
-
   }
 }
 </style>

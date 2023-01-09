@@ -1,39 +1,68 @@
 <template>
   <view class="uni-data-pickerview">
-    <scroll-view class="selected-area" scroll-x="true" scroll-y="false" :show-scrollbar="false">
+    <scroll-view
+      class="selected-area"
+      scroll-x="true"
+      scroll-y="false"
+      :show-scrollbar="false"
+    >
       <view class="selected-list">
-        <template v-for="(item,index) in selected">
-          <view class="selected-item"
-                :class="{'selected-item-active':index==selectedIndex, 'selected-item-text-overflow': ellipsis}"
-                v-if="item.text" @click="handleSelect(index)">
-            <text class="">{{item.text}}</text>
+        <template v-for="(item, index) in selected">
+          <view
+            class="selected-item"
+            :class="{
+              'selected-item-active': index == selectedIndex,
+              'selected-item-text-overflow': ellipsis,
+            }"
+            v-if="item.text"
+            @click="handleSelect(index)"
+          >
+            <text class="">{{ item.text }}</text>
           </view>
         </template>
       </view>
     </scroll-view>
     <view class="tab-c">
       <template v-for="(child, i) in dataList">
-        <scroll-view class="list" :key="i" v-if="i==selectedIndex" :scroll-y="true">
-          <view class="item" :class="{'is-disabled': !!item.disable}" v-for="(item, j) in child"
-                @click="handleNodeClick(item, i, j)">
-            <text class="item-text item-text-overflow">{{item[map.text]}}</text>
-            <view class="check" v-if="selected.length > i && item[map.value] == selected[i].value"></view>
+        <scroll-view
+          class="list"
+          :key="i"
+          v-if="i == selectedIndex"
+          :scroll-y="true"
+        >
+          <view
+            class="item"
+            :class="{ 'is-disabled': !!item.disable }"
+            v-for="(item, j) in child"
+            @click="handleNodeClick(item, i, j)"
+          >
+            <text class="item-text item-text-overflow">{{
+              item[map.text]
+            }}</text>
+            <view
+              class="check"
+              v-if="selected.length > i && item[map.value] == selected[i].value"
+            ></view>
           </view>
         </scroll-view>
       </template>
 
       <view class="loading-cover" v-if="loading">
-        <uni-load-more class="load-more" :contentText="loadMore" status="loading"></uni-load-more>
+        <uni-load-more
+          class="load-more"
+          :contentText="loadMore"
+          status="loading"
+        ></uni-load-more>
       </view>
       <view class="error-message" v-if="errorMessage">
-        <text class="error-text">{{errorMessage}}</text>
+        <text class="error-text">{{ errorMessage }}</text>
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import dataPicker from "./uni-data-picker.js"
+import dataPicker from "./uni-data-picker.js";
 
 /**
  * DataPickerview
@@ -57,125 +86,122 @@ export default {
   props: {
     managedMode: {
       type: Boolean,
-      default: false
+      default: false,
     },
     ellipsis: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  created () {
+  created() {
     if (this.managedMode) {
-      return
+      return;
     }
 
     this.$nextTick(() => {
-      this.load()
-    })
+      this.load();
+    });
   },
   methods: {
-    onPropsChange () {
-      this._treeData = []
-      this.selectedIndex = 0
-      this.load()
+    onPropsChange() {
+      this._treeData = [];
+      this.selectedIndex = 0;
+      this.load();
     },
-    load () {
+    load() {
       if (this.isLocaldata) {
-        this.loadData()
+        this.loadData();
       } else if (this.dataValue.length) {
         this.getTreePath((res) => {
-          this.loadData()
-        })
+          this.loadData();
+        });
       }
     },
-    handleSelect (index) {
-      this.selectedIndex = index
+    handleSelect(index) {
+      this.selectedIndex = index;
     },
-    handleNodeClick (item, i, j) {
+    handleNodeClick(item, i, j) {
       if (item.disable) {
-        return
+        return;
       }
-      const node = this.dataList[i][j]
-      const text = node[this.map.text]
-      const value = node[this.map.value]
+      const node = this.dataList[i][j];
+      const text = node[this.map.text];
+      const value = node[this.map.value];
       if (i < this.selected.length - 1) {
-        this.selected.splice(i, this.selected.length - i)
+        this.selected.splice(i, this.selected.length - i);
         this.selected.push({
           text,
-          value
-        })
+          value,
+        });
       } else if (i === this.selected.length - 1) {
         this.selected.splice(i, 1, {
           text,
-          value
-        })
+          value,
+        });
       }
 
       if (node.isleaf) {
-        this.onSelectedChange(node, node.isleaf)
-        return
+        this.onSelectedChange(node, node.isleaf);
+        return;
       }
 
-      const {
-        isleaf,
-        hasNodes
-      } = this._updateBindData()
+      const { isleaf, hasNodes } = this._updateBindData();
 
       if (!this._isTreeView() && !hasNodes) {
-        this.onSelectedChange(node, true)
-        return
+        this.onSelectedChange(node, true);
+        return;
       }
 
       if (this.isLocaldata && (!hasNodes || isleaf)) {
-        this.onSelectedChange(node, true)
-        return
+        this.onSelectedChange(node, true);
+        return;
       }
 
       if (!isleaf && !hasNodes) {
         this._loadNodeData((data) => {
           if (!data.length) {
-            node.isleaf = true
+            node.isleaf = true;
           } else {
-            this._treeData.push(...data)
-            this._updateBindData(node)
+            this._treeData.push(...data);
+            this._updateBindData(node);
           }
-          this.onSelectedChange(node, node.isleaf)
-        }, this._nodeWhere())
-        return
+          this.onSelectedChange(node, node.isleaf);
+        }, this._nodeWhere());
+        return;
       }
 
-      this.onSelectedChange(node, false)
+      this.onSelectedChange(node, false);
     },
-    updateData (data) {
-      this._treeData = data.treeData
-      this.selected = data.selected
+    updateData(data) {
+      this._treeData = data.treeData;
+      this.selected = data.selected;
       if (!this._treeData.length) {
-        this.loadData()
+        this.loadData();
       } else {
         //this.selected = data.selected
-        this._updateBindData()
+        this._updateBindData();
       }
     },
-    onDataChange () {
-      this.$emit("datachange")
+    onDataChange() {
+      this.$emit("datachange");
     },
-    onSelectedChange (node, isleaf) {
+    onSelectedChange(node, isleaf) {
       if (isleaf) {
-        this._dispatchEvent()
+        this._dispatchEvent();
       }
 
       if (node) {
-        this.$emit("nodeclick", node)
+        this.$emit("nodeclick", node);
       }
     },
-    _dispatchEvent () {
-      this.$emit("change", this.selected.slice(0))
-    }
-  }
-}
+    _dispatchEvent() {
+      this.$emit("change", this.selected.slice(0));
+    },
+  },
+};
 </script>
 <style lang="scss">
 $uni-primary: #007aff !default;
@@ -191,7 +217,7 @@ $uni-primary: #007aff !default;
 }
 
 .error-text {
-  color: #DD524D;
+  color: #dd524d;
 }
 
 .loading-cover {
@@ -200,7 +226,7 @@ $uni-primary: #007aff !default;
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, .5);
+  background-color: rgba(255, 255, 255, 0.5);
   /* #ifndef APP-NVUE */
   display: flex;
   /* #endif */
@@ -223,7 +249,7 @@ $uni-primary: #007aff !default;
   right: 0;
   bottom: 0;
   padding: 15px;
-  opacity: .9;
+  opacity: 0.9;
   z-index: 102;
 }
 
@@ -299,7 +325,7 @@ $uni-primary: #007aff !default;
 }
 
 .is-disabled {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .item-text {

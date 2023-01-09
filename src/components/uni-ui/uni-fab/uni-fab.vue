@@ -1,44 +1,86 @@
 <template>
   <view class="uni-cursor-point">
-    <view v-if="popMenu && (leftBottom||rightBottom||leftTop||rightTop) && content.length > 0" :class="{
+    <view
+      v-if="
+        popMenu &&
+        (leftBottom || rightBottom || leftTop || rightTop) &&
+        content.length > 0
+      "
+      :class="{
         'uni-fab--leftBottom': leftBottom,
         'uni-fab--rightBottom': rightBottom,
         'uni-fab--leftTop': leftTop,
-        'uni-fab--rightTop': rightTop
-      }" class="uni-fab"
-          :style="nvueBottom"
+        'uni-fab--rightTop': rightTop,
+      }"
+      class="uni-fab"
+      :style="nvueBottom"
     >
-      <view :class="{
+      <view
+        :class="{
           'uni-fab__content--left': horizontal === 'left',
           'uni-fab__content--right': horizontal === 'right',
           'uni-fab__content--flexDirection': direction === 'vertical',
           'uni-fab__content--flexDirectionStart': flexDirectionStart,
           'uni-fab__content--flexDirectionEnd': flexDirectionEnd,
-		  'uni-fab__content--other-platform': !isAndroidNvue
-        }" :style="{ width: boxWidth, height: boxHeight, backgroundColor: styles.backgroundColor }"
-            class="uni-fab__content" elevation="5">
-        <view v-if="flexDirectionStart || horizontalLeft" class="uni-fab__item uni-fab__item--first"/>
-        <view v-for="(item, index) in content" :key="index" :class="{ 'uni-fab__item--active': isShow }"
-              class="uni-fab__item" @click="_onItemClick(index, item)">
-          <image :src="item.active ? item.selectedIconPath : item.iconPath" class="uni-fab__item-image"
-                 mode="aspectFit"/>
-          <text class="uni-fab__item-text"
-                :style="{ color: item.active ? styles.selectedColor : styles.color }">{{ item.text }}
+          'uni-fab__content--other-platform': !isAndroidNvue,
+        }"
+        :style="{
+          width: boxWidth,
+          height: boxHeight,
+          backgroundColor: styles.backgroundColor,
+        }"
+        class="uni-fab__content"
+        elevation="5"
+      >
+        <view
+          v-if="flexDirectionStart || horizontalLeft"
+          class="uni-fab__item uni-fab__item--first"
+        />
+        <view
+          v-for="(item, index) in content"
+          :key="index"
+          :class="{ 'uni-fab__item--active': isShow }"
+          class="uni-fab__item"
+          @click="_onItemClick(index, item)"
+        >
+          <image
+            :src="item.active ? item.selectedIconPath : item.iconPath"
+            class="uni-fab__item-image"
+            mode="aspectFit"
+          />
+          <text
+            class="uni-fab__item-text"
+            :style="{
+              color: item.active ? styles.selectedColor : styles.color,
+            }"
+            >{{ item.text }}
           </text>
         </view>
-        <view v-if="flexDirectionEnd || horizontalRight" class="uni-fab__item uni-fab__item--first"/>
+        <view
+          v-if="flexDirectionEnd || horizontalRight"
+          class="uni-fab__item uni-fab__item--first"
+        />
       </view>
     </view>
-    <view :class="{
-		  'uni-fab__circle--leftBottom': leftBottom,
-		  'uni-fab__circle--rightBottom': rightBottom,
-		  'uni-fab__circle--leftTop': leftTop,
-		  'uni-fab__circle--rightTop': rightTop,
-		  'uni-fab__content--other-platform': !isAndroidNvue
-		}" class="uni-fab__circle uni-fab__plus" :style="{ 'background-color': styles.buttonColor, 'bottom': nvueBottom }"
-          @click="_onClick">
-      <uni-icons class="fab-circle-icon" type="plusempty" :color="styles.iconColor" size="32"
-                 :class="{'uni-fab__plus--active': isShow && content.length > 0}"></uni-icons>
+    <view
+      :class="{
+        'uni-fab__circle--leftBottom': leftBottom,
+        'uni-fab__circle--rightBottom': rightBottom,
+        'uni-fab__circle--leftTop': leftTop,
+        'uni-fab__circle--rightTop': rightTop,
+        'uni-fab__content--other-platform': !isAndroidNvue,
+      }"
+      class="uni-fab__circle uni-fab__plus"
+      :style="{ 'background-color': styles.buttonColor, bottom: nvueBottom }"
+      @click="_onClick"
+    >
+      <uni-icons
+        class="fab-circle-icon"
+        type="plusempty"
+        :color="styles.iconColor"
+        size="32"
+        :class="{ 'uni-fab__plus--active': isShow && content.length > 0 }"
+      ></uni-icons>
       <!-- <view class="fab-circle-v"  :class="{'uni-fab__plus--active': isShow && content.length > 0}"></view>
       <view class="fab-circle-h" :class="{'uni-fab__plus--active': isShow  && content.length > 0}"></view> -->
     </view>
@@ -46,9 +88,9 @@
 </template>
 
 <script>
-let platform = "other"
+let platform = "other";
 // #ifdef APP-NVUE
-platform = uni.getSystemInfoSync().platform
+platform = uni.getSystemInfoSync().platform;
 // #endif
 
 /**
@@ -76,38 +118,38 @@ export default {
   props: {
     pattern: {
       type: Object,
-      default () {
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
     horizontal: {
       type: String,
-      default: "left"
+      default: "left",
     },
     vertical: {
       type: String,
-      default: "bottom"
+      default: "bottom",
     },
     direction: {
       type: String,
-      default: "horizontal"
+      default: "horizontal",
     },
     content: {
       type: Array,
-      default () {
-        return []
-      }
+      default() {
+        return [];
+      },
     },
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     popMenu: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
-  data () {
+  data() {
     return {
       fabShow: false,
       isShow: false,
@@ -117,122 +159,128 @@ export default {
         selectedColor: "#007AFF",
         backgroundColor: "#fff",
         buttonColor: "#007AFF",
-        iconColor: "#fff"
-      }
-    }
+        iconColor: "#fff",
+      },
+    };
   },
   computed: {
-    contentWidth (e) {
-      return (this.content.length + 1) * 55 + 15 + "px"
+    contentWidth(e) {
+      return (this.content.length + 1) * 55 + 15 + "px";
     },
-    contentWidthMin () {
-      return "55px"
+    contentWidthMin() {
+      return "55px";
     },
     // 动态计算宽度
-    boxWidth () {
-      return this.getPosition(3, "horizontal")
+    boxWidth() {
+      return this.getPosition(3, "horizontal");
     },
     // 动态计算高度
-    boxHeight () {
-      return this.getPosition(3, "vertical")
+    boxHeight() {
+      return this.getPosition(3, "vertical");
     },
     // 计算左下位置
-    leftBottom () {
-      return this.getPosition(0, "left", "bottom")
+    leftBottom() {
+      return this.getPosition(0, "left", "bottom");
     },
     // 计算右下位置
-    rightBottom () {
-      return this.getPosition(0, "right", "bottom")
+    rightBottom() {
+      return this.getPosition(0, "right", "bottom");
     },
     // 计算左上位置
-    leftTop () {
-      return this.getPosition(0, "left", "top")
+    leftTop() {
+      return this.getPosition(0, "left", "top");
     },
-    rightTop () {
-      return this.getPosition(0, "right", "top")
+    rightTop() {
+      return this.getPosition(0, "right", "top");
     },
-    flexDirectionStart () {
-      return this.getPosition(1, "vertical", "top")
+    flexDirectionStart() {
+      return this.getPosition(1, "vertical", "top");
     },
-    flexDirectionEnd () {
-      return this.getPosition(1, "vertical", "bottom")
+    flexDirectionEnd() {
+      return this.getPosition(1, "vertical", "bottom");
     },
-    horizontalLeft () {
-      return this.getPosition(2, "horizontal", "left")
+    horizontalLeft() {
+      return this.getPosition(2, "horizontal", "left");
     },
-    horizontalRight () {
-      return this.getPosition(2, "horizontal", "right")
+    horizontalRight() {
+      return this.getPosition(2, "horizontal", "right");
     },
     // 计算 nvue bottom
-    nvueBottom () {
-      const safeBottom = uni.getSystemInfoSync().windowBottom
+    nvueBottom() {
+      const safeBottom = uni.getSystemInfoSync().windowBottom;
       // #ifdef APP-NVUE
-      return 30 + safeBottom
+      return 30 + safeBottom;
       // #endif
       // #ifndef APP-NVUE
-      return 30
+      return 30;
       // #endif
-    }
+    },
   },
   watch: {
     pattern: {
-      handler (val, oldVal) {
-        this.styles = Object.assign({}, this.styles, val)
+      handler(val, oldVal) {
+        this.styles = Object.assign({}, this.styles, val);
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
-  created () {
-    this.isShow = this.show
+  created() {
+    this.isShow = this.show;
     if (this.top === 0) {
-      this.fabShow = true
+      this.fabShow = true;
     }
     // 初始化样式
-    this.styles = Object.assign({}, this.styles, this.pattern)
+    this.styles = Object.assign({}, this.styles, this.pattern);
   },
   methods: {
-    _onClick () {
-      this.$emit("fabClick")
+    _onClick() {
+      this.$emit("fabClick");
       if (!this.popMenu) {
-        return
+        return;
       }
-      this.isShow = !this.isShow
+      this.isShow = !this.isShow;
     },
-    open () {
-      this.isShow = true
+    open() {
+      this.isShow = true;
     },
-    close () {
-      this.isShow = false
+    close() {
+      this.isShow = false;
     },
     /**
      * 按钮点击事件
      */
-    _onItemClick (index, item) {
+    _onItemClick(index, item) {
       this.$emit("trigger", {
         index,
-        item
-      })
+        item,
+      });
     },
     /**
      * 获取 位置信息
      */
-    getPosition (types, paramA, paramB) {
+    getPosition(types, paramA, paramB) {
       if (types === 0) {
-        return this.horizontal === paramA && this.vertical === paramB
+        return this.horizontal === paramA && this.vertical === paramB;
       } else if (types === 1) {
-        return this.direction === paramA && this.vertical === paramB
+        return this.direction === paramA && this.vertical === paramB;
       } else if (types === 2) {
-        return this.direction === paramA && this.horizontal === paramB
+        return this.direction === paramA && this.horizontal === paramB;
       } else {
-        return this.isShow && this.direction === paramA ? this.contentWidth : this.contentWidthMin
+        return this.isShow && this.direction === paramA
+          ? this.contentWidth
+          : this.contentWidthMin;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-$uni-shadow-base: 0 1px 5px 2px rgba($color: #000000, $alpha: 0.3) !default;
+$uni-shadow-base: 0 1px 5px 2px
+  rgba(
+    $color: #000000,
+    $alpha: 0.3,
+  ) !default;
 
 .uni-fab {
   position: fixed;
@@ -420,7 +468,7 @@ $uni-shadow-base: 0 1px 5px 2px rgba($color: #000000, $alpha: 0.3) !default;
   transition-property: width, height;
   transition-duration: 0.2s;
   width: 55px;
-  border-color: #DDDDDD;
+  border-color: #dddddd;
   border-width: 1rpx;
   border-style: solid;
 }
@@ -477,7 +525,7 @@ $uni-shadow-base: 0 1px 5px 2px rgba($color: #000000, $alpha: 0.3) !default;
 }
 
 .uni-fab__item-text {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 12px;
   line-height: 12px;
   margin-top: 2px;

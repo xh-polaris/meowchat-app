@@ -17,8 +17,8 @@
       "path": "pages/collection/collection",
       "style": {
         "navigationBarTitleText": "图鉴",
-		"enablePullDownRefresh": true,
-		"onReachBottomDistance":150
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 150
       }
     },
     {
@@ -28,41 +28,41 @@
       }
     },
     {
-      "path": "pages/profile/quick_contact",
+      "path": "pages/profile/quick-contact/quick-contact",
       "style": {
         "navigationBarTitleText": "快速联系"
       }
     },
     {
-      "path": "pages/profile/apply_adopt",
+      "path": "pages/profile/apply-adopt/apply-adopt",
       "style": {
         "navigationBarTitleText": "申请领养"
       }
     },
     {
-      "path": "pages/profile/apply_admin",
+      "path": "pages/profile/apply-admin/apply-admin",
       "style": {
         "navigationBarTitleText": "申请管理"
       }
     },
     {
-      "path": "pages/profile/about_us",
+      "path": "pages/profile/about-us/about-us",
       "style": {
         "navigationBarTitleText": "关于我们"
       }
     },
     {
-      "path": "pages/profile/apply_adopt_questionnaire",
+      "path": "pages/profile/apply-adopt-questionnaire/apply-adopt-questionnaire",
       "style": {
         "navigationBarTitleText": "领养问卷"
       }
     },
-	{
-	  "path": "pages/profile/edit_info",
-	  "style": {
-	    "navigationBarTitleText": "修改个人信息"
-	  }
-	},
+    {
+      "path": "pages/profile/edit-info/edit-info",
+      "style": {
+        "navigationBarTitleText": "修改个人信息"
+      }
+    },
     {
       "path": "pages/moment/moment",
       "style": {
@@ -70,19 +70,19 @@
       }
     },
     {
-      "path": "pages/world/post-detail/post-detail",
+      "path": "pages/post/post",
       "style": {
         "navigationBarTitleText": "帖子详情"
       }
     },
     {
-      "path": "pages/community/school_select",
+      "path": "pages/community/school-select",
       "style": {
         "navigationBarTitleText": "切换学校"
       }
     },
     {
-      "path": "pages/detail/detail",
+      "path": "pages/cat/cat",
       "style": {
         "navigationBarTitleText": "喵详情",
         //"navigationStyle": "custom",
@@ -138,7 +138,7 @@
         "navigationBarTitleText": "我的消息"
       }
     }
-    ],
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "喵世界",

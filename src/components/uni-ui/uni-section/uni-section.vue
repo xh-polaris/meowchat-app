@@ -1,15 +1,21 @@
 <template>
   <view class="uni-section">
     <view class="uni-section-header" @click="onClick">
-      <view class="uni-section-header__decoration" v-if="type" :class="type"/>
+      <view class="uni-section-header__decoration" v-if="type" :class="type" />
       <slot v-else name="decoration"></slot>
 
       <view class="uni-section-header__content">
-        <text :style="{'font-size':titleFontSize,'color':titleColor}" class="uni-section__content-title"
-              :class="{'distraction':!subTitle}">{{ title }}
+        <text
+          :style="{ 'font-size': titleFontSize, color: titleColor }"
+          class="uni-section__content-title"
+          :class="{ distraction: !subTitle }"
+          >{{ title }}
         </text>
-        <text v-if="subTitle" :style="{'font-size':subTitleFontSize,'color':subTitleColor}"
-              class="uni-section-header__content-sub">{{ subTitle }}
+        <text
+          v-if="subTitle"
+          :style="{ 'font-size': subTitleFontSize, color: subTitleColor }"
+          class="uni-section-header__content-sub"
+          >{{ subTitle }}
         </text>
       </view>
 
@@ -18,14 +24,13 @@
       </view>
     </view>
 
-    <view class="uni-section-content" :style="{padding: _padding}">
-      <slot/>
+    <view class="uni-section-content" :style="{ padding: _padding }">
+      <slot />
     </view>
   </view>
 </template>
 
 <script>
-
 /**
  * Section 标题栏
  * @description 标题栏
@@ -48,60 +53,60 @@ export default {
   props: {
     type: {
       type: String,
-      default: ""
+      default: "",
     },
     title: {
       type: String,
       required: true,
-      default: ""
+      default: "",
     },
     titleFontSize: {
       type: String,
-      default: "14px"
+      default: "14px",
     },
     titleColor: {
       type: String,
-      default: "#333"
+      default: "#333",
     },
     subTitle: {
       type: String,
-      default: ""
+      default: "",
     },
     subTitleFontSize: {
       type: String,
-      default: "12px"
+      default: "12px",
     },
     subTitleColor: {
       type: String,
-      default: "#999"
+      default: "#999",
     },
     padding: {
       type: [Boolean, String],
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    _padding () {
+    _padding() {
       if (typeof this.padding === "string") {
-        return this.padding
+        return this.padding;
       }
 
-      return this.padding ? "10px" : ""
-    }
+      return this.padding ? "10px" : "";
+    },
   },
   watch: {
-    title (newVal) {
+    title(newVal) {
       if (uni.report && newVal !== "") {
-        uni.report("title", newVal)
+        uni.report("title", newVal);
       }
-    }
+    },
   },
   methods: {
-    onClick () {
-      this.$emit("click")
-    }
-  }
-}
+    onClick() {
+      this.$emit("click");
+    },
+  },
+};
 </script>
 <style lang="scss">
 $uni-primary: #2979ff !default;

@@ -2,57 +2,103 @@
   <view class="uni-data-tree">
     <view class="uni-data-tree-input" @click="handleInput">
       <slot :options="options" :data="inputSelected" :error="errorMessage">
-        <view class="input-value" :class="{'input-value-border': border}">
-          <text v-if="errorMessage" class="selected-area error-text">{{errorMessage}}</text>
+        <view class="input-value" :class="{ 'input-value-border': border }">
+          <text v-if="errorMessage" class="selected-area error-text">{{
+            errorMessage
+          }}</text>
           <view v-else-if="loading && !isOpened" class="selected-area">
-            <uni-load-more class="load-more" :contentText="loadMore" status="loading"></uni-load-more>
+            <uni-load-more
+              class="load-more"
+              :contentText="loadMore"
+              status="loading"
+            ></uni-load-more>
           </view>
-          <scroll-view v-else-if="inputSelected.length" class="selected-area" scroll-x="true">
+          <scroll-view
+            v-else-if="inputSelected.length"
+            class="selected-area"
+            scroll-x="true"
+          >
             <view class="selected-list">
-              <view class="selected-item" v-for="(item,index) in inputSelected" :key="index">
-                <text class="text-color">{{item.text}}</text>
-                <text v-if="index<inputSelected.length-1"
-                      class="input-split-line">{{split}}
+              <view
+                class="selected-item"
+                v-for="(item, index) in inputSelected"
+                :key="index"
+              >
+                <text class="text-color">{{ item.text }}</text>
+                <text
+                  v-if="index < inputSelected.length - 1"
+                  class="input-split-line"
+                  >{{ split }}
                 </text>
               </view>
             </view>
           </scroll-view>
-          <text v-else class="selected-area placeholder">{{placeholder}}</text>
-          <view v-if="clearIcon && !readonly && inputSelected.length" class="icon-clear"
-                @click.stop="clear">
+          <text v-else class="selected-area placeholder">{{
+            placeholder
+          }}</text>
+          <view
+            v-if="clearIcon && !readonly && inputSelected.length"
+            class="icon-clear"
+            @click.stop="clear"
+          >
             <uni-icons type="clear" color="#c0c4cc" size="24"></uni-icons>
           </view>
-          <view class="arrow-area" v-if="(!clearIcon || !inputSelected.length) && !readonly ">
+          <view
+            class="arrow-area"
+            v-if="(!clearIcon || !inputSelected.length) && !readonly"
+          >
             <view class="input-arrow"></view>
           </view>
         </view>
       </slot>
     </view>
-    <view class="uni-data-tree-cover" v-if="isOpened" @click="handleClose"></view>
+    <view
+      class="uni-data-tree-cover"
+      v-if="isOpened"
+      @click="handleClose"
+    ></view>
     <view class="uni-data-tree-dialog" v-if="isOpened">
       <view class="uni-popper__arrow"></view>
       <view class="dialog-caption">
         <view class="title-area">
-          <text class="dialog-title">{{popupTitle}}</text>
+          <text class="dialog-title">{{ popupTitle }}</text>
         </view>
         <view class="dialog-close" @click="handleClose">
           <view class="dialog-close-plus" data-id="close"></view>
-          <view class="dialog-close-plus dialog-close-rotate" data-id="close"></view>
+          <view
+            class="dialog-close-plus dialog-close-rotate"
+            data-id="close"
+          ></view>
         </view>
       </view>
-      <data-picker-view class="picker-view" ref="pickerView" v-model="dataValue" :localdata="localdata"
-                        :preload="preload" :collection="collection" :field="field" :orderby="orderby" :where="where"
-                        :step-searh="stepSearh" :self-field="selfField" :parent-field="parentField" :managed-mode="true"
-                        :map="map" :ellipsis="ellipsis" @change="onchange" @datachange="ondatachange"
-                        @nodeclick="onnodeclick">
+      <data-picker-view
+        class="picker-view"
+        ref="pickerView"
+        v-model="dataValue"
+        :localdata="localdata"
+        :preload="preload"
+        :collection="collection"
+        :field="field"
+        :orderby="orderby"
+        :where="where"
+        :step-searh="stepSearh"
+        :self-field="selfField"
+        :parent-field="parentField"
+        :managed-mode="true"
+        :map="map"
+        :ellipsis="ellipsis"
+        @change="onchange"
+        @datachange="ondatachange"
+        @nodeclick="onnodeclick"
+      >
       </data-picker-view>
     </view>
   </view>
 </template>
 
 <script>
-import dataPicker from "../uni-data-pickerview/uni-data-picker.js"
-import DataPickerView from "../uni-data-pickerview/uni-data-pickerview.vue"
+import dataPicker from "../uni-data-pickerview/uni-data-picker.js";
+import DataPickerView from "../uni-data-pickerview/uni-data-pickerview.vue";
 
 /**
  * DataPicker 级联选择
@@ -79,222 +125,229 @@ import DataPickerView from "../uni-data-pickerview/uni-data-pickerview.vue"
  */
 export default {
   name: "UniDataPicker",
-  emits: ["popupopened", "popupclosed", "nodeclick", "input", "change", "update:modelValue"],
+  emits: [
+    "popupopened",
+    "popupclosed",
+    "nodeclick",
+    "input",
+    "change",
+    "update:modelValue",
+  ],
   mixins: [dataPicker],
   components: {
-    DataPickerView
+    DataPickerView,
   },
   props: {
     options: {
       type: [Object, Array],
-      default () {
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
     popupTitle: {
       type: String,
-      default: "请选择"
+      default: "请选择",
     },
     placeholder: {
       type: String,
-      default: "请选择"
+      default: "请选择",
     },
     heightMobile: {
       type: String,
-      default: ""
+      default: "",
     },
     readonly: {
       type: Boolean,
-      default: false
+      default: false,
     },
     clearIcon: {
       type: Boolean,
-      default: true
+      default: true,
     },
     border: {
       type: Boolean,
-      default: true
+      default: true,
     },
     split: {
       type: String,
-      default: "/"
+      default: "/",
     },
     ellipsis: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
-  data () {
+  data() {
     return {
       isOpened: false,
-      inputSelected: []
-    }
+      inputSelected: [],
+    };
   },
-  created () {
-    this.form = this.getForm("uniForms")
-    this.formItem = this.getForm("uniFormsItem")
+  created() {
+    this.form = this.getForm("uniForms");
+    this.formItem = this.getForm("uniFormsItem");
     if (this.formItem) {
       if (this.formItem.name) {
-        this.rename = this.formItem.name
-        this.form.inputChildrens.push(this)
+        this.rename = this.formItem.name;
+        this.form.inputChildrens.push(this);
       }
     }
 
     this.$nextTick(() => {
-      this.load()
-    })
+      this.load();
+    });
   },
   methods: {
-    clear () {
-      this.inputSelected.splice(0)
-      this._dispatchEvent([])
+    clear() {
+      this.inputSelected.splice(0);
+      this._dispatchEvent([]);
     },
-    onPropsChange () {
-      this._treeData = []
-      this.selectedIndex = 0
-      this.load()
+    onPropsChange() {
+      this._treeData = [];
+      this.selectedIndex = 0;
+      this.load();
     },
-    load () {
+    load() {
       if (this.readonly) {
-        this._processReadonly(this.localdata, this.dataValue)
-        return
+        this._processReadonly(this.localdata, this.dataValue);
+        return;
       }
 
       if (this.isLocaldata) {
-        this.loadData()
-        this.inputSelected = this.selected.slice(0)
+        this.loadData();
+        this.inputSelected = this.selected.slice(0);
       } else if (!this.parentField && !this.selfField && this.hasValue) {
         this.getNodeData(() => {
-          this.inputSelected = this.selected.slice(0)
-        })
+          this.inputSelected = this.selected.slice(0);
+        });
       } else if (this.hasValue) {
         this.getTreePath(() => {
-          this.inputSelected = this.selected.slice(0)
-        })
+          this.inputSelected = this.selected.slice(0);
+        });
       }
     },
-    getForm (name = "uniForms") {
-      let parent = this.$parent
-      let parentName = parent.$options.name
+    getForm(name = "uniForms") {
+      let parent = this.$parent;
+      let parentName = parent.$options.name;
       while (parentName !== name) {
-        parent = parent.$parent
-        if (!parent) return false
-        parentName = parent.$options.name
+        parent = parent.$parent;
+        if (!parent) return false;
+        parentName = parent.$options.name;
       }
-      return parent
+      return parent;
     },
-    show () {
-      this.isOpened = true
+    show() {
+      this.isOpened = true;
       setTimeout(() => {
         this.$refs.pickerView.updateData({
           treeData: this._treeData,
           selected: this.selected,
-          selectedIndex: this.selectedIndex
-        })
-      }, 200)
-      this.$emit("popupopened")
+          selectedIndex: this.selectedIndex,
+        });
+      }, 200);
+      this.$emit("popupopened");
     },
-    hide () {
-      this.isOpened = false
-      this.$emit("popupclosed")
+    hide() {
+      this.isOpened = false;
+      this.$emit("popupclosed");
     },
-    handleInput () {
+    handleInput() {
       if (this.readonly) {
-        return
+        return;
       }
-      this.show()
+      this.show();
     },
-    handleClose (e) {
-      this.hide()
+    handleClose(e) {
+      this.hide();
     },
-    onnodeclick (e) {
-      this.$emit("nodeclick", e)
+    onnodeclick(e) {
+      this.$emit("nodeclick", e);
     },
-    ondatachange (e) {
-      this._treeData = this.$refs.pickerView._treeData
+    ondatachange(e) {
+      this._treeData = this.$refs.pickerView._treeData;
     },
-    onchange (e) {
-      this.hide()
+    onchange(e) {
+      this.hide();
       this.$nextTick(() => {
-        this.inputSelected = e
-      })
-      this._dispatchEvent(e)
+        this.inputSelected = e;
+      });
+      this._dispatchEvent(e);
     },
-    _processReadonly (dataList, value) {
+    _processReadonly(dataList, value) {
       var isTree = dataList.findIndex((item) => {
-        return item.children
-      })
+        return item.children;
+      });
       if (isTree > -1) {
-        let inputValue
+        let inputValue;
         if (Array.isArray(value)) {
-          inputValue = value[value.length - 1]
+          inputValue = value[value.length - 1];
           if (typeof inputValue === "object" && inputValue.value) {
-            inputValue = inputValue.value
+            inputValue = inputValue.value;
           }
         } else {
-          inputValue = value
+          inputValue = value;
         }
-        this.inputSelected = this._findNodePath(inputValue, this.localdata)
-        return
+        this.inputSelected = this._findNodePath(inputValue, this.localdata);
+        return;
       }
 
       if (!this.hasValue) {
-        this.inputSelected = []
-        return
+        this.inputSelected = [];
+        return;
       }
 
-      let result = []
+      let result = [];
       for (let i = 0; i < value.length; i++) {
-        var val = value[i]
+        var val = value[i];
         var item = dataList.find((v) => {
-          return v.value == val
-        })
+          return v.value == val;
+        });
         if (item) {
-          result.push(item)
+          result.push(item);
         }
       }
       if (result.length) {
-        this.inputSelected = result
+        this.inputSelected = result;
       }
     },
-    _filterForArray (data, valueArray) {
-      var result = []
+    _filterForArray(data, valueArray) {
+      var result = [];
       for (let i = 0; i < valueArray.length; i++) {
-        var value = valueArray[i]
+        var value = valueArray[i];
         var found = data.find((item) => {
-          return item.value == value
-        })
+          return item.value == value;
+        });
         if (found) {
-          result.push(found)
+          result.push(found);
         }
       }
-      return result
+      return result;
     },
-    _dispatchEvent (selected) {
-      let item = {}
+    _dispatchEvent(selected) {
+      let item = {};
       if (selected.length) {
-        var value = new Array(selected.length)
+        var value = new Array(selected.length);
         for (var i = 0; i < selected.length; i++) {
-          value[i] = selected[i].value
+          value[i] = selected[i].value;
         }
-        item = selected[selected.length - 1]
+        item = selected[selected.length - 1];
       } else {
-        item.value = ""
+        item.value = "";
       }
       if (this.formItem) {
-        this.formItem.setValue(item.value)
+        this.formItem.setValue(item.value);
       }
 
-      this.$emit("input", item.value)
-      this.$emit("update:modelValue", item.value)
+      this.$emit("input", item.value);
+      this.$emit("update:modelValue", item.value);
       this.$emit("change", {
         detail: {
-          value: selected
-        }
-      })
-    }
-  }
-}
+          value: selected,
+        },
+      });
+    },
+  },
+};
 </script>
 
 <style>
@@ -305,7 +358,7 @@ export default {
 }
 
 .error-text {
-  color: #DD524D;
+  color: #dd524d;
 }
 
 .input-value {
@@ -376,7 +429,7 @@ export default {
 }
 
 .input-split-line {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .arrow-area {
@@ -405,7 +458,7 @@ export default {
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .4);
+  background-color: rgba(0, 0, 0, 0.4);
   /* #ifndef APP-NVUE */
   display: flex;
   /* #endif */
@@ -419,7 +472,7 @@ export default {
   top: 20%;
   right: 0;
   bottom: 0;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   /* #ifndef APP-NVUE */
@@ -507,7 +560,7 @@ export default {
     min-height: 400px;
     max-height: 50vh;
     background-color: #fff;
-    border: 1px solid #EBEEF5;
+    border: 1px solid #ebeef5;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     overflow: unset;
@@ -543,7 +596,7 @@ export default {
   left: 10%;
   margin-right: 3px;
   border-top-width: 0;
-  border-bottom-color: #EBEEF5;
+  border-bottom-color: #ebeef5;
 }
 
 .uni-popper__arrow::after {

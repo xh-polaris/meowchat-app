@@ -1,48 +1,51 @@
 <template>
   <view class="all">
     <view class="main">
-      <input placeholder="输入标题" type="text">
+      <input placeholder="输入标题" type="text"/>
       <!-- #ifdef H5 -->
       <textarea
-        maxlength="5000"
-        placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-        type="text"
+          maxlength="5000"
+          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          type="text"
       />
       <!-- #endif -->
       <!-- #ifdef MP-WEIXIN -->
       <textarea
-        maxlength="5000"
-        placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-        type="text"
+          maxlength="5000"
+          placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          type="text"
       />
       <!-- #endif -->
 
-
       <view class="images">
-        <block v-for="(image) in imagesData" :key="image.id">
-          <view class="added-image" />
+        <block v-for="image in imagesData" :key="image.id">
+          <view
+              :style="{ backgroundImage: 'url(' + image.url + ')' }"
+              class="added-image"
+          />
         </block>
-        <view class="new-image" />
+        <view
+            v-if="imagesData.length < 8"
+            class="new-image"
+            @click="addImage"
+        />
       </view>
-      <view class="image-num">
-        {{ imagesData.length }}/8
-      </view>
+      <view class="image-num"> {{ imagesData.length }}/8</view>
     </view>
 
     <view class="panel">
       <view class="toggle-bar">
-        <view class="toggle-text">
-          匿名信息
-        </view>
-        <view :class="'toggle '+(isAnonymous?'active':'')" @click="toggleAnonymous">
+        <view class="toggle-text"> 匿名信息</view>
+        <view
+            :class="'toggle ' + (isAnonymous ? 'active' : '')"
+            @click="toggleAnonymous"
+        >
           <view class="toggle-capsule">
-            <view class="toggle-circle" />
+            <view class="toggle-circle"/>
           </view>
         </view>
       </view>
-      <view class="publish">
-        发布帖子
-      </view>
+      <view class="publish"> 发布帖子</view>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -59,32 +62,43 @@
 </template>
 
 <script setup>
-
 import { reactive, ref } from "vue";
 
-const imagesData = reactive([])
+const imagesData = reactive([]);
 
-function addImageData() {
-  imagesData.push({
-    id: Math.random()
-  })
-}
-
-const isAnonymous = ref(false)
+const isAnonymous = ref(false);
 
 function toggleAnonymous() {
-  isAnonymous.value = !isAnonymous.value
+  isAnonymous.value = !isAnonymous.value;
 }
 
-const imageNum = Math.floor(Math.random() * 9)
-for (let i = 0; i < imageNum; i++) {
-  addImageData()
+function addImage() {
+  uni.chooseImage({
+    success: (chooseImageRes) => {
+      let isTooManyImages = false;
+      let tempFilePaths = chooseImageRes.tempFilePaths;
+      if (imagesData.length + tempFilePaths.length > 8) {
+        isTooManyImages = true;
+        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length);
+      }
+      tempFilePaths.map((path) => {
+        imagesData.push({
+          id: path,
+          url: path,
+        });
+      });
+      if (isTooManyImages) {
+        uni.showToast({
+          title: "最多可上传8张图片！",
+          icon: "error",
+        });
+      }
+    },
+  });
 }
-
 </script>
 
 <style lang="scss" scoped>
-
 $margin: calc(20 / 390 * 100vw);
 $imagesWidth: calc(100vw - $margin * 2);
 $imageWidth: calc(110 / 390 * 100vw);
@@ -109,7 +123,8 @@ body {
   flex-wrap: wrap;
 }
 
-.added-image, .new-image {
+.added-image,
+.new-image {
   box-sizing: border-box;
   width: $imageWidth;
   height: $imageWidth;
@@ -119,13 +134,13 @@ body {
 }
 
 .added-image {
-  background-color: #e1e1e1;
+  background-size: cover;
+  background-position: center;
 }
 
-
 .new-image {
-  background-color: #FAFAFA;
-  border: #D1D1D1 solid calc(1 / 390 * 100vw);
+  background-color: #fafafa;
+  border: #d1d1d1 solid calc(1 / 390 * 100vw);
   background-image: url("../../static/images/plus-lightgrey.png");
   background-size: 24% 24%;
   background-repeat: no-repeat;
@@ -134,16 +149,16 @@ body {
 
 .image-num {
   font-size: calc(12 / 390 * 100vw);
-  color: #B8B8B8;
+  color: #b8b8b8;
   margin-left: calc(32 / 390 * 100vw);
   margin-bottom: calc(20 / 390 * 100vw);
 }
 
-input, textarea {
-  background-color: #FAFAFA;
+input,
+textarea {
+  background-color: #fafafa;
   border-radius: calc(10 / 390 * 100vw);
   width: calc(100vw - $margin * 2);
-  box-sizing: border-box;
   margin: 0 $margin;
   padding: calc(10 / 390 * 100vw);
   color: black;
@@ -153,10 +168,12 @@ input, textarea {
 input {
   margin-top: calc(20 / 390 * 100vw);
   margin-bottom: calc(10 / 390 * 100vw);
-  height: calc(40 / 390 * 100vw);;
+  padding: 0 calc(10 / 390 * 100vw);
+  height: calc(40 / 390 * 100vw);
 }
 
 textarea {
+  box-sizing: border-box;
   margin-bottom: calc(10 / 390 * 100vw);
   word-wrap: break-word;
   white-space: pre-line;
@@ -178,7 +195,7 @@ textarea ::selection {
   margin-bottom: calc(10 / 390 * 100vw);
 
   .choose-cats {
-    color: #1FA1FF;
+    color: #1fa1ff;
     font-size: calc(14 / 390 * 100vw);
     margin-right: calc(5 / 390 * 100vw);
   }
@@ -191,7 +208,7 @@ textarea ::selection {
   }
 
   .choose-followed-cats {
-    color: #B8B8B8;
+    color: #b8b8b8;
     font-size: calc(12 / 390 * 100vw);
   }
 }
@@ -204,7 +221,7 @@ textarea ::selection {
   .cat-name {
     color: #939393;
     font-size: calc(14 / 390 * 100vw);
-    border: #D1D1D1 calc(1 / 390 * 100vw) solid;
+    border: #d1d1d1 calc(1 / 390 * 100vw) solid;
     line-height: calc(16 / 390 * 100vw);
     height: calc(16 / 390 * 100vw);
     border-radius: calc(8 / 390 * 100vw);
@@ -213,10 +230,9 @@ textarea ::selection {
     text-align: center;
     min-width: calc(36 / 390 * 100vw);
 
-
     &.selected {
-      color: #1FA1FF;
-      border: #1FA1FF calc(1 / 390 * 100vw) solid;
+      color: #1fa1ff;
+      border: #1fa1ff calc(1 / 390 * 100vw) solid;
     }
   }
 }
@@ -227,7 +243,6 @@ textarea ::selection {
 }
 
 .toggle-bar {
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -242,7 +257,7 @@ textarea ::selection {
       width: calc(38 / 390 * 100vw);
       height: calc(20 / 390 * 100vw);
       border-radius: calc(19 / 390 * 100vw);
-      background-color: #EEEEEE;
+      background-color: #eeeeee;
       display: flex;
       align-items: center;
       transition-duration: 0.1s;
@@ -252,14 +267,14 @@ textarea ::selection {
         height: calc(18 / 390 * 100vw);
         margin-left: calc(1 / 390 * 100vw);
         border-radius: 50%;
-        background-color: #FFFFFF;
+        background-color: #ffffff;
         transition-duration: 0.1s;
       }
     }
 
     &.active {
       .toggle-capsule {
-        background-color: #1FA1FF;
+        background-color: #1fa1ff;
       }
 
       .toggle-circle {
@@ -273,8 +288,8 @@ textarea ::selection {
   margin-top: calc(25 / 390 * 100vw);
   margin-bottom: calc(19 / 390 * 100vw);
   width: 100%;
-  background-color: #1FA1FF;
-  color: #FFFFFF;
+  background-color: #1fa1ff;
+  color: #ffffff;
   font-size: calc(16 / 390 * 100vw);
   text-align: center;
   height: calc(44 / 390 * 100vw);
@@ -284,7 +299,7 @@ textarea ::selection {
 }
 
 .publish:active {
-  background-color: #BAE2FF;
+  background-color: #bae2ff;
 }
 
 .notice {
@@ -293,7 +308,6 @@ textarea ::selection {
 
 .nobody-will-read {
   display: inline;
-  color: #1FA1FF;
+  color: #1fa1ff;
 }
-
 </style>

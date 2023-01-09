@@ -1,17 +1,17 @@
-export function onClickCarousel (url: string) {
+export function onClickCarousel(url: string) {
   uni.navigateTo({
-    url
-  })
+    url,
+  });
 }
 
-export function onClickMoment (id: string) {
+export function onClickMoment(id: string) {
   uni.navigateTo({
-    url: `/pages/moment/moment?id=${id}`
-  })
+    url: `/pages/moment/moment?id=${id}`,
+  });
 }
 
-export function onClickSwitch () {
+export function onClickSwitch() {
   uni.navigateTo({
-    url: `/pages/community/school_select`
-  })
+    url: `/pages/community/school-select`,
+  });
 }

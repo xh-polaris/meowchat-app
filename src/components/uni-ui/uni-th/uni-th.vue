@@ -1,23 +1,47 @@
 <template>
   <!-- #ifdef H5 -->
-  <th :rowspan="rowspan" :colspan="colspan" class="uni-table-th" :class="{ 'table--border': border }"
-      :style="{ width: customWidth + 'px', 'text-align': align }">
+  <th
+    :rowspan="rowspan"
+    :colspan="colspan"
+    class="uni-table-th"
+    :class="{ 'table--border': border }"
+    :style="{ width: customWidth + 'px', 'text-align': align }"
+  >
     <view class="uni-table-th-row">
-      <view class="uni-table-th-content" :style="{ 'justify-content': contentAlign }" @click="sort">
+      <view
+        class="uni-table-th-content"
+        :style="{ 'justify-content': contentAlign }"
+        @click="sort"
+      >
         <slot></slot>
         <view v-if="sortable" class="arrow-box">
-          <text class="arrow up" :class="{ active: ascending }" @click.stop="ascendingFn"></text>
-          <text class="arrow down" :class="{ active: descending }" @click.stop="descendingFn"></text>
+          <text
+            class="arrow up"
+            :class="{ active: ascending }"
+            @click.stop="ascendingFn"
+          ></text>
+          <text
+            class="arrow down"
+            :class="{ active: descending }"
+            @click.stop="descendingFn"
+          ></text>
         </view>
       </view>
-      <dropdown v-if="filterType || filterData.length" :filterData="filterData" :filterType="filterType"
-                @change="ondropdown"></dropdown>
+      <dropdown
+        v-if="filterType || filterData.length"
+        :filterData="filterData"
+        :filterType="filterType"
+        @change="ondropdown"
+      ></dropdown>
     </view>
   </th>
   <!-- #endif -->
   <!-- #ifndef H5 -->
-  <view class="uni-table-th" :class="{ 'table--border': border }"
-        :style="{ width: customWidth + 'px', 'text-align': align }">
+  <view
+    class="uni-table-th"
+    :class="{ 'table--border': border }"
+    :style="{ width: customWidth + 'px', 'text-align': align }"
+  >
     <slot></slot>
   </view>
   <!-- #endif -->
@@ -25,7 +49,7 @@
 
 <script>
 // #ifdef H5
-import dropdown from "./filter-dropdown.vue"
+import dropdown from "./filter-dropdown.vue";
 // #endif
 /**
  * Th 表头
@@ -46,161 +70,167 @@ import dropdown from "./filter-dropdown.vue"
 export default {
   name: "uniTh",
   options: {
-    virtualHost: true
+    virtualHost: true,
   },
   components: {
     // #ifdef H5
-    dropdown
+    dropdown,
     // #endif
   },
   emits: ["sort-change", "filter-change"],
   props: {
     width: {
       type: [String, Number],
-      default: ""
+      default: "",
     },
     align: {
       type: String,
-      default: "left"
+      default: "left",
     },
     rowspan: {
       type: [Number, String],
-      default: 1
+      default: 1,
     },
     colspan: {
       type: [Number, String],
-      default: 1
+      default: 1,
     },
     sortable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     filterType: {
       type: String,
-      default: ""
+      default: "",
     },
     filterData: {
       type: Array,
-      default () {
-        return []
-      }
-    }
+      default() {
+        return [];
+      },
+    },
   },
-  data () {
+  data() {
     return {
       border: false,
       ascending: false,
-      descending: false
-    }
+      descending: false,
+    };
   },
   computed: {
     // 根据props中的width属性 自动匹配当前th的宽度(px)
-    customWidth () {
+    customWidth() {
       if (typeof this.width === "number") {
-        return this.width
+        return this.width;
       } else if (typeof this.width === "string") {
-        let regexHaveUnitPx = new RegExp(/^[1-9][0-9]*px$/g)
-        let regexHaveUnitRpx = new RegExp(/^[1-9][0-9]*rpx$/g)
-        let regexHaveNotUnit = new RegExp(/^[1-9][0-9]*$/g)
-        if (this.width.match(regexHaveUnitPx) !== null) { // 携带了 px
-          return this.width.replace("px", "")
-        } else if (this.width.match(regexHaveUnitRpx) !== null) { // 携带了 rpx
-          let numberRpx = Number(this.width.replace("rpx", ""))
-          let widthCoe = uni.getSystemInfoSync().screenWidth / 750
-          return Math.round(numberRpx * widthCoe)
-        } else if (this.width.match(regexHaveNotUnit) !== null) { // 未携带 rpx或px 的纯数字 String
-          return this.width
-        } else { // 不符合格式
-          return ""
+        let regexHaveUnitPx = new RegExp(/^[1-9][0-9]*px$/g);
+        let regexHaveUnitRpx = new RegExp(/^[1-9][0-9]*rpx$/g);
+        let regexHaveNotUnit = new RegExp(/^[1-9][0-9]*$/g);
+        if (this.width.match(regexHaveUnitPx) !== null) {
+          // 携带了 px
+          return this.width.replace("px", "");
+        } else if (this.width.match(regexHaveUnitRpx) !== null) {
+          // 携带了 rpx
+          let numberRpx = Number(this.width.replace("rpx", ""));
+          let widthCoe = uni.getSystemInfoSync().screenWidth / 750;
+          return Math.round(numberRpx * widthCoe);
+        } else if (this.width.match(regexHaveNotUnit) !== null) {
+          // 未携带 rpx或px 的纯数字 String
+          return this.width;
+        } else {
+          // 不符合格式
+          return "";
         }
       } else {
-        return ""
+        return "";
       }
     },
-    contentAlign () {
-      let align = "left"
+    contentAlign() {
+      let align = "left";
       switch (this.align) {
         case "left":
-          align = "flex-start"
-          break
+          align = "flex-start";
+          break;
         case "center":
-          align = "center"
-          break
+          align = "center";
+          break;
         case "right":
-          align = "flex-end"
-          break
+          align = "flex-end";
+          break;
       }
-      return align
-    }
+      return align;
+    },
   },
-  created () {
-    this.root = this.getTable("uniTable")
-    this.rootTr = this.getTable("uniTr")
-    this.rootTr.minWidthUpdate(this.customWidth ? this.customWidth : 140)
-    this.border = this.root.border
-    this.root.thChildren.push(this)
+  created() {
+    this.root = this.getTable("uniTable");
+    this.rootTr = this.getTable("uniTr");
+    this.rootTr.minWidthUpdate(this.customWidth ? this.customWidth : 140);
+    this.border = this.root.border;
+    this.root.thChildren.push(this);
   },
   methods: {
-    sort () {
-      if (!this.sortable) return
-      this.clearOther()
+    sort() {
+      if (!this.sortable) return;
+      this.clearOther();
       if (!this.ascending && !this.descending) {
-        this.ascending = true
-        this.$emit("sort-change", { order: "ascending" })
-        return
+        this.ascending = true;
+        this.$emit("sort-change", { order: "ascending" });
+        return;
       }
       if (this.ascending && !this.descending) {
-        this.ascending = false
-        this.descending = true
-        this.$emit("sort-change", { order: "descending" })
-        return
+        this.ascending = false;
+        this.descending = true;
+        this.$emit("sort-change", { order: "descending" });
+        return;
       }
 
       if (!this.ascending && this.descending) {
-        this.ascending = false
-        this.descending = false
-        this.$emit("sort-change", { order: null })
+        this.ascending = false;
+        this.descending = false;
+        this.$emit("sort-change", { order: null });
       }
     },
-    ascendingFn () {
-      this.clearOther()
-      this.ascending = !this.ascending
-      this.descending = false
-      this.$emit("sort-change", { order: this.ascending ? "ascending" : null })
+    ascendingFn() {
+      this.clearOther();
+      this.ascending = !this.ascending;
+      this.descending = false;
+      this.$emit("sort-change", { order: this.ascending ? "ascending" : null });
     },
-    descendingFn () {
-      this.clearOther()
-      this.descending = !this.descending
-      this.ascending = false
-      this.$emit("sort-change", { order: this.descending ? "descending" : null })
+    descendingFn() {
+      this.clearOther();
+      this.descending = !this.descending;
+      this.ascending = false;
+      this.$emit("sort-change", {
+        order: this.descending ? "descending" : null,
+      });
     },
-    clearOther () {
-      this.root.thChildren.map(item => {
+    clearOther() {
+      this.root.thChildren.map((item) => {
         if (item !== this) {
-          item.ascending = false
-          item.descending = false
+          item.ascending = false;
+          item.descending = false;
         }
-        return item
-      })
+        return item;
+      });
     },
-    ondropdown (e) {
-      this.$emit("filter-change", e)
+    ondropdown(e) {
+      this.$emit("filter-change", e);
     },
     /**
      * 获取父元素实例
      */
-    getTable (name) {
-      let parent = this.$parent
-      let parentName = parent.$options.name
+    getTable(name) {
+      let parent = this.$parent;
+      let parentName = parent.$options.name;
       while (parentName !== name) {
-        parent = parent.$parent
-        if (!parent) return false
-        parentName = parent.$options.name
+        parent = parent.$parent;
+        if (!parent) return false;
+        parentName = parent.$options.name;
       }
-      return parent
-    }
-  }
-}
+      return parent;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -253,7 +283,7 @@ $border-color: #ebeef5;
   top: 3px;
 
   ::after {
-    content: '';
+    content: "";
     width: 8px;
     height: 8px;
     position: absolute;
@@ -272,7 +302,7 @@ $border-color: #ebeef5;
 
 .up {
   ::after {
-    content: '';
+    content: "";
     width: 8px;
     height: 8px;
     position: absolute;

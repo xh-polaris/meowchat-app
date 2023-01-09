@@ -1,15 +1,22 @@
 <template>
   <view class="uni-popup-message">
-    <view class="uni-popup-message__box fixforpc-width" :class="'uni-popup__'+type">
+    <view
+      class="uni-popup-message__box fixforpc-width"
+      :class="'uni-popup__' + type"
+    >
       <slot>
-        <text class="uni-popup-message-text" :class="'uni-popup__'+type+'-text'">{{message}}</text>
+        <text
+          class="uni-popup-message-text"
+          :class="'uni-popup__' + type + '-text'"
+          >{{ message }}</text
+        >
       </slot>
     </view>
   </view>
 </template>
 
 <script>
-import popup from "../uni-popup/popup.js"
+import popup from "../uni-popup/popup.js";
 
 /**
  * PopUp 弹出层-消息提示
@@ -33,44 +40,44 @@ export default {
      */
     type: {
       type: String,
-      default: "success"
+      default: "success",
     },
     /**
      * 消息文字
      */
     message: {
       type: String,
-      default: ""
+      default: "",
     },
     /**
      * 显示时间，设置为 0 则不会自动关闭
      */
     duration: {
       type: Number,
-      default: 3000
+      default: 3000,
     },
     maskShow: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  created () {
-    this.popup.maskShow = this.maskShow
-    this.popup.messageChild = this
+  created() {
+    this.popup.maskShow = this.maskShow;
+    this.popup.messageChild = this;
   },
   methods: {
-    timerClose () {
-      if (this.duration === 0) return
-      clearTimeout(this.timer)
+    timerClose() {
+      if (this.duration === 0) return;
+      clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        this.popup.close()
-      }, this.duration)
-    }
-  }
-}
+        this.popup.close();
+      }, this.duration);
+    },
+  },
+};
 </script>
 <style lang="scss">
 .uni-popup-message {
@@ -115,7 +122,7 @@ export default {
 }
 
 .uni-popup__success-text {
-  color: #67C23A;
+  color: #67c23a;
 }
 
 .uni-popup__warn {
@@ -123,7 +130,7 @@ export default {
 }
 
 .uni-popup__warn-text {
-  color: #E6A23C;
+  color: #e6a23c;
 }
 
 .uni-popup__error {
@@ -131,11 +138,11 @@ export default {
 }
 
 .uni-popup__error-text {
-  color: #F56C6C;
+  color: #f56c6c;
 }
 
 .uni-popup__info {
-  background-color: #F2F6FC;
+  background-color: #f2f6fc;
 }
 
 .uni-popup__info-text {

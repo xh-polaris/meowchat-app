@@ -1,56 +1,94 @@
 <template>
-  <view v-if="show" class="uni-noticebar" :style="{ backgroundColor }" @click="onClick">
-    <uni-icons v-if="showIcon === true || showIcon === 'true'" class="uni-noticebar-icon" type="sound"
-               :color="color" :size="fontSize * 1.5"/>
-    <view ref="textBox" class="uni-noticebar__content-wrapper"
-          :class="{
-				'uni-noticebar__content-wrapper--scrollable': scrollable,
-				'uni-noticebar__content-wrapper--single': !scrollable && (single || moreText)
-			}"
-          :style="{ height: scrollable ? fontSize * 1.5 + 'px' : 'auto' }"
+  <view
+    v-if="show"
+    class="uni-noticebar"
+    :style="{ backgroundColor }"
+    @click="onClick"
+  >
+    <uni-icons
+      v-if="showIcon === true || showIcon === 'true'"
+      class="uni-noticebar-icon"
+      type="sound"
+      :color="color"
+      :size="fontSize * 1.5"
+    />
+    <view
+      ref="textBox"
+      class="uni-noticebar__content-wrapper"
+      :class="{
+        'uni-noticebar__content-wrapper--scrollable': scrollable,
+        'uni-noticebar__content-wrapper--single':
+          !scrollable && (single || moreText),
+      }"
+      :style="{ height: scrollable ? fontSize * 1.5 + 'px' : 'auto' }"
     >
-      <view :id="elIdBox" class="uni-noticebar__content"
-            :class="{
-					'uni-noticebar__content--scrollable': scrollable,
-					'uni-noticebar__content--single': !scrollable && (single || moreText)
-				}"
+      <view
+        :id="elIdBox"
+        class="uni-noticebar__content"
+        :class="{
+          'uni-noticebar__content--scrollable': scrollable,
+          'uni-noticebar__content--single': !scrollable && (single || moreText),
+        }"
       >
-        <text :id="elId" ref="animationEle" class="uni-noticebar__content-text"
-              :class="{
-						'uni-noticebar__content-text--scrollable': scrollable,
-						'uni-noticebar__content-text--single': !scrollable && (single || showGetMore)
-					}"
-              :style="{
-						color: color,
-						fontSize: fontSize + 'px',
-						lineHeight: fontSize * 1.5 + 'px',
-						width: wrapWidth + 'px',
-						'animationDuration': animationDuration,
-						'-webkit-animationDuration': animationDuration,
-						animationPlayState: webviewHide ? 'paused' : animationPlayState,
-						'-webkit-animationPlayState': webviewHide ? 'paused' : animationPlayState,
-						animationDelay: animationDelay,
-						'-webkit-animationDelay': animationDelay
-					}"
-        >{{text}}
+        <text
+          :id="elId"
+          ref="animationEle"
+          class="uni-noticebar__content-text"
+          :class="{
+            'uni-noticebar__content-text--scrollable': scrollable,
+            'uni-noticebar__content-text--single':
+              !scrollable && (single || showGetMore),
+          }"
+          :style="{
+            color: color,
+            fontSize: fontSize + 'px',
+            lineHeight: fontSize * 1.5 + 'px',
+            width: wrapWidth + 'px',
+            animationDuration: animationDuration,
+            '-webkit-animationDuration': animationDuration,
+            animationPlayState: webviewHide ? 'paused' : animationPlayState,
+            '-webkit-animationPlayState': webviewHide
+              ? 'paused'
+              : animationPlayState,
+            animationDelay: animationDelay,
+            '-webkit-animationDelay': animationDelay,
+          }"
+          >{{ text }}
         </text>
       </view>
     </view>
-    <view v-if="isShowGetMore" class="uni-noticebar__more uni-cursor-point"
-          @click="clickMore">
-      <text v-if="moreText.length > 0" :style="{ color: moreColor, fontSize: fontSize + 'px' }">{{ moreText }}</text>
-      <uni-icons v-else type="right" :color="moreColor" :size="fontSize * 1.1"/>
+    <view
+      v-if="isShowGetMore"
+      class="uni-noticebar__more uni-cursor-point"
+      @click="clickMore"
+    >
+      <text
+        v-if="moreText.length > 0"
+        :style="{ color: moreColor, fontSize: fontSize + 'px' }"
+        >{{ moreText }}</text
+      >
+      <uni-icons
+        v-else
+        type="right"
+        :color="moreColor"
+        :size="fontSize * 1.1"
+      />
     </view>
     <view class="uni-noticebar-close uni-cursor-point" v-if="isShowClose">
-      <uni-icons type="closeempty" :color="color" :size="fontSize * 1.1" @click="close"/>
+      <uni-icons
+        type="closeempty"
+        :color="color"
+        :size="fontSize * 1.1"
+        @click="close"
+      />
     </view>
   </view>
 </template>
 
 <script>
 // #ifdef APP-NVUE
-const dom = weex.requireModule("dom")
-const animation = weex.requireModule("animation")
+const dom = weex.requireModule("dom");
+const animation = weex.requireModule("animation");
 // #endif
 
 /**
@@ -79,62 +117,62 @@ export default {
   props: {
     text: {
       type: String,
-      default: ""
+      default: "",
     },
     moreText: {
       type: String,
-      default: ""
+      default: "",
     },
     backgroundColor: {
       type: String,
-      default: "#FFF9EA"
+      default: "#FFF9EA",
     },
     speed: {
       // 默认1s滚动100px
       type: Number,
-      default: 100
+      default: 100,
     },
     color: {
       type: String,
-      default: "#FF9A43"
+      default: "#FF9A43",
     },
     fontSize: {
       type: Number,
-      default: 14
+      default: 14,
     },
     moreColor: {
       type: String,
-      default: "#FF9A43"
+      default: "#FF9A43",
     },
     single: {
       // 是否单行
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     scrollable: {
       // 是否滚动，添加后控制单行效果取消
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     showIcon: {
       // 是否显示左侧icon
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     showGetMore: {
       // 是否显示右侧查看更多
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     showClose: {
       // 是否显示左侧关闭按钮
       type: [Boolean, String],
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
-    const elId = `Uni_${Math.ceil(Math.random() * 10e5).toString(36)}`
-    const elIdBox = `Uni_${Math.ceil(Math.random() * 10e5).toString(36)}`
+  data() {
+    const elId = `Uni_${Math.ceil(Math.random() * 10e5).toString(36)}`;
+    const elIdBox = `Uni_${Math.ceil(Math.random() * 10e5).toString(36)}`;
     return {
       textWidth: 0,
       boxWidth: 0,
@@ -148,155 +186,175 @@ export default {
       show: true,
       animationDuration: "none",
       animationPlayState: "paused",
-      animationDelay: "0s"
-    }
+      animationDelay: "0s",
+    };
   },
   computed: {
-    isShowGetMore () {
-      return this.showGetMore === true || this.showGetMore === "true"
+    isShowGetMore() {
+      return this.showGetMore === true || this.showGetMore === "true";
     },
-    isShowClose () {
-      return (this.showClose === true || this.showClose === "true")
-          && (this.showGetMore === false || this.showGetMore === "false")
-    }
+    isShowClose() {
+      return (
+        (this.showClose === true || this.showClose === "true") &&
+        (this.showGetMore === false || this.showGetMore === "false")
+      );
+    },
   },
-  mounted () {
+  mounted() {
     // #ifdef APP-PLUS
-    var pages = getCurrentPages()
-    var page = pages[pages.length - 1]
-    var currentWebview = page.$getAppWebview()
+    var pages = getCurrentPages();
+    var page = pages[pages.length - 1];
+    var currentWebview = page.$getAppWebview();
     currentWebview.addEventListener("hide", () => {
-      this.webviewHide = true
-    })
+      this.webviewHide = true;
+    });
     currentWebview.addEventListener("show", () => {
-      this.webviewHide = false
-    })
+      this.webviewHide = false;
+    });
     // #endif
     this.$nextTick(() => {
-      this.initSize()
-    })
+      this.initSize();
+    });
   },
   // #ifdef APP-NVUE
-  beforeDestroy () {
-    this.stopAnimation = true
+  beforeDestroy() {
+    this.stopAnimation = true;
   },
   // #endif
   methods: {
-    initSize () {
+    initSize() {
       if (this.scrollable) {
         // #ifndef APP-NVUE
         let query = [],
-            boxWidth = 0,
-            textWidth = 0
+          boxWidth = 0,
+          textWidth = 0;
         let textQuery = new Promise((resolve, reject) => {
-          uni.createSelectorQuery()
-              // #ifndef MP-ALIPAY
-              .in(this)
-              // #endif
-              .select(`#${this.elId}`)
-              .boundingClientRect()
-              .exec(ret => {
-                this.textWidth = ret[0].width
-                resolve()
-              })
-        })
+          uni
+            .createSelectorQuery()
+            // #ifndef MP-ALIPAY
+            .in(this)
+            // #endif
+            .select(`#${this.elId}`)
+            .boundingClientRect()
+            .exec((ret) => {
+              this.textWidth = ret[0].width;
+              resolve();
+            });
+        });
         let boxQuery = new Promise((resolve, reject) => {
-          uni.createSelectorQuery()
-              // #ifndef MP-ALIPAY
-              .in(this)
-              // #endif
-              .select(`#${this.elIdBox}`)
-              .boundingClientRect()
-              .exec(ret => {
-                this.boxWidth = ret[0].width
-                resolve()
-              })
-        })
-        query.push(textQuery)
-        query.push(boxQuery)
+          uni
+            .createSelectorQuery()
+            // #ifndef MP-ALIPAY
+            .in(this)
+            // #endif
+            .select(`#${this.elIdBox}`)
+            .boundingClientRect()
+            .exec((ret) => {
+              this.boxWidth = ret[0].width;
+              resolve();
+            });
+        });
+        query.push(textQuery);
+        query.push(boxQuery);
         Promise.all(query).then(() => {
-          this.animationDuration = `${this.textWidth / this.speed}s`
-          this.animationDelay = `-${this.boxWidth / this.speed}s`
+          this.animationDuration = `${this.textWidth / this.speed}s`;
+          this.animationDelay = `-${this.boxWidth / this.speed}s`;
           setTimeout(() => {
-            this.animationPlayState = "running"
-          }, 1000)
-        })
+            this.animationPlayState = "running";
+          }, 1000);
+        });
         // #endif
         // #ifdef APP-NVUE
         dom.getComponentRect(this.$refs["animationEle"], (res) => {
-          let winWidth = uni.getSystemInfoSync().windowWidth
-          this.textWidth = res.size.width
-          animation.transition(this.$refs["animationEle"], {
-            styles: {
-              transform: `translateX(-${winWidth}px)`
+          let winWidth = uni.getSystemInfoSync().windowWidth;
+          this.textWidth = res.size.width;
+          animation.transition(
+            this.$refs["animationEle"],
+            {
+              styles: {
+                transform: `translateX(-${winWidth}px)`,
+              },
+              duration: 0,
+              timingFunction: "linear",
+              delay: 0,
             },
-            duration: 0,
-            timingFunction: "linear",
-            delay: 0
-          }, () => {
-            if (!this.stopAnimation) {
-              animation.transition(this.$refs["animationEle"], {
-                styles: {
-                  transform: `translateX(-${this.textWidth}px)`
-                },
-                timingFunction: "linear",
-                duration: (this.textWidth - winWidth) / this.speed * 1000,
-                delay: 1000
-              }, () => {
-                if (!this.stopAnimation) {
-                  this.loopAnimation()
-                }
-              })
+            () => {
+              if (!this.stopAnimation) {
+                animation.transition(
+                  this.$refs["animationEle"],
+                  {
+                    styles: {
+                      transform: `translateX(-${this.textWidth}px)`,
+                    },
+                    timingFunction: "linear",
+                    duration: ((this.textWidth - winWidth) / this.speed) * 1000,
+                    delay: 1000,
+                  },
+                  () => {
+                    if (!this.stopAnimation) {
+                      this.loopAnimation();
+                    }
+                  }
+                );
+              }
             }
-          })
-        })
+          );
+        });
         // #endif
       }
       // #ifdef APP-NVUE
       if (!this.scrollable && (this.single || this.moreText)) {
         dom.getComponentRect(this.$refs["textBox"], (res) => {
-          this.wrapWidth = res.size.width
-        })
+          this.wrapWidth = res.size.width;
+        });
       }
       // #endif
     },
-    loopAnimation () {
+    loopAnimation() {
       // #ifdef APP-NVUE
-      animation.transition(this.$refs["animationEle"], {
-        styles: {
-          transform: `translateX(0px)`
+      animation.transition(
+        this.$refs["animationEle"],
+        {
+          styles: {
+            transform: `translateX(0px)`,
+          },
+          duration: 0,
         },
-        duration: 0
-      }, () => {
-        if (!this.stopAnimation) {
-          animation.transition(this.$refs["animationEle"], {
-            styles: {
-              transform: `translateX(-${this.textWidth}px)`
-            },
-            duration: this.textWidth / this.speed * 1000,
-            timingFunction: "linear",
-            delay: 0
-          }, () => {
-            if (!this.stopAnimation) {
-              this.loopAnimation()
-            }
-          })
+        () => {
+          if (!this.stopAnimation) {
+            animation.transition(
+              this.$refs["animationEle"],
+              {
+                styles: {
+                  transform: `translateX(-${this.textWidth}px)`,
+                },
+                duration: (this.textWidth / this.speed) * 1000,
+                timingFunction: "linear",
+                delay: 0,
+              },
+              () => {
+                if (!this.stopAnimation) {
+                  this.loopAnimation();
+                }
+              }
+            );
+          }
         }
-      })
+      );
       // #endif
     },
-    clickMore () {
-      this.$emit("getmore")
+    clickMore() {
+      this.$emit("getmore");
     },
-    close () {
-      this.show = false
-      this.$emit("close")
+    close() {
+      this.show = false;
+      this.$emit("close");
     },
-    onClick () {
-      this.$emit("click")
-    }
-  }
-}
+    onClick() {
+      this.$emit("click");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

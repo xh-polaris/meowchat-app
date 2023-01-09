@@ -18,13 +18,12 @@
     <view class="search" @click.prevent="search" />
   </view>
 
-
   <view class="top-padding" />
 
-  <block v-for="(post) in postsData" :key="post.id">
+  <block v-for="post in postsData" :key="post.id">
     <view class="post" @click="onClickPost(post.id)">
       <view class="upper">
-        <view :class="'main '+(post.coverUrl?'hasImage':'')">
+        <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
           <view class="title">
             {{ post.title }}
           </view>
@@ -52,7 +51,7 @@
               </view>
             </block>
             <block v-else>
-              <block v-for="(tag) in post.tags" :key="tag.id">
+              <block v-for="tag in post.tags" :key="tag.id">
                 <view class="tag">
                   {{ tag }}
                 </view>
@@ -60,7 +59,11 @@
             </block>
           </view>
         </view>
-        <view v-if="post.coverUrl" :style="{backgroundImage: 'url('+post.coverUrl+')'}" class="image" />
+        <view
+          v-if="post.coverUrl"
+          :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
+          class="image"
+        />
       </view>
       <view class="lower">
         <view class="time">
@@ -75,91 +78,88 @@
 </template>
 
 <script setup>
+import { reactive } from "vue";
+import { onReachBottom } from "@dcloudio/uni-app";
+import { onClickPost } from "./event";
+import { getPostPreviews } from "../../apis/post/post";
+import DraftButton from "@/pages/draft/draft-button";
 
-import { reactive } from "vue"
-import { onReachBottom } from "@dcloudio/uni-app"
-import { onClickPost } from "./event"
-import { getPostPreviews } from "../../apis/post/post"
-import DraftButton from "@/pages/draft/draft-button"
-
-const postsData = reactive([])
+const postsData = reactive([]);
 
 const getPostPreviewsAsync = async () => {
-  return (await getPostPreviews({ page: 0 })).posts
+  return (await getPostPreviews({ page: 0 })).posts;
+};
+
+async function createPostsDataBatch() {
+  const posts = await getPostPreviewsAsync();
+  postsData.push(...posts);
 }
 
-async function createPostsDataBatch () {
-  const posts = await getPostPreviewsAsync()
-  postsData.push(...posts)
-}
-
-createPostsDataBatch()
+createPostsDataBatch();
 
 onReachBottom(() => {
-  createPostsDataBatch()
-})
+  createPostsDataBatch();
+});
 
 const types = reactive([
   {
     name: "官方",
     isCurrent: false,
     className: "navbtn",
-    onClick: ev => {
-      toggleSelf("官方")
-    }
+    onClick: (ev) => {
+      toggleSelf("官方");
+    },
   },
   {
     name: "热度",
     isCurrent: true,
     className: "navbtn current",
-    onClick: ev => {
-      toggleSelf("热度")
-    }
+    onClick: (ev) => {
+      toggleSelf("热度");
+    },
   },
   {
     name: "最新",
     isCurrent: false,
     className: "navbtn",
-    onClick: ev => {
-      toggleSelf("最新")
-    }
+    onClick: (ev) => {
+      toggleSelf("最新");
+    },
   },
   {
     name: "关注",
     isCurrent: false,
     className: "navbtn",
-    onClick: ev => {
-      toggleSelf("关注")
-    }
-  }
-])
+    onClick: (ev) => {
+      toggleSelf("关注");
+    },
+  },
+]);
 
-const toggleSelf = name => {
-  if (!types.filter(type => type.name === name)[0].isCurrent) {
-    types.map(type => {
-      type.isCurrent = false
-      type.className = "navbtn"
-    })
-    const currentType = types.filter(type => type.name === name)[0]
-    currentType.isCurrent = true
-    currentType.className = "navbtn current"
+const toggleSelf = (name) => {
+  if (!types.filter((type) => type.name === name)[0].isCurrent) {
+    types.map((type) => {
+      type.isCurrent = false;
+      type.className = "navbtn";
+    });
+    const currentType = types.filter((type) => type.name === name)[0];
+    currentType.isCurrent = true;
+    currentType.className = "navbtn current";
   }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
-
 body {
   font-family: sans-serif;
-  background-color: #FAFCFF;
+  background-color: #fafcff;
 }
 
 .navbar {
   position: fixed;
-  background-color: #FAFCFF;
+  background-color: #fafcff;
   display: flex;
-  color: #B8B8B8;
+  color: #b8b8b8;
   font-size: calc(13 / 390 * 100vw);
   align-items: center;
   width: 100vw;
@@ -174,10 +174,10 @@ body {
   margin: 0 calc(20 / 390 * 100vw);
 
   &.current {
-    color: #1FA1FF;
+    color: #1fa1ff;
     font-size: calc(20 / 390 * 100vw);
     padding-bottom: calc(2 / 390 * 100vw);
-    border-bottom: calc(1 / 390 * 100vw) #1FA1FF solid;
+    border-bottom: calc(1 / 390 * 100vw) #1fa1ff solid;
     font-weight: bold;
   }
 }
@@ -185,7 +185,7 @@ body {
 .search {
   width: calc(35 / 390 * 100vw);
   height: calc(35 / 390 * 100vw);
-  background-image: url('../../static/images/search-grey.png');
+  background-image: url("../../static/images/search-grey.png");
   background-size: 100% 100%;
   position: fixed;
   z-index: 10;
@@ -198,9 +198,9 @@ body {
 }
 
 .post {
-  background-color: #FFFFFF;
-  border-top: 1px #F5F5F5 solid;
-  border-bottom: 1px #F5F5F5 solid;
+  background-color: #ffffff;
+  border-top: 1px #f5f5f5 solid;
+  border-bottom: 1px #f5f5f5 solid;
   margin-bottom: calc(6 / 390 * 100vw);
   padding: calc(16 / 390 * 100vw);
 }
@@ -231,7 +231,7 @@ body {
       width: calc(21 / 390 * 100vw);
       height: calc(21 / 390 * 100vw);
       border-radius: 50%;
-      background-color: #CCC;
+      background-color: #ccc;
       margin-right: calc(4 / 390 * 100vw);
     }
 
@@ -251,7 +251,7 @@ body {
   .tags {
     display: flex;
     flex-wrap: wrap;
-    color: #1FA1FF;
+    color: #1fa1ff;
     font-size: calc(10 / 390 * 100vw);
     //height: calc(18 / 390 * 100vw);
     line-height: calc(18 / 390 * 100vw);
@@ -263,7 +263,7 @@ body {
       text-align: center;
       min-width: calc(28 / 390 * 100vw);
       padding: 0 calc(6 / 390 * 100vw);
-      border: #1FA1FF 1px solid;
+      border: #1fa1ff 1px solid;
       border-radius: calc(9 / 390 * 100vw);
       margin-right: calc(8 / 390 * 100vw);
       margin-top: calc(6 / 390 * 100vw);
@@ -276,7 +276,8 @@ body {
   height: calc(93 / 390 * 100vw);
   border-radius: calc(6 / 390 * 100vw);
   margin-left: calc(16 / 390 * 100vw);
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: center;
 
   //text-align: center;
   //line-height: calc(93 / 390 * 100vw);
@@ -286,12 +287,11 @@ body {
   margin-top: calc(12 / 390 * 100vw);
   display: flex;
   align-items: baseline;
-  color: #B8B8B8;
+  color: #b8b8b8;
   font-size: calc(10 / 390 * 100vw);
 
   .time {
     margin-right: calc(16 / 390 * 100vw);
   }
 }
-
 </style>

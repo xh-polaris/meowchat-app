@@ -1,13 +1,9 @@
 <template>
   <navigator v-if="type === 'moment'" url="/pages/draft/draft-moment">
-    <view class="button">
-      +
-    </view>
+    <view class="button"> + </view>
   </navigator>
   <navigator v-if="type === 'post'" url="/pages/draft/draft-post">
-    <view class="button">
-      +
-    </view>
+    <view class="button"> + </view>
   </navigator>
 </template>
 
@@ -18,15 +14,14 @@ const props = defineProps({
   type: {
     type: String,
     default() {
-      return "moment"
-    }
-  }
-})
-const type = ref(props.type)
+      return "moment";
+    },
+  },
+});
+const type = ref(props.type);
 </script>
 
 <style lang="scss" scoped>
-
 .button {
   position: fixed;
   right: calc(20 / 390 * 100vw);
@@ -38,7 +33,7 @@ const type = ref(props.type)
   width: calc(48 / 390 * 100vw);
   height: calc(48 / 390 * 100vw);
   border-radius: 50%;
-  color: #EEEEEE;
+  color: #eeeeee;
   font-family: sans-serif;
   line-height: calc(48 / 390 * 100vw);
   text-align: center;
@@ -46,7 +41,6 @@ const type = ref(props.type)
 }
 
 .button:active {
-  color: #CCC;
+  color: #ccc;
 }
-
 </style>

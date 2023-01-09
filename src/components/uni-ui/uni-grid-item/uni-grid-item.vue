@@ -1,10 +1,24 @@
 <template>
-  <view v-if="width" :style="'width:'+width+';'+(square?'height:'+width:'')" class="uni-grid-item">
+  <view
+    v-if="width"
+    :style="'width:' + width + ';' + (square ? 'height:' + width : '')"
+    class="uni-grid-item"
+  >
     <view
-        :class="{ 'uni-grid-item--border': showBorder,  'uni-grid-item--border-top': showBorder && index < column, 'uni-highlight': highlight }"
-        :style="{'border-right-color': borderColor ,'border-bottom-color': borderColor ,'border-top-color': borderColor }"
-        class="uni-grid-item__box" @click="_onClick">
-      <slot/>
+      :class="{
+        'uni-grid-item--border': showBorder,
+        'uni-grid-item--border-top': showBorder && index < column,
+        'uni-highlight': highlight,
+      }"
+      :style="{
+        'border-right-color': borderColor,
+        'border-bottom-color': borderColor,
+        'border-top-color': borderColor,
+      }"
+      class="uni-grid-item__box"
+      @click="_onClick"
+    >
+      <slot />
     </view>
   </view>
 </template>
@@ -22,10 +36,10 @@ export default {
   props: {
     index: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
-  data () {
+  data() {
     return {
       column: 0,
       showBorder: true,
@@ -35,38 +49,38 @@ export default {
       top: 0,
       openNum: 2,
       width: 0,
-      borderColor: "#e5e5e5"
-    }
+      borderColor: "#e5e5e5",
+    };
   },
-  created () {
-    this.column = this.grid.column
-    this.showBorder = this.grid.showBorder
-    this.square = this.grid.square
-    this.highlight = this.grid.highlight
-    this.top = this.hor === 0 ? this.grid.hor : this.hor
-    this.left = this.ver === 0 ? this.grid.ver : this.ver
-    this.borderColor = this.grid.borderColor
-    this.grid.children.push(this)
+  created() {
+    this.column = this.grid.column;
+    this.showBorder = this.grid.showBorder;
+    this.square = this.grid.square;
+    this.highlight = this.grid.highlight;
+    this.top = this.hor === 0 ? this.grid.hor : this.hor;
+    this.left = this.ver === 0 ? this.grid.ver : this.ver;
+    this.borderColor = this.grid.borderColor;
+    this.grid.children.push(this);
     // this.grid.init()
-    this.width = this.grid.width
+    this.width = this.grid.width;
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.grid.children.forEach((item, index) => {
       if (item === this) {
-        this.grid.children.splice(index, 1)
+        this.grid.children.splice(index, 1);
       }
-    })
+    });
   },
   methods: {
-    _onClick () {
+    _onClick() {
       this.grid.change({
         detail: {
-          index: this.index
-        }
-      })
-    }
-  }
-}
+          index: this.index,
+        },
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -95,33 +109,32 @@ export default {
 .uni-grid-item--border {
   position: relative;
   /* #ifdef APP-NVUE */
-  border-bottom-color: #D2D2D2;
+  border-bottom-color: #d2d2d2;
   border-bottom-style: solid;
   border-bottom-width: 0.5px;
-  border-right-color: #D2D2D2;
+  border-right-color: #d2d2d2;
   border-right-style: solid;
   border-right-width: 0.5px;
   /* #endif */
   /* #ifndef APP-NVUE */
   z-index: 0;
-  border-bottom: 1px #D2D2D2 solid;
-  border-right: 1px #D2D2D2 solid;
+  border-bottom: 1px #d2d2d2 solid;
+  border-right: 1px #d2d2d2 solid;
   /* #endif */
 }
 
 .uni-grid-item--border-top {
   position: relative;
   /* #ifdef APP-NVUE */
-  border-top-color: #D2D2D2;
+  border-top-color: #d2d2d2;
   border-top-style: solid;
   border-top-width: 0.5px;
   /* #endif */
   /* #ifndef APP-NVUE */
-  border-top: 1px #D2D2D2 solid;
+  border-top: 1px #d2d2d2 solid;
   z-index: 0;
   /* #endif */
 }
-
 
 .uni-highlight:active {
   background-color: #f1f1f1;
