@@ -1,14 +1,23 @@
 <template>
   <view>
-    <image :src="mainImgUrl" class="img"/>
+    <image :src="mainImgUrl" class="img" />
     <view>
       <scroll-view scroll-x="true" class="scroll-view-item_H" scroll-left="120">
         <li
-            v-for="(item,index) in cat.avatars" :key="index"
-            class="img-li"
-            @click="()=>{mainImgUrl= item,imgActiveIndex=index}"
+          v-for="(item, index) in cat.avatars"
+          :key="index"
+          class="img-li"
+          @click="
+            () => {
+              (mainImgUrl = item), (imgActiveIndex = index);
+            }
+          "
         >
-          <img :class="index === imgActiveIndex ? 'img_activeBorder' : ''" :src="item" style="width:50px;height:50px">
+          <img
+            :class="index === imgActiveIndex ? 'img_activeBorder' : ''"
+            :src="item"
+            style="width: 50px; height: 50px"
+          />
         </li>
       </scroll-view>
     </view>
@@ -19,11 +28,11 @@
 
       <view class="text-box2">
         <progress
-            :percent="cat.popularity"
-            :stroke-width="10"
-            activeColor="#63A4F9"
-            backgroundColor="#F5F5F5"
-            border-radius="6px"
+          :percent="cat.popularity"
+          :stroke-width="10"
+          activeColor="#63A4F9"
+          backgroundColor="#F5F5F5"
+          border-radius="6px"
         />
         <text>{{ cat.popularity }}人气值</text>
       </view>
@@ -68,45 +77,52 @@
         </view>
       </view>
     </view>
-    <view class="divider"/>
+    <view class="divider" />
     <view class="photo">
       <text class="maopian"> 猫片</text>
       <view class="dd">
-        <text class="detail_info">
-          {{ cat.details }}
-        </text>
-        <view v-if="spread" @click="()=>{spread=!spread}">
-          <text style="font-size: 25rpx; ">点击展开
-          </text>
-          <image src="../../static/images/open.png"
-                 style=" width:25rpx; height: 25rpx; margin-right: 40rpx; "></image>
+        <text class="detail_info"> 撸猫指南：{{ cat.details }} </text>
+        <view
+          v-if="spread"
+          @click="
+            () => {
+              spread = !spread;
+            }
+          "
+        >
+          <text style="font-size: 25rpx">点击展开 </text>
+          <image
+            src="../../static/images/open.png"
+            style="width: 20rpx; height: 20rpx; margin-right: 40rpx"
+          ></image>
         </view>
-        <view v-if="!spread" @click="()=>{spread=!spread}">
-          <text style="font-size: 25rpx; ">点击收起
-          </text>
-          <image src="../../static/images/back.png"
-                 style=" width:25rpx; height: 25rpx; margin-right: 40rpx; "></image>
+        <view
+          v-if="!spread"
+          @click="
+            () => {
+              spread = !spread;
+            }
+          "
+        >
+          <text style="font-size: 25rpx">点击收起 </text>
+          <image
+            src="../../static/images/back.png"
+            style="width: 20rpx; height: 20rpx; margin-right: 40rpx"
+          ></image>
         </view>
       </view>
-      <view v-if="!spread" class="divider1"/>
+      <view v-if="!spread" class="divider1" />
       <view v-if="!spread" class="end">
         <text class="detail_info">
           {{ cat.details }}
         </text>
       </view>
       <view class="imgs">
-        <text>
-          11月
-        </text>
+        <text> 11月 </text>
         <view class="qz_imgs qz_imgs3 clearfix">
-
-          <li
-              v-for="(item,index) in imgUrlList" :key="index"
-          >
-            <image :src="item" mode="aspectFill"/>
-
+          <li v-for="(item, index) in imgUrlList" :key="index">
+            <image :src="item" mode="aspectFill" />
           </li>
-
         </view>
       </view>
     </view>
@@ -114,10 +130,10 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import {Cat} from "@/apis/schemas";
-import {getCatDetail} from "@/apis/collection/collection";
-import {GetCatDetailReq} from "@/apis/collection/collection-interfaces";
+import { reactive, ref } from "vue";
+import { Cat } from "@/apis/schemas";
+import { getCatDetail } from "@/apis/collection/collection";
+import { GetCatDetailReq } from "@/apis/collection/collection-interfaces";
 
 const props = defineProps<{
   id: string;
@@ -133,7 +149,6 @@ let imgUrlList = [
   "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg",
   "https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg",
   "https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg",
-
 ];
 let Sterilized: string;
 let Snipped: string;
@@ -151,49 +166,45 @@ let cat = reactive<Cat>({
   area: "",
   isSnipped: true,
   isSterilized: true,
-  avatars: []
+  avatars: [],
 });
 const mainImgUrl = ref("");
 const imgActiveIndex = ref(0);
 const spread = ref(true);
-getCatDetail(getCatDetailReq).then(res => {
-      cat.id = res.cat.id;
-      cat.createAt = res.cat.createAt;
-      cat.age = res.cat.age;
-      cat.communityId = res.cat.communityId;
-      cat.color = res.cat.color;
-      cat.details = res.cat.details;
-      cat.name = res.cat.name;
-      cat.popularity = res.cat.popularity;
-      cat.sex = res.cat.sex;
-      cat.status = res.cat.status;
-      cat.area = res.cat.area;
-      cat.isSnipped = res.cat.isSnipped;
-      cat.isSterilized = res.cat.isSterilized;
-      cat.avatars = res.cat.avatars;
-      if (res.cat.isSterilized) {
-        Sterilized = "是";
-      } else {
-        Sterilized = "否";
-      }
-      if (res.cat.isSnipped) {
-        Snipped = "是";
-      } else {
-        Snipped = "否";
-      }
-      mainImgUrl.value = cat.avatars[0];
-    }
-);
-
+getCatDetail(getCatDetailReq).then((res) => {
+  cat.id = res.cat.id;
+  cat.createAt = res.cat.createAt;
+  cat.age = res.cat.age;
+  cat.communityId = res.cat.communityId;
+  cat.color = res.cat.color;
+  cat.details = res.cat.details;
+  cat.name = res.cat.name;
+  cat.popularity = res.cat.popularity;
+  cat.sex = res.cat.sex;
+  cat.status = res.cat.status;
+  cat.area = res.cat.area;
+  cat.isSnipped = res.cat.isSnipped;
+  cat.isSterilized = res.cat.isSterilized;
+  cat.avatars = res.cat.avatars;
+  if (res.cat.isSterilized) {
+    Sterilized = "是";
+  } else {
+    Sterilized = "否";
+  }
+  if (res.cat.isSnipped) {
+    Snipped = "是";
+  } else {
+    Snipped = "否";
+  }
+  mainImgUrl.value = cat.avatars[0];
+});
 </script>
 
 <style lang="scss" scoped>
-
 .scroll-view-item_H {
-
   display: inline-block;
   width: 330rpx;
-  height: 100rpx;
+  height: 150rpx;
   line-height: 100rpx;
   white-space: nowrap;
   margin-left: 300rpx;
@@ -211,12 +222,13 @@ getCatDetail(getCatDetailReq).then(res => {
 
 .img-li {
   //float: left;
-  margin: 0 10rpx;
+  margin: 0 20rpx;
   cursor: pointer;
   display: inline-block;
 }
 
 .img_activeBorder {
+  padding: 5rpx 5rpx 5rpx 5rpx;
   border: 5rpx solid #a4a9ab;
 }
 
@@ -252,7 +264,7 @@ getCatDetail(getCatDetailReq).then(res => {
     //display: inline-block;
     text-align: center;
     color: #37393a;
-    font-size: 50rpx;
+    font-size: 40rpx;
   }
 
   .text-box2 {
@@ -280,14 +292,15 @@ getCatDetail(getCatDetailReq).then(res => {
 
     .attribute {
       text-align: center;
-      color: #007aff;
-      font-size: 30rpx;
+      color: #1fa1ff;
+      font-size: 25rpx;
+      margin-bottom: 10rpx;
     }
 
     .content {
       text-align: center;
       color: #37393a;
-      font-size: 40rpx;
+      font-size: 30rpx;
     }
   }
 }
@@ -296,15 +309,14 @@ getCatDetail(getCatDetailReq).then(res => {
   background: #e0e3da;
   width: 100%;
   height: 10rpx;
-  margin-top: 10rpx;
+  margin-top: 30rpx;
   margin-bottom: 20rpx;
 }
 
 .divider1 {
-
   width: 100%;
   height: 1rpx;
-  border: 1rpx solid #FFFFFF;
+  border: 1rpx solid #ffffff;
 }
 
 .photo {
@@ -320,17 +332,17 @@ getCatDetail(getCatDetailReq).then(res => {
     left: 15rpx;
     top: 677rpx;
 
-    font-family: 'Abel';
+    font-family: "Abel";
     font-style: normal;
     font-weight: 400;
-    font-size: 60rpx;
+    font-size: 35rpx;
+    font-weight: bold;
     line-height: 41rpx;
+    margin-left: 20rpx;
     /* identical to box height, or 205% */
     letter-spacing: 0.374rpx;
 
     color: #000000;
-
-
   }
 
   text {
@@ -342,60 +354,64 @@ getCatDetail(getCatDetailReq).then(res => {
   .dd {
     //text-align: center;
     margin-right: auto;
+    margin-left: 20rpx;
     margin-top: 20rpx;
-    width: 100%;
+    width: 95%;
     color: white;
     //background: linear-gradient(90deg, #0688f3, white);
-    background: #EAF6FF;
+    background: #eaf6ff;
     display: flex;
     justify-content: space-between;
     white-space: nowrap;
     //padding-left: 30rpx;
-    padding-top: 30rpx;
+    padding-top: 10rpx;
+    border-radius: 30rpx;
   }
 
   .end {
     text-align: center;
     margin-right: auto;
-    width: 100%;
+    margin-left: 20rpx;
+    width: 95%;
     height: 200rpx;
     color: white;
     // background: linear-gradient(90deg, #0688f3, white);
-    background: #EAF6FF;
+    background: #eaf6ff;
+    border-radius: 30rpx;
   }
 
   .detail_info {
-    font-size: 40rpx;
+    font-size: 28rpx;
     font-weight: 400;
     width: 100%;
-    margin-bottom: 30rpx;
+    margin-top: 5rpx;
+    margin-bottom: 20rpx;
   }
 
   .imgs {
-    margin-top: 40rpx;
+    margin-top: 30rpx;
+    margin-left: 20rpx;
 
     text {
-
       /* 11月 */
 
       //position: absolute;
-      width: 27rpx;
-      height: 17rpx;
-      left: 16rpx;
+      //width: 27rpx;
+      //height: 17rpx;
+      //left: 16rpx;
+      margin-left: auto;
+      //margin-bottom: 30rpx;
 
-
-      font-family: 'Inter';
+      font-family: "Inter";
       font-style: normal;
       font-weight: 500;
-      font-size: 40rpx;
-      line-height: 17rpx;
+      font-size: 28rpx;
+      line-height: 80rpx;
       /* identical to box height */
       letter-spacing: -0.3rpx;
 
       /* darkgrey02 */
       color: #353535;
-
-
     }
 
     .qz_imgs {
@@ -407,16 +423,15 @@ getCatDetail(getCatDetailReq).then(res => {
 
       &.qz_imgs3 {
         image {
-          width: 212rpx;
-          height: 212rpx;
+          width: 225rpx;
+          height: 225rpx;
           object-fit: cover;
           border-radius: 3px;
           float: left;
-          margin: 5px;
+          margin: 5rpx 5rpx 5rpx 5rpx;
         }
       }
     }
   }
 }
-
 </style>
