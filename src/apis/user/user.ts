@@ -18,6 +18,7 @@ export async function getUserInfo(): Promise<GetUserResp> {
     });
   });
 }
+
 export async function updateUserInfo(
   req: UpdateUserReq
 ): Promise<UpdateUserResp> {

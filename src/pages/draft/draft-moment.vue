@@ -14,19 +14,19 @@
           @click="addImage"
         />
       </view>
-      <view class="image-num"> {{ imagesData.length }}/8 </view>
+      <view class="image-num"> {{ imagesData.length }}/8</view>
       <textarea maxlength="5000" placeholder="说点什么吧！" type="text" />
 
       <view class="choose-cats-bar">
-        <view class="choose-cats"> 选择猫咪 </view>
+        <view class="choose-cats"> 选择猫咪</view>
         <view class="right-arrow" />
-        <view class="choose-followed-cats"> 不选择猫咪 </view>
+        <view class="choose-followed-cats"> 不选择猫咪</view>
       </view>
     </view>
 
     <view class="panel">
       <view class="toggle-bar">
-        <view class="toggle-text"> 同步到猫咪图鉴 </view>
+        <view class="toggle-text"> 同步到猫咪图鉴</view>
         <view
           :class="'toggle ' + (isSyncToCollection ? 'active' : '')"
           @click="toggleSyncToCollection"
@@ -37,7 +37,7 @@
         </view>
       </view>
       <view class="toggle-bar">
-        <view class="toggle-text"> 匿名信息 </view>
+        <view class="toggle-text"> 匿名信息</view>
         <view
           :class="'toggle ' + (isAnonymous ? 'active' : '')"
           @click="toggleAnonymous"
@@ -47,7 +47,7 @@
           </view>
         </view>
       </view>
-      <view class="publish"> 发布动态 </view>
+      <view class="publish"> 发布动态</view>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -63,10 +63,11 @@
   </view>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { reactive, ref } from "vue";
+import { putObject } from "@/apis/cos/cos";
 
-const imagesData = reactive([]);
+const imagesData = reactive<any>([]);
 
 const isAnonymous = ref(false);
 const isSyncToCollection = ref(false);
@@ -83,7 +84,7 @@ function addImage() {
   uni.chooseImage({
     success: (chooseImageRes) => {
       let isTooManyImages = false;
-      let tempFilePaths = chooseImageRes.tempFilePaths;
+      let tempFilePaths = chooseImageRes.tempFilePaths as string[];
       if (imagesData.length + tempFilePaths.length > 8) {
         isTooManyImages = true;
         tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length);
@@ -93,6 +94,7 @@ function addImage() {
           id: path,
           url: path,
         });
+        putObject({ filePath: path });
       });
       if (isTooManyImages) {
         uni.showToast({

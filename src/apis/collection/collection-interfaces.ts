@@ -4,16 +4,19 @@ export interface GetCatPreviewsReq {
   page: number;
   communityId: string;
 }
+
 export interface SearchCatPreviewsReq {
   communityId: string;
   page: number;
   keyword: string;
 }
+
 export interface SearchCatPreviewsResp {
-  cats: Cat[];
+  cats: CatPreview[];
   code: number;
   msg: string;
 }
+
 export interface GetCatPreviewsResp {
   cats: CatPreview[];
   code: number;

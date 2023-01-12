@@ -10,7 +10,7 @@
         <view class="school-name">
           {{ school.name }}
         </view>
-        <view class="campus-name"> ({{ currentNavBtn }}) </view>
+        <view class="campus-name"> ({{ currentNavBtn }})</view>
       </view>
       <view class="switch-box">
         <view class="switch-icon" />
@@ -75,16 +75,17 @@ uni.getProvider({
           });
         },
       });
-    } else {
-      signIn({
-        authType: "email",
-        authId: "test@test.com",
-        params: ["1234"],
-      }).then((res) => {
-        uni.setStorageSync("accessToken", res.accessToken);
-        init.value = true;
-      });
     }
+  },
+  fail() {
+    signIn({
+      authType: "email",
+      authId: "test@test.com",
+      params: ["1234"],
+    }).then((res) => {
+      uni.setStorageSync("accessToken", res.accessToken);
+      init.value = true;
+    });
   },
 });
 </script>
