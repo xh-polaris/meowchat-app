@@ -59,7 +59,7 @@ export default {
         });
       });
       uni.reLaunch({
-        url: "./profile",
+        url: "/pages/profile/profile",
       });
     },
   },
