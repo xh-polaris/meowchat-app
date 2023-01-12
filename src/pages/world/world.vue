@@ -38,7 +38,7 @@
           <view class="description">
             {{ post.text }}
           </view>
-          <view class="tags">
+          <view class="tags" v-if="post.tags">
             <block v-if="post.tags.length > 4">
               <view class="tag">
                 {{ post.tags[0] }}
