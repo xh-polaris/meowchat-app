@@ -61,7 +61,6 @@ export async function newPost(req: NewPostReq): Promise<NewPostResp> {
       method: "POST",
       success(res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode !== 200) {
-          console.log(res);
           reject(res);
         }
         const data = res.data as NewPostResp;

@@ -44,7 +44,6 @@ export async function newMoment(req: NewMomentReq): Promise<NewMomentResp> {
       method: "POST",
       success(res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode !== 200) {
-          console.log(res);
           reject(res);
         }
         const data = res.data as NewMomentResp;
