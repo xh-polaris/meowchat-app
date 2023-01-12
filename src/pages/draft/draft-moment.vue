@@ -15,7 +15,34 @@
         />
       </view>
       <view class="image-num"> {{ imagesData.length }}/8</view>
-      <textarea maxlength="5000" placeholder="说点什么吧！" type="text" />
+      <view class="m-2">
+        <fui-button
+          text="默认按钮"
+          height="50rpx"
+          color="black"
+          backgroundColor="white"
+          placeholder="填写标题能获得更多赞哦~"
+          borderColor="#1FA1FF"
+          :borderTop="false"
+          bottomLeft="20"
+          bottomRight="20"
+          :borderBottom="true"
+          v-model="title"
+        ></fui-button>
+      </view>
+
+      <view class="mx-2 mt-2">
+        <fui-button
+          text="默认按钮"
+          color="black"
+          :isCounter="true"
+          :borderTop="false"
+          :borderBottom="false"
+          placeholder="说点什么吧!"
+          v-model="text"
+          height="350rpx"
+        ></fui-button>
+      </view>
 
       <view class="choose-cats-bar">
         <view class="choose-cats"> 选择猫咪</view>
@@ -47,7 +74,7 @@
           </view>
         </view>
       </view>
-      <view class="publish"> 发布动态</view>
+      <view class="publish" @click="publishMoment"> 发布动态</view>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -66,11 +93,18 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
+import { newMoment } from "@/apis/moment/moment.ts";
+import fuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
 
 const imagesData = reactive<any>([]);
 
 const isAnonymous = ref(false);
 const isSyncToCollection = ref(false);
+
+let title = ref("");
+let text = ref("");
+let communityId = ref("637ce159b15d9764c31f9c84");
+let photos = reactive<any>([]);
 
 function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value;
@@ -94,7 +128,13 @@ function addImage() {
           id: path,
           url: path,
         });
-        putObject({ filePath: path });
+        putObject({
+          filePath: path,
+        }).then(function (url) {
+          //将返回的url添加进photos
+          photos.push(url.url);
+          console.log(photos);
+        });
       });
       if (isTooManyImages) {
         uni.showToast({
@@ -103,6 +143,20 @@ function addImage() {
         });
       }
     },
+  });
+}
+
+function publishMoment() {
+  newMoment({
+    title: title.value,
+    communityId: "637ce159b15d9764c31f9c84",
+    text: text.value,
+    photos: photos,
+  }).then((res) => {
+    console.log(res);
+    uni.navigateBack({
+      delta: 1,
+    });
   });
 }
 </script>
