@@ -115,7 +115,7 @@ onReachBottom(() => {
   if (!whetherSearch) {
     getCatPreviewsReq.page++;
     getCatPreviews(getCatPreviewsReq).then((res) => {
-      if (res.cats.length == 0) {
+      if (res.cats.length === 0) {
         uni.stopPullDownRefresh();
       } else {
         cats.value.push(...res.cats);
@@ -124,7 +124,7 @@ onReachBottom(() => {
   } else {
     searchCatPreviewsReq.page++;
     searchCatPreviews(searchCatPreviewsReq).then((res) => {
-      if (res.cats.length == 0) {
+      if (res.cats.length === 0) {
         uni.stopPullDownRefresh();
       } else {
         cats.value.push(...res.cats);

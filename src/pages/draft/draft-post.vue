@@ -1,13 +1,13 @@
 <template>
   <view class="all">
     <view class="main">
-      <input placeholder="输入标题" type="text" />
+      <input placeholder="输入标题" type="text" v-model="title" />
       <!-- #ifdef H5 -->
       <textarea
         maxlength="5000"
         placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
         type="text"
-        v-model="title"
+        v-model="text"
       />
       <!-- #endif -->
       <!-- #ifdef MP-WEIXIN -->
@@ -63,9 +63,9 @@
   </view>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { newPost } from "@/apis/post/post.ts";
+import { newPost } from "@/apis/post/post";
 
 import { putObject } from "@/apis/cos/cos";
 
@@ -86,20 +86,20 @@ function addImage() {
   uni.chooseImage({
     success: (chooseImageRes) => {
       let isTooManyImages = false;
-      let tempFilePaths = chooseImageRes.tempFilePaths;
+      let tempFilePaths = chooseImageRes.tempFilePaths as string[];
       if (imagesData.length + tempFilePaths.length > 1) {
         isTooManyImages = true;
         tempFilePaths = tempFilePaths.slice(0, 1 - imagesData.length);
       }
-      tempFilePaths.map((path) => {
+      tempFilePaths.map((path: string) => {
         imagesData.push({
           id: path,
           url: path,
         });
         putObject({
           filePath: path,
-        }).then(function (url) {
-          coverUrl.value = url;
+        }).then(function (res) {
+          coverUrl.value = res.url;
         });
       });
 
@@ -114,15 +114,13 @@ function addImage() {
 }
 
 function publishPost() {
-  console.log(coverUrl);
   newPost({
     title: title.value,
     text: text.value,
-    coverUrl: coverUrl.value.url,
+    coverUrl: coverUrl.value,
     tags: [],
     isAnonymous: isAnonymous.value,
-  }).then((res) => {
-    console.log(res);
+  }).then(() => {
     uni.navigateBack({
       delta: 1,
     });

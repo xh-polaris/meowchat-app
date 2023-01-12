@@ -29,7 +29,7 @@
           </view>
           <view class="user">
             <block v-if="!post.isAnonymous">
-              <view class="avatar" />
+              <image class="avatar" :src="post.user.avatarUrl" />
               <view class="username">
                 {{ post.user.nickname }}
               </view>
@@ -77,18 +77,24 @@
   <draft-button type="post" />
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { reactive } from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
-import { getPostPreviews } from "../../apis/post/post";
+import { getPostPreviews } from "@/apis/post/post";
 import DraftButton from "@/pages/draft/draft-button";
 import { displayTime } from "@/utils/time";
+import { Post } from "@/apis/schemas";
 
-const postsData = reactive([]);
-
+const postsData = reactive<Post[]>([]);
+let page = 0;
 const getPostPreviewsAsync = async () => {
-  return (await getPostPreviews({ page: 0 })).posts;
+  const posts = (await getPostPreviews({ page: page })).posts;
+  if (posts.length === 0) {
+    uni.stopPullDownRefresh();
+  }
+  page++;
+  return posts;
 };
 
 async function createPostsDataBatch() {
@@ -107,7 +113,7 @@ const types = reactive([
     name: "官方",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("官方");
     },
   },
@@ -115,7 +121,7 @@ const types = reactive([
     name: "热度",
     isCurrent: true,
     className: "navbtn current",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("热度");
     },
   },
@@ -123,7 +129,7 @@ const types = reactive([
     name: "最新",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("最新");
     },
   },
@@ -131,13 +137,13 @@ const types = reactive([
     name: "关注",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("关注");
     },
   },
 ]);
 
-const toggleSelf = (name) => {
+const toggleSelf = (name: string) => {
   if (!types.filter((type) => type.name === name)[0].isCurrent) {
     types.map((type) => {
       type.isCurrent = false;

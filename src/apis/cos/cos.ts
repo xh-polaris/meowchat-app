@@ -4,7 +4,7 @@ import { PutObjectReq, PutObjectResp } from "@/apis/cos/cos-interface";
 /**
  * @description 使用PUT方法上传文件至COS
  */
-export async function putObject(req: PutObjectReq) {
+export async function putObject(req: PutObjectReq): Promise<PutObjectResp> {
   const filePath = req.filePath;
   const resp = await applySignedUrl({
     prefix: req.prefix,

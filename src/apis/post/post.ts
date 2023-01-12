@@ -9,10 +9,10 @@ import {
   NewPostResp,
 } from "@/apis/post/post-interfaces";
 
-export function getPostPreviews(
+export async function getPostPreviews(
   req: GetPostPreviewsReq
 ): Promise<GetPostPreviewsResp> {
-  return new Promise<GetPostPreviewsResp>((resolve, reject) => {
+  return await new Promise<GetPostPreviewsResp>((resolve, reject) => {
     uni.request({
       url: "/post/get_post_previews",
       method: "GET",

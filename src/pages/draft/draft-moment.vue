@@ -93,8 +93,8 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
-import { newMoment } from "@/apis/moment/moment.ts";
-import fuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
+import { newMoment } from "@/apis/moment/moment";
+import FuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
 
 const imagesData = reactive<any>([]);
 
@@ -103,7 +103,6 @@ const isSyncToCollection = ref(false);
 
 let title = ref("");
 let text = ref("");
-let communityId = ref("637ce159b15d9764c31f9c84");
 let photos = reactive<any>([]);
 
 function toggleAnonymous() {
@@ -133,7 +132,6 @@ function addImage() {
         }).then(function (url) {
           //将返回的url添加进photos
           photos.push(url.url);
-          console.log(photos);
         });
       });
       if (isTooManyImages) {
@@ -149,11 +147,10 @@ function addImage() {
 function publishMoment() {
   newMoment({
     title: title.value,
-    communityId: "637ce159b15d9764c31f9c84",
+    communityId: uni.getStorageSync("communityId"),
     text: text.value,
     photos: photos,
-  }).then((res) => {
-    console.log(res);
+  }).then(() => {
     uni.navigateBack({
       delta: 1,
     });
