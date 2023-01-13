@@ -5,7 +5,7 @@
         class="tagItem"
         :class="tagBgColor"
         v-bind:key="index"
-        v-for="(tagText, index) in value"
+        v-for="(tagText, index) in nowValue"
       >
         <text @tap="tapTag" :data-text="tagText" style="color: white">{{
           tagText
@@ -63,7 +63,15 @@ export default {
       tagString: "",
       isShowDelIcon: this.enableDel || false,
       isShowAdd: this.enableAdd || false,
+      nowValue: this.value,
     };
+  },
+  watch: {
+    value: {
+      handler(newval, oldval) {
+        this.nowValue = newval;
+      },
+    },
   },
   computed: {
     tagBgColor() {
@@ -96,7 +104,7 @@ export default {
         }
       }
       this.tagString = "";
-      this.value.splice(this.value.length, 0, ...tempTagArr);
+      this.nowValue.splice(this.value.length, 0, ...tempTagArr);
       this.$emit("add", {
         currentTag: tempTagArr,
         allTags: this.value,
@@ -106,7 +114,7 @@ export default {
     delTag(e) {
       const delTagText = e.currentTarget.dataset.text;
       const delTagIndex = this.value.indexOf(delTagText);
-      this.value.splice(delTagIndex, 1);
+      this.nowValue.splice(delTagIndex, 1);
       this.$emit("delete", {
         currentTag: delTagText,
         allTags: this.value,
