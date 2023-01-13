@@ -27,7 +27,8 @@
           placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
           v-model="text"
           height="350rpx"
-        ></fui-button>
+        >
+        </fui-button>
       </view>
 
       <view class="">
@@ -202,8 +203,7 @@ body {
 .images {
   display: flex;
   width: calc(100vw - $margin * 2 + $imageGap);
-  margin: $margin;
-  margin-bottom: 0;
+  margin: $margin $margin 0;
   flex-wrap: wrap;
 }
 
@@ -275,8 +275,7 @@ textarea ::selection {
 .choose-cats-bar {
   display: flex;
   align-items: center;
-  margin: 0 $margin;
-  margin-bottom: calc(10 / 390 * 100vw);
+  margin: 0 $margin calc(10 / 390 * 100vw);
 
   .choose-cats {
     color: #1fa1ff;
@@ -322,8 +321,7 @@ textarea ::selection {
 }
 
 .panel {
-  padding: calc(33 / 390 * 100vw);
-  padding-bottom: calc(60 / 390 * 100vw);
+  padding: calc(33 / 390 * 100vw) calc(33 / 390 * 100vw) calc(60 / 390 * 100vw);
 }
 
 .toggle-bar {

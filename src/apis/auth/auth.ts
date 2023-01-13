@@ -11,7 +11,7 @@ import {
  * @description
  * @param req
  */
-export function signIn(req: SignInReq): Promise<SignInResp> {
+export function signIn(req: SignInReq) {
   return new Promise<SignInResp>((resolve, reject) => {
     uni.request({
       url: "/auth/sign_in",
@@ -32,7 +32,7 @@ export function signIn(req: SignInReq): Promise<SignInResp> {
  * @description
  * @param req
  */
-export function setPassword(req: SetPasswordReq): Promise<SetPasswordResp> {
+export function setPassword(req: SetPasswordReq) {
   return new Promise((resolve, reject) => {
     uni.request({
       url: "/auth/set_password",
@@ -53,10 +53,8 @@ export function setPassword(req: SetPasswordReq): Promise<SetPasswordResp> {
  * @description
  * @param req
  */
-export function sendVerifyCode(
-  req: SendVerifyCodeReq
-): Promise<SendVerifyCodeResp> {
-  return new Promise((resolve, reject) => {
+export async function sendVerifyCode(req: SendVerifyCodeReq) {
+  return await new Promise((resolve, reject) => {
     uni.request({
       url: "/auth/send_verify_code",
       data: req,

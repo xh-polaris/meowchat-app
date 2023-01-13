@@ -1,4 +1,4 @@
 <script lang="ts" setup></script>
 <style>
-@import "common/zcm-main.css";
+@import "assets/zcm-main.css";
 </style>

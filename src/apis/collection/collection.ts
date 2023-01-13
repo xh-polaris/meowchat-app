@@ -11,7 +11,7 @@ import {
   SearchCatPreviewsResp,
 } from "./collection-interfaces";
 
-export async function deleteCat(req: DeleteCatReq): Promise<DeleteCatResp> {
+export async function deleteCat(req: DeleteCatReq) {
   return await new Promise<DeleteCatResp>((resolve, reject) => {
     uni.request({
       url: "/collection/delete_cat",
@@ -32,7 +32,7 @@ export async function deleteCat(req: DeleteCatReq): Promise<DeleteCatResp> {
  * @description
  * @param req
  */
-export async function newCat(req: NewCatReq): Promise<NewCatResp> {
+export async function newCat(req: NewCatReq) {
   return await new Promise<NewCatResp>((resolve, reject) => {
     uni.request({
       url: "/collection/new_cat",
@@ -53,9 +53,7 @@ export async function newCat(req: NewCatReq): Promise<NewCatResp> {
  * @description
  * @param req
  */
-export async function getCatPreviews(
-  req: GetCatPreviewsReq
-): Promise<GetCatPreviewsResp> {
+export async function getCatPreviews(req: GetCatPreviewsReq) {
   return await new Promise<GetCatPreviewsResp>((resolve, reject) => {
     uni.request({
       url: "/collection/get_cat_previews",
@@ -76,9 +74,7 @@ export async function getCatPreviews(
  * @description
  * @param req
  */
-export async function searchCatPreviews(
-  req: SearchCatPreviewsReq
-): Promise<SearchCatPreviewsResp> {
+export async function searchCatPreviews(req: SearchCatPreviewsReq) {
   return await new Promise<SearchCatPreviewsResp>((resolve, reject) => {
     uni.request({
       url: "/collection/search_cat",
@@ -99,9 +95,7 @@ export async function searchCatPreviews(
  * @description
  * @param req
  */
-export async function getCatDetail(
-  req: GetCatDetailReq
-): Promise<GetCatDetailResp> {
+export async function getCatDetail(req: GetCatDetailReq) {
   return await new Promise<GetCatDetailResp>((resolve, reject) => {
     uni.request({
       url: "/collection/get_cat_detail",

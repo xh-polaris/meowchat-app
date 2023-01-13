@@ -13,7 +13,7 @@
             }
           "
         >
-          <img
+          <image
             :class="index === imgActiveIndex ? 'img_activeBorder' : ''"
             :src="item"
             style="width: 50px; height: 50px"
@@ -81,8 +81,9 @@
     <view class="photo">
       <text class="maopian"> 猫片</text>
       <view class="dd">
-        <text class="detail_info"> 撸猫指南：{{ cat.details }} </text>
+        <text class="detail_info"> 撸猫指南：{{ cat.details }}</text>
         <view
+          class="spread"
           v-if="spread"
           @click="
             () => {
@@ -90,13 +91,11 @@
             }
           "
         >
-          <text style="font-size: 25rpx">点击展开 </text>
-          <image
-            src="../../static/images/open.png"
-            style="width: 20rpx; height: 20rpx; margin-right: 40rpx"
-          ></image>
+          <text>点击展开</text>
+          <image src="/static/images/open.png"></image>
         </view>
         <view
+          class="spread"
           v-if="!spread"
           @click="
             () => {
@@ -104,11 +103,8 @@
             }
           "
         >
-          <text style="font-size: 25rpx">点击收起 </text>
-          <image
-            src="../../static/images/back.png"
-            style="width: 20rpx; height: 20rpx; margin-right: 40rpx"
-          ></image>
+          <text>点击收起</text>
+          <image src="/static/images/back.png"></image>
         </view>
       </view>
       <view v-if="!spread" class="divider1" />
@@ -118,7 +114,7 @@
         </text>
       </view>
       <view class="imgs">
-        <text> 11月 </text>
+        <text> 11月</text>
         <view class="qz_imgs qz_imgs3 clearfix">
           <li v-for="(item, index) in imgUrlList" :key="index">
             <image :src="item" mode="aspectFill" />
@@ -332,9 +328,8 @@ getCatDetail(getCatDetailReq).then((res) => {
     left: 15rpx;
     top: 677rpx;
 
-    font-family: "Abel";
+    font-family: "Abel", serif;
     font-style: normal;
-    font-weight: 400;
     font-size: 35rpx;
     font-weight: bold;
     line-height: 41rpx;
@@ -402,7 +397,7 @@ getCatDetail(getCatDetailReq).then((res) => {
       margin-left: auto;
       //margin-bottom: 30rpx;
 
-      font-family: "Inter";
+      font-family: "Inter", serif;
       font-style: normal;
       font-weight: 500;
       font-size: 28rpx;
@@ -432,6 +427,18 @@ getCatDetail(getCatDetailReq).then((res) => {
         }
       }
     }
+  }
+}
+
+.spread {
+  text {
+    font-size: 25rpx;
+  }
+
+  image {
+    width: 20rpx;
+    height: 20rpx;
+    margin-right: 40rpx;
   }
 }
 </style>

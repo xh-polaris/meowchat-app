@@ -1,10 +1,5 @@
 <template>
   <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
-  <!--  <reply-->
-  <!--      :animation="enterReplyData"-->
-  <!--      :replies="comments[selectedReply]"-->
-  <!--      class="more-reply"-->
-  <!--  />-->
 
   <view class="container">
     <view class="post-info-box">
@@ -54,14 +49,14 @@
           />
         </view>
         <view class="like-box">
-          <view v-if="commentLikes[index]">
-            <image :src="likedUrl" class="like-icon" mode="widthFix" />
-          </view>
-          <view v-else>
-            <image :src="unlikeUrl" class="like-icon" mode="widthFix" />
-          </view>
+          <image
+            :src="commentLikes[index].likeUrl"
+            class="like-icon"
+            mode="widthFix"
+            @click="commentDoLike(index)"
+          />
           <text class="like-num">
-            {{ item.likes }}
+            {{ commentLikes[index].count }}
           </text>
         </view>
       </view>
@@ -171,39 +166,90 @@ const getCommentsReq = reactive<GetCommentsReq>({
   page: 0,
   id: props.id,
 });
+
+interface likeStruct {
+  count: number;
+  liked: boolean;
+  likeUrl: string;
+}
+
 const comments = reactive<Comment[]>([]);
-const commentLikes = reactive<boolean[]>([]);
+const commentLikes = reactive<likeStruct[]>([]);
 let allCommentsLoaded = false;
 let isCommentsLoaded = false;
+let pageStart = 0;
 const getCommentsData = async () => {
   let commentsTemp = (await getComments(getCommentsReq)).comments;
-  if (commentsTemp.length > 0) {
-    for (let i = 0; i < commentsTemp.length; i++) {
+  if (commentsTemp.length > pageStart) {
+    for (let i = pageStart; i < commentsTemp.length; i++) {
       comments.push(commentsTemp[i]);
-      let commentLike = (
-        await getUserLiked({
-          targetId: commentsTemp[i].id,
-          targetType: TargetType.Comment,
-        })
-      ).liked;
-      commentLikes.push(commentLike);
+      const commentLikeReq = {
+        targetId: commentsTemp[i].id,
+        targetType: TargetType.Comment,
+      };
+      commentLikes.push(await getCommentLikeData(commentLikeReq));
     }
-    getCommentsReq.page += 1;
+    if (commentsTemp.length === 10) {
+      getCommentsReq.page += 1;
+      pageStart = 0;
+    } else {
+      pageStart = commentsTemp.length;
+    }
   } else {
     allCommentsLoaded = true;
   }
   isCommentsLoaded = true;
 };
+const getCommentLikeData = async (req: GetCountReq) => {
+  let commentLike = (await getUserLiked(req)).liked;
+  let likeCount = (await getCount(req)).count;
+  let commentLikeUrl = unlikeUrl;
+  if (commentLike) commentLikeUrl = likedUrl;
+  return {
+    count: likeCount,
+    liked: commentLike,
+    likeUrl: commentLikeUrl,
+  };
+};
+const commentDoLike = async (index: number) => {
+  let commentLikeReq = {
+    targetId: comments[index].id,
+    targetType: TargetType.Comment,
+  };
+  await doLike(commentLikeReq);
+  commentLikes[index] = await getCommentLikeData(commentLikeReq);
+};
 getCommentsData();
+
 const newCommentReq = reactive<NewCommentReq>({
   id: props.id,
   scope: "moment",
   text: "",
 });
 const text = ref("");
-const createComment = async (text: string) => {
+const createComment = (text: string) => {
+  if (text === "") {
+    return;
+  }
   newCommentReq.text = text;
-  await newComment(newCommentReq);
+  newComment(newCommentReq).then((res) => {
+    getNewComment();
+    uni.showToast({
+      title: res.msg,
+    });
+  });
+};
+const getNewComment = async () => {
+  let tmpPage = getCommentsReq.page;
+  getCommentsReq.page = 0;
+  let commentsTemp = (await getComments(getCommentsReq)).comments;
+  getCommentsReq.page = tmpPage;
+  comments.unshift(commentsTemp[0]);
+  pageStart += 1;
+  if (pageStart === 10) {
+    getCommentsReq.page += 1;
+    pageStart = 0;
+  }
 };
 
 onReachBottom(() => {
@@ -213,64 +259,12 @@ onReachBottom(() => {
   }
 });
 
-// getComments(getCommentsReq).then(res => {
-//   comments.value.push(...res.comments)
-// })
-
-const comments2 = reactive([
-  {
-    id: "Pinlunrenyi",
-    profile: "https://static.xhpolaris.com/cat_world.jpg",
-    time: " 3小时前",
-    text: "我做了猫猫月饼，请学校的猫猫来吃!",
-    likes: 666,
-    reply: [
-      {
-        id: "Jiezheshuo1",
-        profile: "https://static.xhpolaris.com/cat_world.jpg",
-        time: " 2小时前",
-        text: "猫居然也有月饼吃",
-        likes: 333,
-      },
-      {
-        id: "Jiezheshuo2",
-        profile: "https://static.xhpolaris.com/cat_world.jpg",
-        time: " 2小时前",
-        text: "猫为啥没有月饼吃",
-        likes: 888,
-      },
-      {
-        id: "Jiezheshuo3",
-        profile: "https://static.xhpolaris.com/cat_world.jpg",
-        time: " 1小时前",
-        text: "猫当然有月饼吃",
-        likes: 222222,
-      },
-    ],
-  },
-  {
-    id: "Dianpinger",
-    profile: "https://static.xhpolaris.com/cat_world.jpg",
-    time: " 4小时前",
-    text: "祝大家中秋节快乐哦~",
-    likes: 8888,
-    reply: [],
-  },
-]);
-
-let selectedReply = ref(0);
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
 const isReplyOpened = ref(false);
 
-function onClickReplies(idx: number) {
-  // selectedReply.value = idx;
-  // enterMask.width("100%").height("100%").opacity(0.5).step();
-  // enterMaskData.value = enterMask.export();
-  // enterReply.height("70%").step();
-  // enterReplyData.value = enterReply.export();
-
+function onClickReplies() {
   isReplyOpened.value = true;
 }
 
@@ -328,7 +322,7 @@ function leaveReply() {
         max-height: 50px;
         min-width: 36px;
         min-height: 36px;
-
+        background-color: #cccccc;
         margin-right: 12px;
         border-radius: 50%;
       }
@@ -369,7 +363,7 @@ function leaveReply() {
   .comments-box {
     .comment-box {
       background-color: #fff;
-      box-shadow: 0px 0px 4px #ddd;
+      box-shadow: 0 0 4px #ddd;
       border-radius: 30rpx;
       margin-bottom: 15px;
       padding: 20rpx 20rpx;
@@ -388,6 +382,7 @@ function leaveReply() {
           height: 70rpx;
           border-radius: 35rpx;
           margin-right: 24rpx;
+          background-color: #cccccc;
         }
 
         .commenter-name {

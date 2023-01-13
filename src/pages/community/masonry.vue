@@ -21,7 +21,7 @@
       :key="i"
       :class="i === 1 ? 'column-left' : 'column-right'"
     >
-      <block
+      <template
         v-for="moment in i === 1 ? leftMoments : rightMoments"
         :key="moment.id"
       >
@@ -57,7 +57,7 @@
             </view>
           </view>
         </view>
-      </block>
+      </template>
     </view>
   </view>
 </template>
@@ -253,7 +253,7 @@ $titleFontSize: calc(12 / 390 * 100vw);
 $smallFontSize: calc(8 / 390 * 100vw);
 $avatarWidth: calc(21 / 390 * 100vw);
 
-@import "../../common/user-info.scss";
+@import "../../assets/user-info.scss";
 
 .header {
   margin: 0 calc(12 / 390 * 100vw);

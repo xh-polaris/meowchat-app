@@ -3,7 +3,7 @@
     <view class="school-select-box">
       <image
         class="arrow"
-        src="../../static/images/location.png"
+        src="/static/images/location.png"
         @click="onClickSwitch"
       />
       <view class="names" @click="onClickSwitch">
@@ -14,19 +14,17 @@
       </view>
       <view class="switch-box">
         <view class="switch-icon" />
-        <view class="switch" size="mini" @click="onClickSwitch">
-          切换学校
-        </view>
+        <view class="switch" @click="onClickSwitch"> 切换学校</view>
       </view>
     </view>
   </view>
 
   <view>
-    <carousel-frame v-if="init" />
+    <carousel-frame />
   </view>
 
   <view style="margin-top: 10px">
-    <masonry v-if="init" />
+    <masonry />
   </view>
 
   <draft-button type="moment" />
@@ -38,7 +36,6 @@ import Masonry from "@/pages/community/masonry";
 import CarouselFrame from "@/pages/community/carousel-frame";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/event";
-import { signIn } from "@/apis/auth/auth";
 import DraftButton from "@/pages/draft/draft-button";
 
 const school = reactive({
@@ -49,45 +46,7 @@ const school = reactive({
 
 const currentNavBtn = ref("中北校区");
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
-
-const init = ref(false);
-
-if (!uni.getStorageSync("communityId")) {
-  uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
-}
-
-uni.getProvider({
-  service: "oauth",
-  success(res: UniNamespace.GetProviderRes) {
-    if (res.provider[0] === "weixin") {
-      uni.login({
-        provider: "weixin",
-        success(res: UniNamespace.LoginRes) {
-          signIn({
-            authType: "wechat",
-            authId: "123",
-            params: [res.code],
-          }).then((res) => {
-            uni.setStorageSync("accessToken", res.accessToken);
-            init.value = true;
-          });
-        },
-      });
-    }
-  },
-  fail() {
-    signIn({
-      authType: "email",
-      authId: "test@test.com",
-      params: ["1234"],
-    }).then((res) => {
-      uni.setStorageSync("accessToken", res.accessToken);
-      init.value = true;
-    });
-  },
-});
 </script>
 
 <style lang="scss" scoped>
