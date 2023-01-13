@@ -33,12 +33,12 @@
 
       <view class="">
         <view class="images">
-          <block v-for="image in imagesData" :key="image.id">
+          <template v-for="image in imagesData" :key="image.id">
             <view
               :style="{ backgroundImage: 'url(' + image.url + ')' }"
               class="added-image"
             />
-          </block>
+          </template>
           <view
             v-if="imagesData.length < 1"
             class="new-image"
@@ -54,9 +54,6 @@
       <view class="p-2">
         <robby-tags
           v-model="tags"
-          @add="addTag"
-          @delete="delTag"
-          @click="clickTag"
           :enable-del="true"
           :enable-add="true"
           :value="tags"
@@ -99,23 +96,22 @@ import { newPost } from "@/apis/post/post";
 
 import { putObject } from "@/apis/cos/cos";
 
-import robbyTags from "@/components/draft-post/robby-tags/robby-tags.vue";
+import RobbyTags from "@/components/draft-post/robby-tags/robby-tags.vue";
 import FuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
 
-const imagesData = reactive([]);
+const imagesData = reactive<
+    {
+      id: string;
+      url: string;
+    }[]
+    >([]);
 
 const isAnonymous = ref(false);
 
-let title = ref("");
-let text = ref("");
-let coverUrl = ref("");
+const title = ref("");
+const text = ref("");
+const coverUrl = ref("");
 let tags = reactive([]);
-
-function clickTag(e) {}
-
-function delTag(e) {}
-
-function addTag(e) {}
 
 function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value;
@@ -174,8 +170,6 @@ function publishPost() {
     tags: tags,
     isAnonymous: isAnonymous.value,
   }).then(() => {
-    const pages = getCurrentPages();
-    const beforePage = pages[pages.length - 2];
     uni.navigateBack({
       delta: 1,
     });

@@ -28,7 +28,6 @@ import { News } from "@/apis/schemas";
 const props = defineProps<{
   contents: News[];
 }>();
-
 const contents = reactive(props.contents);
 
 let touchStartX: number;
