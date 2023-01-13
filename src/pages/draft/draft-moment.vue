@@ -4,49 +4,49 @@
       <view class="images">
         <template v-for="image in imagesData" :key="image.id">
           <view
-            :style="{ backgroundImage: 'url(' + image.url + ')' }"
-            class="added-image"
+              :style="{ backgroundImage: 'url(' + image.url + ')' }"
+              class="added-image"
           />
         </template>
         <view
-          v-if="imagesData.length < 8"
-          class="new-image"
-          @click="addImage"
+            v-if="imagesData.length < 8"
+            class="new-image"
+            @click="addImage"
         />
       </view>
       <view class="image-num"> {{ imagesData.length }}/8</view>
       <view class="m-2">
         <fui-button
-          text="默认按钮"
-          height="50rpx"
-          color="black"
-          backgroundColor="white"
-          placeholder="填写标题能获得更多赞哦~"
-          borderColor="#1FA1FF"
-          :borderTop="false"
-          bottomLeft="20"
-          bottomRight="20"
-          :borderBottom="true"
-          v-model="title"
+            text="默认按钮"
+            height="50rpx"
+            color="black"
+            backgroundColor="white"
+            placeholder="填写标题能获得更多赞哦~"
+            borderColor="#1FA1FF"
+            :borderTop="false"
+            bottomLeft="20"
+            bottomRight="20"
+            :borderBottom="true"
+            v-model="title"
         ></fui-button>
       </view>
 
       <view class="mx-2 mt-2">
         <fui-button
-          text="默认按钮"
-          color="black"
-          :isCounter="true"
-          :borderTop="false"
-          :borderBottom="false"
-          placeholder="说点什么吧!"
-          v-model="text"
-          height="350rpx"
+            text="默认按钮"
+            color="black"
+            :isCounter="true"
+            :borderTop="false"
+            :borderBottom="false"
+            placeholder="说点什么吧!"
+            v-model="text"
+            height="350rpx"
         ></fui-button>
       </view>
 
       <view class="choose-cats-bar">
         <view class="choose-cats"> 选择猫咪</view>
-        <view class="right-arrow" />
+        <view class="right-arrow"/>
         <view class="choose-followed-cats"> 不选择猫咪</view>
       </view>
     </view>
@@ -55,26 +55,26 @@
       <view class="toggle-bar">
         <view class="toggle-text"> 同步到猫咪图鉴</view>
         <view
-          :class="'toggle ' + (isSyncToCollection ? 'active' : '')"
-          @click="toggleSyncToCollection"
+            :class="'toggle ' + (isSyncToCollection ? 'active' : '')"
+            @click="toggleSyncToCollection"
         >
           <view class="toggle-capsule">
-            <view class="toggle-circle" />
+            <view class="toggle-circle"/>
           </view>
         </view>
       </view>
       <view class="toggle-bar">
         <view class="toggle-text"> 匿名信息</view>
         <view
-          :class="'toggle ' + (isAnonymous ? 'active' : '')"
-          @click="toggleAnonymous"
+            :class="'toggle ' + (isAnonymous ? 'active' : '')"
+            @click="toggleAnonymous"
         >
           <view class="toggle-capsule">
-            <view class="toggle-circle" />
+            <view class="toggle-circle"/>
           </view>
         </view>
       </view>
-      <view class="publish" @click="publishMoment"> 发布动态</view>
+      <button class="publish" @click="publishMoment" :disabled="disablePublish"> 发布动态</button>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -91,82 +91,88 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
-import { putObject } from "@/apis/cos/cos";
+import { reactive, ref } from "vue"
+import { putObject } from "@/apis/cos/cos"
 
-import { newMoment } from "@/apis/moment/moment";
-import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
+import { newMoment } from "@/apis/moment/moment"
+import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue"
 
-const imagesData = reactive<any>([]);
+const imagesData = reactive<any>([])
 
-const isAnonymous = ref(false);
-const isSyncToCollection = ref(false);
+const isAnonymous = ref(false)
+const isSyncToCollection = ref(false)
 
-let title = ref("");
-let text = ref("");
+const title = ref("")
+const text = ref("")
+const disablePublish = ref(false)
 
-let photos = reactive<any>([]);
+const photos = reactive<any>([])
 
-function toggleAnonymous() {
-  isAnonymous.value = !isAnonymous.value;
+function toggleAnonymous () {
+  isAnonymous.value = !isAnonymous.value
 }
 
-function toggleSyncToCollection() {
-  isSyncToCollection.value = !isSyncToCollection.value;
+function toggleSyncToCollection () {
+  isSyncToCollection.value = !isSyncToCollection.value
 }
 
-function addImage() {
+function addImage () {
+  disablePublish.value = true
   uni.chooseImage({
     success: (chooseImageRes) => {
-      let isTooManyImages = false;
-      let tempFilePaths = chooseImageRes.tempFilePaths as string[];
+      let isTooManyImages = false
+      let tempFilePaths = chooseImageRes.tempFilePaths as string[]
       if (imagesData.length + tempFilePaths.length > 8) {
-        isTooManyImages = true;
-        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length);
+        isTooManyImages = true
+        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length)
       }
       tempFilePaths.map((path) => {
         imagesData.push({
           id: path,
           url: path,
-        });
+        })
         putObject({
           filePath: path,
         }).then(function (url) {
           //将返回的url添加进photos
-          photos.push(url.url);
-        });
-      });
+          photos.push(url.url)
+          disablePublish.value = false
+        })
+      })
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传8张图片！",
           icon: "error",
-        });
+        })
       }
     },
-  });
+    fail: () => {
+      disablePublish.value = false
+    }
+  })
 }
 
-function publishMoment() {
+function publishMoment () {
   if (title.value === "") {
     uni.showToast({
       title: "请输入标题",
       icon: "none",
-    });
-    return;
+    })
+    return
   }
   if (text.value === "") {
     uni.showToast({
       title: "请输入正文",
       icon: "none",
-    });
-    return;
+    })
+    return
   }
   if (photos.length == 0) {
     uni.showToast({
       title: "至少上传一张图片哦",
       icon: "none",
-    });
-    return;
+    })
+    return
   }
   newMoment({
     title: title.value,
@@ -176,9 +182,10 @@ function publishMoment() {
   }).then(() => {
     uni.navigateBack({
       delta: 1,
-      success: () => {},
-    });
-  });
+      success: () => {
+      },
+    })
+  })
 }
 </script>
 

@@ -3,30 +3,30 @@
     <view class="main">
       <view class="m-2">
         <fui-button
-          text="默认按钮"
-          height="50rpx"
-          color="black"
-          backgroundColor="white"
-          placeholder="输入标题"
-          borderColor="#1FA1FF"
-          :borderTop="false"
-          bottomLeft="20"
-          bottomRight="20"
-          :borderBottom="true"
-          v-model="title"
+            text="默认按钮"
+            height="50rpx"
+            color="black"
+            backgroundColor="white"
+            placeholder="输入标题"
+            borderColor="#1FA1FF"
+            :borderTop="false"
+            bottomLeft="20"
+            bottomRight="20"
+            :borderBottom="true"
+            v-model="title"
         ></fui-button>
       </view>
 
       <view class="mx-2 mt-2">
         <fui-button
-          text="默认按钮"
-          color="black"
-          :isCounter="true"
-          :borderTop="false"
-          :borderBottom="false"
-          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-          v-model="text"
-          height="350rpx"
+            text="默认按钮"
+            color="black"
+            :isCounter="true"
+            :borderTop="false"
+            :borderBottom="false"
+            placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+            v-model="text"
+            height="350rpx"
         >
         </fui-button>
       </view>
@@ -35,14 +35,14 @@
         <view class="images">
           <template v-for="image in imagesData" :key="image.id">
             <view
-              :style="{ backgroundImage: 'url(' + image.url + ')' }"
-              class="added-image"
+                :style="{ backgroundImage: 'url(' + image.url + ')' }"
+                class="added-image"
             />
           </template>
           <view
-            v-if="imagesData.length < 1"
-            class="new-image"
-            @click="addImage"
+              v-if="imagesData.length < 1"
+              class="new-image"
+              @click="addImage"
           />
         </view>
         <view class="image-num w-100">封面{{ imagesData.length }}/1</view>
@@ -50,13 +50,13 @@
     </view>
 
     <!-- 添加标签 -->
-    <view class="mx-4" style="background-color: #f3f3f3; border-radius: 20rpx">
+    <view class="mx-4 tag-box">
       <view class="p-2">
         <robby-tags
-          v-model="tags"
-          :enable-del="true"
-          :enable-add="true"
-          :value="tags"
+            v-model="tags"
+            :enable-del="true"
+            :enable-add="true"
+            :value="tags"
         ></robby-tags>
       </view>
     </view>
@@ -65,15 +65,15 @@
       <view class="toggle-bar">
         <view class="toggle-text"> 匿名信息</view>
         <view
-          :class="'toggle ' + (isAnonymous ? 'active' : '')"
-          @click="toggleAnonymous"
+            :class="'toggle ' + (isAnonymous ? 'active' : '')"
+            @click="toggleAnonymous"
         >
           <view class="toggle-capsule">
-            <view class="toggle-circle" />
+            <view class="toggle-circle"/>
           </view>
         </view>
       </view>
-      <view class="publish" @click="publishPost"> 发布帖子</view>
+      <button class="publish" @click="publishPost" :disabled="disablePublish"> 发布帖子</button>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -90,78 +90,83 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref } from "vue"
 
-import { newPost } from "@/apis/post/post";
+import { newPost } from "@/apis/post/post"
 
-import { putObject } from "@/apis/cos/cos";
+import { putObject } from "@/apis/cos/cos"
 
-import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
-import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
+import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue"
+import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue"
 
-const imagesData = reactive<
-  {
-    id: string;
-    url: string;
-  }[]
->([]);
+const imagesData = reactive<{
+  id: string;
+  url: string;
+}[]>([])
 
-const isAnonymous = ref(false);
+const isAnonymous = ref(false)
 
-const title = ref("");
-const text = ref("");
-const coverUrl = ref("");
-let tags = reactive([]);
+const title = ref("")
+const text = ref("")
+const coverUrl = ref("")
+const disablePublish = ref(false)
 
-function toggleAnonymous() {
-  isAnonymous.value = !isAnonymous.value;
+let tags = reactive([])
+
+function toggleAnonymous () {
+  isAnonymous.value = !isAnonymous.value
 }
 
-function addImage() {
+function addImage () {
+  disablePublish.value = true
   uni.chooseImage({
     success: (chooseImageRes) => {
-      let isTooManyImages = false;
-      let tempFilePaths = chooseImageRes.tempFilePaths as string[];
+      let isTooManyImages = false
+      let tempFilePaths = chooseImageRes.tempFilePaths as string[]
       if (imagesData.length + tempFilePaths.length > 1) {
-        isTooManyImages = true;
-        tempFilePaths = tempFilePaths.slice(0, 1 - imagesData.length);
+        isTooManyImages = true
+        tempFilePaths = tempFilePaths.slice(0, 1 - imagesData.length)
       }
       tempFilePaths.map((path: string) => {
         imagesData.push({
           id: path,
           url: path,
-        });
+        })
         putObject({
           filePath: path,
         }).then(function (res) {
-          coverUrl.value = res.url;
-        });
-      });
+          coverUrl.value = res.url
+          disablePublish.value = false
+        })
+      })
 
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传1张图片！",
           icon: "error",
-        });
+        })
       }
     },
-  });
+    fail: () => {
+      disablePublish.value = false
+    }
+  })
 }
 
-function publishPost() {
+function publishPost () {
   if (title.value === "") {
     uni.showToast({
       title: "请输入标题",
       icon: "none",
-    });
-    return;
+    })
+    return
   }
   if (text.value === "") {
     uni.showToast({
       title: "请输入正文",
       icon: "none",
-    });
-    return;
+    })
+    return
   }
   newPost({
     title: title.value,
@@ -172,8 +177,8 @@ function publishPost() {
   }).then(() => {
     uni.navigateBack({
       delta: 1,
-    });
-  });
+    })
+  })
 }
 </script>
 
@@ -385,5 +390,10 @@ textarea ::selection {
 .nobody-will-read {
   display: inline;
   color: #1fa1ff;
+}
+
+.tag-box {
+  background-color: #f3f3f3;
+  border-radius: 20rpx
 }
 </style>
