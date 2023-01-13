@@ -9,9 +9,7 @@ import {
   NewPostResp,
 } from "@/apis/post/post-interfaces";
 
-export async function getPostPreviews(
-  req: GetPostPreviewsReq
-): Promise<GetPostPreviewsResp> {
+export async function getPostPreviews(req: GetPostPreviewsReq) {
   return await new Promise<GetPostPreviewsResp>((resolve, reject) => {
     uni.request({
       url: "/post/get_post_previews",
@@ -28,11 +26,7 @@ export async function getPostPreviews(
   });
 }
 
-/**
- * @description
- * @param req
- */
-export async function deletePost(req: DeletePostReq): Promise<DeletePostResp> {
+export async function deletePost(req: DeletePostReq) {
   return await new Promise<DeletePostResp>((resolve, reject) => {
     uni.request({
       url: "/post/delete_post",
@@ -49,11 +43,7 @@ export async function deletePost(req: DeletePostReq): Promise<DeletePostResp> {
   });
 }
 
-/**
- * @description
- * @param req
- */
-export async function newPost(req: NewPostReq): Promise<NewPostResp> {
+export async function newPost(req: NewPostReq) {
   return await new Promise<NewPostResp>((resolve, reject) => {
     uni.request({
       url: "/post/new_post",
@@ -70,13 +60,7 @@ export async function newPost(req: NewPostReq): Promise<NewPostResp> {
   });
 }
 
-/**
- * @description
- * @param req
- */
-export async function getPostDetail(
-  req: GetPostDetailReq
-): Promise<GetPostDetailResp> {
+export async function getPostDetail(req: GetPostDetailReq) {
   return await new Promise<GetPostDetailResp>((resolve, reject) => {
     uni.request({
       url: "/post/get_post_detail",

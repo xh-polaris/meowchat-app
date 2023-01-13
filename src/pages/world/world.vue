@@ -20,7 +20,7 @@
 
   <view class="top-padding" />
 
-  <block v-for="post in postsData" :key="post.id">
+  <template v-for="post in postsData" :key="post.id">
     <view class="post" @click="onClickPost(post.id)">
       <view class="upper">
         <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
@@ -28,18 +28,18 @@
             {{ post.title }}
           </view>
           <view class="user">
-            <block v-if="!post.isAnonymous">
+            <template v-if="!post.isAnonymous">
               <image class="avatar" :src="post.user.avatarUrl" />
               <view class="username">
                 {{ post.user.nickname }}
               </view>
-            </block>
+            </template>
           </view>
           <view class="description">
             {{ post.text }}
           </view>
           <view class="tags" v-if="post.tags">
-            <block v-if="post.tags.length > 4">
+            <template v-if="post.tags.length > 4">
               <view class="tag">
                 {{ post.tags[0] }}
               </view>
@@ -49,14 +49,14 @@
               <view class="tag">
                 {{ post.tags[2] }}
               </view>
-            </block>
-            <block v-else>
-              <block v-for="tag in post.tags" :key="tag.id">
+            </template>
+            <template v-else>
+              <template v-for="tag in post.tags" :key="tag.id">
                 <view class="tag">
                   {{ tag }}
                 </view>
-              </block>
-            </block>
+              </template>
+            </template>
           </view>
         </view>
         <view
@@ -72,7 +72,7 @@
         <view>{{ post.comments }}条回复</view>
       </view>
     </view>
-  </block>
+  </template>
 
   <draft-button type="post" />
 </template>

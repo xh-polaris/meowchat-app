@@ -2,14 +2,14 @@
   <view class="carousel">
     <view class="carousel-background" />
     <view class="slides" @touchmove="touchEnd" @touchstart="touchStart">
-      <block v-for="i in 5" :key="i">
+      <template v-for="i in 5" :key="i">
         <view
           :class="slidesStyle[i - 1]"
           :style="{
             backgroundImage: 'url(' + displayContents[i - 1].imageUrl + ')',
           }"
         />
-      </block>
+      </template>
     </view>
     <view class="pagination-dots">
       <view
@@ -21,7 +21,7 @@
   </view>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { reactive, ref } from "vue";
 
 const props = defineProps({
@@ -33,17 +33,16 @@ const props = defineProps({
   },
 });
 
-// eslint-disable-next-line vue/no-setup-props-destructure
 const contents = props.contents;
 
-let touchStartX;
+let touchStartX: number;
 let isSlidesMoving = false;
 
-const touchStart = (ev) => {
+const touchStart = (ev: any) => {
   touchStartX = ev.touches[0].clientX;
 };
 
-const touchEnd = (ev) => {
+const touchEnd = (ev: any) => {
   if (!isSlidesMoving) {
     if (ev.touches[0].clientX - touchStartX > 30) {
       isSlidesMoving = true;
@@ -134,7 +133,6 @@ $backgroundColor: #f5f5f5;
   text-align: center;
   line-height: $slideHeightLarge;
 
-  //background-color: #E5E9EE;
   background-size: 100% 100%;
   position: absolute;
   width: $slideWidthSmall;

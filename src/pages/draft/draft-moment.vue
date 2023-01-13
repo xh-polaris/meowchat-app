@@ -2,12 +2,12 @@
   <view class="all">
     <view class="main">
       <view class="images">
-        <block v-for="image in imagesData" :key="image.id">
+        <template v-for="image in imagesData" :key="image.id">
           <view
             :style="{ backgroundImage: 'url(' + image.url + ')' }"
             class="added-image"
           />
-        </block>
+        </template>
         <view
           v-if="imagesData.length < 8"
           class="new-image"
@@ -178,8 +178,7 @@ body {
 .images {
   display: flex;
   width: calc(100vw - $margin * 2 + $imageGap);
-  margin: $margin;
-  margin-bottom: 0;
+  margin: $margin $margin 0;
   flex-wrap: wrap;
 }
 
@@ -218,10 +217,9 @@ textarea {
   background-color: #fafafa;
   border-radius: calc(10 / 390 * 100vw);
   width: calc(100vw - $margin * 2);
-  margin: 0 $margin;
   padding: calc(10 / 390 * 100vw);
   color: black;
-  margin-bottom: calc(28 / 390 * 100vw);
+  margin: 0 $margin calc(28 / 390 * 100vw);
   font-size: calc(14 / 390 * 100vw);
   box-sizing: border-box;
 }
@@ -238,8 +236,7 @@ textarea ::selection {
 .choose-cats-bar {
   display: flex;
   align-items: center;
-  margin: 0 $margin;
-  margin-bottom: calc(10 / 390 * 100vw);
+  margin: 0 $margin calc(10 / 390 * 100vw);
 
   .choose-cats {
     color: #1fa1ff;
@@ -261,8 +258,7 @@ textarea ::selection {
 }
 
 .panel {
-  padding: calc(33 / 390 * 100vw);
-  padding-bottom: calc(60 / 390 * 100vw);
+  padding: calc(33 / 390 * 100vw) calc(33 / 390 * 100vw) calc(60 / 390 * 100vw);
 }
 
 .toggle-bar {

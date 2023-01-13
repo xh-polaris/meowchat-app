@@ -1,9 +1,6 @@
 import { GetUserResp, UpdateUserReq, UpdateUserResp } from "./user-interfaces";
 
-/**
- * @description,
- */
-export async function getUserInfo(): Promise<GetUserResp> {
+export async function getUserInfo() {
   return await new Promise<GetUserResp>((resolve, reject) => {
     uni.request({
       url: "/user/get_user_info",
@@ -19,9 +16,7 @@ export async function getUserInfo(): Promise<GetUserResp> {
   });
 }
 
-export async function updateUserInfo(
-  req: UpdateUserReq
-): Promise<UpdateUserResp> {
+export async function updateUserInfo(req: UpdateUserReq) {
   return await new Promise<UpdateUserResp>((resolve, reject) => {
     uni.request({
       url: "/user/update_user_info",

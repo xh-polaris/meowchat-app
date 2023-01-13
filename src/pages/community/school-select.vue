@@ -13,15 +13,15 @@
       </view>
     </view>
     <view class="search-bar">
-      <view class="small"> 当前选择 </view>
+      <view class="small"> 当前选择</view>
     </view>
     <view class="school-select-box">
       <view class="current_school">
-        <view class="current_school_text"> 华东师范大学 </view>
+        <view class="current_school_text"> 华东师范大学</view>
       </view>
       <view v-if="sel" class="select" @click="change">
         <text>{{ currentNavBtn }}</text>
-        <image class="arrow" src="../../static/images/down-black.svg"  />
+        <image class="arrow" src="../../static/images/down-black.svg" />
       </view>
       <view v-else class="box">
         <view class="select2" @click="change">
@@ -29,33 +29,30 @@
           <image class="arrow" src="../../static/images/up-black.svg" />
         </view>
         <view class="option" @click="change">
-          <text
-            v-for="item in school.campuses" :key="item"
-            @click="setBranch(item)"
-          >
+          <text v-for="item in school.campuses" :key="item">
             {{ item }}
           </text>
         </view>
       </view>
     </view>
     <view class="search-bar">
-      <view class="small"> 定位/历史记录 </view>
+      <view class="small"> 定位/历史记录</view>
     </view>
     <view class="big">
       <view>
-        <view class="bubble"> 华东师范大学（中山北路校区） </view>
-        <view class="bubble"> 华东师范大学（闵行校区） </view>
+        <view class="bubble"> 华东师范大学（中山北路校区）</view>
+        <view class="bubble"> 华东师范大学（闵行校区）</view>
       </view>
     </view>
     <view class="search-bar">
-      <view class="small"> 热门学校 </view>
+      <view class="small"> 热门学校</view>
     </view>
     <view class="big">
       <view>
-        <view class="bubble"> 华东师范大学 </view>
-        <view class="bubble"> 上海交通大学 </view>
-        <view class="bubble"> 上海大学 </view>
-        <view class="bubble"> 上海工程技术大学 </view>
+        <view class="bubble"> 华东师范大学</view>
+        <view class="bubble"> 上海交通大学</view>
+        <view class="bubble"> 上海大学</view>
+        <view class="bubble"> 上海工程技术大学</view>
       </view>
     </view>
   </view>
@@ -64,37 +61,37 @@
 
   <view class="content2">
     <view class="search-bar">
-      <view class="small"> A </view>
+      <view class="small"> A</view>
     </view>
     <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small"> B </view>
+      <view class="small"> B</view>
     </view>
     <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small"> C </view>
+      <view class="small"> C</view>
     </view>
     <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small"> D </view>
+      <view class="small"> D</view>
     </view>
     <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small"> E </view>
+      <view class="small"> E</view>
     </view>
     <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
     </view>
     <view class="search-bar">
-      <view class="small"> F </view>
+      <view class="small"> F</view>
     </view>
     <view v-for="item in school.name" :key="item" class="school">
       {{ item }}
@@ -103,7 +100,7 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "vue"
+import { reactive, ref } from "vue";
 
 const school = reactive({
   alpha: [
@@ -136,21 +133,16 @@ const school = reactive({
   ],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
   campuses: ["闵行校区", "全部"],
-  No: 0
-})
+  No: 0,
+});
 
-const sel = ref(true)
+const sel = ref(true);
 
-function change () {
-  sel.value = !sel.value
+function change() {
+  sel.value = !sel.value;
 }
 
-const currentNavBtn = ref("中山北路校区")
-
-// function setBranch (e: string) {
-//   currentNavBtn.value = e
-// }
-
+const currentNavBtn = ref("中山北路校区");
 </script>
 
 <style lang="scss" scoped>
@@ -303,8 +295,8 @@ const currentNavBtn = ref("中山北路校区")
     font-weight: bold;
     width: 200rpx;
   }
-
 }
+
 .select2 {
   padding: 10rpx 10rpx 10rpx 20rpx;
   border: black 1px solid;
@@ -322,12 +314,11 @@ const currentNavBtn = ref("中山北路校区")
     font-weight: bold;
     width: 200rpx;
   }
-
 }
+
 .box {
   flex-direction: column;
 }
-
 
 .arrow {
   width: 25rpx;
@@ -345,8 +336,6 @@ const currentNavBtn = ref("中山北路校区")
   margin-right: 25rpx;
   flex-direction: row;
 
-
-
   text {
     padding: 0rpx 10rpx 0rpx 20rpx;
     color: #7f7f81;
@@ -355,7 +344,6 @@ const currentNavBtn = ref("中山北路校区")
     width: 235rpx;
     position: relative;
     display: inline-block;
-
   }
 
   text::before {
@@ -367,8 +355,5 @@ const currentNavBtn = ref("中山北路校区")
     height: 1rpx;
     background-color: black;
   }
-
 }
-
-
 </style>

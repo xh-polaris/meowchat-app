@@ -1,10 +1,5 @@
 <template>
   <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
-  <!--  <reply-->
-  <!--      :animation="enterReplyData"-->
-  <!--      :replies="comments[selectedReply]"-->
-  <!--      class="more-reply"-->
-  <!--  />-->
 
   <view class="container">
     <view class="post-info-box">
@@ -264,60 +259,12 @@ onReachBottom(() => {
   }
 });
 
-const comments2 = reactive([
-  {
-    id: "Pinlunrenyi",
-    profile: "https://static.xhpolaris.com/cat_world.jpg",
-    time: " 3小时前",
-    text: "我做了猫猫月饼，请学校的猫猫来吃!",
-    likes: 666,
-    reply: [
-      {
-        id: "Jiezheshuo1",
-        profile: "https://static.xhpolaris.com/cat_world.jpg",
-        time: " 2小时前",
-        text: "猫居然也有月饼吃",
-        likes: 333,
-      },
-      {
-        id: "Jiezheshuo2",
-        profile: "https://static.xhpolaris.com/cat_world.jpg",
-        time: " 2小时前",
-        text: "猫为啥没有月饼吃",
-        likes: 888,
-      },
-      {
-        id: "Jiezheshuo3",
-        profile: "https://static.xhpolaris.com/cat_world.jpg",
-        time: " 1小时前",
-        text: "猫当然有月饼吃",
-        likes: 222222,
-      },
-    ],
-  },
-  {
-    id: "Dianpinger",
-    profile: "https://static.xhpolaris.com/cat_world.jpg",
-    time: " 4小时前",
-    text: "祝大家中秋节快乐哦~",
-    likes: 8888,
-    reply: [],
-  },
-]);
-
-let selectedReply = ref(0);
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
 const isReplyOpened = ref(false);
 
-function onClickReplies(idx: number) {
-  // selectedReply.value = idx;
-  // enterMask.width("100%").height("100%").opacity(0.5).step();
-  // enterMaskData.value = enterMask.export();
-  // enterReply.height("70%").step();
-  // enterReplyData.value = enterReply.export();
-
+function onClickReplies() {
   isReplyOpened.value = true;
 }
 
@@ -375,7 +322,7 @@ function leaveReply() {
         max-height: 50px;
         min-width: 36px;
         min-height: 36px;
-
+        background-color: #cccccc;
         margin-right: 12px;
         border-radius: 50%;
       }
@@ -416,7 +363,7 @@ function leaveReply() {
   .comments-box {
     .comment-box {
       background-color: #fff;
-      box-shadow: 0px 0px 4px #ddd;
+      box-shadow: 0 0 4px #ddd;
       border-radius: 30rpx;
       margin-bottom: 15px;
       padding: 20rpx 20rpx;
@@ -435,6 +382,7 @@ function leaveReply() {
           height: 70rpx;
           border-radius: 35rpx;
           margin-right: 24rpx;
+          background-color: #cccccc;
         }
 
         .commenter-name {

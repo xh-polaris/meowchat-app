@@ -21,7 +21,7 @@
       :key="i"
       :class="i === 1 ? 'column-left' : 'column-right'"
     >
-      <block
+      <template
         v-for="moment in i === 1 ? leftMoments : rightMoments"
         :key="moment.id"
       >
@@ -57,7 +57,7 @@
             </view>
           </view>
         </view>
-      </block>
+      </template>
     </view>
   </view>
 </template>
