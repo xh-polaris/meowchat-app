@@ -3,10 +3,12 @@ import App from "./App.vue";
 
 uni.addInterceptor("request", {
   invoke(args: UniNamespace.RequestOptions) {
-    args.url = "https://meowchat.xhpolaris.com" + args.url;
-    args.header = {
-      Authorization: uni.getStorageSync("accessToken"),
-    };
+    if (args.url[0] === "/") {
+      args.url = "https://meowchat.xhpolaris.com" + args.url;
+      args.header = {
+        Authorization: uni.getStorageSync("accessToken"),
+      };
+    }
   },
   fail(err: UniNamespace.GeneralCallbackResult) {
     console.log(err);

@@ -68,7 +68,7 @@ import {
   GetCatPreviewsReq,
   SearchCatPreviewsReq,
 } from "@/apis/collection/collection-interfaces";
-import { Cat } from "@/apis/schemas";
+import { CatPreview } from "@/apis/schemas";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
@@ -79,8 +79,8 @@ let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
   page: 0,
   keyword: "",
 });
-let cats = ref<Cat[]>([]);
-let wheatherSearch = false;
+let cats = ref<CatPreview[]>([]);
+let whetherSearch = false;
 getCatPreviews(getCatPreviewsReq).then((res) => {
   cats.value.push(...res.cats);
 });
@@ -99,23 +99,23 @@ function setBranch(e: string) {
 
 function onClickSwitch() {
   uni.navigateTo({
-    url: `/pages/community/school-select`
-  })
+    url: `/pages/community/school-select`,
+  });
 }
 
 function onClickSearch() {
   searchCatPreviews(searchCatPreviewsReq).then((res) => {
     cats.value = [];
     cats.value = res.cats;
-    wheatherSearch = true;
+    whetherSearch = true;
   });
 }
 
 onReachBottom(() => {
-  if (!wheatherSearch) {
+  if (!whetherSearch) {
     getCatPreviewsReq.page++;
     getCatPreviews(getCatPreviewsReq).then((res) => {
-      if (res.cats.length == 0) {
+      if (res.cats.length === 0) {
         uni.stopPullDownRefresh();
       } else {
         cats.value.push(...res.cats);
@@ -124,7 +124,7 @@ onReachBottom(() => {
   } else {
     searchCatPreviewsReq.page++;
     searchCatPreviews(searchCatPreviewsReq).then((res) => {
-      if (res.cats.length == 0) {
+      if (res.cats.length === 0) {
         uni.stopPullDownRefresh();
       } else {
         cats.value.push(...res.cats);

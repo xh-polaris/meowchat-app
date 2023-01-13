@@ -1,5 +1,5 @@
 {
-  "name": "cat-community-app",
+  "name": "meowchat-app",
   "private": true,
   "version": "1.0.0",
   "engines": {
@@ -30,6 +30,7 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3060320220917001",
     "@dcloudio/uni-ui": "^1.4.22",
     "@types/node": "^18.11.9",
+    "cos-nodejs-sdk-v5": "^2.11.19",
     "good-storage": "^1.1.1",
     "moment": "^2.29.4",
     "postcss": "^8.0.0",
@@ -58,7 +59,7 @@
     "vite": "2.9.14"
   },
   "main": "index.js",
-  "repository": "https://github.com/xh-polaris/cat-community-app.git",
+  "repository": "https://github.com/xh-polaris/meowchat-app.git",
   "author": "Yufeng Cheng <1351416566@qq.com>",
   "license": "MIT",
   "lint-staged": {

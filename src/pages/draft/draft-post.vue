@@ -1,51 +1,53 @@
 <template>
   <view class="all">
     <view class="main">
-      <input placeholder="输入标题" type="text"/>
+      <input placeholder="输入标题" type="text" v-model="title" />
       <!-- #ifdef H5 -->
       <textarea
-          maxlength="5000"
-          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-          type="text"
+        maxlength="5000"
+        placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+        type="text"
+        v-model="text"
       />
       <!-- #endif -->
       <!-- #ifdef MP-WEIXIN -->
       <textarea
-          maxlength="5000"
-          placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-          type="text"
+        maxlength="5000"
+        placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+        type="text"
+        v-model="text"
       />
       <!-- #endif -->
 
       <view class="images">
         <block v-for="image in imagesData" :key="image.id">
           <view
-              :style="{ backgroundImage: 'url(' + image.url + ')' }"
-              class="added-image"
+            :style="{ backgroundImage: 'url(' + image.url + ')' }"
+            class="added-image"
           />
         </block>
         <view
-            v-if="imagesData.length < 8"
-            class="new-image"
-            @click="addImage"
+          v-if="imagesData.length < 1"
+          class="new-image"
+          @click="addImage"
         />
       </view>
-      <view class="image-num"> {{ imagesData.length }}/8</view>
+      <view class="image-num"> {{ imagesData.length }}/1</view>
     </view>
 
     <view class="panel">
       <view class="toggle-bar">
         <view class="toggle-text"> 匿名信息</view>
         <view
-            :class="'toggle ' + (isAnonymous ? 'active' : '')"
-            @click="toggleAnonymous"
+          :class="'toggle ' + (isAnonymous ? 'active' : '')"
+          @click="toggleAnonymous"
         >
           <view class="toggle-capsule">
-            <view class="toggle-circle"/>
+            <view class="toggle-circle" />
           </view>
         </view>
       </view>
-      <view class="publish"> 发布帖子</view>
+      <view class="publish" @click="publishPost"> 发布帖子</view>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -61,12 +63,20 @@
   </view>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { reactive, ref } from "vue";
+import { newPost } from "@/apis/post/post";
+
+import { putObject } from "@/apis/cos/cos";
 
 const imagesData = reactive([]);
 
 const isAnonymous = ref(false);
+
+let title = ref("");
+let text = ref("");
+let coverUrl = ref("");
+let tags = reactive([]);
 
 function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value;
@@ -76,24 +86,44 @@ function addImage() {
   uni.chooseImage({
     success: (chooseImageRes) => {
       let isTooManyImages = false;
-      let tempFilePaths = chooseImageRes.tempFilePaths;
-      if (imagesData.length + tempFilePaths.length > 8) {
+      let tempFilePaths = chooseImageRes.tempFilePaths as string[];
+      if (imagesData.length + tempFilePaths.length > 1) {
         isTooManyImages = true;
-        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length);
+        tempFilePaths = tempFilePaths.slice(0, 1 - imagesData.length);
       }
-      tempFilePaths.map((path) => {
+      tempFilePaths.map((path: string) => {
         imagesData.push({
           id: path,
           url: path,
         });
+        putObject({
+          filePath: path,
+        }).then(function (res) {
+          coverUrl.value = res.url;
+        });
       });
+
       if (isTooManyImages) {
         uni.showToast({
-          title: "最多可上传8张图片！",
+          title: "最多可上传1张图片！",
           icon: "error",
         });
       }
     },
+  });
+}
+
+function publishPost() {
+  newPost({
+    title: title.value,
+    text: text.value,
+    coverUrl: coverUrl.value,
+    tags: [],
+    isAnonymous: isAnonymous.value,
+  }).then(() => {
+    uni.navigateBack({
+      delta: 1,
+    });
   });
 }
 </script>

@@ -29,7 +29,7 @@
           </view>
           <view class="user">
             <block v-if="!post.isAnonymous">
-              <view class="avatar" />
+              <image class="avatar" :src="post.user.avatarUrl" />
               <view class="username">
                 {{ post.user.nickname }}
               </view>
@@ -38,7 +38,7 @@
           <view class="description">
             {{ post.text }}
           </view>
-          <view class="tags">
+          <view class="tags" v-if="post.tags">
             <block v-if="post.tags.length > 4">
               <view class="tag">
                 {{ post.tags[0] }}
@@ -67,7 +67,7 @@
       </view>
       <view class="lower">
         <view class="time">
-          {{ post.createAt }}
+          {{ displayTime(post.createAt * 1000) }}
         </view>
         <view>{{ post.comments }}条回复</view>
       </view>
@@ -77,17 +77,24 @@
   <draft-button type="post" />
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { reactive } from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
-import { getPostPreviews } from "../../apis/post/post";
+import { getPostPreviews } from "@/apis/post/post";
 import DraftButton from "@/pages/draft/draft-button";
+import { displayTime } from "@/utils/time";
+import { Post } from "@/apis/schemas";
 
-const postsData = reactive([]);
-
+const postsData = reactive<Post[]>([]);
+let page = 0;
 const getPostPreviewsAsync = async () => {
-  return (await getPostPreviews({ page: 0 })).posts;
+  const posts = (await getPostPreviews({ page: page })).posts;
+  if (posts.length === 0) {
+    uni.stopPullDownRefresh();
+  }
+  page++;
+  return posts;
 };
 
 async function createPostsDataBatch() {
@@ -106,7 +113,7 @@ const types = reactive([
     name: "官方",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("官方");
     },
   },
@@ -114,7 +121,7 @@ const types = reactive([
     name: "热度",
     isCurrent: true,
     className: "navbtn current",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("热度");
     },
   },
@@ -122,7 +129,7 @@ const types = reactive([
     name: "最新",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("最新");
     },
   },
@@ -130,13 +137,13 @@ const types = reactive([
     name: "关注",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("关注");
     },
   },
 ]);
 
-const toggleSelf = (name) => {
+const toggleSelf = (name: string) => {
   if (!types.filter((type) => type.name === name)[0].isCurrent) {
     types.map((type) => {
       type.isCurrent = false;
@@ -255,18 +262,25 @@ body {
     font-size: calc(10 / 390 * 100vw);
     //height: calc(18 / 390 * 100vw);
     line-height: calc(18 / 390 * 100vw);
+    padding-top: 10rpx;
 
     .tag {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      margin-top: 3px;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 10px;
+      line-height: 13px;
+      /* or 170% */
       text-align: center;
-      min-width: calc(28 / 390 * 100vw);
-      padding: 0 calc(6 / 390 * 100vw);
+      letter-spacing: 0.5px;
+      /* blue02 */
+      color: #1fa1ff;
+
+      min-width: 28px;
+      padding: 5rpx 10rpx 5rpx 10rpx;
       border: #1fa1ff 1px solid;
-      border-radius: calc(9 / 390 * 100vw);
-      margin-right: calc(8 / 390 * 100vw);
-      margin-top: calc(6 / 390 * 100vw);
+      border-radius: 9px;
+      margin-right: 8px;
     }
   }
 }

@@ -1,7 +1,3 @@
-// import * as components from "./auth-interfaces"
-//
-// export * from "./auth-interfaces"
-
 import {
   SendVerifyCodeReq,
   SendVerifyCodeResp,
