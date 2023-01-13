@@ -39,6 +39,8 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@dcloudio/types": "^3.0.14",
     "@dcloudio/uni-automator": "3.0.0-alpha-3060320220917001",
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060320220917001",
@@ -56,7 +58,6 @@
     "typescript": "^4.9.3",
     "vite": "2.9.14"
   },
-  "main": "index.js",
   "repository": "https://github.com/xh-polaris/meowchat-app.git",
   "author": "Yufeng Cheng <1351416566@qq.com>",
   "license": "MIT"
