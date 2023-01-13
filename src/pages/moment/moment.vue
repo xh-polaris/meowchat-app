@@ -54,14 +54,14 @@
           />
         </view>
         <view class="like-box">
-          <view v-if="commentLikes[index]">
-            <image :src="likedUrl" class="like-icon" mode="widthFix" />
-          </view>
-          <view v-else>
-            <image :src="unlikeUrl" class="like-icon" mode="widthFix" />
-          </view>
+          <image
+            :src="commentLikes[index].likeUrl"
+            class="like-icon"
+            mode="widthFix"
+            @click="commentDoLike(index)"
+          />
           <text class="like-num">
-            {{ item.likes }}
+            {{ commentLikes[index].count }}
           </text>
         </view>
       </view>
@@ -171,39 +171,90 @@ const getCommentsReq = reactive<GetCommentsReq>({
   page: 0,
   id: props.id,
 });
+
+interface likeStruct {
+  count: number;
+  liked: boolean;
+  likeUrl: string;
+}
+
 const comments = reactive<Comment[]>([]);
-const commentLikes = reactive<boolean[]>([]);
+const commentLikes = reactive<likeStruct[]>([]);
 let allCommentsLoaded = false;
 let isCommentsLoaded = false;
+let pageStart = 0;
 const getCommentsData = async () => {
   let commentsTemp = (await getComments(getCommentsReq)).comments;
-  if (commentsTemp.length > 0) {
-    for (let i = 0; i < commentsTemp.length; i++) {
+  if (commentsTemp.length > pageStart) {
+    for (let i = pageStart; i < commentsTemp.length; i++) {
       comments.push(commentsTemp[i]);
-      let commentLike = (
-        await getUserLiked({
-          targetId: commentsTemp[i].id,
-          targetType: TargetType.Comment,
-        })
-      ).liked;
-      commentLikes.push(commentLike);
+      const commentLikeReq = {
+        targetId: commentsTemp[i].id,
+        targetType: TargetType.Comment,
+      };
+      commentLikes.push(await getCommentLikeData(commentLikeReq));
     }
-    getCommentsReq.page += 1;
+    if (commentsTemp.length === 10) {
+      getCommentsReq.page += 1;
+      pageStart = 0;
+    } else {
+      pageStart = commentsTemp.length;
+    }
   } else {
     allCommentsLoaded = true;
   }
   isCommentsLoaded = true;
 };
+const getCommentLikeData = async (req: GetCountReq) => {
+  let commentLike = (await getUserLiked(req)).liked;
+  let likeCount = (await getCount(req)).count;
+  let commentLikeUrl = unlikeUrl;
+  if (commentLike) commentLikeUrl = likedUrl;
+  return {
+    count: likeCount,
+    liked: commentLike,
+    likeUrl: commentLikeUrl,
+  };
+};
+const commentDoLike = async (index: number) => {
+  let commentLikeReq = {
+    targetId: comments[index].id,
+    targetType: TargetType.Comment,
+  };
+  await doLike(commentLikeReq);
+  commentLikes[index] = await getCommentLikeData(commentLikeReq);
+};
 getCommentsData();
+
 const newCommentReq = reactive<NewCommentReq>({
   id: props.id,
   scope: "moment",
   text: "",
 });
 const text = ref("");
-const createComment = async (text: string) => {
+const createComment = (text: string) => {
+  if (text === "") {
+    return;
+  }
   newCommentReq.text = text;
-  await newComment(newCommentReq);
+  newComment(newCommentReq).then((res) => {
+    getNewComment();
+    uni.showToast({
+      title: res.msg,
+    });
+  });
+};
+const getNewComment = async () => {
+  let tmpPage = getCommentsReq.page;
+  getCommentsReq.page = 0;
+  let commentsTemp = (await getComments(getCommentsReq)).comments;
+  getCommentsReq.page = tmpPage;
+  comments.unshift(commentsTemp[0]);
+  pageStart += 1;
+  if (pageStart === 10) {
+    getCommentsReq.page += 1;
+    pageStart = 0;
+  }
 };
 
 onReachBottom(() => {
@@ -212,10 +263,6 @@ onReachBottom(() => {
     getCommentsData();
   }
 });
-
-// getComments(getCommentsReq).then(res => {
-//   comments.value.push(...res.comments)
-// })
 
 const comments2 = reactive([
   {
