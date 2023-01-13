@@ -8,8 +8,8 @@ export async function init() {
 
     uni.getProvider({
       service: "oauth",
-      success(res: UniNamespace.GetProviderRes) {
-        if (res.provider[0] === "weixin") {
+      success(getProviderRes: UniNamespace.GetProviderRes) {
+        if (getProviderRes.provider[0] === "weixin") {
           uni.login({
             provider: "weixin",
             success(res: UniNamespace.LoginRes) {
@@ -18,8 +18,8 @@ export async function init() {
                 authId: "123", // 微信登陆时这里随便填什么都可以
                 params: [res.code],
               })
-                .then((res) => {
-                  uni.setStorageSync("accessToken", res.accessToken);
+                .then((signInRes) => {
+                  uni.setStorageSync("accessToken", signInRes.accessToken);
                   resolve();
                 })
                 .catch((err) => {
@@ -35,8 +35,8 @@ export async function init() {
           authId: "test@test.com",
           params: ["1234"],
         })
-          .then((res) => {
-            uni.setStorageSync("accessToken", res.accessToken);
+          .then((signInRes) => {
+            uni.setStorageSync("accessToken", signInRes.accessToken);
             resolve();
           })
           .catch((err) => {

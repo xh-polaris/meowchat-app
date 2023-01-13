@@ -85,6 +85,7 @@ import { getPostPreviews } from "@/apis/post/post";
 import DraftButton from "@/pages/draft/draft-button";
 import { displayTime } from "@/utils/time";
 import { Post } from "@/apis/schemas";
+import { init } from "@/utils/init";
 
 const postsData = reactive<Post[]>([]);
 let page = 0;
@@ -101,8 +102,6 @@ async function createPostsDataBatch() {
   const posts = await getPostPreviewsAsync();
   postsData.push(...posts);
 }
-
-createPostsDataBatch();
 
 onReachBottom(() => {
   createPostsDataBatch();
@@ -154,6 +153,10 @@ const toggleSelf = (name: string) => {
     currentType.className = "navbtn current";
   }
 };
+
+init().then(() => {
+  createPostsDataBatch();
+});
 </script>
 
 <style lang="scss" scoped>

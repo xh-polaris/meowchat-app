@@ -23,17 +23,13 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
+import { News } from "@/apis/schemas";
 
-const props = defineProps({
-  contents: {
-    type: Array,
-    default() {
-      return [];
-    },
-  },
-});
+const props = defineProps<{
+  contents: News[];
+}>();
 
-const contents = props.contents;
+const contents = reactive(props.contents);
 
 let touchStartX: number;
 let isSlidesMoving = false;

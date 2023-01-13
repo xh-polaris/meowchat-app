@@ -14,17 +14,17 @@
       </view>
       <view class="switch-box">
         <view class="switch-icon" />
-        <view class="switch" @click="onClickSwitch"> 切换学校 </view>
+        <view class="switch" @click="onClickSwitch"> 切换学校</view>
       </view>
     </view>
   </view>
 
   <view>
-    <carousel-frame v-if="init" />
+    <carousel-frame />
   </view>
 
   <view style="margin-top: 10px">
-    <masonry v-if="init" />
+    <masonry />
   </view>
 
   <draft-button type="moment" />
@@ -47,8 +47,6 @@ const school = reactive({
 const currentNavBtn = ref("中北校区");
 
 onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
-
-const init = ref(false);
 </script>
 
 <style lang="scss" scoped>
