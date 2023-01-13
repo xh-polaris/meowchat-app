@@ -3,7 +3,7 @@
 node_modules
 dist
 unpackage
-
+_MACOSX
 # misc
 .DS_Store
 npm-debug.log*
