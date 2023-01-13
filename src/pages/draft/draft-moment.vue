@@ -93,6 +93,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
+
 import { newMoment } from "@/apis/moment/moment";
 import FuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
 
@@ -103,6 +104,7 @@ const isSyncToCollection = ref(false);
 
 let title = ref("");
 let text = ref("");
+
 let photos = reactive<any>([]);
 
 function toggleAnonymous() {
@@ -145,14 +147,38 @@ function addImage() {
 }
 
 function publishMoment() {
+  if (title.value === "") {
+    uni.showToast({
+      title: "请输入标题",
+      icon: "none",
+    });
+    return;
+  }
+  if (text.value === "") {
+    uni.showToast({
+      title: "请输入正文",
+      icon: "none",
+    });
+    return;
+  }
+  if (photos.length == 0) {
+    uni.showToast({
+      title: "至少上传一张图片哦",
+      icon: "none",
+    });
+    return;
+  }
   newMoment({
     title: title.value,
     communityId: uni.getStorageSync("communityId"),
     text: text.value,
     photos: photos,
   }).then(() => {
+    let pages = getCurrentPages();
+    let beforePage = pages[pages.length - 2];
     uni.navigateBack({
       delta: 1,
+      success: () => {},
     });
   });
 }

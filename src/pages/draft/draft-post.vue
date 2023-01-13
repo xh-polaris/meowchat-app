@@ -1,38 +1,67 @@
 <template>
   <view class="all">
     <view class="main">
-      <input placeholder="输入标题" type="text" v-model="title" />
-      <!-- #ifdef H5 -->
-      <textarea
-        maxlength="5000"
-        placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-        type="text"
-        v-model="text"
-      />
-      <!-- #endif -->
-      <!-- #ifdef MP-WEIXIN -->
-      <textarea
-        maxlength="5000"
-        placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-        type="text"
-        v-model="text"
-      />
-      <!-- #endif -->
-
-      <view class="images">
-        <template v-for="image in imagesData" :key="image.id">
-          <view
-            :style="{ backgroundImage: 'url(' + image.url + ')' }"
-            class="added-image"
-          />
-        </template>
-        <view
-          v-if="imagesData.length < 1"
-          class="new-image"
-          @click="addImage"
-        />
+      <view class="m-2">
+        <fui-button
+          text="默认按钮"
+          height="50rpx"
+          color="black"
+          backgroundColor="white"
+          placeholder="输入标题"
+          borderColor="#1FA1FF"
+          :borderTop="false"
+          bottomLeft="20"
+          bottomRight="20"
+          :borderBottom="true"
+          v-model="title"
+        ></fui-button>
       </view>
-      <view class="image-num"> {{ imagesData.length }}/1</view>
+
+      <view class="mx-2 mt-2">
+        <fui-button
+          text="默认按钮"
+          color="black"
+          :isCounter="true"
+          :borderTop="false"
+          :borderBottom="false"
+          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          v-model="text"
+          height="350rpx"
+        >
+        </fui-button>
+      </view>
+
+      <view class="">
+        <view class="images">
+          <block v-for="image in imagesData" :key="image.id">
+            <view
+              :style="{ backgroundImage: 'url(' + image.url + ')' }"
+              class="added-image"
+            />
+          </block>
+          <view
+            v-if="imagesData.length < 1"
+            class="new-image"
+            @click="addImage"
+          />
+        </view>
+        <view class="image-num w-100">封面{{ imagesData.length }}/1</view>
+      </view>
+    </view>
+
+    <!-- 添加标签 -->
+    <view class="mx-4" style="background-color: #f3f3f3; border-radius: 20rpx">
+      <view class="p-2">
+        <robby-tags
+          v-model="tags"
+          @add="addTag"
+          @delete="delTag"
+          @click="clickTag"
+          :enable-del="true"
+          :enable-add="true"
+          :value="tags"
+        ></robby-tags>
+      </view>
     </view>
 
     <view class="panel">
@@ -65,22 +94,28 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
+
 import { newPost } from "@/apis/post/post";
 
 import { putObject } from "@/apis/cos/cos";
 
-const imagesData = reactive<
-  {
-    id: string;
-    url: string;
-  }[]
->([]);
+import robbyTags from "@/components/draft-post/robby-tags/robby-tags.vue";
+import FuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
+
+const imagesData = reactive([]);
 
 const isAnonymous = ref(false);
 
 let title = ref("");
 let text = ref("");
 let coverUrl = ref("");
+let tags = reactive([]);
+
+function clickTag(e) {}
+
+function delTag(e) {}
+
+function addTag(e) {}
 
 function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value;
@@ -118,13 +153,29 @@ function addImage() {
 }
 
 function publishPost() {
+  if (title.value === "") {
+    uni.showToast({
+      title: "请输入标题",
+      icon: "none",
+    });
+    return;
+  }
+  if (text.value === "") {
+    uni.showToast({
+      title: "请输入正文",
+      icon: "none",
+    });
+    return;
+  }
   newPost({
     title: title.value,
     text: text.value,
     coverUrl: coverUrl.value,
-    tags: [],
+    tags: tags,
     isAnonymous: isAnonymous.value,
   }).then(() => {
+    const pages = getCurrentPages();
+    const beforePage = pages[pages.length - 2];
     uni.navigateBack({
       delta: 1,
     });

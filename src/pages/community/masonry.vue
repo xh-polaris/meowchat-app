@@ -47,11 +47,11 @@
             <view class="other-info">
               <view class="user-info">
                 <image class="avatar" :src="moment.user.avatarUrl" />
-                <view class="username">
+                <view class="username font-md">
                   {{ moment.user.nickname }}
                 </view>
               </view>
-              <view class="time">
+              <view class="time font-sm">
                 {{ displayTime(moment.createAt * 1000) }}
               </view>
             </view>
@@ -253,6 +253,8 @@ $titleFontSize: calc(12 / 390 * 100vw);
 $smallFontSize: calc(8 / 390 * 100vw);
 $avatarWidth: calc(21 / 390 * 100vw);
 
+@import "../../assets/user-info.scss";
+
 .header {
   margin: 0 calc(12 / 390 * 100vw);
   display: flex;
@@ -336,19 +338,6 @@ $avatarWidth: calc(21 / 390 * 100vw);
       display: flex;
       align-items: center;
       justify-content: space-between;
-
-      .user-info {
-        display: flex;
-        align-items: center;
-
-        .avatar {
-          width: $avatarWidth;
-          height: $avatarWidth;
-          border-radius: 50%;
-          background-color: #cccccc;
-          margin-right: calc(4 / 390 * 100vw);
-        }
-      }
     }
   }
 }
