@@ -41,10 +41,22 @@
 export default {
   name: "robby-tags",
   props: {
-    enableAdd: Boolean,
-    bgColorType: String,
-    value: Array,
-    enableDel: Boolean,
+    enableAdd: {
+      type: Boolean,
+      default: true,
+    },
+    bgColorType: {
+      type: String,
+      default: "",
+    },
+    value: {
+      type: Array,
+      default: [],
+    },
+    enableDel: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
