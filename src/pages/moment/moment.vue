@@ -48,7 +48,7 @@
             src="/static/images/arrow_right_blue.png"
           />
         </view>
-        <view class="like-box">
+        <view v-if="commentLikes[index]" class="like-box">
           <image
             :src="commentLikes[index].likeUrl"
             class="like-icon"
