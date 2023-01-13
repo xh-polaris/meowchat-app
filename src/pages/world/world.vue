@@ -20,7 +20,7 @@
 
   <view class="top-padding" />
 
-  <block v-for="post in postsData" :key="post.id" v-if="updateData">
+  <block v-for="post in postsData" :key="post.id">
     <view class="post" @click="onClickPost(post.id)">
       <view class="upper">
         <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
