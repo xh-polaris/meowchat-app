@@ -32,7 +32,7 @@
 <script lang="ts">
 import { updateUserInfo } from "@/apis/user/user";
 import { UpdateUserReq } from "@/apis/user/user-interfaces";
-
+import { putObject } from "@/apis/cos/cos";
 export default {
   data() {
     return {
@@ -43,7 +43,11 @@ export default {
   methods: {
     onChooseAvatar(e: any) {
       const { avatarUrl } = e.detail;
-      this.avatarUrl = avatarUrl;
+      putObject({
+        filePath: avatarUrl,
+      }).then((res) => {
+        this.avatarUrl = res.url;
+      });
     },
     onNickName(e: any) {
       this.nickName = e.detail.value;

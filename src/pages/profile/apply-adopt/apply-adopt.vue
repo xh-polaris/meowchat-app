@@ -20,17 +20,23 @@
     </view>
     <view class="link_content">
       <text class="title"> 问卷链接: </text>
-      <navigator
-        hover-class="none"
-        url="/pages/profile/apply-adopt-questionnaire/apply-adopt-questionnaire"
+      <view class="link" @click="CopyURLToClipboard()"
+        >https://www.wjx.cn/vj/mBnSgB8.aspx</view
       >
-        <view class="link"> https://www.wjx.cn/vj/mBnSgB8.aspx </view>
-      </navigator>
     </view>
   </view>
 </template>
 
-<script></script>
+<script lang="ts">
+import { CopyToClipboard } from "@/pages/profile/event";
+export default {
+  methods: {
+    CopyURLToClipboard() {
+      CopyToClipboard("https://www.wjx.cn/vj/mBnSgB8.aspx");
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .bg-set {
