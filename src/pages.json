@@ -52,12 +52,6 @@
       }
     },
     {
-      "path": "pages/profile/apply-adopt-questionnaire/apply-adopt-questionnaire",
-      "style": {
-        "navigationBarTitleText": "领养问卷"
-      }
-    },
-    {
       "path": "pages/profile/edit-info/edit-info",
       "style": {
         "navigationBarTitleText": "修改个人信息"
