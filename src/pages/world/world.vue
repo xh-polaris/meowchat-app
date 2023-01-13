@@ -15,10 +15,10 @@
     <view :class="types[3].className" @click.prevent="types[3].onClick">
       {{ types[3].name }}
     </view>
-    <view class="search" @click.prevent="search" />
+    <view class="search" @click.prevent="search"/>
   </view>
 
-  <view class="top-padding" />
+  <view class="top-padding"/>
 
   <template v-for="post in postsData" :key="post.id">
     <view class="post" @click="onClickPost(post.id)">
@@ -29,7 +29,7 @@
           </view>
           <view class="user-info">
             <template v-if="!post.isAnonymous">
-              <image class="avatar" :src="post.user.avatarUrl" />
+              <image class="avatar" :src="post.user.avatarUrl"/>
               <view class="username">
                 {{ post.user.nickname }}
               </view>
@@ -60,9 +60,9 @@
           </view>
         </view>
         <view
-          v-if="post.coverUrl"
-          :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
-          class="image"
+            v-if="post.coverUrl"
+            :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
+            class="image"
         />
       </view>
       <view class="lower">
@@ -74,48 +74,43 @@
     </view>
   </template>
 
-  <draft-button type="post" />
+  <draft-button type="post"/>
 </template>
 
 <script lang="ts" setup>
-import {
-  reactive,
-  watch,
-  getCurrentInstance,
-  ComponentInternalInstance,
-} from "vue";
-import { onReachBottom } from "@dcloudio/uni-app";
-import { onClickPost } from "./event";
-import { getPostPreviews } from "@/apis/post/post";
-import DraftButton from "@/pages/draft/draft-button";
-import { displayTime } from "@/utils/time";
-import { Post } from "@/apis/schemas";
+import { reactive } from "vue"
+import { onReachBottom } from "@dcloudio/uni-app"
+import { onClickPost } from "./event"
+import { getPostPreviews } from "@/apis/post/post"
+import DraftButton from "@/pages/draft/draft-button"
+import { displayTime } from "@/utils/time"
+import { Post } from "@/apis/schemas"
 
-import { init } from "@/utils/init";
+import { init } from "@/utils/init"
 
-let postsData = reactive<Post[]>([]);
-let page = 0;
+let postsData = reactive<Post[]>([])
+let page = 0
 const getPostPreviewsAsync = async () => {
   const posts = (
-    await getPostPreviews({
-      page: page,
-    })
-  ).posts;
+      await getPostPreviews({
+        page: page,
+      })
+  ).posts
   if (posts.length === 0) {
-    uni.stopPullDownRefresh();
+    uni.stopPullDownRefresh()
   }
-  page++;
-  return posts;
-};
+  page++
+  return posts
+}
 
-async function createPostsDataBatch() {
-  const posts = await getPostPreviewsAsync();
-  postsData.push(...posts);
+async function createPostsDataBatch () {
+  const posts = await getPostPreviewsAsync()
+  postsData.push(...posts)
 }
 
 onReachBottom(() => {
-  createPostsDataBatch();
-});
+  createPostsDataBatch()
+})
 
 const types = reactive([
   {
@@ -123,7 +118,7 @@ const types = reactive([
     isCurrent: false,
     className: "navbtn",
     onClick: () => {
-      toggleSelf("官方");
+      toggleSelf("官方")
     },
   },
   {
@@ -131,7 +126,7 @@ const types = reactive([
     isCurrent: true,
     className: "navbtn current",
     onClick: () => {
-      toggleSelf("热度");
+      toggleSelf("热度")
     },
   },
   {
@@ -139,7 +134,7 @@ const types = reactive([
     isCurrent: false,
     className: "navbtn",
     onClick: () => {
-      toggleSelf("最新");
+      toggleSelf("最新")
     },
   },
   {
@@ -147,30 +142,30 @@ const types = reactive([
     isCurrent: false,
     className: "navbtn",
     onClick: () => {
-      toggleSelf("关注");
+      toggleSelf("关注")
     },
   },
-]);
+])
 
 const toggleSelf = (name: string) => {
   if (!types.filter((type) => type.name === name)[0].isCurrent) {
     types.map((type) => {
-      type.isCurrent = false;
-      type.className = "navbtn";
-    });
-    const currentType = types.filter((type) => type.name === name)[0];
-    currentType.isCurrent = true;
-    currentType.className = "navbtn current";
+      type.isCurrent = false
+      type.className = "navbtn"
+    })
+    const currentType = types.filter((type) => type.name === name)[0]
+    currentType.isCurrent = true
+    currentType.className = "navbtn current"
   }
-};
+}
 
 init().then(() => {
-  createPostsDataBatch();
-});
+  createPostsDataBatch()
+})
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/user-info.scss";
+@import "@/common/user-info.scss";
 
 body {
   font-family: sans-serif;

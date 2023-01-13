@@ -6,7 +6,10 @@
         <text class="commenter-name">
           {{ mainComment.user.nickname }}
         </text>
-        <text class="comment-time"> ·{{ displayTime(mainComment.createAt * 1000) }}</text>
+        <text class="comment-time">
+          ·{{ displayTime(mainComment.createAt * 1000) }}
+        </text
+        >
       </view>
       <view class="comment-content">
         <view class="comment-text">
@@ -26,17 +29,16 @@
     </view>
 
     <view class="replies-box">
-      <view
-          v-for="(item, index) in replies"
-          :key="index"
-          class="reply-box"
-      >
+      <view v-for="(item, index) in replies" :key="index" class="reply-box">
         <view class="replier-info-box">
           <image :src="item.user.avatarUrl" class="replier-profile"/>
           <text class="replier-name">
             {{ item.user.nickname }}
           </text>
-          <text class="reply-time"> ·{{ displayTime(item.createAt * 1000) }}</text>
+          <text class="reply-time">
+            ·{{ displayTime(item.createAt * 1000) }}
+          </text
+          >
         </view>
         <view class="reply-content">
           <view class="reply-text">
@@ -59,12 +61,12 @@
 </template>
 
 <script lang="ts" setup>
-import {Comment, User} from "@/apis/schemas";
-import {reactive} from "vue";
-import {GetCommentsReq} from "@/apis/comment/comment-interfaces";
-import {getComments} from "@/apis/comment/comment";
-import {displayTime} from "@/utils/time";
-import {onReachBottom} from "@dcloudio/uni-app";
+import { Comment, User } from "@/apis/schemas"
+import { reactive } from "vue"
+import { GetCommentsReq } from "@/apis/comment/comment-interfaces"
+import { getComments } from "@/apis/comment/comment"
+import { displayTime } from "@/utils/time"
+import { onReachBottom } from "@dcloudio/uni-app"
 
 const props = defineProps<{
   id: string;
@@ -74,16 +76,16 @@ const props = defineProps<{
   user: User;
   comments: number;
   replyName?: string;
-}>();
-console.log(props)
-const mainComment = reactive(props);
+}>()
+
+const mainComment = reactive(props)
 let allRepliesLoaded = false
 let isRepliesLoaded = true
 const replies = reactive<Comment[]>([])
 const getRepliesReq = reactive<GetCommentsReq>({
   scope: "comment",
   page: 0,
-  id: props.id
+  id: props.id,
 })
 const getRepliesData = async () => {
   let repliesTemp = (await getComments(getRepliesReq)).comments
@@ -105,7 +107,6 @@ onReachBottom(() => {
     getRepliesData()
   }
 })
-
 </script>
 
 <style lang="scss" scoped>

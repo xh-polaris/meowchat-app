@@ -95,7 +95,7 @@ import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
 
 import { newMoment } from "@/apis/moment/moment";
-import FuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
+import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 
 const imagesData = reactive<any>([]);
 
@@ -174,8 +174,6 @@ function publishMoment() {
     text: text.value,
     photos: photos,
   }).then(() => {
-    let pages = getCurrentPages();
-    let beforePage = pages[pages.length - 2];
     uni.navigateBack({
       delta: 1,
       success: () => {},

@@ -31,5 +31,4 @@ jobs:
           yarn install
 
       - name: Run ESLint
-        run: npx eslint .
-          --config .eslintrc.js
+        run: npx eslint . --config .eslintrc.js --ext .js,.ts,.vue

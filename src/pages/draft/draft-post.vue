@@ -96,15 +96,15 @@ import { newPost } from "@/apis/post/post";
 
 import { putObject } from "@/apis/cos/cos";
 
-import RobbyTags from "@/components/draft-post/robby-tags/robby-tags.vue";
-import FuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
+import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
+import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 
 const imagesData = reactive<
-    {
-      id: string;
-      url: string;
-    }[]
-    >([]);
+  {
+    id: string;
+    url: string;
+  }[]
+>([]);
 
 const isAnonymous = ref(false);
 

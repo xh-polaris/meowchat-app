@@ -201,7 +201,7 @@
 
 const emits = defineEmits(["closeReply"])
 
-function closeSelf() {
+function closeSelf () {
   emits("closeReply")
 }
 

@@ -17,6 +17,7 @@ module.exports = {
     semi: "off",
     "vue/multi-word-component-names": "off",
     "no-undef": "off",
+    "no-unused-vars": "warn",
     "vue/max-attributes-per-line": [
       "error",
       {
