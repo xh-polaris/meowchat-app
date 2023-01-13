@@ -14,8 +14,8 @@
           {{ moment.user.nickname }}
         </text>
         <text class="post-time">
-          · {{ displayTime(moment.createAt * 1000) }}</text
-        >
+          · {{ displayTime(moment.createAt * 1000) }}
+        </text>
       </view>
       <view class="post-content">
         {{ moment.text }}
@@ -38,8 +38,8 @@
             {{ item.user.nickname }}
           </text>
           <text class="comment-time">
-            · {{ displayTime(item.createAt * 1000) }}</text
-          >
+            · {{ displayTime(item.createAt * 1000) }}
+          </text>
         </view>
         <view class="comment-content">
           {{ item.text }}
@@ -116,7 +116,6 @@ const props = defineProps<{
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
   momentId: props.id,
 });
-console.log(props.id);
 const moment = ref<Moment>({
   id: "",
   createAt: 0,
@@ -203,9 +202,8 @@ const newCommentReq = reactive<NewCommentReq>({
 });
 const text = ref("");
 const createComment = async (text: string) => {
-  console.log(text);
   newCommentReq.text = text;
-  console.log(await newComment(newCommentReq));
+  await newComment(newCommentReq);
 };
 
 onReachBottom(() => {

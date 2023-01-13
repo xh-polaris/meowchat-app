@@ -5,7 +5,7 @@ export interface GetPostPreviewsReq {
 }
 
 export interface GetPostPreviewsResp {
-  posts: Array<Post>;
+  posts: Post[];
   code: number;
   msg: string;
 }
@@ -26,7 +26,7 @@ export interface NewPostReq {
   title: string;
   text: string;
   coverUrl?: string;
-  tags: Array<Tag>;
+  tags: Tag[];
 }
 
 export interface NewPostResp {

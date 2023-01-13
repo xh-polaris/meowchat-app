@@ -1,6 +1,6 @@
 <template>
   <view class="header">
-    <view class="title"> 最新动态 </view>
+    <view class="title"> 最新动态</view>
     <view class="toggle">
       <view :class="types[0].className" @click.prevent="types[0].onClick">
         {{ types[0].name }}
@@ -46,12 +46,12 @@
             </view>
             <view class="other-info">
               <view class="user-info">
-                <view class="avatar" />
-                <view class="username">
+                <image class="avatar" :src="moment.user.avatarUrl" />
+                <view class="username font-md">
                   {{ moment.user.nickname }}
                 </view>
               </view>
-              <view class="time">
+              <view class="time font-sm">
                 {{ displayTime(moment.createAt * 1000) }}
               </view>
             </view>
@@ -86,7 +86,8 @@ let loadedAmount = 0;
 let isBatchLoaded = false;
 let isBatchLoadedAll = false;
 let page = 0; //每往下翻页一次page加1直到没有内容
-/*
+
+/**
  * 大致逻辑：
  * batch是每一批加上去的moment，分为first和second
  * first是左边n个右边n个直接放
@@ -103,9 +104,10 @@ let page = 0; //每往下翻页一次page加1直到没有内容
  * 第16个tile加载好了，才触发放第17个；第17个加载好后，才触发第18个……直到第二批放完
  * 第二次每次放的时候都会判断之前左右高低情况
  * 所有的moment都放完后，又初始化为index=0, loadedAmount=0, isBatchLoaded=true
- * */
+ */
 
-let leftHeight: number, rightHeight: number;
+let leftHeight: number = 0,
+  rightHeight: number = 0;
 
 const isLeftTallerThanRight = () => {
   return leftHeight > rightHeight;
@@ -206,7 +208,7 @@ const types = reactive([
     name: "热门",
     isCurrent: true,
     className: "label current",
-    onClick: (ev: Event) => {
+    onClick: () => {
       toggleSelf("热门");
     },
   },
@@ -214,7 +216,7 @@ const types = reactive([
     name: "最新",
     isCurrent: false,
     className: "label",
-    onClick: (ev: Event) => {
+    onClick: () => {
       toggleSelf("最新");
     },
   },
@@ -222,7 +224,7 @@ const types = reactive([
     name: "关注",
     isCurrent: false,
     className: "label",
-    onClick: (ev: Event) => {
+    onClick: () => {
       toggleSelf("关注");
     },
   },
@@ -250,6 +252,8 @@ $radius: calc(6 / 390 * 100vw);
 $titleFontSize: calc(12 / 390 * 100vw);
 $smallFontSize: calc(8 / 390 * 100vw);
 $avatarWidth: calc(21 / 390 * 100vw);
+
+@import "../../common/user-info.scss";
 
 .header {
   margin: 0 calc(12 / 390 * 100vw);
@@ -334,19 +338,6 @@ $avatarWidth: calc(21 / 390 * 100vw);
       display: flex;
       align-items: center;
       justify-content: space-between;
-
-      .user-info {
-        display: flex;
-        align-items: center;
-
-        .avatar {
-          width: $avatarWidth;
-          height: $avatarWidth;
-          border-radius: 50%;
-          background-color: #cccccc;
-          margin-right: calc(4 / 390 * 100vw);
-        }
-      }
     }
   }
 }

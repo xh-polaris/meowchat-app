@@ -20,16 +20,16 @@
 
   <view class="top-padding" />
 
-  <block v-for="post in postsData" :key="post.id">
+  <block v-for="post in postsData" :key="post.id" v-if="updateData">
     <view class="post" @click="onClickPost(post.id)">
       <view class="upper">
         <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
           <view class="title">
             {{ post.title }}
           </view>
-          <view class="user">
+          <view class="user-info">
             <block v-if="!post.isAnonymous">
-              <view class="avatar" />
+              <image class="avatar" :src="post.user.avatarUrl" />
               <view class="username">
                 {{ post.user.nickname }}
               </view>
@@ -66,10 +66,10 @@
         />
       </view>
       <view class="lower">
-        <view class="time">
+        <view class="time font-sm">
           {{ displayTime(post.createAt * 1000) }}
         </view>
-        <view>{{ post.comments }}条回复</view>
+        <view class="font-sm">{{ post.comments }}条回复</view>
       </view>
     </view>
   </block>
@@ -77,18 +77,39 @@
   <draft-button type="post" />
 </template>
 
-<script setup>
-import { reactive } from "vue";
+<script lang="ts" setup>
+import {
+  reactive,
+  watch,
+  getCurrentInstance,
+  ComponentInternalInstance,
+} from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
-import { getPostPreviews } from "../../apis/post/post";
+import { getPostPreviews } from "@/apis/post/post";
 import DraftButton from "@/pages/draft/draft-button";
 import { displayTime } from "@/utils/time";
+import { Post } from "@/apis/schemas";
+import {
+  onShow,
+  onLoad,
+  onBackPress,
+  onPullDownRefresh,
+} from "@dcloudio/uni-app";
 
-const postsData = reactive([]);
-
+let postsData = reactive<Post[]>([]);
+let page = 0;
 const getPostPreviewsAsync = async () => {
-  return (await getPostPreviews({ page: 0 })).posts;
+  const posts = (
+    await getPostPreviews({
+      page: page,
+    })
+  ).posts;
+  if (posts.length === 0) {
+    uni.stopPullDownRefresh();
+  }
+  page++;
+  return posts;
 };
 
 async function createPostsDataBatch() {
@@ -102,12 +123,28 @@ onReachBottom(() => {
   createPostsDataBatch();
 });
 
+// onPullDownRefresh(() => {
+// 	//下拉刷新
+// 	page = 0;
+// 	postsData.slice(0, postsData.length)
+// 	getPostPreviews({
+// 		page: 0
+// 	}).then((postsOne) => {
+// 		postsData = postsOne.posts
+
+// 	})
+// 	// createPostsDataBatch()
+// 	setTimeout(function() {
+// 		uni.stopPullDownRefresh();
+// 	}, 1000);
+// })
+
 const types = reactive([
   {
     name: "官方",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("官方");
     },
   },
@@ -115,7 +152,7 @@ const types = reactive([
     name: "热度",
     isCurrent: true,
     className: "navbtn current",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("热度");
     },
   },
@@ -123,7 +160,7 @@ const types = reactive([
     name: "最新",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("最新");
     },
   },
@@ -131,13 +168,13 @@ const types = reactive([
     name: "关注",
     isCurrent: false,
     className: "navbtn",
-    onClick: (ev) => {
+    onClick: () => {
       toggleSelf("关注");
     },
   },
 ]);
 
-const toggleSelf = (name) => {
+const toggleSelf = (name: string) => {
   if (!types.filter((type) => type.name === name)[0].isCurrent) {
     types.map((type) => {
       type.isCurrent = false;
@@ -151,6 +188,8 @@ const toggleSelf = (name) => {
 </script>
 
 <style lang="scss" scoped>
+@import "../../common/user-info.scss";
+
 body {
   font-family: sans-serif;
   background-color: #fafcff;
@@ -221,32 +260,22 @@ body {
   .title {
     font-size: calc(16 / 390 * 100vw);
     font-weight: bold;
-  }
-
-  .user {
-    display: flex;
-    align-items: center;
-    padding: calc(8 / 390 * 100vw) 0;
-
-    .avatar {
-      width: calc(21 / 390 * 100vw);
-      height: calc(21 / 390 * 100vw);
-      border-radius: 50%;
-      background-color: #ccc;
-      margin-right: calc(4 / 390 * 100vw);
-    }
-
-    .username {
-      font-size: calc(8 / 390 * 100vw);
-      color: #696969;
-    }
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
   }
 
   .description {
-    overflow: hidden;
-    height: calc(34 / 390 * 100vw);
+    // height: calc(34 / 390 * 100vw);
     font-size: calc(12 / 390 * 100vw);
     line-height: calc(17 / 390 * 100vw);
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
   }
 
   .tags {
@@ -255,11 +284,11 @@ body {
     color: #1fa1ff;
     font-size: calc(10 / 390 * 100vw);
     //height: calc(18 / 390 * 100vw);
-    line-height: calc(18 / 390 * 100vw);
+    // line-height: calc(18 / 390 * 100vw);
     padding-top: 10rpx;
 
     .tag {
-      margin-top: 3px;
+      margin-top: 0rpx;
       font-style: normal;
       font-weight: bold;
       font-size: 10px;

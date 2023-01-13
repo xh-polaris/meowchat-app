@@ -1,10 +1,5 @@
 <template>
   <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
-  <!--  <reply-->
-  <!--    :animation="enterReplyData"-->
-  <!--    :replies="comments[selectedReply]"-->
-  <!--    class="more-reply"-->
-  <!--  />-->
 
   <view class="header">
     <view class="title">
@@ -40,8 +35,8 @@
             {{ item.user.nickname }}
           </text>
           <text class="comment-time">
-            · {{ displayTime(item.createAt * 1000) }}</text
-          >
+            · {{ displayTime(item.createAt * 1000) }}
+          </text>
         </view>
         <view class="comment-content">
           {{ item.text }}
@@ -118,7 +113,6 @@ const props = defineProps<{
 const getPostDetailReq = reactive<GetPostDetailReq>({
   postId: props.id,
 });
-console.log(props.id);
 
 // Post
 const post = ref<Post>({
@@ -216,9 +210,8 @@ const newCommentReq = reactive<NewCommentReq>({
 });
 const text = ref("");
 const createComment = async (text: string) => {
-  console.log(text);
   newCommentReq.text = text;
-  console.log(await newComment(newCommentReq));
+  await newComment(newCommentReq);
 };
 
 onReachBottom(() => {

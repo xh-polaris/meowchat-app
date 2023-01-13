@@ -37,10 +37,10 @@ export interface Post {
   title: string;
   text: string;
   coverUrl?: string;
-  tags: Array<Tag>;
+  tags: Tag[];
   likes: number;
   comments: number;
-  user?: User;
+  user: User;
   status: number;
 }
 
