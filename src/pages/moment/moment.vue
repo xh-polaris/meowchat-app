@@ -4,20 +4,20 @@
   <view class="container">
     <view class="post-info-box">
       <view class="poster-info-box">
-        <image :src="moment.user.avatarUrl" class="poster-profile" />
+        <image :src="moment.data.user.avatarUrl" class="poster-profile" />
         <text class="poster-name">
-          {{ moment.user.nickname }}
+          {{ moment.data.user.nickname }}
         </text>
         <text class="post-time">
-          · {{ displayTime(moment.createAt * 1000) }}
+          · {{ displayTime(moment.data.createAt * 1000) }}
         </text>
       </view>
       <view class="post-content">
-        {{ moment.text }}
+        {{ moment.data.text }}
       </view>
       <view class="like-info"> {{ momentLike.count }} 位喵友觉得很赞</view>
       <image
-        v-for="(item, index) in moment.photos"
+        v-for="(item, index) in moment.data.photos"
         :key="index"
         :src="item"
         class="post-image"
@@ -100,7 +100,7 @@ import { doLike, getCount, getUserLiked } from "@/apis/like/like";
 import { getComments, newComment } from "@/apis/comment/comment";
 import {
   GetCommentsReq,
-  NewCommentReq
+  NewCommentReq,
 } from "@/apis/comment/comment-interfaces";
 import { onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply";
@@ -109,25 +109,27 @@ const props = defineProps<{
   id: string;
 }>();
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
-  momentId: props.id
+  momentId: props.id,
 });
-const moment = ref<Moment>({
-  id: "",
-  createAt: 0,
-  title: "",
-  catId: "",
-  communityId: "",
-  text: "",
-  user: {
+const moment = reactive<{ data: Moment }>({
+  data: {
     id: "",
-    nickname: "",
-    avatarUrl: ""
+    createAt: 0,
+    title: "",
+    catId: "",
+    communityId: "",
+    text: "",
+    user: {
+      id: "",
+      nickname: "",
+      avatarUrl: "",
+    },
+    photos: [],
   },
-  photos: []
 });
 
 const getData = async () => {
-  moment.value = (await getMomentDetail(getMomentDetailReq)).moment;
+  moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
 };
 getData();
 
@@ -135,7 +137,7 @@ const likeReq = reactive<GetCountReq>({
   targetId: props.id,
   targetType: TargetType.Moment
 });
-const momentLike = ref({
+const momentLike = reactive<likeStruct>({
   count: 0,
   liked: true,
   likeUrl: "/static/images/like.png"
@@ -150,9 +152,9 @@ const getLikeUrl = (liked: boolean) => {
   }
 };
 const getMomentLikeData = async () => {
-  momentLike.value.count = (await getCount(likeReq)).count;
-  momentLike.value.liked = (await getUserLiked(likeReq)).liked;
-  momentLike.value.likeUrl = getLikeUrl(momentLike.value.liked);
+  momentLike.count = (await getCount(likeReq)).count;
+  momentLike.liked = (await getUserLiked(likeReq)).liked;
+  momentLike.likeUrl = getLikeUrl(momentLike.liked);
 };
 getMomentLikeData();
 
@@ -201,10 +203,9 @@ const getCommentsData = async () => {
   isCommentsLoaded = true;
 };
 const getCommentLikeData = async (req: GetCountReq) => {
-  let commentLike = (await getUserLiked(req)).liked;
-  let likeCount = (await getCount(req)).count;
-  let commentLikeUrl = unlikeUrl;
-  if (commentLike) commentLikeUrl = likedUrl;
+  const commentLike = (await getUserLiked(req)).liked;
+  const likeCount = (await getCount(req)).count;
+  const commentLikeUrl = getLikeUrl(commentLike);
   return {
     count: likeCount,
     liked: commentLike,
