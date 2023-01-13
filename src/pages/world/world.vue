@@ -123,22 +123,6 @@ onReachBottom(() => {
   createPostsDataBatch();
 });
 
-// onPullDownRefresh(() => {
-// 	//下拉刷新
-// 	page = 0;
-// 	postsData.slice(0, postsData.length)
-// 	getPostPreviews({
-// 		page: 0
-// 	}).then((postsOne) => {
-// 		postsData = postsOne.posts
-
-// 	})
-// 	// createPostsDataBatch()
-// 	setTimeout(function() {
-// 		uni.stopPullDownRefresh();
-// 	}, 1000);
-// })
-
 const types = reactive([
   {
     name: "官方",

@@ -40,7 +40,12 @@
 <script>
 export default {
   name: "robby-tags",
-  props: ["enableDel", "bgColorType", "value", "enableAdd"],
+  props: {
+    enableAdd: Boolean,
+    bgColorType: String,
+    value: Array,
+    enableDel: Boolean,
+  },
   data() {
     return {
       tagString: "",
@@ -49,7 +54,7 @@ export default {
     };
   },
   computed: {
-    tagBgColor: function () {
+    tagBgColor() {
       if (this.bgColorType === null) {
         return "tagBgDefault";
       } else if (this.bgColorType === "primary") {
@@ -66,12 +71,12 @@ export default {
     },
   },
   methods: {
-    createTags: function () {
-      let tempTagArr = [];
+    createTags() {
+      const tempTagArr = [];
       if (this.tagString.length > 0) {
-        let newvalue = this.tagString.split(/,|，/);
+        const newvalue = this.tagString.split(/,|，/u);
         for (let i = 0; i < newvalue.length; i++) {
-          let newTag = newvalue[i].trim();
+          const newTag = newvalue[i].trim();
 
           if (newTag !== "" && this.value.indexOf(newTag) < 0) {
             tempTagArr.push(newTag);
@@ -86,9 +91,9 @@ export default {
       });
       this.$emit("input", this.value);
     },
-    delTag: function (e) {
-      let delTagText = e.currentTarget.dataset.text;
-      let delTagIndex = this.value.indexOf(delTagText);
+    delTag(e) {
+      const delTagText = e.currentTarget.dataset.text;
+      const delTagIndex = this.value.indexOf(delTagText);
       this.value.splice(delTagIndex, 1);
       this.$emit("delete", {
         currentTag: delTagText,
@@ -96,8 +101,8 @@ export default {
       });
       this.$emit("input", this.value);
     },
-    tapTag: function (e) {
-      let selTagText = e.currentTarget.dataset.text;
+    tapTag(e) {
+      const selTagText = e.currentTarget.dataset.text;
       this.$emit("click", selTagText);
     },
   },
