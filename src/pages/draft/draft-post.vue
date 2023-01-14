@@ -90,67 +90,65 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue"
+import { reactive, ref } from "vue";
+import { newPost } from "@/apis/post/post";
+import { putObject } from "@/apis/cos/cos";
 
-import { newPost } from "@/apis/post/post"
-
-import { putObject } from "@/apis/cos/cos"
-
-import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue"
-import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue"
+import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
+import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 
 const imagesData = reactive<{
   id: string;
   url: string;
-}[]>([])
+}[]>([]);
 
-const isAnonymous = ref(false)
+const isAnonymous = ref(false);
 
-const title = ref("")
-const text = ref("")
-const coverUrl = ref("")
-const disablePublish = ref(false)
+const title = ref("");
+const text = ref("");
+const coverUrl = ref("");
+const disablePublish = ref(false);
 
-let tags = reactive([])
+let tags = reactive([]);
 
 function toggleAnonymous () {
-  isAnonymous.value = !isAnonymous.value
+  isAnonymous.value = !isAnonymous.value;
 }
 
 function addImage () {
-  disablePublish.value = true
+  disablePublish.value = true;
   uni.chooseImage({
     success: (chooseImageRes) => {
-      let isTooManyImages = false
-      let tempFilePaths = chooseImageRes.tempFilePaths as string[]
+      let isTooManyImages = false;
+      let tempFilePaths = chooseImageRes.tempFilePaths as string[];
       if (imagesData.length + tempFilePaths.length > 1) {
-        isTooManyImages = true
-        tempFilePaths = tempFilePaths.slice(0, 1 - imagesData.length)
+        isTooManyImages = true;
+        tempFilePaths = tempFilePaths.slice(0, 1 - imagesData.length);
       }
       tempFilePaths.map((path: string) => {
         imagesData.push({
           id: path,
           url: path,
-        })
+        });
         putObject({
           filePath: path,
         }).then(function (res) {
-          coverUrl.value = res.url
-          disablePublish.value = false
-        })
-      })
+          coverUrl.value = res.url;
+          disablePublish.value = false;
+        });
+      });
 
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传1张图片！",
           icon: "error",
-        })
+        });
       }
     },
     fail: () => {
-      disablePublish.value = false
+      disablePublish.value = false;
     }
-  })
+  });
 }
 
 function publishPost () {
@@ -158,15 +156,15 @@ function publishPost () {
     uni.showToast({
       title: "请输入标题",
       icon: "none",
-    })
-    return
+    });
+    return;
   }
   if (text.value === "") {
     uni.showToast({
       title: "请输入正文",
       icon: "none",
-    })
-    return
+    });
+    return;
   }
   newPost({
     title: title.value,
@@ -177,8 +175,8 @@ function publishPost () {
   }).then(() => {
     uni.navigateBack({
       delta: 1,
-    })
-  })
+    });
+  });
 }
 </script>
 

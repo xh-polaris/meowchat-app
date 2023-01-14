@@ -78,39 +78,39 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue"
-import { onReachBottom } from "@dcloudio/uni-app"
-import { onClickPost } from "./event"
-import { getPostPreviews } from "@/apis/post/post"
-import DraftButton from "@/pages/draft/draft-button"
-import { displayTime } from "@/utils/time"
-import { Post } from "@/apis/schemas"
+import { reactive } from "vue";
+import { onReachBottom } from "@dcloudio/uni-app";
+import { onClickPost } from "./event";
+import { getPostPreviews } from "@/apis/post/post";
+import DraftButton from "@/pages/draft/draft-button";
+import { displayTime } from "@/utils/time";
+import { Post } from "@/apis/schemas";
 
-import { init } from "@/utils/init"
+import { init } from "@/utils/init";
 
-let postsData = reactive<Post[]>([])
-let page = 0
+let postsData = reactive<Post[]>([]);
+let page = 0;
 const getPostPreviewsAsync = async () => {
   const posts = (
       await getPostPreviews({
         page: page,
       })
-  ).posts
+  ).posts;
   if (posts.length === 0) {
-    uni.stopPullDownRefresh()
+    uni.stopPullDownRefresh();
   }
-  page++
-  return posts
-}
+  page++;
+  return posts;
+};
 
 async function createPostsDataBatch () {
-  const posts = await getPostPreviewsAsync()
-  postsData.push(...posts)
+  const posts = await getPostPreviewsAsync();
+  postsData.push(...posts);
 }
 
 onReachBottom(() => {
-  createPostsDataBatch()
-})
+  createPostsDataBatch();
+});
 
 const types = reactive([
   {
@@ -118,7 +118,7 @@ const types = reactive([
     isCurrent: false,
     className: "navbtn",
     onClick: () => {
-      toggleSelf("官方")
+      toggleSelf("官方");
     },
   },
   {
@@ -126,7 +126,7 @@ const types = reactive([
     isCurrent: true,
     className: "navbtn current",
     onClick: () => {
-      toggleSelf("热度")
+      toggleSelf("热度");
     },
   },
   {
@@ -134,7 +134,7 @@ const types = reactive([
     isCurrent: false,
     className: "navbtn",
     onClick: () => {
-      toggleSelf("最新")
+      toggleSelf("最新");
     },
   },
   {
@@ -142,26 +142,26 @@ const types = reactive([
     isCurrent: false,
     className: "navbtn",
     onClick: () => {
-      toggleSelf("关注")
+      toggleSelf("关注");
     },
   },
-])
+]);
 
 const toggleSelf = (name: string) => {
   if (!types.filter((type) => type.name === name)[0].isCurrent) {
     types.map((type) => {
-      type.isCurrent = false
-      type.className = "navbtn"
-    })
-    const currentType = types.filter((type) => type.name === name)[0]
-    currentType.isCurrent = true
-    currentType.className = "navbtn current"
+      type.isCurrent = false;
+      type.className = "navbtn";
+    });
+    const currentType = types.filter((type) => type.name === name)[0];
+    currentType.isCurrent = true;
+    currentType.className = "navbtn current";
   }
-}
+};
 
 init().then(() => {
-  createPostsDataBatch()
-})
+  createPostsDataBatch();
+});
 </script>
 
 <style lang="scss" scoped>

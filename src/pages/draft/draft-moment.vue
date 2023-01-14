@@ -91,65 +91,65 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue"
-import { putObject } from "@/apis/cos/cos"
+import { reactive, ref } from "vue";
+import { putObject } from "@/apis/cos/cos";
 
-import { newMoment } from "@/apis/moment/moment"
-import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue"
+import { newMoment } from "@/apis/moment/moment";
+import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 
-const imagesData = reactive<any>([])
+const imagesData = reactive<any>([]);
 
-const isAnonymous = ref(false)
-const isSyncToCollection = ref(false)
+const isAnonymous = ref(false);
+const isSyncToCollection = ref(false);
 
-const title = ref("")
-const text = ref("")
-const disablePublish = ref(false)
+const title = ref("");
+const text = ref("");
+const disablePublish = ref(false);
 
-const photos = reactive<any>([])
+const photos = reactive<any>([]);
 
 function toggleAnonymous () {
-  isAnonymous.value = !isAnonymous.value
+  isAnonymous.value = !isAnonymous.value;
 }
 
 function toggleSyncToCollection () {
-  isSyncToCollection.value = !isSyncToCollection.value
+  isSyncToCollection.value = !isSyncToCollection.value;
 }
 
 function addImage () {
-  disablePublish.value = true
+  disablePublish.value = true;
   uni.chooseImage({
     success: (chooseImageRes) => {
-      let isTooManyImages = false
-      let tempFilePaths = chooseImageRes.tempFilePaths as string[]
+      let isTooManyImages = false;
+      let tempFilePaths = chooseImageRes.tempFilePaths as string[];
       if (imagesData.length + tempFilePaths.length > 8) {
-        isTooManyImages = true
-        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length)
+        isTooManyImages = true;
+        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length);
       }
       tempFilePaths.map((path) => {
         imagesData.push({
           id: path,
           url: path,
-        })
+        });
         putObject({
           filePath: path,
         }).then(function (url) {
           //将返回的url添加进photos
-          photos.push(url.url)
-          disablePublish.value = false
-        })
-      })
+          photos.push(url.url);
+          disablePublish.value = false;
+        });
+      });
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传8张图片！",
           icon: "error",
-        })
+        });
       }
     },
     fail: () => {
-      disablePublish.value = false
+      disablePublish.value = false;
     }
-  })
+  });
 }
 
 function publishMoment () {
@@ -157,22 +157,22 @@ function publishMoment () {
     uni.showToast({
       title: "请输入标题",
       icon: "none",
-    })
-    return
+    });
+    return;
   }
   if (text.value === "") {
     uni.showToast({
       title: "请输入正文",
       icon: "none",
-    })
-    return
+    });
+    return;
   }
   if (photos.length == 0) {
     uni.showToast({
       title: "至少上传一张图片哦",
       icon: "none",
-    })
-    return
+    });
+    return;
   }
   newMoment({
     title: title.value,
@@ -182,10 +182,8 @@ function publishMoment () {
   }).then(() => {
     uni.navigateBack({
       delta: 1,
-      success: () => {
-      },
-    })
-  })
+    });
+  });
 }
 </script>
 

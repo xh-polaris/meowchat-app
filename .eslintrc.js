@@ -5,19 +5,23 @@ module.exports = {
     node: true,
     es2021: true,
   },
-  extends: "eslint:recommended",
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["import", "vue"],
+  globals: {
+    uni: "readonly",
+    UniNamespace: "readonly",
+  },
+  plugins: ["import", "vue", "@typescript-eslint"],
   rules: {
-    semi: "off",
+    semi: "warn",
     "vue/multi-word-component-names": "off",
-    "no-undef": "off",
-    "no-unused-vars": "warn",
+    "no-undef": "error",
+    "no-unused-vars": "error",
     "vue/max-attributes-per-line": [
       "error",
       {
@@ -29,7 +33,16 @@ module.exports = {
         },
       },
     ],
+    "@typescript-eslint/no-explicit-any": "off",
   },
+  overrides: [
+    {
+      files: ["src/apis/**"],
+      rules: {
+        "no-unused-vars": "off",
+      }
+    }
+  ],
   settings: {
     "import/resolver": {
       alias: {

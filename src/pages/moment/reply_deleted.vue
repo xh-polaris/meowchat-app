@@ -61,12 +61,12 @@
 </template>
 
 <script lang="ts" setup>
-import { Comment, User } from "@/apis/schemas"
-import { reactive } from "vue"
-import { GetCommentsReq } from "@/apis/comment/comment-interfaces"
-import { getComments } from "@/apis/comment/comment"
-import { displayTime } from "@/utils/time"
-import { onReachBottom } from "@dcloudio/uni-app"
+import { Comment, User } from "@/apis/schemas";
+import { reactive } from "vue";
+import { GetCommentsReq } from "@/apis/comment/comment-interfaces";
+import { getComments } from "@/apis/comment/comment";
+import { displayTime } from "@/utils/time";
+import { onReachBottom } from "@dcloudio/uni-app";
 
 const props = defineProps<{
   id: string;
@@ -76,37 +76,37 @@ const props = defineProps<{
   user: User;
   comments: number;
   replyName?: string;
-}>()
+}>();
 
-const mainComment = reactive(props)
-let allRepliesLoaded = false
-let isRepliesLoaded = true
-const replies = reactive<Comment[]>([])
+const mainComment = reactive(props);
+let allRepliesLoaded = false;
+let isRepliesLoaded = true;
+const replies = reactive<Comment[]>([]);
 const getRepliesReq = reactive<GetCommentsReq>({
   scope: "comment",
   page: 0,
   id: props.id,
-})
+});
 const getRepliesData = async () => {
-  let repliesTemp = (await getComments(getRepliesReq)).comments
+  let repliesTemp = (await getComments(getRepliesReq)).comments;
   if (repliesTemp.length > 0) {
     for (let i = 0; i < repliesTemp.length; i++) {
-      replies.push(repliesTemp[i])
+      replies.push(repliesTemp[i]);
     }
-    getRepliesReq.page += 1
+    getRepliesReq.page += 1;
   } else {
-    allRepliesLoaded = true
+    allRepliesLoaded = true;
   }
-  isRepliesLoaded = true
-}
-getRepliesData()
+  isRepliesLoaded = true;
+};
+getRepliesData();
 
 onReachBottom(() => {
   if (isRepliesLoaded && !allRepliesLoaded) {
-    isRepliesLoaded = false
-    getRepliesData()
+    isRepliesLoaded = false;
+    getRepliesData();
   }
-})
+});
 </script>
 
 <style lang="scss" scoped>

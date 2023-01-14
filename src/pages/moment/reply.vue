@@ -199,10 +199,10 @@
 
 <script setup>
 
-const emits = defineEmits(["closeReply"])
+const emits = defineEmits(["closeReply"]);
 
 function closeSelf () {
-  emits("closeReply")
+  emits("closeReply");
 }
 
 </script>

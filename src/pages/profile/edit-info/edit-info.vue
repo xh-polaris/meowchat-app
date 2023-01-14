@@ -1,27 +1,27 @@
 <template>
   <view class="container">
     <image
-      class="bg-set"
-      src="https://static.xhpolaris.com/profile_background.png"
+        class="bg-set"
+        src="https://static.xhpolaris.com/profile_background.png"
     />
     <view class="content">
       <view class="choose-avatar-row">
         <button
-          class="avatar-wrapper"
-          open-type="chooseAvatar"
-          @chooseavatar="onChooseAvatar"
+            class="avatar-wrapper"
+            open-type="chooseAvatar"
+            @chooseavatar="onChooseAvatar"
         >
-          <image :src="avatarUrl" class="avatar" />
+          <image :src="avatarUrl" class="avatar"/>
         </button>
         <text>点击选择头像</text>
       </view>
       <view class="choose-nickname-row">
         <text>新昵称:</text>
         <input
-          class="title"
-          placeholder="请输入昵称"
-          type="nickname"
-          @blur="onNickName"
+            class="title"
+            placeholder="请输入昵称"
+            type="nickname"
+            @blur="onNickName"
         />
       </view>
     </view>
@@ -29,45 +29,43 @@
   </view>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { updateUserInfo } from "@/apis/user/user";
 import { UpdateUserReq } from "@/apis/user/user-interfaces";
 import { putObject } from "@/apis/cos/cos";
-export default {
-  data() {
-    return {
-      avatarUrl: "https://static.xhpolaris.com/cat_world.jpg",
-      nickName: "",
-    };
-  },
-  methods: {
-    onChooseAvatar(e: any) {
-      const { avatarUrl } = e.detail;
-      putObject({
-        filePath: avatarUrl,
-      }).then((res) => {
-        this.avatarUrl = res.url;
-      });
-    },
-    onNickName(e: any) {
-      this.nickName = e.detail.value;
-    },
-    onClickConfirm() {
-      const userInfo: UpdateUserReq = {
-        avatarUrl: this.avatarUrl,
-        nickname: this.nickName,
-      };
-      updateUserInfo(userInfo).then((res) => {
-        uni.showToast({
-          title: res.msg,
-        });
-      });
-      uni.reLaunch({
-        url: "/pages/profile/profile",
-      });
-    },
-  },
-};
+import { ref } from "vue";
+
+const avatarUrl = ref("https://static.xhpolaris.com/cat_world.jpg");
+const nickName = ref("");
+
+function onChooseAvatar (e: any) {
+  const { avatarUrl } = e.detail;
+  putObject({
+    filePath: avatarUrl,
+  }).then((res) => {
+    avatarUrl.value = res.url;
+  });
+}
+
+function onNickName (e: any) {
+  nickName.value = e.detail.value;
+}
+
+function onClickConfirm () {
+  const userInfo: UpdateUserReq = {
+    avatarUrl: avatarUrl.value,
+    nickname: nickName.value,
+  };
+  updateUserInfo(userInfo).then((res) => {
+    uni.showToast({
+      title: res.msg,
+    });
+  });
+  uni.reLaunch({
+    url: "/pages/profile/profile",
+  });
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -83,9 +81,8 @@ export default {
 
 .content {
   box-shadow: 0 0 10rpx #eeeeee;
-  margin: 60rpx;
   padding: 20rpx;
-  margin-top: 30rpx;
+  margin: 30rpx 60rpx 60rpx;
   border-radius: 20rpx;
   background-color: #ffffff;
 }

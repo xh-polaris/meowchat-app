@@ -63,29 +63,29 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue"
-import { getMomentPreviews } from "@/apis/moment/moment"
-import { Moment } from "@/apis/schemas"
-import { onClickMoment } from "@/pages/community/event"
-import { onReachBottom } from "@dcloudio/uni-app"
-import { displayTime } from "@/utils/time"
+import { reactive } from "vue";
+import { getMomentPreviews } from "@/apis/moment/moment";
+import { Moment } from "@/apis/schemas";
+import { onClickMoment } from "@/pages/community/event";
+import { onReachBottom } from "@dcloudio/uni-app";
+import { displayTime } from "@/utils/time";
 
-let moments: Moment[]
-const leftMoments = reactive<Moment[]>([])
-const rightMoments = reactive<Moment[]>([])
+let moments: Moment[];
+const leftMoments = reactive<Moment[]>([]);
+const rightMoments = reactive<Moment[]>([]);
 
-const batchLoadingAmount = 20
-const firstLoadingAmount = 16
-const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount
+const batchLoadingAmount = 20;
+const firstLoadingAmount = 16;
+const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount;
 
-let isLastBatch = false
-let lastBatchAmount: number
+let isLastBatch = false;
+let lastBatchAmount: number;
 
-let index = 0
-let loadedAmount = 0
-let isBatchLoaded = false
-let isBatchLoadedAll = false
-let page = 0 //每往下翻页一次page加1直到没有内容
+let index = 0;
+let loadedAmount = 0;
+let isBatchLoaded = false;
+let isBatchLoadedAll = false;
+let page = 0; //每往下翻页一次page加1直到没有内容
 
 /**
  * 大致逻辑：
@@ -106,19 +106,18 @@ let page = 0 //每往下翻页一次page加1直到没有内容
  * 所有的moment都放完后，又初始化为index=0, loadedAmount=0, isBatchLoaded=true
  */
 
-let leftHeight: number = 0,
-    rightHeight: number = 0
+let leftHeight = 0, rightHeight = 0;
 
 const isLeftTallerThanRight = () => {
-  return leftHeight > rightHeight
-}
+  return leftHeight > rightHeight;
+};
 
 onReachBottom(() => {
   if (isBatchLoaded && !isBatchLoadedAll) {
-    isBatchLoaded = false
-    addBatch()
+    isBatchLoaded = false;
+    addBatch();
   }
-})
+});
 
 const addBatch = async () => {
   moments = (
@@ -126,82 +125,82 @@ const addBatch = async () => {
         page,
         communityId: uni.getStorageSync("communityId"),
       })
-  ).moments
+  ).moments;
   if (moments) {
-    page += 1
+    page += 1;
     if (moments.length === 20) {
       for (let i = 0; i < firstLoadingAmount / 2; i++) {
-        addTile(index, "left")
-        index += 1
-        addTile(index, "right")
-        index += 1
+        addTile(index, "left");
+        index += 1;
+        addTile(index, "right");
+        index += 1;
       }
     } else {
-      isLastBatch = true
-      lastBatchAmount = moments.length
-      onLoad()
-      isBatchLoadedAll = true
+      isLastBatch = true;
+      lastBatchAmount = moments.length;
+      onLoad();
+      isBatchLoadedAll = true;
     }
   } else {
-    isBatchLoadedAll = true
+    isBatchLoadedAll = true;
   }
-}
+};
 
 const onLoadLeft = (ev: Event) => {
-  const target = ev.target as HTMLImageElement
+  const target = ev.target as HTMLImageElement;
   leftHeight =
-      target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0)
-  onLoad()
-}
+      target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
+  onLoad();
+};
 const onLoadRight = (ev: Event) => {
-  const target = ev.target as HTMLImageElement
+  const target = ev.target as HTMLImageElement;
   rightHeight =
-      target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0)
-  onLoad()
-}
+      target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
+  onLoad();
+};
 
 const onLoad = () => {
-  isBatchLoaded = false
-  loadedAmount += 1
+  isBatchLoaded = false;
+  loadedAmount += 1;
   if (!isLastBatch) {
     if (loadedAmount >= firstLoadingAmount) {
       if (loadedAmount < firstLoadingAmount + secondLoadingAmount) {
-        addTile(index, "either")
-        index += 1
+        addTile(index, "either");
+        index += 1;
       } else {
-        loadedAmount = 0
-        index = 0
-        isBatchLoaded = true
+        loadedAmount = 0;
+        index = 0;
+        isBatchLoaded = true;
       }
     }
   } else {
     if (index < lastBatchAmount) {
-      addTile(index, "either")
-      index += 1
+      addTile(index, "either");
+      index += 1;
     } else {
-      loadedAmount = 0
-      index = 0
-      isBatchLoaded = true
+      loadedAmount = 0;
+      index = 0;
+      isBatchLoaded = true;
     }
   }
-}
+};
 
 const addTile = (tileIndex: number, side: string) => {
-  const tile = moments[tileIndex]
+  const tile = moments[tileIndex];
   if (side === "left") {
-    leftMoments.push(tile)
+    leftMoments.push(tile);
   } else if (side === "right") {
-    rightMoments.push(tile)
+    rightMoments.push(tile);
   } else if (side === "either") {
     if (isLeftTallerThanRight()) {
-      rightMoments.push(tile)
+      rightMoments.push(tile);
     } else {
-      leftMoments.push(tile)
+      leftMoments.push(tile);
     }
   }
-}
+};
 
-addBatch()
+addBatch();
 
 const types = reactive([
   {
@@ -209,7 +208,7 @@ const types = reactive([
     isCurrent: true,
     className: "label current",
     onClick: () => {
-      toggleSelf("热门")
+      toggleSelf("热门");
     },
   },
   {
@@ -217,7 +216,7 @@ const types = reactive([
     isCurrent: false,
     className: "label",
     onClick: () => {
-      toggleSelf("最新")
+      toggleSelf("最新");
     },
   },
   {
@@ -225,22 +224,22 @@ const types = reactive([
     isCurrent: false,
     className: "label",
     onClick: () => {
-      toggleSelf("关注")
+      toggleSelf("关注");
     },
   },
-])
+]);
 
 const toggleSelf = (name: string) => {
   if (!types.filter((type) => type.name === name)[0].isCurrent) {
     types.map((type) => {
-      type.isCurrent = false
-      type.className = "label"
-    })
-    const currentType = types.filter((type) => type.name === name)[0]
-    currentType.isCurrent = true
-    currentType.className = "label current"
+      type.isCurrent = false;
+      type.className = "label";
+    });
+    const currentType = types.filter((type) => type.name === name)[0];
+    currentType.isCurrent = true;
+    currentType.className = "label current";
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
