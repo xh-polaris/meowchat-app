@@ -21,6 +21,7 @@
             class="title"
             placeholder="请输入昵称"
             type="nickname"
+            :value="nickName"
             @blur="onNickName"
         />
       </view>
@@ -35,13 +36,18 @@ import { UpdateUserReq } from "@/apis/user/user-interfaces";
 import { putObject } from "@/apis/cos/cos";
 import { ref } from "vue";
 
-const avatarUrl = ref("https://static.xhpolaris.com/cat_world.jpg");
-const nickName = ref("");
+const props = defineProps<{
+  avatarUrl: string;
+  nickname: string;
+}>();
+
+const avatarUrl = ref(props.avatarUrl);
+const nickName = ref(props.nickname);
 
 function onChooseAvatar (e: any) {
   const { avatarUrl } = e.detail;
   putObject({
-    filePath: avatarUrl,
+    filePath: avatarUrl
   }).then((res) => {
     avatarUrl.value = res.url;
   });
@@ -54,15 +60,15 @@ function onNickName (e: any) {
 function onClickConfirm () {
   const userInfo: UpdateUserReq = {
     avatarUrl: avatarUrl.value,
-    nickname: nickName.value,
+    nickname: nickName.value
   };
   updateUserInfo(userInfo).then((res) => {
     uni.showToast({
-      title: res.msg,
+      title: res.msg
     });
   });
   uni.reLaunch({
-    url: "/pages/profile/profile",
+    url: "/pages/profile/profile"
   });
 }
 

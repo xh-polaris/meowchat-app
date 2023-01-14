@@ -7,11 +7,14 @@
     <view class="content">
       <!-- 用户信息：昵称、权限、单位 -->
       <view class="fot-xh">
-        <navigator hover-class="none" url="/pages/profile/edit-info/edit-info">
+        <navigator
+            hover-class="none"
+            :url="`/pages/profile/edit-info/edit-info?avatarUrl=${userInfo.avatarUrl}&nickname=${userInfo.nickname}`"
+        >
           <view class="pic">
             <image
-              :src="userInfo.avatarUrl"
-              style="width: 100%; height: 100%; border-radius: 50%"
+                :src="userInfo.avatarUrl"
+                style="width: 100%; height: 100%; border-radius: 50%"
             />
           </view>
           <view class="txt">
@@ -109,7 +112,7 @@ import { User } from "@/apis/schemas";
 const userInfo = reactive<User>({
   id: "",
   nickname: "微信用户",
-  avatarUrl: "https://static.xhpolaris.com/cat_world.jpg",
+  avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
 });
 getUserInfo().then((res) => {
   userInfo.id = res.user.id;
@@ -120,52 +123,52 @@ const userOptions = [
   {
     title: "我的发布",
     icon: "/static/images/my_publish.png",
-    url: "/pages/moment/moment",
+    url: "/pages/moment/moment"
   },
   {
     title: "快速联系",
     icon: "/static/images/quick_contact.png",
-    url: "/pages/profile/quick-contact/quick-contact",
+    url: "/pages/profile/quick-contact/quick-contact"
   },
   {
     title: "申请领养",
     icon: "/static/images/apply_adopt.png",
-    url: "/pages/profile/apply-adopt/apply-adopt",
-  },
+    url: "/pages/profile/apply-adopt/apply-adopt"
+  }
 ];
 const adminOptions = [
   {
     title: "申请管理",
     icon: "/static/images/apply_admin.png",
-    url: "/pages/profile/apply-admin/apply-admin",
+    url: "/pages/profile/apply-admin/apply-admin"
   },
   {
     title: "关于我们",
     icon: "/static/images/about_us.png",
-    url: "/pages/profile/about-us/about-us",
-  },
+    url: "/pages/profile/about-us/about-us"
+  }
 ];
 const superAdminOptions = [
   {
     title: "发布公告",
     icon: "/static/images/notice.png",
-    url: "/pages/profile/quick_contact",
+    url: "/pages/profile/quick_contact"
   },
   {
     title: "管理审核",
     icon: "/static/images/admin_check.png",
-    url: "/pages/profile/quick_contact",
+    url: "/pages/profile/quick_contact"
   },
   {
     title: "成员管理",
     icon: "/static/images/member_admin.png",
-    url: "/pages/profile/quick_contact",
+    url: "/pages/profile/quick_contact"
   },
   {
     title: "轮播设置",
     icon: "/static/images/carousel_setting.png",
-    url: "/pages/profile/quick_contact",
-  },
+    url: "/pages/profile/quick_contact"
+  }
 ];
 </script>
 
