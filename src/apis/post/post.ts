@@ -6,7 +6,7 @@ import {
   GetPostPreviewsReq,
   GetPostPreviewsResp,
   NewPostReq,
-  NewPostResp,
+  NewPostResp
 } from "@/apis/post/post-interfaces";
 
 export async function getPostPreviews(req: GetPostPreviewsReq) {
@@ -21,7 +21,7 @@ export async function getPostPreviews(req: GetPostPreviewsReq) {
         }
         const data = res.data as GetPostPreviewsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -38,7 +38,7 @@ export async function deletePost(req: DeletePostReq) {
         }
         const data = res.data as DeletePostResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -55,7 +55,7 @@ export async function newPost(req: NewPostReq) {
         }
         const data = res.data as NewPostResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -72,7 +72,7 @@ export async function getPostDetail(req: GetPostDetailReq) {
         }
         const data = res.data as GetPostDetailResp;
         resolve(data);
-      },
+      }
     });
   });
 }

@@ -128,10 +128,10 @@ function addImage () {
       tempFilePaths.map((path: string) => {
         imagesData.push({
           id: path,
-          url: path,
+          url: path
         });
         putObject({
-          filePath: path,
+          filePath: path
         }).then(function (res) {
           coverUrl.value = res.url;
           disablePublish.value = false;
@@ -141,7 +141,7 @@ function addImage () {
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传1张图片！",
-          icon: "error",
+          icon: "error"
         });
       }
     },
@@ -155,14 +155,14 @@ function publishPost () {
   if (title.value === "") {
     uni.showToast({
       title: "请输入标题",
-      icon: "none",
+      icon: "none"
     });
     return;
   }
   if (text.value === "") {
     uni.showToast({
       title: "请输入正文",
-      icon: "none",
+      icon: "none"
     });
     return;
   }
@@ -171,10 +171,10 @@ function publishPost () {
     text: text.value,
     coverUrl: coverUrl.value,
     tags: tags,
-    isAnonymous: isAnonymous.value,
+    isAnonymous: isAnonymous.value
   }).then(() => {
     uni.navigateBack({
-      delta: 1,
+      delta: 1
     });
   });
 }

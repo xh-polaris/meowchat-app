@@ -7,7 +7,7 @@ import {
   NewNewReq,
   NewNewResp,
   NewNoticeReq,
-  NewNoticeResp,
+  NewNoticeResp
 } from "./notice-interfaces";
 
 export async function getNews(req: GetNewsReq) {
@@ -22,7 +22,7 @@ export async function getNews(req: GetNewsReq) {
         }
         const data = res.data as GetNewsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -39,7 +39,7 @@ export async function getAdmins(req: GetAdminsReq) {
         }
         const data = res.data as GetAdminsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -55,7 +55,7 @@ export async function getNotices() {
         }
         const data = res.data as GetNoticesResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -72,7 +72,7 @@ export async function newNotice(req: NewNoticeReq) {
         }
         const data = res.data as NewNoticeResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -89,7 +89,7 @@ export async function newNew(req: NewNewReq) {
         }
         const data = res.data as NewNewResp;
         resolve(data);
-      },
+      }
     });
   });
 }

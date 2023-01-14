@@ -8,7 +8,7 @@ import {
   NewCatReq,
   NewCatResp,
   SearchCatPreviewsReq,
-  SearchCatPreviewsResp,
+  SearchCatPreviewsResp
 } from "./collection-interfaces";
 
 export async function deleteCat(req: DeleteCatReq) {
@@ -23,7 +23,7 @@ export async function deleteCat(req: DeleteCatReq) {
         }
         const data = res.data as DeleteCatResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -44,7 +44,7 @@ export async function newCat(req: NewCatReq) {
         }
         const data = res.data as NewCatResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -65,7 +65,7 @@ export async function getCatPreviews(req: GetCatPreviewsReq) {
         }
         const data = res.data as GetCatPreviewsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -86,7 +86,7 @@ export async function searchCatPreviews(req: SearchCatPreviewsReq) {
         }
         const data = res.data as SearchCatPreviewsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -107,7 +107,7 @@ export async function getCatDetail(req: GetCatDetailReq) {
         }
         const data = res.data as GetCatDetailResp;
         resolve(data);
-      },
+      }
     });
   });
 }

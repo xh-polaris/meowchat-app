@@ -3,43 +3,49 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es2021: true,
+    es2021: true
   },
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",
     ecmaVersion: "latest",
-    sourceType: "module",
+    sourceType: "module"
   },
   globals: {
     uni: "readonly",
-    UniNamespace: "readonly",
+    UniNamespace: "readonly"
   },
   plugins: ["import", "vue", "@typescript-eslint"],
   rules: {
-    semi: "warn",
+    "semi": "off",
+    "@typescript-eslint/semi": "warn",
+    "quotes": "off",
+    "@typescript-eslint/quotes": "warn",
+    "@typescript-eslint/member-delimiter-style": "warn",
     "vue/multi-word-component-names": "off",
     "no-undef": "error",
     "no-unused-vars": "error",
+    "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": "warn",
     "vue/max-attributes-per-line": [
       "error",
       {
         singleline: {
-          max: 3,
+          max: 3
         },
         multiline: {
-          max: 2,
-        },
-      },
+          max: 2
+        }
+      }
     ],
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   overrides: [
     {
       files: ["src/apis/**"],
       rules: {
-        "no-unused-vars": "off",
+        "no-unused-vars": "off"
       }
     }
   ],
@@ -47,8 +53,8 @@ module.exports = {
     "import/resolver": {
       alias: {
         map: [["@", "./src"]],
-        extensions: [".ts", ".js", ".jsx", ".tsx", ".vue"],
-      },
-    },
-  },
+        extensions: [".ts", ".js", ".jsx", ".tsx", ".vue"]
+      }
+    }
+  }
 };

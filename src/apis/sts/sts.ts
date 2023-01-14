@@ -1,6 +1,6 @@
 import {
   ApplySignedUrlReq,
-  ApplySignedUrlResp,
+  ApplySignedUrlResp
 } from "@/apis/sts/sts-interface";
 
 export async function applySignedUrl(req: ApplySignedUrlReq) {
@@ -15,7 +15,7 @@ export async function applySignedUrl(req: ApplySignedUrlReq) {
         }
         const data = res.data as ApplySignedUrlResp;
         resolve(data);
-      },
+      }
     });
   });
 }

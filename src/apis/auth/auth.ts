@@ -4,7 +4,7 @@ import {
   SetPasswordReq,
   SetPasswordResp,
   SignInReq,
-  SignInResp,
+  SignInResp
 } from "./auth-interfaces";
 
 /**
@@ -23,7 +23,7 @@ export function signIn(req: SignInReq) {
         }
         const data = res.data as SignInResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -44,7 +44,7 @@ export function setPassword(req: SetPasswordReq) {
         }
         const data = res.data as SetPasswordResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -65,7 +65,7 @@ export async function sendVerifyCode(req: SendVerifyCodeReq) {
       },
       fail(err: UniNamespace.GeneralCallbackResult) {
         reject(err);
-      },
+      }
     });
   });
 }

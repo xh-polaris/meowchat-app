@@ -125,5 +125,5 @@ export enum TargetType {
   Post = 1,
   Comment,
   Cat,
-  Moment,
+  Moment
 }

@@ -16,16 +16,17 @@ export async function init() {
               signIn({
                 authType: "wechat",
                 authId: "123", // 微信登陆时这里随便填什么都可以
-                params: [res.code],
+                params: [res.code]
               })
                 .then((signInRes) => {
                   uni.setStorageSync("accessToken", signInRes.accessToken);
+                  uni.setStorageSync("userId", signInRes.userId);
                   resolve();
                 })
                 .catch((err) => {
                   reject(err);
                 });
-            },
+            }
           });
         }
       },
@@ -33,7 +34,7 @@ export async function init() {
         signIn({
           authType: "email",
           authId: "test@test.com",
-          params: ["1234"],
+          params: ["1234"]
         })
           .then((signInRes) => {
             uni.setStorageSync("accessToken", signInRes.accessToken);
@@ -42,7 +43,7 @@ export async function init() {
           .catch((err) => {
             reject(err);
           });
-      },
+      }
     });
   });
 }

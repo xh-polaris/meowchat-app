@@ -7,17 +7,12 @@
   </navigator>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from "vue";
 
-const props = defineProps({
-  type: {
-    type: String,
-    default() {
-      return "moment";
-    },
-  },
-});
+const props = defineProps<{
+  type: string;
+}>();
 const type = ref(props.type);
 </script>
 

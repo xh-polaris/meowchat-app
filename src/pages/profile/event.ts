@@ -3,8 +3,8 @@ export function CopyToClipboard(res: string) {
     data: res,
     success: () => {
       uni.showToast({
-        title: "复制成功",
+        title: "复制成功"
       });
-    },
+    }
   });
 }

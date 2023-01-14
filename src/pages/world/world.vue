@@ -82,7 +82,7 @@ import { reactive } from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
 import { getPostPreviews } from "@/apis/post/post";
-import DraftButton from "@/pages/draft/draft-button";
+import DraftButton from "@/components/draft-button/draft-button.vue";
 import { displayTime } from "@/utils/time";
 import { Post } from "@/apis/schemas";
 
@@ -93,7 +93,7 @@ let page = 0;
 const getPostPreviewsAsync = async () => {
   const posts = (
       await getPostPreviews({
-        page: page,
+        page: page
       })
   ).posts;
   if (posts.length === 0) {
@@ -119,7 +119,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("官方");
-    },
+    }
   },
   {
     name: "热度",
@@ -127,7 +127,7 @@ const types = reactive([
     className: "navbtn current",
     onClick: () => {
       toggleSelf("热度");
-    },
+    }
   },
   {
     name: "最新",
@@ -135,7 +135,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("最新");
-    },
+    }
   },
   {
     name: "关注",
@@ -143,8 +143,8 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("关注");
-    },
-  },
+    }
+  }
 ]);
 
 const toggleSelf = (name: string) => {

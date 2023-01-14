@@ -36,12 +36,12 @@ import Masonry from "@/pages/community/masonry";
 import CarouselFrame from "@/pages/community/carousel-frame";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/event";
-import DraftButton from "@/pages/draft/draft-button";
+import DraftButton from "@/components/draft-button/draft-button.vue";
 
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
-  No: 0,
+  No: 0
 });
 
 const currentNavBtn = ref("中北校区");

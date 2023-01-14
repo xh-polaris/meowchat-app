@@ -12,7 +12,7 @@ export async function putObject (req: PutObjectReq) {
   const suffix = filePath.substring(filePath.lastIndexOf("."));
   const resp = await applySignedUrl({
     prefix: req.prefix,
-    suffix: suffix,
+    suffix: suffix
   });
   return await new Promise<PutObjectResp>((resolve, reject) => {
     // put请求需要从文件临时路径读取出文件内容
@@ -43,9 +43,9 @@ export async function putObject (req: PutObjectReq) {
           },
           fail: function (res) {
             reject(res);
-          },
+          }
         });
-      },
+      }
     });
   });
 }

@@ -11,7 +11,7 @@ export async function getUserInfo() {
         }
         const data = res.data as GetUserResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -28,7 +28,7 @@ export async function updateUserInfo(req: UpdateUserReq) {
         }
         const data = res.data as UpdateUserResp;
         resolve(data);
-      },
+      }
     });
   });
 }

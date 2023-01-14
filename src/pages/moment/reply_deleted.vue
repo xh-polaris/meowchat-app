@@ -85,7 +85,7 @@ const replies = reactive<Comment[]>([]);
 const getRepliesReq = reactive<GetCommentsReq>({
   scope: "comment",
   page: 0,
-  id: props.id,
+  id: props.id
 });
 const getRepliesData = async () => {
   let repliesTemp = (await getComments(getRepliesReq)).comments;

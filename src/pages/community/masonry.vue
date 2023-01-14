@@ -123,7 +123,7 @@ const addBatch = async () => {
   moments = (
       await getMomentPreviews({
         page,
-        communityId: uni.getStorageSync("communityId"),
+        communityId: uni.getStorageSync("communityId")
       })
   ).moments;
   if (moments) {
@@ -209,7 +209,7 @@ const types = reactive([
     className: "label current",
     onClick: () => {
       toggleSelf("热门");
-    },
+    }
   },
   {
     name: "最新",
@@ -217,7 +217,7 @@ const types = reactive([
     className: "label",
     onClick: () => {
       toggleSelf("最新");
-    },
+    }
   },
   {
     name: "关注",
@@ -225,8 +225,8 @@ const types = reactive([
     className: "label",
     onClick: () => {
       toggleSelf("关注");
-    },
-  },
+    }
+  }
 ]);
 
 const toggleSelf = (name: string) => {

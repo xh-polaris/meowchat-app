@@ -6,7 +6,7 @@ import {
   GetMomentPreviewsReq,
   GetMomentPreviewsResp,
   NewMomentReq,
-  NewMomentResp,
+  NewMomentResp
 } from "./moment-components";
 
 /**
@@ -27,7 +27,7 @@ export async function deleteMoment(
         }
         const data = res.data as DeleteMomentResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -48,7 +48,7 @@ export async function newMoment(req: NewMomentReq): Promise<NewMomentResp> {
         }
         const data = res.data as NewMomentResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -69,7 +69,7 @@ export async function getMomentPreviews(req: GetMomentPreviewsReq) {
         }
         const data = res.data as GetMomentPreviewsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -90,7 +90,7 @@ export async function getMomentDetail(req: GetMomentDetailReq) {
         }
         const data = res.data as GetMomentDetailResp;
         resolve(data);
-      },
+      }
     });
   });
 }

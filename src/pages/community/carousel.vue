@@ -57,7 +57,7 @@ const displayContents = reactive([
   contents[(currentContent.value + contents.length - 1) % contents.length],
   contents[currentContent.value],
   contents[(currentContent.value + 1) % contents.length],
-  contents[(currentContent.value + 2) % contents.length],
+  contents[(currentContent.value + 2) % contents.length]
 ]);
 
 const slidesStyle = reactive([
@@ -65,7 +65,7 @@ const slidesStyle = reactive([
   "slide slide-left",
   "slide slide-center",
   "slide slide-right",
-  "slide slide-rightest",
+  "slide slide-rightest"
 ]);
 
 function leftward() {

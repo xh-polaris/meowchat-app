@@ -61,23 +61,23 @@ import { reactive, ref } from "vue";
 import { onClickCatBox } from "@/pages/collection/event";
 import {
   getCatPreviews,
-  searchCatPreviews,
+  searchCatPreviews
 } from "@/apis/collection/collection";
 import { onReachBottom } from "@dcloudio/uni-app";
 import {
   GetCatPreviewsReq,
-  SearchCatPreviewsReq,
+  SearchCatPreviewsReq
 } from "@/apis/collection/collection-interfaces";
 import { CatPreview } from "@/apis/schemas";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
-  communityId: "637ce159b15d9764c31f9c84",
+  communityId: "637ce159b15d9764c31f9c84"
 });
 let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
   communityId: "637ce159b15d9764c31f9c84",
   page: 0,
-  keyword: "",
+  keyword: ""
 });
 let cats = ref<CatPreview[]>([]);
 let whetherSearch = false;
@@ -88,7 +88,7 @@ getCatPreviews(getCatPreviewsReq).then((res) => {
 const school = reactive({
   name: "华东师范大学",
   campuses: ["中北校区", "闵行校区", "不限"],
-  No: 0,
+  No: 0
 });
 
 const currentNavBtn = ref("中北校区");
@@ -99,7 +99,7 @@ function setBranch(e: string) {
 
 function onClickSwitch() {
   uni.navigateTo({
-    url: `/pages/community/school-select`,
+    url: "/pages/community/school-select"
   });
 }
 

@@ -4,7 +4,7 @@ import {
   GetCountReq,
   GetCountResp,
   GetUserLikedReq,
-  GetUserLikedResp,
+  GetUserLikedResp
 } from "@/apis/like/like-interface";
 
 /**
@@ -24,7 +24,7 @@ export async function doLike(req: DoLikeReq) {
         }
         const data = res.data as DoLikeResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -46,7 +46,7 @@ export async function getUserLiked(req: GetUserLikedReq) {
         }
         const data = res.data as GetUserLikedResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -68,7 +68,7 @@ export async function getCount(req: GetCountReq) {
         }
         const data = res.data as GetCountResp;
         resolve(data);
-      },
+      }
     });
   });
 }

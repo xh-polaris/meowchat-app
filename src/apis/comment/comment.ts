@@ -2,7 +2,7 @@ import {
   GetCommentsReq,
   GetCommentsResp,
   NewCommentReq,
-  NewCommentResp,
+  NewCommentResp
 } from "@/apis/comment/comment-interfaces";
 
 export async function newComment(req: NewCommentReq) {
@@ -17,7 +17,7 @@ export async function newComment(req: NewCommentReq) {
         }
         const data = res.data as NewCommentResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -38,7 +38,7 @@ export async function getComments(req: GetCommentsReq) {
         }
         const data = res.data as GetCommentsResp;
         resolve(data);
-      },
+      }
     });
   });
 }

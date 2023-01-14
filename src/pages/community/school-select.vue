@@ -129,11 +129,11 @@ const school = reactive({
     "W",
     "X",
     "Y",
-    "Z",
+    "Z"
   ],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
   campuses: ["闵行校区", "全部"],
-  No: 0,
+  No: 0
 });
 
 const sel = ref(true);

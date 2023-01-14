@@ -100,7 +100,7 @@ import { doLike, getCount, getUserLiked } from "@/apis/like/like";
 import { getComments, newComment } from "@/apis/comment/comment";
 import {
   GetCommentsReq,
-  NewCommentReq,
+  NewCommentReq
 } from "@/apis/comment/comment-interfaces";
 import { onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply";
@@ -109,7 +109,7 @@ const props = defineProps<{
   id: string;
 }>();
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
-  momentId: props.id,
+  momentId: props.id
 });
 const moment = ref<Moment>({
   id: "",
@@ -121,9 +121,9 @@ const moment = ref<Moment>({
   user: {
     id: "",
     nickname: "",
-    avatarUrl: "",
+    avatarUrl: ""
   },
-  photos: [],
+  photos: []
 });
 
 const getData = async () => {
@@ -133,12 +133,12 @@ getData();
 
 const likeReq = reactive<GetCountReq>({
   targetId: props.id,
-  targetType: TargetType.Moment,
+  targetType: TargetType.Moment
 });
 const momentLike = ref({
   count: 0,
   liked: true,
-  likeUrl: "/static/images/like.png",
+  likeUrl: "/static/images/like.png"
 });
 const likedUrl = "/static/images/like.png";
 const unlikeUrl = "/static/images/like_grey_0.png";
@@ -164,7 +164,7 @@ const momentDoLike = async () => {
 const getCommentsReq = reactive<GetCommentsReq>({
   scope: "moment",
   page: 0,
-  id: props.id,
+  id: props.id
 });
 
 interface likeStruct {
@@ -185,7 +185,7 @@ const getCommentsData = async () => {
       comments.push(commentsTemp[i]);
       const commentLikeReq = {
         targetId: commentsTemp[i].id,
-        targetType: TargetType.Comment,
+        targetType: TargetType.Comment
       };
       commentLikes.push(await getCommentLikeData(commentLikeReq));
     }
@@ -208,13 +208,13 @@ const getCommentLikeData = async (req: GetCountReq) => {
   return {
     count: likeCount,
     liked: commentLike,
-    likeUrl: commentLikeUrl,
+    likeUrl: commentLikeUrl
   };
 };
 const commentDoLike = async (index: number) => {
   let commentLikeReq = {
     targetId: comments[index].id,
-    targetType: TargetType.Comment,
+    targetType: TargetType.Comment
   };
   await doLike(commentLikeReq);
   commentLikes[index] = await getCommentLikeData(commentLikeReq);
@@ -224,7 +224,7 @@ getCommentsData();
 const newCommentReq = reactive<NewCommentReq>({
   id: props.id,
   scope: "moment",
-  text: "",
+  text: ""
 });
 const text = ref("");
 const createComment = (text: string) => {
@@ -235,7 +235,7 @@ const createComment = (text: string) => {
   newComment(newCommentReq).then((res) => {
     getNewComment();
     uni.showToast({
-      title: res.msg,
+      title: res.msg
     });
   });
 };

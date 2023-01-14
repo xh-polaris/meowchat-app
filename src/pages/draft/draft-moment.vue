@@ -129,10 +129,10 @@ function addImage () {
       tempFilePaths.map((path) => {
         imagesData.push({
           id: path,
-          url: path,
+          url: path
         });
         putObject({
-          filePath: path,
+          filePath: path
         }).then(function (url) {
           //将返回的url添加进photos
           photos.push(url.url);
@@ -142,7 +142,7 @@ function addImage () {
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传8张图片！",
-          icon: "error",
+          icon: "error"
         });
       }
     },
@@ -156,21 +156,21 @@ function publishMoment () {
   if (title.value === "") {
     uni.showToast({
       title: "请输入标题",
-      icon: "none",
+      icon: "none"
     });
     return;
   }
   if (text.value === "") {
     uni.showToast({
       title: "请输入正文",
-      icon: "none",
+      icon: "none"
     });
     return;
   }
   if (photos.length == 0) {
     uni.showToast({
       title: "至少上传一张图片哦",
-      icon: "none",
+      icon: "none"
     });
     return;
   }
@@ -178,10 +178,10 @@ function publishMoment () {
     title: title.value,
     communityId: uni.getStorageSync("communityId"),
     text: text.value,
-    photos: photos,
+    photos: photos
   }).then(() => {
     uni.navigateBack({
-      delta: 1,
+      delta: 1
     });
   });
 }
