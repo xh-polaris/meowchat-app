@@ -254,7 +254,7 @@ onPullDownRefresh(() => {
   leftHeight = 0;
   rightHeight = 0;
   addBatch();
-  uni.stopPullDownRefresh()
+  uni.stopPullDownRefresh();
 });
 </script>
 
