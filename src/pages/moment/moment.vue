@@ -80,7 +80,7 @@
           {{ momentLike.count }}
         </view>
       </view>
-      <view class="send-comment-btn" @click="createComment(text)"> 发布</view>
+      <view class="send-comment-btn" @click="createComment()"> 发布</view>
     </view>
   </view>
   <view v-if="isReplyOpened" class="reply">
@@ -226,14 +226,15 @@ const newCommentReq = reactive<NewCommentReq>({
   scope: "moment",
   text: ""
 });
-const text = ref("");
-const createComment = (text: string) => {
-  if (text === "") {
+const text = ref<string>("");
+const createComment = () => {
+  if (text.value === "") {
     return;
   }
-  newCommentReq.text = text;
+  newCommentReq.text = text.value;
   newComment(newCommentReq).then((res) => {
     getNewComment();
+    text.value = "";
     uni.showToast({
       title: res.msg
     });
@@ -260,6 +261,7 @@ const getNewComment = async () => {
 const init = () => {
   getData();
   getMomentLikeData();
+  text.value = "";
   pageStart = 0;
   comments.data = [];
   comments.likeData = [];
@@ -278,8 +280,9 @@ onReachBottom(() => {
 
 onPullDownRefresh(() => {
   setTimeout(function () {
-    init();
+    uni.stopPullDownRefresh();
   }, 1000);
+  init();
 });
 
 let enterMaskData = ref(null);
