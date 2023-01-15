@@ -182,8 +182,16 @@ function publishMoment() {
     text: text.value,
     photos: photos
   }).then(() => {
-    uni.navigateBack({
-      delta: 1
+    // uni.navigateBack({
+    //   delta: 1
+    // });
+    uni.switchTab({
+      url: "../community/community",
+      success() {
+        uni.reLaunch({
+          url: "/pages/community/community"
+        });
+      }
     });
   });
 }

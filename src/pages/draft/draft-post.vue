@@ -4,29 +4,29 @@
       <view class="m-2">
         <fui-button
           v-model="title"
-          text="默认按钮"
-          height="50rpx"
-          color="black"
-          background-color="white"
-          placeholder="输入标题"
-          border-color="#1FA1FF"
+          :border-bottom="true"
           :border-top="false"
+          background-color="white"
+          border-color="#1FA1FF"
           bottom-left="20"
           bottom-right="20"
-          :border-bottom="true"
+          color="black"
+          height="50rpx"
+          placeholder="输入标题"
+          text="默认按钮"
         ></fui-button>
       </view>
 
       <view class="mx-2 mt-2">
         <fui-button
           v-model="text"
-          text="默认按钮"
-          color="black"
-          :is-counter="true"
-          :border-top="false"
           :border-bottom="false"
-          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          :border-top="false"
+          :is-counter="true"
+          color="black"
           height="350rpx"
+          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          text="默认按钮"
         >
         </fui-button>
       </view>
@@ -54,8 +54,8 @@
       <view class="p-2">
         <robby-tags
           v-model="tags"
-          :enable-del="true"
           :enable-add="true"
+          :enable-del="true"
           :value="tags"
         ></robby-tags>
       </view>
@@ -73,7 +73,7 @@
           </view>
         </view>
       </view>
-      <button class="publish" :disabled="disablePublish" @click="publishPost">
+      <button :disabled="disablePublish" class="publish" @click="publishPost">
         发布帖子
       </button>
       <view class="notice">
@@ -177,8 +177,16 @@ function publishPost() {
     tags: tags,
     isAnonymous: isAnonymous.value
   }).then(() => {
-    uni.navigateBack({
-      delta: 1
+    // uni.navigateBack({
+    //   delta: 1
+    // });
+    uni.switchTab({
+      url: "../world/world",
+      success() {
+        uni.reLaunch({
+          url: "/pages/world/world"
+        });
+      }
     });
   });
 }
