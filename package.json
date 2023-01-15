@@ -1,10 +1,10 @@
 {
   "name": "meowchat-app",
   "private": true,
-  "version": "1.0.0",
   "engines": {
     "node": ">=16.0.0"
   },
+  "version": "1.0.0",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
@@ -46,6 +46,7 @@
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060320220917001",
     "@dcloudio/uni-stacktracey": "3.0.0-3060520221121001",
     "@dcloudio/vite-plugin-uni": "3.0.0-3060520221121001",
+    "@release-it/conventional-changelog": "^5.1.1",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.46.0",
     "eslint": "^8.30.0",
@@ -54,6 +55,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^9.5.1",
     "husky": "^8.0.3",
+    "release-it": "^15.6.0",
     "sass": "^1.56.1",
     "typescript": "^4.9.3",
     "vite": "2.9.14"

@@ -1,0 +1,37 @@
+{
+  "github": {
+    "release": false
+  },
+  "git": {
+    "changelog": "git log --pretty=format:\"- %s (%h)\" ${from}...${to}",
+    "commitMessage": "release: 版本${version}发布"
+  },
+  "npm": {
+    "publish": false
+  },
+  "hooks": {
+    "after:bump": "echo 更新版本成功"
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "infile": "CHANGELOG.md",
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "refactor",
+            "section": "Updated behaviors"
+          }
+        ]
+      }
+    }
+  }
+}
