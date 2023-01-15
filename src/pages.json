@@ -4,13 +4,13 @@
     {
       "path": "pages/world/world",
       "style": {
-        "navigationBarTitleText": "喵世界",
+        "navigationBarTitleText": "喵世界"
       }
     },
     {
       "path": "pages/community/community",
       "style": {
-        "navigationBarTitleText": "喵社区",
+        "navigationBarTitleText": "喵社区"
       }
     },
     {

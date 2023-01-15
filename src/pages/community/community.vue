@@ -36,7 +36,7 @@ import Masonry from "@/pages/community/masonry";
 import CarouselFrame from "@/pages/community/carousel-frame";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/event";
-import DraftButton from "@/components/draft-button/draft-button.vue";
+import DraftButton from "@/components/draft-button/draft-button";
 
 const school = reactive({
   name: "华东师范大学",

@@ -20,15 +20,15 @@
         "types": [
           {
             "type": "feat",
-            "section": "Features"
+            "section": "✨ Features | 新功能"
           },
           {
             "type": "fix",
-            "section": "Bug Fixes"
+            "section": "\uD83D\uDC1B Bug Fixes | Bug 修复"
           },
           {
-            "type": "refactor",
-            "section": "Updated behaviors"
+            "type": "perf",
+            "section": "⚡ Performance Improvements | 优化"
           }
         ]
       }

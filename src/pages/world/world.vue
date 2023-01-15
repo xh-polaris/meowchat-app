@@ -211,7 +211,7 @@ body {
 .search {
   width: calc(35 / 390 * 100vw);
   height: calc(35 / 390 * 100vw);
-  background-image: url("../../static/images/search-grey.png");
+  background-image: url("/static/images/search-grey.png");
   background-size: 100% 100%;
   position: fixed;
   z-index: 10;
@@ -253,7 +253,6 @@ body {
   }
 
   .description {
-    // height: calc(34 / 390 * 100vw);
     font-size: calc(12 / 390 * 100vw);
     line-height: calc(17 / 390 * 100vw);
     overflow: hidden;

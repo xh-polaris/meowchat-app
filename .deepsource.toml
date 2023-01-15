@@ -1,6 +1,6 @@
 version = 1
 
-exclude_patterns = ["/src/components/uni-ui/**"]
+exclude_patterns = ["/src/*/third-party/**"]
 
 [[analyzers]]
 name = "javascript"

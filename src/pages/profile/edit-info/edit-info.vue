@@ -45,9 +45,8 @@ const avatarUrl = ref(props.avatarUrl);
 const nickName = ref(props.nickname);
 
 function onChooseAvatar(e: any) {
-  const { avatarUrl } = e.detail;
   putObject({
-    filePath: avatarUrl
+    filePath: e.detail.avatarUrl
   }).then((res) => {
     avatarUrl.value = res.url;
   });
