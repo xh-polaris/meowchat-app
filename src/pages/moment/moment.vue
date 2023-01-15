@@ -89,17 +89,17 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import {enterMask, enterReply} from "@/pages/moment/event";
-import {GetMomentDetailReq} from "@/apis/moment/moment-components";
-import {getMomentDetail} from "@/apis/moment/moment";
-import {Comment, Moment, TargetType} from "@/apis/schemas";
-import {displayTime} from "@/utils/time";
-import {GetCountReq} from "@/apis/like/like-interface";
-import {doLike, getCount, getUserLiked} from "@/apis/like/like";
-import {getComments, newComment} from "@/apis/comment/comment";
-import {GetCommentsReq, NewCommentReq} from "@/apis/comment/comment-interfaces";
-import {onPullDownRefresh, onReachBottom} from "@dcloudio/uni-app";
+import { reactive, ref } from "vue";
+import { enterMask, enterReply } from "@/pages/moment/event";
+import { GetMomentDetailReq } from "@/apis/moment/moment-components";
+import { getMomentDetail } from "@/apis/moment/moment";
+import { Comment, Moment, TargetType } from "@/apis/schemas";
+import { displayTime } from "@/utils/time";
+import { GetCountReq } from "@/apis/like/like-interface";
+import { doLike, getCount, getUserLiked } from "@/apis/like/like";
+import { getComments, newComment } from "@/apis/comment/comment";
+import { GetCommentsReq, NewCommentReq } from "@/apis/comment/comment-interfaces";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply";
 
 const props = defineProps<{

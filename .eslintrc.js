@@ -20,6 +20,8 @@ module.exports = {
   rules: {
     "semi": "off",
     "@typescript-eslint/semi": "warn",
+    "object-curly-spacing": "off",
+    "@typescript-eslint/object-curly-spacing": ["warn", "always"],
     "quotes": "off",
     "@typescript-eslint/quotes": "warn",
     "@typescript-eslint/member-delimiter-style": "warn",
