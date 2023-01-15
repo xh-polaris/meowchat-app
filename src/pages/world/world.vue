@@ -273,7 +273,7 @@ body {
     padding-top: 10rpx;
 
     .tag {
-      margin-top: 0rpx;
+      margin-top: 0;
       font-style: normal;
       font-weight: bold;
       font-size: 10px;
