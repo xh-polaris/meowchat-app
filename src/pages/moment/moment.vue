@@ -1,10 +1,10 @@
 <template>
-  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()"/>
+  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
 
   <view class="container">
     <view class="post-info-box">
       <view class="poster-info-box">
-        <image :src="moment.data.user.avatarUrl" class="poster-profile"/>
+        <image :src="moment.data.user.avatarUrl" class="poster-profile" />
         <text class="poster-name">
           {{ moment.data.user.nickname }}
         </text>
@@ -17,18 +17,22 @@
       </view>
       <view class="like-info"> {{ momentLike.count }} 位喵友觉得很赞</view>
       <image
-          v-for="(item, index) in moment.data.photos"
-          :key="index"
-          :src="item"
-          class="post-image"
-          mode="widthFix"
+        v-for="(item, index) in moment.data.photos"
+        :key="index"
+        :src="item"
+        class="post-image"
+        mode="widthFix"
       />
     </view>
 
     <view class="comments-box">
-      <view v-for="(item, index) in comments.data" :key="index" class="comment-box">
+      <view
+        v-for="(item, index) in comments.data"
+        :key="index"
+        class="comment-box"
+      >
         <view class="commenter-info-box">
-          <image :src="item.user.avatarUrl" class="commenter-profile"/>
+          <image :src="item.user.avatarUrl" class="commenter-profile" />
           <text class="commenter-name">
             {{ item.user.nickname }}
           </text>
@@ -44,16 +48,16 @@
             {{ item.comments }}条相关回复
           </text>
           <image
-              class="arrow-right"
-              src="/static/images/arrow_right_blue.png"
+            class="arrow-right"
+            src="/static/images/arrow_right_blue.png"
           />
         </view>
         <view v-if="comments.likeData[index]" class="like-box">
           <image
-              :src="comments.likeData[index].likeUrl"
-              class="like-icon"
-              mode="widthFix"
-              @click="commentDoLike(index)"
+            :src="comments.likeData[index].likeUrl"
+            class="like-icon"
+            mode="widthFix"
+            @click="commentDoLike(index)"
           />
           <text class="like-num">
             {{ comments.likeData[index].count }}
@@ -64,17 +68,17 @@
 
     <view class="write-comment-box">
       <input
-          v-model="text"
-          class="write-comment"
-          placeholder="发表评论..."
-          type="text"
+        v-model="text"
+        class="write-comment"
+        placeholder="发表评论..."
+        type="text"
       />
       <view class="like-box">
         <image
-            :src="momentLike.likeUrl"
-            class="like-icon"
-            mode="widthFix"
-            @click="momentDoLike()"
+          :src="momentLike.likeUrl"
+          class="like-icon"
+          mode="widthFix"
+          @click="momentDoLike()"
         />
         <view class="like-num">
           {{ momentLike.count }}
@@ -84,7 +88,7 @@
     </view>
   </view>
   <view v-if="isReplyOpened" class="reply">
-    <reply @closeReply="closeReply"/>
+    <reply @closeReply="closeReply" />
   </view>
 </template>
 
@@ -98,7 +102,10 @@ import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
 import { doLike, getCount, getUserLiked } from "@/apis/like/like";
 import { getComments, newComment } from "@/apis/comment/comment";
-import { GetCommentsReq, NewCommentReq } from "@/apis/comment/comment-interfaces";
+import {
+  GetCommentsReq,
+  NewCommentReq
+} from "@/apis/comment/comment-interfaces";
 import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply";
 

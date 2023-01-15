@@ -83,8 +83,8 @@
       <view class="dd">
         <text class="detail_info"> 撸猫指南：{{ cat.details }}</text>
         <view
-          class="spread"
           v-if="spread"
+          class="spread"
           @click="
             () => {
               spread = !spread;
@@ -95,8 +95,8 @@
           <image src="/static/images/open.png"></image>
         </view>
         <view
-          class="spread"
           v-if="!spread"
+          class="spread"
           @click="
             () => {
               spread = !spread;

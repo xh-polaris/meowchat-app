@@ -6,7 +6,7 @@
         <view
           :class="slidesStyle[i - 1]"
           :style="{
-            backgroundImage: 'url(' + displayContents[i - 1].imageUrl + ')',
+            backgroundImage: 'url(' + displayContents[i - 1].imageUrl + ')'
           }"
         />
       </template>

@@ -4,49 +4,49 @@
       <view class="images">
         <template v-for="image in imagesData" :key="image.id">
           <view
-              :style="{ backgroundImage: 'url(' + image.url + ')' }"
-              class="added-image"
+            :style="{ backgroundImage: 'url(' + image.url + ')' }"
+            class="added-image"
           />
         </template>
         <view
-            v-if="imagesData.length < 8"
-            class="new-image"
-            @click="addImage"
+          v-if="imagesData.length < 8"
+          class="new-image"
+          @click="addImage"
         />
       </view>
       <view class="image-num"> {{ imagesData.length }}/8</view>
       <view class="m-2">
         <fui-button
-            text="默认按钮"
-            height="50rpx"
-            color="black"
-            backgroundColor="white"
-            placeholder="填写标题能获得更多赞哦~"
-            borderColor="#1FA1FF"
-            :borderTop="false"
-            bottomLeft="20"
-            bottomRight="20"
-            :borderBottom="true"
-            v-model="title"
+          v-model="title"
+          text="默认按钮"
+          height="50rpx"
+          color="black"
+          background-color="white"
+          placeholder="填写标题能获得更多赞哦~"
+          border-color="#1FA1FF"
+          :border-top="false"
+          bottom-left="20"
+          bottom-right="20"
+          :border-bottom="true"
         ></fui-button>
       </view>
 
       <view class="mx-2 mt-2">
         <fui-button
-            text="默认按钮"
-            color="black"
-            :isCounter="true"
-            :borderTop="false"
-            :borderBottom="false"
-            placeholder="说点什么吧!"
-            v-model="text"
-            height="350rpx"
+          v-model="text"
+          text="默认按钮"
+          color="black"
+          :is-counter="true"
+          :border-top="false"
+          :border-bottom="false"
+          placeholder="说点什么吧!"
+          height="350rpx"
         ></fui-button>
       </view>
 
       <view class="choose-cats-bar">
         <view class="choose-cats"> 选择猫咪</view>
-        <view class="right-arrow"/>
+        <view class="right-arrow" />
         <view class="choose-followed-cats"> 不选择猫咪</view>
       </view>
     </view>
@@ -55,26 +55,28 @@
       <view class="toggle-bar">
         <view class="toggle-text"> 同步到猫咪图鉴</view>
         <view
-            :class="'toggle ' + (isSyncToCollection ? 'active' : '')"
-            @click="toggleSyncToCollection"
+          :class="'toggle ' + (isSyncToCollection ? 'active' : '')"
+          @click="toggleSyncToCollection"
         >
           <view class="toggle-capsule">
-            <view class="toggle-circle"/>
+            <view class="toggle-circle" />
           </view>
         </view>
       </view>
       <view class="toggle-bar">
         <view class="toggle-text"> 匿名信息</view>
         <view
-            :class="'toggle ' + (isAnonymous ? 'active' : '')"
-            @click="toggleAnonymous"
+          :class="'toggle ' + (isAnonymous ? 'active' : '')"
+          @click="toggleAnonymous"
         >
           <view class="toggle-capsule">
-            <view class="toggle-circle"/>
+            <view class="toggle-circle" />
           </view>
         </view>
       </view>
-      <button class="publish" @click="publishMoment" :disabled="disablePublish"> 发布动态</button>
+      <button class="publish" :disabled="disablePublish" @click="publishMoment">
+        发布动态
+      </button>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -108,15 +110,15 @@ const disablePublish = ref(false);
 
 const photos = reactive<any>([]);
 
-function toggleAnonymous () {
+function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value;
 }
 
-function toggleSyncToCollection () {
+function toggleSyncToCollection() {
   isSyncToCollection.value = !isSyncToCollection.value;
 }
 
-function addImage () {
+function addImage() {
   disablePublish.value = true;
   uni.chooseImage({
     success: (chooseImageRes) => {
@@ -152,7 +154,7 @@ function addImage () {
   });
 }
 
-function publishMoment () {
+function publishMoment() {
   if (title.value === "") {
     uni.showToast({
       title: "请输入标题",

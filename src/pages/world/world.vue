@@ -15,10 +15,10 @@
     <view :class="types[3].className" @click.prevent="types[3].onClick">
       {{ types[3].name }}
     </view>
-    <view class="search" @click.prevent="search"/>
+    <view class="search" @click.prevent="search" />
   </view>
 
-  <view class="top-padding"/>
+  <view class="top-padding" />
 
   <template v-for="post in postsData" :key="post.id">
     <view class="post" @click="onClickPost(post.id)">
@@ -29,7 +29,7 @@
           </view>
           <view class="user-info">
             <template v-if="!post.isAnonymous">
-              <image class="avatar" :src="post.user.avatarUrl"/>
+              <image class="avatar" :src="post.user.avatarUrl" />
               <view class="username">
                 {{ post.user.nickname }}
               </view>
@@ -38,7 +38,7 @@
           <view class="description">
             {{ post.text }}
           </view>
-          <view class="tags" v-if="post.tags">
+          <view v-if="post.tags" class="tags">
             <template v-if="post.tags.length > 4">
               <view class="tag">
                 {{ post.tags[0] }}
@@ -60,9 +60,9 @@
           </view>
         </view>
         <view
-            v-if="post.coverUrl"
-            :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
-            class="image"
+          v-if="post.coverUrl"
+          :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
+          class="image"
         />
       </view>
       <view class="lower">
@@ -74,7 +74,7 @@
     </view>
   </template>
 
-  <draft-button type="post"/>
+  <draft-button type="post" />
 </template>
 
 <script lang="ts" setup>
@@ -92,9 +92,9 @@ let postsData = reactive<Post[]>([]);
 let page = 0;
 const getPostPreviewsAsync = async () => {
   const posts = (
-      await getPostPreviews({
-        page: page
-      })
+    await getPostPreviews({
+      page: page
+    })
   ).posts;
   if (posts.length === 0) {
     uni.stopPullDownRefresh();
@@ -103,7 +103,7 @@ const getPostPreviewsAsync = async () => {
   return posts;
 };
 
-async function createPostsDataBatch () {
+async function createPostsDataBatch() {
   const posts = await getPostPreviewsAsync();
   postsData.push(...posts);
 }

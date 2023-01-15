@@ -1,28 +1,28 @@
 <template>
   <view class="container">
     <image
-        class="bg-set"
-        src="https://static.xhpolaris.com/profile_background.png"
+      class="bg-set"
+      src="https://static.xhpolaris.com/profile_background.png"
     />
     <view class="content">
       <view class="choose-avatar-row">
         <button
-            class="avatar-wrapper"
-            open-type="chooseAvatar"
-            @chooseavatar="onChooseAvatar"
+          class="avatar-wrapper"
+          open-type="chooseAvatar"
+          @chooseavatar="onChooseAvatar"
         >
-          <image :src="avatarUrl" class="avatar"/>
+          <image :src="avatarUrl" class="avatar" />
         </button>
         <text>点击选择头像</text>
       </view>
       <view class="choose-nickname-row">
         <text>新昵称:</text>
         <input
-            class="title"
-            placeholder="请输入昵称"
-            type="nickname"
-            :value="nickName"
-            @blur="onNickName"
+          class="title"
+          placeholder="请输入昵称"
+          type="nickname"
+          :value="nickName"
+          @blur="onNickName"
         />
       </view>
     </view>
@@ -44,7 +44,7 @@ const props = defineProps<{
 const avatarUrl = ref(props.avatarUrl);
 const nickName = ref(props.nickname);
 
-function onChooseAvatar (e: any) {
+function onChooseAvatar(e: any) {
   const { avatarUrl } = e.detail;
   putObject({
     filePath: avatarUrl
@@ -53,11 +53,11 @@ function onChooseAvatar (e: any) {
   });
 }
 
-function onNickName (e: any) {
+function onNickName(e: any) {
   nickName.value = e.detail.value;
 }
 
-function onClickConfirm () {
+function onClickConfirm() {
   const userInfo: UpdateUserReq = {
     avatarUrl: avatarUrl.value,
     nickname: nickName.value
@@ -71,7 +71,6 @@ function onClickConfirm () {
     url: "/pages/profile/profile"
   });
 }
-
 </script>
 
 <style lang="scss" scoped>

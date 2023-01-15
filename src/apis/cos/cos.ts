@@ -7,7 +7,7 @@ const cdn = "static.xhpolaris.com";
 /**
  * @description 使用PUT方法上传文件至COS
  */
-export async function putObject (req: PutObjectReq) {
+export async function putObject(req: PutObjectReq) {
   const filePath = req.filePath;
   const suffix = filePath.substring(filePath.lastIndexOf("."));
   const resp = await applySignedUrl({

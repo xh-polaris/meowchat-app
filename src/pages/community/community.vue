@@ -2,9 +2,9 @@
   <view class="school-box">
     <view class="school-select-box">
       <image
-          class="arrow"
-          src="/static/images/location.png"
-          @click="onClickSwitch"
+        class="arrow"
+        src="/static/images/location.png"
+        @click="onClickSwitch"
       />
       <view class="names" @click="onClickSwitch">
         <view class="school-name">
@@ -13,21 +13,21 @@
         <view class="campus-name"> ({{ currentNavBtn }})</view>
       </view>
       <view class="switch-box">
-        <view class="switch-icon"/>
+        <view class="switch-icon" />
         <view class="switch" @click="onClickSwitch"> 切换学校</view>
       </view>
     </view>
   </view>
 
   <view>
-    <carousel-frame/>
+    <carousel-frame />
   </view>
 
   <view style="margin-top: 10px">
-    <masonry/>
+    <masonry />
   </view>
 
-  <draft-button type="moment"/>
+  <draft-button type="moment" />
 </template>
 
 <script lang="ts" setup>
@@ -47,8 +47,7 @@ const school = reactive({
 const currentNavBtn = ref("中北校区");
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-onReachBottom(() => {
-}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
+onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
 </script>
 
 <style lang="scss" scoped>

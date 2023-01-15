@@ -31,7 +31,7 @@
 import { CopyToClipboard } from "@/pages/profile/event";
 export default {
   methods: {
-    CopyURLToClipboard () {
+    CopyURLToClipboard() {
       CopyToClipboard("https://www.wjx.cn/vj/mBnSgB8.aspx");
     }
   }

@@ -17,28 +17,28 @@
   </view>
   <view class="masonry">
     <view
-        v-for="i in 2"
-        :key="i"
-        :class="i === 1 ? 'column-left' : 'column-right'"
+      v-for="i in 2"
+      :key="i"
+      :class="i === 1 ? 'column-left' : 'column-right'"
     >
       <template
-          v-for="moment in i === 1 ? leftMoments : rightMoments"
-          :key="moment.id"
+        v-for="moment in i === 1 ? leftMoments : rightMoments"
+        :key="moment.id"
       >
         <view class="tile" @click="onClickMoment(moment.id)">
           <image
-              v-if="i === 1"
-              :src="moment.photos[0]"
-              class="img"
-              mode="widthFix"
-              @load.once="onLoadLeft"
+            v-if="i === 1"
+            :src="moment.photos[0]"
+            class="img"
+            mode="widthFix"
+            @load.once="onLoadLeft"
           />
           <image
-              v-else
-              :src="moment.photos[0]"
-              class="img"
-              mode="widthFix"
-              @load.once="onLoadRight"
+            v-else
+            :src="moment.photos[0]"
+            class="img"
+            mode="widthFix"
+            @load.once="onLoadRight"
           />
           <view class="tile-info">
             <view class="title">
@@ -46,7 +46,7 @@
             </view>
             <view class="other-info">
               <view class="user-info">
-                <image class="avatar" :src="moment.user.avatarUrl"/>
+                <image class="avatar" :src="moment.user.avatarUrl" />
                 <view class="username font-md">
                   {{ moment.user.nickname }}
                 </view>
@@ -106,7 +106,8 @@ let page = 0; //每往下翻页一次page加1直到没有内容
  * 所有的moment都放完后，又初始化为index=0, loadedAmount=0, isBatchLoaded=true
  */
 
-let leftHeight = 0, rightHeight = 0;
+let leftHeight = 0;
+let rightHeight = 0;
 
 const isLeftTallerThanRight = () => {
   return leftHeight > rightHeight;
@@ -121,10 +122,10 @@ onReachBottom(() => {
 
 const addBatch = async () => {
   moments = (
-      await getMomentPreviews({
-        page,
-        communityId: uni.getStorageSync("communityId")
-      })
+    await getMomentPreviews({
+      page,
+      communityId: uni.getStorageSync("communityId")
+    })
   ).moments;
   if (moments) {
     page += 1;
@@ -149,13 +150,13 @@ const addBatch = async () => {
 const onLoadLeft = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
   leftHeight =
-      target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
+    target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
   onLoad();
 };
 const onLoadRight = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
   rightHeight =
-      target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
+    target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
   onLoad();
 };
 

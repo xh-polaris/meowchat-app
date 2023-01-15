@@ -2,14 +2,13 @@
   <view class="reply-container">
     <view class="comment-box">
       <view class="commenter-info-box">
-        <image :src="mainComment.user.avatarUrl" class="commenter-profile"/>
+        <image :src="mainComment.user.avatarUrl" class="commenter-profile" />
         <text class="commenter-name">
           {{ mainComment.user.nickname }}
         </text>
         <text class="comment-time">
           ·{{ displayTime(mainComment.createAt * 1000) }}
-        </text
-        >
+        </text>
       </view>
       <view class="comment-content">
         <view class="comment-text">
@@ -17,9 +16,9 @@
         </view>
         <view class="like-box">
           <image
-              class="like-icon"
-              mode="widthFix"
-              src="/static/images/like.png"
+            class="like-icon"
+            mode="widthFix"
+            src="/static/images/like.png"
           />
           <text class="like-num">
             {{ mainComment.likes }}
@@ -31,14 +30,13 @@
     <view class="replies-box">
       <view v-for="(item, index) in replies" :key="index" class="reply-box">
         <view class="replier-info-box">
-          <image :src="item.user.avatarUrl" class="replier-profile"/>
+          <image :src="item.user.avatarUrl" class="replier-profile" />
           <text class="replier-name">
             {{ item.user.nickname }}
           </text>
           <text class="reply-time">
             ·{{ displayTime(item.createAt * 1000) }}
-          </text
-          >
+          </text>
         </view>
         <view class="reply-content">
           <view class="reply-text">
@@ -46,9 +44,9 @@
           </view>
           <view class="like-box">
             <image
-                class="like-icon"
-                mode="widthFix"
-                src="/static/images/like.png"
+              class="like-icon"
+              mode="widthFix"
+              src="/static/images/like.png"
             />
             <text class="like-num">
               {{ item.likes }}

@@ -3,7 +3,13 @@
   <scroll-view class="frame" scroll-y="true" @touchmove.stop>
     <view class="main">
       <view class="comment">
-        <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}" class="avatar"></view>
+        <view
+          :style="{
+            backgroundImage:
+              'url(https://dummyimage.com/100x100/000/fff&text=user)'
+          }"
+          class="avatar"
+        ></view>
         <view class="thread">
           <view class="content">
             <view class="left">
@@ -11,21 +17,27 @@
                 <view class="username">Username</view>
                 <view class="timestamp">3小时前</view>
               </view>
-              <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              <view class="lower"
+                >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+              </view>
             </view>
             <view class="right">
               <view class="likes-frame">
                 <view class="thumb"></view>
                 <view class="likes">3</view>
               </view>
-
             </view>
           </view>
         </view>
-
       </view>
       <view class="reply">
-        <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}" class="avatar"></view>
+        <view
+          :style="{
+            backgroundImage:
+              'url(https://dummyimage.com/100x100/000/fff&text=user)'
+          }"
+          class="avatar"
+        ></view>
         <view class="thread">
           <view class="content">
             <view class="left">
@@ -33,7 +45,9 @@
                 <view class="username">Username</view>
                 <view class="timestamp">3小时前</view>
               </view>
-              <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              <view class="lower"
+                >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+              </view>
             </view>
             <view class="right">
               <view class="likes-frame">
@@ -41,18 +55,24 @@
                 <view class="likes">3</view>
               </view>
             </view>
-
           </view>
           <view class="sub-replies">
-            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
-                  class="avatar"></view>
+            <view
+              :style="{
+                backgroundImage:
+                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
+              }"
+              class="avatar"
+            ></view>
             <view class="content">
               <view class="left">
                 <view class="upper">
                   <view class="username">Username</view>
                   <view class="timestamp">3小时前</view>
                 </view>
-                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+                <view class="lower"
+                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+                </view>
               </view>
               <view class="right">
                 <view class="likes-frame">
@@ -63,15 +83,22 @@
             </view>
           </view>
           <view class="sub-replies">
-            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
-                  class="avatar"></view>
+            <view
+              :style="{
+                backgroundImage:
+                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
+              }"
+              class="avatar"
+            ></view>
             <view class="content">
               <view class="left">
                 <view class="upper">
                   <view class="username">Username</view>
                   <view class="timestamp">3小时前</view>
                 </view>
-                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+                <view class="lower"
+                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+                </view>
               </view>
               <view class="right">
                 <view class="likes-frame">
@@ -82,15 +109,22 @@
             </view>
           </view>
           <view class="sub-replies">
-            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
-                  class="avatar"></view>
+            <view
+              :style="{
+                backgroundImage:
+                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
+              }"
+              class="avatar"
+            ></view>
             <view class="content">
               <view class="left">
                 <view class="upper">
                   <view class="username">Username</view>
                   <view class="timestamp">3小时前</view>
                 </view>
-                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+                <view class="lower"
+                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+                </view>
               </view>
               <view class="right">
                 <view class="likes-frame">
@@ -105,11 +139,15 @@
             <view class="down-arrow"></view>
           </view>
         </view>
-
-
       </view>
       <view class="reply">
-        <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}" class="avatar"></view>
+        <view
+          :style="{
+            backgroundImage:
+              'url(https://dummyimage.com/100x100/000/fff&text=user)'
+          }"
+          class="avatar"
+        ></view>
         <view class="thread">
           <view class="content">
             <view class="left">
@@ -117,7 +155,9 @@
                 <view class="username">Username</view>
                 <view class="timestamp">3小时前</view>
               </view>
-              <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+              <view class="lower"
+                >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+              </view>
             </view>
             <view class="right">
               <view class="likes-frame">
@@ -125,18 +165,24 @@
                 <view class="likes">3</view>
               </view>
             </view>
-
           </view>
           <view class="sub-replies">
-            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
-                  class="avatar"></view>
+            <view
+              :style="{
+                backgroundImage:
+                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
+              }"
+              class="avatar"
+            ></view>
             <view class="content">
               <view class="left">
                 <view class="upper">
                   <view class="username">Username</view>
                   <view class="timestamp">3小时前</view>
                 </view>
-                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+                <view class="lower"
+                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+                </view>
               </view>
               <view class="right">
                 <view class="likes-frame">
@@ -147,15 +193,22 @@
             </view>
           </view>
           <view class="sub-replies">
-            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
-                  class="avatar"></view>
+            <view
+              :style="{
+                backgroundImage:
+                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
+              }"
+              class="avatar"
+            ></view>
             <view class="content">
               <view class="left">
                 <view class="upper">
                   <view class="username">Username</view>
                   <view class="timestamp">3小时前</view>
                 </view>
-                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+                <view class="lower"
+                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+                </view>
               </view>
               <view class="right">
                 <view class="likes-frame">
@@ -166,15 +219,22 @@
             </view>
           </view>
           <view class="sub-replies">
-            <view :style="{backgroundImage: 'url(https://dummyimage.com/100x100/000/fff&text=user)'}"
-                  class="avatar"></view>
+            <view
+              :style="{
+                backgroundImage:
+                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
+              }"
+              class="avatar"
+            ></view>
             <view class="content">
               <view class="left">
                 <view class="upper">
                   <view class="username">Username</view>
                   <view class="timestamp">3小时前</view>
                 </view>
-                <view class="lower">你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了</view>
+                <view class="lower"
+                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
+                </view>
               </view>
               <view class="right">
                 <view class="likes-frame">
@@ -189,26 +249,20 @@
             <view class="down-arrow"></view>
           </view>
         </view>
-
-
       </view>
     </view>
   </scroll-view>
-
 </template>
 
 <script setup>
-
 const emits = defineEmits(["closeReply"]);
 
-function closeSelf () {
+function closeSelf() {
   emits("closeReply");
 }
-
 </script>
 
 <style lang="scss" scoped>
-
 .background {
   position: fixed;
   top: 0;
@@ -232,11 +286,11 @@ function closeSelf () {
 }
 
 .main {
-
   padding: calc(20 / 390 * 100vw);
   box-sizing: border-box;
 
-  .comment, .reply {
+  .comment,
+  .reply {
     display: flex;
     color: #353535;
     font-size: calc(12 / 390 * 100vw);
@@ -261,7 +315,7 @@ function closeSelf () {
 
           .upper {
             display: flex;
-            color: #B8B8B8;
+            color: #b8b8b8;
 
             .username {
               margin-right: calc(10 / 390 * 100vw);
@@ -279,7 +333,6 @@ function closeSelf () {
           width: calc(28 / 390 * 100vw);
           justify-content: flex-end;
           padding-top: calc(22 / 390 * 100vw);
-
 
           .likes-frame {
             height: calc(20 / 390 * 100vw);
@@ -299,10 +352,8 @@ function closeSelf () {
             }
           }
 
-
-          color: #B8B8B8;
+          color: #b8b8b8;
         }
-
       }
 
       .sub-replies {
@@ -318,11 +369,9 @@ function closeSelf () {
           flex: auto;
           display: flex;
 
-
           .left {
             flex: auto;
             width: 0;
-
           }
         }
       }
@@ -342,8 +391,6 @@ function closeSelf () {
         }
       }
     }
-
-
   }
 
   .comment {
@@ -354,5 +401,4 @@ function closeSelf () {
     margin: calc(20 / 390 * 100vw) 0;
   }
 }
-
 </style>

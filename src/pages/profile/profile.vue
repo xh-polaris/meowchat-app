@@ -8,13 +8,13 @@
       <!-- 用户信息：昵称、权限、单位 -->
       <view class="fot-xh">
         <navigator
-            hover-class="none"
-            :url="`/pages/profile/edit-info/edit-info?avatarUrl=${userInfo.avatarUrl}&nickname=${userInfo.nickname}`"
+          hover-class="none"
+          :url="`/pages/profile/edit-info/edit-info?avatarUrl=${userInfo.avatarUrl}&nickname=${userInfo.nickname}`"
         >
           <view class="pic">
             <image
-                :src="userInfo.avatarUrl"
-                style="width: 100%; height: 100%; border-radius: 50%"
+              :src="userInfo.avatarUrl"
+              style="width: 100%; height: 100%; border-radius: 50%"
             />
           </view>
           <view class="txt">
