@@ -5,7 +5,6 @@ module.exports = {
     node: true,
     es2021: true
   },
-  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",
@@ -16,31 +15,18 @@ module.exports = {
     uni: "readonly",
     UniNamespace: "readonly"
   },
-  plugins: ["import", "vue", "@typescript-eslint"],
+  extends: [
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  plugins: ["import", "vue", "@typescript-eslint", "prettier"],
   rules: {
-    "semi": "off",
-    "@typescript-eslint/semi": "warn",
-    "object-curly-spacing": "off",
-    "@typescript-eslint/object-curly-spacing": ["warn", "always"],
-    "quotes": "off",
-    "@typescript-eslint/quotes": "warn",
-    "@typescript-eslint/member-delimiter-style": "warn",
     "vue/multi-word-component-names": "off",
+    "vue/valid-v-on": "error",
     "no-undef": "error",
     "no-unused-vars": "error",
-    "comma-dangle": "off",
-    "@typescript-eslint/comma-dangle": "warn",
-    "vue/max-attributes-per-line": [
-      "error",
-      {
-        singleline: {
-          max: 3
-        },
-        multiline: {
-          max: 2
-        }
-      }
-    ],
     "@typescript-eslint/no-explicit-any": "off"
   },
   overrides: [
