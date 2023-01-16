@@ -16,13 +16,35 @@
         {{ moment.data.text }}
       </view>
       <view class="like-info"> {{ momentLike.count }} 位喵友觉得很赞</view>
-      <image
-        v-for="(item, index) in moment.data.photos"
-        :key="index"
-        :src="item"
-        class="post-image"
-        mode="widthFix"
-      />
+      <view v-if="moment.data.photos.length === 1" class="imgs imgs1 clearfix">
+        <image
+          v-for="(item, index) in moment.data.photos"
+          :key="index"
+          :src="item"
+          mode="aspectFill"
+        />
+      </view>
+      <view
+        v-else-if="
+          moment.data.photos.length === 2 || moment.data.photos.length === 4
+        "
+        class="imgs imgs2 clearfix"
+      >
+        <image
+          v-for="(item, index) in moment.data.photos"
+          :key="index"
+          :src="item"
+          mode="aspectFill"
+        />
+      </view>
+      <view v-else class="imgs imgs5 clearfix">
+        <image
+          v-for="(item, index) in moment.data.photos"
+          :key="index"
+          :src="item"
+          mode="aspectFill"
+        />
+      </view>
     </view>
 
     <view class="comments-box">
@@ -390,6 +412,45 @@ function leaveReply() {
       width: 90%;
       margin-bottom: 10px;
       border-radius: 15px;
+    }
+    // 根据图片数量自适应图片排版方式
+    .imgs {
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      //justify-content: space-between;
+      flex-wrap: wrap;
+
+      &.imgs1 {
+        image {
+          width: 600rpx;
+          height: 600rpx;
+          object-fit: none;
+          border-radius: 3px;
+          float: left;
+          margin: 5rpx 5rpx 5rpx 5rpx;
+        }
+      }
+      &.imgs2 {
+        image {
+          width: 330rpx;
+          height: 330rpx;
+          object-fit: none;
+          border-radius: 3px;
+          float: left;
+          margin: 5rpx 5rpx 5rpx 5rpx;
+        }
+      }
+      &.imgs5 {
+        image {
+          width: 220rpx;
+          height: 220rpx;
+          object-fit: none;
+          border-radius: 3px;
+          float: left;
+          margin: 5rpx 5rpx 5rpx 5rpx;
+        }
+      }
     }
   }
 
