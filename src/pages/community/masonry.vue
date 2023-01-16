@@ -26,20 +26,23 @@
         :key="moment.id"
       >
         <view class="tile" @click="onClickMoment(moment.id)">
-          <image
-            v-if="i === 1"
-            :src="moment.photos[0]"
-            class="img"
-            mode="widthFix"
-            @load.once="onLoadLeft"
-          />
-          <image
-            v-else
-            :src="moment.photos[0]"
-            class="img"
-            mode="widthFix"
-            @load.once="onLoadRight"
-          />
+          <view class="img-frame">
+            <image
+              v-if="i === 1"
+              :src="moment.photos[0]"
+              class="img"
+              mode="widthFix"
+              @load.once="onLoadLeft"
+            />
+            <image
+              v-else
+              :src="moment.photos[0]"
+              class="img"
+              mode="widthFix"
+              @load.once="onLoadRight"
+            />
+          </view>
+
           <view class="tile-info">
             <view class="title">
               {{ moment.title }}
@@ -67,7 +70,7 @@ import { reactive } from "vue";
 import { getMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/event";
-import { onReachBottom, onPullDownRefresh } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 
 let moments: Moment[];
@@ -327,10 +330,15 @@ $avatarWidth: calc(21 / 390 * 100vw);
   border-radius: $radius;
   font-family: sans-serif;
 
-  .img {
-    width: calc(50vw - $sideMargin - $horizontalGap / 2);
-    display: block;
-    border-radius: $radius $radius 0 0;
+  .img-frame {
+    max-height: calc((50vw - $sideMargin - $horizontalGap / 2) * 1.8);
+    overflow: hidden;
+
+    .img {
+      width: calc(50vw - $sideMargin - $horizontalGap / 2);
+      display: block;
+      border-radius: $radius $radius 0 0;
+    }
   }
 
   .tile-info {
