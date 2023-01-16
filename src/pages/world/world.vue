@@ -29,7 +29,7 @@
           </view>
           <view class="user-info">
             <template v-if="!post.isAnonymous">
-              <image class="avatar" :src="post.user.avatarUrl" />
+              <image :src="post.user.avatarUrl" class="avatar" />
               <view class="username">
                 {{ post.user.nickname }}
               </view>
@@ -79,7 +79,7 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
 import { getPostPreviews } from "@/apis/post/post";
 import DraftButton from "@/components/draft-button/draft-button.vue";
@@ -159,6 +159,13 @@ const toggleSelf = (name: string) => {
   }
 };
 
+onPullDownRefresh(() => {
+  postsData.splice(0);
+  page = 0;
+  createPostsDataBatch();
+  uni.stopPullDownRefresh();
+});
+
 init().then(() => {
   createPostsDataBatch();
 });
@@ -174,6 +181,7 @@ body {
 
 .navbar {
   position: fixed;
+  top: -1px;
   background-color: #fafcff;
   display: flex;
   color: #b8b8b8;
@@ -208,7 +216,6 @@ body {
   position: fixed;
   z-index: 10;
   right: calc(18 / 390 * 100vw);
-  transform: translateY(calc(-4 / 390 * 100vw));
 }
 
 .top-padding {
@@ -266,7 +273,7 @@ body {
     padding-top: 10rpx;
 
     .tag {
-      margin-top: 0rpx;
+      margin-top: 0;
       font-style: normal;
       font-weight: bold;
       font-size: 10px;

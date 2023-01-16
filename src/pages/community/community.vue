@@ -54,7 +54,7 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 .arrow {
   width: 44rpx;
   height: 50rpx;
-  margin: 30rpx 0rpx 30rpx 20rpx;
+  margin: 30rpx 0 30rpx 20rpx;
 }
 
 .navbar {
@@ -64,7 +64,7 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
   font-size: calc(15 / 390 * 100vw);
   align-items: baseline;
   width: 100vw;
-  margin: 0rpx 0rpx 0rpx 60rpx;
+  margin: 0 0 0 60rpx;
   transition-duration: 0.4s;
 }
 

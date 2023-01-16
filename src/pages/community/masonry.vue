@@ -46,7 +46,7 @@
             </view>
             <view class="other-info">
               <view class="user-info">
-                <image class="avatar" :src="moment.user.avatarUrl" />
+                <image :src="moment.user.avatarUrl" class="avatar" />
                 <view class="username font-md">
                   {{ moment.user.nickname }}
                 </view>
@@ -67,7 +67,7 @@ import { reactive } from "vue";
 import { getMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/event";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onReachBottom, onPullDownRefresh } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 
 let moments: Moment[];
@@ -241,6 +241,21 @@ const toggleSelf = (name: string) => {
     currentType.className = "label current";
   }
 };
+
+onPullDownRefresh(() => {
+  leftMoments.splice(0);
+  rightMoments.splice(0);
+  isLastBatch = false;
+  index = 0;
+  loadedAmount = 0;
+  isBatchLoaded = false;
+  isBatchLoadedAll = false;
+  page = 0;
+  leftHeight = 0;
+  rightHeight = 0;
+  addBatch();
+  uni.stopPullDownRefresh();
+});
 </script>
 
 <style lang="scss" scoped>
