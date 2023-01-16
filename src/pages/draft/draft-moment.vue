@@ -9,12 +9,12 @@
           />
         </template>
         <view
-          v-if="imagesData.length < 8"
+          v-if="imagesData.length < 9"
           class="new-image"
           @click="addImage"
         />
       </view>
-      <view class="image-num"> {{ imagesData.length }}/8</view>
+      <view class="image-num"> {{ imagesData.length }}/9</view>
       <view class="m-2">
         <fui-button
           v-model="title"
@@ -124,9 +124,9 @@ function addImage() {
     success: (chooseImageRes) => {
       let isTooManyImages = false;
       let tempFilePaths = chooseImageRes.tempFilePaths as string[];
-      if (imagesData.length + tempFilePaths.length > 8) {
+      if (imagesData.length + tempFilePaths.length > 9) {
         isTooManyImages = true;
-        tempFilePaths = tempFilePaths.slice(0, 8 - imagesData.length);
+        tempFilePaths = tempFilePaths.slice(0, 9 - imagesData.length);
       }
       tempFilePaths.map((path) => {
         imagesData.push({
@@ -143,7 +143,7 @@ function addImage() {
       });
       if (isTooManyImages) {
         uni.showToast({
-          title: "最多可上传8张图片！",
+          title: "最多可上传9张图片！",
           icon: "error"
         });
       }
