@@ -177,9 +177,6 @@ function publishPost() {
     tags: tags,
     isAnonymous: isAnonymous.value
   }).then(() => {
-    // uni.navigateBack({
-    //   delta: 1
-    // });
     uni.switchTab({
       url: "../world/world",
       success() {
