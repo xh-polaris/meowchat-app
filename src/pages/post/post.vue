@@ -149,7 +149,7 @@ const likeReq = reactive<GetCountReq>({
   targetType: TargetType.Post
 });
 
-const postLike = reactive<likeStruct>({
+const postLike = reactive<LikeStruct>({
   count: 0,
   liked: true,
   likeUrl: "/static/images/like.png"
@@ -177,7 +177,7 @@ const postDoLike = async () => {
   await getPostLikeData();
 };
 
-interface likeStruct {
+interface LikeStruct {
   count: number;
   liked: boolean;
   likeUrl: string;
@@ -192,7 +192,7 @@ const getCommentsReq = reactive<GetCommentsReq>({
 
 const comments = reactive<{
   data: Comment[];
-  likeData: likeStruct[];
+  likeData: LikeStruct[];
 }>({
   data: [],
   likeData: []

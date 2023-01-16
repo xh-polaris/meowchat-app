@@ -9,7 +9,7 @@ function afterSignIn(signInResp: SignInResp) {
     if (res.statusCode === 400) {
       const id = signInResp.userId;
       updateUserInfo({
-        nickname: "用户_" + id.substring(id.length - 16),
+        nickname: "用户_" + id.substring(id.length - 13),
         avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
       });
     }

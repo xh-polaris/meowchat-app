@@ -10,6 +10,7 @@ import {
   SearchCatPreviewsReq,
   SearchCatPreviewsResp
 } from "./collection-interfaces";
+import { PictureStyle } from "@/apis/cos/cos-interface";
 
 export async function deleteCat(req: DeleteCatReq) {
   return await new Promise<DeleteCatResp>((resolve, reject) => {
@@ -64,6 +65,9 @@ export async function getCatPreviews(req: GetCatPreviewsReq) {
           reject(res);
         }
         const data = res.data as GetCatPreviewsResp;
+        data.cats.forEach((cat) => {
+          cat.avatarUrl += PictureStyle.thumbnail;
+        });
         resolve(data);
       }
     });
@@ -85,6 +89,9 @@ export async function searchCatPreviews(req: SearchCatPreviewsReq) {
           reject(res);
         }
         const data = res.data as SearchCatPreviewsResp;
+        data.cats.forEach((cat) => {
+          cat.avatarUrl += PictureStyle.thumbnail;
+        });
         resolve(data);
       }
     });

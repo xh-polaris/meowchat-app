@@ -8,6 +8,7 @@ import {
   NewPostReq,
   NewPostResp
 } from "@/apis/post/post-interfaces";
+import { PictureStyle } from "@/apis/cos/cos-interface";
 
 export async function getPostPreviews(req: GetPostPreviewsReq) {
   return await new Promise<GetPostPreviewsResp>((resolve, reject) => {
@@ -20,6 +21,12 @@ export async function getPostPreviews(req: GetPostPreviewsReq) {
           reject(res);
         }
         const data = res.data as GetPostPreviewsResp;
+        data.posts.forEach((post) => {
+          if (post.coverUrl) {
+            post.coverUrl += PictureStyle.thumbnail;
+          }
+          post.user.avatarUrl += PictureStyle.thumbnail;
+        });
         resolve(data);
       }
     });
@@ -71,6 +78,7 @@ export async function getPostDetail(req: GetPostDetailReq) {
           reject(res);
         }
         const data = res.data as GetPostDetailResp;
+        data.post.user.avatarUrl += PictureStyle.thumbnail;
         resolve(data);
       }
     });

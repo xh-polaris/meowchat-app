@@ -3,6 +3,7 @@ import {
   UpdateUserInfoReq,
   UpdateUserInfoResp
 } from "./user-interfaces";
+import { PictureStyle } from "@/apis/cos/cos-interface";
 
 export async function getUserInfo() {
   return await new Promise<GetUserInfoResp>((resolve, reject) => {
@@ -14,6 +15,7 @@ export async function getUserInfo() {
           reject(res);
         }
         const data = res.data as GetUserInfoResp;
+        data.user.avatarUrl += PictureStyle.thumbnail;
         resolve(data);
       }
     });
