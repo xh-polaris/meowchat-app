@@ -21,7 +21,7 @@
           v-for="(item, index) in moment.data.photos"
           :key="index"
           :src="item"
-          mode="aspectFill"
+          mode="widthFix"
         />
       </view>
       <view
@@ -34,7 +34,7 @@
           v-for="(item, index) in moment.data.photos"
           :key="index"
           :src="item"
-          mode="aspectFill"
+          mode="scaleToFill"
         />
       </view>
       <view v-else class="imgs imgs5 clearfix">
@@ -407,24 +407,16 @@ function leaveReply() {
       color: #aaa;
       font-size: 12px;
     }
-
-    .post-image {
-      width: 90%;
-      margin-bottom: 10px;
-      border-radius: 15px;
-    }
     // 根据图片数量自适应图片排版方式
     .imgs {
       position: relative;
       display: flex;
       overflow: hidden;
-      //justify-content: space-between;
       flex-wrap: wrap;
 
       &.imgs1 {
         image {
-          width: 600rpx;
-          height: 600rpx;
+          width: 680rpx;
           object-fit: none;
           border-radius: 3px;
           float: left;
