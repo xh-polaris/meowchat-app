@@ -183,6 +183,7 @@ body {
   padding-top: calc(10 / 390 * 100vw);
   padding-bottom: calc(16 / 390 * 100vw);
   transition-duration: 0.4s;
+  z-index: 99999;
 }
 
 .navbtn {
