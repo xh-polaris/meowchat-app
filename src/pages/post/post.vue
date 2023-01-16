@@ -6,8 +6,7 @@
       {{ post.data.title }}
     </view>
     <view class="head-info">
-      {{ displayTime(post.data.createAt * 1000) }} ·
-      {{ post.data.comments }}条回复
+      {{ displayTime(post.data.createAt) }} · {{ post.data.comments }}条回复
     </view>
     <view class="tags">
       <image class="tagIcon" src="/static/images/tag.png" />
@@ -39,9 +38,7 @@
           <text class="commenter-name">
             {{ item.user.nickname }}
           </text>
-          <text class="comment-time">
-            · {{ displayTime(item.createAt * 1000) }}
-          </text>
+          <text class="comment-time"> · {{ displayTime(item.createAt) }} </text>
         </view>
         <view class="comment-content">
           {{ item.text }}

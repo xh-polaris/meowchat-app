@@ -9,7 +9,7 @@
           {{ moment.data.user.nickname }}
         </text>
         <text class="post-time">
-          · {{ displayTime(moment.data.createAt * 1000) }}
+          · {{ displayTime(moment.data.createAt) }}
         </text>
       </view>
       <view class="post-content">
@@ -58,9 +58,7 @@
           <text class="commenter-name">
             {{ item.user.nickname }}
           </text>
-          <text class="comment-time">
-            · {{ displayTime(item.createAt * 1000) }}
-          </text>
+          <text class="comment-time"> · {{ displayTime(item.createAt) }} </text>
         </view>
         <view class="comment-content">
           {{ item.text }}

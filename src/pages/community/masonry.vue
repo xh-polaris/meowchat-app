@@ -55,7 +55,7 @@
                 </view>
               </view>
               <view class="time font-sm">
-                {{ displayTime(moment.createAt * 1000) }}
+                {{ displayTime(moment.createAt) }}
               </view>
             </view>
           </view>

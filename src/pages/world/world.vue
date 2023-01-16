@@ -67,7 +67,7 @@
       </view>
       <view class="lower">
         <view class="time font-sm">
-          {{ displayTime(post.createAt * 1000) }}
+          {{ displayTime(post.createAt) }}
         </view>
         <view class="font-sm">{{ post.comments }}条回复</view>
       </view>
