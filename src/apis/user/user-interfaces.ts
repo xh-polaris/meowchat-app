@@ -1,14 +1,14 @@
 import { User } from "../schemas";
-export interface GetUserResp {
+export interface GetUserInfoResp {
   code: number;
   msg: string;
   user: User;
 }
-export interface UpdateUserReq {
+export interface UpdateUserInfoReq {
   avatarUrl: string;
   nickname: string;
 }
-export interface UpdateUserResp {
+export interface UpdateUserInfoResp {
   code: number;
   msg: string;
 }

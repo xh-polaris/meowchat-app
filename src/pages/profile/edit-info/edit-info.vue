@@ -32,7 +32,7 @@
 
 <script lang="ts" setup>
 import { updateUserInfo } from "@/apis/user/user";
-import { UpdateUserReq } from "@/apis/user/user-interfaces";
+import { UpdateUserInfoReq } from "@/apis/user/user-interfaces";
 import { putObject } from "@/apis/cos/cos";
 import { ref } from "vue";
 
@@ -57,7 +57,7 @@ function onNickName(e: any) {
 }
 
 function onClickConfirm() {
-  const userInfo: UpdateUserReq = {
+  const userInfo: UpdateUserInfoReq = {
     avatarUrl: avatarUrl.value,
     nickname: nickName.value
   };
