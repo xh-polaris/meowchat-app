@@ -1,10 +1,10 @@
 import fs from "fs"
-import axios from "axios"
+import axios, { AxiosHeaders } from "axios"
 
 function sendChangLog() {
   // 机器人webhook
   const url =
-    "https://open.feishu.cn/open-apis/bot/v2/hook/3029abe9-6082-4856-ac43-0a1ffc85c28e";
+    process.env.WEBHOOK_URL;
   // 读取版本更新日志
   let data = fs.readFileSync("./CHANGELOG.md", "utf8");
   const secondIndex = data.indexOf("\n## ", 5);
@@ -38,7 +38,7 @@ function sendChangLog() {
     })
   };
   axios
-    .post(url, options.data, {headers: options.headers})
+    .post(url, options.data, {headers: new AxiosHeaders(options.headers)})
     .then((res) => {
       if (res.status === 200) {
         console.log("发送消息成功");

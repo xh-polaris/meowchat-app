@@ -1,6 +1,9 @@
 version = 1
 
-exclude_patterns = ["/src/*/third-party/**"]
+exclude_patterns = [
+  "/src/*/third-party/**"
+  "!/src/**"
+]
 
 [[analyzers]]
 name = "javascript"

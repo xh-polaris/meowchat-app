@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: ["main"]
+    tags: [ 'v*.*.*' ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -34,12 +34,19 @@ jobs:
           path: dist/build/h5
 
   build-mp:
+    env:
+      UPLOAD_KEY: ${{ secrets.UPLOAD_KEY }}
+      WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build Mini Program
         run: yarn install && yarn build:mp-weixin
+      - name: Upload artifact
+        run: node scripts/upload.mjs
+      - name: Send Change Log
+        run: node scripts/send-changelog.mjs
 
   deploy:
     environment:

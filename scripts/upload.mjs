@@ -11,10 +11,11 @@ if (!version) {
   versionTag = "v" + version;
 }
 
+fs.writeFileSync("upload.key", process.env.UPLOAD_KEY, "utf8");
 const project = new ci.Project({
-  appid: "你自己的appid",
+  appid: "wxd39cebf05e21d3b6",
   type: "miniProgram",
-  projectPath: "dist/dev/mp-weixin",
+  projectPath: "dist/build/mp-weixin",
   privateKeyPath: "upload.key",
   ignores: ["node_modules/**/*"]
 });
@@ -30,6 +31,7 @@ async function upload() {
     console.log(JSON.stringify(result));
   } catch (error) {
     console.error(JSON.stringify(error));
+    process.exit(1)
   }
 }
 
