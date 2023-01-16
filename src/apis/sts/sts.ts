@@ -1,11 +1,9 @@
 import {
   ApplySignedUrlReq,
-  ApplySignedUrlResp,
+  ApplySignedUrlResp
 } from "@/apis/sts/sts-interface";
 
-export async function applySignedUrl(
-  req: ApplySignedUrlReq
-): Promise<ApplySignedUrlResp> {
+export async function applySignedUrl(req: ApplySignedUrlReq) {
   return await new Promise<ApplySignedUrlResp>((resolve, reject) => {
     uni.request({
       url: "/sts/apply_signed_url",
@@ -17,7 +15,7 @@ export async function applySignedUrl(
         }
         const data = res.data as ApplySignedUrlResp;
         resolve(data);
-      },
+      }
     });
   });
 }

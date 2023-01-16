@@ -2,11 +2,13 @@
   <view class="reply-container">
     <view class="comment-box">
       <view class="commenter-info-box">
-        <image :src="mainComment.user.avatarUrl" class="commenter-profile"/>
+        <image :src="mainComment.user.avatarUrl" class="commenter-profile" />
         <text class="commenter-name">
           {{ mainComment.user.nickname }}
         </text>
-        <text class="comment-time"> ·{{ displayTime(mainComment.createAt * 1000) }}</text>
+        <text class="comment-time">
+          ·{{ displayTime(mainComment.createAt * 1000) }}
+        </text>
       </view>
       <view class="comment-content">
         <view class="comment-text">
@@ -14,9 +16,9 @@
         </view>
         <view class="like-box">
           <image
-              class="like-icon"
-              mode="widthFix"
-              src="/static/images/like.png"
+            class="like-icon"
+            mode="widthFix"
+            src="/static/images/like.png"
           />
           <text class="like-num">
             {{ mainComment.likes }}
@@ -26,17 +28,15 @@
     </view>
 
     <view class="replies-box">
-      <view
-          v-for="(item, index) in replies"
-          :key="index"
-          class="reply-box"
-      >
+      <view v-for="(item, index) in replies" :key="index" class="reply-box">
         <view class="replier-info-box">
-          <image :src="item.user.avatarUrl" class="replier-profile"/>
+          <image :src="item.user.avatarUrl" class="replier-profile" />
           <text class="replier-name">
             {{ item.user.nickname }}
           </text>
-          <text class="reply-time"> ·{{ displayTime(item.createAt * 1000) }}</text>
+          <text class="reply-time">
+            ·{{ displayTime(item.createAt * 1000) }}
+          </text>
         </view>
         <view class="reply-content">
           <view class="reply-text">
@@ -44,9 +44,9 @@
           </view>
           <view class="like-box">
             <image
-                class="like-icon"
-                mode="widthFix"
-                src="/static/images/like.png"
+              class="like-icon"
+              mode="widthFix"
+              src="/static/images/like.png"
             />
             <text class="like-num">
               {{ item.likes }}
@@ -59,12 +59,12 @@
 </template>
 
 <script lang="ts" setup>
-import {Comment, User} from "@/apis/schemas";
-import {reactive} from "vue";
-import {GetCommentsReq} from "@/apis/comment/comment-interfaces";
-import {getComments} from "@/apis/comment/comment";
-import {displayTime} from "@/utils/time";
-import {onReachBottom} from "@dcloudio/uni-app";
+import { Comment, User } from "@/apis/schemas";
+import { reactive } from "vue";
+import { GetCommentsReq } from "@/apis/comment/comment-interfaces";
+import { getComments } from "@/apis/comment/comment";
+import { displayTime } from "@/utils/time";
+import { onReachBottom } from "@dcloudio/uni-app";
 
 const props = defineProps<{
   id: string;
@@ -75,37 +75,36 @@ const props = defineProps<{
   comments: number;
   replyName?: string;
 }>();
-console.log(props)
+
 const mainComment = reactive(props);
-let allRepliesLoaded = false
-let isRepliesLoaded = true
-const replies = reactive<Comment[]>([])
+let allRepliesLoaded = false;
+let isRepliesLoaded = true;
+const replies = reactive<Comment[]>([]);
 const getRepliesReq = reactive<GetCommentsReq>({
   scope: "comment",
   page: 0,
   id: props.id
-})
+});
 const getRepliesData = async () => {
-  let repliesTemp = (await getComments(getRepliesReq)).comments
+  let repliesTemp = (await getComments(getRepliesReq)).comments;
   if (repliesTemp.length > 0) {
     for (let i = 0; i < repliesTemp.length; i++) {
-      replies.push(repliesTemp[i])
+      replies.push(repliesTemp[i]);
     }
-    getRepliesReq.page += 1
+    getRepliesReq.page += 1;
   } else {
-    allRepliesLoaded = true
+    allRepliesLoaded = true;
   }
-  isRepliesLoaded = true
-}
-getRepliesData()
+  isRepliesLoaded = true;
+};
+getRepliesData();
 
 onReachBottom(() => {
   if (isRepliesLoaded && !allRepliesLoaded) {
-    isRepliesLoaded = false
-    getRepliesData()
+    isRepliesLoaded = false;
+    getRepliesData();
   }
-})
-
+});
 </script>
 
 <style lang="scss" scoped>

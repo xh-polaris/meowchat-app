@@ -3,38 +3,46 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es2021: true,
+    es2021: true
   },
-  extends: "eslint:recommended",
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",
     ecmaVersion: "latest",
-    sourceType: "module",
+    sourceType: "module"
   },
-  plugins: ["import", "vue"],
+  globals: {
+    uni: "readonly",
+    UniNamespace: "readonly"
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  plugins: ["import", "vue", "@typescript-eslint", "prettier"],
   rules: {
-    semi: "off",
     "vue/multi-word-component-names": "off",
-    "no-undef": "off",
-    "vue/max-attributes-per-line": [
-      "error",
-      {
-        singleline: {
-          max: 3,
-        },
-        multiline: {
-          max: 2,
-        },
-      },
-    ],
+    "vue/valid-v-on": "error",
+    "no-undef": "error",
+    "no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "off"
   },
+  overrides: [
+    {
+      files: ["src/apis/**"],
+      rules: {
+        "no-unused-vars": "off"
+      }
+    }
+  ],
   settings: {
     "import/resolver": {
       alias: {
         map: [["@", "./src"]],
-        extensions: [".ts", ".js", ".jsx", ".tsx", ".vue"],
-      },
-    },
-  },
+        extensions: [".ts", ".js", ".jsx", ".tsx", ".vue"]
+      }
+    }
+  }
 };

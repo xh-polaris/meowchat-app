@@ -1,38 +1,64 @@
 <template>
   <view class="all">
     <view class="main">
-      <input placeholder="输入标题" type="text" v-model="title" />
-      <!-- #ifdef H5 -->
-      <textarea
-        maxlength="5000"
-        placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-        type="text"
-        v-model="text"
-      />
-      <!-- #endif -->
-      <!-- #ifdef MP-WEIXIN -->
-      <textarea
-        maxlength="5000"
-        placeholder="说点什么吧！\n内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
-        type="text"
-        v-model="text"
-      />
-      <!-- #endif -->
-
-      <view class="images">
-        <block v-for="image in imagesData" :key="image.id">
-          <view
-            :style="{ backgroundImage: 'url(' + image.url + ')' }"
-            class="added-image"
-          />
-        </block>
-        <view
-          v-if="imagesData.length < 1"
-          class="new-image"
-          @click="addImage"
-        />
+      <view class="m-2">
+        <fui-button
+          v-model="title"
+          :border-bottom="true"
+          :border-top="false"
+          background-color="white"
+          border-color="#1FA1FF"
+          bottom-left="20"
+          bottom-right="20"
+          color="black"
+          height="50rpx"
+          placeholder="输入标题"
+          text="默认按钮"
+        ></fui-button>
       </view>
-      <view class="image-num"> {{ imagesData.length }}/1</view>
+
+      <view class="mx-2 mt-2">
+        <fui-button
+          v-model="text"
+          :border-bottom="false"
+          :border-top="false"
+          :is-counter="true"
+          color="black"
+          height="350rpx"
+          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          text="默认按钮"
+        >
+        </fui-button>
+      </view>
+
+      <view class="">
+        <view class="images">
+          <template v-for="image in imagesData" :key="image.id">
+            <view
+              :style="{ backgroundImage: 'url(' + image.url + ')' }"
+              class="added-image"
+            />
+          </template>
+          <view
+            v-if="imagesData.length < 1"
+            class="new-image"
+            @click="addImage"
+          />
+        </view>
+        <view class="image-num w-100">封面{{ imagesData.length }}/1</view>
+      </view>
+    </view>
+
+    <!-- 添加标签 -->
+    <view class="mx-4 tag-box">
+      <view class="p-2">
+        <robby-tags
+          v-model="tags"
+          :enable-add="true"
+          :enable-del="true"
+          :value="tags"
+        ></robby-tags>
+      </view>
     </view>
 
     <view class="panel">
@@ -47,7 +73,9 @@
           </view>
         </view>
       </view>
-      <view class="publish" @click="publishPost"> 发布帖子</view>
+      <button :disabled="disablePublish" class="publish" @click="publishPost">
+        发布帖子
+      </button>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -66,16 +94,25 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { newPost } from "@/apis/post/post";
-
 import { putObject } from "@/apis/cos/cos";
 
-const imagesData = reactive([]);
+import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
+import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
+
+const imagesData = reactive<
+  {
+    id: string;
+    url: string;
+  }[]
+>([]);
 
 const isAnonymous = ref(false);
 
-let title = ref("");
-let text = ref("");
-let coverUrl = ref("");
+const title = ref("");
+const text = ref("");
+const coverUrl = ref("");
+const disablePublish = ref(false);
+
 let tags = reactive([]);
 
 function toggleAnonymous() {
@@ -83,6 +120,7 @@ function toggleAnonymous() {
 }
 
 function addImage() {
+  disablePublish.value = true;
   uni.chooseImage({
     success: (chooseImageRes) => {
       let isTooManyImages = false;
@@ -94,35 +132,58 @@ function addImage() {
       tempFilePaths.map((path: string) => {
         imagesData.push({
           id: path,
-          url: path,
+          url: path
         });
         putObject({
-          filePath: path,
+          filePath: path
         }).then(function (res) {
           coverUrl.value = res.url;
+          disablePublish.value = false;
         });
       });
 
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传1张图片！",
-          icon: "error",
+          icon: "error"
         });
       }
     },
+    fail: () => {
+      disablePublish.value = false;
+    }
   });
 }
 
 function publishPost() {
+  if (title.value === "") {
+    uni.showToast({
+      title: "请输入标题",
+      icon: "none"
+    });
+    return;
+  }
+  if (text.value === "") {
+    uni.showToast({
+      title: "请输入正文",
+      icon: "none"
+    });
+    return;
+  }
   newPost({
     title: title.value,
     text: text.value,
     coverUrl: coverUrl.value,
-    tags: [],
-    isAnonymous: isAnonymous.value,
+    tags: tags,
+    isAnonymous: isAnonymous.value
   }).then(() => {
-    uni.navigateBack({
-      delta: 1,
+    uni.switchTab({
+      url: "../world/world",
+      success() {
+        uni.reLaunch({
+          url: "/pages/world/world"
+        });
+      }
     });
   });
 }
@@ -148,8 +209,7 @@ body {
 .images {
   display: flex;
   width: calc(100vw - $margin * 2 + $imageGap);
-  margin: $margin;
-  margin-bottom: 0;
+  margin: $margin $margin 0;
   flex-wrap: wrap;
 }
 
@@ -221,8 +281,7 @@ textarea ::selection {
 .choose-cats-bar {
   display: flex;
   align-items: center;
-  margin: 0 $margin;
-  margin-bottom: calc(10 / 390 * 100vw);
+  margin: 0 $margin calc(10 / 390 * 100vw);
 
   .choose-cats {
     color: #1fa1ff;
@@ -268,8 +327,7 @@ textarea ::selection {
 }
 
 .panel {
-  padding: calc(33 / 390 * 100vw);
-  padding-bottom: calc(60 / 390 * 100vw);
+  padding: calc(33 / 390 * 100vw) calc(33 / 390 * 100vw) calc(60 / 390 * 100vw);
 }
 
 .toggle-bar {
@@ -339,5 +397,10 @@ textarea ::selection {
 .nobody-will-read {
   display: inline;
   color: #1fa1ff;
+}
+
+.tag-box {
+  background-color: #f3f3f3;
+  border-radius: 20rpx;
 }
 </style>

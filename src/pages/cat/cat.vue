@@ -13,7 +13,7 @@
             }
           "
         >
-          <img
+          <image
             :class="index === imgActiveIndex ? 'img_activeBorder' : ''"
             :src="item"
             style="width: 50px; height: 50px"
@@ -81,34 +81,30 @@
     <view class="photo">
       <text class="maopian"> 猫片</text>
       <view class="dd">
-        <text class="detail_info"> 撸猫指南：{{ cat.details }} </text>
+        <text class="detail_info"> 撸猫指南：{{ cat.details }}</text>
         <view
           v-if="spread"
+          class="spread"
           @click="
             () => {
               spread = !spread;
             }
           "
         >
-          <text style="font-size: 25rpx">点击展开 </text>
-          <image
-            src="../../static/images/open.png"
-            style="width: 20rpx; height: 20rpx; margin-right: 40rpx"
-          ></image>
+          <text>点击展开</text>
+          <image src="/static/images/open.png"></image>
         </view>
         <view
           v-if="!spread"
+          class="spread"
           @click="
             () => {
               spread = !spread;
             }
           "
         >
-          <text style="font-size: 25rpx">点击收起 </text>
-          <image
-            src="../../static/images/back.png"
-            style="width: 20rpx; height: 20rpx; margin-right: 40rpx"
-          ></image>
+          <text>点击收起</text>
+          <image src="/static/images/back.png"></image>
         </view>
       </view>
       <view v-if="!spread" class="divider1" />
@@ -118,7 +114,7 @@
         </text>
       </view>
       <view class="imgs">
-        <text> 11月 </text>
+        <text> 11月</text>
         <view class="qz_imgs qz_imgs3 clearfix">
           <li v-for="(item, index) in imgUrlList" :key="index">
             <image :src="item" mode="aspectFill" />
@@ -139,7 +135,7 @@ const props = defineProps<{
   id: string;
 }>();
 const getCatDetailReq = reactive<GetCatDetailReq>({
-  catId: props.id,
+  catId: props.id
 });
 let imgUrlList = [
   "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
@@ -148,7 +144,7 @@ let imgUrlList = [
   "https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg",
   "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg",
   "https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg",
-  "https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg",
+  "https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg"
 ];
 let Sterilized: string;
 let Snipped: string;
@@ -166,7 +162,7 @@ let cat = reactive<Cat>({
   area: "",
   isSnipped: true,
   isSterilized: true,
-  avatars: [],
+  avatars: []
 });
 const mainImgUrl = ref("");
 const imgActiveIndex = ref(0);
@@ -332,9 +328,8 @@ getCatDetail(getCatDetailReq).then((res) => {
     left: 15rpx;
     top: 677rpx;
 
-    font-family: "Abel";
+    font-family: "Abel", serif;
     font-style: normal;
-    font-weight: 400;
     font-size: 35rpx;
     font-weight: bold;
     line-height: 41rpx;
@@ -402,7 +397,7 @@ getCatDetail(getCatDetailReq).then((res) => {
       margin-left: auto;
       //margin-bottom: 30rpx;
 
-      font-family: "Inter";
+      font-family: "Inter", serif;
       font-style: normal;
       font-weight: 500;
       font-size: 28rpx;
@@ -432,6 +427,18 @@ getCatDetail(getCatDetailReq).then((res) => {
         }
       }
     }
+  }
+}
+
+.spread {
+  text {
+    font-size: 25rpx;
+  }
+
+  image {
+    width: 20rpx;
+    height: 20rpx;
+    margin-right: 40rpx;
   }
 }
 </style>

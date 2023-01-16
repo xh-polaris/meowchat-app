@@ -33,8 +33,8 @@ export default {
   methods: {
     CopyURLToClipboard() {
       CopyToClipboard("https://www.wjx.cn/vj/mBnSgB8.aspx");
-    },
-  },
+    }
+  }
 };
 </script>
 

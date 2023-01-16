@@ -2,12 +2,12 @@
   <view class="all">
     <view class="main">
       <view class="images">
-        <block v-for="image in imagesData" :key="image.id">
+        <template v-for="image in imagesData" :key="image.id">
           <view
             :style="{ backgroundImage: 'url(' + image.url + ')' }"
             class="added-image"
           />
-        </block>
+        </template>
         <view
           v-if="imagesData.length < 8"
           class="new-image"
@@ -17,29 +17,29 @@
       <view class="image-num"> {{ imagesData.length }}/8</view>
       <view class="m-2">
         <fui-button
+          v-model="title"
           text="默认按钮"
           height="50rpx"
           color="black"
-          backgroundColor="white"
+          background-color="white"
           placeholder="填写标题能获得更多赞哦~"
-          borderColor="#1FA1FF"
-          :borderTop="false"
-          bottomLeft="20"
-          bottomRight="20"
-          :borderBottom="true"
-          v-model="title"
+          border-color="#1FA1FF"
+          :border-top="false"
+          bottom-left="20"
+          bottom-right="20"
+          :border-bottom="true"
         ></fui-button>
       </view>
 
       <view class="mx-2 mt-2">
         <fui-button
+          v-model="text"
           text="默认按钮"
           color="black"
-          :isCounter="true"
-          :borderTop="false"
-          :borderBottom="false"
+          :is-counter="true"
+          :border-top="false"
+          :border-bottom="false"
           placeholder="说点什么吧!"
-          v-model="text"
           height="350rpx"
         ></fui-button>
       </view>
@@ -74,7 +74,9 @@
           </view>
         </view>
       </view>
-      <view class="publish" @click="publishMoment"> 发布动态</view>
+      <button class="publish" :disabled="disablePublish" @click="publishMoment">
+        发布动态
+      </button>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -93,17 +95,20 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
+
 import { newMoment } from "@/apis/moment/moment";
-import FuiButton from "@/components/draft-moment/fui-textarea/fui-textarea.vue";
+import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 
 const imagesData = reactive<any>([]);
 
 const isAnonymous = ref(false);
 const isSyncToCollection = ref(false);
 
-let title = ref("");
-let text = ref("");
-let photos = reactive<any>([]);
+const title = ref("");
+const text = ref("");
+const disablePublish = ref(false);
+
+const photos = reactive<any>([]);
 
 function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value;
@@ -114,6 +119,7 @@ function toggleSyncToCollection() {
 }
 
 function addImage() {
+  disablePublish.value = true;
   uni.chooseImage({
     success: (chooseImageRes) => {
       let isTooManyImages = false;
@@ -125,34 +131,64 @@ function addImage() {
       tempFilePaths.map((path) => {
         imagesData.push({
           id: path,
-          url: path,
+          url: path
         });
         putObject({
-          filePath: path,
+          filePath: path
         }).then(function (url) {
           //将返回的url添加进photos
           photos.push(url.url);
+          disablePublish.value = false;
         });
       });
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传8张图片！",
-          icon: "error",
+          icon: "error"
         });
       }
     },
+    fail: () => {
+      disablePublish.value = false;
+    }
   });
 }
 
 function publishMoment() {
+  if (title.value === "") {
+    uni.showToast({
+      title: "请输入标题",
+      icon: "none"
+    });
+    return;
+  }
+  if (text.value === "") {
+    uni.showToast({
+      title: "请输入正文",
+      icon: "none"
+    });
+    return;
+  }
+  if (photos.length == 0) {
+    uni.showToast({
+      title: "至少上传一张图片哦",
+      icon: "none"
+    });
+    return;
+  }
   newMoment({
     title: title.value,
     communityId: uni.getStorageSync("communityId"),
     text: text.value,
-    photos: photos,
+    photos: photos
   }).then(() => {
-    uni.navigateBack({
-      delta: 1,
+    uni.switchTab({
+      url: "../community/community",
+      success() {
+        uni.reLaunch({
+          url: "/pages/community/community"
+        });
+      }
     });
   });
 }
@@ -178,8 +214,7 @@ body {
 .images {
   display: flex;
   width: calc(100vw - $margin * 2 + $imageGap);
-  margin: $margin;
-  margin-bottom: 0;
+  margin: $margin $margin 0;
   flex-wrap: wrap;
 }
 
@@ -218,10 +253,9 @@ textarea {
   background-color: #fafafa;
   border-radius: calc(10 / 390 * 100vw);
   width: calc(100vw - $margin * 2);
-  margin: 0 $margin;
   padding: calc(10 / 390 * 100vw);
   color: black;
-  margin-bottom: calc(28 / 390 * 100vw);
+  margin: 0 $margin calc(28 / 390 * 100vw);
   font-size: calc(14 / 390 * 100vw);
   box-sizing: border-box;
 }
@@ -238,8 +272,7 @@ textarea ::selection {
 .choose-cats-bar {
   display: flex;
   align-items: center;
-  margin: 0 $margin;
-  margin-bottom: calc(10 / 390 * 100vw);
+  margin: 0 $margin calc(10 / 390 * 100vw);
 
   .choose-cats {
     color: #1fa1ff;
@@ -261,8 +294,7 @@ textarea ::selection {
 }
 
 .panel {
-  padding: calc(33 / 390 * 100vw);
-  padding-bottom: calc(60 / 390 * 100vw);
+  padding: calc(33 / 390 * 100vw) calc(33 / 390 * 100vw) calc(60 / 390 * 100vw);
 }
 
 .toggle-bar {

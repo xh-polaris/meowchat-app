@@ -42,7 +42,7 @@ import { reactive } from "vue";
 
 const data = reactive({
   show: false,
-  hisList: ["123", "ddd"] as any,
+  hisList: ["123", "ddd"] as any
 });
 
 //let show = true;

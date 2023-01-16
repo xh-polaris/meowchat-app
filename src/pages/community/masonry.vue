@@ -21,7 +21,7 @@
       :key="i"
       :class="i === 1 ? 'column-left' : 'column-right'"
     >
-      <block
+      <template
         v-for="moment in i === 1 ? leftMoments : rightMoments"
         :key="moment.id"
       >
@@ -46,18 +46,18 @@
             </view>
             <view class="other-info">
               <view class="user-info">
-                <image class="avatar" :src="moment.user.avatarUrl" />
-                <view class="username">
+                <image :src="moment.user.avatarUrl" class="avatar" />
+                <view class="username font-md">
                   {{ moment.user.nickname }}
                 </view>
               </view>
-              <view class="time">
+              <view class="time font-sm">
                 {{ displayTime(moment.createAt * 1000) }}
               </view>
             </view>
           </view>
         </view>
-      </block>
+      </template>
     </view>
   </view>
 </template>
@@ -67,7 +67,7 @@ import { reactive } from "vue";
 import { getMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/event";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onReachBottom, onPullDownRefresh } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 
 let moments: Moment[];
@@ -106,8 +106,8 @@ let page = 0; //每往下翻页一次page加1直到没有内容
  * 所有的moment都放完后，又初始化为index=0, loadedAmount=0, isBatchLoaded=true
  */
 
-let leftHeight: number = 0,
-  rightHeight: number = 0;
+let leftHeight = 0;
+let rightHeight = 0;
 
 const isLeftTallerThanRight = () => {
   return leftHeight > rightHeight;
@@ -124,7 +124,7 @@ const addBatch = async () => {
   moments = (
     await getMomentPreviews({
       page,
-      communityId: uni.getStorageSync("communityId"),
+      communityId: uni.getStorageSync("communityId")
     })
   ).moments;
   if (moments) {
@@ -210,7 +210,7 @@ const types = reactive([
     className: "label current",
     onClick: () => {
       toggleSelf("热门");
-    },
+    }
   },
   {
     name: "最新",
@@ -218,7 +218,7 @@ const types = reactive([
     className: "label",
     onClick: () => {
       toggleSelf("最新");
-    },
+    }
   },
   {
     name: "关注",
@@ -226,8 +226,8 @@ const types = reactive([
     className: "label",
     onClick: () => {
       toggleSelf("关注");
-    },
-  },
+    }
+  }
 ]);
 
 const toggleSelf = (name: string) => {
@@ -241,6 +241,21 @@ const toggleSelf = (name: string) => {
     currentType.className = "label current";
   }
 };
+
+onPullDownRefresh(() => {
+  leftMoments.splice(0);
+  rightMoments.splice(0);
+  isLastBatch = false;
+  index = 0;
+  loadedAmount = 0;
+  isBatchLoaded = false;
+  isBatchLoadedAll = false;
+  page = 0;
+  leftHeight = 0;
+  rightHeight = 0;
+  addBatch();
+  uni.stopPullDownRefresh();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -252,6 +267,8 @@ $radius: calc(6 / 390 * 100vw);
 $titleFontSize: calc(12 / 390 * 100vw);
 $smallFontSize: calc(8 / 390 * 100vw);
 $avatarWidth: calc(21 / 390 * 100vw);
+
+@import "@/common/user-info.scss";
 
 .header {
   margin: 0 calc(12 / 390 * 100vw);
@@ -336,19 +353,6 @@ $avatarWidth: calc(21 / 390 * 100vw);
       display: flex;
       align-items: center;
       justify-content: space-between;
-
-      .user-info {
-        display: flex;
-        align-items: center;
-
-        .avatar {
-          width: $avatarWidth;
-          height: $avatarWidth;
-          border-radius: 50%;
-          background-color: #cccccc;
-          margin-right: calc(4 / 390 * 100vw);
-        }
-      }
     }
   }
 }

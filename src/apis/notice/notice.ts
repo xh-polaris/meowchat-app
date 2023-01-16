@@ -7,13 +7,10 @@ import {
   NewNewReq,
   NewNewResp,
   NewNoticeReq,
-  NewNoticeResp,
+  NewNoticeResp
 } from "./notice-interfaces";
 
-/**
- * @description
- */
-export async function getNews(req: GetNewsReq): Promise<GetNewsResp> {
+export async function getNews(req: GetNewsReq) {
   return await new Promise<GetNewsResp>((resolve, reject) => {
     uni.request({
       url: "/notice/get_news",
@@ -25,15 +22,12 @@ export async function getNews(req: GetNewsReq): Promise<GetNewsResp> {
         }
         const data = res.data as GetNewsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
 
-/**
- * @description
- */
-export async function getAdmins(req: GetAdminsReq): Promise<GetAdminsResp> {
+export async function getAdmins(req: GetAdminsReq) {
   return await new Promise<GetAdminsResp>((resolve, reject) => {
     uni.request({
       url: "/notice/get_admins",
@@ -45,15 +39,12 @@ export async function getAdmins(req: GetAdminsReq): Promise<GetAdminsResp> {
         }
         const data = res.data as GetAdminsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
 
-/**
- * @description
- */
-export async function getNotices(): Promise<GetNoticesResp> {
+export async function getNotices() {
   return await new Promise<GetNoticesResp>((resolve, reject) => {
     uni.request({
       url: "/notice/get_notices",
@@ -64,16 +55,12 @@ export async function getNotices(): Promise<GetNoticesResp> {
         }
         const data = res.data as GetNoticesResp;
         resolve(data);
-      },
+      }
     });
   });
 }
 
-/**
- * @description
- * @param req
- */
-export async function newNotice(req: NewNoticeReq): Promise<NewNoticeResp> {
+export async function newNotice(req: NewNoticeReq) {
   return await new Promise<NewNoticeResp>((resolve, reject) => {
     uni.request({
       url: "/notice/new_notice",
@@ -85,16 +72,12 @@ export async function newNotice(req: NewNoticeReq): Promise<NewNoticeResp> {
         }
         const data = res.data as NewNoticeResp;
         resolve(data);
-      },
+      }
     });
   });
 }
 
-/**
- * @description
- * @param req
- */
-export async function newNew(req: NewNewReq): Promise<NewNewResp> {
+export async function newNew(req: NewNewReq) {
   return await new Promise<NewNewResp>((resolve, reject) => {
     uni.request({
       url: "/notice/new_new",
@@ -106,7 +89,7 @@ export async function newNew(req: NewNewReq): Promise<NewNewResp> {
         }
         const data = res.data as NewNewResp;
         resolve(data);
-      },
+      }
     });
   });
 }

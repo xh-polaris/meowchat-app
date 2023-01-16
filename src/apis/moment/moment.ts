@@ -6,7 +6,7 @@ import {
   GetMomentPreviewsReq,
   GetMomentPreviewsResp,
   NewMomentReq,
-  NewMomentResp,
+  NewMomentResp
 } from "./moment-components";
 
 /**
@@ -27,7 +27,7 @@ export async function deleteMoment(
         }
         const data = res.data as DeleteMomentResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -48,7 +48,7 @@ export async function newMoment(req: NewMomentReq): Promise<NewMomentResp> {
         }
         const data = res.data as NewMomentResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -57,9 +57,7 @@ export async function newMoment(req: NewMomentReq): Promise<NewMomentResp> {
  * @description
  * @param req
  */
-export async function getMomentPreviews(
-  req: GetMomentPreviewsReq
-): Promise<GetMomentPreviewsResp> {
+export async function getMomentPreviews(req: GetMomentPreviewsReq) {
   return await new Promise<GetMomentPreviewsResp>((resolve, reject) => {
     uni.request({
       url: "/moment/get_moment_previews",
@@ -71,7 +69,7 @@ export async function getMomentPreviews(
         }
         const data = res.data as GetMomentPreviewsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
@@ -80,9 +78,7 @@ export async function getMomentPreviews(
  * @description
  * @param req
  */
-export async function getMomentDetail(
-  req: GetMomentDetailReq
-): Promise<GetMomentDetailResp> {
+export async function getMomentDetail(req: GetMomentDetailReq) {
   return await new Promise<GetMomentDetailResp>((resolve, reject) => {
     uni.request({
       url: "/moment/get_moment_detail",
@@ -94,7 +90,7 @@ export async function getMomentDetail(
         }
         const data = res.data as GetMomentDetailResp;
         resolve(data);
-      },
+      }
     });
   });
 }

@@ -6,12 +6,10 @@ import {
   GetPostPreviewsReq,
   GetPostPreviewsResp,
   NewPostReq,
-  NewPostResp,
+  NewPostResp
 } from "@/apis/post/post-interfaces";
 
-export async function getPostPreviews(
-  req: GetPostPreviewsReq
-): Promise<GetPostPreviewsResp> {
+export async function getPostPreviews(req: GetPostPreviewsReq) {
   return await new Promise<GetPostPreviewsResp>((resolve, reject) => {
     uni.request({
       url: "/post/get_post_previews",
@@ -23,16 +21,12 @@ export async function getPostPreviews(
         }
         const data = res.data as GetPostPreviewsResp;
         resolve(data);
-      },
+      }
     });
   });
 }
 
-/**
- * @description
- * @param req
- */
-export async function deletePost(req: DeletePostReq): Promise<DeletePostResp> {
+export async function deletePost(req: DeletePostReq) {
   return await new Promise<DeletePostResp>((resolve, reject) => {
     uni.request({
       url: "/post/delete_post",
@@ -44,16 +38,12 @@ export async function deletePost(req: DeletePostReq): Promise<DeletePostResp> {
         }
         const data = res.data as DeletePostResp;
         resolve(data);
-      },
+      }
     });
   });
 }
 
-/**
- * @description
- * @param req
- */
-export async function newPost(req: NewPostReq): Promise<NewPostResp> {
+export async function newPost(req: NewPostReq) {
   return await new Promise<NewPostResp>((resolve, reject) => {
     uni.request({
       url: "/post/new_post",
@@ -65,18 +55,12 @@ export async function newPost(req: NewPostReq): Promise<NewPostResp> {
         }
         const data = res.data as NewPostResp;
         resolve(data);
-      },
+      }
     });
   });
 }
 
-/**
- * @description
- * @param req
- */
-export async function getPostDetail(
-  req: GetPostDetailReq
-): Promise<GetPostDetailResp> {
+export async function getPostDetail(req: GetPostDetailReq) {
   return await new Promise<GetPostDetailResp>((resolve, reject) => {
     uni.request({
       url: "/post/get_post_detail",
@@ -88,7 +72,7 @@ export async function getPostDetail(
         }
         const data = res.data as GetPostDetailResp;
         resolve(data);
-      },
+      }
     });
   });
 }

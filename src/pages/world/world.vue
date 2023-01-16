@@ -20,26 +20,26 @@
 
   <view class="top-padding" />
 
-  <block v-for="post in postsData" :key="post.id">
+  <template v-for="post in postsData" :key="post.id">
     <view class="post" @click="onClickPost(post.id)">
       <view class="upper">
         <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
           <view class="title">
             {{ post.title }}
           </view>
-          <view class="user">
-            <block v-if="!post.isAnonymous">
-              <image class="avatar" :src="post.user.avatarUrl" />
+          <view class="user-info">
+            <template v-if="!post.isAnonymous">
+              <image :src="post.user.avatarUrl" class="avatar" />
               <view class="username">
                 {{ post.user.nickname }}
               </view>
-            </block>
+            </template>
           </view>
           <view class="description">
             {{ post.text }}
           </view>
-          <view class="tags" v-if="post.tags">
-            <block v-if="post.tags.length > 4">
+          <view v-if="post.tags" class="tags">
+            <template v-if="post.tags.length > 4">
               <view class="tag">
                 {{ post.tags[0] }}
               </view>
@@ -49,14 +49,14 @@
               <view class="tag">
                 {{ post.tags[2] }}
               </view>
-            </block>
-            <block v-else>
-              <block v-for="tag in post.tags" :key="tag.id">
+            </template>
+            <template v-else>
+              <template v-for="tag in post.tags" :key="tag.id">
                 <view class="tag">
                   {{ tag }}
                 </view>
-              </block>
-            </block>
+              </template>
+            </template>
           </view>
         </view>
         <view
@@ -66,30 +66,36 @@
         />
       </view>
       <view class="lower">
-        <view class="time">
+        <view class="time font-sm">
           {{ displayTime(post.createAt * 1000) }}
         </view>
-        <view>{{ post.comments }}条回复</view>
+        <view class="font-sm">{{ post.comments }}条回复</view>
       </view>
     </view>
-  </block>
+  </template>
 
   <draft-button type="post" />
 </template>
 
 <script lang="ts" setup>
 import { reactive } from "vue";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { onClickPost } from "./event";
 import { getPostPreviews } from "@/apis/post/post";
-import DraftButton from "@/pages/draft/draft-button";
+import DraftButton from "@/components/draft-button/draft-button.vue";
 import { displayTime } from "@/utils/time";
 import { Post } from "@/apis/schemas";
 
-const postsData = reactive<Post[]>([]);
+import { init } from "@/utils/init";
+
+let postsData = reactive<Post[]>([]);
 let page = 0;
 const getPostPreviewsAsync = async () => {
-  const posts = (await getPostPreviews({ page: page })).posts;
+  const posts = (
+    await getPostPreviews({
+      page: page
+    })
+  ).posts;
   if (posts.length === 0) {
     uni.stopPullDownRefresh();
   }
@@ -102,8 +108,6 @@ async function createPostsDataBatch() {
   postsData.push(...posts);
 }
 
-createPostsDataBatch();
-
 onReachBottom(() => {
   createPostsDataBatch();
 });
@@ -115,7 +119,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("官方");
-    },
+    }
   },
   {
     name: "热度",
@@ -123,7 +127,7 @@ const types = reactive([
     className: "navbtn current",
     onClick: () => {
       toggleSelf("热度");
-    },
+    }
   },
   {
     name: "最新",
@@ -131,7 +135,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("最新");
-    },
+    }
   },
   {
     name: "关注",
@@ -139,8 +143,8 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("关注");
-    },
-  },
+    }
+  }
 ]);
 
 const toggleSelf = (name: string) => {
@@ -154,9 +158,22 @@ const toggleSelf = (name: string) => {
     currentType.className = "navbtn current";
   }
 };
+
+onPullDownRefresh(() => {
+  postsData.splice(0);
+  page = 0;
+  createPostsDataBatch();
+  uni.stopPullDownRefresh();
+});
+
+init().then(() => {
+  createPostsDataBatch();
+});
 </script>
 
 <style lang="scss" scoped>
+@import "@/common/user-info.scss";
+
 body {
   font-family: sans-serif;
   background-color: #fafcff;
@@ -164,6 +181,7 @@ body {
 
 .navbar {
   position: fixed;
+  top: -1px;
   background-color: #fafcff;
   display: flex;
   color: #b8b8b8;
@@ -173,6 +191,7 @@ body {
   padding-top: calc(10 / 390 * 100vw);
   padding-bottom: calc(16 / 390 * 100vw);
   transition-duration: 0.4s;
+  z-index: 99999;
 }
 
 .navbtn {
@@ -197,7 +216,6 @@ body {
   position: fixed;
   z-index: 10;
   right: calc(18 / 390 * 100vw);
-  transform: translateY(calc(-4 / 390 * 100vw));
 }
 
 .top-padding {
@@ -227,32 +245,22 @@ body {
   .title {
     font-size: calc(16 / 390 * 100vw);
     font-weight: bold;
-  }
-
-  .user {
-    display: flex;
-    align-items: center;
-    padding: calc(8 / 390 * 100vw) 0;
-
-    .avatar {
-      width: calc(21 / 390 * 100vw);
-      height: calc(21 / 390 * 100vw);
-      border-radius: 50%;
-      background-color: #ccc;
-      margin-right: calc(4 / 390 * 100vw);
-    }
-
-    .username {
-      font-size: calc(8 / 390 * 100vw);
-      color: #696969;
-    }
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
   }
 
   .description {
-    overflow: hidden;
-    height: calc(34 / 390 * 100vw);
+    // height: calc(34 / 390 * 100vw);
     font-size: calc(12 / 390 * 100vw);
     line-height: calc(17 / 390 * 100vw);
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
   }
 
   .tags {
@@ -261,11 +269,11 @@ body {
     color: #1fa1ff;
     font-size: calc(10 / 390 * 100vw);
     //height: calc(18 / 390 * 100vw);
-    line-height: calc(18 / 390 * 100vw);
+    // line-height: calc(18 / 390 * 100vw);
     padding-top: 10rpx;
 
     .tag {
-      margin-top: 3px;
+      margin-top: 0;
       font-style: normal;
       font-weight: bold;
       font-size: 10px;
