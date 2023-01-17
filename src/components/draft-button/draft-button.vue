@@ -1,9 +1,9 @@
 <template>
   <navigator v-if="type === 'moment'" url="/pages/draft/draft-moment">
-    <view class="button"> + </view>
+    <view class="button"></view>
   </navigator>
   <navigator v-if="type === 'post'" url="/pages/draft/draft-post">
-    <view class="button"> + </view>
+    <view class="button"></view>
   </navigator>
 </template>
 
@@ -22,6 +22,11 @@ const type = ref(props.type);
   right: calc(20 / 390 * 100vw);
   bottom: calc(20 / 390 * 100vw);
   z-index: 100;
+
+  background-image: url("/static/images/plus-white.png");
+  background-size: 40% 40%;
+  background-repeat: no-repeat;
+  background-position: center;
 
   background-color: #1fa1ff;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
