@@ -95,7 +95,7 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { enterMask, enterReply } from "../moment/event";
+import { enterMask, enterReply } from "../moment/utils";
 import Reply from "@/pages/moment/reply";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
 import { Comment, Post, TargetType } from "@/apis/schemas";

@@ -114,7 +114,7 @@ import {
   chooseImageMode,
   getLikeData,
   LikeStruct
-} from "@/pages/moment/event";
+} from "@/pages/moment/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
 import { getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";

@@ -80,7 +80,7 @@
 <script lang="ts" setup>
 import { reactive } from "vue";
 import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
-import { onClickPost } from "./event";
+import { onClickPost } from "./utils";
 import { getPostPreviews } from "@/apis/post/post";
 import DraftButton from "@/components/draft-button/draft-button.vue";
 import { displayTime } from "@/utils/time";

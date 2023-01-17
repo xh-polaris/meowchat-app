@@ -58,7 +58,7 @@
 <script lang="ts" setup>
 import CatBox from "@/pages/collection/cat-box";
 import { reactive, ref } from "vue";
-import { onClickCatBox } from "@/pages/collection/event";
+import { onClickCatBox } from "@/pages/collection/utils";
 import {
   getCatPreviews,
   searchCatPreviews

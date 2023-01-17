@@ -69,7 +69,7 @@
 import { reactive } from "vue";
 import { getMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
-import { onClickMoment } from "@/pages/community/event";
+import { onClickMoment } from "@/pages/community/utils";
 import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 

@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onClickCancel } from "@/pages/collection/event";
+import { onClickCancel } from "@/pages/collection/utils";
 import { reactive } from "vue";
 
 const data = reactive({
