@@ -16,33 +16,13 @@
         {{ moment.data.text }}
       </view>
       <view class="like-info"> {{ momentLike.count }} 位喵友觉得很赞</view>
-      <view v-if="moment.data.photos.length === 1" class="imgs imgs1 clearfix">
+      <view :class="chooseImageClass(moment.data.photos.length)">
         <image
           v-for="(item, index) in moment.data.photos"
           :key="index"
           :src="item"
-          mode="widthFix"
-        />
-      </view>
-      <view
-        v-else-if="
-          moment.data.photos.length === 2 || moment.data.photos.length === 4
-        "
-        class="imgs imgs2 clearfix"
-      >
-        <image
-          v-for="(item, index) in moment.data.photos"
-          :key="index"
-          :src="item"
-          mode="scaleToFill"
-        />
-      </view>
-      <view v-else class="imgs imgs5 clearfix">
-        <image
-          v-for="(item, index) in moment.data.photos"
-          :key="index"
-          :src="item"
-          mode="aspectFill"
+          :mode="chooseImageMode(moment.data.photos.length)"
+          @click="onClickImage(item)"
         />
       </view>
     </view>
@@ -126,7 +106,13 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { enterMask, enterReply } from "@/pages/moment/event";
+import {
+  enterMask,
+  enterReply,
+  onClickImage,
+  chooseImageClass,
+  chooseImageMode
+} from "@/pages/moment/event";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
 import { getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
