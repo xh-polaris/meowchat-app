@@ -58,7 +58,7 @@
           <text class="commenter-name">
             {{ item.user.nickname }}
           </text>
-          <text class="comment-time"> · {{ displayTime(item.createAt) }} </text>
+          <text class="comment-time"> · {{ displayTime(item.createAt) }}</text>
         </view>
         <view class="comment-content">
           {{ item.text }}
@@ -73,10 +73,16 @@
           />
         </view>
         <view v-if="comments.likeData[index]" class="like-box">
-          <image
-            :src="comments.likeData[index].likeUrl"
+          <view
+            v-if="!comments.likeData[index].liked"
+            :style="{ backgroundImage: 'url(/static/images/like_grey_0.png)' }"
             class="like-icon"
-            mode="widthFix"
+            @click="commentDoLike(index)"
+          />
+          <view
+            v-else
+            :style="{ backgroundImage: 'url(/static/images/like_grey_1.png)' }"
+            class="like-icon"
             @click="commentDoLike(index)"
           />
           <text class="like-num">
@@ -94,10 +100,16 @@
         type="text"
       />
       <view class="like-box">
-        <image
-          :src="momentLike.likeUrl"
+        <view
+          v-if="!momentLike.liked"
+          :style="{ backgroundImage: 'url(/static/images/like_grey_0.png)' }"
           class="like-icon"
-          mode="widthFix"
+          @click="momentDoLike()"
+        />
+        <view
+          v-else
+          :style="{ backgroundImage: 'url(/static/images/like_grey_1.png)' }"
+          class="like-icon"
           @click="momentDoLike()"
         />
         <view class="like-num">
@@ -162,22 +174,11 @@ const likeReq = reactive<GetCountReq>({
 });
 const momentLike = reactive<likeStruct>({
   count: 0,
-  liked: true,
-  likeUrl: "/static/images/like.png"
+  liked: false
 });
-const likedUrl = "/static/images/like.png";
-const unlikeUrl = "/static/images/like_grey_0.png";
-const getLikeUrl = (liked: boolean) => {
-  if (liked) {
-    return likedUrl;
-  } else {
-    return unlikeUrl;
-  }
-};
 const getMomentLikeData = async () => {
   momentLike.count = (await getCount(likeReq)).count;
   momentLike.liked = (await getUserLiked(likeReq)).liked;
-  momentLike.likeUrl = getLikeUrl(momentLike.liked);
 };
 
 const momentDoLike = async () => {
@@ -194,7 +195,6 @@ const getCommentsReq = reactive<GetCommentsReq>({
 interface likeStruct {
   count: number;
   liked: boolean;
-  likeUrl: string;
 }
 
 const comments = reactive<{
@@ -232,11 +232,9 @@ const getCommentsData = async () => {
 const getCommentLikeData = async (req: GetCountReq) => {
   const commentLike = (await getUserLiked(req)).liked;
   const likeCount = (await getCount(req)).count;
-  const commentLikeUrl = getLikeUrl(commentLike);
   return {
     count: likeCount,
-    liked: commentLike,
-    likeUrl: commentLikeUrl
+    liked: commentLike
   };
 };
 const commentDoLike = async (index: number) => {
@@ -405,6 +403,7 @@ function leaveReply() {
       color: #aaa;
       font-size: 12px;
     }
+
     // 根据图片数量自适应图片排版方式
     .imgs {
       position: relative;
@@ -421,6 +420,7 @@ function leaveReply() {
           margin: 5rpx 5rpx 5rpx 5rpx;
         }
       }
+
       &.imgs2 {
         image {
           width: 330rpx;
@@ -431,6 +431,7 @@ function leaveReply() {
           margin: 5rpx 5rpx 5rpx 5rpx;
         }
       }
+
       &.imgs5 {
         image {
           width: 220rpx;
@@ -507,13 +508,17 @@ function leaveReply() {
 
       .like-box {
         margin-left: 50px;
+        display: flex;
+        align-items: center;
 
         .like-icon {
-          width: 15px;
-          margin-right: 8px;
+          width: calc(16 / 390 * 100vw);
+          height: calc(16 / 390 * 100vw);
+          background-size: 100% 100%;
         }
 
         .like-num {
+          margin-left: calc(4 / 390 * 100vw);
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -556,7 +561,9 @@ function leaveReply() {
       margin-right: 12px;
 
       .like-icon {
-        width: 22px;
+        width: calc(20 / 390 * 100vw);
+        height: calc(20 / 390 * 100vw);
+        background-size: 100% 100%;
       }
 
       .like-num {
