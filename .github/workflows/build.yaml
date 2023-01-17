@@ -19,19 +19,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-h5:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-      - name: Build Pages
-        run: yarn install && yarn build:h5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: dist/build/h5
 
   build-mp:
     env:
@@ -47,14 +34,3 @@ jobs:
         run: node scripts/upload.mjs
       - name: Send Change Log
         run: node scripts/send-changelog.mjs
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build-h5
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
