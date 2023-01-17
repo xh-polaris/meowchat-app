@@ -23,7 +23,6 @@ jobs:
   build-mp:
     env:
       UPLOAD_KEY: ${{ secrets.UPLOAD_KEY }}
-      WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,4 +32,7 @@ jobs:
       - name: Upload artifact
         run: node scripts/upload.mjs
       - name: Send Change Log
-        run: node scripts/send-changelog.mjs
+        uses: xh-polaris/send-changelog@v1
+        with:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          title: MeowChat小程序更新日志

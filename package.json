@@ -50,7 +50,6 @@
     "@release-it/conventional-changelog": "^5.1.1",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.46.0",
-    "axios": "^1.2.2",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -69,5 +68,5 @@
   },
   "repository": "https://github.com/xh-polaris/meowchat-app.git",
   "author": "Yufeng Cheng <1351416566@qq.com>",
-  "license": "MIT"
+  "license": "GPL v2"
 }
