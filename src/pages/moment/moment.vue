@@ -164,9 +164,6 @@ const likeReq = reactive<GetCountReq>({
   targetType: TargetType.Moment
 });
 
-const likeUrl = "/static/images/like.png";
-const unlikeUrl = "/static/images/like_grey_0.png";
-
 const getData = async () => {
   moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
   moment.likeData = await getLikeData(likeReq);
