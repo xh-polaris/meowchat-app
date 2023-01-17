@@ -1,3 +1,6 @@
+import { GetCountReq } from "@/apis/like/like-interface";
+import { getCount, getUserLiked } from "@/apis/like/like";
+
 export const enterReply = uni.createAnimation({
   transformOrigin: "50% 50%",
   duration: 300,
@@ -11,6 +14,20 @@ export const enterMask = uni.createAnimation({
   timingFunction: "ease",
   delay: 0
 });
+
+export interface LikeStruct {
+  count: number;
+  isLike: boolean;
+}
+
+export const getLikeData = async (likeReq: GetCountReq) => {
+  const count = (await getCount(likeReq)).count;
+  const isLike = (await getUserLiked(likeReq)).liked;
+  return {
+    count: count,
+    isLike: isLike
+  };
+};
 
 export function onClickImage(url: string) {
   uni.previewImage({
