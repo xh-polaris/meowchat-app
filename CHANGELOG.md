@@ -1,5 +1,20 @@
 
 
+## [1.2.0](https://github.com/xh-polaris/meowchat-app/compare/v1.1.0...v1.2.0) (2023-01-17)
+
+
+### ✨ Features | 新功能
+
+* 点击动态的图片时会全屏显示，并且允许保存和转发 ([9cd80fd](https://github.com/xh-polaris/meowchat-app/commit/9cd80fd05f929a4e90663684e7b587cd98d9563c))
+* 切换官方/热度/最新/关注触发页面刷新 ([164a882](https://github.com/xh-polaris/meowchat-app/commit/164a882cf3dbc74a500810276c778f42fb96dbcb))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 发帖/动态的加号换成了icon，确保不会往下偏移 ([f75e58d](https://github.com/xh-polaris/meowchat-app/commit/f75e58d2a2af69f383b81eee6c282b3efef6a762))
+* 修复点赞图标不协调、莫名变大bug ([6f03132](https://github.com/xh-polaris/meowchat-app/commit/6f031323e727a256b1d84fd50dcf18f303b29aed))
+* 修复发布评论后刷新问题 ([#140](https://github.com/xh-polaris/meowchat-app/issues/140)) ([78cb764](https://github.com/xh-polaris/meowchat-app/commit/78cb764ae05596aca64a6c5f54967469c49aca90))
+
 ## [1.1.0](https://github.com/xh-polaris/meowchat-app/compare/v1.0.0...v1.1.0) (2023-01-16)
 
 
