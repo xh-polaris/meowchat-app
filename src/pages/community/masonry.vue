@@ -213,6 +213,7 @@ const types = reactive([
     className: "label current",
     onClick: () => {
       toggleSelf("热门");
+      pageRefresh();
     }
   },
   {
@@ -221,6 +222,7 @@ const types = reactive([
     className: "label",
     onClick: () => {
       toggleSelf("最新");
+      pageRefresh();
     }
   },
   {
@@ -229,6 +231,7 @@ const types = reactive([
     className: "label",
     onClick: () => {
       toggleSelf("关注");
+      pageRefresh();
     }
   }
 ]);
@@ -246,6 +249,10 @@ const toggleSelf = (name: string) => {
 };
 
 onPullDownRefresh(() => {
+  pageRefresh();
+});
+
+function pageRefresh() {
   leftMoments.splice(0);
   rightMoments.splice(0);
   isLastBatch = false;
@@ -258,7 +265,7 @@ onPullDownRefresh(() => {
   rightHeight = 0;
   addBatch();
   uni.stopPullDownRefresh();
-});
+}
 </script>
 
 <style lang="scss" scoped>
@@ -296,6 +303,10 @@ $avatarWidth: calc(21 / 390 * 100vw);
       color: #939393;
       font-size: calc(12 / 390 * 100vw);
       padding: 0 calc(9 / 390 * 100vw);
+
+      &:active {
+        color: #1e1e1e !important;
+      }
 
       &.current {
         color: #353535;
@@ -338,6 +349,7 @@ $avatarWidth: calc(21 / 390 * 100vw);
       width: calc(50vw - $sideMargin - $horizontalGap / 2);
       display: block;
       border-radius: $radius $radius 0 0;
+      height: 1px;
     }
   }
 
