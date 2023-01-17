@@ -77,8 +77,8 @@ let moments: Moment[];
 const leftMoments = reactive<Moment[]>([]);
 const rightMoments = reactive<Moment[]>([]);
 
-const batchLoadingAmount = 20;
-const firstLoadingAmount = 16;
+const batchLoadingAmount = 10;
+const firstLoadingAmount = 8;
 const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount;
 
 let isLastBatch = false;
@@ -117,6 +117,7 @@ const isLeftTallerThanRight = () => {
 };
 
 onReachBottom(() => {
+  console.log(1);
   if (isBatchLoaded && !isBatchLoadedAll) {
     isBatchLoaded = false;
     addBatch();
@@ -132,7 +133,7 @@ const addBatch = async () => {
   ).moments;
   if (moments) {
     page += 1;
-    if (moments.length === 20) {
+    if (moments.length === 10) {
       for (let i = 0; i < firstLoadingAmount / 2; i++) {
         addTile(index, "left");
         index += 1;
