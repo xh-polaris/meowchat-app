@@ -17,11 +17,11 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
+    "plugin:import/recommended",
     "plugin:vue/vue3-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
-  plugins: ["import", "vue", "@typescript-eslint", "prettier"],
   rules: {
     "vue/multi-word-component-names": "off",
     "vue/valid-v-on": "error",
@@ -39,6 +39,8 @@ module.exports = {
   ],
   settings: {
     "import/resolver": {
+      typescript: true,
+      node: true,
       alias: {
         map: [["@", "./src"]],
         extensions: [".ts", ".js", ".jsx", ".tsx", ".vue"]

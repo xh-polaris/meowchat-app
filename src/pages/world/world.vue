@@ -67,7 +67,7 @@
       </view>
       <view class="lower">
         <view class="time font-sm">
-          {{ displayTime(post.createAt * 1000) }}
+          {{ displayTime(post.createAt) }}
         </view>
         <view class="font-sm">{{ post.comments }}条回复</view>
       </view>
@@ -80,7 +80,7 @@
 <script lang="ts" setup>
 import { reactive } from "vue";
 import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
-import { onClickPost } from "./event";
+import { onClickPost } from "./utils";
 import { getPostPreviews } from "@/apis/post/post";
 import DraftButton from "@/components/draft-button/draft-button.vue";
 import { displayTime } from "@/utils/time";
@@ -119,6 +119,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("官方");
+      pageRefresh();
     }
   },
   {
@@ -127,6 +128,7 @@ const types = reactive([
     className: "navbtn current",
     onClick: () => {
       toggleSelf("热度");
+      pageRefresh();
     }
   },
   {
@@ -135,6 +137,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("最新");
+      pageRefresh();
     }
   },
   {
@@ -143,6 +146,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("关注");
+      pageRefresh();
     }
   }
 ]);
@@ -159,11 +163,15 @@ const toggleSelf = (name: string) => {
   }
 };
 
-onPullDownRefresh(() => {
+function pageRefresh() {
   postsData.splice(0);
   page = 0;
   createPostsDataBatch();
   uni.stopPullDownRefresh();
+}
+
+onPullDownRefresh(() => {
+  pageRefresh();
 });
 
 init().then(() => {
@@ -199,6 +207,10 @@ body {
   font-size: calc(14 / 390 * 100vw);
   margin: 0 calc(20 / 390 * 100vw);
 
+  &:active {
+    color: #1c74b9 !important;
+  }
+
   &.current {
     color: #1fa1ff;
     font-size: calc(20 / 390 * 100vw);
@@ -211,7 +223,7 @@ body {
 .search {
   width: calc(35 / 390 * 100vw);
   height: calc(35 / 390 * 100vw);
-  background-image: url("../../static/images/search-grey.png");
+  background-image: url("/static/images/search-grey.png");
   background-size: 100% 100%;
   position: fixed;
   z-index: 10;
@@ -253,7 +265,6 @@ body {
   }
 
   .description {
-    // height: calc(34 / 390 * 100vw);
     font-size: calc(12 / 390 * 100vw);
     line-height: calc(17 / 390 * 100vw);
     overflow: hidden;
@@ -269,26 +280,27 @@ body {
     color: #1fa1ff;
     font-size: calc(10 / 390 * 100vw);
     //height: calc(18 / 390 * 100vw);
-    // line-height: calc(18 / 390 * 100vw);
+    //line-height: calc(18 / 390 * 100vw);
     padding-top: 10rpx;
 
     .tag {
-      margin-top: 0;
+      margin-top: calc(4 / 390 * 100vw);
       font-style: normal;
       font-weight: bold;
-      font-size: 10px;
-      line-height: 13px;
+      font-size: calc(10 / 390 * 100vw);
+      line-height: calc(20 / 390 * 100vw);
       /* or 170% */
       text-align: center;
-      letter-spacing: 0.5px;
+      letter-spacing: calc(0.5 / 390 * 100vw);
       /* blue02 */
       color: #1fa1ff;
 
-      min-width: 28px;
-      padding: 5rpx 10rpx 5rpx 10rpx;
-      border: #1fa1ff 1px solid;
-      border-radius: 9px;
-      margin-right: 8px;
+      min-width: calc(28 / 390 * 100vw);
+      height: calc(20 / 390 * 100vw);
+      padding: calc(0 / 390 * 100vw) calc(8 / 390 * 100vw);
+      border: #1fa1ff calc(1 / 390 * 100vw) solid;
+      border-radius: calc(10 / 390 * 100vw);
+      margin-right: calc(8 / 390 * 100vw);
     }
   }
 }

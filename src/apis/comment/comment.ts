@@ -4,6 +4,7 @@ import {
   NewCommentReq,
   NewCommentResp
 } from "@/apis/comment/comment-interfaces";
+import { PictureStyle } from "@/apis/cos/cos-interface";
 
 export async function newComment(req: NewCommentReq) {
   return await new Promise<NewCommentResp>((resolve, reject) => {
@@ -37,6 +38,9 @@ export async function getComments(req: GetCommentsReq) {
           reject(res);
         }
         const data = res.data as GetCommentsResp;
+        data.comments.forEach((comment) => {
+          comment.user.avatarUrl += PictureStyle.thumbnail;
+        });
         resolve(data);
       }
     });

@@ -1,4 +1,20 @@
 import { signIn } from "@/apis/auth/auth";
+import { getUserInfo, updateUserInfo } from "@/apis/user/user";
+import { SignInResp } from "@/apis/auth/auth-interfaces";
+
+function afterSignIn(signInResp: SignInResp) {
+  uni.setStorageSync("accessToken", signInResp.accessToken);
+  uni.setStorageSync("userId", signInResp.userId);
+  getUserInfo().catch((res: UniNamespace.RequestSuccessCallbackResult) => {
+    if (res.statusCode === 400) {
+      const id = signInResp.userId;
+      updateUserInfo({
+        nickname: "用户_" + id.substring(id.length - 13),
+        avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
+      });
+    }
+  });
+}
 
 export async function init() {
   return await new Promise<void>((resolve, reject) => {
@@ -19,8 +35,7 @@ export async function init() {
                 params: [res.code]
               })
                 .then((signInRes) => {
-                  uni.setStorageSync("accessToken", signInRes.accessToken);
-                  uni.setStorageSync("userId", signInRes.userId);
+                  afterSignIn(signInRes);
                   resolve();
                 })
                 .catch((err) => {
@@ -37,7 +52,7 @@ export async function init() {
           params: ["1234"]
         })
           .then((signInRes) => {
-            uni.setStorageSync("accessToken", signInRes.accessToken);
+            afterSignIn(signInRes);
             resolve();
           })
           .catch((err) => {

@@ -26,20 +26,23 @@
         :key="moment.id"
       >
         <view class="tile" @click="onClickMoment(moment.id)">
-          <image
-            v-if="i === 1"
-            :src="moment.photos[0]"
-            class="img"
-            mode="widthFix"
-            @load.once="onLoadLeft"
-          />
-          <image
-            v-else
-            :src="moment.photos[0]"
-            class="img"
-            mode="widthFix"
-            @load.once="onLoadRight"
-          />
+          <view class="img-frame">
+            <image
+              v-if="i === 1"
+              :src="moment.photos[0]"
+              class="img"
+              mode="widthFix"
+              @load.once="onLoadLeft"
+            />
+            <image
+              v-else
+              :src="moment.photos[0]"
+              class="img"
+              mode="widthFix"
+              @load.once="onLoadRight"
+            />
+          </view>
+
           <view class="tile-info">
             <view class="title">
               {{ moment.title }}
@@ -52,7 +55,7 @@
                 </view>
               </view>
               <view class="time font-sm">
-                {{ displayTime(moment.createAt * 1000) }}
+                {{ displayTime(moment.createAt) }}
               </view>
             </view>
           </view>
@@ -66,16 +69,16 @@
 import { reactive } from "vue";
 import { getMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
-import { onClickMoment } from "@/pages/community/event";
-import { onReachBottom, onPullDownRefresh } from "@dcloudio/uni-app";
+import { onClickMoment } from "@/pages/community/utils";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 
 let moments: Moment[];
 const leftMoments = reactive<Moment[]>([]);
 const rightMoments = reactive<Moment[]>([]);
 
-const batchLoadingAmount = 20;
-const firstLoadingAmount = 16;
+const batchLoadingAmount = 10;
+const firstLoadingAmount = 8;
 const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount;
 
 let isLastBatch = false;
@@ -114,6 +117,7 @@ const isLeftTallerThanRight = () => {
 };
 
 onReachBottom(() => {
+  console.log(1);
   if (isBatchLoaded && !isBatchLoadedAll) {
     isBatchLoaded = false;
     addBatch();
@@ -129,7 +133,7 @@ const addBatch = async () => {
   ).moments;
   if (moments) {
     page += 1;
-    if (moments.length === 20) {
+    if (moments.length === 10) {
       for (let i = 0; i < firstLoadingAmount / 2; i++) {
         addTile(index, "left");
         index += 1;
@@ -210,6 +214,7 @@ const types = reactive([
     className: "label current",
     onClick: () => {
       toggleSelf("热门");
+      pageRefresh();
     }
   },
   {
@@ -218,6 +223,7 @@ const types = reactive([
     className: "label",
     onClick: () => {
       toggleSelf("最新");
+      pageRefresh();
     }
   },
   {
@@ -226,6 +232,7 @@ const types = reactive([
     className: "label",
     onClick: () => {
       toggleSelf("关注");
+      pageRefresh();
     }
   }
 ]);
@@ -243,6 +250,10 @@ const toggleSelf = (name: string) => {
 };
 
 onPullDownRefresh(() => {
+  pageRefresh();
+});
+
+function pageRefresh() {
   leftMoments.splice(0);
   rightMoments.splice(0);
   isLastBatch = false;
@@ -255,7 +266,7 @@ onPullDownRefresh(() => {
   rightHeight = 0;
   addBatch();
   uni.stopPullDownRefresh();
-});
+}
 </script>
 
 <style lang="scss" scoped>
@@ -294,6 +305,10 @@ $avatarWidth: calc(21 / 390 * 100vw);
       font-size: calc(12 / 390 * 100vw);
       padding: 0 calc(9 / 390 * 100vw);
 
+      &:active {
+        color: #1e1e1e !important;
+      }
+
       &.current {
         color: #353535;
       }
@@ -327,10 +342,16 @@ $avatarWidth: calc(21 / 390 * 100vw);
   border-radius: $radius;
   font-family: sans-serif;
 
-  .img {
-    width: calc(50vw - $sideMargin - $horizontalGap / 2);
-    display: block;
-    border-radius: $radius $radius 0 0;
+  .img-frame {
+    max-height: calc((50vw - $sideMargin - $horizontalGap / 2) * 1.8);
+    overflow: hidden;
+
+    .img {
+      width: calc(50vw - $sideMargin - $horizontalGap / 2);
+      display: block;
+      border-radius: $radius $radius 0 0;
+      height: 1px;
+    }
   }
 
   .tile-info {

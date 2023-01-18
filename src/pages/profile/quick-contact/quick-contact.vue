@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { CopyToClipboard } from "@/pages/profile/event";
+import { CopyToClipboard } from "@/pages/profile/utils";
 import { reactive } from "vue";
 import { Admin } from "@/apis/schemas";
 import { getAdmins } from "@/apis/notice/notice";

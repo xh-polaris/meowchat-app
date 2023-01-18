@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { CopyToClipboard } from "@/pages/profile/event";
+import { CopyToClipboard } from "@/pages/profile/utils";
 export default {
   methods: {
     CopyURLToClipboard() {

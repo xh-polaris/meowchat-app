@@ -9,20 +9,22 @@
           {{ moment.data.user.nickname }}
         </text>
         <text class="post-time">
-          · {{ displayTime(moment.data.createAt * 1000) }}
+          · {{ displayTime(moment.data.createAt) }}
         </text>
       </view>
       <view class="post-content">
         {{ moment.data.text }}
       </view>
-      <view class="like-info"> {{ momentLike.count }} 位喵友觉得很赞</view>
-      <image
-        v-for="(item, index) in moment.data.photos"
-        :key="index"
-        :src="item"
-        class="post-image"
-        mode="widthFix"
-      />
+      <view class="like-info"> {{ moment.likeData.count }} 位喵友觉得很赞</view>
+      <view :class="chooseImageClass(moment.data.photos.length)">
+        <image
+          v-for="(item, index) in moment.data.photos"
+          :key="index"
+          :src="item"
+          :mode="chooseImageMode(moment.data.photos.length)"
+          @click="onClickImage(item)"
+        />
+      </view>
     </view>
 
     <view class="comments-box">
@@ -36,9 +38,7 @@
           <text class="commenter-name">
             {{ item.user.nickname }}
           </text>
-          <text class="comment-time">
-            · {{ displayTime(item.createAt * 1000) }}
-          </text>
+          <text class="comment-time"> · {{ displayTime(item.createAt) }}</text>
         </view>
         <view class="comment-content">
           {{ item.text }}
@@ -53,10 +53,16 @@
           />
         </view>
         <view v-if="comments.likeData[index]" class="like-box">
-          <image
-            :src="comments.likeData[index].likeUrl"
+          <view
+            v-if="!comments.likeData[index].isLike"
+            :style="{ backgroundImage: 'url(/static/images/like_grey_0.png)' }"
             class="like-icon"
-            mode="widthFix"
+            @click="commentDoLike(index)"
+          />
+          <view
+            v-else
+            :style="{ backgroundImage: 'url(/static/images/like_grey_1.png)' }"
+            class="like-icon"
             @click="commentDoLike(index)"
           />
           <text class="like-num">
@@ -74,14 +80,20 @@
         type="text"
       />
       <view class="like-box">
-        <image
-          :src="momentLike.likeUrl"
+        <view
+          v-if="!moment.likeData.isLike"
+          :style="{ backgroundImage: 'url(/static/images/like_grey_0.png)' }"
           class="like-icon"
-          mode="widthFix"
+          @click="momentDoLike()"
+        />
+        <view
+          v-else
+          :style="{ backgroundImage: 'url(/static/images/like_grey_1.png)' }"
+          class="like-icon"
           @click="momentDoLike()"
         />
         <view class="like-num">
-          {{ momentLike.count }}
+          {{ moment.likeData.count }}
         </view>
       </view>
       <view class="send-comment-btn" @click="createComment()"> 发布</view>
@@ -94,13 +106,21 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { enterMask, enterReply } from "@/pages/moment/event";
+import {
+  enterMask,
+  enterReply,
+  onClickImage,
+  chooseImageClass,
+  chooseImageMode,
+  getLikeData,
+  LikeStruct
+} from "@/pages/moment/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
 import { getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
-import { doLike, getCount, getUserLiked } from "@/apis/like/like";
+import { doLike } from "@/apis/like/like";
 import { getComments, newComment } from "@/apis/comment/comment";
 import {
   GetCommentsReq,
@@ -115,7 +135,10 @@ const props = defineProps<{
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
   momentId: props.id
 });
-const moment = reactive<{ data: Moment }>({
+const moment = reactive<{
+  data: Moment;
+  likeData: LikeStruct;
+}>({
   data: {
     id: "",
     createAt: 0,
@@ -129,40 +152,26 @@ const moment = reactive<{ data: Moment }>({
       avatarUrl: ""
     },
     photos: []
+  },
+  likeData: {
+    isLike: false,
+    count: 0
   }
 });
-
-const getData = async () => {
-  moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
-};
 
 const likeReq = reactive<GetCountReq>({
   targetId: props.id,
   targetType: TargetType.Moment
 });
-const momentLike = reactive<likeStruct>({
-  count: 0,
-  liked: true,
-  likeUrl: "/static/images/like.png"
-});
-const likedUrl = "/static/images/like.png";
-const unlikeUrl = "/static/images/like_grey_0.png";
-const getLikeUrl = (liked: boolean) => {
-  if (liked) {
-    return likedUrl;
-  } else {
-    return unlikeUrl;
-  }
-};
-const getMomentLikeData = async () => {
-  momentLike.count = (await getCount(likeReq)).count;
-  momentLike.liked = (await getUserLiked(likeReq)).liked;
-  momentLike.likeUrl = getLikeUrl(momentLike.liked);
+
+const getData = async () => {
+  moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
+  moment.likeData = await getLikeData(likeReq);
 };
 
 const momentDoLike = async () => {
   await doLike(likeReq);
-  await getMomentLikeData();
+  moment.likeData = await getLikeData(likeReq);
 };
 
 const getCommentsReq = reactive<GetCommentsReq>({
@@ -171,15 +180,9 @@ const getCommentsReq = reactive<GetCommentsReq>({
   id: props.id
 });
 
-interface likeStruct {
-  count: number;
-  liked: boolean;
-  likeUrl: string;
-}
-
 const comments = reactive<{
   data: Comment[];
-  likeData: likeStruct[];
+  likeData: LikeStruct[];
 }>({
   data: [],
   likeData: []
@@ -196,7 +199,7 @@ const getCommentsData = async () => {
         targetId: commentsTemp[i].id,
         targetType: TargetType.Comment
       };
-      comments.likeData.push(await getCommentLikeData(commentLikeReq));
+      comments.likeData.push(await getLikeData(commentLikeReq));
     }
     if (commentsTemp.length === 10) {
       getCommentsReq.page += 1;
@@ -209,23 +212,14 @@ const getCommentsData = async () => {
   }
   isCommentsLoaded = true;
 };
-const getCommentLikeData = async (req: GetCountReq) => {
-  const commentLike = (await getUserLiked(req)).liked;
-  const likeCount = (await getCount(req)).count;
-  const commentLikeUrl = getLikeUrl(commentLike);
-  return {
-    count: likeCount,
-    liked: commentLike,
-    likeUrl: commentLikeUrl
-  };
-};
+
 const commentDoLike = async (index: number) => {
   let commentLikeReq = {
     targetId: comments.data[index].id,
     targetType: TargetType.Comment
   };
   await doLike(commentLikeReq);
-  comments.likeData[index] = await getCommentLikeData(commentLikeReq);
+  comments.likeData[index] = await getLikeData(commentLikeReq);
 };
 
 const newCommentReq = reactive<NewCommentReq>({
@@ -240,34 +234,15 @@ const createComment = () => {
   }
   newCommentReq.text = text.value;
   newComment(newCommentReq).then((res) => {
-    getNewComment();
-    text.value = "";
+    init();
     uni.showToast({
       title: res.msg
     });
   });
 };
-const getNewComment = async () => {
-  let tmpPage = getCommentsReq.page;
-  getCommentsReq.page = 0;
-  let commentsTemp = (await getComments(getCommentsReq)).comments;
-  getCommentsReq.page = tmpPage;
-  comments.data.unshift(commentsTemp[0]);
-  let commentLikeReq = {
-    targetId: commentsTemp[0].id,
-    targetType: TargetType.Comment
-  };
-  comments.likeData.unshift(await getCommentLikeData(commentLikeReq));
-  pageStart += 1;
-  if (pageStart === 10) {
-    getCommentsReq.page += 1;
-    pageStart = 0;
-  }
-};
 
 const init = () => {
   getData();
-  getMomentLikeData();
   text.value = "";
   pageStart = 0;
   comments.data = [];
@@ -386,10 +361,44 @@ function leaveReply() {
       font-size: 12px;
     }
 
-    .post-image {
-      width: 90%;
-      margin-bottom: 10px;
-      border-radius: 15px;
+    // 根据图片数量自适应图片排版方式
+    .imgs {
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      flex-wrap: wrap;
+
+      &.imgs1 {
+        image {
+          width: 680rpx;
+          object-fit: none;
+          border-radius: 3px;
+          float: left;
+          margin: 5rpx 5rpx 5rpx 5rpx;
+        }
+      }
+
+      &.imgs2 {
+        image {
+          width: 330rpx;
+          height: 330rpx;
+          object-fit: none;
+          border-radius: 3px;
+          float: left;
+          margin: 5rpx 5rpx 5rpx 5rpx;
+        }
+      }
+
+      &.imgs5 {
+        image {
+          width: 220rpx;
+          height: 220rpx;
+          object-fit: none;
+          border-radius: 3px;
+          float: left;
+          margin: 5rpx 5rpx 5rpx 5rpx;
+        }
+      }
     }
   }
 
@@ -456,13 +465,17 @@ function leaveReply() {
 
       .like-box {
         margin-left: 50px;
+        display: flex;
+        align-items: center;
 
         .like-icon {
-          width: 15px;
-          margin-right: 8px;
+          width: calc(16 / 390 * 100vw);
+          height: calc(16 / 390 * 100vw);
+          background-size: 100% 100%;
         }
 
         .like-num {
+          margin-left: calc(4 / 390 * 100vw);
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -505,7 +518,9 @@ function leaveReply() {
       margin-right: 12px;
 
       .like-icon {
-        width: 22px;
+        width: calc(20 / 390 * 100vw);
+        height: calc(20 / 390 * 100vw);
+        background-size: 100% 100%;
       }
 
       .like-num {

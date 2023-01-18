@@ -10,8 +10,11 @@ uni.addInterceptor("request", {
       };
     }
   },
-  fail(err: UniNamespace.GeneralCallbackResult) {
-    console.log(err);
+  fail() {
+    uni.showToast({
+      title: "网络异常",
+      icon: "error"
+    });
   }
 });
 

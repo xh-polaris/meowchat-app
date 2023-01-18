@@ -33,7 +33,7 @@
 <script lang="ts" setup>
 import { reactive } from "vue";
 import { CatPreview } from "@/apis/schemas";
-import { onClickCollect } from "@/pages/collection/event";
+import { onClickCollect } from "@/pages/collection/utils";
 
 const props = defineProps<{ cat: CatPreview }>();
 const cat = reactive(props.cat);

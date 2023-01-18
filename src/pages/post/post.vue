@@ -3,14 +3,14 @@
 
   <view class="header">
     <view class="title">
-      {{ post.title }}
+      {{ post.data.title }}
     </view>
     <view class="head-info">
-      {{ displayTime(post.createAt * 1000) }} · {{ post.comments }}条回复
+      {{ displayTime(post.data.createAt) }} · {{ post.data.comments }}条回复
     </view>
     <view class="tags">
       <image class="tagIcon" src="/static/images/tag.png" />
-      <view v-for="(item, index) in post.tags" :key="index" class="tag">
+      <view v-for="(item, index) in post.data.tags" :key="index" class="tag">
         {{ item }}
       </view>
     </view>
@@ -18,25 +18,27 @@
 
   <view class="post">
     <view class="user">
-      <image :src="post.user.avatarUrl" class="avatar" />
+      <image :src="post.data.user.avatarUrl" class="avatar" />
       <view class="name">
-        {{ post.user.nickname }}
+        {{ post.data.user.nickname }}
       </view>
     </view>
     <view class="text">
-      {{ post.text }}
+      {{ post.data.text }}
     </view>
 
     <view class="comments-box">
-      <view v-for="(item, index) in comments" :key="index" class="comment-box">
+      <view
+        v-for="(item, index) in comments.data"
+        :key="index"
+        class="comment-box"
+      >
         <view class="commenter-info-box">
           <image :src="item.user.avatarUrl" class="commenter-profile" />
           <text class="commenter-name">
             {{ item.user.nickname }}
           </text>
-          <text class="comment-time">
-            · {{ displayTime(item.createAt * 1000) }}
-          </text>
+          <text class="comment-time"> · {{ displayTime(item.createAt) }} </text>
         </view>
         <view class="comment-content">
           {{ item.text }}
@@ -51,14 +53,16 @@
           />
         </view>
         <view class="like-box">
-          <view v-if="commentLikes[index]">
-            <image :src="likedUrl" class="like-icon" mode="widthFix" />
-          </view>
-          <view v-else>
-            <image :src="unlikeUrl" class="like-icon" mode="widthFix" />
+          <view v-if="comments.likeData[index]">
+            <image
+              :src="comments.likeData[index].likeUrl"
+              class="like-icon"
+              mode="widthFix"
+              @click="commentDoLike(index)"
+            />
           </view>
           <text class="like-num">
-            {{ item.likes }}
+            {{ comments.likeData[index].count }}
           </text>
         </view>
       </view>
@@ -83,7 +87,7 @@
         {{ postLike.count }}
       </view>
     </view>
-    <view class="send-comment-btn" @click="createComment(text)"> 发布</view>
+    <view class="send-comment-btn" @click="createComment()"> 发布</view>
   </view>
   <view v-if="isReplyOpened" class="reply">
     <reply @closeReply="closeReply" />
@@ -91,7 +95,7 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { enterMask, enterReply } from "../moment/event";
+import { enterMask, enterReply } from "../moment/utils";
 import Reply from "@/pages/moment/reply";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
 import { Comment, Post, TargetType } from "@/apis/schemas";
@@ -103,7 +107,7 @@ import {
   GetCommentsReq,
   NewCommentReq
 } from "@/apis/comment/comment-interfaces";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { GetCountReq } from "@/apis/like/like-interface";
 
 const props = defineProps<{
@@ -115,28 +119,29 @@ const getPostDetailReq = reactive<GetPostDetailReq>({
 });
 
 // Post
-const post = ref<Post>({
-  id: "",
-  createAt: 0,
-  title: "",
-  text: "",
-  coverUrl: "",
-  tags: [],
-  likes: 0,
-  user: {
+const post = reactive<{ data: Post }>({
+  data: {
     id: "",
-    nickname: "",
-    avatarUrl: ""
-  },
-  comments: 0,
-  isAnonymous: false,
-  status: 0
+    createAt: 0,
+    title: "",
+    text: "",
+    coverUrl: "",
+    tags: [],
+    likes: 0,
+    user: {
+      id: "",
+      nickname: "",
+      avatarUrl: ""
+    },
+    comments: 0,
+    isAnonymous: false,
+    status: 0
+  }
 });
 
 const getData = async () => {
-  post.value = (await getPostDetail(getPostDetailReq)).post;
+  post.data = (await getPostDetail(getPostDetailReq)).post;
 };
-getData();
 
 // Like
 const likeReq = reactive<GetCountReq>({
@@ -144,7 +149,7 @@ const likeReq = reactive<GetCountReq>({
   targetType: TargetType.Post
 });
 
-const postLike = ref({
+const postLike = reactive<LikeStruct>({
   count: 0,
   liked: true,
   likeUrl: "/static/images/like.png"
@@ -161,9 +166,9 @@ const getLikeUrl = (liked: boolean) => {
 };
 
 const getPostLikeData = async () => {
-  postLike.value.count = (await getCount(likeReq)).count;
-  postLike.value.liked = (await getUserLiked(likeReq)).liked;
-  postLike.value.likeUrl = getLikeUrl(postLike.value.liked);
+  postLike.count = (await getCount(likeReq)).count;
+  postLike.liked = (await getUserLiked(likeReq)).liked;
+  postLike.likeUrl = getLikeUrl(postLike.liked);
 };
 getPostLikeData();
 
@@ -172,6 +177,12 @@ const postDoLike = async () => {
   await getPostLikeData();
 };
 
+interface LikeStruct {
+  count: number;
+  liked: boolean;
+  likeUrl: string;
+}
+
 // Comments
 const getCommentsReq = reactive<GetCommentsReq>({
   scope: "post",
@@ -179,41 +190,106 @@ const getCommentsReq = reactive<GetCommentsReq>({
   id: props.id
 });
 
-const comments = reactive<Comment[]>([]);
-const commentLikes = reactive<boolean[]>([]);
+const comments = reactive<{
+  data: Comment[];
+  likeData: LikeStruct[];
+}>({
+  data: [],
+  likeData: []
+});
+// const commentLikes = reactive<boolean[]>([]);
 let allCommentsLoaded = false;
 let isCommentsLoaded = false;
+let pageStart = 0;
 const getCommentsData = async () => {
   let commentsTemp = (await getComments(getCommentsReq)).comments;
-  if (commentsTemp.length > 0) {
-    for (let i = 0; i < commentsTemp.length; i++) {
-      comments.push(commentsTemp[i]);
-      let commentLike = (
-        await getUserLiked({
-          targetId: commentsTemp[i].id,
-          targetType: TargetType.Comment
-        })
-      ).liked;
-      commentLikes.push(commentLike);
+  if (commentsTemp.length > pageStart) {
+    for (let i = pageStart; i < commentsTemp.length; i++) {
+      comments.data.push(commentsTemp[i]);
+      const commentLikeReq = {
+        targetId: commentsTemp[i].id,
+        targetType: TargetType.Comment
+      };
+      comments.likeData.push(await getCommentLikeData(commentLikeReq));
     }
-    getCommentsReq.page += 1;
+    if (commentsTemp.length === 10) {
+      getCommentsReq.page += 1;
+      pageStart = 0;
+    } else {
+      pageStart = commentsTemp.length;
+    }
   } else {
     allCommentsLoaded = true;
   }
   isCommentsLoaded = true;
 };
-getCommentsData();
+const getCommentLikeData = async (req: GetCountReq) => {
+  const commentLike = (await getUserLiked(req)).liked;
+  const likeCount = (await getCount(req)).count;
+  const commentLikeUrl = getLikeUrl(commentLike);
+  return {
+    count: likeCount,
+    liked: commentLike,
+    likeUrl: commentLikeUrl
+  };
+};
+const commentDoLike = async (index: number) => {
+  let commentLikeReq = {
+    targetId: comments.data[index].id,
+    targetType: TargetType.Comment
+  };
+  await doLike(commentLikeReq);
+  comments.likeData[index] = await getCommentLikeData(commentLikeReq);
+};
 
 const newCommentReq = reactive<NewCommentReq>({
   id: props.id,
   scope: "post",
   text: ""
 });
-const text = ref("");
-const createComment = async (text: string) => {
-  newCommentReq.text = text;
-  await newComment(newCommentReq);
+const text = ref<string>("");
+const createComment = () => {
+  if (text.value === "") {
+    return;
+  }
+  newCommentReq.text = text.value;
+  newComment(newCommentReq).then((res) => {
+    getNewComment();
+    text.value = "";
+    uni.showToast({
+      title: res.msg
+    });
+  });
 };
+const getNewComment = async () => {
+  let tmpPage = getCommentsReq.page;
+  getCommentsReq.page = 0;
+  let commentsTemp = (await getComments(getCommentsReq)).comments;
+  getCommentsReq.page = tmpPage;
+  comments.data.unshift(commentsTemp[0]);
+  let commentLikeReq = {
+    targetId: commentsTemp[0].id,
+    targetType: TargetType.Comment
+  };
+  comments.likeData.unshift(await getCommentLikeData(commentLikeReq));
+  pageStart += 1;
+  if (pageStart === 10) {
+    getCommentsReq.page += 1;
+    pageStart = 0;
+  }
+};
+const init = () => {
+  getData();
+  getPostLikeData();
+  text.value = "";
+  pageStart = 0;
+  comments.data = [];
+  comments.likeData = [];
+  allCommentsLoaded = false;
+  isCommentsLoaded = false;
+  getCommentsData();
+};
+init();
 
 onReachBottom(() => {
   if (isCommentsLoaded && !allCommentsLoaded) {
@@ -222,13 +298,18 @@ onReachBottom(() => {
   }
 });
 
+onPullDownRefresh(() => {
+  setTimeout(function () {
+    uni.stopPullDownRefresh();
+  }, 1000);
+  init();
+});
 function isAnonymous() {
-  if (post.value.isAnonymous) {
-    post.value.user.nickname = "匿名用户";
-    post.value.user.avatarUrl = "/static/images/anonymous.png";
+  if (post.data.isAnonymous) {
+    post.data.user.nickname = "匿名用户";
+    post.data.user.avatarUrl = "/static/images/anonymous.png";
   }
 }
-
 isAnonymous();
 
 let enterMaskData = ref(null);
@@ -429,6 +510,10 @@ $postPadding: 15px 27px 0 21px;
 
       .like-box {
         margin-left: 50px;
+        align-items: center;
+        flex-direction: row;
+        display: flex;
+        margin-right: 12px;
 
         .like-icon {
           width: 15px;
@@ -439,6 +524,7 @@ $postPadding: 15px 27px 0 21px;
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
+          white-space: nowrap;
           color: #aaa;
         }
       }

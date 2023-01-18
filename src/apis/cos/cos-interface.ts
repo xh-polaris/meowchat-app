@@ -12,3 +12,7 @@ export interface PutObjectReq {
 export interface PutObjectResp {
   url: string;
 }
+
+export enum PictureStyle {
+  thumbnail = "/thumbnail"
+}

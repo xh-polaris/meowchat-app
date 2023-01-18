@@ -7,7 +7,7 @@
           {{ mainComment.user.nickname }}
         </text>
         <text class="comment-time">
-          ·{{ displayTime(mainComment.createAt * 1000) }}
+          ·{{ displayTime(mainComment.createAt) }}
         </text>
       </view>
       <view class="comment-content">
@@ -34,9 +34,7 @@
           <text class="replier-name">
             {{ item.user.nickname }}
           </text>
-          <text class="reply-time">
-            ·{{ displayTime(item.createAt * 1000) }}
-          </text>
+          <text class="reply-time"> ·{{ displayTime(item.createAt) }} </text>
         </view>
         <view class="reply-content">
           <view class="reply-text">

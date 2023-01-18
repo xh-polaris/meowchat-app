@@ -1,7 +1,12 @@
-import { GetUserResp, UpdateUserReq, UpdateUserResp } from "./user-interfaces";
+import {
+  GetUserInfoResp,
+  UpdateUserInfoReq,
+  UpdateUserInfoResp
+} from "./user-interfaces";
+import { PictureStyle } from "@/apis/cos/cos-interface";
 
 export async function getUserInfo() {
-  return await new Promise<GetUserResp>((resolve, reject) => {
+  return await new Promise<GetUserInfoResp>((resolve, reject) => {
     uni.request({
       url: "/user/get_user_info",
       method: "GET",
@@ -9,15 +14,16 @@ export async function getUserInfo() {
         if (res.statusCode !== 200) {
           reject(res);
         }
-        const data = res.data as GetUserResp;
+        const data = res.data as GetUserInfoResp;
+        data.user.avatarUrl += PictureStyle.thumbnail;
         resolve(data);
       }
     });
   });
 }
 
-export async function updateUserInfo(req: UpdateUserReq) {
-  return await new Promise<UpdateUserResp>((resolve, reject) => {
+export async function updateUserInfo(req: UpdateUserInfoReq) {
+  return await new Promise<UpdateUserInfoResp>((resolve, reject) => {
     uni.request({
       url: "/user/update_user_info",
       data: req,
@@ -26,7 +32,7 @@ export async function updateUserInfo(req: UpdateUserReq) {
         if (res.statusCode !== 200) {
           reject(res);
         }
-        const data = res.data as UpdateUserResp;
+        const data = res.data as UpdateUserInfoResp;
         resolve(data);
       }
     });
