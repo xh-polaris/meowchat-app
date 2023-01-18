@@ -40,7 +40,10 @@
           </text>
           <text class="comment-time"> · {{ displayTime(item.createAt) }}</text>
         </view>
-        <view class="comment-content">
+        <view
+          class="comment-content"
+          @click="focusSecondComment(item.user.nickname, index)"
+        >
           {{ item.text }}
         </view>
         <view v-if="item.comments > 0" class="reply-info">
@@ -67,9 +70,11 @@
     <view class="write-comment-box">
       <input
         v-model="text"
+        :focus="focus"
+        :placeholder="placeholderText"
         class="write-comment"
-        placeholder="发表评论..."
         type="text"
+        @blur="blur"
       />
       <view class="like-box">
         <view
@@ -82,7 +87,9 @@
           {{ moment.likeData.count }}
         </view>
       </view>
-      <view class="send-comment-btn" @click="createComment()"> 发布</view>
+      <view class="send-comment-btn" @click="createComment(getNewCommentReq())">
+        发布
+      </view>
     </view>
   </view>
   <view v-if="isReplyOpened" class="reply">
@@ -209,23 +216,52 @@ const commentDoLike = async (index: number) => {
   comments.likeData[index] = await getLikeData(commentLikeReq);
 };
 
-const newCommentReq = reactive<NewCommentReq>({
-  id: props.id,
-  scope: "moment",
-  text: ""
-});
 const text = ref<string>("");
-const createComment = () => {
+const placeholderText = ref<string>("发布评论");
+const createComment = (req: NewCommentReq) => {
   if (text.value === "" || initLock) {
     return;
   }
-  newCommentReq.text = text.value;
-  newComment(newCommentReq).then((res) => {
+  req.text = text.value;
+  newComment(req).then((res) => {
     init();
     uni.showToast({
       title: res.msg
     });
   });
+};
+
+const getNewCommentReq = () => {
+  console.log(lastReplyIndex);
+  let req = {
+    id: props.id,
+    scope: "moment",
+    text: ""
+  };
+  if (lastReplyIndex !== -1) {
+    console.log(comments.data[lastReplyIndex].id);
+    req.id = comments.data[lastReplyIndex].id;
+    req.scope = "comment";
+  }
+  return req;
+};
+
+const focus = ref(false);
+let replyCommentIndex = -1;
+let lastReplyIndex = -1;
+const focusSecondComment = (name: string, index: number) => {
+  placeholderText.value = "回复 @" + name + ": ";
+  focus.value = true;
+  lastReplyIndex = replyCommentIndex;
+  replyCommentIndex = index;
+  console.log(focus.value);
+};
+
+const blur = () => {
+  focus.value = false;
+  lastReplyIndex = replyCommentIndex;
+  replyCommentIndex = -1;
+  placeholderText.value = "发布评论";
 };
 
 let initLock = false;
