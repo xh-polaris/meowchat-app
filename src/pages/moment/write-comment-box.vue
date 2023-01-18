@@ -59,7 +59,7 @@ const preReq = reactive<NewCommentReq>({
 });
 
 const localCreateComment = async () => {
-  let res;
+  let res = null;
   if (props.focus) {
     res = await createComment(props.newCommentReq);
   } else {

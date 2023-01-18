@@ -47,7 +47,9 @@
           {{ item.text }}
         </view>
         <view v-if="item.comments > 0" class="reply-info">
-          <text @click="onClickReplies()"> {{ item.comments }}条相关回复 </text>
+          <text @click="onClickReplies(index)">
+            {{ item.comments }}条相关回复
+          </text>
           <image
             class="arrow-right"
             src="/static/images/arrow_right_blue.png"
@@ -67,24 +69,34 @@
       </view>
     </view>
 
-    <view class="write-comment-box">
-      <input class="write-comment" placeholder="发表评论..." type="text" />
-      <view class="like-box">
-        <view
-          v-if="moment.likeData.isLike"
-          class="like-icon liked"
-          @click="momentDoLike()"
-        />
-        <view v-else class="like-icon" @click="momentDoLike()" />
-        <view class="like-num">
-          {{ moment.likeData.count }}
-        </view>
-      </view>
-      <view class="send-comment-btn" @click="createComment()"> 发布</view>
-    </view>
+    <write-comment-box
+      v-model:placeholder-text="placeholderText"
+      :focus="newCommentFocus"
+      :like-data="moment.likeData"
+      :new-comment-req="newCommentReq"
+      @update-text="
+        (newText) => {
+          newCommentReq.text = newText;
+        }
+      "
+      @do-like="
+        localDoLike({
+          targetId: id,
+          targetType: TargetType.Moment
+        }).then((res) => {
+          moment.likeData = res;
+        })
+      "
+      @after-create-comment="init"
+      @after-blur="afterBlur"
+    />
   </view>
   <view v-if="isReplyOpened" class="reply">
-    <reply @close-reply="closeReply" />
+    <reply
+      :like-data="comments.likeData[selectIndex]"
+      :main-comment="comments.data[selectIndex]"
+      @close-reply="closeReply"
+    />
   </view>
 </template>
 
@@ -98,6 +110,7 @@ import {
   getCommentsData,
   getLikeData,
   LikeStruct,
+  localDoLike,
   onClickImage
 } from "@/pages/moment/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
@@ -112,6 +125,7 @@ import {
 } from "@/apis/comment/comment-interfaces";
 import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply";
+import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
 
 const props = defineProps<{
   id: string;
@@ -215,6 +229,11 @@ const refreshReplyIndex = (index: number) => {
     newCommentReq.scope = "moment";
     commentReplyIndex.value = -1;
   }
+};
+
+const afterBlur = () => {
+  newCommentFocus.value = false;
+  refreshReplyIndex(-1);
 };
 
 const focusReplyComment = (name: string, index: number) => {
@@ -482,70 +501,6 @@ function leaveReply() {
           color: #aaa;
         }
       }
-    }
-  }
-  .write-comment-box {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    box-shadow: 0 -1px 2px #eee;
-    padding: 10px;
-
-    .write-comment {
-      width: 64%;
-      height: 36px;
-      background-color: #fafafa;
-      border-radius: 35rpx;
-      padding-left: 30rpx;
-      margin-right: 12px;
-
-      .uni-input-placeholder {
-        color: #d1d1d1;
-      }
-    }
-
-    .like-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      margin-right: 12px;
-
-      .like-icon {
-        width: calc(20 / 390 * 100vw);
-        height: calc(20 / 390 * 100vw);
-        background-size: 100% 100%;
-        background-image: url("/static/images/like_grey_0.png");
-
-        &.liked {
-          background-image: url("/static/images/like_grey_1.png");
-        }
-      }
-
-      .like-num {
-        max-width: 40px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 12px;
-        color: #c8c8c8;
-      }
-    }
-
-    .send-comment-btn {
-      background-color: #63bdff;
-      border-radius: 39rpx;
-      width: 132rpx;
-      padding: 0 10rpx;
-      line-height: 35px;
-      font-size: 16px;
-      text-align: center;
-      color: #fff;
     }
   }
 }
