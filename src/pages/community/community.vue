@@ -24,7 +24,23 @@
   </view>
 
   <view style="margin-top: 10px">
-    <masonry />
+    <view class="masonry-header">
+      <view class="title"> 最新动态</view>
+      <view class="toggle">
+        <view :class="types[0].className" @click.prevent="types[0].onClick">
+          {{ types[0].name }}
+        </view>
+        |
+        <view :class="types[1].className" @click.prevent="types[1].onClick">
+          {{ types[1].name }}
+        </view>
+        |
+        <view :class="types[2].className" @click.prevent="types[2].onClick">
+          {{ types[2].name }}
+        </view>
+      </view>
+    </view>
+    <masonry v-if="!isRefreshing" :search="{ type: 'default' }" />
   </view>
 
   <draft-button type="moment" />
@@ -34,7 +50,7 @@
 import { reactive, ref } from "vue";
 import Masonry from "@/pages/community/masonry";
 import CarouselFrame from "@/pages/community/carousel-frame";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
 import DraftButton from "@/components/draft-button/draft-button";
 
@@ -45,6 +61,62 @@ const school = reactive({
 });
 
 const currentNavBtn = ref("中北校区");
+
+const types = reactive([
+  {
+    name: "热门",
+    isCurrent: true,
+    className: "label current",
+    onClick: () => {
+      toggleSelf("热门");
+      pageRefresh();
+    }
+  },
+  {
+    name: "最新",
+    isCurrent: false,
+    className: "label",
+    onClick: () => {
+      toggleSelf("最新");
+      pageRefresh();
+    }
+  },
+  {
+    name: "关注",
+    isCurrent: false,
+    className: "label",
+    onClick: () => {
+      toggleSelf("关注");
+      pageRefresh();
+    }
+  }
+]);
+
+const toggleSelf = (name: string) => {
+  if (!types.filter((type) => type.name === name)[0].isCurrent) {
+    types.map((type) => {
+      type.isCurrent = false;
+      type.className = "label";
+    });
+    const currentType = types.filter((type) => type.name === name)[0];
+    currentType.isCurrent = true;
+    currentType.className = "label current";
+  }
+};
+
+const isRefreshing = ref(false);
+
+function pageRefresh() {
+  isRefreshing.value = true;
+  setTimeout(() => {
+    isRefreshing.value = false;
+  }, 1);
+}
+
+onPullDownRefresh(() => {
+  pageRefresh();
+  uni.stopPullDownRefresh();
+});
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
@@ -179,5 +251,40 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 .title {
   color: #8f8f94;
   font-size: 36rpx;
+}
+
+.masonry-header {
+  margin: 0 calc(12 / 390 * 100vw);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    color: #353535;
+    font-weight: bold;
+    font-size: calc(18 / 390 * 100vw);
+  }
+
+  .toggle {
+    display: flex;
+    align-items: center;
+    color: #b8b8b8;
+    font-size: calc(10 / 390 * 100vw);
+    transform: translateX(calc(9 / 390 * 100vw));
+
+    .label {
+      color: #939393;
+      font-size: calc(12 / 390 * 100vw);
+      padding: 0 calc(9 / 390 * 100vw);
+
+      &:active {
+        color: #1e1e1e !important;
+      }
+
+      &.current {
+        color: #353535;
+      }
+    }
+  }
 }
 </style>

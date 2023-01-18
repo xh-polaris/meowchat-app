@@ -1,20 +1,4 @@
 <template>
-  <view class="header">
-    <view class="title"> 最新动态</view>
-    <view class="toggle">
-      <view :class="types[0].className" @click.prevent="types[0].onClick">
-        {{ types[0].name }}
-      </view>
-      |
-      <view :class="types[1].className" @click.prevent="types[1].onClick">
-        {{ types[1].name }}
-      </view>
-      |
-      <view :class="types[2].className" @click.prevent="types[2].onClick">
-        {{ types[2].name }}
-      </view>
-    </view>
-  </view>
   <view class="masonry">
     <view
       v-for="i in 2"
@@ -70,16 +54,31 @@ import { reactive } from "vue";
 import { getMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/utils";
-import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
+import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
+
+const props = defineProps({
+  search: {
+    type: Object,
+    default() {
+      return { type: "default" };
+    }
+  }
+});
+
+/**
+ * 在父组件用<masonry :search="{...}"/>
+ * search.type --- "default"
+ */
 
 let moments: Moment[];
 const leftMoments = reactive<Moment[]>([]);
 const rightMoments = reactive<Moment[]>([]);
 
-const batchLoadingAmount = 10;
-const firstLoadingAmount = 8;
-const secondLoadingAmount = batchLoadingAmount - firstLoadingAmount;
+let batchLoadingAmount: number;
+let firstLoadingAmount: number;
+let secondLoadingAmount: number;
+const defaultSecondLoadingAmount = 4;
 
 let isLastBatch = false;
 let lastBatchAmount: number;
@@ -117,7 +116,6 @@ const isLeftTallerThanRight = () => {
 };
 
 onReachBottom(() => {
-  console.log(1);
   if (isBatchLoaded && !isBatchLoadedAll) {
     isBatchLoaded = false;
     addBatch();
@@ -125,15 +123,26 @@ onReachBottom(() => {
 });
 
 const addBatch = async () => {
-  moments = (
-    await getMomentPreviews({
-      page,
-      communityId: uni.getStorageSync("communityId")
-    })
-  ).moments;
+  moments = [];
+  if (props.search.type === "default") {
+    moments = (
+      await getMomentPreviews({
+        page,
+        communityId: uni.getStorageSync("communityId")
+      })
+    ).moments;
+  }
+
   if (moments) {
     page += 1;
-    if (moments.length === 10) {
+    batchLoadingAmount = moments.length;
+    if (defaultSecondLoadingAmount < batchLoadingAmount) {
+      firstLoadingAmount = batchLoadingAmount - defaultSecondLoadingAmount;
+      secondLoadingAmount = defaultSecondLoadingAmount;
+      if (firstLoadingAmount > 0 && firstLoadingAmount % 2 !== 0) {
+        firstLoadingAmount -= 1;
+        secondLoadingAmount += 1;
+      }
       for (let i = 0; i < firstLoadingAmount / 2; i++) {
         addTile(index, "left");
         index += 1;
@@ -141,10 +150,9 @@ const addBatch = async () => {
         index += 1;
       }
     } else {
-      isLastBatch = true;
-      lastBatchAmount = moments.length;
+      firstLoadingAmount = 0;
+      secondLoadingAmount = batchLoadingAmount;
       onLoad();
-      isBatchLoadedAll = true;
     }
   } else {
     isBatchLoadedAll = true;
@@ -207,66 +215,24 @@ const addTile = (tileIndex: number, side: string) => {
 
 addBatch();
 
-const types = reactive([
-  {
-    name: "热门",
-    isCurrent: true,
-    className: "label current",
-    onClick: () => {
-      toggleSelf("热门");
-      pageRefresh();
-    }
-  },
-  {
-    name: "最新",
-    isCurrent: false,
-    className: "label",
-    onClick: () => {
-      toggleSelf("最新");
-      pageRefresh();
-    }
-  },
-  {
-    name: "关注",
-    isCurrent: false,
-    className: "label",
-    onClick: () => {
-      toggleSelf("关注");
-      pageRefresh();
-    }
-  }
-]);
+// onPullDownRefresh(() => {
+//   pageRefresh();
+// });
 
-const toggleSelf = (name: string) => {
-  if (!types.filter((type) => type.name === name)[0].isCurrent) {
-    types.map((type) => {
-      type.isCurrent = false;
-      type.className = "label";
-    });
-    const currentType = types.filter((type) => type.name === name)[0];
-    currentType.isCurrent = true;
-    currentType.className = "label current";
-  }
-};
-
-onPullDownRefresh(() => {
-  pageRefresh();
-});
-
-function pageRefresh() {
-  leftMoments.splice(0);
-  rightMoments.splice(0);
-  isLastBatch = false;
-  index = 0;
-  loadedAmount = 0;
-  isBatchLoaded = false;
-  isBatchLoadedAll = false;
-  page = 0;
-  leftHeight = 0;
-  rightHeight = 0;
-  addBatch();
-  uni.stopPullDownRefresh();
-}
+// function pageRefresh() {
+//   leftMoments.splice(0);
+//   rightMoments.splice(0);
+//   isLastBatch = false;
+//   index = 0;
+//   loadedAmount = 0;
+//   isBatchLoaded = false;
+//   isBatchLoadedAll = false;
+//   page = 0;
+//   leftHeight = 0;
+//   rightHeight = 0;
+//   addBatch();
+//   uni.stopPullDownRefresh();
+// }
 </script>
 
 <style lang="scss" scoped>
@@ -280,41 +246,6 @@ $smallFontSize: calc(8 / 390 * 100vw);
 $avatarWidth: calc(21 / 390 * 100vw);
 
 @import "@/common/user-info.scss";
-
-.header {
-  margin: 0 calc(12 / 390 * 100vw);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .title {
-    color: #353535;
-    font-weight: bold;
-    font-size: calc(18 / 390 * 100vw);
-  }
-
-  .toggle {
-    display: flex;
-    align-items: center;
-    color: #b8b8b8;
-    font-size: calc(10 / 390 * 100vw);
-    transform: translateX(calc(9 / 390 * 100vw));
-
-    .label {
-      color: #939393;
-      font-size: calc(12 / 390 * 100vw);
-      padding: 0 calc(9 / 390 * 100vw);
-
-      &:active {
-        color: #1e1e1e !important;
-      }
-
-      &.current {
-        color: #353535;
-      }
-    }
-  }
-}
 
 .masonry {
   display: flex;
@@ -376,6 +307,13 @@ $avatarWidth: calc(21 / 390 * 100vw);
       justify-content: space-between;
     }
   }
+}
+
+.username {
+  max-width: calc(60 / 390 * 100vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .get-dom {
