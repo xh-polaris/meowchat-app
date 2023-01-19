@@ -42,7 +42,7 @@
         </view>
         <view
           class="comment-content"
-          @click="focusSecondComment(item.user.nickname, index)"
+          @click="focusReplyComment(item.user.nickname, index)"
         >
           {{ item.text }}
         </view>
@@ -67,30 +67,39 @@
       </view>
     </view>
 
-    <view class="write-comment-box">
-      <input
-        v-model="text"
-        :focus="focus"
-        :placeholder="placeholderText"
-        class="write-comment"
-        type="text"
-        @blur="blur"
-      />
-      <view class="like-box">
-        <view
-          v-if="moment.likeData.isLike"
-          class="like-icon liked"
-          @click="momentDoLike()"
-        />
-        <view v-else class="like-icon" @click="momentDoLike()" />
-        <view class="like-num">
-          {{ moment.likeData.count }}
-        </view>
-      </view>
-      <view class="send-comment-btn" @click="createComment(getNewCommentReq())">
-        发布
-      </view>
-    </view>
+    <write-comment-box
+      v-model:placeholder-text="placeholderText"
+      :focus="newCommentFocus"
+      :like-data="moment.likeData"
+      :new-comment-req="newCommentReq"
+      @update-text="
+        (newText) => {
+          newCommentReq.text = newText;
+        }
+      "
+      @custom-blur="
+        () => {
+          newCommentFocus = false;
+          if (commentReplyIndex !== -1) {
+            newCommentReq.id = comments.data[commentReplyIndex].id;
+            newCommentReq.scope = 'comment';
+          } else {
+            newCommentReq.id = id;
+            newCommentReq.scope = 'moment';
+          }
+          commentReplyIndex = -1;
+        }
+      "
+      @do-like="
+        localDoLike({
+          targetId: id,
+          targetType: TargetType.Moment
+        }).then((res) => {
+          moment.likeData = res;
+        })
+      "
+      @after-create-comment="init()"
+    />
   </view>
   <view v-if="isReplyOpened" class="reply">
     <reply @close-reply="closeReply" />
@@ -114,13 +123,14 @@ import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
 import { doLike } from "@/apis/like/like";
-import { getComments, newComment } from "@/apis/comment/comment";
+import { getComments } from "@/apis/comment/comment";
 import {
   GetCommentsReq,
   NewCommentReq
 } from "@/apis/comment/comment-interfaces";
 import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply";
+import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
 
 const props = defineProps<{
   id: string;
@@ -159,11 +169,6 @@ const likeReq = reactive<GetCountReq>({
 
 const getData = async () => {
   moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
-  moment.likeData = await getLikeData(likeReq);
-};
-
-const momentDoLike = async () => {
-  await doLike(likeReq);
   moment.likeData = await getLikeData(likeReq);
 };
 
@@ -216,52 +221,20 @@ const commentDoLike = async (index: number) => {
   comments.likeData[index] = await getLikeData(commentLikeReq);
 };
 
-const text = ref<string>("");
-const placeholderText = ref<string>("发布评论");
-const createComment = (req: NewCommentReq) => {
-  if (text.value === "" || initLock) {
-    return;
-  }
-  req.text = text.value;
-  newComment(req).then((res) => {
-    init();
-    uni.showToast({
-      title: res.msg
-    });
-  });
-};
+let commentReplyIndex = -1;
+const placeholderText = ref("发布评论");
+const newCommentFocus = ref(false);
 
-const getNewCommentReq = () => {
-  console.log(lastReplyIndex);
-  let req = {
-    id: props.id,
-    scope: "moment",
-    text: ""
-  };
-  if (lastReplyIndex !== -1) {
-    console.log(comments.data[lastReplyIndex].id);
-    req.id = comments.data[lastReplyIndex].id;
-    req.scope = "comment";
-  }
-  return req;
-};
+const newCommentReq = reactive<NewCommentReq>({
+  text: "",
+  id: props.id,
+  scope: "moment"
+});
 
-const focus = ref(false);
-let replyCommentIndex = -1;
-let lastReplyIndex = -1;
-const focusSecondComment = (name: string, index: number) => {
+const focusReplyComment = (name: string, index: number) => {
   placeholderText.value = "回复 @" + name + ": ";
-  focus.value = true;
-  lastReplyIndex = replyCommentIndex;
-  replyCommentIndex = index;
-  console.log(focus.value);
-};
-
-const blur = () => {
-  focus.value = false;
-  lastReplyIndex = replyCommentIndex;
-  replyCommentIndex = -1;
-  placeholderText.value = "发布评论";
+  newCommentFocus.value = true;
+  commentReplyIndex = index;
 };
 
 let initLock = false;
@@ -269,8 +242,8 @@ const init = async () => {
   if (initLock) return;
   initLock = true;
   await getData();
-  text.value = "";
   pageStart = 0;
+  newCommentReq.text = "";
   getCommentsReq.page = 0;
   comments.data = [];
   comments.likeData = [];
@@ -517,71 +490,6 @@ function leaveReply() {
           color: #aaa;
         }
       }
-    }
-  }
-
-  .write-comment-box {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    box-shadow: 0 -1px 2px #eee;
-    padding: 10px;
-
-    .write-comment {
-      width: 64%;
-      height: 36px;
-      background-color: #fafafa;
-      border-radius: 35rpx;
-      padding-left: 30rpx;
-      margin-right: 12px;
-
-      .uni-input-placeholder {
-        color: #d1d1d1;
-      }
-    }
-
-    .like-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      margin-right: 12px;
-
-      .like-icon {
-        width: calc(20 / 390 * 100vw);
-        height: calc(20 / 390 * 100vw);
-        background-size: 100% 100%;
-        background-image: url("/static/images/like_grey_0.png");
-
-        &.liked {
-          background-image: url("/static/images/like_grey_1.png");
-        }
-      }
-
-      .like-num {
-        max-width: 40px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 12px;
-        color: #c8c8c8;
-      }
-    }
-
-    .send-comment-btn {
-      background-color: #63bdff;
-      border-radius: 39rpx;
-      width: 132rpx;
-      padding: 0 10rpx;
-      line-height: 35px;
-      font-size: 16px;
-      text-align: center;
-      color: #fff;
     }
   }
 }

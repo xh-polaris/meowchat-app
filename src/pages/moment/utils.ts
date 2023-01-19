@@ -1,5 +1,7 @@
-import { GetCountReq } from "@/apis/like/like-interface";
-import { getCount, getUserLiked } from "@/apis/like/like";
+import { DoLikeReq, GetCountReq } from "@/apis/like/like-interface";
+import { doLike, getCount, getUserLiked } from "@/apis/like/like";
+import { NewCommentReq } from "@/apis/comment/comment-interfaces";
+import { newComment } from "@/apis/comment/comment";
 
 export const enterReply = uni.createAnimation({
   transformOrigin: "50% 50%",
@@ -27,6 +29,22 @@ export const getLikeData = async (likeReq: GetCountReq) => {
     count: count,
     isLike: isLike
   };
+};
+
+export const localDoLike = async (req: DoLikeReq) => {
+  await doLike(req);
+  return await getLikeData(req);
+};
+
+export const createComment = async (req: NewCommentReq) => {
+  if (req.text !== "") {
+    const res = await newComment(req);
+    uni.showToast({
+      title: res.msg
+    });
+    return true;
+  }
+  return false;
 };
 
 export function onClickImage(url: string) {
