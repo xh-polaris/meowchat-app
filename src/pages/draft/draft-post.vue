@@ -92,7 +92,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import { newPost } from "@/apis/post/post";
 import { putObject } from "@/apis/cos/cos";
 
@@ -114,6 +114,16 @@ const coverUrl = ref("");
 const disablePublish = ref(false);
 
 let tags = reactive([]);
+
+watch(tags, (newValue) => {
+  if (newValue.length > 3) {
+    uni.showToast({
+      title: "最多输入三个标签哦",
+      icon: "none"
+    });
+    tags = newValue.slice(0, 3);
+  }
+});
 
 function toggleAnonymous() {
   isAnonymous.value = !isAnonymous.value;
