@@ -6,7 +6,9 @@ import {
   GetMomentPreviewsReq,
   GetMomentPreviewsResp,
   NewMomentReq,
-  NewMomentResp
+  NewMomentResp,
+  SearchMomentPreviewsReq,
+  SearchMomentPreviewsResp
 } from "./moment-components";
 import { PictureStyle } from "@/apis/cos/cos-interface";
 
@@ -27,6 +29,23 @@ export async function deleteMoment(
           reject(res);
         }
         const data = res.data as DeleteMomentResp;
+        resolve(data);
+      }
+    });
+  });
+}
+
+export async function searchMomentPreviews(req: SearchMomentPreviewsReq) {
+  return await new Promise<SearchMomentPreviewsResp>((resolve, reject) => {
+    uni.request({
+      url: "/moment/search_moment",
+      data: req,
+      method: "GET",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as SearchMomentPreviewsResp;
         resolve(data);
       }
     });

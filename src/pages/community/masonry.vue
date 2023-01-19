@@ -47,11 +47,14 @@
       </template>
     </view>
   </view>
+  <view v-if="moments.length === 0">
+    <image src="https://static.xhpolaris.com/nodata.png" />
+  </view>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from "vue";
-import { getMomentPreviews } from "@/apis/moment/moment";
+import { getMomentPreviews, searchMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
@@ -61,8 +64,14 @@ const props = defineProps({
   search: {
     type: Object,
     default() {
-      return { type: "default" };
+      return {
+        type: "default"
+      };
     }
+  },
+  keyword: {
+    type: String,
+    default: {}
   }
 });
 
@@ -129,6 +138,14 @@ const addBatch = async () => {
       await getMomentPreviews({
         page,
         communityId: uni.getStorageSync("communityId")
+      })
+    ).moments;
+  } else if (props.search.type === "moment") {
+    moments = (
+      await searchMomentPreviews({
+        page: page,
+        communityId: uni.getStorageSync("communityId"),
+        keyword: props.keyword
       })
     ).moments;
   }

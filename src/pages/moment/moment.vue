@@ -100,7 +100,7 @@
     </view>
   </view>
   <view v-if="isReplyOpened" class="reply">
-    <reply @closeReply="closeReply" />
+    <reply @close-reply="closeReply" />
   </view>
 </template>
 
