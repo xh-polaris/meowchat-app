@@ -1,5 +1,5 @@
 <template>
-  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
+  <view class="reply-mask" @click="leaveReply()" />
 
   <view class="container">
     <view class="post-info-box">
@@ -44,9 +44,7 @@
           {{ item.text }}
         </view>
         <view v-if="item.comments > 0" class="reply-info">
-          <text @click="onClickReplies(index)">
-            {{ item.comments }}条相关回复
-          </text>
+          <text @click="onClickReplies()"> {{ item.comments }}条相关回复 </text>
           <image
             class="arrow-right"
             src="/static/images/arrow_right_blue.png"
@@ -100,7 +98,7 @@
     </view>
   </view>
   <view v-if="isReplyOpened" class="reply">
-    <reply @closeReply="closeReply" />
+    <reply @close-reply="closeReply" />
   </view>
 </template>
 
