@@ -97,7 +97,13 @@ export default {
         const newvalue = this.tagString.split(/,|，/u);
         for (let i = 0; i < newvalue.length; i++) {
           const newTag = newvalue[i].trim();
-
+		  if(newTag.length>6){
+			  uni.showToast({
+			  	title: '每个标签最多6个字',
+				icon:"none"
+			  });
+			  return;
+		  }
           if (newTag !== "" && this.value.indexOf(newTag) < 0) {
             tempTagArr.push(newTag);
           }

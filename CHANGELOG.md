@@ -1,5 +1,13 @@
 
 
+## [1.2.1](https://github.com/xh-polaris/meowchat-app/compare/v1.2.0...v1.2.1) (2023-01-18)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复了瀑布流中用户名过长导致样式坍塌bug ([#142](https://github.com/xh-polaris/meowchat-app/issues/142)) ([ce9d37f](https://github.com/xh-polaris/meowchat-app/commit/ce9d37f010eb025d98485faccfe1f458241e7963))
+* 修复评论刷新bug ([#141](https://github.com/xh-polaris/meowchat-app/issues/141)) ([b61fcfd](https://github.com/xh-polaris/meowchat-app/commit/b61fcfd9c7b85488e800b175d02382ce7306e99f))
+
 ## [1.2.0](https://github.com/xh-polaris/meowchat-app/compare/v1.1.0...v1.2.0) (2023-01-17)
 
 

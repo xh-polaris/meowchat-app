@@ -20,8 +20,8 @@
         <image
           v-for="(item, index) in moment.data.photos"
           :key="index"
-          :src="item"
           :mode="chooseImageMode(moment.data.photos.length)"
+          :src="item"
           @click="onClickImage(item)"
         />
       </view>
@@ -107,13 +107,13 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import {
-  enterMask,
-  enterReply,
-  onClickImage,
   chooseImageClass,
   chooseImageMode,
+  enterMask,
+  enterReply,
   getLikeData,
-  LikeStruct
+  LikeStruct,
+  onClickImage
 } from "@/pages/moment/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
 import { getMomentDetail } from "@/apis/moment/moment";
@@ -126,7 +126,7 @@ import {
   GetCommentsReq,
   NewCommentReq
 } from "@/apis/comment/comment-interfaces";
-import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
+import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply";
 
 const props = defineProps<{
@@ -188,9 +188,10 @@ const comments = reactive<{
   likeData: []
 });
 let allCommentsLoaded = false;
-let isCommentsLoaded = false;
+let isCommentsLoaded = true;
 let pageStart = 0;
 const getCommentsData = async () => {
+  isCommentsLoaded = false;
   let commentsTemp = (await getComments(getCommentsReq)).comments;
   if (commentsTemp.length > pageStart) {
     for (let i = pageStart; i < commentsTemp.length; i++) {
@@ -229,7 +230,7 @@ const newCommentReq = reactive<NewCommentReq>({
 });
 const text = ref<string>("");
 const createComment = () => {
-  if (text.value === "") {
+  if (text.value === "" || initLock) {
     return;
   }
   newCommentReq.text = text.value;
@@ -241,21 +242,28 @@ const createComment = () => {
   });
 };
 
-const init = () => {
-  getData();
+let initLock = false;
+const init = async () => {
+  if (initLock) return;
+  initLock = true;
+  await getData();
   text.value = "";
   pageStart = 0;
+  getCommentsReq.page = 0;
   comments.data = [];
   comments.likeData = [];
   allCommentsLoaded = false;
-  isCommentsLoaded = false;
-  getCommentsData();
+  isCommentsLoaded = true;
+  await getCommentsData();
+  initLock = false;
 };
-init();
+
+onLoad(() => {
+  init();
+});
 
 onReachBottom(() => {
   if (isCommentsLoaded && !allCommentsLoaded) {
-    isCommentsLoaded = false;
     getCommentsData();
   }
 });
@@ -264,7 +272,7 @@ onPullDownRefresh(() => {
   setTimeout(function () {
     uni.stopPullDownRefresh();
   }, 1000);
-  init();
+  if (!initLock) init();
 });
 
 let enterMaskData = ref(null);
