@@ -1,5 +1,12 @@
 
 
+## [1.2.3](https://github.com/xh-polaris/meowchat-app/compare/v1.2.2...v1.2.3) (2023-01-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复了动态详情页面点赞图标有时无法显示的bug ([#145](https://github.com/xh-polaris/meowchat-app/issues/145)) ([576da42](https://github.com/xh-polaris/meowchat-app/commit/576da42af1bd2ed9e71bae3feb01072a099ea8e5))
+
 ## [1.2.2](https://github.com/xh-polaris/meowchat-app/compare/v1.2.1...v1.2.2) (2023-01-19)
 
 
