@@ -5,8 +5,8 @@ export interface GetUserInfoResp {
   user: User;
 }
 export interface UpdateUserInfoReq {
-  avatarUrl: string;
-  nickname: string;
+  avatarUrl?: string;
+  nickname?: string;
 }
 export interface UpdateUserInfoResp {
   code: number;
