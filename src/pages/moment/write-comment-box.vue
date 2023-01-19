@@ -69,8 +69,10 @@ const emit = defineEmits<{
 }>();
 
 const blur = () => {
-  emit("customBlur");
   emit("update:placeholderText", "发布评论");
+  setTimeout(() => {
+    emit("customBlur");
+  }, 10);
 };
 </script>
 

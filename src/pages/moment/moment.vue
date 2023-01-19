@@ -80,13 +80,8 @@
       @custom-blur="
         () => {
           newCommentFocus = false;
-          if (commentReplyIndex !== -1) {
-            newCommentReq.id = comments.data[commentReplyIndex].id;
-            newCommentReq.scope = 'comment';
-          } else {
-            newCommentReq.id = id;
-            newCommentReq.scope = 'moment';
-          }
+          newCommentReq.id = id;
+          newCommentReq.scope = 'moment';
           commentReplyIndex = -1;
         }
       "
@@ -235,6 +230,8 @@ const focusReplyComment = (name: string, index: number) => {
   placeholderText.value = "回复 @" + name + ": ";
   newCommentFocus.value = true;
   commentReplyIndex = index;
+  newCommentReq.id = comments.data[commentReplyIndex].id;
+  newCommentReq.scope = "comment";
 };
 
 let initLock = false;
@@ -242,6 +239,7 @@ const init = async () => {
   if (initLock) return;
   initLock = true;
   await getData();
+  commentReplyIndex = -1;
   pageStart = 0;
   newCommentReq.text = "";
   getCommentsReq.page = 0;
