@@ -33,7 +33,11 @@ const props = defineProps({
   },
   keyword: {
     type: String,
-    default: {}
+    default() {
+      return {
+        type: "cat"
+      };
+    }
   }
 });
 

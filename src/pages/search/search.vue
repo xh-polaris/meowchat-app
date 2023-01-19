@@ -95,14 +95,11 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed, ref, getCurrentInstance } from "vue";
+import { computed, ref, getCurrentInstance } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import { searchPostPreviews } from "@/apis/post/post";
-import { searchCatPreviews } from "@/apis/collection/collection";
 import QSTabs from "@/components/QS-tabs/QS-tabs.vue";
 import WorldPosts from "@/pages/world/world-posts";
 import Masonry from "@/pages/community/masonry";
-import CatBox from "@/pages/collection/cat-box.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 
 const tabs = ["帖子", "动态", "图鉴"];
@@ -110,21 +107,11 @@ const tabs = ["帖子", "动态", "图鉴"];
 let searchText = ref("");
 // 搜索历史
 let list = ref([]);
-// 搜索结果
-let searchList = reactive([]);
-//搜索动态
-let momentList = reactive([]);
-//搜索帖子
-let postList = ref([]);
-//搜索图鉴
-let catList = reactive([]);
 //是否点击搜索
 let isClickSearch = ref(false);
 
 let current = ref(0);
 let swiperCurrent = ref(0);
-let tabsHeight = ref(0);
-let dx = ref(0);
 const { proxy } = getCurrentInstance();
 
 onLoad(() => {
@@ -144,14 +131,6 @@ function transition({ detail: { dx } }) {
 function animationfinish({ detail: { current } }) {
   proxy.$refs.tabs.setFinishCurrent(current);
   swiperCurrent.value = current;
-}
-
-function onClickItem(val) {
-  current.value = val.currentIndex;
-}
-
-function scollSwiper(e) {
-  current.value = e.target.current;
 }
 
 function onClickCancel() {
@@ -184,7 +163,6 @@ function onClickSearch() {
       uni.setStorageSync("historySearchText", JSON.stringify(list.value));
     }
   } else {
-    console.log("没有搜索");
     uni.showToast({
       title: "请输入搜索内容",
       icon: "none"
@@ -203,13 +181,7 @@ let getStyle = computed(() => {
 });
 
 function clickSearchHistory(item) {
-  // 处于加载中状态
-  // uni.showLoading({
-  // 	title: '加载中',
-  // 	mask: false
-  // });
   searchText.value = item;
-  // 请求搜索
 }
 </script>
 

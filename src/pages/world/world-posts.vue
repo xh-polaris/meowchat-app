@@ -77,7 +77,11 @@ const props = defineProps({
   },
   keyword: {
     type: String,
-    default: {}
+    default() {
+      return {
+        type: "post"
+      };
+    }
   }
 });
 
@@ -98,7 +102,6 @@ const getPostPreviewsAsync = async () => {
         keyword: props.keyword
       })
     ).posts;
-    console.log(posts);
   }
   page++;
   return posts;

@@ -360,7 +360,7 @@ export default {
     }
   },
   watch: {
-    current(n, o) {
+    current(n) {
       this.change(n);
     },
     tabs() {
@@ -379,7 +379,6 @@ export default {
   // #endif
   methods: {
     init() {
-      console.log("init");
       this.countPx();
       let view = uni.createSelectorQuery().in(this);
       for (let i = 0; i < this.tabs.length; i++) {
@@ -393,10 +392,6 @@ export default {
         this.tabsInfo = arr;
         this.countLine2Dx();
         this.countLine3Dx();
-        let _this = this;
-        _this.getQuery(() => {
-          _this.countScrollX();
-        });
       });
     },
     countLine2Dx() {
@@ -417,8 +412,8 @@ export default {
       this.lW = w * (Number(this.animationLineWidth) / 100);
       this.sW = uni.upx2px(Number(this.swiperWidth));
     },
-    emit(index) {
-      this.$emit("change", index);
+    emit() {
+      // this.$emit("change", index);
     },
     change() {
       this.countScrollX();
