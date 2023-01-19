@@ -10,7 +10,10 @@
         open-type="chooseAvatar"
         @chooseavatar="onChooseAvatar"
       >
-        <image :src="updateAvatarUrl" class="avatar" />
+        <image
+          :src="userInfo.avatarUrl ? userInfo.avatarUrl : props.avatarUrl"
+          class="avatar"
+        />
       </button>
       <text class="avatar-hint">点击更换头像</text>
     </view>
@@ -20,7 +23,7 @@
         class="update-nickname"
         placeholder="请输入昵称"
         type="nickname"
-        :value="nickName"
+        :value="userInfo.nickname ? userInfo.nickname : props.nickname"
         @blur="onNickName"
       />
     </view>
@@ -34,32 +37,27 @@
 import { updateUserInfo } from "@/apis/user/user";
 import { UpdateUserInfoReq } from "@/apis/user/user-interfaces";
 import { putObject } from "@/apis/cos/cos";
-import { ref } from "vue";
+import { reactive } from "vue";
 
 const props = defineProps<{
   avatarUrl: string;
   nickname: string;
 }>();
 
-const updateAvatarUrl = ref(props.avatarUrl);
-const nickName = ref(props.nickname);
+const userInfo = reactive<UpdateUserInfoReq>({});
 function onChooseAvatar(e: any) {
   putObject({
     filePath: e.detail.avatarUrl
   }).then((res) => {
-    updateAvatarUrl.value = res.url;
+    userInfo.avatarUrl = res.url;
   });
 }
 
 function onNickName(e: any) {
-  nickName.value = e.detail.value;
+  userInfo.nickname = e.detail.value;
 }
 
 function onClickConfirm() {
-  const userInfo: UpdateUserInfoReq = {
-    avatarUrl: updateAvatarUrl.value,
-    nickname: nickName.value
-  };
   updateUserInfo(userInfo).then((res) => {
     uni.showToast({
       title: res.msg
