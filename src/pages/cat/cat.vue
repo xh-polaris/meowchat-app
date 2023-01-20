@@ -109,7 +109,7 @@
       </view>
       <view v-if="!spread" class="divider1" />
       <view v-if="!spread" class="end">
-        <text style="font-size: 30rpx;">
+        <text style="font-size: 30rpx">
           {{ cat.details }}
         </text>
       </view>
@@ -288,7 +288,7 @@ getCatDetail(getCatDetailReq).then((res) => {
 
     .attribute {
       text-align: center;
-      color: #6FC2FF;
+      color: #6fc2ff;
       font-size: 25rpx;
       margin-bottom: 10rpx;
     }
@@ -368,7 +368,7 @@ getCatDetail(getCatDetailReq).then((res) => {
     margin-right: auto;
     margin-left: 20rpx;
     width: 95%;
-	min-height: 200rpx;
+    min-height: 200rpx;
     color: white;
     // background: linear-gradient(90deg, #0688f3, white);
     background: #eaf6ff;
@@ -381,9 +381,9 @@ getCatDetail(getCatDetailReq).then((res) => {
     width: 70%;
     margin-top: 5rpx;
     margin-bottom: 20rpx;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .imgs {
