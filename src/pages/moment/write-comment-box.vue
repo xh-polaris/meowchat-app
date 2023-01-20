@@ -8,6 +8,7 @@
       class="write-comment"
       type="text"
       @blur="blur"
+      @focus="onFocus"
       @input="$emit('updateText', $event.target.value)"
     />
     <view class="like-box">
@@ -57,16 +58,12 @@ const preReq = reactive<NewCommentReq>({
   text: ""
 });
 
-let index = 0;
 // eslint-disable-next-line no-unused-vars
 const watchReq = watch(
   () => [props.newCommentReq.id, props.newCommentReq.scope],
   (value, oldValue) => {
-    index++;
     preReq.id = oldValue[0];
     preReq.scope = oldValue[1];
-    console.log(index, value);
-    console.log(oldValue);
   }
 );
 
@@ -84,11 +81,13 @@ const localCreateComment = async () => {
   if (res) emit("afterCreateComment");
 };
 
-const blur = () => {
-  uni.showToast({ title: "blur" });
-  emit("update:placeholderText", "发布评论");
+const onFocus = () => {
   preReq.id = props.newCommentReq.id;
   preReq.scope = props.newCommentReq.scope;
+};
+
+const blur = () => {
+  emit("update:placeholderText", "发布评论");
   emit("afterBlur");
 };
 </script>

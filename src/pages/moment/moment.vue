@@ -247,17 +247,17 @@ const init = async () => {
   if (initLock) return;
   initLock = true;
   await getData();
-  commentReplyIndex.value = -1;
   page = 0;
-  newCommentReq.text = "";
-  newCommentReq.scope = "moment";
-  newCommentReq.id = props.id;
   getCommentsReq.page = 0;
   comments.data = [];
   comments.likeData = [];
   allCommentsLoaded = false;
   isCommentsLoaded = true;
   await localGetCommentsData();
+  commentReplyIndex.value = -1;
+  newCommentReq.text = "";
+  newCommentReq.scope = "moment";
+  newCommentReq.id = props.id;
   initLock = false;
 };
 
