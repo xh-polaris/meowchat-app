@@ -90,7 +90,7 @@
     <view class="send-comment-btn" @click="createComment()"> 发布</view>
   </view>
   <view v-if="isReplyOpened" class="reply">
-    <reply @closeReply="closeReply" />
+    <reply @close-reply="closeReply" />
   </view>
 </template>
 <script lang="ts" setup>

@@ -35,6 +35,7 @@ import DraftButton from "@/components/draft-button/draft-button.vue";
 
 import { init } from "@/utils/init";
 import WorldPosts from "@/pages/world/world-posts.vue";
+import { search } from "./utils";
 
 const isInitialized = ref(false);
 

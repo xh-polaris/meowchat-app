@@ -53,12 +53,15 @@
         </view>
       </view>
     </template>
+    <view v-if="postsData.length === 0">
+      <image src="https://static.xhpolaris.com/nodata.png" />
+    </view>
   </template>
 </template>
 
 <script setup>
 import { reactive } from "vue";
-import { getPostPreviews } from "@/apis/post/post";
+import { getPostPreviews, searchPostPreviews } from "@/apis/post/post";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
@@ -67,7 +70,17 @@ const props = defineProps({
   search: {
     type: Object,
     default() {
-      return { type: "default" };
+      return {
+        type: "default"
+      };
+    }
+  },
+  keyword: {
+    type: String,
+    default() {
+      return {
+        type: "post"
+      };
     }
   }
 });
@@ -80,6 +93,13 @@ const getPostPreviewsAsync = async () => {
     posts = (
       await getPostPreviews({
         page: page
+      })
+    ).posts;
+  } else if (props.search.type === "post") {
+    posts = (
+      await searchPostPreviews({
+        page: page,
+        keyword: props.keyword
       })
     ).posts;
   }
@@ -101,6 +121,7 @@ onReachBottom(() => {
 
 <style lang="scss" scoped>
 @import "@/common/user-info.scss";
+
 .post {
   background-color: #ffffff;
   border-top: 1px #f5f5f5 solid;

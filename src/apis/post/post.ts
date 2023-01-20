@@ -6,7 +6,9 @@ import {
   GetPostPreviewsReq,
   GetPostPreviewsResp,
   NewPostReq,
-  NewPostResp
+  NewPostResp,
+  SearchPostPreviewsReq,
+  SearchPostPreviewsResp
 } from "@/apis/post/post-interfaces";
 import { PictureStyle } from "@/apis/cos/cos-interface";
 
@@ -79,6 +81,23 @@ export async function getPostDetail(req: GetPostDetailReq) {
         }
         const data = res.data as GetPostDetailResp;
         data.post.user.avatarUrl += PictureStyle.thumbnail;
+        resolve(data);
+      }
+    });
+  });
+}
+
+export async function searchPostPreviews(req: SearchPostPreviewsReq) {
+  return await new Promise<SearchPostPreviewsResp>((resolve, reject) => {
+    uni.request({
+      url: "/post/search_post",
+      data: req,
+      method: "GET",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as SearchPostPreviewsResp;
         resolve(data);
       }
     });
