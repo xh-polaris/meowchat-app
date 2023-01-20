@@ -107,6 +107,7 @@ import {
   chooseImageMode,
   enterMask,
   enterReply,
+  getCommentsData,
   getLikeData,
   LikeStruct,
   localDoLike,
@@ -118,7 +119,6 @@ import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
 import { doLike } from "@/apis/like/like";
-import { getComments } from "@/apis/comment/comment";
 import {
   GetCommentsReq,
   NewCommentReq
@@ -182,29 +182,22 @@ const comments = reactive<{
 });
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
-let pageStart = 0;
-const getCommentsData = async () => {
+let page = 0;
+const localGetCommentsData = async () => {
   isCommentsLoaded = false;
-  let commentsTemp = (await getComments(getCommentsReq)).comments;
-  if (commentsTemp.length > pageStart) {
-    for (let i = pageStart; i < commentsTemp.length; i++) {
-      comments.data.push(commentsTemp[i]);
-      const commentLikeReq = {
-        targetId: commentsTemp[i].id,
-        targetType: TargetType.Comment
-      };
-      comments.likeData.push(await getLikeData(commentLikeReq));
+  getCommentsData({
+    id: props.id,
+    scope: "moment",
+    page: page
+  }).then((res) => {
+    for (let i = 0; i < res.data.length; i++) {
+      comments.data.push(res.data[i]);
+      comments.likeData.push(res.likeData[i]);
     }
-    if (commentsTemp.length === 10) {
-      getCommentsReq.page += 1;
-      pageStart = 0;
-    } else {
-      pageStart = commentsTemp.length;
-    }
-  } else {
-    allCommentsLoaded = true;
-  }
-  isCommentsLoaded = true;
+    isCommentsLoaded = true;
+    page += 1;
+    if (res.data.length < 10) allCommentsLoaded = true;
+  });
 };
 
 const commentDoLike = async (index: number) => {
@@ -255,7 +248,7 @@ const init = async () => {
   initLock = true;
   await getData();
   commentReplyIndex.value = -1;
-  pageStart = 0;
+  page = 0;
   newCommentReq.text = "";
   newCommentReq.scope = "moment";
   newCommentReq.id = props.id;
@@ -264,7 +257,7 @@ const init = async () => {
   comments.likeData = [];
   allCommentsLoaded = false;
   isCommentsLoaded = true;
-  await getCommentsData();
+  await localGetCommentsData();
   initLock = false;
 };
 
@@ -274,7 +267,7 @@ onLoad(() => {
 
 onReachBottom(() => {
   if (isCommentsLoaded && !allCommentsLoaded) {
-    getCommentsData();
+    localGetCommentsData();
   }
 });
 

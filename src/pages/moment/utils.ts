@@ -1,7 +1,11 @@
 import { DoLikeReq, GetCountReq } from "@/apis/like/like-interface";
 import { doLike, getCount, getUserLiked } from "@/apis/like/like";
-import { NewCommentReq } from "@/apis/comment/comment-interfaces";
-import { newComment } from "@/apis/comment/comment";
+import {
+  GetCommentsReq,
+  NewCommentReq
+} from "@/apis/comment/comment-interfaces";
+import { getComments, newComment } from "@/apis/comment/comment";
+import { TargetType } from "@/apis/schemas";
 
 export const enterReply = uni.createAnimation({
   transformOrigin: "50% 50%",
@@ -34,6 +38,22 @@ export const getLikeData = async (likeReq: GetCountReq) => {
 export const localDoLike = async (req: DoLikeReq) => {
   await doLike(req);
   return await getLikeData(req);
+};
+
+export const getCommentsData = async (req: GetCommentsReq) => {
+  const commentsTemp = (await getComments(req)).comments;
+  const likeDataTemp = [];
+  if (commentsTemp.length > 0) {
+    for (let i = 0; i < commentsTemp.length; i++) {
+      likeDataTemp.push(
+        await getLikeData({
+          targetId: commentsTemp[i].id,
+          targetType: TargetType.Comment
+        })
+      );
+    }
+  }
+  return { data: commentsTemp, likeData: likeDataTemp };
 };
 
 export const createComment = async (req: NewCommentReq) => {

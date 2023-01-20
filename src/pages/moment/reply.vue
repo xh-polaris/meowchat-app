@@ -61,11 +61,10 @@
 </template>
 
 <script lang="ts" setup>
-import { Comment, TargetType } from "@/apis/schemas";
+import { Comment } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { reactive } from "vue";
-import { getLikeData, LikeStruct } from "@/pages/moment/utils";
-import { getComments } from "@/apis/comment/comment";
+import { getCommentsData, LikeStruct } from "@/pages/moment/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 
 const props = defineProps<{
@@ -83,42 +82,29 @@ const comments = reactive<{
 
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
-let pageStart = 0;
 let page = 0;
-const getCommentsData = async () => {
+const localGetCommentsData = async () => {
   isCommentsLoaded = false;
-  const getCommentsReq = {
+  getCommentsData({
     id: props.mainComment.id,
     scope: "comment",
     page: page
-  };
-  let commentsTemp = (await getComments(getCommentsReq)).comments;
-  if (commentsTemp.length > pageStart) {
-    for (let i = pageStart; i < commentsTemp.length; i++) {
-      comments.data.push(commentsTemp[i]);
-      const commentLikeReq = {
-        targetId: commentsTemp[i].id,
-        targetType: TargetType.Comment
-      };
-      comments.likeData.push(await getLikeData(commentLikeReq));
+  }).then((res) => {
+    for (let i = 0; i < res.data.length; i++) {
+      comments.data.push(res.data[i]);
+      comments.likeData.push(res.likeData[i]);
     }
-    if (commentsTemp.length === 10) {
-      getCommentsReq.page += 1;
-      pageStart = 0;
-    } else {
-      pageStart = commentsTemp.length;
-    }
-  } else {
-    allCommentsLoaded = true;
-  }
-  isCommentsLoaded = true;
+    isCommentsLoaded = true;
+    page += 1;
+    if (res.data.length < 10) allCommentsLoaded = true;
+  });
 };
 
-getCommentsData();
+localGetCommentsData();
 
 onReachBottom(() => {
   if (isCommentsLoaded && !allCommentsLoaded) {
-    getCommentsData();
+    localGetCommentsData();
   }
 });
 
