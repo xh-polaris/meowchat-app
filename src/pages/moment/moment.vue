@@ -47,7 +47,9 @@
           {{ item.text }}
         </view>
         <view v-if="item.comments > 0" class="reply-info">
-          <text @click="onClickReplies()"> {{ item.comments }}条相关回复</text>
+          <text @click="onClickReplies(index)">
+            {{ item.comments }}条相关回复
+          </text>
           <image
             class="arrow-right"
             src="/static/images/arrow_right_blue.png"
@@ -90,7 +92,11 @@
     />
   </view>
   <view v-if="isReplyOpened" class="reply">
-    <reply @close-reply="closeReply" />
+    <reply
+      :like-data="comments.likeData[selectIndex]"
+      :main-comment="comments.data[selectIndex]"
+      @close-reply="closeReply"
+    />
   </view>
 </template>
 
@@ -279,12 +285,15 @@ onPullDownRefresh(() => {
   if (!initLock) init();
 });
 
+const selectIndex = ref(0);
+
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
 const isReplyOpened = ref(false);
 
-function onClickReplies() {
+function onClickReplies(index: number) {
+  selectIndex.value = index;
   isReplyOpened.value = true;
 }
 

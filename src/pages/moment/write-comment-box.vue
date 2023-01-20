@@ -27,16 +27,13 @@
 
 <script lang="ts" setup>
 import { NewCommentReq } from "@/apis/comment/comment-interfaces";
-import { createComment } from "@/pages/moment/utils";
+import { createComment, LikeStruct } from "@/pages/moment/utils";
 import { reactive, watch } from "vue";
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps<{
   newCommentReq: NewCommentReq;
-  likeData: {
-    count: number;
-    isLike: boolean;
-  };
+  likeData: LikeStruct;
   placeholderText: string;
   focus: boolean;
 }>();
