@@ -21,22 +21,14 @@
         {{ likeData.count }}
       </view>
     </view>
-    <view
-      class="send-comment-btn"
-      @click="
-        createComment(newCommentReq).then((res) => {
-          if (res) $emit('afterCreateComment');
-        })
-      "
-    >
-      发布
-    </view>
+    <view class="send-comment-btn" @click="localCreateComment"> 发布</view>
   </view>
 </template>
 
 <script lang="ts" setup>
 import { NewCommentReq } from "@/apis/comment/comment-interfaces";
 import { createComment } from "@/pages/moment/utils";
+import { reactive, watch } from "vue";
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps<{
@@ -59,14 +51,48 @@ const emit = defineEmits<{
   // eslint-disable-next-line no-unused-vars
   (e: "afterCreateComment"): void;
   // eslint-disable-next-line no-unused-vars
-  (e: "customBlur"): void;
+  (e: "afterBlur"): void;
 }>();
 
+const preReq = reactive<NewCommentReq>({
+  id: props.newCommentReq.id,
+  scope: "moment",
+  text: ""
+});
+
+let index = 0;
+// eslint-disable-next-line no-unused-vars
+const watchReq = watch(
+  () => [props.newCommentReq.id, props.newCommentReq.scope],
+  (value, oldValue) => {
+    index++;
+    preReq.id = oldValue[0];
+    preReq.scope = oldValue[1];
+    console.log(index, value);
+    console.log(oldValue);
+  }
+);
+
+const localCreateComment = async () => {
+  let res = null;
+  if (props.focus) {
+    res = await createComment(props.newCommentReq);
+  } else {
+    res = await createComment({
+      id: preReq.id,
+      scope: preReq.scope,
+      text: props.newCommentReq.text
+    });
+  }
+  if (res) emit("afterCreateComment");
+};
+
 const blur = () => {
+  uni.showToast({ title: "blur" });
   emit("update:placeholderText", "发布评论");
-  setTimeout(() => {
-    emit("customBlur");
-  }, 10);
+  preReq.id = props.newCommentReq.id;
+  preReq.scope = props.newCommentReq.scope;
+  emit("afterBlur");
 };
 </script>
 

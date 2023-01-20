@@ -47,7 +47,7 @@
           {{ item.text }}
         </view>
         <view v-if="item.comments > 0" class="reply-info">
-          <text @click="onClickReplies()"> {{ item.comments }}条相关回复 </text>
+          <text @click="onClickReplies()"> {{ item.comments }}条相关回复</text>
           <image
             class="arrow-right"
             src="/static/images/arrow_right_blue.png"
@@ -77,14 +77,6 @@
           newCommentReq.text = newText;
         }
       "
-      @custom-blur="
-        () => {
-          newCommentFocus = false;
-          newCommentReq.id = id;
-          newCommentReq.scope = 'moment';
-          commentReplyIndex = -1;
-        }
-      "
       @do-like="
         localDoLike({
           targetId: id,
@@ -93,7 +85,8 @@
           moment.likeData = res;
         })
       "
-      @after-create-comment="init()"
+      @after-create-comment="init"
+      @after-blur="afterBlur"
     />
   </view>
   <view v-if="isReplyOpened" class="reply">
@@ -110,6 +103,7 @@ import {
   enterReply,
   getLikeData,
   LikeStruct,
+  localDoLike,
   onClickImage
 } from "@/pages/moment/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
@@ -216,9 +210,9 @@ const commentDoLike = async (index: number) => {
   comments.likeData[index] = await getLikeData(commentLikeReq);
 };
 
-let commentReplyIndex = -1;
+let commentReplyIndex = ref(-1);
 const placeholderText = ref("发布评论");
-const newCommentFocus = ref(false);
+const newCommentFocus = ref<boolean>(false);
 
 const newCommentReq = reactive<NewCommentReq>({
   text: "",
@@ -226,12 +220,27 @@ const newCommentReq = reactive<NewCommentReq>({
   scope: "moment"
 });
 
+const refreshReplyIndex = (index: number) => {
+  if (index != -1) {
+    commentReplyIndex.value = index;
+    newCommentReq.id = comments.data[commentReplyIndex.value].id;
+    newCommentReq.scope = "comment";
+  } else {
+    newCommentReq.id = props.id;
+    newCommentReq.scope = "moment";
+    commentReplyIndex.value = -1;
+  }
+};
+
+const afterBlur = () => {
+  newCommentFocus.value = false;
+  refreshReplyIndex(-1);
+};
+
 const focusReplyComment = (name: string, index: number) => {
   placeholderText.value = "回复 @" + name + ": ";
   newCommentFocus.value = true;
-  commentReplyIndex = index;
-  newCommentReq.id = comments.data[commentReplyIndex].id;
-  newCommentReq.scope = "comment";
+  refreshReplyIndex(index);
 };
 
 let initLock = false;
@@ -239,9 +248,11 @@ const init = async () => {
   if (initLock) return;
   initLock = true;
   await getData();
-  commentReplyIndex = -1;
+  commentReplyIndex.value = -1;
   pageStart = 0;
   newCommentReq.text = "";
+  newCommentReq.scope = "moment";
+  newCommentReq.id = props.id;
   getCommentsReq.page = 0;
   comments.data = [];
   comments.likeData = [];
