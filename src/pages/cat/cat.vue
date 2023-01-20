@@ -22,7 +22,7 @@
       </scroll-view>
     </view>
     <view class="progress-box">
-      <view class="text-box1">
+      <view class="text-box1 font-weight">
         <text>{{ cat.name }}</text>
       </view>
 
@@ -40,19 +40,19 @@
     <view class="info">
       <view class="combination">
         <view class="attribute"> 年龄</view>
-        <view class="content">
+        <view class="content font-weight font-lg">
           {{ cat.age }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute"> 花色</view>
-        <view class="content">
+        <view class="content font-weight font-lg">
           {{ cat.color }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute"> 当前地区</view>
-        <view class="area-content">
+        <view class="area-content font-weight font-lg">
           {{ cat.area }}
         </view>
       </view>
@@ -60,19 +60,19 @@
     <view class="info">
       <view class="combination">
         <view class="attribute"> 性别</view>
-        <view class="content">
+        <view class="content font-weight font-lg">
           {{ cat.sex }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute"> 绝育情况</view>
-        <view class="content">
+        <view class="content font-weight font-lg">
           {{ Sterilized }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute"> 是否剪耳</view>
-        <view class="content">
+        <view class="content font-weight font-lg">
           {{ Snipped }}
         </view>
       </view>
@@ -109,7 +109,7 @@
       </view>
       <view v-if="!spread" class="divider1" />
       <view v-if="!spread" class="end">
-        <text class="detail_info">
+        <text style="font-size: 30rpx">
           {{ cat.details }}
         </text>
       </view>
@@ -288,7 +288,7 @@ getCatDetail(getCatDetailReq).then((res) => {
 
     .attribute {
       text-align: center;
-      color: #1fa1ff;
+      color: #6fc2ff;
       font-size: 25rpx;
       margin-bottom: 10rpx;
     }
@@ -368,7 +368,7 @@ getCatDetail(getCatDetailReq).then((res) => {
     margin-right: auto;
     margin-left: 20rpx;
     width: 95%;
-    height: 200rpx;
+    min-height: 200rpx;
     color: white;
     // background: linear-gradient(90deg, #0688f3, white);
     background: #eaf6ff;
@@ -378,9 +378,12 @@ getCatDetail(getCatDetailReq).then((res) => {
   .detail_info {
     font-size: 28rpx;
     font-weight: 400;
-    width: 100%;
+    width: 70%;
     margin-top: 5rpx;
     margin-bottom: 20rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .imgs {

@@ -2,6 +2,12 @@
   <view class="page">
     <view class="search-bar">
       <view class="search-bar-box">
+        <image
+          class="ml-2"
+          style="width: 40rpx; margin-top: 17rpx"
+          mode="widthFix"
+          src="/static/images/search.png"
+        />
         <input
           ref="getValue"
           v-model="searchText"
@@ -10,7 +16,6 @@
           placeholder="搜索帖子|动态|图鉴"
           type="text"
         />
-        <image class="search-span" src="/static/images/search_span.png" />
       </view>
       <view v-if="isClickSearch" class="cancel" @click="onClickCancel">
         取消
@@ -41,69 +46,60 @@
       </view>
     </view>
 
-    <!-- 搜索结果 -->
-    <view v-if="isClickSearch" class="QS-tabs-box">
-      <QSTabs
-        ref="tabs"
-        :tabs="tabs"
-        animation-mode="line3"
-        :current="current"
-        active-color="#adadad"
-        line-color="#1FA1FF"
-        swiper-width="750"
-        @change="change"
+    <view v-if="isClickSearch" class="">
+      <view style="margin-top: 20upx">
+        <zzx-tabs
+          ref="mytabs"
+          :items="items"
+          :current="current"
+          @click-item="onClickItem"
+        >
+        </zzx-tabs>
+      </view>
+      <view
+        style="
+          margin-top: 20upx;
+          color: #999999;
+          font-size: 24upx;
+          height: 260upx;
+        "
       >
-      </QSTabs>
-    </view>
-    <swiper
-      v-if="isClickSearch"
-      :style="{ height: '1200rpx' }"
-      :current="swiperCurrent"
-      @transition="transition"
-      @animationfinish="animationfinish"
-    >
-      <!-- 帖子 -->
-      <swiper-item :key="index" class="swiper-item">
-        <scroll-view scroll-y style="height: 100%; width: 100%">
+        <view v-show="current === 0">
+          <!-- 帖子 -->
           <world-posts
             :search="{ type: 'post' }"
             :keyword="searchText"
           ></world-posts>
-        </scroll-view>
-      </swiper-item>
-      <!-- 动态 -->
-      <swiper-item :key="index" class="swiper-item">
-        <scroll-view scroll-y style="height: 100%; width: 100%">
+        </view>
+        <view v-show="current === 1">
+          <!-- 动态 -->
           <masonry
             v-if="!isRefreshing"
             :search="{ type: 'moment' }"
             :keyword="searchText"
           />
-        </scroll-view>
-      </swiper-item>
-      <!-- 图鉴 -->
-      <swiper-item :key="index" class="swiper-item">
-        <scroll-view scroll-y style="height: 100%; width: 100%">
+        </view>
+        <view v-show="current === 2">
+          <!-- 图鉴 -->
           <search-cats
             :search="{ type: 'cat' }"
             :keyword="searchText"
           ></search-cats>
-        </scroll-view>
-      </swiper-item>
-    </swiper>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, getCurrentInstance } from "vue";
+import { computed, ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import QSTabs from "@/components/QS-tabs/QS-tabs.vue";
 import WorldPosts from "@/pages/world/world-posts";
 import Masonry from "@/pages/community/masonry";
 import SearchCats from "@/pages/search/search-cats.vue";
+import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 
-const tabs = ["帖子", "动态", "图鉴"];
-
+const items = ["帖子", "动态", "图鉴"];
 let searchText = ref("");
 // 搜索历史
 let list = ref([]);
@@ -111,8 +107,6 @@ let list = ref([]);
 let isClickSearch = ref(false);
 
 let current = ref(0);
-let swiperCurrent = ref(0);
-const { proxy } = getCurrentInstance();
 
 onLoad(() => {
   if (list.value.length === 0) {
@@ -120,25 +114,20 @@ onLoad(() => {
   }
 });
 
-function change(index) {
-  swiperCurrent.value = index;
-}
-
-function transition({ detail: { dx } }) {
-  proxy.$refs.tabs.setDx(dx);
-}
-
-function animationfinish({ detail: { current } }) {
-  proxy.$refs.tabs.setFinishCurrent(current);
-  swiperCurrent.value = current;
+function onClickItem(e) {
+  if (current.value !== e.currentIndex) {
+    current.value = e.currentIndex;
+  }
 }
 
 function onClickCancel() {
   isClickSearch.value = !isClickSearch.value;
+  uni.navigateBack({
+    delta: 1
+  });
 }
 
 function onClickSearch() {
-  isClickSearch.value = !isClickSearch.value;
   // 收起键盘
   uni.hideKeyboard();
   uni.showLoading({
@@ -150,6 +139,7 @@ function onClickSearch() {
   }, 1000);
   if (searchText.value !== "") {
     // 加入搜索历史
+    isClickSearch.value = !isClickSearch.value;
     let index = list.value.findIndex((v) => v === searchText.value);
     if (index !== -1) {
       if (index !== 0) {
