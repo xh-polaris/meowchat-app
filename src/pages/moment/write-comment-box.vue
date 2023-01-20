@@ -12,17 +12,11 @@
     />
     <view class="like-box">
       <view
-        v-if="!likeData.isLike"
-        :style="{ backgroundImage: 'url(/static/images/like_grey_0.png)' }"
-        class="like-icon"
+        v-if="likeData.isLike"
+        class="like-icon liked"
         @click="$emit('doLike')"
       />
-      <view
-        v-else
-        :style="{ backgroundImage: 'url(/static/images/like_grey_1.png)' }"
-        class="like-icon"
-        @click="$emit('doLike')"
-      />
+      <view v-else class="like-icon" @click="$emit('doLike')" />
       <view class="like-num">
         {{ likeData.count }}
       </view>
@@ -113,6 +107,11 @@ const blur = () => {
       width: calc(20 / 390 * 100vw);
       height: calc(20 / 390 * 100vw);
       background-size: 100% 100%;
+      background-image: url("/static/images/like_grey_0.png");
+
+      &.liked {
+        background-image: url("/static/images/like_grey_1.png");
+      }
     }
 
     .like-num {
