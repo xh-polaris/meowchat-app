@@ -1,5 +1,21 @@
 
 
+## [1.2.3](https://github.com/xh-polaris/meowchat-app/compare/v1.2.2...v1.2.3) (2023-01-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复了动态详情页面点赞图标有时无法显示的bug ([#145](https://github.com/xh-polaris/meowchat-app/issues/145)) ([576da42](https://github.com/xh-polaris/meowchat-app/commit/576da42af1bd2ed9e71bae3feb01072a099ea8e5))
+
+## [1.2.2](https://github.com/xh-polaris/meowchat-app/compare/v1.2.1...v1.2.2) (2023-01-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 限制标签个数和限制标签字数 ([#143](https://github.com/xh-polaris/meowchat-app/issues/143)) ([a414492](https://github.com/xh-polaris/meowchat-app/commit/a414492308d3c600a27648e70666f1ee22d94856))
+* 修复更改名称头像后，我的页面不立刻刷新的问题 ([b7aefc6](https://github.com/xh-polaris/meowchat-app/commit/b7aefc6a8fd54bd8f648daf0037cec30e6b75784))
+* 修改修改个人信息页面样式 ([#144](https://github.com/xh-polaris/meowchat-app/issues/144)) ([8b569cc](https://github.com/xh-polaris/meowchat-app/commit/8b569cc908d31c25a49aae9e552900918d02e1ab))
+
 ## [1.2.1](https://github.com/xh-polaris/meowchat-app/compare/v1.2.0...v1.2.1) (2023-01-18)
 
 

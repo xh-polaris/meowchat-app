@@ -4,29 +4,32 @@
       class="bg-set"
       src="https://static.xhpolaris.com/profile_background.png"
     />
-    <view class="content">
-      <view class="choose-avatar-row">
-        <button
-          class="avatar-wrapper"
-          open-type="chooseAvatar"
-          @chooseavatar="onChooseAvatar"
-        >
-          <image :src="avatarUrl" class="avatar" />
-        </button>
-        <text>点击选择头像</text>
-      </view>
-      <view class="choose-nickname-row">
-        <text>新昵称:</text>
-        <input
-          class="title"
-          placeholder="请输入昵称"
-          type="nickname"
-          :value="nickName"
-          @blur="onNickName"
+    <view class="choose-avatar-row">
+      <button
+        class="avatar-wrapper"
+        open-type="chooseAvatar"
+        @chooseavatar="onChooseAvatar"
+      >
+        <image
+          :src="userInfo.avatarUrl ? userInfo.avatarUrl : props.avatarUrl"
+          class="avatar"
         />
-      </view>
+      </button>
+      <text class="avatar-hint">点击更换头像</text>
     </view>
-    <button class="confirm-change" @click="onClickConfirm()">确认更改</button>
+    <text class="nickname">昵称</text>
+    <view class="choose-nickname-row">
+      <input
+        class="update-nickname"
+        placeholder="请输入昵称"
+        type="nickname"
+        :value="userInfo.nickname ? userInfo.nickname : props.nickname"
+        @blur="onNickName"
+      />
+    </view>
+    <button class="confirm-change" @click="onClickConfirm()">
+      <text class="save">确认</text>
+    </button>
   </view>
 </template>
 
@@ -34,33 +37,27 @@
 import { updateUserInfo } from "@/apis/user/user";
 import { UpdateUserInfoReq } from "@/apis/user/user-interfaces";
 import { putObject } from "@/apis/cos/cos";
-import { ref } from "vue";
+import { reactive } from "vue";
 
 const props = defineProps<{
   avatarUrl: string;
   nickname: string;
 }>();
 
-const avatarUrl = ref(props.avatarUrl);
-const nickName = ref(props.nickname);
-
+const userInfo = reactive<UpdateUserInfoReq>({});
 function onChooseAvatar(e: any) {
   putObject({
     filePath: e.detail.avatarUrl
   }).then((res) => {
-    avatarUrl.value = res.url;
+    userInfo.avatarUrl = res.url;
   });
 }
 
 function onNickName(e: any) {
-  nickName.value = e.detail.value;
+  userInfo.nickname = e.detail.value;
 }
 
 function onClickConfirm() {
-  const userInfo: UpdateUserInfoReq = {
-    avatarUrl: avatarUrl.value,
-    nickname: nickName.value
-  };
   updateUserInfo(userInfo).then((res) => {
     uni.showToast({
       title: res.msg
@@ -73,6 +70,11 @@ function onClickConfirm() {
 </script>
 
 <style lang="scss" scoped>
+.content {
+  width: 100%;
+  height: 40%;
+  background-color: #eeeeee;
+}
 .bg-set {
   position: fixed;
   width: 100%;
@@ -82,68 +84,63 @@ function onClickConfirm() {
   z-index: -1;
   opacity: 0.9; //设置透明度
 }
-
-.content {
-  box-shadow: 0 0 10rpx #eeeeee;
-  padding: 20rpx;
-  margin: 30rpx 60rpx 60rpx;
-  border-radius: 20rpx;
-  background-color: #ffffff;
-}
-
 .choose-avatar-row {
   width: 100%;
-  height: 20%;
-  display: flex;
-  justify-content: flex-start;
+  height: 80%;
   align-items: center;
-  padding: 10px 2px;
-  font-size: 14px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-
+  text-align: center;
+  font-size: 28rpx;
+  margin-bottom: 10%;
   .avatar-wrapper {
-    width: 160rpx;
-    height: 160rpx;
+    width: 260rpx;
+    height: 260rpx;
     margin-top: 40rpx;
     margin-bottom: 40rpx;
-    margin-left: 140rpx;
-  }
-
-  .avatar {
-    width: 100%;
-    height: 100%;
+    border-radius: 50%;
+    .avatar {
+      width: 260rpx;
+      height: 260rpx;
+      border-radius: 50%;
+      margin-left: -25rpx;
+    }
   }
 }
-
-.avatar-wrapper {
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  padding: 0;
-  margin-right: 10px;
-
-  .avatar {
-    width: 100%;
-    height: 100%;
-  }
+.avatar-hint {
+  color: #888888;
+}
+.nickname {
+  margin-left: 70rpx;
+  font-size: 40rpx;
+  color: #858585;
 }
 
 .choose-nickname-row {
-  width: 100%;
-  height: 20%;
+  width: 92%;
+  height: 60rpx;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 2px;
-  font-size: 14px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  padding: 20rpx 4rpx;
+  margin-top: 20rpx;
+  margin-left: 30rpx;
+  background-color: #e6e6e6;
+  border-radius: 25rpx;
+  .update-nickname {
+    margin-left: 40rpx;
+    font-size: 40rpx;
+  }
 }
 
 .confirm-change {
-  margin-top: 20rpx;
-  width: 60%;
-  background-color: azure;
+  margin-top: 200rpx;
+  margin-left: 30rpx;
+  height: 100rpx;
+  width: 92%;
+  border-radius: 25rpx;
+  background-color: #1fa1ff;
+  .save {
+    color: #fcfcfc;
+    font-size: 40rpx;
+  }
 }
 </style>

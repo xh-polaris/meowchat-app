@@ -108,16 +108,19 @@
 import { reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
+import { onShow } from "@dcloudio/uni-app";
 
 const userInfo = reactive<User>({
   id: "",
   nickname: "微信用户",
   avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
 });
-getUserInfo().then((res) => {
-  userInfo.id = res.user.id;
-  userInfo.nickname = res.user.nickname;
-  userInfo.avatarUrl = res.user.avatarUrl;
+onShow(() => {
+  getUserInfo().then((res) => {
+    userInfo.id = res.user.id;
+    userInfo.nickname = res.user.nickname;
+    userInfo.avatarUrl = res.user.avatarUrl;
+  });
 });
 const userOptions = [
   {

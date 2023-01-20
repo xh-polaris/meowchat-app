@@ -47,7 +47,7 @@
       </template>
     </view>
   </view>
-  <view v-if="leftHeight === 0 && rightHeight === 0">
+  <view v-if="leftHeight===0&&rightHeight===0">
     <image src="https://static.xhpolaris.com/nodata.png" />
   </view>
 </template>

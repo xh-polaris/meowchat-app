@@ -1,5 +1,5 @@
 <template>
-  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
+  <view class="reply-mask" @click="leaveReply()" />
 
   <view class="container">
     <view class="post-info-box">
@@ -44,9 +44,7 @@
           {{ item.text }}
         </view>
         <view v-if="item.comments > 0" class="reply-info">
-          <text @click="onClickReplies(index)">
-            {{ item.comments }}条相关回复
-          </text>
+          <text @click="onClickReplies()"> {{ item.comments }}条相关回复 </text>
           <image
             class="arrow-right"
             src="/static/images/arrow_right_blue.png"
@@ -54,17 +52,11 @@
         </view>
         <view v-if="comments.likeData[index]" class="like-box">
           <view
-            v-if="!comments.likeData[index].isLike"
-            :style="{ backgroundImage: 'url(/static/images/like_grey_0.png)' }"
-            class="like-icon"
+            v-if="comments.likeData[index].isLike"
+            class="like-icon liked"
             @click="commentDoLike(index)"
           />
-          <view
-            v-else
-            :style="{ backgroundImage: 'url(/static/images/like_grey_1.png)' }"
-            class="like-icon"
-            @click="commentDoLike(index)"
-          />
+          <view v-else class="like-icon" @click="commentDoLike(index)" />
           <text class="like-num">
             {{ comments.likeData[index].count }}
           </text>
@@ -81,17 +73,11 @@
       />
       <view class="like-box">
         <view
-          v-if="!moment.likeData.isLike"
-          :style="{ backgroundImage: 'url(/static/images/like_grey_0.png)' }"
-          class="like-icon"
+          v-if="moment.likeData.isLike"
+          class="like-icon liked"
           @click="momentDoLike()"
         />
-        <view
-          v-else
-          :style="{ backgroundImage: 'url(/static/images/like_grey_1.png)' }"
-          class="like-icon"
-          @click="momentDoLike()"
-        />
+        <view v-else class="like-icon" @click="momentDoLike()" />
         <view class="like-num">
           {{ moment.likeData.count }}
         </view>
@@ -480,6 +466,11 @@ function leaveReply() {
           width: calc(16 / 390 * 100vw);
           height: calc(16 / 390 * 100vw);
           background-size: 100% 100%;
+          background-image: url("/static/images/like_grey_0.png");
+
+          &.liked {
+            background-image: url("/static/images/like_grey_1.png");
+          }
         }
 
         .like-num {
@@ -529,6 +520,11 @@ function leaveReply() {
         width: calc(20 / 390 * 100vw);
         height: calc(20 / 390 * 100vw);
         background-size: 100% 100%;
+        background-image: url("/static/images/like_grey_0.png");
+
+        &.liked {
+          background-image: url("/static/images/like_grey_1.png");
+        }
       }
 
       .like-num {
