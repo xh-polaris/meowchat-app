@@ -79,9 +79,11 @@ let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
   page: 0,
   keyword: ""
 });
+const allCats=ref<CatPreview[]>([]);
 let cats = ref<CatPreview[]>([]);
 let whetherSearch = false;
 getCatPreviews(getCatPreviewsReq).then((res) => {
+  allCats.value.push(...res.cats);
   cats.value.push(...res.cats);
 });
 
@@ -105,9 +107,16 @@ function onClickSwitch() {
 
 function onClickSearch() {
   searchCatPreviews(searchCatPreviewsReq).then((res) => {
-    cats.value = [];
-    cats.value = res.cats;
-    whetherSearch = true;
+	if(res.cats.length!=0)
+    {
+		cats.value = res.cats;
+		whetherSearch = true;
+	}
+	else
+	{
+		cats.value=allCats.value;
+		whetherSearch = false;
+	}
   });
 }
 
