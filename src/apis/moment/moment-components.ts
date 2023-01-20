@@ -9,6 +9,19 @@ export interface DeleteMomentResp {
   msg: string;
 }
 
+export interface SearchMomentPreviewsReq {
+  page: number;
+  keyword: string;
+  communityId: string;
+  Authorization?: string;
+}
+
+export interface SearchMomentPreviewsResp {
+  moments: Moment[];
+  code: number;
+  msg: string;
+}
+
 export interface NewMomentReq {
   id?: string; // 留空表示创建
   title: string;

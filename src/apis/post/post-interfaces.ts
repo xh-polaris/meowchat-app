@@ -10,6 +10,18 @@ export interface GetPostPreviewsResp {
   msg: string;
 }
 
+export interface SearchPostPreviewsReq {
+  page: number;
+  keyword: string;
+  Authorization?: string;
+}
+
+export interface SearchPostPreviewsResp {
+  posts: Post[];
+  code: number;
+  msg: string;
+}
+
 export interface GetPostDetailReq {
   postId: string;
 }
