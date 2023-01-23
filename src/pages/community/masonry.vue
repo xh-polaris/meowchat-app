@@ -69,14 +69,7 @@ const props = defineProps({
       };
     }
   },
-  keyword: {
-    type: String,
-    default() {
-      return {
-        type: "moment"
-      };
-    }
-  }
+  keyword:String
 });
 
 /**

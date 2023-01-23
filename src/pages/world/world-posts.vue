@@ -75,14 +75,7 @@ const props = defineProps({
       };
     }
   },
-  keyword: {
-    type: String,
-    default() {
-      return {
-        type: "post"
-      };
-    }
-  }
+  keyword: String
 });
 
 let postsData = reactive([]);

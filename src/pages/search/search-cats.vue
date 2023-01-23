@@ -31,14 +31,7 @@ const props = defineProps({
       };
     }
   },
-  keyword: {
-    type: String,
-    default() {
-      return {
-        type: "cat"
-      };
-    }
-  }
+  keyword: String
 });
 
 let catsData = reactive([]);
