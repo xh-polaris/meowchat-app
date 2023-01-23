@@ -66,6 +66,7 @@
       >
         <view v-show="current === 0">
           <!-- 帖子 -->
+
           <world-posts search="post" :keyword="searchText"></world-posts>
         </view>
         <view v-show="current === 1">

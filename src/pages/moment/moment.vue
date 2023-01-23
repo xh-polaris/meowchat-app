@@ -40,7 +40,10 @@
           </text>
           <text class="comment-time"> · {{ displayTime(item.createAt) }}</text>
         </view>
-        <view class="comment-content">
+        <view
+          class="comment-content"
+          @click="focusReplyComment(item.user.nickname, index)"
+        >
           {{ item.text }}
         </view>
         <view v-if="item.comments > 0" class="reply-info">
@@ -97,6 +100,7 @@ import {
   chooseImageMode,
   enterMask,
   enterReply,
+  getCommentsData,
   getLikeData,
   LikeStruct,
   onClickImage
@@ -107,7 +111,6 @@ import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
 import { doLike } from "@/apis/like/like";
-import { getComments, newComment } from "@/apis/comment/comment";
 import {
   GetCommentsReq,
   NewCommentReq
@@ -155,11 +158,6 @@ const getData = async () => {
   moment.likeData = await getLikeData(likeReq);
 };
 
-const momentDoLike = async () => {
-  await doLike(likeReq);
-  moment.likeData = await getLikeData(likeReq);
-};
-
 const getCommentsReq = reactive<GetCommentsReq>({
   scope: "moment",
   page: 0,
@@ -175,29 +173,22 @@ const comments = reactive<{
 });
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
-let pageStart = 0;
-const getCommentsData = async () => {
+let page = 0;
+const localGetCommentsData = async () => {
   isCommentsLoaded = false;
-  let commentsTemp = (await getComments(getCommentsReq)).comments;
-  if (commentsTemp.length > pageStart) {
-    for (let i = pageStart; i < commentsTemp.length; i++) {
-      comments.data.push(commentsTemp[i]);
-      const commentLikeReq = {
-        targetId: commentsTemp[i].id,
-        targetType: TargetType.Comment
-      };
-      comments.likeData.push(await getLikeData(commentLikeReq));
+  getCommentsData({
+    id: props.id,
+    scope: "moment",
+    page: page
+  }).then((res) => {
+    for (let i = 0; i < res.data.length; i++) {
+      comments.data.push(res.data[i]);
+      comments.likeData.push(res.likeData[i]);
     }
-    if (commentsTemp.length === 10) {
-      getCommentsReq.page += 1;
-      pageStart = 0;
-    } else {
-      pageStart = commentsTemp.length;
-    }
-  } else {
-    allCommentsLoaded = true;
-  }
-  isCommentsLoaded = true;
+    isCommentsLoaded = true;
+    page += 1;
+    if (res.data.length < 10) allCommentsLoaded = true;
+  });
 };
 
 const commentDoLike = async (index: number) => {
@@ -209,23 +200,32 @@ const commentDoLike = async (index: number) => {
   comments.likeData[index] = await getLikeData(commentLikeReq);
 };
 
+let commentReplyIndex = ref(-1);
+const placeholderText = ref("发布评论");
+const newCommentFocus = ref<boolean>(false);
+
 const newCommentReq = reactive<NewCommentReq>({
+  text: "",
   id: props.id,
-  scope: "moment",
-  text: ""
+  scope: "moment"
 });
-const text = ref<string>("");
-const createComment = () => {
-  if (text.value === "" || initLock) {
-    return;
+
+const refreshReplyIndex = (index: number) => {
+  if (index != -1) {
+    commentReplyIndex.value = index;
+    newCommentReq.id = comments.data[commentReplyIndex.value].id;
+    newCommentReq.scope = "comment";
+  } else {
+    newCommentReq.id = props.id;
+    newCommentReq.scope = "moment";
+    commentReplyIndex.value = -1;
   }
-  newCommentReq.text = text.value;
-  newComment(newCommentReq).then((res) => {
-    init();
-    uni.showToast({
-      title: res.msg
-    });
-  });
+};
+
+const focusReplyComment = (name: string, index: number) => {
+  placeholderText.value = "回复 @" + name + ": ";
+  newCommentFocus.value = true;
+  refreshReplyIndex(index);
 };
 
 let initLock = false;
@@ -233,14 +233,17 @@ const init = async () => {
   if (initLock) return;
   initLock = true;
   await getData();
-  text.value = "";
-  pageStart = 0;
+  page = 0;
   getCommentsReq.page = 0;
   comments.data = [];
   comments.likeData = [];
   allCommentsLoaded = false;
   isCommentsLoaded = true;
-  await getCommentsData();
+  await localGetCommentsData();
+  commentReplyIndex.value = -1;
+  newCommentReq.text = "";
+  newCommentReq.scope = "moment";
+  newCommentReq.id = props.id;
   initLock = false;
 };
 
@@ -250,7 +253,7 @@ onLoad(() => {
 
 onReachBottom(() => {
   if (isCommentsLoaded && !allCommentsLoaded) {
-    getCommentsData();
+    localGetCommentsData();
   }
 });
 
@@ -261,12 +264,15 @@ onPullDownRefresh(() => {
   if (!initLock) init();
 });
 
+const selectIndex = ref(0);
+
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
 const isReplyOpened = ref(false);
 
-function onClickReplies() {
+function onClickReplies(index: number) {
+  selectIndex.value = index;
   isReplyOpened.value = true;
 }
 
@@ -483,7 +489,6 @@ function leaveReply() {
       }
     }
   }
-
   .write-comment-box {
     position: fixed;
     left: 0;

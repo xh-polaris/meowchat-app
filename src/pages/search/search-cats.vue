@@ -35,6 +35,7 @@ let catsData = reactive([]);
 let page = 0;
 const getCatPreviewsAsync = async () => {
   let cats = [];
+
   if (props.search === "default") {
     cats = (
       await getCatPreviews({
