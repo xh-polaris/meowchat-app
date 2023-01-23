@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import { NewCommentReq } from "@/apis/comment/comment-interfaces";
 import { createComment, LikeStruct } from "@/pages/moment/utils";
-import { reactive, watch } from "vue";
+import { reactive } from "vue";
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps<{
@@ -57,15 +57,6 @@ const preReq = reactive<NewCommentReq>({
   scope: "moment",
   text: ""
 });
-
-// eslint-disable-next-line no-unused-vars
-const watchReq = watch(
-  () => [props.newCommentReq.id, props.newCommentReq.scope],
-  (value, oldValue) => {
-    preReq.id = oldValue[0];
-    preReq.scope = oldValue[1];
-  }
-);
 
 const localCreateComment = async () => {
   let res = null;

@@ -66,25 +66,16 @@
       >
         <view v-show="current === 0">
           <!-- 帖子 -->
-          <world-posts
-            :search="{ type: 'post' }"
-            :keyword="searchText"
-          ></world-posts>
+
+          <world-posts search="post" :keyword="searchText"></world-posts>
         </view>
         <view v-show="current === 1">
           <!-- 动态 -->
-          <masonry
-            v-if="!isRefreshing"
-            :search="{ type: 'moment' }"
-            :keyword="searchText"
-          />
+          <masonry v-if="!isRefreshing" search="moment" :keyword="searchText" />
         </view>
         <view v-show="current === 2">
           <!-- 图鉴 -->
-          <search-cats
-            :search="{ type: 'cat' }"
-            :keyword="searchText"
-          ></search-cats>
+          <search-cats search="cat" :keyword="searchText"></search-cats>
         </view>
       </view>
     </view>
@@ -109,8 +100,11 @@ let isClickSearch = ref(false);
 let current = ref(0);
 
 onLoad(() => {
-  if (list.value.length === 0) {
-    list.value = JSON.parse(uni.getStorageSync("historySearchText"));
+  let historyText = uni.getStorageSync("historySearchText");
+  if (list.value.length === 0 && historyText) {
+    list.value = JSON.parse(
+      decodeURIComponent(uni.getStorageSync("historySearchText"))
+    );
   }
 });
 
@@ -150,7 +144,10 @@ function onClickSearch() {
     }
     // 保存到本地存储
     if (list.value.length !== 0) {
-      uni.setStorageSync("historySearchText", JSON.stringify(list.value));
+      uni.setStorageSync(
+        "historySearchText",
+        encodeURIComponent(JSON.stringify(list.value))
+      );
     }
   } else {
     uni.showToast({

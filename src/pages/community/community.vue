@@ -40,7 +40,7 @@
         </view>
       </view>
     </view>
-    <masonry v-if="!isRefreshing" :search="{ type: 'default' }" />
+    <masonry v-if="!isRefreshing" search="default" />
   </view>
 
   <draft-button type="moment" />
