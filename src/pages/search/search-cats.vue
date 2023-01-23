@@ -22,29 +22,19 @@ import {
 import { onReachBottom } from "@dcloudio/uni-app";
 import CatBox from "@/pages/collection/cat-box";
 
-const props = defineProps({
-  search: {
-    type: Object,
-    default() {
-      return {
-        type: "default"
-      };
-    }
-  },
-  keyword: String
-});
+const props=defineProps(['search','keyword'])
 
 let catsData = reactive([]);
 let page = 0;
 const getCatPreviewsAsync = async () => {
   let cats = [];
-  if (props.search.type === "default") {
+  if (props.search === "default") {
     cats = (
       await getCatPreviews({
         page: page
       })
     ).cats;
-  } else if (props.search.type === "cat") {
+  } else if (props.search === "cat") {
     cats = (
       await searchCatPreviews({
         page: page,

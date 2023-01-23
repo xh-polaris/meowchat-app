@@ -60,17 +60,7 @@ import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 
-const props = defineProps({
-  search: {
-    type: Object,
-    default() {
-      return {
-        type: "default"
-      };
-    }
-  },
-  keyword:String
-});
+const props=defineProps(['search','keyword'])
 
 /**
  * 在父组件用<masonry :search="{...}"/>
@@ -130,14 +120,14 @@ onReachBottom(() => {
 
 const addBatch = async () => {
   moments = [];
-  if (props.search.type === "default") {
+  if (props.search === "default") {
     moments = (
       await getMomentPreviews({
         page,
         communityId: uni.getStorageSync("communityId")
       })
     ).moments;
-  } else if (props.search.type === "moment") {
+  } else if (props.search === "moment") {
     moments = (
       await searchMomentPreviews({
         page: page,

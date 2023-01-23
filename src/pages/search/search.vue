@@ -43,15 +43,15 @@
         ">
 				<view v-show="current === 0">
 					<!-- 帖子 -->
-					<world-posts :search="{ type: 'post' }" :keyword="searchText"></world-posts>
+					<world-posts search="post" :keyword="searchText"></world-posts>
 				</view>
 				<view v-show="current === 1">
 					<!-- 动态 -->
-					<masonry v-if="!isRefreshing" :search="{ type: 'moment' }" :keyword="searchText" />
+					<masonry v-if="!isRefreshing" search="moment" :keyword="searchText" />
 				</view>
 				<view v-show="current === 2">
 					<!-- 图鉴 -->
-					<search-cats :search="{ type: 'cat' }" :keyword="searchText"></search-cats>
+					<search-cats search="cat" :keyword="searchText"></search-cats>
 				</view>
 			</view>
 		</view>

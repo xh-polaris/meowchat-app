@@ -66,29 +66,19 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 
-const props = defineProps({
-  search: {
-    type: Object,
-    default() {
-      return {
-        type: "default"
-      };
-    }
-  },
-  keyword: String
-});
+const props=defineProps(['search','keyword'])
 
 let postsData = reactive([]);
 let page = 0;
 const getPostPreviewsAsync = async () => {
   let posts = [];
-  if (props.search.type === "default") {
+  if (props.search === "default") {
     posts = (
       await getPostPreviews({
         page: page
       })
     ).posts;
-  } else if (props.search.type === "post") {
+  } else if (props.search === "post") {
     posts = (
       await searchPostPreviews({
         page: page,
