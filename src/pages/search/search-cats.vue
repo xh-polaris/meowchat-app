@@ -22,14 +22,14 @@ import {
 import { onReachBottom } from "@dcloudio/uni-app";
 import CatBox from "@/pages/collection/cat-box";
 
-interface Props{
-	search?:String,
-	keyword?:String
+interface Props {
+  search?: string;
+  keyword?: string;
 }
-const props=withDefaults(defineProps<Props>(),{
-	search:'default',
-	keyword:'cat'
-})
+const props = withDefaults(defineProps<Props>(), {
+  search: "default",
+  keyword: "cat"
+});
 
 let catsData = reactive([]);
 let page = 0;

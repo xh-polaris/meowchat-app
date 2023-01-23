@@ -20,10 +20,7 @@
 
   <view class="top-padding" />
 
-  <world-posts
-    v-if="isInitialized && !isRefreshing"
-    search="default"
-  />
+  <world-posts v-if="isInitialized && !isRefreshing" search="default" />
 
   <draft-button type="post" />
 </template>

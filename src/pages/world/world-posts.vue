@@ -66,14 +66,14 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 
-interface Props{
-	search?:String,
-	keyword?:String
+interface Props {
+  search?: string;
+  keyword?: string;
 }
-const props=withDefaults(defineProps<Props>(),{
-	search:'default',
-	keyword:'post'
-})
+const props = withDefaults(defineProps<Props>(), {
+  search: "default",
+  keyword: "post"
+});
 
 let postsData = reactive([]);
 let page = 0;
