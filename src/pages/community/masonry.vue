@@ -60,7 +60,14 @@ import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 
-const props=defineProps(['search','keyword'])
+interface Props{
+	search?:String,
+	keyword?:String
+}
+const props=withDefaults(defineProps<Props>(),{
+	search:'default',
+	keyword:'cat'
+})
 
 /**
  * 在父组件用<masonry :search="{...}"/>

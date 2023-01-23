@@ -59,14 +59,21 @@
   </template>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive } from "vue";
 import { getPostPreviews, searchPostPreviews } from "@/apis/post/post";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 
-const props=defineProps(['search','keyword'])
+interface Props{
+	search?:String,
+	keyword?:String
+}
+const props=withDefaults(defineProps<Props>(),{
+	search:'default',
+	keyword:'post'
+})
 
 let postsData = reactive([]);
 let page = 0;

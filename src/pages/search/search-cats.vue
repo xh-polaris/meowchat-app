@@ -13,7 +13,7 @@
   </template>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive } from "vue";
 import {
   getCatPreviews,
@@ -22,7 +22,14 @@ import {
 import { onReachBottom } from "@dcloudio/uni-app";
 import CatBox from "@/pages/collection/cat-box";
 
-const props=defineProps(['search','keyword'])
+interface Props{
+	search?:String,
+	keyword?:String
+}
+const props=withDefaults(defineProps<Props>(),{
+	search:'default',
+	keyword:'cat'
+})
 
 let catsData = reactive([]);
 let page = 0;

@@ -22,7 +22,7 @@
 
   <world-posts
     v-if="isInitialized && !isRefreshing"
-    :search="{ type: 'default' }"
+    search="default"
   />
 
   <draft-button type="post" />
