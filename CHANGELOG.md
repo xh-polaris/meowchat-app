@@ -1,3 +1,25 @@
+
+
+## [1.3.0](https://github.com/xh-polaris/meowchat-app/compare/v1.2.1...v1.3.0) (2023-01-20)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 美化个人信息页面样式 ([#144](https://github.com/xh-polaris/meowchat-app/issues/144)) ([930e2c7](https://github.com/xh-polaris/meowchat-app/commit/930e2c7003b33e73e83d0a10d363e4b2573882b6))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 限制标签个数和限制标签字数 ([#143](https://github.com/xh-polaris/meowchat-app/issues/143)) ([a414492](https://github.com/xh-polaris/meowchat-app/commit/a414492308d3c600a27648e70666f1ee22d94856))
+* 修复更改名称头像后，我的页面不立刻刷新的问题 ([c1312f7](https://github.com/xh-polaris/meowchat-app/commit/c1312f7a69ae81953a2a67a908c415c6cf2675fb))
+* 修复了动态详情页面点赞图标有时无法显示的bug ([#145](https://github.com/xh-polaris/meowchat-app/issues/145)) ([c5cac9d](https://github.com/xh-polaris/meowchat-app/commit/c5cac9d795577d13bd69070e86216a77b71dfbc5))
+
+
+### ✨ Features | 新功能
+
+* 二级评论初步完成 ([#148](https://github.com/xh-polaris/meowchat-app/issues/148)) ([680286a](https://github.com/xh-polaris/meowchat-app/commit/680286a376c252192daa8dda40bc39822c086c4d))
+* 实现世界页面的搜索功能 ([#146](https://github.com/xh-polaris/meowchat-app/issues/146)) ([f1a5f45](https://github.com/xh-polaris/meowchat-app/commit/f1a5f45310061ff3227db656a36cae7ba4c731dd))
+
 ## [1.2.3](https://github.com/xh-polaris/meowchat-app/compare/v1.2.2...v1.2.3) (2023-01-19)
 
 
