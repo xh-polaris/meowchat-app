@@ -42,8 +42,7 @@
     </view>
     <masonry v-if="!isRefreshing" search="default" />
   </view>
-
-  <draft-button type="moment" />
+  <tab-bar id="2"></tab-bar>
 </template>
 
 <script lang="ts" setup>
@@ -52,7 +51,7 @@ import Masonry from "@/pages/community/masonry";
 import CarouselFrame from "@/pages/community/carousel-frame";
 import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
-import DraftButton from "@/components/draft-button/draft-button";
+import TabBar from "@/components/tab-bar/tab-bar.vue";
 
 const school = reactive({
   name: "华东师范大学",

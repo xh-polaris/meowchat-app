@@ -102,6 +102,7 @@
       </view>
     </view>
   </view>
+  <tab-bar id="4"></tab-bar>
 </template>
 
 <script lang="ts" setup>
@@ -109,6 +110,7 @@ import { reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onShow } from "@dcloudio/uni-app";
+import TabBar from "@/components/tab-bar/tab-bar.vue";
 
 const userInfo = reactive<User>({
   id: "",

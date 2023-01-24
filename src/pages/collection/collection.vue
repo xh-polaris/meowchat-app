@@ -53,6 +53,7 @@
       <image src="https://static.xhpolaris.com/nodata.png" />
     </view>
   </view>
+  <tab-bar id="3"></tab-bar>
 </template>
 
 <script lang="ts" setup>
@@ -69,6 +70,7 @@ import {
   SearchCatPreviewsReq
 } from "@/apis/collection/collection-interfaces";
 import { CatPreview } from "@/apis/schemas";
+import TabBar from "@/components/tab-bar/tab-bar.vue";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
