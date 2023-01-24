@@ -68,12 +68,7 @@
     </view>
 
     <view class="write-comment-box">
-      <input
-        v-model="text"
-        class="write-comment"
-        placeholder="发表评论..."
-        type="text"
-      />
+      <input class="write-comment" placeholder="发表评论..." type="text" />
       <view class="like-box">
         <view
           v-if="moment.likeData.isLike"

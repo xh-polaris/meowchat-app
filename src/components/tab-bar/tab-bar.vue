@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 
 const props = defineProps<{ id: string }>();
 const selectedId = ref(props.id);
@@ -85,10 +85,6 @@ const tabSwitch = (path: string) => {
     });
   }
 };
-
-onMounted(() => {
-  uni.hideTabBar({});
-});
 </script>
 
 <style lang="scss" scoped>
