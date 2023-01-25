@@ -1,5 +1,22 @@
 
 
+## [1.4.0](https://github.com/xh-polaris/meowchat-app/compare/v1.3.0...v1.4.0) (2023-01-25)
+
+
+### ✨ Features | 新功能
+
+* 将下方原生导航栏重写为自定义导航栏并调整样式 ([#158](https://github.com/xh-polaris/meowchat-app/issues/158)) ([6568661](https://github.com/xh-polaris/meowchat-app/commit/6568661366eae671677163a8467145f447738980))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 压缩图标，删除无用的svg图片减小体积 ([9d74a02](https://github.com/xh-polaris/meowchat-app/commit/9d74a02cb7f566993a71b3613da145aca35e1831))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修正世界搜索时出现的报错&修改props解构方式 ([#157](https://github.com/xh-polaris/meowchat-app/issues/157)) ([fcc4be4](https://github.com/xh-polaris/meowchat-app/commit/fcc4be40c74332474252342e2a9e7c54fce44cfb))
+
 ## [1.3.0](https://github.com/xh-polaris/meowchat-app/compare/v1.2.1...v1.3.0) (2023-01-20)
 
 
