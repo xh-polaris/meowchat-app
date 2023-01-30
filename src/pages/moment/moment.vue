@@ -22,7 +22,7 @@
           :key="index"
           :mode="chooseImageMode(moment.data.photos.length)"
           :src="item"
-          @click="onClickImage(item)"
+          @click="onClickImage(index, moment.data.photos)"
         />
       </view>
     </view>

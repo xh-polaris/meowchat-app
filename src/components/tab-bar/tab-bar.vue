@@ -7,19 +7,10 @@
       @click="item.id === '0' ? tabSwitch(item.url) : tabChange(item.url)"
     >
       <image
-        v-if="item.id === '0'"
-        class="tab-con0"
-        :src="selectedId === item.id ? item.activeIcon : item.icon"
+        :class="chooseIconClass(item.id)"
+        :src="item.id === selectedId ? item.activeIcon : item.icon"
       />
-      <image
-        v-else
-        class="tab-con"
-        :src="selectedId === item.id ? item.activeIcon : item.icon"
-      />
-      <text v-if="selectedId === item.id" class="icon-text0">
-        {{ item.text }}
-      </text>
-      <text v-else class="icon-text1">
+      <text :class="chooseTextClass(item.id)">
         {{ item.text }}
       </text>
     </view>
@@ -69,6 +60,20 @@ const tabContent = [
     text: "我的"
   }
 ];
+function chooseIconClass(id: string) {
+  if (id === "0") {
+    return "tab-con0";
+  } else {
+    return "tab-con";
+  }
+}
+function chooseTextClass(id: string) {
+  if (id === selectedId.value) {
+    return "icon-text0";
+  } else {
+    return "icon-text1";
+  }
+}
 const tabChange = (path: string) => {
   uni.switchTab({
     url: path
@@ -105,11 +110,13 @@ const tabSwitch = (path: string) => {
     display: grid;
   }
   .tab-con {
+    will-change: auto;
     width: 70rpx;
     height: 70rpx;
     margin: 0 30rpx 0 30rpx;
   }
   .tab-con0 {
+    will-change: auto;
     width: 110rpx;
     height: 110rpx;
     margin: 0 30rpx 0 30rpx;

@@ -67,9 +67,10 @@ export const createComment = async (req: NewCommentReq) => {
   return false;
 };
 
-export function onClickImage(url: string) {
+export function onClickImage(index: string, photo: Array<string>) {
   uni.previewImage({
-    urls: [url]
+    current: index,
+    urls: photo
   });
 }
 
