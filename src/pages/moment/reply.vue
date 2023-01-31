@@ -1,12 +1,11 @@
 <template>
-  <view class="background" @touchmove.stop.prevent @click="closeSelf"></view>
+  <view class="background" @click="closeSelf" @touchmove.stop.prevent></view>
   <scroll-view class="frame" scroll-y="true" @touchmove.stop>
     <view class="main">
       <view class="comment">
         <view
           :style="{
-            backgroundImage:
-              'url(https://dummyimage.com/100x100/000/fff&text=user)'
+            backgroundImage: 'url( ' + mainComment.user.avatarUrl + ')'
           }"
           class="avatar"
         ></view>
@@ -14,27 +13,26 @@
           <view class="content">
             <view class="left">
               <view class="upper">
-                <view class="username">Username</view>
-                <view class="timestamp">3小时前</view>
+                <view class="username">{{ mainComment.user.nickname }}</view>
+                <view class="timestamp"
+                  >· {{ displayTime(mainComment.createAt) }}
+                </view>
               </view>
-              <view class="lower"
-                >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-              </view>
+              <view class="lower">{{ mainComment.text }}</view>
             </view>
             <view class="right">
               <view class="likes-frame">
                 <view class="thumb"></view>
-                <view class="likes">3</view>
+                <view class="likes">{{ likeData.count }}</view>
               </view>
             </view>
           </view>
         </view>
       </view>
-      <view class="reply">
+      <view v-for="(item, index) in comments.data" :key="index" class="reply">
         <view
           :style="{
-            backgroundImage:
-              'url(https://dummyimage.com/100x100/000/fff&text=user)'
+            backgroundImage: 'url( ' + item.user.avatarUrl + ')'
           }"
           class="avatar"
         ></view>
@@ -42,211 +40,19 @@
           <view class="content">
             <view class="left">
               <view class="upper">
-                <view class="username">Username</view>
-                <view class="timestamp">3小时前</view>
+                <view class="username">{{ item.user.nickname }}</view>
+                <view class="timestamp"
+                  >· {{ displayTime(item.createAt) }}
+                </view>
               </view>
-              <view class="lower"
-                >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-              </view>
+              <view class="lower">{{ item.text }}</view>
             </view>
-            <view class="right">
+            <view v-if="comments.likeData[index]" class="right">
               <view class="likes-frame">
                 <view class="thumb"></view>
-                <view class="likes">3</view>
+                <view class="likes">{{ comments.likeData[index].count }}</view>
               </view>
             </view>
-          </view>
-          <view class="sub-replies">
-            <view
-              :style="{
-                backgroundImage:
-                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
-              }"
-              class="avatar"
-            ></view>
-            <view class="content">
-              <view class="left">
-                <view class="upper">
-                  <view class="username">Username</view>
-                  <view class="timestamp">3小时前</view>
-                </view>
-                <view class="lower"
-                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-                </view>
-              </view>
-              <view class="right">
-                <view class="likes-frame">
-                  <view class="thumb"></view>
-                  <view class="likes">3</view>
-                </view>
-              </view>
-            </view>
-          </view>
-          <view class="sub-replies">
-            <view
-              :style="{
-                backgroundImage:
-                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
-              }"
-              class="avatar"
-            ></view>
-            <view class="content">
-              <view class="left">
-                <view class="upper">
-                  <view class="username">Username</view>
-                  <view class="timestamp">3小时前</view>
-                </view>
-                <view class="lower"
-                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-                </view>
-              </view>
-              <view class="right">
-                <view class="likes-frame">
-                  <view class="thumb"></view>
-                  <view class="likes">3</view>
-                </view>
-              </view>
-            </view>
-          </view>
-          <view class="sub-replies">
-            <view
-              :style="{
-                backgroundImage:
-                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
-              }"
-              class="avatar"
-            ></view>
-            <view class="content">
-              <view class="left">
-                <view class="upper">
-                  <view class="username">Username</view>
-                  <view class="timestamp">3小时前</view>
-                </view>
-                <view class="lower"
-                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-                </view>
-              </view>
-              <view class="right">
-                <view class="likes-frame">
-                  <view class="thumb"></view>
-                  <view class="likes">3</view>
-                </view>
-              </view>
-            </view>
-          </view>
-          <view class="more-sub-replies">
-            <view>展开更多回复</view>
-            <view class="down-arrow"></view>
-          </view>
-        </view>
-      </view>
-      <view class="reply">
-        <view
-          :style="{
-            backgroundImage:
-              'url(https://dummyimage.com/100x100/000/fff&text=user)'
-          }"
-          class="avatar"
-        ></view>
-        <view class="thread">
-          <view class="content">
-            <view class="left">
-              <view class="upper">
-                <view class="username">Username</view>
-                <view class="timestamp">3小时前</view>
-              </view>
-              <view class="lower"
-                >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-              </view>
-            </view>
-            <view class="right">
-              <view class="likes-frame">
-                <view class="thumb"></view>
-                <view class="likes">3</view>
-              </view>
-            </view>
-          </view>
-          <view class="sub-replies">
-            <view
-              :style="{
-                backgroundImage:
-                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
-              }"
-              class="avatar"
-            ></view>
-            <view class="content">
-              <view class="left">
-                <view class="upper">
-                  <view class="username">Username</view>
-                  <view class="timestamp">3小时前</view>
-                </view>
-                <view class="lower"
-                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-                </view>
-              </view>
-              <view class="right">
-                <view class="likes-frame">
-                  <view class="thumb"></view>
-                  <view class="likes">3</view>
-                </view>
-              </view>
-            </view>
-          </view>
-          <view class="sub-replies">
-            <view
-              :style="{
-                backgroundImage:
-                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
-              }"
-              class="avatar"
-            ></view>
-            <view class="content">
-              <view class="left">
-                <view class="upper">
-                  <view class="username">Username</view>
-                  <view class="timestamp">3小时前</view>
-                </view>
-                <view class="lower"
-                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-                </view>
-              </view>
-              <view class="right">
-                <view class="likes-frame">
-                  <view class="thumb"></view>
-                  <view class="likes">3</view>
-                </view>
-              </view>
-            </view>
-          </view>
-          <view class="sub-replies">
-            <view
-              :style="{
-                backgroundImage:
-                  'url(https://dummyimage.com/100x100/000/fff&text=user)'
-              }"
-              class="avatar"
-            ></view>
-            <view class="content">
-              <view class="left">
-                <view class="upper">
-                  <view class="username">Username</view>
-                  <view class="timestamp">3小时前</view>
-                </view>
-                <view class="lower"
-                  >你说得对，但是喵社区是一款由喵社区团队自主研发的，后面忘了
-                </view>
-              </view>
-              <view class="right">
-                <view class="likes-frame">
-                  <view class="thumb"></view>
-                  <view class="likes">3</view>
-                </view>
-              </view>
-            </view>
-          </view>
-          <view class="more-sub-replies">
-            <view>展开更多回复</view>
-            <view class="down-arrow"></view>
           </view>
         </view>
       </view>
@@ -254,7 +60,54 @@
   </scroll-view>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+import { Comment } from "@/apis/schemas";
+import { displayTime } from "@/utils/time";
+import { reactive } from "vue";
+import { getCommentsData, LikeStruct } from "@/pages/moment/utils";
+import { onReachBottom } from "@dcloudio/uni-app";
+
+const props = defineProps<{
+  mainComment: Comment;
+  likeData: LikeStruct;
+}>();
+
+const comments = reactive<{
+  data: Comment[];
+  likeData: LikeStruct[];
+}>({
+  data: [],
+  likeData: []
+});
+
+let allCommentsLoaded = false;
+let isCommentsLoaded = true;
+let page = 0;
+const localGetCommentsData = async () => {
+  isCommentsLoaded = false;
+  getCommentsData({
+    id: props.mainComment.id,
+    scope: "comment",
+    page: page
+  }).then((res) => {
+    for (let i = 0; i < res.data.length; i++) {
+      comments.data.push(res.data[i]);
+      comments.likeData.push(res.likeData[i]);
+    }
+    isCommentsLoaded = true;
+    page += 1;
+    if (res.data.length < 10) allCommentsLoaded = true;
+  });
+};
+
+localGetCommentsData();
+
+onReachBottom(() => {
+  if (isCommentsLoaded && !allCommentsLoaded) {
+    localGetCommentsData();
+  }
+});
+
 const emits = defineEmits(["closeReply"]);
 
 function closeSelf() {

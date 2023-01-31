@@ -47,7 +47,7 @@
       </template>
     </view>
   </view>
-  <view v-if="moments.length === 0">
+  <view v-if="leftHeight === 0 && rightHeight === 0">
     <image src="https://static.xhpolaris.com/nodata.png" />
   </view>
 </template>
@@ -60,23 +60,13 @@ import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 
-const props = defineProps({
-  search: {
-    type: Object,
-    default() {
-      return {
-        type: "default"
-      };
-    }
-  },
-  keyword: {
-    type: String,
-    default() {
-      return {
-        type: "moment"
-      };
-    }
-  }
+interface Props {
+  search?: string;
+  keyword?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  search: "default",
+  keyword: "cat"
 });
 
 /**
@@ -137,14 +127,14 @@ onReachBottom(() => {
 
 const addBatch = async () => {
   moments = [];
-  if (props.search.type === "default") {
+  if (props.search === "default") {
     moments = (
       await getMomentPreviews({
         page,
         communityId: uni.getStorageSync("communityId")
       })
     ).moments;
-  } else if (props.search.type === "moment") {
+  } else if (props.search === "moment") {
     moments = (
       await searchMomentPreviews({
         page: page,

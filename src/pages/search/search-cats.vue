@@ -13,7 +13,7 @@
   </template>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive } from "vue";
 import {
   getCatPreviews,
@@ -22,36 +22,27 @@ import {
 import { onReachBottom } from "@dcloudio/uni-app";
 import CatBox from "@/pages/collection/cat-box";
 
-const props = defineProps({
-  search: {
-    type: Object,
-    default() {
-      return {
-        type: "default"
-      };
-    }
-  },
-  keyword: {
-    type: String,
-    default() {
-      return {
-        type: "cat"
-      };
-    }
-  }
+interface Props {
+  search?: string;
+  keyword?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  search: "default",
+  keyword: "cat"
 });
 
 let catsData = reactive([]);
 let page = 0;
 const getCatPreviewsAsync = async () => {
   let cats = [];
-  if (props.search.type === "default") {
+
+  if (props.search === "default") {
     cats = (
       await getCatPreviews({
         page: page
       })
     ).cats;
-  } else if (props.search.type === "cat") {
+  } else if (props.search === "cat") {
     cats = (
       await searchCatPreviews({
         page: page,
