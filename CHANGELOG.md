@@ -1,5 +1,12 @@
 
 
+## [1.4.1](https://github.com/xh-polaris/meowchat-app/compare/v1.4.0...v1.4.1) (2023-01-31)
+
+
+### ✨ Features | 新功能
+
+* 动态详情点击预览多张图片可滑动 ([#160](https://github.com/xh-polaris/meowchat-app/issues/160)) ([6d4a41d](https://github.com/xh-polaris/meowchat-app/commit/6d4a41dfad771586788f671e6f5378f2d79384c2))
+
 ## [1.4.0](https://github.com/xh-polaris/meowchat-app/compare/v1.3.0...v1.4.0) (2023-01-25)
 
 
