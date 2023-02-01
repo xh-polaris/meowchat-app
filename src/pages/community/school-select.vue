@@ -1,7 +1,7 @@
 <template>
   <view class="content2">
     <view class="search-bar">
-      <image class="cancel" src="../../static/images/cancel.png" />
+      <image class="cancel" src="/static/images/cancel.png" />
       <view class="search-bar-box">
         <input
           class="search-text"
@@ -17,19 +17,24 @@
     </view>
     <view class="school-select-box">
       <view class="current_school">
-        <view class="current_school_text"> 华东师范大学</view>
+        <view class="current_school_text">{{ currentSchool }}</view>
       </view>
       <view v-if="sel" class="select" @click="change">
         <text>{{ currentNavBtn }}</text>
-        <image class="arrow" src="../../static/images/down-black.svg" />
+        <image class="arrow" src="/static/images/down-black.png" />
       </view>
       <view v-else class="box">
         <view class="select2" @click="change">
           <text>{{ currentNavBtn }}</text>
-          <image class="arrow" src="../../static/images/up-black.svg" />
+          <image class="arrow" src="/static/images/up-black.png" />
         </view>
         <view class="option" @click="change">
-          <text v-for="item in school.campuses" :key="item">
+          <text
+            v-for="(item, index) in school.campuses"
+            :key="index"
+            :src="item"
+            @click="changeCampus(item)"
+          >
             {{ item }}
           </text>
         </view>
@@ -49,10 +54,15 @@
     </view>
     <view class="big">
       <view>
-        <view class="bubble"> 华东师范大学</view>
-        <view class="bubble"> 上海交通大学</view>
-        <view class="bubble"> 上海大学</view>
-        <view class="bubble"> 上海工程技术大学</view>
+        <view
+          v-for="(item, index) in school.name"
+          :key="index"
+          :src="item"
+          class="bubble"
+          @click="changeSchool(item)"
+        >
+          {{ item }}
+        </view>
       </view>
     </view>
   </view>
@@ -60,41 +70,22 @@
   <view class="blank" />
 
   <view class="content2">
-    <view class="search-bar">
-      <view class="small"> A</view>
-    </view>
-    <view v-for="item in school.name" :key="item" class="school">
-      {{ item }}
-    </view>
-    <view class="search-bar">
-      <view class="small"> B</view>
-    </view>
-    <view v-for="item in school.name" :key="item" class="school">
-      {{ item }}
-    </view>
-    <view class="search-bar">
-      <view class="small"> C</view>
-    </view>
-    <view v-for="item in school.name" :key="item" class="school">
-      {{ item }}
-    </view>
-    <view class="search-bar">
-      <view class="small"> D</view>
-    </view>
-    <view v-for="item in school.name" :key="item" class="school">
-      {{ item }}
-    </view>
-    <view class="search-bar">
-      <view class="small"> E</view>
-    </view>
-    <view v-for="item in school.name" :key="item" class="school">
-      {{ item }}
-    </view>
-    <view class="search-bar">
-      <view class="small"> F</view>
-    </view>
-    <view v-for="item in school.name" :key="item" class="school">
-      {{ item }}
+    <view
+      v-for="(item, index) in school.alpha"
+      :key="index"
+      class="school-bar"
+      :src="item"
+    >
+      <view class="small"> {{ item }}</view>
+      <view
+        v-for="(item1, index1) in school.name"
+        :key="index1"
+        :src="school"
+        class="school"
+        @click="changeSchool(item1)"
+      >
+        {{ item1 }}
+      </view>
     </view>
   </view>
 </template>
@@ -132,8 +123,8 @@ const school = reactive({
     "Z"
   ],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
-  campuses: ["闵行校区", "全部"],
-  No: 0
+  campuses: ["中山北路校区", "闵行校区", "全部"],
+  index: 0
 });
 
 const sel = ref(true);
@@ -141,8 +132,15 @@ const sel = ref(true);
 function change() {
   sel.value = !sel.value;
 }
+function changeCampus(name: string) {
+  currentNavBtn.value = name;
+}
+function changeSchool(name: string) {
+  currentSchool.value = name;
+}
 
 const currentNavBtn = ref("中山北路校区");
+const currentSchool = ref("华东师范大学");
 </script>
 
 <style lang="scss" scoped>
@@ -151,9 +149,10 @@ const currentNavBtn = ref("中山北路校区");
 }
 
 .school {
-  margin: 30rpx 50rpx 0rpx 50rpx;
+  margin: 30rpx 50rpx 0 50rpx;
   font-size: 25rpx;
   text-align: left;
+  display: grid;
   padding-bottom: 15rpx;
   border-bottom: 1px solid #f6f6f6;
 }
@@ -204,10 +203,10 @@ const currentNavBtn = ref("中山北路校区");
 }
 
 .small {
-  height: 50rpx;
+  height: 40rpx;
   width: 100%;
   display: flex;
-  position: absolute;
+  position: relative;
   margin-top: 40rpx;
   margin-left: 50rpx;
   font-size: 25rpx;
@@ -234,9 +233,9 @@ const currentNavBtn = ref("中山北路校区");
 }
 
 .cancel {
-  width: 50rpx;
-  height: 50rpx;
-  margin: 5rpx 0rpx 30rpx 30rpx;
+  width: 40rpx;
+  height: 40rpx;
+  margin: 8rpx 0 30rpx 30rpx;
 }
 
 .search-bar {
@@ -247,16 +246,14 @@ const currentNavBtn = ref("中山北路校区");
 }
 
 .school-bar {
-  position: fixed;
-  display: flex;
+  display: grid;
   width: 100%;
-  height: 70rpx;
   margin-top: 2%;
 }
 
 .search-bar-box {
   display: flex;
-  width: 600rpx;
+  width: 620rpx;
   height: 50rpx;
   background-color: #f6f6f6;
   border: 5rpx solid #f3f7f8;
@@ -322,8 +319,9 @@ const currentNavBtn = ref("中山北路校区");
 
 .arrow {
   width: 25rpx;
-  height: 25rpx;
-  padding-right: 10rpx;
+  height: 15rpx;
+  margin-top: 10rpx;
+  margin-right: 10rpx;
 }
 
 .option {
@@ -335,9 +333,10 @@ const currentNavBtn = ref("中山北路校区");
   line-height: 60rpx;
   margin-right: 25rpx;
   flex-direction: row;
+  z-index: 100;
 
   text {
-    padding: 0rpx 10rpx 0rpx 20rpx;
+    padding: 0 10rpx 0 20rpx;
     color: #7f7f81;
     font-size: 25rpx;
     font-weight: bold;
@@ -353,7 +352,7 @@ const currentNavBtn = ref("中山北路校区");
     top: 0;
     width: 90%;
     height: 1rpx;
-    background-color: black;
+    background-color: #7f7f81;
   }
 }
 </style>

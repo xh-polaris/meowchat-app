@@ -175,7 +175,7 @@ $backgroundColor: #f5f5f5;
 }
 
 .carousel-background {
-  background-color: white;
+  background-color: #fafcff;
   position: absolute;
   width: 100vw;
   height: calc($verticalPaddingOfCarousel * 2 + $slideHeightLarge);
@@ -187,6 +187,7 @@ $backgroundColor: #f5f5f5;
 }
 
 .pagination-dots {
+  background-color: #fafcff;
   padding: 0;
   display: flex;
   width: 100vw;
