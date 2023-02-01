@@ -31,28 +31,58 @@
     <view class="apply-wrap">
       <view class="input-wrap">
         <input
+          v-model="info.title"
           class="uni-input"
-          placeholder="  请填写你名字"
+          placeholder="  请填写您的姓名"
           placeholder-style="color: #B8B8B8;"
           type="name"
         />
       </view>
-      <cover-view class="input-wrap">
+      <view class="input-wrap">
         <textarea
+          v-model="info.text"
           class="textarea-inherit"
-          placeholder="请填写你的申请信息，如申请理由、个人介绍等"
+          placeholder="&nbsp 请填写您的申请信息 如申请理由 个人介绍等"
           placeholder-style="color: #B8B8B8;"
           type="name"
         />
-      </cover-view>
-      <button class="confirm" type="primary">
+      </view>
+      <button class="confirm" type="primary" @click="checkInput">
         <view class="send"> 提交申请 </view>
       </button>
     </view>
   </view>
 </template>
 
-<script></script>
+<script lang="ts" setup>
+import { reactive } from "vue";
+
+const info = reactive({
+  title: "",
+  text: ""
+});
+
+function checkInput() {
+  if (info.title === "") {
+    uni.showToast({
+      title: "请输入姓名",
+      icon: "none"
+    });
+    return;
+  } else if (info.text === "") {
+    uni.showToast({
+      title: "请输入申请信息",
+      icon: "none"
+    });
+    return;
+  } else {
+    uni.showToast({
+      title: "提交成功！",
+      icon: "none"
+    });
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .bg-set {
@@ -67,10 +97,7 @@
 .content-wrap {
   box-shadow: 0 0 10rpx #eeeeee;
   padding: 20rpx;
-  margin-top: 50rpx;
-  margin-bottom: 10rpx;
-  margin-left: 30rpx;
-  margin-right: 30rpx;
+  margin: 20rpx 30rpx 50rpx;
   border-radius: 21rpx;
   background-color: #ffffff;
 
@@ -85,20 +112,20 @@
   .title {
     font-weight: bold;
     font-size: 35rpx;
-    margin-top: 30rpx;
+    margin-top: 20rpx;
     margin-left: 10rpx;
-    margin-bottom: 60rpx;
+    margin-bottom: 40rpx;
   }
 
   .text {
     font-style: normal;
     font-weight: 500;
     font-size: 30rpx;
-    line-height: 150%;
-    letter-spacing: -0.3px;
-    margin-top: 30rpx;
+    line-height: 180%;
+    //letter-spacing: -0.3px;
+    margin-top: 25rpx;
     margin-left: 10rpx;
-    margin-bottom: 30rpx;
+    margin-bottom: 10rpx;
 
     .Blue {
       color: #1fa1ff;
@@ -113,28 +140,21 @@
 }
 
 .apply-wrap {
-  font-size: 24rpx;
   box-shadow: 0 0 10rpx #eeeeee;
   padding: 20rpx;
-  margin-top: 50rpx;
-  margin-bottom: 30rpx;
-  margin-left: 30rpx;
-  margin-right: 30rpx;
+  margin: 50rpx 30rpx 30rpx;
   border-radius: 21rpx;
   background-color: #ffffff;
 
   .input-wrap {
-    font-size: 24rpx;
+    font-size: 30rpx;
     display: flex;
     background-color: #fafafa;
-    margin-left: 10rpx;
-    margin-right: 10rpx;
-    margin-top: 10rpx;
-    margin-bottom: 40rpx;
+    margin: 10rpx 10rpx 40rpx;
   }
 
   .confirm {
-    margin-top: 30rpx;
+    margin-top: -20rpx;
     background-color: #1fa1ff;
     border-radius: 30px;
     height: 88rpx;
@@ -149,6 +169,7 @@
 }
 
 .textarea-inherit {
+  font-size: 28rpx;
   width: 100%;
   overflow: auto;
   word-break: break-all; //解决兼容问题

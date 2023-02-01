@@ -68,7 +68,7 @@ const cat = reactive(props.cat);
 .title {
   font-size: 35rpx;
   color: #333;
-  //margin-top: 20rpx;
+  margin-top: 15rpx;
   margin-bottom: 10rpx;
   /*text-overflow: -o-ellipsis-lastline;*/
   /*溢出内容隐藏*/
@@ -83,10 +83,12 @@ const cat = reactive(props.cat);
   /*盒子中内容竖直排列*/
   -webkit-box-orient: horizontal;
 
-  image {
-    margin-top: 10rpx;
-    width: 40rpx;
-    height: 40rpx;
+  .collect {
+    image {
+      margin-top: -2rpx;
+      width: 40rpx;
+      height: 40rpx;
+    }
   }
 }
 

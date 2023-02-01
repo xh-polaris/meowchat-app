@@ -259,8 +259,8 @@ $avatarWidth: calc(21 / 390 * 100vw);
 @import "@/common/user-info.scss";
 
 .masonry {
+  background-color: #fafcff;
   display: flex;
-  background-color: transparent;
   padding-top: calc(12 / 390 * 100vw);
 }
 

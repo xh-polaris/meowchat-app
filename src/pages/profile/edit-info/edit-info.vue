@@ -15,15 +15,25 @@
           class="avatar"
         />
       </button>
-      <text class="avatar-hint">点击更换头像</text>
+      <text class="avatar-hint">点击选择头像</text>
     </view>
-    <text class="nickname">昵称</text>
+    <text class="nickname">新昵称</text>
     <view class="choose-nickname-row">
       <input
         class="update-nickname"
         placeholder="请输入昵称"
         type="nickname"
         :value="userInfo.nickname ? userInfo.nickname : props.nickname"
+        @blur="onNickName"
+      />
+    </view>
+    <text class="nickname">选择学校</text>
+    <view class="choose-nickname-row">
+      <input
+        class="update-nickname"
+        placeholder="请选择或输入学校"
+        type="nickname"
+        value="华东师范大学"
         @blur="onNickName"
       />
     </view>
@@ -123,7 +133,10 @@ function onClickConfirm() {
   padding: 20rpx 4rpx;
   margin-top: 20rpx;
   margin-left: 30rpx;
-  background-color: #e6e6e6;
+  margin-bottom: 40rpx;
+  background-color: #f8f8f8;
+  border: 5rpx solid #f1f1f1;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
   border-radius: 25rpx;
   .update-nickname {
     margin-left: 40rpx;
@@ -132,10 +145,10 @@ function onClickConfirm() {
 }
 
 .confirm-change {
-  margin-top: 200rpx;
+  margin-top: 30rpx;
   margin-left: 30rpx;
   height: 100rpx;
-  width: 92%;
+  width: 93%;
   border-radius: 25rpx;
   background-color: #1fa1ff;
   .save {
