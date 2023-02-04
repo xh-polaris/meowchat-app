@@ -21,9 +21,13 @@
               <view class="lower">{{ mainComment.text }}</view>
             </view>
             <view class="right">
-              <view class="likes-frame">
-                <view class="thumb"></view>
-                <view class="likes">{{ likeData.count }}</view>
+              <view class="likes-frame" @click="mainCommentDoLike">
+                <view
+                  v-if="mainCommentLikeData.isLike"
+                  class="thumb liked"
+                ></view>
+                <view v-else class="thumb"></view>
+                <view class="likes">{{ mainCommentLikeData.count }}</view>
               </view>
             </view>
           </view>
@@ -48,8 +52,12 @@
               <view class="lower">{{ item.text }}</view>
             </view>
             <view v-if="comments.likeData[index]" class="right">
-              <view class="likes-frame">
-                <view class="thumb"></view>
+              <view class="likes-frame" @click="replyDoLike(index)">
+                <view
+                  v-if="comments.likeData[index].isLike"
+                  class="thumb liked"
+                ></view>
+                <view v-else class="thumb"></view>
                 <view class="likes">{{ comments.likeData[index].count }}</view>
               </view>
             </view>
@@ -61,16 +69,22 @@
 </template>
 
 <script lang="ts" setup>
-import { Comment } from "@/apis/schemas";
+import { Comment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { reactive } from "vue";
 import { getCommentsData, LikeStruct } from "@/pages/moment/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
+import { doLike, getCount, getUserLiked } from "@/apis/like/like";
 
 const props = defineProps<{
   mainComment: Comment;
   likeData: LikeStruct;
 }>();
+
+const mainCommentLikeData = reactive({
+  count: props.likeData.count,
+  isLike: props.likeData.isLike
+});
 
 const comments = reactive<{
   data: Comment[];
@@ -100,6 +114,28 @@ const localGetCommentsData = async () => {
   });
 };
 
+const mainCommentDoLike = async () => {
+  const likeReq = {
+    targetId: props.mainComment.id,
+    targetType: TargetType.Comment
+  };
+  await doLike(likeReq);
+  mainCommentLikeData.count = (await getCount(likeReq)).count;
+  mainCommentLikeData.isLike = (await getUserLiked(likeReq)).liked;
+
+  emits("updateLikeData");
+};
+
+const replyDoLike = async (index: number) => {
+  const likeReq = {
+    targetId: comments.data[index].id,
+    targetType: TargetType.Comment
+  };
+  await doLike(likeReq);
+  comments.likeData[index].count = (await getCount(likeReq)).count;
+  comments.likeData[index].isLike = (await getUserLiked(likeReq)).liked;
+};
+
 localGetCommentsData();
 
 onReachBottom(() => {
@@ -108,7 +144,7 @@ onReachBottom(() => {
   }
 });
 
-const emits = defineEmits(["closeReply"]);
+const emits = defineEmits(["closeReply", "updateLikeData"]);
 
 function closeSelf() {
   emits("closeReply");
@@ -197,6 +233,10 @@ function closeSelf() {
               width: calc(12 / 390 * 100vw);
               height: calc(12 / 390 * 100vw);
               background-size: 100% 100%;
+
+              &.liked {
+                background-image: url("../../static/images/like_grey_1.png");
+              }
             }
 
             .likes {

@@ -8,12 +8,18 @@
               {{ post.title }}
             </view>
             <view class="user-info">
-              <template v-if="!post.isAnonymous">
+              <view v-if="!post.isAnonymous">
                 <image :src="post.user.avatarUrl" class="avatar" />
                 <view class="username">
                   {{ post.user.nickname }}
                 </view>
-              </template>
+              </view>
+			  <view v-else>
+				  <image src="/static/images/anonymous.png" class="avatar" />
+				  <view class="username">
+				    匿名用户
+				  </view>
+			  </view>
             </view>
             <view class="description">
               {{ post.text }}
@@ -62,7 +68,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { getPostPreviews, searchPostPreviews } from "@/apis/post/post";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onReachBottom} from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 
@@ -74,6 +80,7 @@ const props = withDefaults(defineProps<Props>(), {
   search: "default",
   keyword: "post"
 });
+
 
 let postsData = reactive([]);
 let page = 0;
@@ -114,10 +121,11 @@ onReachBottom(() => {
 
 .post {
   background-color: #ffffff;
-  border-top: 1px #f5f5f5 solid;
-  border-bottom: 1px #f5f5f5 solid;
-  margin-bottom: calc(6 / 390 * 100vw);
-  padding: calc(16 / 390 * 100vw);
+  //border-top: 2px #f4f9ff solid;
+  border-bottom: 15rpx #fafcff solid;
+  padding: 32rpx;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.03);
+  border-radius: 5px;
 }
 
 .upper {
@@ -133,7 +141,7 @@ onReachBottom(() => {
   }
 
   .title {
-    font-size: calc(16 / 390 * 100vw);
+    font-size: 35rpx;
     font-weight: bold;
     overflow: hidden;
     -webkit-line-clamp: 1;

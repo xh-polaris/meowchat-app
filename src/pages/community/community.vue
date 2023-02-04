@@ -23,7 +23,7 @@
     <carousel-frame />
   </view>
 
-  <view style="margin-top: 10px">
+  <view>
     <view class="masonry-header">
       <view class="title"> 最新动态</view>
       <view class="toggle">
@@ -42,8 +42,7 @@
     </view>
     <masonry v-if="!isRefreshing" search="default" />
   </view>
-
-  <draft-button type="moment" />
+  <tab-bar id="2"></tab-bar>
 </template>
 
 <script lang="ts" setup>
@@ -52,7 +51,7 @@ import Masonry from "@/pages/community/masonry";
 import CarouselFrame from "@/pages/community/carousel-frame";
 import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
-import DraftButton from "@/components/draft-button/draft-button";
+import TabBar from "@/components/tab-bar/tab-bar.vue";
 
 const school = reactive({
   name: "华东师范大学",
@@ -156,6 +155,7 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 }
 
 .school-box {
+  background-color: #fafcff;
   height: 14vw;
   display: flex;
   flex-direction: column;
@@ -254,6 +254,8 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 }
 
 .masonry-header {
+  border-top: 10px #fafcff solid;
+  background-color: #fafcff;
   margin: 0 calc(12 / 390 * 100vw);
   display: flex;
   justify-content: space-between;

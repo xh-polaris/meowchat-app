@@ -22,17 +22,19 @@
 
   <world-posts v-if="isInitialized && !isRefreshing" search="default" />
 
-  <draft-button type="post" />
+
+  <tab-bar id="1"></tab-bar>
+
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
-import DraftButton from "@/components/draft-button/draft-button.vue";
 
 import { init } from "@/utils/init";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
+import TabBar from "@/components/tab-bar/tab-bar.vue";
 
 const isInitialized = ref(false);
 

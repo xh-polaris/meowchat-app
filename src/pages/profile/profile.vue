@@ -102,6 +102,7 @@
       </view>
     </view>
   </view>
+  <tab-bar id="4"></tab-bar>
 </template>
 
 <script lang="ts" setup>
@@ -109,6 +110,7 @@ import { reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onShow } from "@dcloudio/uni-app";
+import TabBar from "@/components/tab-bar/tab-bar.vue";
 
 const userInfo = reactive<User>({
   id: "",
@@ -210,8 +212,8 @@ const superAdminOptions = [
 .fot-xh .txt .info .nickname {
   height: 30rpx;
   width: 600rpx;
-  font-size: 35rpx;
-  margin-bottom: 26rpx;
+  font-size: 40rpx;
+  margin-bottom: 30rpx;
   font-weight: bold;
 }
 
@@ -223,9 +225,11 @@ const superAdminOptions = [
 }
 
 .fot-xh .txt .info .unit {
+  color: #696969;
   height: 28rpx;
   width: 600rpx;
-  font-size: 25rpx;
+  font-size: 23rpx;
+  margin-top: 10rpx;
   margin-bottom: 13rpx;
 }
 
@@ -239,6 +243,7 @@ const superAdminOptions = [
 .com-item .com-wrap {
   border-radius: 25rpx;
   overflow: hidden;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
 }
 
 .com-item1 {
@@ -250,6 +255,7 @@ const superAdminOptions = [
 .com-item1 .com-wrap {
   border-radius: 25rpx;
   overflow: hidden;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
 }
 
 .cell {
@@ -260,7 +266,7 @@ const superAdminOptions = [
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid #f8f8f8;
 
   .cell-left {
@@ -270,13 +276,14 @@ const superAdminOptions = [
     .cell-icon {
       width: 50rpx;
       height: 50rpx;
+      margin-left: 10rpx;
       float: left;
     }
 
     .cell-text {
       width: 610rpx;
-      color: #666;
-      font-size: 28rpx;
+      color: #353535;
+      font-size: 30rpx;
       margin-left: 20rpx;
     }
 

@@ -1,7 +1,37 @@
 
+## [1.4.2](https://github.com/xh-polaris/meowchat-app/compare/v1.4.1...v1.4.2) (2023-02-02)
 
-<<<<<<< HEAD
-=======
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复了动态评论的子评论无法点赞的问题 ([#162](https://github.com/xh-polaris/meowchat-app/issues/162)) ([d2cd89d](https://github.com/xh-polaris/meowchat-app/commit/d2cd89d6bbead66e2d5afcb9fe56dc12124e5e63))
+* 修复校区选择界面下拉框图片消失，选择无效。部分逻辑；申请管理界面按反馈修改，添加选择学校 ([#161](https://github.com/xh-polaris/meowchat-app/issues/161)) ([4006bb8](https://github.com/xh-polaris/meowchat-app/commit/4006bb8b8a85437777acfa6e5d8fa718fd087b9c))
+
+## [1.4.1](https://github.com/xh-polaris/meowchat-app/compare/v1.4.0...v1.4.1) (2023-01-31)
+
+
+### ✨ Features | 新功能
+
+* 动态详情点击预览多张图片可滑动 ([#160](https://github.com/xh-polaris/meowchat-app/issues/160)) ([6d4a41d](https://github.com/xh-polaris/meowchat-app/commit/6d4a41dfad771586788f671e6f5378f2d79384c2))
+
+## [1.4.0](https://github.com/xh-polaris/meowchat-app/compare/v1.3.0...v1.4.0) (2023-01-25)
+
+
+### ✨ Features | 新功能
+
+* 将下方原生导航栏重写为自定义导航栏并调整样式 ([#158](https://github.com/xh-polaris/meowchat-app/issues/158)) ([6568661](https://github.com/xh-polaris/meowchat-app/commit/6568661366eae671677163a8467145f447738980))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 压缩图标，删除无用的svg图片减小体积 ([9d74a02](https://github.com/xh-polaris/meowchat-app/commit/9d74a02cb7f566993a71b3613da145aca35e1831))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修正世界搜索时出现的报错&修改props解构方式 ([#157](https://github.com/xh-polaris/meowchat-app/issues/157)) ([fcc4be4](https://github.com/xh-polaris/meowchat-app/commit/fcc4be40c74332474252342e2a9e7c54fce44cfb))
+
+>>>>>>> ad08379a991ebc61ca7e11d47133a7bf10a15a60
 ## [1.3.0](https://github.com/xh-polaris/meowchat-app/compare/v1.2.1...v1.3.0) (2023-01-20)
 
 

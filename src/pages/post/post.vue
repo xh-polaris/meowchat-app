@@ -17,12 +17,18 @@
   </view>
 
   <view class="post">
-    <view class="user">
+   <view class="user" v-if="!post.data.isAnonymous">
       <image :src="post.data.user.avatarUrl" class="avatar" />
       <view class="name">
         {{ post.data.user.nickname }}
       </view>
     </view>
+	<view class="user" v-else>
+	  <image src="/static/images/anonymous.png" class="avatar" />
+	  <view class="name">
+	    匿名用户
+	  </view>
+	</view>
     <view class="text">
       {{ post.data.text }}
     </view>
@@ -304,13 +310,6 @@ onPullDownRefresh(() => {
   }, 1000);
   init();
 });
-function isAnonymous() {
-  if (post.data.isAnonymous) {
-    post.data.user.nickname = "匿名用户";
-    post.data.user.avatarUrl = "/static/images/anonymous.png";
-  }
-}
-isAnonymous();
 
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);

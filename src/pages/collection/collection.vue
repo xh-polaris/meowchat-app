@@ -53,6 +53,7 @@
       <image src="https://static.xhpolaris.com/nodata.png" />
     </view>
   </view>
+  <tab-bar id="3"></tab-bar>
 </template>
 
 <script lang="ts" setup>
@@ -69,6 +70,7 @@ import {
   SearchCatPreviewsReq
 } from "@/apis/collection/collection-interfaces";
 import { CatPreview } from "@/apis/schemas";
+import TabBar from "@/components/tab-bar/tab-bar.vue";
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
@@ -148,6 +150,7 @@ onReachBottom(() => {
 }
 
 .content {
+  background-color: #fafcff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -163,7 +166,7 @@ onReachBottom(() => {
 }
 
 .navbar {
-  background-color: #ffffff;
+  background-color: #fafcff;
   display: flex;
   color: #b8b8b8;
   font-size: calc(15 / 390 * 100vw);
@@ -191,6 +194,7 @@ onReachBottom(() => {
 .switch-box {
   margin-left: auto;
   margin-top: 20rpx;
+  margin-right: 10rpx;
 }
 
 .school-box {
@@ -200,6 +204,7 @@ onReachBottom(() => {
 }
 
 .school-select-box {
+  background-color: #fafcff;
   height: 8vh;
   display: flex;
   flex-direction: row;
@@ -239,16 +244,17 @@ onReachBottom(() => {
 .search-bar-box {
   display: flex;
   margin: 0 auto;
-  width: 620rpx;
+  width: 680rpx;
   height: 70rpx;
-  border: 5rpx solid #f3f7f8;
+  border: 5rpx solid #f1f1f1;
   border-radius: 50rpx;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
 }
 
 .search-span {
   width: 56rpx;
-  height: 56rpx;
-  margin-top: 6rpx;
+  height: 48rpx;
+  margin-top: 10rpx;
   margin-right: 30rpx;
 }
 
@@ -261,12 +267,13 @@ onReachBottom(() => {
 }
 
 .out {
-  padding: 20rpx 30rpx 10rpx;
-
+  padding: 5rpx 30rpx 5rpx;
   .row {
+    background-color: #ffffff;
     border-radius: 25px;
-    border: 1px solid #dad6d6;
+    border: 5rpx solid #f1f1f1;
     padding: 10rpx 0;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
   }
 }
 </style>

@@ -22,7 +22,7 @@
           :key="index"
           :mode="chooseImageMode(moment.data.photos.length)"
           :src="item"
-          @click="onClickImage(item)"
+          @click="onClickImage(index, moment.data.photos)"
         />
       </view>
     </view>
@@ -89,7 +89,12 @@
     </view>
   </view>
   <view v-if="isReplyOpened" class="reply">
-    <reply @close-reply="closeReply" />
+    <reply
+      :like-data="comments.likeData[selectIndex]"
+      :main-comment="comments.data[selectIndex]"
+      @close-reply="closeReply"
+      @update-like-data="updateLikeData(selectIndex)"
+    />
   </view>
 </template>
 
@@ -110,7 +115,7 @@ import { getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
-import { doLike } from "@/apis/like/like";
+import { doLike, getCount, getUserLiked } from "@/apis/like/like";
 import {
   GetCommentsReq,
   NewCommentReq
@@ -226,6 +231,15 @@ const focusReplyComment = (name: string, index: number) => {
   placeholderText.value = "回复 @" + name + ": ";
   newCommentFocus.value = true;
   refreshReplyIndex(index);
+};
+
+const updateLikeData = async (index: number) => {
+  const likeReq = {
+    targetId: comments.data[index].id,
+    targetType: TargetType.Comment
+  };
+  comments.likeData[index].count = (await getCount(likeReq)).count;
+  comments.likeData[index].isLike = (await getUserLiked(likeReq)).liked;
 };
 
 let initLock = false;
