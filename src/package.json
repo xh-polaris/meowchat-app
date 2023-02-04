@@ -1,0 +1,16 @@
+{
+    "id": "zy-headSearch",
+    "displayName": " 搜索框 查询框search",
+    "version": "1.0.1",
+    "description": "自定义选择样式 图标 图片",
+    "keywords": [
+        "搜索框",
+        "头部、顶部查询框"
+    ],
+    "dcloudext": {
+        "category": [
+            "前端组件",
+            "通用组件"
+        ]
+    }
+}

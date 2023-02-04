@@ -1,7 +1,7 @@
 <template>
   <view class="uni-searchbar">
     <view
-      :style="{ borderRadius: radius + 'px', backgroundColor: bgColor }"
+      :style="{ borderRadius: radius + 'px', backgroundColor: bgColor, borderColor: border }"
       class="uni-searchbar__box"
       @click="searchClick"
     >
