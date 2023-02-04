@@ -22,9 +22,7 @@
 
   <world-posts v-if="isInitialized && !isRefreshing" search="default" />
 
-
   <tab-bar id="1"></tab-bar>
-
 </template>
 
 <script lang="ts" setup>
