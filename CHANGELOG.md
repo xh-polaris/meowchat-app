@@ -1,5 +1,13 @@
 
 
+## [1.4.2](https://github.com/xh-polaris/meowchat-app/compare/v1.4.1...v1.4.2) (2023-02-02)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复了动态评论的子评论无法点赞的问题 ([#162](https://github.com/xh-polaris/meowchat-app/issues/162)) ([d2cd89d](https://github.com/xh-polaris/meowchat-app/commit/d2cd89d6bbead66e2d5afcb9fe56dc12124e5e63))
+* 修复校区选择界面下拉框图片消失，选择无效。部分逻辑；申请管理界面按反馈修改，添加选择学校 ([#161](https://github.com/xh-polaris/meowchat-app/issues/161)) ([4006bb8](https://github.com/xh-polaris/meowchat-app/commit/4006bb8b8a85437777acfa6e5d8fa718fd087b9c))
+
 ## [1.4.1](https://github.com/xh-polaris/meowchat-app/compare/v1.4.0...v1.4.1) (2023-01-31)
 
 
