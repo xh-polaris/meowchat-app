@@ -71,7 +71,7 @@ import {
   getCatPreviews,
   searchCatPreviews
 } from "@/apis/collection/collection";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import {
   GetCatPreviewsReq,
   SearchCatPreviewsReq
@@ -91,9 +91,24 @@ let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
 const allCats = ref<CatPreview[]>([]);
 let cats = ref<CatPreview[]>([]);
 let whetherSearch = false;
-getCatPreviews(getCatPreviewsReq).then((res) => {
-  allCats.value.push(...res.cats);
-  cats.value.push(...res.cats);
+
+const getCatPreviewsHandler = () => {
+  getCatPreviews(getCatPreviewsReq).then((res) => {
+    allCats.value.push(...res.cats);
+    cats.value.push(...res.cats);
+  });
+};
+getCatPreviewsHandler();
+
+function pageRefresh() {
+  allCats.value = [];
+  cats.value = [];
+  getCatPreviewsHandler();
+}
+
+onPullDownRefresh(() => {
+  pageRefresh();
+  uni.stopPullDownRefresh();
 });
 
 const school = reactive({
