@@ -27,16 +27,6 @@
         @blur="onNickName"
       />
     </view>
-    <text class="nickname">选择学校</text>
-    <view class="choose-nickname-row">
-      <input
-        class="update-nickname"
-        placeholder="请选择或输入学校"
-        type="nickname"
-        value="华东师范大学"
-        @blur="onNickName"
-      />
-    </view>
     <button class="confirm-change" @click="onClickConfirm()">
       <text class="save">确认</text>
     </button>

@@ -45,6 +45,12 @@
         "navigationBarTitleText": "申请管理"
       }
     },
+	{
+	  "path": "pages/profile/my-publish/my-publish",
+	  "style": {
+	    "navigationBarTitleText": "我的发布"
+	  }
+	},
     {
       "path": "pages/profile/about-us/about-us",
       "style": {
