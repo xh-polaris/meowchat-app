@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view v-if="!isRefreshing">
     <image :src="mainImgUrl" class="img" />
     <view>
       <scroll-view scroll-x="true" class="scroll-view-item_H" scroll-left="120">
@@ -130,7 +130,9 @@ import { reactive, ref } from "vue";
 import { Cat } from "@/apis/schemas";
 import { getCatDetail } from "@/apis/collection/collection";
 import { GetCatDetailReq } from "@/apis/collection/collection-interfaces";
+import { onPullDownRefresh } from "@dcloudio/uni-app";
 
+const isRefreshing = ref(false);
 const props = defineProps<{
   id: string;
 }>();
@@ -148,7 +150,7 @@ let imgUrlList = [
 ];
 let Sterilized: string;
 let Snipped: string;
-let cat = reactive<Cat>({
+const cat = reactive<Cat>({
   id: "",
   createAt: 0,
   age: "",
@@ -167,32 +169,46 @@ let cat = reactive<Cat>({
 const mainImgUrl = ref("");
 const imgActiveIndex = ref(0);
 const spread = ref(true);
-getCatDetail(getCatDetailReq).then((res) => {
-  cat.id = res.cat.id;
-  cat.createAt = res.cat.createAt;
-  cat.age = res.cat.age;
-  cat.communityId = res.cat.communityId;
-  cat.color = res.cat.color;
-  cat.details = res.cat.details;
-  cat.name = res.cat.name;
-  cat.popularity = res.cat.popularity;
-  cat.sex = res.cat.sex;
-  cat.status = res.cat.status;
-  cat.area = res.cat.area;
-  cat.isSnipped = res.cat.isSnipped;
-  cat.isSterilized = res.cat.isSterilized;
-  cat.avatars = res.cat.avatars;
-  if (res.cat.isSterilized) {
-    Sterilized = "是";
-  } else {
-    Sterilized = "否";
-  }
-  if (res.cat.isSnipped) {
-    Snipped = "是";
-  } else {
-    Snipped = "否";
-  }
-  mainImgUrl.value = cat.avatars[0];
+const getCatDetailHandler = () => {
+  getCatDetail(getCatDetailReq).then((res) => {
+    cat.id = res.cat.id;
+    cat.createAt = res.cat.createAt;
+    cat.age = res.cat.age;
+    cat.communityId = res.cat.communityId;
+    cat.color = res.cat.color;
+    cat.details = res.cat.details;
+    cat.name = res.cat.name;
+    cat.popularity = res.cat.popularity;
+    cat.sex = res.cat.sex;
+    cat.status = res.cat.status;
+    cat.area = res.cat.area;
+    cat.isSnipped = res.cat.isSnipped;
+    cat.isSterilized = res.cat.isSterilized;
+    cat.avatars = res.cat.avatars;
+    if (res.cat.isSterilized) {
+      Sterilized = "是";
+    } else {
+      Sterilized = "否";
+    }
+    if (res.cat.isSnipped) {
+      Snipped = "是";
+    } else {
+      Snipped = "否";
+    }
+    mainImgUrl.value = cat.avatars[0];
+    isRefreshing.value = false;
+  });
+};
+getCatDetailHandler();
+
+function pageRefresh() {
+  isRefreshing.value = true;
+  getCatDetailHandler();
+}
+
+onPullDownRefresh(() => {
+  pageRefresh();
+  uni.stopPullDownRefresh();
 });
 </script>
 

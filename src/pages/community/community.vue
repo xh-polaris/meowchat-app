@@ -23,7 +23,7 @@
     <carousel-frame />
   </view>
 
-  <view style="margin-top: 10px">
+  <view>
     <view class="masonry-header">
       <view class="title"> 最新动态</view>
       <view class="toggle">
@@ -155,6 +155,7 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 }
 
 .school-box {
+  background-color: #fafcff;
   height: 14vw;
   display: flex;
   flex-direction: column;
@@ -253,6 +254,8 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 }
 
 .masonry-header {
+  border-top: 10px #fafcff solid;
+  background-color: #fafcff;
   margin: 0 calc(12 / 390 * 100vw);
   display: flex;
   justify-content: space-between;
