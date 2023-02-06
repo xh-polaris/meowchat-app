@@ -1,0 +1,24 @@
+.like-box {
+  margin-left: 50px;
+  display: flex;
+  align-items: center;
+
+  .like-icon {
+    width: calc(16 / 390 * 100vw);
+    height: calc(16 / 390 * 100vw);
+    background-size: 100% 100%;
+    background-image: url("/static/images/like_grey_0.png");
+
+    &.liked {
+      background-image: url("/static/images/like_grey_1.png");
+    }
+  }
+
+  .like-num {
+    margin-left: calc(4 / 390 * 100vw);
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #aaa;
+  }
+}
