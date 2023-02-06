@@ -54,6 +54,7 @@ export interface Tag {
 export interface Community {
   id: string;
   name: string;
+  parentId: string;
 }
 
 // notice
