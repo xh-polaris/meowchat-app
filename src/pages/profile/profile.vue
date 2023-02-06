@@ -51,55 +51,6 @@
           </view>
         </view>
       </view>
-      <view class="com-item1">
-        <view class="com-wrap">
-          <view v-for="(item, index) in adminOptions" :key="index" class="cell">
-            <navigator :url="item.url" hover-class="none">
-              <view class="cell-left">
-                <image
-                  :src="item.icon"
-                  class="cell-icon"
-                  mode="widthFix"
-                  style="width: 15%; border-radius: 50%"
-                />
-                <view class="cell-text">
-                  {{ item.title }}
-                </view>
-                <image class="arrow" src="/static/images/arrow_right.png" />
-              </view>
-              <view class="iconfont" />
-            </navigator>
-          </view>
-        </view>
-      </view>
-      <view class="another">
-        <text>高级管理功能</text>
-      </view>
-      <view class="com-item1">
-        <view class="com-wrap">
-          <view
-            v-for="(item, index) in superAdminOptions"
-            :key="index"
-            class="cell"
-          >
-            <navigator :url="item.url" hover-class="none">
-              <view class="cell-left">
-                <image
-                  :src="item.icon"
-                  class="cell-icon"
-                  mode="widthFix"
-                  style="width: 15%; border-radius: 50%"
-                />
-                <view class="cell-text">
-                  {{ item.title }}
-                </view>
-                <image class="arrow" src="/static/images/arrow_right.png" />
-              </view>
-              <view class="iconfont" />
-            </navigator>
-          </view>
-        </view>
-      </view>
     </view>
   </view>
   <tab-bar id="4"></tab-bar>
@@ -128,7 +79,7 @@ const userOptions = [
   {
     title: "我的发布",
     icon: "/static/images/my_publish.png",
-    url: "/pages/moment/moment"
+    url: "/pages/profile/my-publish/my-publish"
   },
   {
     title: "快速联系",
@@ -139,9 +90,7 @@ const userOptions = [
     title: "申请领养",
     icon: "/static/images/apply_adopt.png",
     url: "/pages/profile/apply-adopt/apply-adopt"
-  }
-];
-const adminOptions = [
+  },
   {
     title: "申请管理",
     icon: "/static/images/apply_admin.png",
@@ -151,28 +100,6 @@ const adminOptions = [
     title: "关于我们",
     icon: "/static/images/about_us.png",
     url: "/pages/profile/about-us/about-us"
-  }
-];
-const superAdminOptions = [
-  {
-    title: "发布公告",
-    icon: "/static/images/notice.png",
-    url: "/pages/profile/quick_contact"
-  },
-  {
-    title: "管理审核",
-    icon: "/static/images/admin_check.png",
-    url: "/pages/profile/quick_contact"
-  },
-  {
-    title: "成员管理",
-    icon: "/static/images/member_admin.png",
-    url: "/pages/profile/quick_contact"
-  },
-  {
-    title: "轮播设置",
-    icon: "/static/images/carousel_setting.png",
-    url: "/pages/profile/quick_contact"
   }
 ];
 </script>
@@ -245,19 +172,6 @@ const superAdminOptions = [
   overflow: hidden;
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
 }
-
-.com-item1 {
-  padding-left: 20rpx;
-  padding-right: 20rpx;
-  margin-bottom: 50rpx;
-}
-
-.com-item1 .com-wrap {
-  border-radius: 25rpx;
-  overflow: hidden;
-  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
-}
-
 .cell {
   height: 100rpx;
   padding-left: 20rpx;

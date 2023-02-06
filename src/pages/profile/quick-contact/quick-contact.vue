@@ -16,7 +16,7 @@
             <view class="name">
               {{ item.name }}
             </view>
-            <view class="position"> 管理员 </view>
+            <view class="position"> {{ item.title }} </view>
             <view class="content">
               <view class="info"> 微信: {{ item.wechat }} </view>
               <image
