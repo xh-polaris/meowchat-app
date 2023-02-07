@@ -34,6 +34,8 @@ import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 
 const isInitialized = ref(false);
+uni.removeStorageSync("search");
+uni.setStorageSync("isClickSearch", false);
 
 const types = reactive([
   {
