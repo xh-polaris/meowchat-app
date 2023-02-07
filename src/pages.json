@@ -1,176 +1,181 @@
 {
-  "pages": [
-    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-    {
-      "path": "pages/world/world",
-      "style": {
-        "navigationBarTitleText": "喵世界"
-      }
-    },
-    {
-      "path": "pages/community/community",
-      "style": {
-        "navigationBarTitleText": "喵社区"
-      }
-    },
-    {
-      "path": "pages/collection/collection",
-      "style": {
-        "navigationBarTitleText": "图鉴",
-        "enablePullDownRefresh": true,
-        "onReachBottomDistance": 150
-      }
-    },
-    {
-      "path": "pages/profile/profile",
-      "style": {
-        "navigationBarTitleText": "个人中心"
-      }
-    },
-    {
-      "path": "pages/profile/quick-contact/quick-contact",
-      "style": {
-        "navigationBarTitleText": "快速联系"
-      }
-    },
-    {
-      "path": "pages/profile/apply-adopt/apply-adopt",
-      "style": {
-        "navigationBarTitleText": "申请领养"
-      }
-    },
-    {
-      "path": "pages/profile/apply-admin/apply-admin",
-      "style": {
-        "navigationBarTitleText": "申请管理"
-      }
-    },
-    {
-      "path": "pages/profile/about-us/about-us",
-      "style": {
-        "navigationBarTitleText": "关于我们"
-      }
-    },
-    {
-      "path": "pages/profile/edit-info/edit-info",
-      "style": {
-        "navigationBarTitleText": "修改个人信息"
-      }
-    },
-    {
-      "path": "pages/moment/moment",
-      "style": {
-        "navigationBarTitleText": "动态详情"
-      }
-    },
-    {
-      "path": "pages/post/post",
-      "style": {
-        "navigationBarTitleText": "帖子详情"
-      }
-    },
-    {
-      "path": "pages/community/school-select",
-      "style": {
-        "navigationBarTitleText": "切换学校"
-      }
-    },
-    {
-      "path": "pages/cat/cat",
-      "style": {
-        "navigationBarTitleText": "喵详情",
-        //"navigationStyle": "custom",
-        "app-plus": {
-          "bounce": "none",
-          //关闭窗口回弹效果
-          "titleNView": {
-            "buttons": [
-              //原生标题栏按钮配置,
-              {
-                "type": "none",
-                // "text": "\u2713",
-                "float": "right"
-              },
-              {
-                "text": "城市",
-                "fontSrc": "",
-                "fontSize": "16",
-                "float": "left",
-                "color": "#101010"
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "path": "pages/search/search",
-      "style": {
-        "navigationBarTitleText": "搜索",
-        "app-plus": {
-          "titleNView": {
-            "autoBackButton": false
-          }
-        }
-      }
-    },
-    {
-      "path": "pages/draft/draft-post",
-      "style": {
-        "navigationBarTitleText": "发帖子"
-      }
-    },
-    {
-      "path": "pages/draft/draft-moment",
-      "style": {
-        "navigationBarTitleText": "发动态"
-      }
-    },
-    {
-      "path": "pages/notification/notification",
-      "style": {
-        "navigationBarTitleText": "我的消息"
-      }
-    }
-  ],
-  "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "喵世界",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8",
-    "enablePullDownRefresh": true
-  },
-  "tabBar": {
-    "custom": true,
-    "color": "#7A7E83",
-    "selectedColor": "#1FA1FF",
-    "borderStyle": "black",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "pagePath": "pages/world/world",
-        "iconPath": "static/images/world-grey.png",
-        "selectedIconPath": "static/images/world-blue.png",
-        "text": "世界"
-      },
-      {
-        "pagePath": "pages/community/community",
-        "iconPath": "static/images/community-grey.png",
-        "selectedIconPath": "static/images/community-blue.png",
-        "text": "社区"
-      },
-      {
-        "pagePath": "pages/collection/collection",
-        "iconPath": "static/images/collection-grey.png",
-        "selectedIconPath": "static/images/collection-blue.png",
-        "text": "图鉴"
-      },
-      {
-        "pagePath": "pages/profile/profile",
-        "iconPath": "static/images/mine-grey.png",
-        "selectedIconPath": "static/images/mine-blue.png",
-        "text": "我的"
-      }
-    ]
-  }
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/world/world",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/community/community",
+			"style": {
+				"navigationBarTitleText": "喵社区"
+			}
+		},
+		{
+			"path": "pages/collection/collection",
+			"style": {
+				"navigationBarTitleText": "图鉴",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 150
+			}
+		},
+		{
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/profile/quick-contact/quick-contact",
+			"style": {
+				"navigationBarTitleText": "快速联系"
+			}
+		},
+		{
+			"path": "pages/profile/apply-adopt/apply-adopt",
+			"style": {
+				"navigationBarTitleText": "申请领养"
+			}
+		},
+		{
+			"path": "pages/profile/apply-admin/apply-admin",
+			"style": {
+				"navigationBarTitleText": "申请管理"
+			}
+		},
+		{
+			"path": "pages/profile/about-us/about-us",
+			"style": {
+				"navigationBarTitleText": "关于我们"
+			}
+		},
+		{
+			"path": "pages/profile/edit-info/edit-info",
+			"style": {
+				"navigationBarTitleText": "修改个人信息"
+			}
+		},
+		{
+			"path": "pages/moment/moment",
+			"style": {
+				"navigationBarTitleText": "动态详情"
+			}
+		},
+		{
+			"path": "pages/post/post",
+			"style": {
+				"navigationBarTitleText": "帖子详情"
+			}
+		},
+		{
+			"path": "pages/community/school-select",
+			"style": {
+				"navigationBarTitleText": "切换学校"
+			}
+		},
+		{
+			"path": "pages/cat/cat",
+			"style": {
+				"navigationBarTitleText": "喵详情",
+				//"navigationStyle": "custom",
+				"app-plus": {
+					"bounce": "none",
+					//关闭窗口回弹效果
+					"titleNView": {
+						"buttons": [
+							//原生标题栏按钮配置,
+							{
+								"type": "none",
+								// "text": "\u2713",
+								"float": "right"
+							},
+							{
+								"text": "城市",
+								"fontSrc": "",
+								"fontSize": "16",
+								"float": "left",
+								"color": "#101010"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"app-plus": {
+					"titleNView": {
+						"autoBackButton": false
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/draft/draft-post",
+			"style": {
+				"navigationBarTitleText": "发帖子"
+			}
+		},
+		{
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": "我的消息"
+			}
+		},
+		{
+			"path": "pages/draft/draft-moment",
+			"style": {
+				"navigationBarTitleText": "发动态"
+			}
+		},
+		{
+			"path": "pages/notification/notification",
+			"style": {
+				"navigationBarTitleText": "我的消息"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "喵世界",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": true
+	},
+	"tabBar": {
+		"custom": true,
+		"color": "#7A7E83",
+		"selectedColor": "#1FA1FF",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/world/world",
+				"iconPath": "static/images/world-grey.png",
+				"selectedIconPath": "static/images/world-blue.png",
+				"text": "世界"
+			},
+			{
+				"pagePath": "pages/community/community",
+				"iconPath": "static/images/community-grey.png",
+				"selectedIconPath": "static/images/community-blue.png",
+				"text": "社区"
+			},
+			{
+				"pagePath": "pages/collection/collection",
+				"iconPath": "static/images/collection-grey.png",
+				"selectedIconPath": "static/images/collection-blue.png",
+				"text": "图鉴"
+			},
+			{
+				"pagePath": "pages/profile/profile",
+				"iconPath": "static/images/mine-grey.png",
+				"selectedIconPath": "static/images/mine-blue.png",
+				"text": "我的"
+			}
+		]
+	}
 }
