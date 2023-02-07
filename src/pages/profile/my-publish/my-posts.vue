@@ -50,13 +50,13 @@
             {{ displayTime(post.createAt) }}
           </view>
           <view class="font-sm">{{ post.comments }}条回复</view>
-		  <image
-		    class="delete"
-		    mode="widthFix"
-		    src="/static/images/delete.png"
-		    style="width: 7%"
-		    @click.stop="onClickDelete(post.id)"
-		  />
+         <image
+            class="delete"
+            mode="widthFix"
+            src="/static/images/delete.png"
+            style="width: 7%"
+            @click.stop="onClickDelete(post.id)"
+          />
         </view>
       </view>
     </template>
@@ -67,9 +67,13 @@
 </template>
 
 <script setup lang="ts">
-import { reactive,ref } from "vue";
-import { getPostPreviews, searchPostPreviews,deletePost } from "@/apis/post/post";
-import {DeletePostReq}from"@/apis/post/post-interfaces";
+import { reactive, ref } from "vue";
+import {
+  getPostPreviews,
+  searchPostPreviews,
+  deletePost
+} from "@/apis/post/post";
+import { DeletePostReq } from "@/apis/post/post-interfaces";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
@@ -82,7 +86,7 @@ const props = withDefaults(defineProps<Props>(), {
   search: "default",
   keyword: "post"
 });
-const deleteID= reactive<DeletePostReq>({id:""});
+const deleteID = reactive<DeletePostReq>({ id: "" });
 let postsData = ref([]);
 let page = 0;
 const getPostPreviewsAsync = async () => {
@@ -104,24 +108,26 @@ const getPostPreviewsAsync = async () => {
   page++;
   return posts;
 };
-async function onClickDelete(id:string){
-	deleteID.id=id;
-	uni.showModal({
-		title: '确认删除',
-		content:'是否删除该帖子',
-		success: function(res){
-			if(res.confirm){
-				deletePost(deleteID).then((res) => {
-				  uni.showToast({
-				    title: res.msg
-				  });
-				});	
-				postsData.value=[];
-				createPostsDataBatch();
-			}
-		}
-	})
+
+async function onClickDelete(id: string) {
+  deleteID.id = id;
+  uni.showModal({
+    title: "确认删除",
+    content: "是否删除该帖子",
+    success: function (res) {
+      if (res.confirm) {
+        deletePost(deleteID).then((res) => {
+          uni.showToast({
+            title: res.msg
+          });
+        });
+        postsData.value = [];
+        createPostsDataBatch();
+      }
+    }
+  });
 }
+
 async function createPostsDataBatch() {
   const posts = await getPostPreviewsAsync();
   postsData.value.push(...posts);
@@ -228,14 +234,16 @@ onReachBottom(() => {
   align-items: baseline;
   color: #b8b8b8;
   font-size: calc(10 / 390 * 100vw);
- .delete {
+  
+  .delete {
     width: 30rpx;
     height: 30rpx;
     right: 30rpx;
     margin-left: 500rpx;
-	margin-top: 20rpx;
+    margin-top: 20rpx;
     float: right;
   }
+  
   .time {
     margin-right: calc(16 / 390 * 100vw);
   }
