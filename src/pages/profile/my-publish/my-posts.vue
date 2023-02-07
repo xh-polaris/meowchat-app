@@ -50,7 +50,7 @@
             {{ displayTime(post.createAt) }}
           </view>
           <view class="font-sm">{{ post.comments }}条回复</view>
-         <image
+          <image
             class="delete"
             mode="widthFix"
             src="/static/images/delete.png"
@@ -234,7 +234,6 @@ onReachBottom(() => {
   align-items: baseline;
   color: #b8b8b8;
   font-size: calc(10 / 390 * 100vw);
-  
   .delete {
     width: 30rpx;
     height: 30rpx;
@@ -243,7 +242,6 @@ onReachBottom(() => {
     margin-top: 20rpx;
     float: right;
   }
-  
   .time {
     margin-right: calc(16 / 390 * 100vw);
   }
