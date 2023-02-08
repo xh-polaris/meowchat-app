@@ -79,7 +79,7 @@ const userOptions = [
   {
     title: "我的发布",
     icon: "/static/images/my_publish.png",
-    url: "/pages/profile/my-publish/my-publish"
+    url: "/pages/profile/my-publish/my-publish?id=${userInfo.id}"
   },
   {
     title: "快速联系",
@@ -95,11 +95,6 @@ const userOptions = [
     title: "申请管理",
     icon: "/static/images/apply_admin.png",
     url: "/pages/profile/apply-admin/apply-admin"
-  },
-  {
-    title: "关于我们",
-    icon: "/static/images/about_us.png",
-    url: "/pages/profile/about-us/about-us"
   }
 ];
 </script>
