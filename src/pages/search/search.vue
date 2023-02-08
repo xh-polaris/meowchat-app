@@ -1,30 +1,30 @@
 <template>
   <view class="page">
-    <view class="search-bar">
-      <view class="search-bar-box">
+    <view
+      class="d-flex border a-center j-sb mx-2 mb-2"
+      style="border-radius: 70rpx; height: 70rpx"
+    >
+      <view class="d-flex a-center">
         <image
           class="ml-2"
-          style="width: 40rpx; margin-top: 17rpx"
+          style="width: 40rpx"
           mode="widthFix"
           src="/static/images/search.png"
         />
         <input
           ref="getValue"
           v-model="searchText"
-          class="search-text"
+          class="search-text ml-2"
           maxlength="20"
           placeholder="搜索帖子|动态|图鉴"
           type="text"
         />
       </view>
-      <view v-if="isClickSearch" class="cancel" @click="onClickCancel">
-        取消
-      </view>
-      <view v-if="!isClickSearch" class="search" @click="onClickSearch">
+      <view style="color: #57a4da" class="mr-2" @click="onClickSearch">
         搜索
       </view>
     </view>
-    <view v-if="!isClickSearch" class="">
+    <view v-if="!isClickSearch">
       <view v-if="list.length !== 0" class="pl-2 pb-1 font-md">历史记录</view>
 
       <!-- 搜索历史列表 -->
@@ -46,7 +46,7 @@
       </view>
     </view>
 
-    <view v-if="isClickSearch" class="">
+    <view v-else>
       <view style="margin-top: 20upx">
         <zzx-tabs
           ref="mytabs"
@@ -91,13 +91,18 @@ import SearchCats from "@/pages/search/search-cats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 
 const items = ["帖子", "动态", "图鉴"];
+
 let searchText = ref("");
-// 搜索历史
+
+searchText.value = uni.getStorageSync("search");
+
 let list = ref([]);
-//是否点击搜索
-let isClickSearch = ref(false);
 
 let current = ref(0);
+
+let isClickSearch = ref(false);
+
+isClickSearch.value = uni.getStorageSync("isClickSearch");
 
 onLoad(() => {
   let historyText = uni.getStorageSync("historySearchText");
@@ -114,13 +119,6 @@ function onClickItem(e) {
   }
 }
 
-function onClickCancel() {
-  isClickSearch.value = !isClickSearch.value;
-  uni.navigateBack({
-    delta: 1
-  });
-}
-
 function onClickSearch() {
   // 收起键盘
   uni.hideKeyboard();
@@ -132,8 +130,9 @@ function onClickSearch() {
     uni.hideLoading();
   }, 1000);
   if (searchText.value !== "") {
+    uni.setStorageSync("search", searchText.value);
     // 加入搜索历史
-    isClickSearch.value = !isClickSearch.value;
+    uni.setStorageSync("isClickSearch", true);
     let index = list.value.findIndex((v) => v === searchText.value);
     if (index !== -1) {
       if (index !== 0) {
@@ -155,6 +154,9 @@ function onClickSearch() {
       icon: "none"
     });
   }
+  uni.reLaunch({
+    url: "/pages/search/search"
+  });
 }
 let getStyle = computed(() => {
   let color = {
@@ -173,8 +175,6 @@ function clickSearchHistory(item) {
 </script>
 
 <style scoped lang="scss">
-@import "@/common/search-input.scss";
-
 .QS-tabs-box {
   width: 100%;
   position: sticky;

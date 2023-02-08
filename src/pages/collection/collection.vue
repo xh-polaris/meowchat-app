@@ -1,20 +1,26 @@
 <template>
   <view class="content">
     <!-- 搜索框 -->
-    <view class="search-bar">
-      <view class="search-bar-box">
-        <input
-          v-model="searchCatPreviewsReq.keyword"
-          class="search-text"
-          maxlength="20"
-          placeholder="搜索猫咪"
-        />
-        <image
-          class="search-span"
-          src="/static/images/search_span.png"
-          @click="onClickSearch"
-        />
-      </view>
+    <view
+      class="border d-flex mx-3 a-center j-sb px-3 mt-1"
+      style="
+        height: 80rpx;
+        border-radius: 50rpx;
+        border-color: #a0cce9;
+        border-width: 3rpx;
+      "
+    >
+      <input
+        v-model="searchCatPreviewsReq.keyword"
+        maxlength="20"
+        placeholder="搜索猫咪"
+      />
+      <image
+        style="width: 60rpx"
+        mode="widthFix"
+        src="/static/images/search.png"
+        @click="onClickSearch"
+      />
     </view>
     <!-- 校区选择框   -->
     <view class="school-box">
@@ -249,40 +255,9 @@ onReachBottom(() => {
   text-align: center;
 }
 
-// 搜索框
-.search-bar {
-  width: 100%;
-  height: 100rpx;
-  margin-top: 2%;
-}
-
-.search-bar-box {
-  display: flex;
-  margin: 0 auto;
-  width: 680rpx;
-  height: 70rpx;
-  border: 5rpx solid #f1f1f1;
-  border-radius: 50rpx;
-  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
-}
-
-.search-span {
-  width: 56rpx;
-  height: 48rpx;
-  margin-top: 10rpx;
-  margin-right: 30rpx;
-}
-
-.search-text {
-  width: 100%;
-  margin-top: 10rpx;
-  margin-left: 20rpx;
-  font-size: 30rpx;
-  color: #7f7f81;
-}
-
 .out {
   padding: 5rpx 30rpx 5rpx;
+
   .row {
     background-color: #ffffff;
     border-radius: 25px;

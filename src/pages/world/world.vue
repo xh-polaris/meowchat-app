@@ -1,4 +1,12 @@
 <template>
+  <uni-nav-bar
+    :fixed="true"
+    shadow
+    status-bar
+    left-text="消息"
+    title="喵世界"
+    @click-left="enterMessage"
+  />
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
       {{ types[0].name }}
@@ -32,8 +40,11 @@ import { init } from "@/utils/init";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
+import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
 const isInitialized = ref(false);
+uni.removeStorageSync("search");
+uni.setStorageSync("isClickSearch", false);
 
 const types = reactive([
   {
@@ -103,6 +114,12 @@ onPullDownRefresh(() => {
 init().then(() => {
   isInitialized.value = true;
 });
+
+function enterMessage() {
+  uni.navigateTo({
+    url: "/pages/message/message"
+  });
+}
 </script>
 
 <style lang="scss" scoped>
@@ -115,7 +132,6 @@ body {
 
 .navbar {
   position: fixed;
-  top: -1px;
   background-color: #fafcff;
   display: flex;
   color: #b8b8b8;

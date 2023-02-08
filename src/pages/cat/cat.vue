@@ -1,6 +1,6 @@
 <template>
   <view v-if="!isRefreshing">
-    <image :src="mainImgUrl" class="img" />
+    <image :src="mainImgUrl" class="img" mode="widthFix" />
     <view>
       <scroll-view scroll-x="true" class="scroll-view-item_H" scroll-left="120">
         <li
@@ -387,7 +387,7 @@ onPullDownRefresh(() => {
     min-height: 200rpx;
     color: white;
     // background: linear-gradient(90deg, #0688f3, white);
-    background: #eaf6ff;
+    background: #fcf7e5;
     border-radius: 30rpx;
   }
 

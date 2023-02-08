@@ -1,16 +1,26 @@
 <template>
   <view class="content2">
-    <view class="search-bar">
-      <image class="cancel" src="/static/images/cancel.png" />
-      <view class="search-bar-box">
-        <input
-          class="search-text"
-          maxlength="10"
-          placeholder="输入学校名称或拼音查询"
-          type="text"
-          value=""
-        />
-      </view>
+    <view
+      class="d-flex border a-center mx-2 j-sb px-3"
+      style="
+        border-radius: 70rpx;
+        height: 60rpx;
+        border-color: #938b8e;
+        border-width: 4rpx;
+      "
+    >
+      <input
+        class="search-text"
+        maxlength="10"
+        placeholder="输入学校名称或拼音查询"
+        type="text"
+        value=""
+      />
+      <image
+        style="width: 40rpx"
+        mode="widthFix"
+        src="/static/images/search.png"
+      />
     </view>
     <view class="search-bar">
       <view class="small"> 当前选择</view>
@@ -132,9 +142,11 @@ const sel = ref(true);
 function change() {
   sel.value = !sel.value;
 }
+
 function changeCampus(name: string) {
   currentNavBtn.value = name;
 }
+
 function changeSchool(name: string) {
   currentSchool.value = name;
 }
@@ -238,42 +250,10 @@ const currentSchool = ref("华东师范大学");
   margin: 8rpx 0 30rpx 30rpx;
 }
 
-.search-bar {
-  display: flex;
-  width: 100%;
-  height: 70rpx;
-  margin-top: 2%;
-}
-
 .school-bar {
   display: grid;
   width: 100%;
   margin-top: 2%;
-}
-
-.search-bar-box {
-  display: flex;
-  width: 620rpx;
-  height: 50rpx;
-  background-color: #f6f6f6;
-  border: 5rpx solid #f3f7f8;
-  border-radius: 50rpx;
-  margin-left: 30rpx;
-
-  .search-text {
-    width: 100%;
-    margin-top: 5rpx;
-    margin-left: 30rpx;
-    font-size: 25rpx;
-    color: #dadada;
-  }
-
-  .search-span {
-    width: 56rpx;
-    height: 56rpx;
-    margin-top: 6rpx;
-    margin-right: 30rpx;
-  }
 }
 
 // 下拉菜单
@@ -291,6 +271,7 @@ const currentSchool = ref("华东师范大学");
     font-size: 25rpx;
     font-weight: bold;
     width: 200rpx;
+    text-align: center;
   }
 }
 
@@ -310,6 +291,7 @@ const currentSchool = ref("华东师范大学");
     font-size: 25rpx;
     font-weight: bold;
     width: 200rpx;
+    text-align: center;
   }
 }
 

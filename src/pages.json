@@ -137,7 +137,13 @@
       "style": {
         "navigationBarTitleText": "我的消息"
       }
-    }
+    },
+	{
+		"path": "pages/message/message",
+		"style": {
+			"navigationBarTitleText": "我的消息"
+		}
+	}
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
