@@ -1,18 +1,20 @@
 <template>
-  <view class="frame">
-    <view class="close" @click="close"></view>
+  <view class="outer" :style="{ height: height + 'px' }">
+    <view class="inner">
+      <view class="close" @click="close"></view>
 
-    <template v-if="type === 'post'">
-      <view class="nav current">发帖子</view>
-      <view class="nav" @click="type = 'moment'">发动态</view>
-    </template>
-    <template v-if="type === 'moment'">
-      <view class="nav" @click="type = 'post'">发帖子</view>
-      <view class="nav current">发动态</view>
-    </template>
+      <template v-if="type === 'post'">
+        <view class="nav current">发帖子</view>
+        <view class="nav" @click="type = 'moment'">发动态</view>
+      </template>
+      <template v-if="type === 'moment'">
+        <view class="nav" @click="type = 'post'">发帖子</view>
+        <view class="nav current">发动态</view>
+      </template>
+    </view>
   </view>
 
-  <view class="empty"></view>
+  <view class="empty" :style="{ height: height + 'px' }"></view>
 
   <draft-post v-if="type === 'post'"></draft-post>
   <draft-moment v-if="type === 'moment'"></draft-moment>
@@ -32,24 +34,36 @@ onLoad((option) => {
 const close = () => {
   uni.navigateBack();
 };
+
+// 下面代码是网上搬运的 这个height用来解决自定义顶部导航栏高度多机型适配问题
+const res = uni.getSystemInfoSync();
+const menu = uni.getMenuButtonBoundingClientRect();
+let height =
+  (menu.top - res.statusBarHeight) * 2 + menu.height + res.statusBarHeight;
+if (res.model.indexOf("iPhone") > -1) {
+  height += 4;
+}
 </script>
 
 <style lang="scss" scoped>
-.frame {
+.outer {
   width: 100vw;
   position: fixed;
-  display: flex;
-  justify-content: center;
   background-color: #f8f8f8;
-  align-items: center;
-  padding-top: 44px;
-  padding-bottom: 4vw;
   z-index: 10;
+
+  .inner {
+    position: absolute;
+    bottom: 8px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .empty {
   width: 100vw;
-  height: 20vw;
 }
 
 .close {
