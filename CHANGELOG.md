@@ -1,5 +1,14 @@
 
 
+## [1.4.4](https://github.com/xh-polaris/meowchat-app/compare/v1.4.3...v1.4.4) (2023-02-09)
+
+
+### ✨ Features | 新功能
+
+* 实现了通过顶部导航栏切换发帖子/动态的功能 ([#172](https://github.com/xh-polaris/meowchat-app/issues/172)) ([64d1c71](https://github.com/xh-polaris/meowchat-app/commit/64d1c71b3186e843ae473a1d90db2bc15bdccc1c))
+* 我的发布页面 ([#171](https://github.com/xh-polaris/meowchat-app/issues/171)) ([73ec22a](https://github.com/xh-polaris/meowchat-app/commit/73ec22a4abbc68f0bc573c90367b73abec1fae24)), closes [#144](https://github.com/xh-polaris/meowchat-app/issues/144) [#145](https://github.com/xh-polaris/meowchat-app/issues/145) [#146](https://github.com/xh-polaris/meowchat-app/issues/146)
+* 修改反馈中的美观问题 ([#168](https://github.com/xh-polaris/meowchat-app/issues/168)) ([13a3420](https://github.com/xh-polaris/meowchat-app/commit/13a34204f8e23982123f923f793b5ffa275a0995))
+
 ## [1.4.3](https://github.com/xh-polaris/meowchat-app/compare/v1.4.2...v1.4.3) (2023-02-06)
 
 
