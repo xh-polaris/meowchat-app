@@ -1,9 +1,9 @@
 <template>
   <uni-nav-bar
     :fixed="true"
+    left-text="消息"
     shadow
     status-bar
-    left-text="消息"
     title="喵世界"
     @click-left="enterMessage"
   />
@@ -40,11 +40,8 @@ import { init } from "@/utils/init";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
 const isInitialized = ref(false);
-uni.removeStorageSync("search");
-uni.setStorageSync("isClickSearch", false);
 
 const types = reactive([
   {
