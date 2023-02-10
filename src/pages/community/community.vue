@@ -8,9 +8,9 @@
       />
       <view class="names" @click="onClickSwitch">
         <view class="school-name">
-          {{ school.name }}
+          {{ currentSchool }}
         </view>
-        <view class="campus-name"> ({{ currentNavBtn }})</view>
+        <view class="campus-name"> ({{ currentCampus }})</view>
       </view>
       <view class="switch-box">
         <view class="switch-icon" />
@@ -49,17 +49,56 @@
 import { reactive, ref } from "vue";
 import Masonry from "@/pages/community/masonry";
 import CarouselFrame from "@/pages/community/carousel-frame";
-import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom, onShow } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
+import { listCommunity } from "@/apis/community/community";
+import { Community } from "@/apis/schemas";
 
-const school = reactive({
-  name: "华东师范大学",
-  campuses: ["中北校区", "闵行校区", "不限"],
-  No: 0
+const currentSchool = ref("");
+const currentCampus = ref("");
+let communityId = ref("");
+let parentId = ref("");
+function init() {
+  if (!uni.getStorageSync("communityId")) {
+    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
+  }
+  communityId.value = uni.getStorageSync("communityId");
+  console.log(communityId.value);
+}
+
+const lists = reactive<{
+  data: Community[];
+}>({
+  data: []
 });
 
-const currentNavBtn = ref("中北校区");
+async function schoolList() {
+  lists.data = (
+    await listCommunity({
+      parentId: ""
+    })
+  ).communities;
+}
+
+function getCampus() {
+  schoolList().then(() => {
+    init();
+    for (let i = 0; i < lists.data.length; i++) {
+      if (lists.data[i].id === communityId.value) {
+        currentCampus.value = lists.data[i].name;
+        parentId.value = <string>lists.data[i].parentId;
+      }
+    }
+    for (let j = 0; j < lists.data.length; j++) {
+      if (lists.data[j].id === parentId.value) {
+        currentSchool.value = lists.data[j].name;
+      }
+    }
+  });
+  console.log(lists.data);
+}
+getCampus();
 
 const types = reactive([
   {
@@ -110,11 +149,16 @@ function pageRefresh() {
   setTimeout(() => {
     isRefreshing.value = false;
   }, 1);
+  getCampus();
 }
 
 onPullDownRefresh(() => {
   pageRefresh();
   uni.stopPullDownRefresh();
+});
+
+onShow(() => {
+  getCampus();
 });
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
