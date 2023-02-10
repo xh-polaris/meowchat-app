@@ -1,9 +1,9 @@
 <template>
   <uni-nav-bar
     :fixed="true"
+    left-text="消息"
     shadow
     status-bar
-    left-text="消息"
     title="喵世界"
     @click-left="enterMessage"
   />

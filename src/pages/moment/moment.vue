@@ -27,47 +27,16 @@
       </view>
     </view>
 
-    <view class="comments-box">
-      <view
-        v-for="(item, index) in comments.data"
-        :key="index"
-        class="comment-box"
-      >
-        <view class="commenter-info-box">
-          <image :src="item.user.avatarUrl" class="commenter-profile" />
-          <text class="commenter-name">
-            {{ item.user.nickname }}
-          </text>
-          <text class="comment-time"> · {{ displayTime(item.createAt) }}</text>
-        </view>
-        <view
-          class="comment-content"
-          @click="focusReplyComment(item.user.nickname, index)"
-        >
-          {{ item.text }}
-        </view>
-        <view v-if="item.comments > 0" class="reply-info">
-          <text @click="onClickReplies(index)">
-            {{ item.comments }}条相关回复
-          </text>
-          <image
-            class="arrow-right"
-            src="/static/images/arrow_right_blue.png"
-          />
-        </view>
-        <view v-if="comments.likeData[index]" class="like-box">
-          <view
-            v-if="comments.likeData[index].isLike"
-            class="like-icon liked"
-            @click="commentDoLike(index)"
-          />
-          <view v-else class="like-icon" @click="commentDoLike(index)" />
-          <text class="like-num">
-            {{ comments.likeData[index].count }}
-          </text>
-        </view>
-      </view>
-    </view>
+    <comment-box
+      v-for="(item, index) in comments.data"
+      :key="index"
+      :comment="item"
+      :like="comments.likeData[index]"
+      @interact-with-comment="focusReplyComment(index)"
+      @on-click-replies="onClickReplies(index)"
+      @local-do-like="commentDoLike(index)"
+    />
+    <view style="margin-bottom: 120rpx"></view>
 
     <write-comment-box
       v-model:placeholder-text="placeholderText"
@@ -127,6 +96,7 @@ import {
 import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply";
 import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
+import CommentBox from "@/pages/moment/comment-box.vue";
 
 const props = defineProps<{
   id: string;
@@ -237,8 +207,8 @@ const afterBlur = () => {
   refreshReplyIndex(-1);
 };
 
-const focusReplyComment = (name: string, index: number) => {
-  placeholderText.value = "回复 @" + name + ": ";
+const focusReplyComment = (index: number) => {
+  placeholderText.value = "回复 @" + comments.data[index].user.nickname + ": ";
   newCommentFocus.value = true;
   refreshReplyIndex(index);
 };
@@ -421,94 +391,6 @@ function leaveReply() {
           border-radius: 3px;
           float: left;
           margin: 5rpx 5rpx 5rpx 5rpx;
-        }
-      }
-    }
-  }
-
-  .comments-box {
-    .comment-box {
-      background-color: #fff;
-      box-shadow: 0 0 4px #ddd;
-      border-radius: 30rpx;
-      margin-bottom: 15px;
-      padding: 20rpx 20rpx;
-
-      &:last-child {
-        margin-bottom: 120rpx;
-      }
-
-      .commenter-info-box {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5rpx;
-
-        .commenter-profile {
-          width: 70rpx;
-          height: 70rpx;
-          border-radius: 35rpx;
-          margin-right: 24rpx;
-          background-color: #cccccc;
-        }
-
-        .commenter-name {
-          margin-right: 30rpx;
-          color: #7f7f81;
-          font-size: 14px;
-        }
-
-        .comment-time {
-          color: #aaa;
-          font-size: 12px;
-        }
-      }
-
-      .comment-content {
-        margin-left: 100rpx;
-        margin-bottom: 30rpx;
-        line-height: 1.5em;
-        letter-spacing: 0.05em;
-        font-weight: 500;
-        font-size: 14px;
-      }
-
-      .reply-info {
-        margin-left: 100rpx;
-        color: #63bdff;
-        font-size: 12px;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-
-        .arrow-right {
-          margin-left: 5px;
-          width: 6px;
-          height: 10px;
-        }
-      }
-
-      .like-box {
-        margin-left: 50px;
-        display: flex;
-        align-items: center;
-
-        .like-icon {
-          width: calc(16 / 390 * 100vw);
-          height: calc(16 / 390 * 100vw);
-          background-size: 100% 100%;
-          background-image: url("/static/images/like_grey_0.png");
-
-          &.liked {
-            background-image: url("/static/images/like_grey_1.png");
-          }
-        }
-
-        .like-num {
-          margin-left: calc(4 / 390 * 100vw);
-          font-size: 14px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          color: #aaa;
         }
       }
     }

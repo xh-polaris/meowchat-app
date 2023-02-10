@@ -1,5 +1,5 @@
 <template>
-  <view :animation="enterMaskData" class="reply-mask" @click="leaveReply()" />
+  <view class="reply-mask" @click="leaveReply()" />
 
   <view class="header">
     <view class="title">
@@ -27,88 +27,73 @@
       {{ post.data.text }}
     </view>
 
-    <view class="comments-box">
-      <view
-        v-for="(item, index) in comments.data"
-        :key="index"
-        class="comment-box"
-      >
-        <view class="commenter-info-box">
-          <image :src="item.user.avatarUrl" class="commenter-profile" />
-          <text class="commenter-name">
-            {{ item.user.nickname }}
-          </text>
-          <text class="comment-time"> · {{ displayTime(item.createAt) }} </text>
-        </view>
-        <view class="comment-content">
-          {{ item.text }}
-        </view>
-        <view v-if="item.comments > 0" class="reply-info">
-          <text @click="onClickReplies(index)">
-            {{ item.comments }}条相关回复
-          </text>
-          <image
-            class="arrow-right"
-            src="/static/images/arrow_right_blue.png"
-          />
-        </view>
-        <view class="like-box">
-          <view v-if="comments.likeData[index]">
-            <image
-              :src="comments.likeData[index].likeUrl"
-              class="like-icon"
-              mode="widthFix"
-              @click="commentDoLike(index)"
-            />
-          </view>
-          <text class="like-num">
-            {{ comments.likeData[index].count }}
-          </text>
-        </view>
-      </view>
-    </view>
-    <view style="height: 100px" />
-  </view>
-  <view class="write-comment-box">
-    <input
-      v-model="text"
-      class="write-comment"
-      placeholder="发表评论..."
-      type="text"
+    <comment-box
+      v-for="(item, index) in comments.data"
+      :key="index"
+      :comment="item"
+      :like="comments.likeData[index]"
+      @interact-with-comment="focusReplyComment(index)"
+      @on-click-replies="onClickReplies(index)"
+      @local-do-like="commentDoLike(index)"
     />
-    <view class="like-box">
-      <image
-        :src="postLike.likeUrl"
-        class="like-icon"
-        mode="widthFix"
-        @click="postDoLike()"
-      />
-      <view class="like-num">
-        {{ postLike.count }}
-      </view>
-    </view>
-    <view class="send-comment-btn" @click="createComment()"> 发布</view>
+    <view style="margin-bottom: 120rpx"></view>
+
+    <write-comment-box
+      v-model:placeholder-text="placeholderText"
+      :focus="newCommentFocus"
+      :like-data="post.likeData"
+      :new-comment-req="newCommentReq"
+      @update-text="
+        (newText) => {
+          newCommentReq.text = newText;
+        }
+      "
+      @do-like="
+        localDoLike({
+          targetId: id,
+          targetType: TargetType.Post
+        }).then((res) => {
+          post.likeData = res;
+        })
+      "
+      @after-create-comment="init"
+      @after-blur="afterBlur"
+    />
   </view>
+
   <view v-if="isReplyOpened" class="reply">
-    <reply @close-reply="closeReply" />
+    <reply
+      :like-data="comments.likeData[selectIndex]"
+      :main-comment="comments.data[selectIndex]"
+      @close-reply="closeReply"
+      @update-like-data="updateLikeData(selectIndex)"
+    />
   </view>
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { enterMask, enterReply } from "../moment/utils";
+import {
+  enterMask,
+  enterReply,
+  getCommentsData,
+  getLikeData,
+  LikeStruct,
+  localDoLike
+} from "../moment/utils";
 import Reply from "@/pages/moment/reply";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
 import { Comment, Post, TargetType } from "@/apis/schemas";
 import { getPostDetail } from "@/apis/post/post";
 import { displayTime } from "@/utils/time";
-import { getComments, newComment } from "@/apis/comment/comment";
 import { doLike, getCount, getUserLiked } from "@/apis/like/like";
 import {
   GetCommentsReq,
   NewCommentReq
 } from "@/apis/comment/comment-interfaces";
-import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
+import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { GetCountReq } from "@/apis/like/like-interface";
+import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
+import CommentBox from "@/pages/moment/comment-box.vue";
 
 const props = defineProps<{
   id: string;
@@ -119,7 +104,7 @@ const getPostDetailReq = reactive<GetPostDetailReq>({
 });
 
 // Post
-const post = reactive<{ data: Post }>({
+const post = reactive<{ data: Post; likeData: LikeStruct }>({
   data: {
     id: "",
     createAt: 0,
@@ -136,54 +121,23 @@ const post = reactive<{ data: Post }>({
     comments: 0,
     isAnonymous: false,
     status: 0
+  },
+  likeData: {
+    isLike: false,
+    count: 0
   }
 });
 
-const getData = async () => {
-  post.data = (await getPostDetail(getPostDetailReq)).post;
-};
-
-// Like
 const likeReq = reactive<GetCountReq>({
   targetId: props.id,
   targetType: TargetType.Post
 });
 
-const postLike = reactive<LikeStruct>({
-  count: 0,
-  liked: true,
-  likeUrl: "/static/images/like.png"
-});
-
-const likedUrl = "/static/images/like.png";
-const unlikeUrl = "/static/images/like_grey_0.png";
-const getLikeUrl = (liked: boolean) => {
-  if (liked) {
-    return likedUrl;
-  } else {
-    return unlikeUrl;
-  }
+const getData = async () => {
+  post.data = (await getPostDetail(getPostDetailReq)).post;
+  post.likeData = await getLikeData(likeReq);
 };
 
-const getPostLikeData = async () => {
-  postLike.count = (await getCount(likeReq)).count;
-  postLike.liked = (await getUserLiked(likeReq)).liked;
-  postLike.likeUrl = getLikeUrl(postLike.liked);
-};
-getPostLikeData();
-
-const postDoLike = async () => {
-  await doLike(likeReq);
-  await getPostLikeData();
-};
-
-interface LikeStruct {
-  count: number;
-  liked: boolean;
-  likeUrl: string;
-}
-
-// Comments
 const getCommentsReq = reactive<GetCommentsReq>({
   scope: "post",
   page: 0,
@@ -197,104 +151,103 @@ const comments = reactive<{
   data: [],
   likeData: []
 });
-// const commentLikes = reactive<boolean[]>([]);
 let allCommentsLoaded = false;
-let isCommentsLoaded = false;
-let pageStart = 0;
-const getCommentsData = async () => {
-  let commentsTemp = (await getComments(getCommentsReq)).comments;
-  if (commentsTemp.length > pageStart) {
-    for (let i = pageStart; i < commentsTemp.length; i++) {
-      comments.data.push(commentsTemp[i]);
-      const commentLikeReq = {
-        targetId: commentsTemp[i].id,
-        targetType: TargetType.Comment
-      };
-      comments.likeData.push(await getCommentLikeData(commentLikeReq));
+let isCommentsLoaded = true;
+let page = 0;
+const localGetCommentsData = async () => {
+  isCommentsLoaded = false;
+  getCommentsData({
+    id: props.id,
+    scope: "moment",
+    page: page
+  }).then((res) => {
+    for (let i = 0; i < res.data.length; i++) {
+      comments.data.push(res.data[i]);
+      comments.likeData.push(res.likeData[i]);
     }
-    if (commentsTemp.length === 10) {
-      getCommentsReq.page += 1;
-      pageStart = 0;
-    } else {
-      pageStart = commentsTemp.length;
-    }
-  } else {
-    allCommentsLoaded = true;
-  }
-  isCommentsLoaded = true;
+    isCommentsLoaded = true;
+    page += 1;
+    if (res.data.length < 10) allCommentsLoaded = true;
+  });
 };
-const getCommentLikeData = async (req: GetCountReq) => {
-  const commentLike = (await getUserLiked(req)).liked;
-  const likeCount = (await getCount(req)).count;
-  const commentLikeUrl = getLikeUrl(commentLike);
-  return {
-    count: likeCount,
-    liked: commentLike,
-    likeUrl: commentLikeUrl
-  };
-};
+
 const commentDoLike = async (index: number) => {
   let commentLikeReq = {
     targetId: comments.data[index].id,
     targetType: TargetType.Comment
   };
   await doLike(commentLikeReq);
-  comments.likeData[index] = await getCommentLikeData(commentLikeReq);
+  comments.likeData[index] = await getLikeData(commentLikeReq);
 };
+
+let commentReplyIndex = ref(-1);
+const placeholderText = ref("发布评论");
+const newCommentFocus = ref<boolean>(false);
 
 const newCommentReq = reactive<NewCommentReq>({
   id: props.id,
   scope: "post",
   text: ""
 });
-const text = ref<string>("");
-const createComment = () => {
-  if (text.value === "") {
-    return;
+
+const refreshReplyIndex = (index: number) => {
+  if (index != -1) {
+    commentReplyIndex.value = index;
+    newCommentReq.id = comments.data[commentReplyIndex.value].id;
+    newCommentReq.scope = "comment";
+  } else {
+    newCommentReq.id = props.id;
+    newCommentReq.scope = "moment";
+    commentReplyIndex.value = -1;
   }
-  newCommentReq.text = text.value;
-  newComment(newCommentReq).then((res) => {
-    getNewComment();
-    text.value = "";
-    uni.showToast({
-      title: res.msg
-    });
-  });
 };
-const getNewComment = async () => {
-  let tmpPage = getCommentsReq.page;
-  getCommentsReq.page = 0;
-  let commentsTemp = (await getComments(getCommentsReq)).comments;
-  getCommentsReq.page = tmpPage;
-  comments.data.unshift(commentsTemp[0]);
-  let commentLikeReq = {
-    targetId: commentsTemp[0].id,
+
+const afterBlur = () => {
+  newCommentFocus.value = false;
+  refreshReplyIndex(-1);
+};
+
+const focusReplyComment = (index: number) => {
+  placeholderText.value = "回复 @" + comments.data[index].user.nickname + ": ";
+  newCommentFocus.value = true;
+  refreshReplyIndex(index);
+};
+
+const updateLikeData = async (index: number) => {
+  const likeReq = {
+    targetId: comments.data[index].id,
     targetType: TargetType.Comment
   };
-  comments.likeData.unshift(await getCommentLikeData(commentLikeReq));
-  pageStart += 1;
-  if (pageStart === 10) {
-    getCommentsReq.page += 1;
-    pageStart = 0;
-  }
+  comments.likeData[index].count = (await getCount(likeReq)).count;
+  comments.likeData[index].isLike = (await getUserLiked(likeReq)).liked;
 };
-const init = () => {
-  getData();
-  getPostLikeData();
-  text.value = "";
-  pageStart = 0;
+
+let initLock = false;
+const init = async () => {
+  if (initLock) return;
+  initLock = true;
+  await getData();
+  page = 0;
+  getCommentsReq.page = 0;
   comments.data = [];
   comments.likeData = [];
   allCommentsLoaded = false;
-  isCommentsLoaded = false;
-  getCommentsData();
+  isCommentsLoaded = true;
+  await localGetCommentsData();
+  commentReplyIndex.value = -1;
+  newCommentReq.text = "";
+  newCommentReq.scope = "moment";
+  newCommentReq.id = props.id;
+  initLock = false;
 };
-init();
+
+onLoad(() => {
+  init();
+});
 
 onReachBottom(() => {
   if (isCommentsLoaded && !allCommentsLoaded) {
-    isCommentsLoaded = false;
-    getCommentsData();
+    localGetCommentsData();
   }
 });
 
@@ -302,22 +255,18 @@ onPullDownRefresh(() => {
   setTimeout(function () {
     uni.stopPullDownRefresh();
   }, 1000);
-  init();
+  if (!initLock) init();
 });
-function isAnonymous() {
-  if (post.data.isAnonymous) {
-    post.data.user.nickname = "匿名用户";
-    post.data.user.avatarUrl = "/static/images/anonymous.png";
-  }
-}
-isAnonymous();
+
+const selectIndex = ref(0);
 
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
 const isReplyOpened = ref(false);
 
-function onClickReplies() {
+function onClickReplies(index: number) {
+  selectIndex.value = index;
   isReplyOpened.value = true;
 }
 
@@ -445,148 +394,6 @@ $postPadding: 15px 27px 0 21px;
     /* darkgrey02 */
     color: #353535;
     margin-bottom: 30px;
-  }
-
-  .comments-box {
-    .comment-box {
-      background-color: #fff;
-      box-shadow: 0 0 4px #ddd;
-      border-radius: 30rpx;
-      margin-bottom: 10px;
-      padding: 20rpx 20rpx;
-
-      &:last-child {
-        margin-bottom: 120rpx;
-      }
-
-      .commenter-info-box {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5rpx;
-
-        .commenter-profile {
-          width: 70rpx;
-          height: 70rpx;
-          border-radius: 35rpx;
-          margin-right: 24rpx;
-          background-color: #cccccc;
-        }
-
-        .commenter-name {
-          margin-right: 30rpx;
-          color: #7f7f81;
-          font-size: 14px;
-        }
-
-        .comment-time {
-          color: #aaa;
-          font-size: 12px;
-        }
-      }
-
-      .comment-content {
-        margin-left: 100rpx;
-        margin-bottom: 30rpx;
-        line-height: 1.5em;
-        letter-spacing: 0.05em;
-        font-weight: 500;
-        font-size: 14px;
-      }
-
-      .reply-info {
-        margin-left: 100rpx;
-        color: #63bdff;
-        font-size: 12px;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-
-        .arrow-right {
-          margin-left: 5px;
-          width: 6px;
-          height: 10px;
-        }
-      }
-
-      .like-box {
-        margin-left: 50px;
-        align-items: center;
-        flex-direction: row;
-        display: flex;
-        margin-right: 12px;
-
-        .like-icon {
-          width: 15px;
-          margin-right: 8px;
-        }
-
-        .like-num {
-          font-size: 14px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          color: #aaa;
-        }
-      }
-    }
-  }
-}
-
-.write-comment-box {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  box-shadow: 0 -1px 2px #eee;
-  padding: 10px;
-
-  .write-comment {
-    width: 64%;
-    height: 36px;
-    background-color: #fafafa;
-    border-radius: 35rpx;
-    padding-left: 30rpx;
-    margin-right: 12px;
-
-    .uni-input-placeholder {
-      color: #d1d1d1;
-    }
-  }
-
-  .like-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-right: 12px;
-
-    .like-icon {
-      width: 22px;
-    }
-
-    .like-num {
-      max-width: 40px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 12px;
-      color: #c8c8c8;
-    }
-  }
-
-  .send-comment-btn {
-    background-color: #63bdff;
-    border-radius: 39rpx;
-    width: 132rpx;
-    padding: 0 10rpx;
-    line-height: 35px;
-    font-size: 16px;
-    text-align: center;
-    color: #fff;
   }
 }
 
