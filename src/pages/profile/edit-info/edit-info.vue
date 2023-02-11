@@ -15,9 +15,9 @@
           class="avatar"
         />
       </button>
-      <text class="avatar-hint">点击选择头像</text>
+      <text class="avatar-hint">点击更换头像</text>
     </view>
-    <text class="nickname">新昵称</text>
+    <text class="nickname">昵称</text>
     <view class="choose-nickname-row">
       <input
         class="update-nickname"
@@ -25,6 +25,15 @@
         type="nickname"
         :value="userInfo.nickname ? userInfo.nickname : props.nickname"
         @blur="onNickName"
+      />
+    </view>
+    <text class="nickname">学校名</text>
+    <view class="choose-nickname-row">
+      <input
+        class="update-nickname"
+        placeholder="请输入学校"
+        :value="school"
+        @blur="onSchool"
       />
     </view>
     <button class="confirm-change" @click="onClickConfirm()">
@@ -37,12 +46,24 @@
 import { updateUserInfo } from "@/apis/user/user";
 import { UpdateUserInfoReq } from "@/apis/user/user-interfaces";
 import { putObject } from "@/apis/cos/cos";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
+import { onShow } from "@dcloudio/uni-app";
 
 const props = defineProps<{
   avatarUrl: string;
   nickname: string;
 }>();
+
+let school = ref("");
+function getSchool() {
+  if (!uni.getStorageSync("school")) {
+    uni.setStorageSync("school", "华东师范大学");
+  }
+  school.value = uni.getStorageSync("school");
+}
+function setSchool() {
+  uni.setStorageSync("school", school.value);
+}
 
 const userInfo = reactive<UpdateUserInfoReq>({});
 function onChooseAvatar(e: any) {
@@ -57,16 +78,24 @@ function onNickName(e: any) {
   userInfo.nickname = e.detail.value;
 }
 
+function onSchool(e: any) {
+  school.value = e.detail.value;
+}
+
 function onClickConfirm() {
   updateUserInfo(userInfo).then((res) => {
     uni.showToast({
       title: res.msg
     });
   });
+  setSchool();
   uni.reLaunch({
     url: "/pages/profile/profile"
   });
 }
+onShow(() => {
+  getSchool();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -106,6 +135,7 @@ function onClickConfirm() {
   }
 }
 .avatar-hint {
+  font-size: 30rpx;
   color: #888888;
 }
 .nickname {
