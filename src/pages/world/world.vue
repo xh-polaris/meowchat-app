@@ -1,20 +1,24 @@
 <template>
-  <uni-nav-bar
-    :fixed="true"
-    shadow
-    status-bar
-  >
-  <block>
-	  <view class="d-flex a-center">
-		  <view class="d-flex a-center" style="position: absolute;left: 38rpx;" @click="enterMessage">
-			  <view class="left d-flex">
-			  			  <image src="/static/images/message-black.png" mode="widthFix" style="width: 60rpx;"></image>
-			  </view>
-			  <view class="font-sm px-1 message-count">23</view>
-		  </view>
-		  <view style="margin-left: 125rpx;font-size: 35rpx;">喵世界</view>
-	  </view>
-  </block>
+  <uni-nav-bar :fixed="true" shadow status-bar>
+    <block>
+      <view class="d-flex a-center">
+        <view
+          class="d-flex a-center"
+          style="position: absolute; left: 38rpx"
+          @click="enterMessage"
+        >
+          <view class="left d-flex">
+            <image
+              src="/static/images/message-black.png"
+              mode="widthFix"
+              style="width: 60rpx"
+            ></image>
+          </view>
+          <view class="font-sm px-1 message-count">23</view>
+        </view>
+        <view style="margin-left: 125rpx; font-size: 35rpx">喵世界</view>
+      </view>
+    </block>
   </uni-nav-bar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
@@ -139,13 +143,13 @@ body {
   background-color: #fafcff;
 }
 
-.message-count{
-	background-color: red;
-	color: white;
-	margin-left: -20rpx;
-	margin-top: 20rpx;
-	z-index: 99;
-	border-radius: 20rpx;
+.message-count {
+  background-color: red;
+  color: white;
+  margin-left: -20rpx;
+  margin-top: 20rpx;
+  z-index: 99;
+  border-radius: 20rpx;
 }
 
 .navbar {
