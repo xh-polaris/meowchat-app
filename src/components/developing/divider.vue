@@ -1,12 +1,12 @@
 <template>
-	<view class="divider"></view>
+  <view class="divider"></view>
 </template>
 
-<script>
-</script>
+<script></script>
 
 <style>
-	.divider{
-		height: 6rpx;background-color: #F5F5F5;
-	}
+.divider {
+  height: 6rpx;
+  background-color: #f5f5f5;
+}
 </style>
