@@ -1,5 +1,14 @@
 
 
+## [1.5.0](https://github.com/xh-polaris/meowchat-app/compare/v1.4.4...v1.5.0) (2023-02-11)
+
+
+### ✨ Features | 新功能
+
+* 初步实现学校/校区选择功能 ([#175](https://github.com/xh-polaris/meowchat-app/issues/175)) ([88adb18](https://github.com/xh-polaris/meowchat-app/commit/88adb182b53a012201b056244951a92f4bdcf00f))
+* 添加帖子的二级评论 ([#174](https://github.com/xh-polaris/meowchat-app/issues/174)) ([65de5c3](https://github.com/xh-polaris/meowchat-app/commit/65de5c30534b7a155f536bb3f957063d89510927))
+* 添加我的消息ui界面 ([#176](https://github.com/xh-polaris/meowchat-app/issues/176)) ([89dd171](https://github.com/xh-polaris/meowchat-app/commit/89dd171371d237d3669d276ad10cb8da1cc5caf7))
+
 ## [1.4.4](https://github.com/xh-polaris/meowchat-app/compare/v1.4.3...v1.4.4) (2023-02-09)
 
 
