@@ -33,6 +33,7 @@
         <!-- 左侧 -->
         <view class="">
           <view class="d-flex">
+			<!-- 头像 -->
             <view>
               <image
                 :src="item.avatar"
@@ -44,6 +45,7 @@
                 "
               ></image>
             </view>
+			<!-- 昵称/内容/时间 -->
             <view class="ml-2">
               <view class="d-flex py-2">
                 <view
@@ -89,7 +91,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import Divider from "@/components/developing/divider.vue";
+import Divider from "@/components/divider/divider.vue";
 const readCount = ref(2);
 const publishTime = ref("2022-3-1");
 const publishContent = ref(
