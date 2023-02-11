@@ -40,7 +40,7 @@ import { init } from "@/utils/init";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue"	;
+import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
 const isInitialized = ref(false);
 uni.removeStorageSync("search");
