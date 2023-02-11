@@ -23,7 +23,7 @@
                 {{ userInfo.nickname }}
               </view>
               <view class="unit">
-                <text>华东师范大学</text>
+                <text>{{ school }}</text>
               </view>
             </view>
           </view>
@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onShow } from "@dcloudio/uni-app";
@@ -68,12 +68,21 @@ const userInfo = reactive<User>({
   nickname: "微信用户",
   avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
 });
+let school = ref("");
+function getSchool() {
+  if (!uni.getStorageSync("school")) {
+    uni.setStorageSync("school", "华东师范大学");
+  }
+  school.value = uni.getStorageSync("school");
+}
+
 onShow(() => {
   getUserInfo().then((res) => {
     userInfo.id = res.user.id;
     userInfo.nickname = res.user.nickname;
     userInfo.avatarUrl = res.user.avatarUrl;
   });
+  getSchool();
 });
 const userOptions = [
   {

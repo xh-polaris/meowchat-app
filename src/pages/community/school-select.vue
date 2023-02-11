@@ -6,7 +6,8 @@
         border-radius: 70rpx;
         height: 60rpx;
         border-color: #938b8e;
-        border-width: 4rpx;
+        border-width: 2rpx;
+        margin-top: 10rpx;
       "
     >
       <input
@@ -30,22 +31,21 @@
         <view class="current_school_text">{{ currentSchool }}</view>
       </view>
       <view v-if="sel" class="select" @click="change">
-        <text>{{ currentNavBtn }}</text>
+        <text>{{ currentCampus }}</text>
         <image class="arrow" src="/static/images/down-black.png" />
       </view>
       <view v-else class="box">
         <view class="select2" @click="change">
-          <text>{{ currentNavBtn }}</text>
+          <text>{{ currentCampus }}</text>
           <image class="arrow" src="/static/images/up-black.png" />
         </view>
         <view class="option" @click="change">
           <text
-            v-for="(item, index) in school.campuses"
+            v-for="(item, index) in campuses.data"
             :key="index"
-            :src="item"
-            @click="changeCampus(item)"
+            @click="changeCampus(item.name, index)"
           >
-            {{ item }}
+            {{ item.name }}
           </text>
         </view>
       </view>
@@ -65,7 +65,7 @@
     <view class="big">
       <view>
         <view
-          v-for="(item, index) in school.name"
+          v-for="(item, index) in schoolLists.name"
           :key="index"
           :src="item"
           class="bubble"
@@ -81,16 +81,15 @@
 
   <view class="content2">
     <view
-      v-for="(item, index) in school.alpha"
+      v-for="(item, index) in schoolLists.alpha"
       :key="index"
       class="school-bar"
       :src="item"
     >
       <view class="small"> {{ item }}</view>
       <view
-        v-for="(item1, index1) in school.name"
+        v-for="(item1, index1) in schoolLists.name"
         :key="index1"
-        :src="school"
         class="school"
         @click="changeSchool(item1)"
       >
@@ -102,57 +101,87 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
+import { Community } from "@/apis/schemas";
+import { listCommunity } from "@/apis/community/community";
 
-const school = reactive({
-  alpha: [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z"
-  ],
+const currentSchool = ref("");
+const currentCampus = ref("");
+let communityId = ref("");
+let parentId = ref("");
+
+function init() {
+  if (!uni.getStorageSync("communityId")) {
+    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
+  }
+  communityId.value = uni.getStorageSync("communityId");
+}
+
+const lists = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
+const campuses = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
+async function schoolList() {
+  lists.data = (
+    await listCommunity({
+      parentId: ""
+    })
+  ).communities;
+}
+async function getCampus() {
+  schoolList().then(async () => {
+    init();
+    for (let i = 0; i < lists.data.length; i++) {
+      if (lists.data[i].id === communityId.value) {
+        currentCampus.value = lists.data[i].name;
+        parentId.value = <string>lists.data[i].parentId;
+      }
+    }
+    for (let j = 0; j < lists.data.length; j++) {
+      if (lists.data[j].id === parentId.value) {
+        currentSchool.value = lists.data[j].name;
+      }
+    }
+    campuses.data = (
+      await listCommunity({
+        parentId: parentId.value
+      })
+    ).communities;
+    console.log(campuses.data);
+  });
+}
+getCampus();
+
+const schoolLists = reactive({
+  alpha: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
-  campuses: ["中山北路校区", "闵行校区", "全部"],
+  campuses: ["中山北路校区", "闵行校区"],
   index: 0
 });
 
 const sel = ref(true);
 
+// 更改下拉选框状态
 function change() {
   sel.value = !sel.value;
 }
-
-function changeCampus(name: string) {
-  currentNavBtn.value = name;
+// 选择学校
+function changeCampus(name: string, index: number) {
+  currentCampus.value = name;
+  uni.setStorageSync("communityId", campuses.data[index].id);
+  console.log(communityId.value);
 }
-
+// 选择校区
 function changeSchool(name: string) {
   currentSchool.value = name;
 }
-
-const currentNavBtn = ref("中山北路校区");
-const currentSchool = ref("华东师范大学");
 </script>
 
 <style lang="scss" scoped>
@@ -271,7 +300,7 @@ const currentSchool = ref("华东师范大学");
     font-size: 25rpx;
     font-weight: bold;
     width: 200rpx;
-    text-align: center;
+    //text-align: center;
   }
 }
 
@@ -291,7 +320,7 @@ const currentSchool = ref("华东师范大学");
     font-size: 25rpx;
     font-weight: bold;
     width: 200rpx;
-    text-align: center;
+    //text-align: center;
   }
 }
 

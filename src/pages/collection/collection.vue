@@ -27,7 +27,7 @@
       <view class="school-select-box">
         <image class="arrow" src="../../static/images/location.png" />
         <view class="school-name">
-          {{ school.name }}
+          {{ currentSchool }}
         </view>
         <view class="switch-box">
           <button class="switch" size="mini" @click="onClickSwitch">
@@ -38,12 +38,12 @@
       <view class="school-select-box">
         <view class="navbar">
           <view
-            v-for="item in school.campuses"
-            :key="item"
-            :class="'navbtn ' + (currentNavBtn === item ? 'current' : '')"
-            @click="setBranch(item)"
+            v-for="(item, index) in campuses.data"
+            :key="index"
+            :class="'navbtn ' + (currentCampus === item.name ? 'current' : '')"
+            @click="setBranch(item.name)"
           >
-            {{ item }}
+            {{ item.name }}
           </view>
         </view>
       </view>
@@ -75,8 +75,64 @@ import {
   GetCatPreviewsReq,
   SearchCatPreviewsReq
 } from "@/apis/collection/collection-interfaces";
-import { CatPreview } from "@/apis/schemas";
+import { CatPreview, Community } from "@/apis/schemas";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
+import { listCommunity } from "@/apis/community/community";
+
+const currentSchool = ref("");
+const currentCampus = ref("");
+let communityId = ref("");
+let parentId = ref("");
+
+function init() {
+  if (!uni.getStorageSync("communityId")) {
+    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
+  }
+  communityId.value = uni.getStorageSync("communityId");
+}
+
+const lists = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
+const campuses = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
+async function schoolList() {
+  lists.data = (
+    await listCommunity({
+      parentId: ""
+    })
+  ).communities;
+}
+async function getCampus() {
+  schoolList().then(async () => {
+    init();
+    for (let i = 0; i < lists.data.length; i++) {
+      if (lists.data[i].id === communityId.value) {
+        currentCampus.value = lists.data[i].name;
+        parentId.value = <string>lists.data[i].parentId;
+      }
+    }
+    for (let j = 0; j < lists.data.length; j++) {
+      if (lists.data[j].id === parentId.value) {
+        currentSchool.value = lists.data[j].name;
+      }
+    }
+    campuses.data = (
+      await listCommunity({
+        parentId: parentId.value
+      })
+    ).communities;
+    console.log(campuses.data);
+  });
+}
+getCampus();
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
@@ -110,16 +166,8 @@ onPullDownRefresh(() => {
   uni.stopPullDownRefresh();
 });
 
-const school = reactive({
-  name: "华东师范大学",
-  campuses: ["中北校区", "闵行校区", "不限"],
-  No: 0
-});
-
-const currentNavBtn = ref("中北校区");
-
 function setBranch(e: string) {
-  currentNavBtn.value = e;
+  currentCampus.value = e;
 }
 
 function onClickSwitch() {
@@ -222,6 +270,7 @@ onReachBottom(() => {
   height: 12vh;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10rpx;
 }
 
 .school-select-box {
