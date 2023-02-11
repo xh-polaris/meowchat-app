@@ -12,7 +12,7 @@
           · {{ displayTime(moment.data.createAt) }}
         </text>
       </view>
-      <view class="post-content">
+      <view class="post-content font-md">
         {{ moment.data.text }}
       </view>
       <view class="like-info"> {{ moment.likeData.count }} 位喵友觉得很赞</view>
@@ -343,7 +343,6 @@ function leaveReply() {
 
     .post-content {
       margin-bottom: 15px;
-      font-size: 16px;
       line-height: 1.5em;
       letter-spacing: 0.05em;
       font-weight: 500;

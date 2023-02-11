@@ -88,7 +88,7 @@ const emit = defineEmits<{
   }
 
   .comment-content {
-    margin-left: 100rpx;
+    margin-left: calc(47 / 390 * 100vw);
     margin-bottom: 30rpx;
     line-height: 1.5em;
     letter-spacing: 0.05em;
@@ -97,7 +97,7 @@ const emit = defineEmits<{
   }
 
   .reply-info {
-    margin-left: 100rpx;
+    margin-left: calc(47 / 390 * 100vw);
     color: #63bdff;
     font-size: 12px;
     margin-bottom: 10px;
