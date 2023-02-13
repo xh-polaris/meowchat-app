@@ -44,7 +44,7 @@
     "@commitlint/config-conventional": "^17.4.2",
     "@dcloudio/types": "^3.0.14",
     "@dcloudio/uni-automator": "3.0.0-alpha-3060320220917001",
-    "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060320220917001",
+    "@dcloudio/uni-cli-shared": "3.0.0-3061820230117001",
     "@dcloudio/uni-stacktracey": "3.0.0-3060520221121001",
     "@dcloudio/vite-plugin-uni": "3.0.0-3060520221121001",
     "@release-it/conventional-changelog": "^5.1.1",
