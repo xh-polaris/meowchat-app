@@ -1,4 +1,11 @@
 <template>
+  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
+    <block>
+      <view style="margin-left: 165rpx; margin-top: 23rpx; font-size: 35rpx"
+        >喵社区</view
+      >
+    </block>
+  </uni-nav-bar>
   <view class="school-box">
     <view class="school-select-box">
       <image
@@ -54,6 +61,7 @@ import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import { Community } from "@/apis/schemas";
+import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
@@ -64,7 +72,6 @@ function init() {
     uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
   }
   communityId.value = uni.getStorageSync("communityId");
-  console.log(communityId.value);
 }
 
 const lists = reactive<{
@@ -96,7 +103,6 @@ function getCampus() {
       }
     }
   });
-  console.log(lists.data);
 }
 getCampus();
 
@@ -166,6 +172,8 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 </script>
 
 <style lang="scss" scoped>
+@import "@/common/third-party/zcm-main.css";
+
 .arrow {
   width: 44rpx;
   height: 50rpx;
