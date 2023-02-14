@@ -4,7 +4,7 @@
     {
       "path": "pages/world/world",
       "style": {
-        "navigationBarTitleText": "喵世界"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -121,15 +121,10 @@
       }
     },
     {
-      "path": "pages/draft/draft-post",
+      "path": "pages/draft/draft-nav",
       "style": {
-        "navigationBarTitleText": "发帖子"
-      }
-    },
-    {
-      "path": "pages/draft/draft-moment",
-      "style": {
-        "navigationBarTitleText": "发动态"
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
       }
     },
     {
@@ -137,7 +132,13 @@
       "style": {
         "navigationBarTitleText": "我的消息"
       }
-    }
+    },
+	{
+		"path": "pages/message/message",
+		"style": {
+			"navigationBarTitleText": "我的消息"
+		}
+	}
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

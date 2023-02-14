@@ -1,18 +1,11 @@
 import { Community } from "../schemas";
 
-export interface GetCommunityInfoResp {
-  code: number;
-  msg: string;
-  communities: Community;
+export interface ListCommunityReq {
+  parentId?: string;
 }
 
-export interface UpdateCommunityInfoReq {
-  id: string;
-  name: string;
-  parentId: string;
-}
-
-export interface UpdateCommunityInfoResp {
+export interface ListCommunityResp {
   code: number;
   msg: string;
+  communities: Community[];
 }

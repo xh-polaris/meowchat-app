@@ -22,7 +22,7 @@ import { ref } from "vue";
 
 const props = defineProps<{ id: string }>();
 const selectedId = ref(props.id);
-const momentUrl = "/pages/draft/draft-moment";
+const momentUrl = "/pages/draft/draft-nav?type=moment";
 const tabContent = [
   {
     id: "1",
@@ -42,7 +42,7 @@ const tabContent = [
     id: "0",
     icon: "/static/images/plus-bg-blue.png",
     activeIcon: "/static/images/plus-bg-blue.png",
-    url: "/pages/draft/draft-post",
+    url: "/pages/draft/draft-nav?type=post",
     text: ""
   },
   {

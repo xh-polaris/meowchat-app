@@ -1,5 +1,23 @@
 
 
+## [1.5.0](https://github.com/xh-polaris/meowchat-app/compare/v1.4.4...v1.5.0) (2023-02-11)
+
+
+### ✨ Features | 新功能
+
+* 初步实现学校/校区选择功能 ([#175](https://github.com/xh-polaris/meowchat-app/issues/175)) ([88adb18](https://github.com/xh-polaris/meowchat-app/commit/88adb182b53a012201b056244951a92f4bdcf00f))
+* 添加帖子的二级评论 ([#174](https://github.com/xh-polaris/meowchat-app/issues/174)) ([65de5c3](https://github.com/xh-polaris/meowchat-app/commit/65de5c30534b7a155f536bb3f957063d89510927))
+* 添加我的消息ui界面 ([#176](https://github.com/xh-polaris/meowchat-app/issues/176)) ([89dd171](https://github.com/xh-polaris/meowchat-app/commit/89dd171371d237d3669d276ad10cb8da1cc5caf7))
+
+## [1.4.4](https://github.com/xh-polaris/meowchat-app/compare/v1.4.3...v1.4.4) (2023-02-09)
+
+
+### ✨ Features | 新功能
+
+* 实现了通过顶部导航栏切换发帖子/动态的功能 ([#172](https://github.com/xh-polaris/meowchat-app/issues/172)) ([64d1c71](https://github.com/xh-polaris/meowchat-app/commit/64d1c71b3186e843ae473a1d90db2bc15bdccc1c))
+* 我的发布页面 ([#171](https://github.com/xh-polaris/meowchat-app/issues/171)) ([73ec22a](https://github.com/xh-polaris/meowchat-app/commit/73ec22a4abbc68f0bc573c90367b73abec1fae24)), closes [#144](https://github.com/xh-polaris/meowchat-app/issues/144) [#145](https://github.com/xh-polaris/meowchat-app/issues/145) [#146](https://github.com/xh-polaris/meowchat-app/issues/146)
+* 修改反馈中的美观问题 ([#168](https://github.com/xh-polaris/meowchat-app/issues/168)) ([13a3420](https://github.com/xh-polaris/meowchat-app/commit/13a34204f8e23982123f923f793b5ffa275a0995))
+
 ## [1.4.3](https://github.com/xh-polaris/meowchat-app/compare/v1.4.2...v1.4.3) (2023-02-06)
 
 

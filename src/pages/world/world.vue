@@ -1,4 +1,25 @@
 <template>
+  <uni-nav-bar :fixed="true" shadow status-bar>
+    <block>
+      <view class="d-flex a-center">
+        <view
+          class="d-flex a-center"
+          style="position: absolute; left: 38rpx"
+          @click="enterMessage"
+        >
+          <view class="left d-flex">
+            <image
+              src="/static/images/message-black.png"
+              mode="widthFix"
+              style="width: 60rpx"
+            ></image>
+          </view>
+          <view class="font-sm px-1 message-count">23</view>
+        </view>
+        <view style="margin-left: 125rpx; font-size: 35rpx">喵世界</view>
+      </view>
+    </block>
+  </uni-nav-bar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
       {{ types[0].name }}
@@ -32,8 +53,11 @@ import { init } from "@/utils/init";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
+import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
 const isInitialized = ref(false);
+uni.removeStorageSync("search");
+uni.setStorageSync("isClickSearch", false);
 
 const types = reactive([
   {
@@ -103,6 +127,12 @@ onPullDownRefresh(() => {
 init().then(() => {
   isInitialized.value = true;
 });
+
+function enterMessage() {
+  uni.navigateTo({
+    url: "/pages/message/message"
+  });
+}
 </script>
 
 <style lang="scss" scoped>
@@ -113,9 +143,17 @@ body {
   background-color: #fafcff;
 }
 
+.message-count {
+  background-color: red;
+  color: white;
+  margin-left: -20rpx;
+  margin-top: 20rpx;
+  z-index: 99;
+  border-radius: 20rpx;
+}
+
 .navbar {
   position: fixed;
-  top: -1px;
   background-color: #fafcff;
   display: flex;
   color: #b8b8b8;

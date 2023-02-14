@@ -1,16 +1,27 @@
 <template>
   <view class="content2">
-    <view class="search-bar">
-      <image class="cancel" src="/static/images/cancel.png" />
-      <view class="search-bar-box">
-        <input
-          class="search-text"
-          maxlength="10"
-          placeholder="输入学校名称或拼音查询"
-          type="text"
-          value=""
-        />
-      </view>
+    <view
+      class="d-flex border a-center mx-2 j-sb px-3"
+      style="
+        border-radius: 70rpx;
+        height: 60rpx;
+        border-color: #938b8e;
+        border-width: 2rpx;
+        margin-top: 10rpx;
+      "
+    >
+      <input
+        class="search-text"
+        maxlength="10"
+        placeholder="输入学校名称或拼音查询"
+        type="text"
+        value=""
+      />
+      <image
+        style="width: 40rpx"
+        mode="widthFix"
+        src="/static/images/search.png"
+      />
     </view>
     <view class="search-bar">
       <view class="small"> 当前选择</view>
@@ -20,22 +31,21 @@
         <view class="current_school_text">{{ currentSchool }}</view>
       </view>
       <view v-if="sel" class="select" @click="change">
-        <text>{{ currentNavBtn }}</text>
+        <text>{{ currentCampus }}</text>
         <image class="arrow" src="/static/images/down-black.png" />
       </view>
       <view v-else class="box">
         <view class="select2" @click="change">
-          <text>{{ currentNavBtn }}</text>
+          <text>{{ currentCampus }}</text>
           <image class="arrow" src="/static/images/up-black.png" />
         </view>
         <view class="option" @click="change">
           <text
-            v-for="(item, index) in school.campuses"
+            v-for="(item, index) in campuses.data"
             :key="index"
-            :src="item"
-            @click="changeCampus(item)"
+            @click="changeCampus(item.name, index)"
           >
-            {{ item }}
+            {{ item.name }}
           </text>
         </view>
       </view>
@@ -55,7 +65,7 @@
     <view class="big">
       <view>
         <view
-          v-for="(item, index) in school.name"
+          v-for="(item, index) in schoolLists.name"
           :key="index"
           :src="item"
           class="bubble"
@@ -71,16 +81,15 @@
 
   <view class="content2">
     <view
-      v-for="(item, index) in school.alpha"
+      v-for="(item, index) in schoolLists.alpha"
       :key="index"
       class="school-bar"
       :src="item"
     >
       <view class="small"> {{ item }}</view>
       <view
-        v-for="(item1, index1) in school.name"
+        v-for="(item1, index1) in schoolLists.name"
         :key="index1"
-        :src="school"
         class="school"
         @click="changeSchool(item1)"
       >
@@ -92,55 +101,87 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
+import { Community } from "@/apis/schemas";
+import { listCommunity } from "@/apis/community/community";
 
-const school = reactive({
-  alpha: [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z"
-  ],
+const currentSchool = ref("");
+const currentCampus = ref("");
+let communityId = ref("");
+let parentId = ref("");
+
+function init() {
+  if (!uni.getStorageSync("communityId")) {
+    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
+  }
+  communityId.value = uni.getStorageSync("communityId");
+}
+
+const lists = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
+const campuses = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
+async function schoolList() {
+  lists.data = (
+    await listCommunity({
+      parentId: ""
+    })
+  ).communities;
+}
+async function getCampus() {
+  schoolList().then(async () => {
+    init();
+    for (let i = 0; i < lists.data.length; i++) {
+      if (lists.data[i].id === communityId.value) {
+        currentCampus.value = lists.data[i].name;
+        parentId.value = <string>lists.data[i].parentId;
+      }
+    }
+    for (let j = 0; j < lists.data.length; j++) {
+      if (lists.data[j].id === parentId.value) {
+        currentSchool.value = lists.data[j].name;
+      }
+    }
+    campuses.data = (
+      await listCommunity({
+        parentId: parentId.value
+      })
+    ).communities;
+    console.log(campuses.data);
+  });
+}
+getCampus();
+
+const schoolLists = reactive({
+  alpha: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"],
   name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
-  campuses: ["中山北路校区", "闵行校区", "全部"],
+  campuses: ["中山北路校区", "闵行校区"],
   index: 0
 });
 
 const sel = ref(true);
 
+// 更改下拉选框状态
 function change() {
   sel.value = !sel.value;
 }
-function changeCampus(name: string) {
-  currentNavBtn.value = name;
+// 选择学校
+function changeCampus(name: string, index: number) {
+  currentCampus.value = name;
+  uni.setStorageSync("communityId", campuses.data[index].id);
+  console.log(communityId.value);
 }
+// 选择校区
 function changeSchool(name: string) {
   currentSchool.value = name;
 }
-
-const currentNavBtn = ref("中山北路校区");
-const currentSchool = ref("华东师范大学");
 </script>
 
 <style lang="scss" scoped>
@@ -238,42 +279,10 @@ const currentSchool = ref("华东师范大学");
   margin: 8rpx 0 30rpx 30rpx;
 }
 
-.search-bar {
-  display: flex;
-  width: 100%;
-  height: 70rpx;
-  margin-top: 2%;
-}
-
 .school-bar {
   display: grid;
   width: 100%;
   margin-top: 2%;
-}
-
-.search-bar-box {
-  display: flex;
-  width: 620rpx;
-  height: 50rpx;
-  background-color: #f6f6f6;
-  border: 5rpx solid #f3f7f8;
-  border-radius: 50rpx;
-  margin-left: 30rpx;
-
-  .search-text {
-    width: 100%;
-    margin-top: 5rpx;
-    margin-left: 30rpx;
-    font-size: 25rpx;
-    color: #dadada;
-  }
-
-  .search-span {
-    width: 56rpx;
-    height: 56rpx;
-    margin-top: 6rpx;
-    margin-right: 30rpx;
-  }
 }
 
 // 下拉菜单
@@ -291,6 +300,7 @@ const currentSchool = ref("华东师范大学");
     font-size: 25rpx;
     font-weight: bold;
     width: 200rpx;
+    //text-align: center;
   }
 }
 
@@ -310,6 +320,7 @@ const currentSchool = ref("华东师范大学");
     font-size: 25rpx;
     font-weight: bold;
     width: 200rpx;
+    //text-align: center;
   }
 }
 

@@ -1,36 +1,19 @@
 import {
-  GetCommunityInfoResp,
-  UpdateCommunityInfoReq,
-  UpdateCommunityInfoResp
+  ListCommunityReq,
+  ListCommunityResp
 } from "@/apis/community/community-interfaces";
 
-export async function getCommunityInfo() {
-  return await new Promise<GetCommunityInfoResp>((resolve, reject) => {
+export async function listCommunity(req: ListCommunityReq) {
+  return await new Promise<ListCommunityResp>((resolve, reject) => {
     uni.request({
-      url: "/community/get_community_info",
+      url: "/community/list_community",
+      data: req,
       method: "GET",
       success(res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode !== 200) {
           reject(res);
         }
-        const data = res.data as GetCommunityInfoResp;
-        resolve(data);
-      }
-    });
-  });
-}
-
-export async function updateCommunityInfo(req: UpdateCommunityInfoReq) {
-  return await new Promise<UpdateCommunityInfoResp>((resolve, reject) => {
-    uni.request({
-      url: "/user/update_community_info",
-      data: req,
-      method: "POST",
-      success(res: UniNamespace.RequestSuccessCallbackResult) {
-        if (res.statusCode !== 200) {
-          reject(res);
-        }
-        const data = res.data as UpdateCommunityInfoResp;
+        const data = res.data as ListCommunityResp;
         resolve(data);
       }
     });

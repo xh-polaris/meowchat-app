@@ -1,27 +1,33 @@
 <template>
   <view class="content">
     <!-- 搜索框 -->
-    <view class="search-bar">
-      <view class="search-bar-box">
-        <input
-          v-model="searchCatPreviewsReq.keyword"
-          class="search-text"
-          maxlength="20"
-          placeholder="搜索猫咪"
-        />
-        <image
-          class="search-span"
-          src="/static/images/search_span.png"
-          @click="onClickSearch"
-        />
-      </view>
+    <view
+      class="border d-flex mx-3 a-center j-sb px-3 mt-1"
+      style="
+        height: 80rpx;
+        border-radius: 50rpx;
+        border-color: #a0cce9;
+        border-width: 3rpx;
+      "
+    >
+      <input
+        v-model="searchCatPreviewsReq.keyword"
+        maxlength="20"
+        placeholder="搜索猫咪"
+      />
+      <image
+        style="width: 60rpx"
+        mode="widthFix"
+        src="/static/images/search.png"
+        @click="onClickSearch"
+      />
     </view>
     <!-- 校区选择框   -->
     <view class="school-box">
       <view class="school-select-box">
         <image class="arrow" src="../../static/images/location.png" />
         <view class="school-name">
-          {{ school.name }}
+          {{ currentSchool }}
         </view>
         <view class="switch-box">
           <button class="switch" size="mini" @click="onClickSwitch">
@@ -32,12 +38,12 @@
       <view class="school-select-box">
         <view class="navbar">
           <view
-            v-for="item in school.campuses"
-            :key="item"
-            :class="'navbtn ' + (currentNavBtn === item ? 'current' : '')"
-            @click="setBranch(item)"
+            v-for="(item, index) in campuses.data"
+            :key="index"
+            :class="'navbtn ' + (currentCampus === item.name ? 'current' : '')"
+            @click="setBranch(item.name)"
           >
-            {{ item }}
+            {{ item.name }}
           </view>
         </view>
       </view>
@@ -69,8 +75,64 @@ import {
   GetCatPreviewsReq,
   SearchCatPreviewsReq
 } from "@/apis/collection/collection-interfaces";
-import { CatPreview } from "@/apis/schemas";
+import { CatPreview, Community } from "@/apis/schemas";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
+import { listCommunity } from "@/apis/community/community";
+
+const currentSchool = ref("");
+const currentCampus = ref("");
+let communityId = ref("");
+let parentId = ref("");
+
+function init() {
+  if (!uni.getStorageSync("communityId")) {
+    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
+  }
+  communityId.value = uni.getStorageSync("communityId");
+}
+
+const lists = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
+const campuses = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
+async function schoolList() {
+  lists.data = (
+    await listCommunity({
+      parentId: ""
+    })
+  ).communities;
+}
+async function getCampus() {
+  schoolList().then(async () => {
+    init();
+    for (let i = 0; i < lists.data.length; i++) {
+      if (lists.data[i].id === communityId.value) {
+        currentCampus.value = lists.data[i].name;
+        parentId.value = <string>lists.data[i].parentId;
+      }
+    }
+    for (let j = 0; j < lists.data.length; j++) {
+      if (lists.data[j].id === parentId.value) {
+        currentSchool.value = lists.data[j].name;
+      }
+    }
+    campuses.data = (
+      await listCommunity({
+        parentId: parentId.value
+      })
+    ).communities;
+    console.log(campuses.data);
+  });
+}
+getCampus();
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
@@ -104,16 +166,8 @@ onPullDownRefresh(() => {
   uni.stopPullDownRefresh();
 });
 
-const school = reactive({
-  name: "华东师范大学",
-  campuses: ["中北校区", "闵行校区", "不限"],
-  No: 0
-});
-
-const currentNavBtn = ref("中北校区");
-
 function setBranch(e: string) {
-  currentNavBtn.value = e;
+  currentCampus.value = e;
 }
 
 function onClickSwitch() {
@@ -216,6 +270,7 @@ onReachBottom(() => {
   height: 12vh;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10rpx;
 }
 
 .school-select-box {
@@ -249,40 +304,9 @@ onReachBottom(() => {
   text-align: center;
 }
 
-// 搜索框
-.search-bar {
-  width: 100%;
-  height: 100rpx;
-  margin-top: 2%;
-}
-
-.search-bar-box {
-  display: flex;
-  margin: 0 auto;
-  width: 680rpx;
-  height: 70rpx;
-  border: 5rpx solid #f1f1f1;
-  border-radius: 50rpx;
-  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
-}
-
-.search-span {
-  width: 56rpx;
-  height: 48rpx;
-  margin-top: 10rpx;
-  margin-right: 30rpx;
-}
-
-.search-text {
-  width: 100%;
-  margin-top: 10rpx;
-  margin-left: 20rpx;
-  font-size: 30rpx;
-  color: #7f7f81;
-}
-
 .out {
   padding: 5rpx 30rpx 5rpx;
+
   .row {
     background-color: #ffffff;
     border-radius: 25px;

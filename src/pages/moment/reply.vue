@@ -39,6 +39,7 @@
             backgroundImage: 'url( ' + item.user.avatarUrl + ')'
           }"
           class="avatar"
+          style="margin-left: calc(42 / 390 * 100vw)"
         ></view>
         <view class="thread">
           <view class="content">
