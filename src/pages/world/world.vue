@@ -1,5 +1,5 @@
 <template>
-  <uni-nav-bar :fixed="true" shadow status-bar>
+  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
     <block>
       <view class="d-flex a-center">
         <view
@@ -11,12 +11,12 @@
             <image
               src="/static/images/message-black.png"
               mode="widthFix"
-              style="width: 60rpx"
+              style="width: 45rpx"
             ></image>
           </view>
           <view class="font-sm px-1 message-count">23</view>
         </view>
-        <view style="margin-left: 125rpx; font-size: 35rpx">喵世界</view>
+        <view style="margin-left: 165rpx; font-size: 35rpx">喵世界</view>
       </view>
     </block>
   </uni-nav-bar>
@@ -163,7 +163,7 @@ body {
   padding-top: calc(10 / 390 * 100vw);
   padding-bottom: calc(16 / 390 * 100vw);
   transition-duration: 0.4s;
-  z-index: 99999;
+  z-index: 100;
 }
 
 .navbtn {

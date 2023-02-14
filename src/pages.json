@@ -4,13 +4,15 @@
     {
       "path": "pages/world/world",
       "style": {
+        "navigationBarTitleText": "喵世界",
         "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/community/community",
       "style": {
-        "navigationBarTitleText": "喵社区"
+        "navigationBarTitleText": "喵社区",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -18,13 +20,15 @@
       "style": {
         "navigationBarTitleText": "图鉴",
         "enablePullDownRefresh": true,
-        "onReachBottomDistance": 150
+        "onReachBottomDistance": 150,
+        "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/profile/profile",
       "style": {
-        "navigationBarTitleText": "个人中心"
+        "navigationBarTitleText": "个人中心",
+        "navigationStyle": "custom"
       }
     },
     {

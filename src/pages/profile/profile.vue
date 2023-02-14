@@ -1,4 +1,11 @@
 <template>
+  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
+    <block>
+      <view style="margin-left: 150rpx; margin-top: 23rpx; font-size: 35rpx"
+        >个人中心</view
+      >
+    </block>
+  </uni-nav-bar>
   <view class="container">
     <image
       class="bg-set"
@@ -62,6 +69,7 @@ import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onShow } from "@dcloudio/uni-app";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
+import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
 const userInfo = reactive<User>({
   id: "",

@@ -1,4 +1,11 @@
 <template>
+  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
+    <block>
+      <view style="margin-left: 181rpx; margin-top: 23rpx; font-size: 35rpx"
+        >图鉴</view
+      >
+    </block>
+  </uni-nav-bar>
   <view class="content">
     <!-- 搜索框 -->
     <view
@@ -78,6 +85,7 @@ import {
 import { CatPreview, Community } from "@/apis/schemas";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
+import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
@@ -223,6 +231,7 @@ onReachBottom(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 20rpx;
 }
 
 .switch {
