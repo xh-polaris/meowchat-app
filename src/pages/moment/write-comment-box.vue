@@ -94,7 +94,8 @@ const blur = () => {
   align-items: center;
   background-color: #fff;
   box-shadow: 0 -1px 2px #eee;
-  padding: 10px;
+  padding: 20rpx 30rpx 0 30rpx;
+  margin-bottom: 70rpx;
 
   .write-comment {
     width: 64%;
@@ -138,7 +139,7 @@ const blur = () => {
   }
 
   .send-comment-btn {
-    background-color: #63bdff;
+    background-color: #1fa1ff;
     border-radius: 39rpx;
     width: 132rpx;
     padding: 0 10rpx;

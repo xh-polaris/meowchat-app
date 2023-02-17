@@ -142,7 +142,13 @@
 		"style": {
 			"navigationBarTitleText": "我的消息"
 		}
-	}
+	},
+    {
+      "path": "pages/draft/draft-image",
+      "style": {
+        "navigationBarTitleText": "上传猫片"
+      }
+    }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

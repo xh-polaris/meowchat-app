@@ -348,6 +348,7 @@ textarea ::selection {
 
   .toggle-text {
     font-size: calc(14 / 390 * 100vw);
+    font-weight: bold;
   }
 
   .toggle {
@@ -394,6 +395,7 @@ textarea ::selection {
   border-radius: calc(22 / 390 * 100vw);
   line-height: calc(44 / 390 * 100vw);
   transition-duration: 0.05s;
+  letter-spacing: 5rpx;
 }
 
 .publish:active {

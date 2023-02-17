@@ -58,8 +58,10 @@ const emit = defineEmits<{
 .comment-box {
   background-color: #fff;
   box-shadow: 0 0 4px #ddd;
-  border-radius: 30rpx;
+  border-radius: 15rpx;
   margin-bottom: 15px;
+  margin-left: -10rpx;
+  margin-right: -10rpx;
   padding: 20rpx 20rpx;
 
   .commenter-info-box {

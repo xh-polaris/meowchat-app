@@ -16,7 +16,9 @@
           </view>
           <view class="font-sm px-1 message-count">23</view>
         </view>
-        <view style="margin-left: 165rpx; font-size: 35rpx">喵世界</view>
+        <view style="margin-left: 165rpx; font-size: 35rpx; font-weight: bold"
+          >喵世界</view
+        >
       </view>
     </block>
   </uni-nav-bar>
@@ -195,6 +197,6 @@ body {
 }
 
 .top-padding {
-  height: calc(58 / 390 * 100vw);
+  height: calc(56 / 390 * 100vw);
 }
 </style>
