@@ -1,7 +1,13 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
     <block>
-      <view style="margin-left: 181rpx; margin-top: 23rpx; font-size: 35rpx"
+      <view
+        style="
+          margin-left: 181rpx;
+          margin-top: 23rpx;
+          font-size: 35rpx;
+          font-weight: bold;
+        "
         >图鉴</view
       >
     </block>
@@ -137,7 +143,6 @@ async function getCampus() {
         parentId: parentId.value
       })
     ).communities;
-    console.log(campuses.data);
   });
 }
 getCampus();
@@ -231,7 +236,7 @@ onReachBottom(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 20rpx;
+  padding-top: 20rpx;
 }
 
 .switch {

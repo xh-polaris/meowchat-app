@@ -1,7 +1,13 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
     <block>
-      <view style="margin-left: 165rpx; margin-top: 23rpx; font-size: 35rpx"
+      <view
+        style="
+          margin-left: 165rpx;
+          margin-top: 23rpx;
+          font-size: 35rpx;
+          font-weight: bold;
+        "
         >喵社区</view
       >
     </block>

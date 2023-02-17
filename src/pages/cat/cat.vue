@@ -79,7 +79,10 @@
     </view>
     <view class="divider" />
     <view class="photo">
-      <text class="maopian"> 猫片</text>
+      <view class="row">
+        <text class="maopian"> 猫片</text>
+        <button class="switch" size="mini" @click="draftImage">我要上传</button>
+      </view>
       <view class="dd">
         <text class="detail_info"> 撸猫指南：{{ cat.details }}</text>
         <view
@@ -131,6 +134,12 @@ import { Cat } from "@/apis/schemas";
 import { getCatDetail } from "@/apis/collection/collection";
 import { GetCatDetailReq } from "@/apis/collection/collection-interfaces";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
+
+function draftImage() {
+  uni.navigateTo({
+    url: "/pages/draft/draft-image"
+  });
+}
 
 const isRefreshing = ref(false);
 const props = defineProps<{
@@ -332,17 +341,15 @@ onPullDownRefresh(() => {
 }
 
 .photo {
-  // text-align: center;
   margin-top: 40rpx;
 
   .maopian {
     /* 猫片 */
-
     //position: absolute;
-    width: 100rpx;
-    height: 100rpx;
-    left: 15rpx;
-    top: 677rpx;
+    //width: 100rpx;
+    //height: 100rpx;
+    //left: 20rpx;
+    //top: 677rpx;
 
     font-family: "Abel", serif;
     font-style: normal;
@@ -459,5 +466,16 @@ onPullDownRefresh(() => {
     height: 20rpx;
     margin-right: 40rpx;
   }
+}
+
+.switch {
+  border-radius: 20px;
+  margin-top: -10rpx;
+  margin-left: auto;
+  margin-right: 20rpx;
+  color: #1fa1ff;
+  font-size: 23rpx;
+  background: white;
+  border: solid #1fa1ff 1px;
 }
 </style>

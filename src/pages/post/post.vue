@@ -26,6 +26,7 @@
     <view class="text">
       {{ post.data.text }}
     </view>
+    <view class="commentNum"> 评论 {{ post.data.comments }} </view>
 
     <comment-box
       v-for="(item, index) in comments.data"
@@ -288,12 +289,12 @@ $headerPadding: 21px;
 
 .header {
   padding: $headerPadding $headerPadding 15px;
-  border-bottom: #c0c0c0 1px solid;
+  border-bottom: #d8d8d8 1px solid;
 
   .title {
     font-style: normal;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 22px;
     line-height: 26px;
     /* identical to box height, or 142% */
 
@@ -393,7 +394,7 @@ $postPadding: 15px 27px 0 21px;
 
     /* darkgrey02 */
     color: #353535;
-    margin-bottom: 30px;
+    margin-bottom: 100rpx;
   }
 }
 
@@ -415,5 +416,17 @@ $postPadding: 15px 27px 0 21px;
   bottom: 56px;
   opacity: 1;
   overflow-y: scroll;
+}
+
+.commentNum {
+  white-space: pre-line;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 25px;
+  /* or 157% */
+
+  /* darkgrey02 */
+  color: #353535;
+  margin-bottom: 20rpx;
 }
 </style>
