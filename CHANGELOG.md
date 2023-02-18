@@ -1,5 +1,14 @@
 
 
+## [1.5.1](https://github.com/xh-polaris/meowchat-app/compare/v1.5.0...v1.5.1) (2023-02-18)
+
+
+### ✨ Features | 新功能
+
+* 将调整四个主界面的顶部栏全部更改为自定义栏，并调整显示效果 ([#180](https://github.com/xh-polaris/meowchat-app/issues/180)) ([589077c](https://github.com/xh-polaris/meowchat-app/commit/589077c6430bb52bf15f17172231487b2e91734f))
+* 实现了帖子/动态详情中用户自删帖子/动态的功能 ([#182](https://github.com/xh-polaris/meowchat-app/issues/182)) ([203062d](https://github.com/xh-polaris/meowchat-app/commit/203062d54cf865ff4e5042c15956fe641bd600f9))
+* 添加图鉴上传照片界面UI ([#181](https://github.com/xh-polaris/meowchat-app/issues/181)) ([82d08f9](https://github.com/xh-polaris/meowchat-app/commit/82d08f93b7b47c2d57bd9a9b49cff550003663c9))
+
 ## [1.5.0](https://github.com/xh-polaris/meowchat-app/compare/v1.4.4...v1.5.0) (2023-02-11)
 
 
