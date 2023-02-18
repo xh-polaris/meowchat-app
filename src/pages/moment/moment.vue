@@ -11,7 +11,11 @@
         <text class="post-time">
           · {{ displayTime(moment.data.createAt) }}
         </text>
-        <view v-if="myUserId === moment.data.user.id" class="delete"></view>
+        <view
+          v-if="myUserId === moment.data.user.id"
+          class="delete"
+          @click="showDeleteDialogue"
+        ></view>
       </view>
       <view class="post-content font-md">
         {{ moment.data.text }}
@@ -80,8 +84,8 @@
         <view class="subtitle">删除后动态将无法查看</view>
       </view>
       <view class="buttons">
-        <view class="button blue">我再想想</view>
-        <view class="button grey">删除</view>
+        <view class="button blue" @click="closeDeleteDialogue">我再想想</view>
+        <view class="button grey" @click="deleteThisMoment">删除</view>
       </view>
     </view>
   </view>
@@ -102,7 +106,7 @@ import {
 } from "@/pages/moment/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
 import { getUserInfo } from "@/apis/user/user";
-import { getMomentDetail } from "@/apis/moment/moment";
+import { deleteMoment, getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
@@ -244,6 +248,27 @@ const updateLikeData = async (index: number) => {
   };
   comments.likeData[index].count = (await getCount(likeReq)).count;
   comments.likeData[index].isLike = (await getUserLiked(likeReq)).liked;
+};
+
+const showDeleteDialogue = () => {
+  isShowDeleteDialogue.value = true;
+};
+const closeDeleteDialogue = () => {
+  isShowDeleteDialogue.value = false;
+};
+const deleteThisMoment = () => {
+  deleteMoment({
+    momentId: moment.data.id
+  }).then(
+    () => {
+      uni.reLaunch({
+        url: "/pages/community/community"
+      });
+    },
+    (reason) => {
+      console.log("reject-reason", reason);
+    }
+  );
 };
 
 let initLock = false;
@@ -484,9 +509,15 @@ function leaveReply() {
         line-height: calc(40 / 390 * 100vw);
         &.blue {
           background-color: #1fa1ff;
+          &:active {
+            background-color: #0579d0;
+          }
         }
         &.grey {
           background-color: #d1d1d1;
+          &:active {
+            background-color: #949494;
+          }
         }
       }
     }
