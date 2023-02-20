@@ -40,5 +40,5 @@ const cat = reactive(props.cat);
 </script>
 
 <style lang="scss" scoped>
-	@import '@/common/cat-box.scss'
+@import "@/common/cat-box.scss";
 </style>

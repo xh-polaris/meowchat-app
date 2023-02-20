@@ -1,23 +1,35 @@
 <template>
-	<wyb-modal
-	 ref="modal" 
-	 :show-title="false"
-	 cancel-text="我再想想"
-	 confirm-text="确认关注并选择"
-	 :custom="true"
-	 :height="700"
-	 @confirm="onConfirmClick" >
-	 <view class="">
-		 <view class="font-lg font-weight mb-4 text-center mx-4">关注猫咪后，方可添加</view>
-		 <view class="text-center font-md mx-5" style="line-height: 1.5;">关注的猫咪可以在图鉴中查看,并在喵世界接收其相关推送</view>
-	     <view class="d-flex j-center w-100 mt-4">
-			 <image :src="catImage" mode="widthFix" v-if="catImage" class="border" style="width: 150rpx;border-radius: 30rpx;"></image>
-		 </view>
-		 <view class="d-flex a-center w-100 j-center font-md ml-1 mt-3">{{catName}}</view>
-	 </view>
-	 </wyb-modal> 
+  <wyb-modal
+    ref="modal"
+    :show-title="false"
+    cancel-text="我再想想"
+    confirm-text="确认关注并选择"
+    :custom="true"
+    :height="700"
+    @confirm="onConfirmClick"
+  >
+    <view class="">
+      <view class="font-lg font-weight mb-4 text-center mx-4"
+        >关注猫咪后，方可添加</view
+      >
+      <view class="text-center font-md mx-5" style="line-height: 1.5"
+        >关注的猫咪可以在图鉴中查看,并在喵世界接收其相关推送</view
+      >
+      <view class="d-flex j-center w-100 mt-4">
+        <image
+          v-if="catImage"
+          :src="catImage"
+          mode="widthFix"
+          class="border"
+          style="width: 150rpx; border-radius: 30rpx"
+        ></image>
+      </view>
+      <view class="d-flex a-center w-100 j-center font-md ml-1 mt-3">{{
+        catName
+      }}</view>
+    </view>
+  </wyb-modal>
   <view class="content">
-	  
     <!-- 搜索框 -->
     <view
       class="border d-flex mx-3 a-center j-sb px-3 mt-1"
@@ -70,62 +82,79 @@
       <view v-for="cat of cats" :key="cat.id" class="out">
         <view class="row" @click="onClickCatBox(cat.id)">
           <!-- 猫咪列表 -->
-		  <view class="cats-box">
-		  	  
-		    <view>
-		      <image :src="cat.avatarUrl" mode="aspectFill" />
-		    </view>
-		    <view class="text">
-		      <view class="title">
-		        <view class="name">
-		          {{ cat.name }}
-		        </view>
-		        <view class="collect">
-		          <image
-		            :src="
-		              cat.isCollected
-		                ? '/static/images/collect.png'
-		                : '/static/images/collect_HL.png'
-		            "
-		            mode="aspectFill"
-		            @click.stop="onClickCollect"
-		          />
-		        </view>
-		      </view>
-		      <view class="d-flex a-center j-sb">
-		  		  <view class="">
-		  			  <view class="data">
-		  			    <text>花色：{{ cat.color }}</text>
-		  			  </view>
-		  			  <view class="data">
-		  			    <text>当前地区： {{ cat.area }}</text>
-		  			  </view>
-		  		  </view>
-		  		  <view  class="border px-3 py-1 font-md" style="border-radius: 50rpx;" @click.stop="choose(cat.avatarUrl,cat.name,cat.id)"  v-if="!isSelected(cat.id)">
-		  			  选择
-		  		  </view>
-		  		  <view  class="border px-3 py-1 font-md" style="border-radius: 50rpx;background-color: #A5CAE4;" 
-		  		  v-if="isSelected(cat.id)">
-		  		  			  已选择
-		  		  </view>
-		  	  </view>
-		    </view>
-		  </view>
-		  <!-- 猫咪列表 -->
+          <view class="cats-box">
+            <view>
+              <image :src="cat.avatarUrl" mode="aspectFill" />
+            </view>
+            <view class="text">
+              <view class="title">
+                <view class="name">
+                  {{ cat.name }}
+                </view>
+                <view class="collect">
+                  <image
+                    :src="
+                      cat.isCollected
+                        ? '/static/images/collect.png'
+                        : '/static/images/collect_HL.png'
+                    "
+                    mode="aspectFill"
+                    @click.stop="onClickCollect"
+                  />
+                </view>
+              </view>
+              <view class="d-flex a-center j-sb">
+                <view class="">
+                  <view class="data">
+                    <text>花色：{{ cat.color }}</text>
+                  </view>
+                  <view class="data">
+                    <text>当前地区： {{ cat.area }}</text>
+                  </view>
+                </view>
+                <view
+                  v-if="!isSelected(cat.id)"
+                  class="border px-3 py-1 font-md"
+                  style="border-radius: 50rpx"
+                  @click.stop="choose(cat.avatarUrl, cat.name, cat.id)"
+                >
+                  选择
+                </view>
+                <view
+                  v-if="isSelected(cat.id)"
+                  class="border px-3 py-1 font-md"
+                  style="border-radius: 50rpx; background-color: #a5cae4"
+                >
+                  已选择
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 猫咪列表 -->
         </view>
       </view>
     </view>
     <view v-else>
       <image src="https://static.xhpolaris.com/nodata.png" />
     </view>
-	<view class="position-fixed text-center py-2 d-flex j-center" style="background-color: #1FA1FF;color:white;border-radius: 70rpx;bottom: 10rpx;width: 100%;" 
-	@click="chooseDone">我选好啦</view>
+    <view
+      class="position-fixed text-center py-2 d-flex j-center"
+      style="
+        background-color: #1fa1ff;
+        color: white;
+        border-radius: 70rpx;
+        bottom: 10rpx;
+        width: 100%;
+      "
+      @click="chooseDone"
+      >我选好啦</view
+    >
   </view>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref,getCurrentInstance,computed } from "vue";
-import { onClickCatBox } from "@/pages/collection/utils";
+import { reactive, ref, getCurrentInstance } from "vue";
+import { onClickCatBox, onClickCollect } from "@/pages/collection/utils";
 import {
   getCatPreviews,
   searchCatPreviews
@@ -136,61 +165,53 @@ import {
   SearchCatPreviewsReq
 } from "@/apis/collection/collection-interfaces";
 import { CatPreview, Community } from "@/apis/schemas";
-import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
-import { onClickCollect } from "@/pages/collection/utils";
-import WybModal from "@/components/third-party/wyb-modal/wyb-modal.vue"
+
+import WybModal from "@/components/third-party/wyb-modal/wyb-modal.vue";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
 
-
-const currentInstance=getCurrentInstance()
+const currentInstance = getCurrentInstance();
 
 // 点击选择的猫咪照片
-const catImage=ref("")
-const catName=ref("猫猫")
-const catId=ref("")
+const catImage = ref("");
+const catName = ref("猫猫");
+const catId = ref("");
 
-let idList=reactive([])
-let nameList=reactive([])
-let avatarList=reactive([])
+let idList = reactive([]);
+let nameList = reactive([]);
+let avatarList = reactive([]);
 
-const props = defineProps<{ cat: CatPreview }>();
-const cat = reactive(props.cat);
-
-function isSelected(id){
-	return idList.indexOf(id)!==-1
+function isSelected(id) {
+  return idList.indexOf(id) !== -1;
 }
 
-
-function choose(avatarUrl,name,id){
-	catImage.value=avatarUrl
-	catName.value=name
-	catId.value=id
-	currentInstance.proxy.$refs.modal.showModal()
+function choose(avatarUrl, name, id) {
+  catImage.value = avatarUrl;
+  catName.value = name;
+  catId.value = id;
+  currentInstance.proxy.$refs.modal.showModal();
 }
 
-function onConfirmClick(){
-	isSelected.value=true
-	//将选择的猫咪保存到缓存
-	idList.push(catId.value)
-	nameList.push(catName.value)
-	avatarList.push(catImage.value)
-	console.log(idList);
-	uni.setStorageSync('idList',JSON.stringify(idList))
-	uni.setStorageSync('nameList',JSON.stringify(nameList))
-	uni.setStorageSync('avatarList',JSON.stringify(avatarList))
+function onConfirmClick() {
+  isSelected.value = true;
+  //将选择的猫咪保存到缓存
+  idList.push(catId.value);
+  nameList.push(catName.value);
+  avatarList.push(catImage.value);
+  console.log(idList);
+  uni.setStorageSync("idList", JSON.stringify(idList));
+  uni.setStorageSync("nameList", JSON.stringify(nameList));
+  uni.setStorageSync("avatarList", JSON.stringify(avatarList));
 }
 
-
-function chooseDone(){
-	uni.navigateBack({
-		delta: 1
-	});
+function chooseDone() {
+  uni.navigateBack({
+    delta: 1
+  });
 }
 
 function init() {
@@ -320,7 +341,7 @@ onReachBottom(() => {
 </script>
 
 <style lang="scss" scoped>
-@import '@/common/cat-box.scss';
+@import "@/common/cat-box.scss";
 .arrow {
   width: 44rpx;
   height: 50rpx;
