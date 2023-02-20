@@ -148,7 +148,13 @@
       "style": {
         "navigationBarTitleText": "上传猫片"
       }
-    }
+    },
+	{
+	  "path": "pages/draft/choose",
+	  "style": {
+	    "navigationBarTitleText": "选择猫咪"
+	  }
+	}
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

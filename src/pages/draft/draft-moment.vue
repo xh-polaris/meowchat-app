@@ -50,6 +50,19 @@
         <view class="choose-followed-cats"> 不选择猫咪</view>
       </view>
     </view>
+	
+	<view class="d-flex wrap">
+		<view class="" style="margin-left: calc(10 / 390 * 100vw);" @click="chooseCats">
+			<view class="">
+				<image src="/static/images/add.png" mode="widthFix" style="width: 150rpx;"></image>
+			</view>
+			<view class="font-md ml-1" style="color: #b8b8b8;">选择更多</view>
+		</view>
+		
+		<view class="d-flex" v-for="(item,index) in avatarList" :key="index">
+			<image :src="item" mode="widthFix" style="width: 150rpx;border-radius: 30rpx;" class="border mx-1"></image>
+		</view>
+	</view>
 
     <view class="panel">
       <button class="publish" :disabled="disablePublish" @click="publishMoment">
@@ -73,12 +86,12 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
+import {onShow,onUnload} from "@dcloudio/uni-app";
 
 import { newMoment } from "@/apis/moment/moment";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 
 const imagesData = reactive<any>([]);
-
 
 const title = ref("");
 const text = ref("");
@@ -86,12 +99,26 @@ const disablePublish = ref(false);
 
 const photos = reactive<any>([]);
 
-function toggleAnonymous() {
-  isAnonymous.value = !isAnonymous.value;
-}
+let idList=ref([])
+let nameList=ref([])
+let avatarList=ref([])
 
-function toggleSyncToCollection() {
-  isSyncToCollection.value = !isSyncToCollection.value;
+onShow(()=>{
+	idList.value=JSON.parse(uni.getStorageSync('idList'))
+	nameList.value=JSON.parse(uni.getStorageSync('nameList'))
+	avatarList.value=JSON.parse(uni.getStorageSync('avatarList'))
+})
+
+onUnload(()=>{
+	uni.removeStorageSync('idList')
+	uni.removeStorageSync('nameList')
+	uni.removeStorageSync('avatarList')
+})
+
+function chooseCats(){
+	uni.navigateTo({
+		url: `/pages/draft/choose`
+	});
 }
 
 function addImage() {
