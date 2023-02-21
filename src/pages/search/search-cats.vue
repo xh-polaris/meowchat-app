@@ -7,23 +7,24 @@
         </view>
       </view>
     </view>
-    <view v-if="catsData.length === 0">
-      <image src="https://static.xhpolaris.com/nodata.png" />
-    </view>
+    <view v-if="catsData.length === 0"> <image :src="Pictures.NoData" /> </view>
   </template>
 </template>
 
 <script setup lang="ts">
+import { Pages, Pictures } from "@/utils/url";
 import { reactive } from "vue";
 import {
   getCatPreviews,
   searchCatPreviews
 } from "@/apis/collection/collection";
 import { onReachBottom } from "@dcloudio/uni-app";
-import CatBox from "@/pages/collection/cat-box";
+import CatBox from "@/pages/collection/cat-box.vue";
+import { CatPreview } from "@/apis/schemas";
+import { StorageKeys } from "@/utils/const";
 
 interface Props {
-  search?: string;
+  search?: "default" | "cat";
   keyword?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -31,15 +32,16 @@ const props = withDefaults(defineProps<Props>(), {
   keyword: "cat"
 });
 
-let catsData = reactive([]);
+const catsData = reactive<CatPreview[]>([]);
 let page = 0;
 const getCatPreviewsAsync = async () => {
-  let cats = [];
+  let cats: CatPreview[] = [];
 
   if (props.search === "default") {
     cats = (
       await getCatPreviews({
-        page: page
+        page: page,
+        communityId: uni.getStorageSync(StorageKeys.CommunityId)
       })
     ).cats;
   } else if (props.search === "cat") {
@@ -47,7 +49,7 @@ const getCatPreviewsAsync = async () => {
       await searchCatPreviews({
         page: page,
         keyword: props.keyword,
-        communityId: uni.getStorageSync("communityId")
+        communityId: uni.getStorageSync(StorageKeys.CommunityId)
       })
     ).cats;
   }
@@ -66,9 +68,9 @@ onReachBottom(() => {
   createCatsDataBatch();
 });
 
-function onClickCatBox(id) {
+function onClickCatBox(id: string) {
   uni.navigateTo({
-    url: `/pages/cat/cat?id=${id}`
+    url: `${Pages.Cat}?id=${id}`
   });
 }
 </script>

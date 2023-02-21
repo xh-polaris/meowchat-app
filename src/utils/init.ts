@@ -1,16 +1,19 @@
 import { signIn } from "@/apis/auth/auth";
 import { getUserInfo, updateUserInfo } from "@/apis/user/user";
 import { SignInResp } from "@/apis/auth/auth-interfaces";
+import { DefaultCommunityId, StorageKeys } from "@/utils/const";
+
+const DefaultUserAvatarUrl = "https://static.xhpolaris.com/cat_world.jpg";
 
 function afterSignIn(signInResp: SignInResp) {
-  uni.setStorageSync("accessToken", signInResp.accessToken);
-  uni.setStorageSync("userId", signInResp.userId);
+  uni.setStorageSync(StorageKeys.AccessToken, signInResp.accessToken);
+  uni.setStorageSync(StorageKeys.UserId, signInResp.userId);
   getUserInfo().catch((res: UniNamespace.RequestSuccessCallbackResult) => {
     if (res.statusCode === 400) {
       const id = signInResp.userId;
       updateUserInfo({
         nickname: "用户_" + id.substring(id.length - 13),
-        avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
+        avatarUrl: DefaultUserAvatarUrl
       });
     }
   });
@@ -18,8 +21,8 @@ function afterSignIn(signInResp: SignInResp) {
 
 export async function init() {
   return await new Promise<void>((resolve, reject) => {
-    if (!uni.getStorageSync("communityId")) {
-      uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
+    if (!uni.getStorageSync(StorageKeys.CommunityId)) {
+      uni.setStorageSync(StorageKeys.CommunityId, DefaultCommunityId);
     }
 
     uni.getProvider({

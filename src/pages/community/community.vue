@@ -60,8 +60,8 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import Masonry from "@/pages/community/masonry";
-import CarouselFrame from "@/pages/community/carousel-frame";
+import Masonry from "@/pages/community/masonry.vue";
+import CarouselFrame from "@/pages/community/carousel-frame.vue";
 import { onPullDownRefresh, onReachBottom, onShow } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";

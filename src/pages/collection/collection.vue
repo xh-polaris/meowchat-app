@@ -76,8 +76,9 @@
 </template>
 
 <script lang="ts" setup>
-import CatBox from "@/pages/collection/cat-box";
+import CatBox from "@/pages/collection/cat-box.vue";
 import { reactive, ref } from "vue";
+import { DefaultCommunityId, StorageKeys } from "@/utils/const";
 import { onClickCatBox } from "@/pages/collection/utils";
 import {
   getCatPreviews,
@@ -99,12 +100,11 @@ let communityId = ref("");
 let parentId = ref("");
 
 function init() {
-  if (!uni.getStorageSync("communityId")) {
-    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
+  if (!uni.getStorageSync(StorageKeys.CommunityId)) {
+    uni.setStorageSync(StorageKeys.CommunityId, DefaultCommunityId);
   }
-  communityId.value = uni.getStorageSync("communityId");
+  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
-
 const lists = reactive<{
   data: Community[];
 }>({
@@ -149,10 +149,10 @@ getCampus();
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
-  communityId: "637ce159b15d9764c31f9c84"
+  communityId: uni.getStorageSync(StorageKeys.CommunityId)
 });
 let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
-  communityId: "637ce159b15d9764c31f9c84",
+  communityId: uni.getStorageSync(StorageKeys.CommunityId),
   page: 0,
   keyword: ""
 });

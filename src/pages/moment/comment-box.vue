@@ -7,11 +7,11 @@
       </text>
       <text class="comment-time"> · {{ displayTime(comment.createAt) }}</text>
     </view>
-    <view class="comment-content" @click="$emit('interactWithComment')">
+    <view class="comment-content" @click="emit('interactWithComment')">
       {{ comment.text }}
     </view>
     <view v-if="comment.comments > 0" class="reply-info">
-      <text @click="$emit('onClickReplies')">
+      <text @click="emit('onClickReplies')">
         {{ comment.comments }}条相关回复
       </text>
       <image class="arrow-right" src="/static/images/arrow_right_blue.png" />
@@ -20,7 +20,7 @@
       <view
         v-if="like.isLike"
         class="like-icon liked"
-        @click="$emit('localDoLike')"
+        @click="emit('localDoLike')"
       />
       <view v-else class="like-icon" @click="$emit('localDoLike')" />
       <text class="like-num">
@@ -35,19 +35,14 @@ import { LikeStruct } from "@/pages/moment/utils";
 import { Comment } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 
-// eslint-disable-next-line no-unused-vars
 const props = defineProps<{
   like: LikeStruct;
   comment: Comment;
 }>();
 
-// eslint-disable-next-line no-unused-vars
 const emit = defineEmits<{
-  // eslint-disable-next-line no-unused-vars
   (e: "interactWithComment"): void;
-  // eslint-disable-next-line no-unused-vars
   (e: "onClickReplies"): void;
-  // eslint-disable-next-line no-unused-vars
   (e: "localDoLike"): void;
 }>();
 </script>

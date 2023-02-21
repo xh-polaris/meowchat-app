@@ -66,7 +66,6 @@
       >
         <view v-show="current === 0">
           <!-- 帖子 -->
-
           <world-posts search="post" :keyword="searchText"></world-posts>
         </view>
         <view v-show="current === 1">
@@ -83,37 +82,37 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import WorldPosts from "@/pages/world/world-posts";
-import Masonry from "@/pages/community/masonry";
+import WorldPosts from "@/pages/world/world-posts.vue";
+import Masonry from "@/pages/community/masonry.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 
 const items = ["帖子", "动态", "图鉴"];
 
-let searchText = ref("");
+const searchText = ref("");
 
 searchText.value = uni.getStorageSync("search");
 
-let list = ref([]);
+let list = reactive<string[]>([]);
 
-let current = ref(0);
+const current = ref(0);
 
-let isClickSearch = ref(false);
+const isClickSearch = ref(false);
 
 isClickSearch.value = uni.getStorageSync("isClickSearch");
 
 onLoad(() => {
   let historyText = uni.getStorageSync("historySearchText");
-  if (list.value.length === 0 && historyText) {
-    list.value = JSON.parse(
+  if (list.length === 0 && historyText) {
+    list = JSON.parse(
       decodeURIComponent(uni.getStorageSync("historySearchText"))
     );
   }
 });
 
-function onClickItem(e) {
+function onClickItem(e: any) {
   if (current.value !== e.currentIndex) {
     current.value = e.currentIndex;
   }
@@ -133,19 +132,19 @@ function onClickSearch() {
     uni.setStorageSync("search", searchText.value);
     // 加入搜索历史
     uni.setStorageSync("isClickSearch", true);
-    let index = list.value.findIndex((v) => v === searchText.value);
+    let index = list.findIndex((v) => v === searchText.value);
     if (index !== -1) {
       if (index !== 0) {
-        list.value.unshift(list.value.splice(index, 1)[0]);
+        list.unshift(list.splice(index, 1)[0]);
       }
     } else {
-      list.value.unshift(searchText.value);
+      list.unshift(searchText.value);
     }
     // 保存到本地存储
-    if (list.value.length !== 0) {
+    if (list.length !== 0) {
       uni.setStorageSync(
         "historySearchText",
-        encodeURIComponent(JSON.stringify(list.value))
+        encodeURIComponent(JSON.stringify(list))
       );
     }
   } else {
@@ -169,7 +168,7 @@ let getStyle = computed(() => {
   return `background:${bgColor};border-color:${borderColor}`;
 });
 
-function clickSearchHistory(item) {
+function clickSearchHistory(item: string) {
   searchText.value = item;
 }
 </script>
