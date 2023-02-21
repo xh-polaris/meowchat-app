@@ -52,10 +52,7 @@
     </view>
 
     <view class="d-flex wrap">
-      <view
-        style="margin-left: calc(10 / 390 * 100vw)"
-        @click="chooseCats"
-      >
+      <view style="margin-left: calc(10 / 390 * 100vw)" @click="chooseCats">
         <view class="">
           <image
             src="/static/images/add.png"
@@ -64,18 +61,18 @@
           ></image>
         </view>
         <view class="font-md text-center" style="color: #b8b8b8">
-		{{catImage?'重新选择':'选择猫咪'}}
-		</view>
+          {{ catImage ? "重新选择" : "选择猫咪" }}
+        </view>
       </view>
-	  <view v-if="catImage">
-		  <image
-		    :src="catImage"
-		    mode="widthFix"
-		    style="width: 150rpx; border-radius: 30rpx"
-		    class="border mx-1"
-		  ></image>
-		  <view class="font-md text-center">{{catName}}</view>
-	  </view>
+      <view v-if="catImage">
+        <image
+          :src="catImage"
+          mode="widthFix"
+          style="width: 150rpx; border-radius: 30rpx"
+          class="border mx-1"
+        ></image>
+        <view class="font-md text-center">{{ catName }}</view>
+      </view>
     </view>
 
     <view class="panel">
@@ -198,7 +195,7 @@ function publishMoment() {
     communityId: uni.getStorageSync("communityId"),
     text: text.value,
     photos: photos,
-	catId:catId.value
+    catId: catId.value
   }).then(() => {
     uni.switchTab({
       url: "../community/community",

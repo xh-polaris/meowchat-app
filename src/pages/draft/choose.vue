@@ -161,10 +161,6 @@ const catImage = ref("");
 const catName = ref("猫猫");
 const catId = ref("");
 
-function isSelected(id) {
-  return idList.indexOf(id) !== -1;
-}
-
 function choose(avatarUrl, name, id) {
   catImage.value = avatarUrl;
   catName.value = name;
@@ -173,16 +169,14 @@ function choose(avatarUrl, name, id) {
 }
 
 function onConfirmClick() {
-  isSelected.value = true;
   //将选择的猫咪保存到缓存
   uni.setStorageSync("idSelected", catId.value);
   uni.setStorageSync("nameSelected", catName.value);
   uni.setStorageSync("avatarSelected", catImage.value);
   uni.navigateBack({
-  	delta: 1
+    delta: 1
   });
 }
-
 
 function init() {
   if (!uni.getStorageSync("communityId")) {
