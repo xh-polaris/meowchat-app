@@ -113,19 +113,11 @@
                   </view>
                 </view>
                 <view
-                  v-if="!isSelected(cat.id)"
                   class="border px-3 py-1 font-md"
                   style="border-radius: 50rpx"
                   @click.stop="choose(cat.avatarUrl, cat.name, cat.id)"
                 >
                   选择
-                </view>
-                <view
-                  v-if="isSelected(cat.id)"
-                  class="border px-3 py-1 font-md"
-                  style="border-radius: 50rpx; background-color: #a5cae4"
-                >
-                  已选择
                 </view>
               </view>
             </view>
@@ -137,18 +129,6 @@
     <view v-else>
       <image src="https://static.xhpolaris.com/nodata.png" />
     </view>
-    <view
-      class="position-fixed text-center py-2 d-flex j-center"
-      style="
-        background-color: #1fa1ff;
-        color: white;
-        border-radius: 70rpx;
-        bottom: 10rpx;
-        width: 100%;
-      "
-      @click="chooseDone"
-      >我选好啦</view
-    >
   </view>
 </template>
 
@@ -181,10 +161,6 @@ const catImage = ref("");
 const catName = ref("猫猫");
 const catId = ref("");
 
-let idList = reactive([]);
-let nameList = reactive([]);
-let avatarList = reactive([]);
-
 function isSelected(id) {
   return idList.indexOf(id) !== -1;
 }
@@ -199,20 +175,14 @@ function choose(avatarUrl, name, id) {
 function onConfirmClick() {
   isSelected.value = true;
   //将选择的猫咪保存到缓存
-  idList.push(catId.value);
-  nameList.push(catName.value);
-  avatarList.push(catImage.value);
-  console.log(idList);
-  uni.setStorageSync("idList", JSON.stringify(idList));
-  uni.setStorageSync("nameList", JSON.stringify(nameList));
-  uni.setStorageSync("avatarList", JSON.stringify(avatarList));
-}
-
-function chooseDone() {
+  uni.setStorageSync("idSelected", catId.value);
+  uni.setStorageSync("nameSelected", catName.value);
+  uni.setStorageSync("avatarSelected", catImage.value);
   uni.navigateBack({
-    delta: 1
+  	delta: 1
   });
 }
+
 
 function init() {
   if (!uni.getStorageSync("communityId")) {

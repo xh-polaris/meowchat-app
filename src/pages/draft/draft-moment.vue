@@ -53,7 +53,6 @@
 
     <view class="d-flex wrap">
       <view
-        class=""
         style="margin-left: calc(10 / 390 * 100vw)"
         @click="chooseCats"
       >
@@ -64,17 +63,19 @@
             style="width: 150rpx"
           ></image>
         </view>
-        <view class="font-md ml-1" style="color: #b8b8b8">选择更多</view>
+        <view class="font-md text-center" style="color: #b8b8b8">
+		{{catImage?'重新选择':'选择猫咪'}}
+		</view>
       </view>
-
-      <view v-for="(item, index) in avatarList" :key="index" class="d-flex">
-        <image
-          :src="item"
-          mode="widthFix"
-          style="width: 150rpx; border-radius: 30rpx"
-          class="border mx-1"
-        ></image>
-      </view>
+	  <view v-if="catImage">
+		  <image
+		    :src="catImage"
+		    mode="widthFix"
+		    style="width: 150rpx; border-radius: 30rpx"
+		    class="border mx-1"
+		  ></image>
+		  <view class="font-md text-center">{{catName}}</view>
+	  </view>
     </view>
 
     <view class="panel">
@@ -112,20 +113,20 @@ const disablePublish = ref(false);
 
 const photos = reactive<any>([]);
 
-let idList = ref([]);
-let nameList = ref([]);
-let avatarList = ref([]);
+const catImage = ref("");
+const catName = ref("猫猫");
+const catId = ref("");
 
 onShow(() => {
-  idList.value = JSON.parse(uni.getStorageSync("idList"));
-  nameList.value = JSON.parse(uni.getStorageSync("nameList"));
-  avatarList.value = JSON.parse(uni.getStorageSync("avatarList"));
+  catId.value = uni.getStorageSync("idSelected");
+  catName.value = uni.getStorageSync("nameSelected");
+  catImage.value = uni.getStorageSync("avatarSelected");
 });
 
 onUnload(() => {
-  uni.removeStorageSync("idList");
-  uni.removeStorageSync("nameList");
-  uni.removeStorageSync("avatarList");
+  uni.removeStorageSync("idSelected");
+  uni.removeStorageSync("nameSelected");
+  uni.removeStorageSync("avatarSelected");
 });
 
 function chooseCats() {
@@ -196,7 +197,8 @@ function publishMoment() {
     title: title.value,
     communityId: uni.getStorageSync("communityId"),
     text: text.value,
-    photos: photos
+    photos: photos,
+	catId:catId.value
   }).then(() => {
     uni.switchTab({
       url: "../community/community",
