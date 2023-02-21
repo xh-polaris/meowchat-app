@@ -289,14 +289,13 @@ onReachBottom(() => {
 
 .school-select-box {
   background-color: #fafcff;
-  height: 8vh;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
 .school-name {
-  margin: 20rpx 10rpx 30rpx 10rpx;
+  margin: 20rpx 10rpx 0 10rpx;
   font-weight: bold;
   border-bottom: 2px solid skyblue;
   height: 55rpx;
