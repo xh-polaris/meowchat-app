@@ -102,7 +102,7 @@ const userOptions = [
   {
     title: "我的发布",
     icon: "/static/images/my_publish.png",
-    url: "/pages/profile/my-publish/my-publish?id=${userInfo.id}"
+    url: "/pages/profile/my-publish/my-publish"
   },
   {
     title: "快速联系",

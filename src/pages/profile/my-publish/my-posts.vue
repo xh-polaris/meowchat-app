@@ -7,14 +7,6 @@
             <view class="title">
               {{ post.title }}
             </view>
-            <view class="user-info">
-              <template v-if="!post.isAnonymous">
-                <image :src="post.user.avatarUrl" class="avatar" />
-                <view class="username">
-                  {{ post.user.nickname }}
-                </view>
-              </template>
-            </view>
             <view class="description">
               {{ post.text }}
             </view>
@@ -50,61 +42,37 @@
             {{ displayTime(post.createAt) }}
           </view>
           <view class="font-sm">{{ post.comments }}条回复</view>
-          <image
-            class="delete"
-            mode="widthFix"
-            src="/static/images/delete.png"
-            style="width: 7%"
-            @click.stop="onClickDelete(post.id)"
-          />
+          <view class="delete" @click.stop="onClickDelete(post.id)">
+            <image class="deletepic" src="/static/images/delete.png" />
+            <view class="font-sm">删除帖子</view>
+          </view>
         </view>
       </view>
     </template>
     <view v-if="postsData.length === 0">
       <image src="https://static.xhpolaris.com/nodata.png" />
     </view>
+    <view class="nomore">没有更多喵~</view>
   </template>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import {
-  getPostPreviews,
-  searchPostPreviews,
-  deletePost
-} from "@/apis/post/post";
+import { getOwnPostPreviews, deletePost } from "@/apis/post/post";
 import { DeletePostReq } from "@/apis/post/post-interfaces";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
-
-interface Props {
-  search?: string;
-  keyword?: string;
-}
-const props = withDefaults(defineProps<Props>(), {
-  search: "default",
-  keyword: "post"
-});
+import { Post } from "@/apis/schemas";
 const deleteID = reactive<DeletePostReq>({ id: "" });
-let postsData = ref([]);
+let postsData = ref<Post[]>([]);
 let page = 0;
 const getPostPreviewsAsync = async () => {
-  let posts = [];
-  if (props.search === "default") {
-    posts = (
-      await getPostPreviews({
-        page: page
-      })
-    ).posts;
-  } else if (props.search === "post") {
-    posts = (
-      await searchPostPreviews({
-        page: page,
-        keyword: props.keyword
-      })
-    ).posts;
-  }
+  let posts = (
+    await getOwnPostPreviews({
+      page: page
+    })
+  ).posts;
   page++;
   return posts;
 };
@@ -121,8 +89,9 @@ async function onClickDelete(id: string) {
             title: res.msg
           });
         });
-        postsData.value = [];
-        createPostsDataBatch();
+        uni.reLaunch({
+          url: "/pages/profile/my-publish/my-publish?id=${userInfo.id}"
+        });
       }
     }
   });
@@ -231,19 +200,28 @@ onReachBottom(() => {
 .lower {
   margin-top: calc(12 / 390 * 100vw);
   display: flex;
-  align-items: baseline;
+  align-items: center;
   color: #b8b8b8;
   font-size: calc(10 / 390 * 100vw);
   .delete {
-    width: 30rpx;
-    height: 30rpx;
-    right: 30rpx;
-    margin-left: 500rpx;
-    margin-top: 20rpx;
-    float: right;
+    display: flex;
+    align-items: center;
+    .deletepic {
+      height: 20rpx;
+      width: 20rpx;
+      margin-left: 50rpx;
+      margin-right: 10rpx;
+      float: left;
+    }
   }
   .time {
     margin-right: calc(16 / 390 * 100vw);
   }
+}
+.nomore {
+  margin-top: 50rpx;
+  font-size: 20rpx;
+  line-height: 20rpx;
+  text-align: center;
 }
 </style>

@@ -102,6 +102,30 @@ export async function getMomentPreviews(req: GetMomentPreviewsReq) {
  * @description
  * @param req
  */
+export async function getOwnMomentPreviews(req: GetMomentPreviewsReq) {
+  return await new Promise<GetMomentPreviewsResp>((resolve, reject) => {
+    uni.request({
+      url: "/moment/get_own_moment_previews",
+      data: req,
+      method: "GET",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as GetMomentPreviewsResp;
+        data.moments.forEach((moment) => {
+          moment.photos[0] += PictureStyle.thumbnail;
+          moment.user.avatarUrl += PictureStyle.thumbnail;
+        });
+        resolve(data);
+      }
+    });
+  });
+}
+/**
+ * @description
+ * @param req
+ */
 export async function getMomentDetail(req: GetMomentDetailReq) {
   return await new Promise<GetMomentDetailResp>((resolve, reject) => {
     uni.request({

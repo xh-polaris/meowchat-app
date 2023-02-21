@@ -35,6 +35,29 @@ export async function getPostPreviews(req: GetPostPreviewsReq) {
   });
 }
 
+export async function getOwnPostPreviews(req: GetPostPreviewsReq) {
+  return await new Promise<GetPostPreviewsResp>((resolve, reject) => {
+    uni.request({
+      url: "/post/get_own_post_previews",
+      method: "GET",
+      data: req,
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as GetPostPreviewsResp;
+        data.posts.forEach((post) => {
+          if (post.coverUrl) {
+            post.coverUrl += PictureStyle.thumbnail;
+          }
+          post.user.avatarUrl += PictureStyle.thumbnail;
+        });
+        resolve(data);
+      }
+    });
+  });
+}
+
 export async function deletePost(req: DeletePostReq) {
   return await new Promise<DeletePostResp>((resolve, reject) => {
     uni.request({
