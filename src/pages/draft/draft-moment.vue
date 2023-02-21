@@ -51,29 +51,31 @@
       </view>
     </view>
 
+    <view class="d-flex wrap">
+      <view style="margin-left: calc(10 / 390 * 100vw)" @click="chooseCats">
+        <view class="">
+          <image
+            src="/static/images/add.png"
+            mode="widthFix"
+            style="width: 150rpx"
+          ></image>
+        </view>
+        <view class="font-md text-center" style="color: #b8b8b8">
+          {{ catImage ? "重新选择" : "选择猫咪" }}
+        </view>
+      </view>
+      <view v-if="catImage">
+        <image
+          :src="catImage"
+          mode="widthFix"
+          style="width: 150rpx; border-radius: 30rpx"
+          class="border mx-1"
+        ></image>
+        <view class="font-md text-center">{{ catName }}</view>
+      </view>
+    </view>
+
     <view class="panel">
-      <view class="toggle-bar">
-        <view class="toggle-text"> 同步到猫咪图鉴</view>
-        <view
-          :class="'toggle ' + (isSyncToCollection ? 'active' : '')"
-          @click="toggleSyncToCollection"
-        >
-          <view class="toggle-capsule">
-            <view class="toggle-circle" />
-          </view>
-        </view>
-      </view>
-      <view class="toggle-bar">
-        <view class="toggle-text"> 匿名信息</view>
-        <view
-          :class="'toggle ' + (isAnonymous ? 'active' : '')"
-          @click="toggleAnonymous"
-        >
-          <view class="toggle-capsule">
-            <view class="toggle-circle" />
-          </view>
-        </view>
-      </view>
       <button class="publish" :disabled="disablePublish" @click="publishMoment">
         发布动态
       </button>
@@ -95,14 +97,12 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
+import { onShow, onUnload } from "@dcloudio/uni-app";
 
 import { newMoment } from "@/apis/moment/moment";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 
 const imagesData = reactive<any>([]);
-
-const isAnonymous = ref(false);
-const isSyncToCollection = ref(false);
 
 const title = ref("");
 const text = ref("");
@@ -110,12 +110,26 @@ const disablePublish = ref(false);
 
 const photos = reactive<any>([]);
 
-function toggleAnonymous() {
-  isAnonymous.value = !isAnonymous.value;
-}
+const catImage = ref("");
+const catName = ref("猫猫");
+const catId = ref("");
 
-function toggleSyncToCollection() {
-  isSyncToCollection.value = !isSyncToCollection.value;
+onShow(() => {
+  catId.value = uni.getStorageSync("idSelected");
+  catName.value = uni.getStorageSync("nameSelected");
+  catImage.value = uni.getStorageSync("avatarSelected");
+});
+
+onUnload(() => {
+  uni.removeStorageSync("idSelected");
+  uni.removeStorageSync("nameSelected");
+  uni.removeStorageSync("avatarSelected");
+});
+
+function chooseCats() {
+  uni.navigateTo({
+    url: `/pages/draft/choose`
+  });
 }
 
 function addImage() {
@@ -180,7 +194,8 @@ function publishMoment() {
     title: title.value,
     communityId: uni.getStorageSync("communityId"),
     text: text.value,
-    photos: photos
+    photos: photos,
+    catId: catId.value
   }).then(() => {
     uni.switchTab({
       url: "../community/community",
@@ -295,49 +310,6 @@ textarea ::selection {
 
 .panel {
   padding: calc(33 / 390 * 100vw) calc(33 / 390 * 100vw) calc(60 / 390 * 100vw);
-}
-
-.toggle-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: calc(8 / 390 * 100vw);
-
-  .toggle-text {
-    font-size: calc(14 / 390 * 100vw);
-    font-weight: bold;
-  }
-
-  .toggle {
-    .toggle-capsule {
-      width: calc(38 / 390 * 100vw);
-      height: calc(20 / 390 * 100vw);
-      border-radius: calc(19 / 390 * 100vw);
-      background-color: #eeeeee;
-      display: flex;
-      align-items: center;
-      transition-duration: 0.1s;
-
-      .toggle-circle {
-        width: calc(18 / 390 * 100vw);
-        height: calc(18 / 390 * 100vw);
-        margin-left: calc(1 / 390 * 100vw);
-        border-radius: 50%;
-        background-color: #ffffff;
-        transition-duration: 0.1s;
-      }
-    }
-
-    &.active {
-      .toggle-capsule {
-        background-color: #1fa1ff;
-      }
-
-      .toggle-circle {
-        margin-left: calc(19 / 390 * 100vw);
-      }
-    }
-  }
 }
 
 .publish {
