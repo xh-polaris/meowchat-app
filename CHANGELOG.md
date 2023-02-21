@@ -1,5 +1,18 @@
 
 
+## [1.6.0](https://github.com/xh-polaris/meowchat-app/compare/v1.5.1...v1.6.0) (2023-02-21)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复ios端上传图片不显示问题 ([#185](https://github.com/xh-polaris/meowchat-app/issues/185)) ([52fc3f0](https://github.com/xh-polaris/meowchat-app/commit/52fc3f0dcc7bd5ad60a862f56447e0dff56f17df))
+
+
+### ✨ Features | 新功能
+
+* 添加发布动态时的选择猫咪 ([#183](https://github.com/xh-polaris/meowchat-app/issues/183)) ([dc76373](https://github.com/xh-polaris/meowchat-app/commit/dc76373bb55fea51f9a81b462a7a94cf9c7dee51))
+* 我的发布页面 ([#184](https://github.com/xh-polaris/meowchat-app/issues/184)) ([3f7b2ee](https://github.com/xh-polaris/meowchat-app/commit/3f7b2ee5d301f60a8da095a4f87b78cfa97d5bcd)), closes [#144](https://github.com/xh-polaris/meowchat-app/issues/144) [#145](https://github.com/xh-polaris/meowchat-app/issues/145) [#146](https://github.com/xh-polaris/meowchat-app/issues/146)
+
 ## [1.5.1](https://github.com/xh-polaris/meowchat-app/compare/v1.5.0...v1.5.1) (2023-02-18)
 
 
