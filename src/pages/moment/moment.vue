@@ -11,6 +11,11 @@
         <text class="post-time">
           · {{ displayTime(moment.data.createAt) }}
         </text>
+        <view
+          v-if="myUserId === moment.data.user.id"
+          class="delete"
+          @click="showDeleteDialogue"
+        ></view>
       </view>
       <view class="post-content font-md">
         {{ moment.data.text }}
@@ -68,6 +73,22 @@
       @update-like-data="updateLikeData(selectIndex)"
     />
   </view>
+  <view
+    v-if="isShowDeleteDialogue"
+    class="confirm-to-delete"
+    @touchmove.stop.prevent
+  >
+    <view class="box">
+      <view class="texts">
+        <view class="title">确认删除此条动态？</view>
+        <view class="subtitle">删除后动态将无法查看</view>
+      </view>
+      <view class="buttons">
+        <view class="button blue" @click="closeDeleteDialogue">我再想想</view>
+        <view class="button grey" @click="deleteThisMoment">删除</view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script lang="ts" setup>
@@ -84,7 +105,8 @@ import {
   onClickImage
 } from "@/pages/moment/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
-import { getMomentDetail } from "@/apis/moment/moment";
+import { getUserInfo } from "@/apis/user/user";
+import { deleteMoment, getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
@@ -127,15 +149,21 @@ const moment = reactive<{
     count: 0
   }
 });
+const myUserId = ref("");
 
 const likeReq = reactive<GetCountReq>({
   targetId: props.id,
   targetType: TargetType.Moment
 });
 
+const isShowDeleteDialogue = ref(false);
+
 const getData = async () => {
   moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
   moment.likeData = await getLikeData(likeReq);
+  getUserInfo().then((res) => {
+    myUserId.value = res.user.id;
+  });
 };
 
 const getCommentsReq = reactive<GetCommentsReq>({
@@ -222,6 +250,27 @@ const updateLikeData = async (index: number) => {
   comments.likeData[index].isLike = (await getUserLiked(likeReq)).liked;
 };
 
+const showDeleteDialogue = () => {
+  isShowDeleteDialogue.value = true;
+};
+const closeDeleteDialogue = () => {
+  isShowDeleteDialogue.value = false;
+};
+const deleteThisMoment = () => {
+  deleteMoment({
+    momentId: moment.data.id
+  }).then(
+    () => {
+      uni.reLaunch({
+        url: "/pages/community/community"
+      });
+    },
+    (reason) => {
+      console.log("reject-reason", reason);
+    }
+  );
+};
+
 let initLock = false;
 const init = async () => {
   if (initLock) return;
@@ -252,10 +301,16 @@ onReachBottom(() => {
 });
 
 onPullDownRefresh(() => {
-  setTimeout(function () {
+  // 出现“确认删除”的对话框后，下拉背后的黑幕还是会触发页面下拉，暂时的解决办法就是让这时候的页面下拉无效（下拉就自己下拉吧）
+  // 对着黑幕上拉是不会有反应的，这个没问题
+  if (!isShowDeleteDialogue.value) {
+    setTimeout(function () {
+      uni.stopPullDownRefresh();
+    }, 1000);
+    if (!initLock) init();
+  } else {
     uni.stopPullDownRefresh();
-  }, 1000);
-  if (!initLock) init();
+  }
 });
 
 const selectIndex = ref(0);
@@ -339,6 +394,15 @@ function leaveReply() {
         color: #aaa;
         font-size: 14px;
       }
+
+      .delete {
+        position: absolute;
+        width: calc(15 / 390 * 100vw);
+        height: calc(15 / 390 * 100vw);
+        background-size: 100% 100%;
+        background-image: url("@/static/images/dustbin.png");
+        right: calc(21 / 390 * 100vw);
+      }
     }
 
     .post-content {
@@ -390,6 +454,70 @@ function leaveReply() {
           border-radius: 3px;
           float: left;
           margin: 5rpx 5rpx 5rpx 5rpx;
+        }
+      }
+    }
+  }
+}
+
+.confirm-to-delete {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .box {
+    width: calc(279 / 390 * 100vw);
+    height: calc(125 / 390 * 100vw);
+    background-color: #ffffff;
+    border-radius: calc(15 / 390 * 100vw);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: calc(14 / 390 * 100vw);
+    box-sizing: border-box;
+
+    .texts {
+      .title {
+        color: #353535;
+        font-size: calc(18 / 390 * 100vw);
+      }
+      .subtitle {
+        color: #353535;
+        font-size: calc(12 / 390 * 100vw);
+      }
+    }
+
+    .buttons {
+      display: flex;
+      width: calc(250 / 390 * 100vw);
+      color: #ffffff;
+      margin: 0 auto;
+      justify-content: space-between;
+
+      .button {
+        width: calc(121 / 390 * 100vw);
+        height: calc(40 / 390 * 100vw);
+        border-radius: calc(6 / 390 * 100vw);
+        line-height: calc(40 / 390 * 100vw);
+        &.blue {
+          background-color: #1fa1ff;
+          &:active {
+            background-color: #0579d0;
+          }
+        }
+        &.grey {
+          background-color: #d1d1d1;
+          &:active {
+            background-color: #949494;
+          }
         }
       }
     }

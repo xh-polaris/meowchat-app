@@ -15,68 +15,26 @@
         />
       </view>
       <view class="image-num"> {{ imagesData.length }}/9</view>
-      <view class="m-2">
-        <fui-button
-          v-model="title"
-          text="默认按钮"
-          height="50rpx"
-          color="black"
-          background-color="white"
-          placeholder="填写标题能获得更多赞哦~"
-          border-color="#1FA1FF"
-          :border-top="false"
-          bottom-left="20"
-          bottom-right="20"
-          :border-bottom="true"
-        ></fui-button>
-      </view>
-
-      <view class="mx-2 mt-2">
-        <fui-button
-          v-model="text"
-          text="默认按钮"
-          color="black"
-          :is-counter="true"
-          :border-top="false"
-          :border-bottom="false"
-          placeholder="说点什么吧!"
-          height="350rpx"
-        ></fui-button>
-      </view>
-
-      <view class="choose-cats-bar">
-        <view class="choose-cats"> 选择猫咪</view>
-        <view class="right-arrow" />
-        <view class="choose-followed-cats"> 不选择猫咪</view>
-      </view>
+      <view class="m-2"> </view>
     </view>
 
     <view class="panel">
-      <view class="toggle-bar">
-        <view class="toggle-text"> 同步到猫咪图鉴</view>
-        <view
-          :class="'toggle ' + (isSyncToCollection ? 'active' : '')"
-          @click="toggleSyncToCollection"
-        >
-          <view class="toggle-capsule">
-            <view class="toggle-circle" />
-          </view>
+      <view class="choose-cats-bar">
+        <view class="choose-cats"> 照片将上传至猫咪</view>
+      </view>
+      <view class="images1">
+        <template v-for="image in imagesData" :key="image.id">
+          <view
+            :style="{ backgroundImage: 'url(' + image.url + ')' }"
+            class="added-cats"
+          />
+        </template>
+        <view class="flex-column">
+          <view v-if="imagesData.length < 5" class="cat-thumbnail" />
+          <text class="choose-text"> 选择猫咪</text>
         </view>
       </view>
-      <view class="toggle-bar">
-        <view class="toggle-text"> 匿名信息</view>
-        <view
-          :class="'toggle ' + (isAnonymous ? 'active' : '')"
-          @click="toggleAnonymous"
-        >
-          <view class="toggle-capsule">
-            <view class="toggle-circle" />
-          </view>
-        </view>
-      </view>
-      <button class="publish" :disabled="disablePublish" @click="publishMoment">
-        发布动态
-      </button>
+      <button class="publish" :disabled="disablePublish">上传至照片墙</button>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -96,27 +54,11 @@
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
 
-import { newMoment } from "@/apis/moment/moment";
-import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
-
 const imagesData = reactive<any>([]);
 
-const isAnonymous = ref(false);
-const isSyncToCollection = ref(false);
-
-const title = ref("");
-const text = ref("");
 const disablePublish = ref(false);
 
 const photos = reactive<any>([]);
-
-function toggleAnonymous() {
-  isAnonymous.value = !isAnonymous.value;
-}
-
-function toggleSyncToCollection() {
-  isSyncToCollection.value = !isSyncToCollection.value;
-}
 
 function addImage() {
   disablePublish.value = true;
@@ -153,51 +95,13 @@ function addImage() {
     }
   });
 }
-
-function publishMoment() {
-  if (title.value === "") {
-    uni.showToast({
-      title: "请输入标题",
-      icon: "none"
-    });
-    return;
-  }
-  if (text.value === "") {
-    uni.showToast({
-      title: "请输入正文",
-      icon: "none"
-    });
-    return;
-  }
-  if (photos.length == 0) {
-    uni.showToast({
-      title: "至少上传一张图片哦",
-      icon: "none"
-    });
-    return;
-  }
-  newMoment({
-    title: title.value,
-    communityId: uni.getStorageSync("communityId"),
-    text: text.value,
-    photos: photos
-  }).then(() => {
-    uni.switchTab({
-      url: "../community/community",
-      success() {
-        uni.reLaunch({
-          url: "/pages/community/community"
-        });
-      }
-    });
-  });
-}
 </script>
 
 <style lang="scss" scoped>
 $margin: calc(20 / 390 * 100vw);
 $imagesWidth: calc(100vw - $margin * 2);
 $imageWidth: calc(110 / 390 * 100vw);
+$halfImageWidth: calc(55 / 390 * 100vw);
 $imageGap: calc(($imagesWidth - 3 * $imageWidth) / 2);
 
 body {
@@ -217,6 +121,12 @@ body {
   margin: $margin $margin 0;
   flex-wrap: wrap;
 }
+.images1 {
+  display: flex;
+  width: calc(100vw - $margin * 2 + $imageGap);
+  margin: $margin -20rpx 0;
+  flex-wrap: wrap;
+}
 
 .added-image,
 .new-image {
@@ -227,8 +137,20 @@ body {
   margin-right: $imageGap;
   margin-bottom: $imageGap;
 }
+.added-cats,
+.cat-thumbnail {
+  box-sizing: border-box;
+  width: $halfImageWidth;
+  height: $halfImageWidth;
+  border-radius: calc(6 / 390 * 100vw);
+  margin-right: $imageGap;
+}
 
 .added-image {
+  background-size: cover;
+  background-position: center;
+}
+.added-cats {
   background-size: cover;
   background-position: center;
 }
@@ -240,6 +162,18 @@ body {
   background-size: 24% 24%;
   background-repeat: no-repeat;
   background-position: center center;
+}
+.cat-thumbnail {
+  background-color: #fafafa;
+  border: #d1d1d1 solid calc(1 / 390 * 100vw);
+  background-image: url("../../static/images/plus-lightgrey.png");
+  background-size: 24% 24%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.choose-text {
+  font-size: 20rpx;
+  color: #939393;
 }
 
 .image-num {
@@ -275,21 +209,9 @@ textarea ::selection {
   margin: 0 $margin calc(10 / 390 * 100vw);
 
   .choose-cats {
-    color: #1fa1ff;
+    color: #939393;
     font-size: calc(14 / 390 * 100vw);
-    margin-right: calc(5 / 390 * 100vw);
-  }
-
-  .right-arrow {
-    width: calc(7 / 390 * 100vw);
-    height: calc(11 / 390 * 100vw);
-    background-image: url("../../static/images/right-blue.png");
-    margin-right: calc(16 / 390 * 100vw);
-  }
-
-  .choose-followed-cats {
-    color: #b8b8b8;
-    font-size: calc(12 / 390 * 100vw);
+    margin-left: -50rpx;
   }
 }
 
@@ -305,7 +227,6 @@ textarea ::selection {
 
   .toggle-text {
     font-size: calc(14 / 390 * 100vw);
-    font-weight: bold;
   }
 
   .toggle {
@@ -352,7 +273,6 @@ textarea ::selection {
   border-radius: calc(22 / 390 * 100vw);
   line-height: calc(44 / 390 * 100vw);
   transition-duration: 0.05s;
-  letter-spacing: 5rpx;
 }
 
 .publish:active {

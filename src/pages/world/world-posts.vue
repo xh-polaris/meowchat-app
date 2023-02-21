@@ -1,55 +1,57 @@
 <template>
   <template v-if="postsData">
     <template v-for="post in postsData" :key="post.id">
-      <view class="post" @click="onClickPost(post.id)">
-        <view class="upper">
-          <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
-            <view class="title">
-              {{ post.title }}
-            </view>
-            <view class="user-info">
-              <template v-if="!post.isAnonymous">
-                <image :src="post.user.avatarUrl" class="avatar" />
-                <view class="username">
-                  {{ post.user.nickname }}
-                </view>
-              </template>
-            </view>
-            <view class="description">
-              {{ post.text }}
-            </view>
-            <view v-if="post.tags" class="tags">
-              <template v-if="post.tags.length > 4">
-                <view class="tag">
-                  {{ post.tags[0] }}
-                </view>
-                <view class="tag">
-                  {{ post.tags[1] }}
-                </view>
-                <view class="tag">
-                  {{ post.tags[2] }}
-                </view>
-              </template>
-              <template v-else>
-                <template v-for="tag in post.tags" :key="tag.id">
-                  <view class="tag">
-                    {{ tag }}
+      <view class="pb-1 first">
+        <view class="post" @click="onClickPost(post.id)">
+          <view class="upper">
+            <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
+              <view class="title">
+                {{ post.title }}
+              </view>
+              <view class="user-info">
+                <template v-if="!post.isAnonymous">
+                  <image :src="post.user.avatarUrl" class="avatar" />
+                  <view class="username">
+                    {{ post.user.nickname }}
                   </view>
                 </template>
-              </template>
+              </view>
+              <view class="description">
+                {{ post.text }}
+              </view>
+              <view v-if="post.tags" class="tags">
+                <template v-if="post.tags.length > 4">
+                  <view class="tag">
+                    {{ post.tags[0] }}
+                  </view>
+                  <view class="tag">
+                    {{ post.tags[1] }}
+                  </view>
+                  <view class="tag">
+                    {{ post.tags[2] }}
+                  </view>
+                </template>
+                <template v-else>
+                  <template v-for="tag in post.tags" :key="tag.id">
+                    <view class="tag">
+                      {{ tag }}
+                    </view>
+                  </template>
+                </template>
+              </view>
+              <view class="lower">
+                <view class="time font-sm">
+                  {{ displayTime(post.createAt) }}
+                </view>
+                <view class="font-sm">{{ post.comments }}条回复</view>
+              </view>
             </view>
+            <view
+              v-if="post.coverUrl"
+              :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
+              class="image"
+            />
           </view>
-          <view
-            v-if="post.coverUrl"
-            :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
-            class="image"
-          />
-        </view>
-        <view class="lower">
-          <view class="time font-sm">
-            {{ displayTime(post.createAt) }}
-          </view>
-          <view class="font-sm">{{ post.comments }}条回复</view>
         </view>
       </view>
     </template>
@@ -111,19 +113,20 @@ onReachBottom(() => {
 
 <style lang="scss" scoped>
 @import "@/common/user-info.scss";
+.first {
+  background-color: #fafcff;
+}
 
 .post {
   background-color: #ffffff;
-  //border-top: 2px #f4f9ff solid;
-  border-bottom: 15rpx #fafcff solid;
+  border-top: 2px #f4f5f6 solid;
+  border-bottom: 2px #f4f5f6 solid;
   padding: 32rpx;
-  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.03);
-  border-radius: 5px;
 }
 
 .upper {
   display: flex;
-  align-items: center;
+  //align-items: center;
 }
 
 .main {
@@ -160,14 +163,13 @@ onReachBottom(() => {
     font-size: calc(10 / 390 * 100vw);
     //height: calc(18 / 390 * 100vw);
     //line-height: calc(18 / 390 * 100vw);
-    padding-top: 10rpx;
+    padding-top: 15rpx;
 
     .tag {
       margin-top: calc(4 / 390 * 100vw);
       font-style: normal;
       font-weight: bold;
       font-size: calc(10 / 390 * 100vw);
-      line-height: calc(17 / 390 * 100vw);
       box-sizing: border-box;
       /* or 170% */
       text-align: center;
@@ -176,8 +178,9 @@ onReachBottom(() => {
       color: #1fa1ff;
 
       min-width: calc(28 / 390 * 100vw);
-      height: calc(20 / 390 * 100vw);
-      padding: calc(0 / 390 * 100vw) calc(8 / 390 * 100vw);
+      height: calc(16 / 390 * 100vw);
+      padding-left: calc(6 / 390 * 100vw);
+      padding-right: calc(6 / 390 * 100vw);
       border: #1fa1ff calc(1 / 390 * 100vw) solid;
       border-radius: calc(10 / 390 * 100vw);
       margin-right: calc(8 / 390 * 100vw);
@@ -186,15 +189,13 @@ onReachBottom(() => {
 }
 
 .image {
-  width: calc(142 / 390 * 100vw);
-  height: calc(93 / 390 * 100vw);
+  width: calc(125 / 390 * 100vw);
+  height: calc(112 / 390 * 100vw);
   border-radius: calc(6 / 390 * 100vw);
   margin-left: calc(16 / 390 * 100vw);
+  margin-top: calc(30 / 390 * 100vw);
   background-size: cover;
   background-position: center;
-
-  //text-align: center;
-  //line-height: calc(93 / 390 * 100vw);
 }
 
 .lower {
