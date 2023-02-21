@@ -10,10 +10,10 @@
   </view>
   <view class="wrap">
     <view v-show="current === 0">
-      <my-posts search="post" :keyword="props.id"></my-posts>
+      <my-posts></my-posts>
     </view>
     <view v-show="current === 1">
-      <masonry search="moment" :keyword="props.id" />
+      <my-moments></my-moments>
     </view>
   </view>
 </template>
@@ -21,11 +21,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import MyPosts from "@/pages/profile/my-publish/my-posts";
-import Masonry from "@/pages/community/masonry";
+import MyMoments from "@/pages/profile/my-publish/my-moments";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
-const props = defineProps<{
-  id: string;
-}>();
 const items = ["帖子", "动态"];
 let current = ref(0);
 function onClickItem(e) {
