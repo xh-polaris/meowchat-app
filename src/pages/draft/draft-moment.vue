@@ -3,10 +3,7 @@
     <view class="main">
       <view class="images">
         <template v-for="image in imagesData" :key="image.id">
-          <view
-            :style="{ backgroundImage: 'url(' + image.url + ')' }"
-            class="added-image"
-          />
+          <image :src="image.url" class="added-image" />
         </template>
         <view
           v-if="imagesData.length < 9"
@@ -120,21 +117,22 @@ function toggleSyncToCollection() {
 
 function addImage() {
   disablePublish.value = true;
-  uni.chooseImage({
+  uni.chooseMedia({
     success: (chooseImageRes) => {
       let isTooManyImages = false;
-      let tempFilePaths = chooseImageRes.tempFilePaths as string[];
+      let tempFilePaths = chooseImageRes.tempFiles as Array<any>;
       if (imagesData.length + tempFilePaths.length > 9) {
         isTooManyImages = true;
         tempFilePaths = tempFilePaths.slice(0, 9 - imagesData.length);
       }
-      tempFilePaths.map((path) => {
+      tempFilePaths.map((item) => {
         imagesData.push({
-          id: path,
-          url: path
+          id: item.tempFilePath,
+          url: item.tempFilePath
         });
+        console.log(imagesData);
         putObject({
-          filePath: path
+          filePath: item.tempFilePath
         }).then(function (url) {
           //将返回的url添加进photos
           photos.push(url.url);
@@ -231,6 +229,7 @@ body {
 .added-image {
   background-size: cover;
   background-position: center;
+  object-fit: none;
 }
 
 .new-image {
