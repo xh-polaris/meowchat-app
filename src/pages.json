@@ -154,7 +154,10 @@
 	  "style": {
 	    "navigationBarTitleText": "选择猫咪"
 	  }
-	}
+	},
+    {
+      "path": "pages/web-frame/web-frame"
+    }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
