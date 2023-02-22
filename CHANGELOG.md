@@ -1,5 +1,12 @@
 
 
+## [1.6.1](https://github.com/xh-polaris/meowchat-app/compare/v1.6.0...v1.6.1) (2023-02-22)
+
+
+### ✨ Features | 新功能
+
+* 实现轮播图的点击跳转 ([57e3896](https://github.com/xh-polaris/meowchat-app/commit/57e389646d06619cd696b5ff6b048ea15328a8bf))
+
 ## [1.6.0](https://github.com/xh-polaris/meowchat-app/compare/v1.5.1...v1.6.0) (2023-02-21)
 
 
