@@ -54,7 +54,7 @@
             v-for="(item, index) in campuses.data"
             :key="index"
             :class="'navbtn ' + (currentCampus === item.name ? 'current' : '')"
-            @click="setBranch(item.name)"
+            @click="setBranch(item.name, index)"
           >
             {{ item.name }}
           </view>
@@ -84,7 +84,7 @@ import {
   getCatPreviews,
   searchCatPreviews
 } from "@/apis/collection/collection";
-import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom, onShow } from "@dcloudio/uni-app";
 import {
   GetCatPreviewsReq,
   SearchCatPreviewsReq
@@ -179,7 +179,8 @@ onPullDownRefresh(() => {
   uni.stopPullDownRefresh();
 });
 
-function setBranch(e: string) {
+function setBranch(e: string, index: number) {
+  uni.setStorageSync("communityId", campuses.data[index].id);
   currentCampus.value = e;
 }
 
@@ -221,6 +222,10 @@ onReachBottom(() => {
       }
     });
   }
+});
+
+onShow(() => {
+  getCampus();
 });
 </script>
 

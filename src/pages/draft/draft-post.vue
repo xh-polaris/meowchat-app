@@ -34,10 +34,7 @@
       <view class="">
         <view class="images">
           <template v-for="image in imagesData" :key="image.id">
-            <view
-              :style="{ backgroundImage: 'url(' + image.url + ')' }"
-              class="added-image"
-            />
+            <image :src="image.url" class="added-image" />
           </template>
           <view
             v-if="imagesData.length < 1"
