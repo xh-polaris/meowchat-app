@@ -65,13 +65,12 @@
     <view class="big">
       <view>
         <view
-          v-for="(item, index) in schoolLists.name"
+          v-for="(item, index) in schools.data"
           :key="index"
-          :src="item"
           class="bubble"
-          @click="changeSchool(item)"
+          @click="changeSchool(item.name, index)"
         >
-          {{ item }}
+          {{ item.name }}
         </view>
       </view>
     </view>
@@ -80,21 +79,14 @@
   <view class="blank" />
 
   <view class="content2">
+    <view class="small"> 所有学校</view>
     <view
-      v-for="(item, index) in schoolLists.alpha"
-      :key="index"
-      class="school-bar"
-      :src="item"
+      v-for="(item1, index1) in schools.data"
+      :key="index1"
+      class="school"
+      @click="changeSchool(item1.name, index1)"
     >
-      <view class="small"> {{ item }}</view>
-      <view
-        v-for="(item1, index1) in schoolLists.name"
-        :key="index1"
-        class="school"
-        @click="changeSchool(item1)"
-      >
-        {{ item1 }}
-      </view>
+      {{ item1.name }}
     </view>
   </view>
 </template>
@@ -103,6 +95,7 @@
 import { reactive, ref } from "vue";
 import { Community } from "@/apis/schemas";
 import { listCommunity } from "@/apis/community/community";
+import { onBackPress, onLoad } from "@dcloudio/uni-app";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
@@ -128,6 +121,12 @@ const campuses = reactive<{
   data: []
 });
 
+const schools = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
 async function schoolList() {
   lists.data = (
     await listCommunity({
@@ -135,37 +134,56 @@ async function schoolList() {
     })
   ).communities;
 }
-async function getCampus() {
+async function getSchools() {
   schoolList().then(async () => {
-    init();
+    let j = 0;
     for (let i = 0; i < lists.data.length; i++) {
-      if (lists.data[i].id === communityId.value) {
-        currentCampus.value = lists.data[i].name;
-        parentId.value = <string>lists.data[i].parentId;
+      if (!lists.data[i].parentId) {
+        schools.data[j] = lists.data[i];
+        j++;
       }
     }
-    for (let j = 0; j < lists.data.length; j++) {
-      if (lists.data[j].id === parentId.value) {
-        currentSchool.value = lists.data[j].name;
-      }
-    }
+  });
+}
+getSchools();
+async function getCampus() {
+  if (parentId.value) {
     campuses.data = (
       await listCommunity({
         parentId: parentId.value
       })
     ).communities;
-    console.log(campuses.data);
-  });
+  } else {
+    schoolList().then(async () => {
+      init();
+      for (let i = 0; i < lists.data.length; i++) {
+        if (lists.data[i].id === communityId.value) {
+          currentCampus.value = lists.data[i].name;
+          parentId.value = <string>lists.data[i].parentId;
+        }
+      }
+      for (let j = 0; j < lists.data.length; j++) {
+        if (lists.data[j].id === parentId.value) {
+          currentSchool.value = lists.data[j].name;
+        }
+      }
+      campuses.data = (
+        await listCommunity({
+          parentId: parentId.value
+        })
+      ).communities;
+    });
+  }
 }
 getCampus();
 
-const schoolLists = reactive({
-  alpha: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"],
-  name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
-  campuses: ["中山北路校区", "闵行校区"],
-  index: 0
+let history = reactive<string[]>([]);
+onLoad(() => {
+  let historyCampuses = uni.getStorageSync("historyCampuses");
+  if (history.length === 0 && historyCampuses) {
+    uni.setStorageSync("historyCampus", currentCampus.value);
+  }
 });
-
 const sel = ref(true);
 
 // 更改下拉选框状态
@@ -176,11 +194,13 @@ function change() {
 function changeCampus(name: string, index: number) {
   currentCampus.value = name;
   uni.setStorageSync("communityId", campuses.data[index].id);
-  console.log(communityId.value);
 }
 // 选择校区
-function changeSchool(name: string) {
+function changeSchool(name: string, index: number) {
   currentSchool.value = name;
+  parentId.value = schools.data[index].id;
+  currentCampus.value = "";
+  getCampus();
 }
 </script>
 

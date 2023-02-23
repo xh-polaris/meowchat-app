@@ -230,7 +230,6 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 .names {
   display: flex;
   align-items: baseline;
-  font-size: calc(18 / 390 * 100vw);
 
   .school-name {
     font-weight: bold;
@@ -238,11 +237,14 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
     line-height: calc(18 / 390 * 100vw);
     margin-left: calc(8 / 390 * 100vw);
     padding-bottom: calc(4 / 390 * 100vw);
+    font-size: calc(18 / 390 * 100vw);
   }
 
   .campus-name {
-    color: #7f7f81;
+    color: #939393;
     font-weight: bold;
+    letter-spacing: calc(0.5 / 390 * 100vw);
+    font-size: calc(16 / 390 * 100vw);
     margin-left: calc(8 / 390 * 100vw);
   }
 }
@@ -252,10 +254,10 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
   display: flex;
   align-items: center;
   border: solid #1fa1ff calc(1 / 390 * 100vw);
-  padding: 0 calc(8 / 390 * 100vw);
+  padding: 0 calc(12 / 390 * 100vw) 0 calc(12 / 390 * 100vw);
   height: calc(22 / 390 * 100vw);
-  border-radius: calc(11 / 390 * 100vw);
-  margin-right: calc(12 / 390 * 100vw);
+  border-radius: 50rpx;
+  margin-right: calc(10 / 390 * 100vw);
 
   .switch-icon {
     width: calc(12 / 390 * 100vw);

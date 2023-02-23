@@ -306,16 +306,20 @@ $avatarWidth: calc(21 / 390 * 100vw);
     padding: calc(4 / 390 * 100vw) calc(12 / 390 * 100vw) calc(6 / 390 * 100vw);
 
     .title {
-      font-size: $titleFontSize;
+      font-size: 30rpx;
       color: #000000;
       line-height: calc ($titleFontSize * 1.5);
-      margin-bottom: calc(12 / 390 * 100vw);
+      margin-top: calc(5 / 390 * 100vw);
     }
 
     .other-info {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      .time {
+        margin-top: 18rpx;
+      }
     }
   }
 }
