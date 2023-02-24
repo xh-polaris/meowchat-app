@@ -67,6 +67,7 @@ import { getPostPreviews, searchPostPreviews } from "@/apis/post/post";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
+import { Post } from "@/apis/schemas";
 
 interface Props {
   search?: string;
@@ -77,10 +78,10 @@ const props = withDefaults(defineProps<Props>(), {
   keyword: "post"
 });
 
-let postsData = reactive([]);
+let postsData: Array<Post> = reactive([]);
 let page = 0;
 const getPostPreviewsAsync = async () => {
-  let posts = [];
+  let posts: Array<Post> = [];
   if (props.search === "default") {
     posts = (
       await getPostPreviews({
