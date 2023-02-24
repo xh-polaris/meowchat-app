@@ -44,6 +44,7 @@
   <view class="top-padding" />
 
   <world-posts v-if="isInitialized && !isRefreshing" search="default" />
+  <view class="empty-bottom"></view>
   <tab-bar id="1"></tab-bar>
 </template>
 
@@ -198,5 +199,9 @@ body {
 
 .top-padding {
   height: calc(56 / 390 * 100vw);
+}
+
+.empty-bottom {
+  height: 120rpx;
 }
 </style>
