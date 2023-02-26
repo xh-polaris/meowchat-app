@@ -107,6 +107,10 @@ function getCampus() {
         currentSchool.value = lists.data[j].name;
       }
     }
+    uni.setStorageSync("historyCampusName", currentCampus.value);
+    uni.setStorageSync("historySchoolName", currentSchool.value);
+    uni.setStorageSync("historyCommunityId", communityId.value);
+    uni.setStorageSync("historySchoolId", parentId.value);
   });
 }
 getCampus();
@@ -170,6 +174,7 @@ onPullDownRefresh(() => {
 
 onShow(() => {
   getCampus();
+  pageRefresh();
 });
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function

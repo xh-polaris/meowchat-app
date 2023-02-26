@@ -179,6 +179,7 @@ onPullDownRefresh(() => {
 function setBranch(e: string, index: number) {
   uni.setStorageSync("communityId", campuses.data[index].id);
   currentCampus.value = e;
+  pageRefresh();
 }
 
 function onClickSwitch() {
@@ -223,6 +224,7 @@ onReachBottom(() => {
 
 onShow(() => {
   getCampus();
+  pageRefresh();
 });
 </script>
 

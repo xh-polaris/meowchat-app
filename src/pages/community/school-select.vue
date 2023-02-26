@@ -55,8 +55,19 @@
     </view>
     <view class="big">
       <view>
-        <view class="bubble"> 华东师范大学（中山北路校区）</view>
-        <view class="bubble"> 华东师范大学（闵行校区）</view>
+        <view
+          class="bubble"
+          @click="
+            changeCampusByHistory(
+              history.campusName,
+              history.schoolName,
+              history.id,
+              history.parentId
+            )
+          "
+        >
+          {{ history.schoolName }} ({{ history.campusName }})</view
+        >
       </view>
     </view>
     <view class="search-bar">
@@ -95,18 +106,28 @@
 import { reactive, ref } from "vue";
 import { Community } from "@/apis/schemas";
 import { listCommunity } from "@/apis/community/community";
-import { onBackPress, onLoad } from "@dcloudio/uni-app";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
+const history = reactive({
+  schoolName: "",
+  campusName: "",
+  id: "",
+  parentId: ""
+});
 
 function init() {
   if (!uni.getStorageSync("communityId")) {
     uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
   }
   communityId.value = uni.getStorageSync("communityId");
+  // history.communityName = uni.getStorageSync("historyCommunityName");
+  history.id = uni.getStorageSync("historyCommunityId");
+  history.campusName = uni.getStorageSync("historyCampusName");
+  history.schoolName = uni.getStorageSync("historySchoolName");
+  history.parentId = uni.getStorageSync("historySchoolId");
 }
 
 const lists = reactive<{
@@ -134,6 +155,7 @@ async function schoolList() {
     })
   ).communities;
 }
+// 找所有学校
 async function getSchools() {
   schoolList().then(async () => {
     let j = 0;
@@ -146,6 +168,8 @@ async function getSchools() {
   });
 }
 getSchools();
+
+// 找该学校的所有校区
 async function getCampus() {
   if (parentId.value) {
     campuses.data = (
@@ -177,13 +201,6 @@ async function getCampus() {
 }
 getCampus();
 
-let history = reactive<string[]>([]);
-onLoad(() => {
-  let historyCampuses = uni.getStorageSync("historyCampuses");
-  if (history.length === 0 && historyCampuses) {
-    uni.setStorageSync("historyCampus", currentCampus.value);
-  }
-});
 const sel = ref(true);
 
 // 更改下拉选框状态
@@ -194,6 +211,18 @@ function change() {
 function changeCampus(name: string, index: number) {
   currentCampus.value = name;
   uni.setStorageSync("communityId", campuses.data[index].id);
+}
+function changeCampusByHistory(
+  campus: string,
+  school: string,
+  id: string,
+  parent: string
+) {
+  currentCampus.value = campus;
+  currentSchool.value = school;
+  parentId.value = parent;
+  uni.setStorageSync("communityId", id);
+  getCampus();
 }
 // 选择校区
 function changeSchool(name: string, index: number) {

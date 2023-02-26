@@ -156,6 +156,7 @@ function onClickSearch() {
   uni.reLaunch({
     url: "/pages/search/search"
   });
+  console.log(list);
 }
 let getStyle = computed(() => {
   let color = {
