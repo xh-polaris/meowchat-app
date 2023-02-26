@@ -1,12 +1,14 @@
 import { createSSRApp } from "vue";
 import App from "./App.vue";
+import { StorageKeys } from "@/utils/const";
+import { Backends } from "@/utils/url";
 
 uni.addInterceptor("request", {
   invoke(args: UniNamespace.RequestOptions) {
     if (args.url[0] === "/") {
-      args.url = "https://meowchat.xhpolaris.com" + args.url;
+      args.url = Backends.Product + args.url;
       args.header = {
-        Authorization: uni.getStorageSync("accessToken")
+        Authorization: uni.getStorageSync(StorageKeys.AccessToken)
       };
     }
   },

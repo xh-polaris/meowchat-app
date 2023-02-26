@@ -14,7 +14,7 @@ function afterSignIn(signInResp: SignInResp) {
       updateUserInfo({
         nickname: "用户_" + id.substring(id.length - 13),
         avatarUrl: DefaultUserAvatarUrl
-      });
+      }).then();
     }
   });
 }
@@ -47,20 +47,6 @@ export async function init() {
             }
           });
         }
-      },
-      fail() {
-        signIn({
-          authType: "email",
-          authId: "test@test.com",
-          params: ["1234"]
-        })
-          .then((signInRes) => {
-            afterSignIn(signInRes);
-            resolve();
-          })
-          .catch((err) => {
-            reject(err);
-          });
       }
     });
   });

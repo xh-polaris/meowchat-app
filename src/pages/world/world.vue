@@ -1,6 +1,6 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <block>
+    <view>
       <view class="d-flex a-center">
         <view
           class="d-flex a-center"
@@ -20,7 +20,7 @@
           >喵世界</view
         >
       </view>
-    </block>
+    </view>
   </uni-nav-bar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
