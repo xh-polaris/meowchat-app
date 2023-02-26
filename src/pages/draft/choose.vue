@@ -148,6 +148,7 @@ import { CatPreview, Community } from "@/apis/schemas";
 import { listCommunity } from "@/apis/community/community";
 
 import WybModal from "@/components/third-party/wyb-modal/wyb-modal.vue";
+import { StorageKeys } from "@/utils/const";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
@@ -179,10 +180,7 @@ function onConfirmClick() {
 }
 
 function init() {
-  if (!uni.getStorageSync("communityId")) {
-    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
-  }
-  communityId.value = uni.getStorageSync("communityId");
+  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 
 const lists = reactive<{

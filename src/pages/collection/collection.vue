@@ -100,9 +100,6 @@ let communityId = ref("");
 let parentId = ref("");
 
 function init() {
-  if (!uni.getStorageSync(StorageKeys.CommunityId)) {
-    uni.setStorageSync(StorageKeys.CommunityId, DefaultCommunityId);
-  }
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 const lists = reactive<{

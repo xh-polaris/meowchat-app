@@ -1,8 +1,5 @@
 <template>
   <view class="px-4">
-    <view style="color: #0d99ff" class="text-right font-md my-1"
-      >{{ readCount }}条未读</view
-    >
     <!-- 公告 -->
     <view class="" style="background-color: #fafcff">
       <view class="d-flex px-3 py-3 a-center j-sb">
@@ -92,7 +89,6 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import Divider from "@/components/divider/divider.vue";
-const readCount = ref(2);
 const publishTime = ref("2022-3-1");
 const publishContent = ref(
   "公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告"

@@ -1,7 +1,8 @@
 import { signIn } from "@/apis/auth/auth";
 import { getUserInfo, updateUserInfo } from "@/apis/user/user";
 import { SignInResp } from "@/apis/auth/auth-interfaces";
-import { DefaultCommunityId, StorageKeys } from "@/utils/const";
+import { StorageKeys } from "@/utils/const";
+import { listCommunity } from "@/apis/community/community";
 
 const DefaultUserAvatarUrl = "https://static.xhpolaris.com/cat_world.jpg";
 
@@ -18,11 +19,25 @@ function afterSignIn(signInResp: SignInResp) {
     }
   });
 }
-
+function setDefaultCommunityId() {
+  listCommunity({}).then((res) => {
+    for (let i = res.communities.length - 1; i >= 0; i--) {
+      const community = res.communities[i];
+      if (
+        community.parentId === "" ||
+        community.parentId === undefined ||
+        community.parentId === null
+      ) {
+        continue;
+      }
+      uni.setStorageSync(StorageKeys.CommunityId, community.id);
+    }
+  });
+}
 export async function init() {
   return await new Promise<void>((resolve, reject) => {
     if (!uni.getStorageSync(StorageKeys.CommunityId)) {
-      uni.setStorageSync(StorageKeys.CommunityId, DefaultCommunityId);
+      setDefaultCommunityId();
     }
 
     uni.getProvider({

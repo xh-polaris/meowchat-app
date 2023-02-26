@@ -14,7 +14,8 @@
               style="width: 45rpx"
             ></image>
           </view>
-          <view class="font-sm px-1 message-count">23</view>
+          <!-- TODO 暂时隐藏通知数量-->
+          <view v-show="false" class="font-sm px-1 message-count">23</view>
         </view>
         <view style="margin-left: 165rpx; font-size: 35rpx; font-weight: bold"
           >喵世界</view

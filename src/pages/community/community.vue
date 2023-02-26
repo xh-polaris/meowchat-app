@@ -1,6 +1,6 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <block>
+    <view>
       <view
         style="
           margin-left: 165rpx;
@@ -10,7 +10,7 @@
         "
         >喵社区</view
       >
-    </block>
+    </view>
   </uni-nav-bar>
   <view class="school-box">
     <view class="school-select-box">
@@ -69,16 +69,14 @@ import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import { Community } from "@/apis/schemas";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
+import { StorageKeys } from "@/utils/const";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
 function init() {
-  if (!uni.getStorageSync("communityId")) {
-    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
-  }
-  communityId.value = uni.getStorageSync("communityId");
+  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 
 const lists = reactive<{
