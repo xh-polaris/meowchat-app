@@ -55,6 +55,7 @@
     </view>
     <masonry v-if="!isRefreshing" search="default" />
   </view>
+  <view class="empty-bottom"></view>
   <tab-bar id="2"></tab-bar>
 </template>
 
@@ -348,5 +349,9 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
       }
     }
   }
+}
+
+.empty-bottom {
+  height: 130rpx;
 }
 </style>
