@@ -1,5 +1,17 @@
 
 
+## [1.6.2](https://github.com/xh-polaris/meowchat-app/compare/v1.6.1...v1.6.2) (2023-02-26)
+
+
+### ✨ Features | 新功能
+
+* 学校/校区选择同步到社区和图鉴界面 ([#186](https://github.com/xh-polaris/meowchat-app/issues/186)) ([4bee751](https://github.com/xh-polaris/meowchat-app/commit/4bee751f6af71be7ee3694f43a5be9eb6d2bd38d))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决喵世界喵社区最底部被tab遮挡问题 ([#187](https://github.com/xh-polaris/meowchat-app/issues/187)) ([2f831d9](https://github.com/xh-polaris/meowchat-app/commit/2f831d9281aeb3c8241c86c6408c07002104820e))
+
 ## [1.6.1](https://github.com/xh-polaris/meowchat-app/compare/v1.6.0...v1.6.1) (2023-02-22)
 
 
