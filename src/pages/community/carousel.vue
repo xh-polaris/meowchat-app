@@ -8,6 +8,7 @@
           :style="{
             backgroundImage: 'url(' + displayContents[i - 1].imageUrl + ')'
           }"
+          @click="onClickCarousel(displayContents[i - 1])"
         />
       </template>
     </view>
@@ -24,6 +25,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { News } from "@/apis/schemas";
+import { onClickCarousel } from "@/pages/community/utils";
 
 const props = defineProps<{
   contents: News[];

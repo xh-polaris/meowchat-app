@@ -34,10 +34,7 @@
       <view class="">
         <view class="images">
           <template v-for="image in imagesData" :key="image.id">
-            <view
-              :style="{ backgroundImage: 'url(' + image.url + ')' }"
-              class="added-image"
-            />
+            <image :src="image.url" class="added-image" />
           </template>
           <view
             v-if="imagesData.length < 1"
@@ -94,10 +91,12 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from "vue";
 import { newPost } from "@/apis/post/post";
-import { putObject } from "@/apis/cos/cos";
+import { Prefixes, putObject } from "@/apis/cos/cos";
 
 import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
+import { Pages } from "@/utils/url";
+import { Tag } from "@/apis/schemas";
 
 const imagesData = reactive<
   {
@@ -113,7 +112,7 @@ const text = ref("");
 const coverUrl = ref("");
 const disablePublish = ref(false);
 
-let tags = reactive([]);
+let tags = reactive<Tag[]>([]);
 
 watch(tags, (newValue) => {
   if (newValue.length > 3) {
@@ -145,7 +144,8 @@ function addImage() {
           url: path
         });
         putObject({
-          filePath: path
+          filePath: path,
+          prefix: Prefixes.Post
         }).then(function (res) {
           coverUrl.value = res.url;
           disablePublish.value = false;
@@ -188,10 +188,10 @@ function publishPost() {
     isAnonymous: isAnonymous.value
   }).then(() => {
     uni.switchTab({
-      url: "../world/world",
+      url: Pages.World,
       success() {
         uni.reLaunch({
-          url: "/pages/world/world"
+          url: Pages.World
         });
       }
     });

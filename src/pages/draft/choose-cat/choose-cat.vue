@@ -1,17 +1,34 @@
 <template>
-  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <view>
-      <view
-        style="
-          margin-left: 181rpx;
-          margin-top: 23rpx;
-          font-size: 35rpx;
-          font-weight: bold;
-        "
-        >图鉴</view
+  <wyb-modal
+    ref="modal"
+    :show-title="false"
+    cancel-text="我再想想"
+    confirm-text="确认关注并选择"
+    :custom="true"
+    :height="700"
+    @confirm="onConfirmClick"
+  >
+    <view class="">
+      <view class="font-lg font-weight mb-4 text-center mx-4"
+        >关注猫咪后，方可添加</view
       >
+      <view class="text-center font-md mx-5" style="line-height: 1.5"
+        >关注的猫咪可以在图鉴中查看,并在喵世界接收其相关推送</view
+      >
+      <view class="d-flex j-center w-100 mt-4">
+        <image
+          v-if="catImage"
+          :src="catImage"
+          mode="widthFix"
+          class="border"
+          style="width: 150rpx; border-radius: 30rpx"
+        ></image>
+      </view>
+      <view class="d-flex a-center w-100 j-center font-md ml-1 mt-3">{{
+        catName
+      }}</view>
     </view>
-  </uni-nav-bar>
+  </wyb-modal>
   <view class="content">
     <!-- 搜索框 -->
     <view
@@ -31,7 +48,7 @@
       <image
         style="width: 60rpx"
         mode="widthFix"
-        src="/static/images/search.png"
+        :src="Icons.Search"
         @click="onClickSearch"
       />
     </view>
@@ -54,7 +71,7 @@
             v-for="(item, index) in campuses.data"
             :key="index"
             :class="'navbtn ' + (currentCampus === item.name ? 'current' : '')"
-            @click="setBranch(item.name, index)"
+            @click="setBranch(item.name)"
           >
             {{ item.name }}
           </view>
@@ -64,7 +81,48 @@
     <view v-if="cats.length > 0">
       <view v-for="cat of cats" :key="cat.id" class="out">
         <view class="row" @click="onClickCatBox(cat.id)">
-          <cat-box :cat="cat" />
+          <!-- 猫咪列表 -->
+          <view class="cats-box">
+            <view>
+              <image :src="cat.avatarUrl" mode="aspectFill" />
+            </view>
+            <view class="text">
+              <view class="title">
+                <view class="name">
+                  {{ cat.name }}
+                </view>
+                <view class="collect">
+                  <image
+                    :src="
+                      cat.isCollected
+                        ? '/static/images/collect.png'
+                        : '/static/images/collect_HL.png'
+                    "
+                    mode="aspectFill"
+                    @click.stop="onClickCollect"
+                  />
+                </view>
+              </view>
+              <view class="d-flex a-center j-sb">
+                <view class="">
+                  <view class="data">
+                    <text>花色：{{ cat.color }}</text>
+                  </view>
+                  <view class="data">
+                    <text>当前地区： {{ cat.area }}</text>
+                  </view>
+                </view>
+                <view
+                  class="border px-3 py-1 font-md"
+                  style="border-radius: 50rpx"
+                  @click.stop="choose(cat.avatarUrl, cat.name, cat.id)"
+                >
+                  选择
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 猫咪列表 -->
         </view>
       </view>
     </view>
@@ -72,37 +130,60 @@
       <image :src="Pictures.NoData" />
     </view>
   </view>
-  <tab-bar id="3"></tab-bar>
 </template>
 
 <script lang="ts" setup>
 import { Pictures, Icons, Pages } from "@/utils/url";
-import CatBox from "@/pages/collection/cat-box.vue";
-import { reactive, ref } from "vue";
-import { StorageKeys } from "@/utils/const";
-import { onClickCatBox } from "@/pages/collection/utils";
+import { reactive, ref, getCurrentInstance } from "vue";
+import { onClickCatBox, onClickCollect } from "@/pages/collection/utils";
 import {
   getCatPreviews,
   searchCatPreviews
 } from "@/apis/collection/collection";
-import { onPullDownRefresh, onReachBottom, onShow } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import {
   GetCatPreviewsReq,
   SearchCatPreviewsReq
 } from "@/apis/collection/collection-interfaces";
 import { CatPreview, Community } from "@/apis/schemas";
-import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
+
+import WybModal from "@/components/third-party/wyb-modal/wyb-modal.vue";
+import { StorageKeys } from "@/utils/const";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
 
+const currentInstance = getCurrentInstance();
+
+// 点击选择的猫咪照片
+const catImage = ref("");
+const catName = ref("猫猫");
+const catId = ref("");
+
+function choose(avatarUrl: string, name: string, id: string) {
+  catImage.value = avatarUrl;
+  catName.value = name;
+  catId.value = id;
+  currentInstance.proxy.$refs.modal.showModal();
+}
+
+function onConfirmClick() {
+  //将选择的猫咪保存到缓存
+  uni.setStorageSync("idSelected", catId.value);
+  uni.setStorageSync("nameSelected", catName.value);
+  uni.setStorageSync("avatarSelected", catImage.value);
+  uni.navigateBack({
+    delta: 1
+  });
+}
+
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
+
 const lists = reactive<{
   data: Community[];
 }>({
@@ -177,14 +258,13 @@ onPullDownRefresh(() => {
   uni.stopPullDownRefresh();
 });
 
-function setBranch(e: string, index: number) {
-  uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
+function setBranch(e: string) {
   currentCampus.value = e;
 }
 
 function onClickSwitch() {
   uni.navigateTo({
-    url: Pages.SchoolSelect
+    url: Pages.ChooseCat
   });
 }
 
@@ -221,13 +301,10 @@ onReachBottom(() => {
     });
   }
 });
-
-onShow(() => {
-  getCampus();
-});
 </script>
 
 <style lang="scss" scoped>
+@import "@/common/cat-box.scss";
 .arrow {
   width: 44rpx;
   height: 50rpx;
@@ -292,13 +369,14 @@ onShow(() => {
 
 .school-select-box {
   background-color: #fafcff;
+  height: 8vh;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
 .school-name {
-  margin: 20rpx 10rpx 0 10rpx;
+  margin: 20rpx 10rpx 30rpx 10rpx;
   font-weight: bold;
   border-bottom: 2px solid skyblue;
   height: 55rpx;

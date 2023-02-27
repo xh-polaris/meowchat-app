@@ -80,7 +80,7 @@
       }
     },
     {
-      "path": "pages/community/school-select",
+      "path": "pages/community/school-select/school-select",
       "style": {
         "navigationBarTitleText": "切换学校"
       }
@@ -125,7 +125,7 @@
       }
     },
     {
-      "path": "pages/draft/draft-nav",
+      "path": "pages/draft/draft-nav/draft-nav",
       "style": {
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
@@ -144,10 +144,19 @@
 		}
 	},
     {
-      "path": "pages/draft/draft-image",
+      "path": "pages/draft/draft-image/draft-image",
       "style": {
         "navigationBarTitleText": "上传猫片"
       }
+    },
+	{
+	  "path": "pages/draft/choose-cat/choose-cat",
+	  "style": {
+	    "navigationBarTitleText": "选择猫咪"
+	  }
+	},
+    {
+      "path": "pages/web-frame/web-frame"
     }
   ],
   "globalStyle": {

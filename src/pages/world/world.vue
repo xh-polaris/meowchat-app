@@ -1,6 +1,6 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <block>
+    <view>
       <view class="d-flex a-center">
         <view
           class="d-flex a-center"
@@ -14,13 +14,14 @@
               style="width: 45rpx"
             ></image>
           </view>
-          <view class="font-sm px-1 message-count">23</view>
+          <!-- TODO 暂时隐藏通知数量-->
+          <view v-show="false" class="font-sm px-1 message-count">23</view>
         </view>
         <view style="margin-left: 165rpx; font-size: 35rpx; font-weight: bold"
           >喵世界</view
         >
       </view>
-    </block>
+    </view>
   </uni-nav-bar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
@@ -44,6 +45,7 @@
   <view class="top-padding" />
 
   <world-posts v-if="isInitialized && !isRefreshing" search="default" />
+  <view class="empty-bottom"></view>
   <tab-bar id="1"></tab-bar>
 </template>
 
@@ -198,5 +200,9 @@ body {
 
 .top-padding {
   height: calc(56 / 390 * 100vw);
+}
+
+.empty-bottom {
+  height: 120rpx;
 }
 </style>

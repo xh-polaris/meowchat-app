@@ -20,12 +20,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import MyPosts from "@/pages/profile/my-publish/my-posts";
-import MyMoments from "@/pages/profile/my-publish/my-moments";
+import MyPosts from "@/pages/profile/my-publish/my-posts.vue";
+import MyMoments from "@/pages/profile/my-publish/my-moments.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 const items = ["帖子", "动态"];
 let current = ref(0);
-function onClickItem(e) {
+function onClickItem(e: any) {
   if (current.value !== e.currentIndex) {
     current.value = e.currentIndex;
   }

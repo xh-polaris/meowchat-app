@@ -61,7 +61,7 @@
 <script>
 export default {
   name: "uploadFile",
-  emits: ["uploadFiles", "choose", "delFile"],
+  emits: ["uploadFiles", "choose-cat.vue", "delFile"],
   props: {
     filesList: {
       type: Array,
@@ -177,7 +177,7 @@ export default {
       });
     },
     choose() {
-      this.$emit("choose");
+      this.$emit("choose-cat.vue");
     },
     delFile(index) {
       this.$emit("delFile", index);

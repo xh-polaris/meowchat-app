@@ -63,7 +63,7 @@
 <script>
 export default {
   name: "uploadImage",
-  emits: ["uploadFiles", "choose", "delFile"],
+  emits: ["uploadFiles", "choose-cat.vue", "delFile"],
   props: {
     filesList: {
       type: Array,
@@ -173,7 +173,7 @@ export default {
       this.$emit("uploadFiles", item);
     },
     choose() {
-      this.$emit("choose");
+      this.$emit("choose-cat.vue");
     },
     delFile(index) {
       this.$emit("delFile", index);
@@ -181,7 +181,7 @@ export default {
     prviewImage(img, index) {
       let urls = [];
       if (Number(this.limit) === 1 && this.disablePreview && !this.disabled) {
-        this.$emit("choose");
+        this.$emit("choose-cat.vue");
       }
       if (this.disablePreview) return;
       this.filesList.forEach((i) => {

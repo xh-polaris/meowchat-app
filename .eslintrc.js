@@ -26,24 +26,15 @@ module.exports = {
     "vue/multi-word-component-names": "off",
     "vue/valid-v-on": "error",
     "no-undef": "error",
-    "no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "off"
   },
-  overrides: [
-    {
-      files: ["src/apis/**"],
-      rules: {
-        "no-unused-vars": "off"
-      }
-    }
-  ],
   settings: {
     "import/resolver": {
       typescript: true,
       node: true,
       alias: {
         map: [["@", "./src"]],
-        extensions: [".ts", ".js", ".jsx", ".tsx", ".vue"]
+        extensions: [".ts", ".js", ".jsx", ".tsx"]
       }
     }
   }

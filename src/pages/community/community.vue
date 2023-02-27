@@ -1,6 +1,6 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <block>
+    <view>
       <view
         style="
           margin-left: 165rpx;
@@ -10,15 +10,11 @@
         "
         >喵社区</view
       >
-    </block>
+    </view>
   </uni-nav-bar>
   <view class="school-box">
     <view class="school-select-box">
-      <image
-        class="arrow"
-        src="/static/images/location.png"
-        @click="onClickSwitch"
-      />
+      <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
       <view class="names" @click="onClickSwitch">
         <view class="school-name">
           {{ currentSchool }}
@@ -55,29 +51,29 @@
     </view>
     <masonry v-if="!isRefreshing" search="default" />
   </view>
+  <view class="empty-bottom"></view>
   <tab-bar id="2"></tab-bar>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import Masonry from "@/pages/community/masonry";
-import CarouselFrame from "@/pages/community/carousel-frame";
+import { Icons } from "@/utils/url";
+import Masonry from "@/pages/community/masonry.vue";
+import CarouselFrame from "@/pages/community/carousel-frame.vue";
 import { onPullDownRefresh, onReachBottom, onShow } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import { Community } from "@/apis/schemas";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
+import { StorageKeys } from "@/utils/const";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
 function init() {
-  if (!uni.getStorageSync("communityId")) {
-    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
-  }
-  communityId.value = uni.getStorageSync("communityId");
+  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 
 const lists = reactive<{
@@ -230,7 +226,6 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 .names {
   display: flex;
   align-items: baseline;
-  font-size: calc(18 / 390 * 100vw);
 
   .school-name {
     font-weight: bold;
@@ -238,11 +233,14 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
     line-height: calc(18 / 390 * 100vw);
     margin-left: calc(8 / 390 * 100vw);
     padding-bottom: calc(4 / 390 * 100vw);
+    font-size: calc(18 / 390 * 100vw);
   }
 
   .campus-name {
-    color: #7f7f81;
+    color: #939393;
     font-weight: bold;
+    letter-spacing: calc(0.5 / 390 * 100vw);
+    font-size: calc(16 / 390 * 100vw);
     margin-left: calc(8 / 390 * 100vw);
   }
 }
@@ -252,10 +250,10 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
   display: flex;
   align-items: center;
   border: solid #1fa1ff calc(1 / 390 * 100vw);
-  padding: 0 calc(8 / 390 * 100vw);
+  padding: 0 calc(12 / 390 * 100vw) 0 calc(12 / 390 * 100vw);
   height: calc(22 / 390 * 100vw);
-  border-radius: calc(11 / 390 * 100vw);
-  margin-right: calc(12 / 390 * 100vw);
+  border-radius: 50rpx;
+  margin-right: calc(10 / 390 * 100vw);
 
   .switch-icon {
     width: calc(12 / 390 * 100vw);
@@ -346,5 +344,9 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
       }
     }
   }
+}
+
+.empty-bottom {
+  height: 130rpx;
 }
 </style>

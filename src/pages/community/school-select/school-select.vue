@@ -17,11 +17,7 @@
         type="text"
         value=""
       />
-      <image
-        style="width: 40rpx"
-        mode="widthFix"
-        src="/static/images/search.png"
-      />
+      <image style="width: 40rpx" mode="widthFix" :src="Icons.Search" />
     </view>
     <view class="search-bar">
       <view class="small"> 当前选择</view>
@@ -32,12 +28,12 @@
       </view>
       <view v-if="sel" class="select" @click="change">
         <text>{{ currentCampus }}</text>
-        <image class="arrow" src="/static/images/down-black.png" />
+        <image class="arrow" :src="Icons.DownBlack" />
       </view>
       <view v-else class="box">
         <view class="select2" @click="change">
           <text>{{ currentCampus }}</text>
-          <image class="arrow" src="/static/images/up-black.png" />
+          <image class="arrow" :src="Icons.UpBlack" />
         </view>
         <view class="option" @click="change">
           <text
@@ -65,13 +61,12 @@
     <view class="big">
       <view>
         <view
-          v-for="(item, index) in schoolLists.name"
+          v-for="(item, index) in schools.data"
           :key="index"
-          :src="item"
           class="bubble"
-          @click="changeSchool(item)"
+          @click="changeSchool(item.name, index)"
         >
-          {{ item }}
+          {{ item.name }}
         </view>
       </view>
     </view>
@@ -80,21 +75,14 @@
   <view class="blank" />
 
   <view class="content2">
+    <view class="small"> 所有学校</view>
     <view
-      v-for="(item, index) in schoolLists.alpha"
-      :key="index"
-      class="school-bar"
-      :src="item"
+      v-for="(item1, index1) in schools.data"
+      :key="index1"
+      class="school"
+      @click="changeSchool(item1.name, index1)"
     >
-      <view class="small"> {{ item }}</view>
-      <view
-        v-for="(item1, index1) in schoolLists.name"
-        :key="index1"
-        class="school"
-        @click="changeSchool(item1)"
-      >
-        {{ item1 }}
-      </view>
+      {{ item1.name }}
     </view>
   </view>
 </template>
@@ -103,6 +91,9 @@
 import { reactive, ref } from "vue";
 import { Community } from "@/apis/schemas";
 import { listCommunity } from "@/apis/community/community";
+import { onLoad } from "@dcloudio/uni-app";
+import { StorageKeys } from "@/utils/const";
+import { Icons } from "@/utils/url";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
@@ -110,10 +101,7 @@ let communityId = ref("");
 let parentId = ref("");
 
 function init() {
-  if (!uni.getStorageSync("communityId")) {
-    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
-  }
-  communityId.value = uni.getStorageSync("communityId");
+  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 
 const lists = reactive<{
@@ -128,6 +116,12 @@ const campuses = reactive<{
   data: []
 });
 
+const schools = reactive<{
+  data: Community[];
+}>({
+  data: []
+});
+
 async function schoolList() {
   lists.data = (
     await listCommunity({
@@ -135,37 +129,56 @@ async function schoolList() {
     })
   ).communities;
 }
-async function getCampus() {
+async function getSchools() {
   schoolList().then(async () => {
-    init();
+    let j = 0;
     for (let i = 0; i < lists.data.length; i++) {
-      if (lists.data[i].id === communityId.value) {
-        currentCampus.value = lists.data[i].name;
-        parentId.value = <string>lists.data[i].parentId;
+      if (!lists.data[i].parentId) {
+        schools.data[j] = lists.data[i];
+        j++;
       }
     }
-    for (let j = 0; j < lists.data.length; j++) {
-      if (lists.data[j].id === parentId.value) {
-        currentSchool.value = lists.data[j].name;
-      }
-    }
+  });
+}
+getSchools();
+async function getCampus() {
+  if (parentId.value) {
     campuses.data = (
       await listCommunity({
         parentId: parentId.value
       })
     ).communities;
-    console.log(campuses.data);
-  });
+  } else {
+    schoolList().then(async () => {
+      init();
+      for (let i = 0; i < lists.data.length; i++) {
+        if (lists.data[i].id === communityId.value) {
+          currentCampus.value = lists.data[i].name;
+          parentId.value = <string>lists.data[i].parentId;
+        }
+      }
+      for (let j = 0; j < lists.data.length; j++) {
+        if (lists.data[j].id === parentId.value) {
+          currentSchool.value = lists.data[j].name;
+        }
+      }
+      campuses.data = (
+        await listCommunity({
+          parentId: parentId.value
+        })
+      ).communities;
+    });
+  }
 }
 getCampus();
 
-const schoolLists = reactive({
-  alpha: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"],
-  name: ["华东师范大学", "上海交通大学", "复旦大学", "上海大学"],
-  campuses: ["中山北路校区", "闵行校区"],
-  index: 0
+let history = reactive<string[]>([]);
+onLoad(() => {
+  let historyCampuses = uni.getStorageSync(StorageKeys.HistoryCampuses);
+  if (history.length === 0 && historyCampuses) {
+    uni.setStorageSync(StorageKeys.HistoryCampuses, currentCampus.value);
+  }
 });
-
 const sel = ref(true);
 
 // 更改下拉选框状态
@@ -175,12 +188,14 @@ function change() {
 // 选择学校
 function changeCampus(name: string, index: number) {
   currentCampus.value = name;
-  uni.setStorageSync("communityId", campuses.data[index].id);
-  console.log(communityId.value);
+  uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
 }
 // 选择校区
-function changeSchool(name: string) {
+function changeSchool(name: string, index: number) {
   currentSchool.value = name;
+  parentId.value = schools.data[index].id;
+  currentCampus.value = "";
+  getCampus();
 }
 </script>
 

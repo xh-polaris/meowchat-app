@@ -1,5 +1,44 @@
 
 
+## [1.6.3](https://github.com/xh-polaris/meowchat-app/compare/v1.6.2...v1.6.3) (2023-02-27)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 确保启动时绑定了一个有效的校区 ([26ed7bd](https://github.com/xh-polaris/meowchat-app/commit/26ed7bd140f1f12652e1eae1c43fe423df633abe))
+
+## [1.6.2](https://github.com/xh-polaris/meowchat-app/compare/v1.6.1...v1.6.2) (2023-02-26)
+
+
+### ✨ Features | 新功能
+
+* 学校/校区选择同步到社区和图鉴界面 ([#186](https://github.com/xh-polaris/meowchat-app/issues/186)) ([4bee751](https://github.com/xh-polaris/meowchat-app/commit/4bee751f6af71be7ee3694f43a5be9eb6d2bd38d))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决喵世界喵社区最底部被tab遮挡问题 ([#187](https://github.com/xh-polaris/meowchat-app/issues/187)) ([2f831d9](https://github.com/xh-polaris/meowchat-app/commit/2f831d9281aeb3c8241c86c6408c07002104820e))
+
+## [1.6.1](https://github.com/xh-polaris/meowchat-app/compare/v1.6.0...v1.6.1) (2023-02-22)
+
+
+### ✨ Features | 新功能
+
+* 实现轮播图的点击跳转 ([57e3896](https://github.com/xh-polaris/meowchat-app/commit/57e389646d06619cd696b5ff6b048ea15328a8bf))
+
+## [1.6.0](https://github.com/xh-polaris/meowchat-app/compare/v1.5.1...v1.6.0) (2023-02-21)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复ios端上传图片不显示问题 ([#185](https://github.com/xh-polaris/meowchat-app/issues/185)) ([52fc3f0](https://github.com/xh-polaris/meowchat-app/commit/52fc3f0dcc7bd5ad60a862f56447e0dff56f17df))
+
+
+### ✨ Features | 新功能
+
+* 添加发布动态时的选择猫咪 ([#183](https://github.com/xh-polaris/meowchat-app/issues/183)) ([dc76373](https://github.com/xh-polaris/meowchat-app/commit/dc76373bb55fea51f9a81b462a7a94cf9c7dee51))
+* 我的发布页面 ([#184](https://github.com/xh-polaris/meowchat-app/issues/184)) ([3f7b2ee](https://github.com/xh-polaris/meowchat-app/commit/3f7b2ee5d301f60a8da095a4f87b78cfa97d5bcd)), closes [#144](https://github.com/xh-polaris/meowchat-app/issues/144) [#145](https://github.com/xh-polaris/meowchat-app/issues/145) [#146](https://github.com/xh-polaris/meowchat-app/issues/146)
+
 ## [1.5.1](https://github.com/xh-polaris/meowchat-app/compare/v1.5.0...v1.5.1) (2023-02-18)
 
 

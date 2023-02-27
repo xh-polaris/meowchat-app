@@ -102,7 +102,7 @@ import {
   LikeStruct,
   localDoLike
 } from "../moment/utils";
-import Reply from "@/pages/moment/reply";
+import Reply from "@/pages/moment/reply.vue";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
 import { Comment, Post, TargetType } from "@/apis/schemas";
 import { deletePost, getPostDetail } from "@/apis/post/post";

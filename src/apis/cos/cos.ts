@@ -2,7 +2,11 @@ import { applySignedUrl } from "../sts/sts";
 import { PutObjectReq, PutObjectResp } from "@/apis/cos/cos-interface";
 import * as mime from "mime";
 
-const cdn = "static.xhpolaris.com";
+export const enum Prefixes {
+  Avatar = "avatar",
+  Moment = "moment",
+  Post = "post"
+}
 
 /**
  * @description 使用PUT方法上传文件至COS
@@ -33,12 +37,7 @@ export async function putObject(req: PutObjectReq) {
               reject(res);
             }
             // 去除url内的param
-            let url = resp.url.substring(0, resp.url.lastIndexOf("?"));
-            // 将url的host替换为CDN域名
-            url = url.replace(
-              /(https:\/\/|http:\/\/)(.*?)(\/.*)/,
-              `$1${cdn}$3`
-            );
+            const url = resp.url.substring(0, resp.url.lastIndexOf("?"));
             resolve({ url: url });
           },
           fail: function (res) {
