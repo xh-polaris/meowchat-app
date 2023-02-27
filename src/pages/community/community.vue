@@ -19,7 +19,10 @@
         <view class="school-name">
           {{ currentSchool }}
         </view>
-        <view class="campus-name"> ({{ currentCampus }})</view>
+        <view v-if="currentSchool !== currentCampus" class="campus-name">
+          ({{ currentCampus }})</view
+        >
+        <view v-else class="campus-name"></view>
       </view>
       <view class="switch-box">
         <view class="switch-icon" />
@@ -60,7 +63,12 @@ import { reactive, ref } from "vue";
 import { Icons } from "@/utils/url";
 import Masonry from "@/pages/community/masonry.vue";
 import CarouselFrame from "@/pages/community/carousel-frame.vue";
-import { onPullDownRefresh, onReachBottom, onShow } from "@dcloudio/uni-app";
+import {
+  onLoad,
+  onPullDownRefresh,
+  onReachBottom,
+  onShow
+} from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
@@ -72,6 +80,16 @@ const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
+let history = reactive({
+  campusName: "",
+  schoolName: "",
+  communityId: "",
+  schoolId: ""
+});
+let historyJSON = reactive({
+  histories: reactive<Array<any>>([])
+});
+
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
@@ -90,7 +108,7 @@ async function schoolList() {
   ).communities;
 }
 
-function getCampus() {
+async function getCampus() {
   schoolList().then(() => {
     init();
     for (let i = 0; i < lists.data.length; i++) {
@@ -104,13 +122,45 @@ function getCampus() {
         currentSchool.value = lists.data[j].name;
       }
     }
-    uni.setStorageSync("historyCampusName", currentCampus.value);
-    uni.setStorageSync("historySchoolName", currentSchool.value);
-    uni.setStorageSync("historyCommunityId", communityId.value);
-    uni.setStorageSync("historySchoolId", parentId.value);
+    history.campusName = currentCampus.value;
+    history.schoolName = currentSchool.value;
+    history.communityId = communityId.value;
+    history.schoolId = parentId.value;
   });
 }
 getCampus();
+
+function getHistories() {
+  if (uni.getStorageSync(StorageKeys.HistoryCampuses)) {
+    historyJSON = JSON.parse(
+      decodeURIComponent(uni.getStorageSync(StorageKeys.HistoryCampuses))
+    );
+  }
+  if (checkRepeat(history.communityId)) {
+    if (historyJSON.histories.length === 3) {
+      historyJSON.histories.pop();
+      historyJSON.histories.unshift(history);
+    } else {
+      historyJSON.histories.unshift(history);
+    }
+  }
+  uni.setStorageSync(
+    StorageKeys.HistoryCampuses,
+    encodeURIComponent(JSON.stringify(historyJSON))
+  );
+}
+function checkRepeat(id: string) {
+  let flag = true;
+  for (let i = 0; i < historyJSON.histories.length; i++) {
+    if (id === historyJSON.histories[i].communityId) {
+      flag = false;
+    }
+  }
+  if (id === "") {
+    flag = false;
+  }
+  return flag;
+}
 
 const types = reactive([
   {
@@ -171,7 +221,12 @@ onPullDownRefresh(() => {
 
 onShow(() => {
   getCampus();
+  getHistories();
   pageRefresh();
+});
+onLoad(() => {
+  getCampus();
+  getHistories();
 });
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function

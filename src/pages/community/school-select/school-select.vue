@@ -49,22 +49,24 @@
     <view class="search-bar">
       <view class="small"> 定位/历史记录</view>
     </view>
-    <view class="big">
-      <view>
-        <view
-          class="bubble"
-          @click="
-            changeCampusByHistory(
-              history.campusName,
-              history.schoolName,
-              history.id,
-              history.parentId
-            )
-          "
-        >
-          {{ history.schoolName }} ({{ history.campusName }})</view
-        >
-      </view>
+    <view
+      v-for="(item, index) in historyJSON.histories"
+      :key="index"
+      class="big"
+    >
+      <view
+        class="bubble"
+        @click="
+          changeCampusByHistory(
+            item.campusName,
+            item.schoolName,
+            item.communityId,
+            item.schoolId
+          )
+        "
+      >
+        {{ item.schoolName }} ({{ item.campusName }})</view
+      >
     </view>
     <view class="search-bar">
       <view class="small"> 热门学校</view>
@@ -110,11 +112,9 @@ const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
-const history = reactive({
-  schoolName: "",
-  campusName: "",
-  id: "",
-  parentId: ""
+
+let historyJSON = reactive({
+  histories: reactive<Array<any>>([])
 });
 
 function init() {
@@ -123,12 +123,15 @@ function init() {
     uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
   }
   communityId.value = uni.getStorageSync("communityId");
-  // history.communityName = uni.getStorageSync("historyCommunityName");
-  history.id = uni.getStorageSync("historyCommunityId");
-  history.campusName = uni.getStorageSync("historyCampusName");
-  history.schoolName = uni.getStorageSync("historySchoolName");
-  history.parentId = uni.getStorageSync("historySchoolId");
 }
+function getHistories() {
+  historyJSON = JSON.parse(
+    decodeURIComponent(uni.getStorageSync(StorageKeys.HistoryCampuses))
+  );
+}
+onLoad(() => {
+  getHistories();
+});
 
 const lists = reactive<{
   data: Community[];
@@ -201,13 +204,6 @@ async function getCampus() {
 }
 getCampus();
 
-let history = reactive<string[]>([]);
-onLoad(() => {
-  let historyCampuses = uni.getStorageSync(StorageKeys.HistoryCampuses);
-  if (history.length === 0 && historyCampuses) {
-    uni.setStorageSync(StorageKeys.HistoryCampuses, currentCampus.value);
-  }
-});
 const sel = ref(true);
 
 // 更改下拉选框状态
