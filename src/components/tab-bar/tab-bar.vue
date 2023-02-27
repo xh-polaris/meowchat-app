@@ -19,44 +19,45 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { Pages } from "@/utils/url";
 
 const props = defineProps<{ id: string }>();
 const selectedId = ref(props.id);
-const momentUrl = "/pages/draft/draft-nav?type=moment";
+const momentUrl = `${Pages.DraftNav}?type=moment`;
 const tabContent = [
   {
     id: "1",
     icon: "/static/images/world-grey.png",
     activeIcon: "/static/images/world-blue.png",
-    url: "/pages/world/world",
+    url: Pages.World,
     text: "世界"
   },
   {
     id: "2",
     icon: "/static/images/community-grey.png",
     activeIcon: "/static/images/community-blue.png",
-    url: "/pages/community/community",
+    url: Pages.Community,
     text: "社区"
   },
   {
     id: "0",
     icon: "/static/images/plus-bg-blue.png",
     activeIcon: "/static/images/plus-bg-blue.png",
-    url: "/pages/draft/draft-nav?type=post",
+    url: `${Pages.DraftNav}?type=post`,
     text: ""
   },
   {
     id: "3",
     icon: "/static/images/collection-grey.png",
     activeIcon: "/static/images/collection-blue.png",
-    url: "/pages/collection/collection",
+    url: Pages.Collection,
     text: "图鉴"
   },
   {
     id: "4",
     icon: "/static/images/mine-grey.png",
     activeIcon: "/static/images/mine-blue.png",
-    url: "/pages/profile/profile",
+    url: Pages.Profile,
     text: "我的"
   }
 ];

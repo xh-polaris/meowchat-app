@@ -1,20 +1,21 @@
 import { CatPreview } from "@/apis/schemas";
+import { Pages } from "@/utils/url";
 
 export function onClickCatBox(id: string) {
   uni.navigateTo({
-    url: `/pages/cat/cat?id=${id}`
+    url: `${Pages.Cat}?id=${id}`
   });
 }
 
 export function onClickSearch() {
   uni.navigateTo({
-    url: "/pages/search/search"
+    url: Pages.Search
   });
 }
 
 export function onClickCancel() {
   uni.navigateTo({
-    url: "/pages/collection/collection"
+    url: Pages.Collection
   });
 }
 
@@ -24,6 +25,6 @@ export function onClickCollect(cat: CatPreview) {
 
 export function onClickSwitch() {
   uni.navigateTo({
-    url: "/pages/community/school_select"
+    url: Pages.SchoolSelect
   });
 }

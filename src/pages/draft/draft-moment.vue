@@ -98,6 +98,8 @@ import { onShow, onUnload } from "@dcloudio/uni-app";
 
 import { newMoment } from "@/apis/moment/moment";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
+import { Pages } from "@/utils/url";
+import { StorageKeys } from "@/utils/const";
 
 const imagesData = reactive<any>([]);
 
@@ -125,7 +127,7 @@ onUnload(() => {
 
 function chooseCats() {
   uni.navigateTo({
-    url: `/pages/draft/choose`
+    url: Pages.ChooseCat
   });
 }
 
@@ -190,16 +192,16 @@ function publishMoment() {
   }
   newMoment({
     title: title.value,
-    communityId: uni.getStorageSync("communityId"),
+    communityId: uni.getStorageSync(StorageKeys.CommunityId),
     text: text.value,
     photos: photos,
     catId: catId.value
   }).then(() => {
     uni.switchTab({
-      url: "../community/community",
+      url: Pages.Community,
       success() {
         uni.reLaunch({
-          url: "/pages/community/community"
+          url: Pages.Community
         });
       }
     });

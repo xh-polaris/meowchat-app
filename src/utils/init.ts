@@ -9,6 +9,9 @@ const DefaultUserAvatarUrl = "https://static.xhpolaris.com/cat_world.jpg";
 function afterSignIn(signInResp: SignInResp) {
   uni.setStorageSync(StorageKeys.AccessToken, signInResp.accessToken);
   uni.setStorageSync(StorageKeys.UserId, signInResp.userId);
+  if (!uni.getStorageSync(StorageKeys.CommunityId)) {
+    setDefaultCommunityId();
+  }
   getUserInfo().catch((res: UniNamespace.RequestSuccessCallbackResult) => {
     if (res.statusCode === 400) {
       const id = signInResp.userId;
@@ -36,10 +39,6 @@ function setDefaultCommunityId() {
 }
 export async function init() {
   return await new Promise<void>((resolve, reject) => {
-    if (!uni.getStorageSync(StorageKeys.CommunityId)) {
-      setDefaultCommunityId();
-    }
-
     uni.getProvider({
       service: "oauth",
       success(getProviderRes: UniNamespace.GetProviderRes) {

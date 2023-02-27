@@ -17,11 +17,7 @@
         type="text"
         value=""
       />
-      <image
-        style="width: 40rpx"
-        mode="widthFix"
-        src="/static/images/search.png"
-      />
+      <image style="width: 40rpx" mode="widthFix" :src="Icons.Search" />
     </view>
     <view class="search-bar">
       <view class="small"> 当前选择</view>
@@ -32,12 +28,12 @@
       </view>
       <view v-if="sel" class="select" @click="change">
         <text>{{ currentCampus }}</text>
-        <image class="arrow" src="/static/images/down-black.png" />
+        <image class="arrow" :src="Icons.DownBlack" />
       </view>
       <view v-else class="box">
         <view class="select2" @click="change">
           <text>{{ currentCampus }}</text>
-          <image class="arrow" src="/static/images/up-black.png" />
+          <image class="arrow" :src="Icons.UpBlack" />
         </view>
         <view class="option" @click="change">
           <text
@@ -95,7 +91,9 @@
 import { reactive, ref } from "vue";
 import { Community } from "@/apis/schemas";
 import { listCommunity } from "@/apis/community/community";
-import { onBackPress, onLoad } from "@dcloudio/uni-app";
+import { onLoad } from "@dcloudio/uni-app";
+import { StorageKeys } from "@/utils/const";
+import { Icons } from "@/utils/url";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
@@ -103,10 +101,7 @@ let communityId = ref("");
 let parentId = ref("");
 
 function init() {
-  if (!uni.getStorageSync("communityId")) {
-    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
-  }
-  communityId.value = uni.getStorageSync("communityId");
+  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 
 const lists = reactive<{
@@ -179,9 +174,9 @@ getCampus();
 
 let history = reactive<string[]>([]);
 onLoad(() => {
-  let historyCampuses = uni.getStorageSync("historyCampuses");
+  let historyCampuses = uni.getStorageSync(StorageKeys.HistoryCampuses);
   if (history.length === 0 && historyCampuses) {
-    uni.setStorageSync("historyCampus", currentCampus.value);
+    uni.setStorageSync(StorageKeys.HistoryCampuses, currentCampus.value);
   }
 });
 const sel = ref(true);
@@ -193,7 +188,7 @@ function change() {
 // 选择学校
 function changeCampus(name: string, index: number) {
   currentCampus.value = name;
-  uni.setStorageSync("communityId", campuses.data[index].id);
+  uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
 }
 // 选择校区
 function changeSchool(name: string, index: number) {

@@ -1,5 +1,6 @@
 export const enum StorageKeys {
   CommunityId = "communityId",
   UserId = "userId",
-  AccessToken = "accessToken"
+  AccessToken = "accessToken",
+  HistoryCampuses = "historyCampuses"
 }

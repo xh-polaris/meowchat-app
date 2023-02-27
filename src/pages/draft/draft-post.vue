@@ -95,6 +95,8 @@ import { putObject } from "@/apis/cos/cos";
 
 import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
+import { Pages } from "@/utils/url";
+import { Tag } from "@/apis/schemas";
 
 const imagesData = reactive<
   {
@@ -110,7 +112,7 @@ const text = ref("");
 const coverUrl = ref("");
 const disablePublish = ref(false);
 
-let tags = reactive([]);
+let tags = reactive<Tag[]>([]);
 
 watch(tags, (newValue) => {
   if (newValue.length > 3) {
@@ -185,10 +187,10 @@ function publishPost() {
     isAnonymous: isAnonymous.value
   }).then(() => {
     uni.switchTab({
-      url: "../world/world",
+      url: Pages.World,
       success() {
         uni.reLaunch({
-          url: "/pages/world/world"
+          url: Pages.World
         });
       }
     });

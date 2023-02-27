@@ -15,12 +15,12 @@ export function onClickCarousel(c: News) {
 
 export function onClickMoment(id: string) {
   uni.navigateTo({
-    url: `/pages/moment/moment?id=${id}`
+    url: `${Pages.Moment}?id=${id}`
   });
 }
 
 export function onClickSwitch() {
   uni.navigateTo({
-    url: "/pages/community/school-select"
+    url: Pages.SchoolSelect
   });
 }

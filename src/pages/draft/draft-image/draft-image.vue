@@ -158,7 +158,7 @@ body {
 .new-image {
   background-color: #fafafa;
   border: #d1d1d1 solid calc(1 / 390 * 100vw);
-  background-image: url("../../static/images/plus-lightgrey.png");
+  background-image: url("../../../static/images/plus-lightgrey.png");
   background-size: 24% 24%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -166,7 +166,7 @@ body {
 .cat-thumbnail {
   background-color: #fafafa;
   border: #d1d1d1 solid calc(1 / 390 * 100vw);
-  background-image: url("../../static/images/plus-lightgrey.png");
+  background-image: url("../../../static/images/plus-lightgrey.png");
   background-size: 24% 24%;
   background-repeat: no-repeat;
   background-position: center center;

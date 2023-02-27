@@ -1,6 +1,6 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <block>
+    <view>
       <view
         style="
           margin-left: 181rpx;
@@ -10,7 +10,7 @@
         "
         >图鉴</view
       >
-    </block>
+    </view>
   </uni-nav-bar>
   <view class="content">
     <!-- 搜索框 -->
@@ -38,7 +38,7 @@
     <!-- 校区选择框   -->
     <view class="school-box">
       <view class="school-select-box">
-        <image class="arrow" src="../../static/images/location.png" />
+        <image class="arrow" :src="Icons.Location" />
         <view class="school-name">
           {{ currentSchool }}
         </view>
@@ -69,16 +69,17 @@
       </view>
     </view>
     <view v-else>
-      <image src="https://static.xhpolaris.com/nodata.png" />
+      <image :src="Pictures.NoData" />
     </view>
   </view>
   <tab-bar id="3"></tab-bar>
 </template>
 
 <script lang="ts" setup>
+import { Pictures, Icons, Pages } from "@/utils/url";
 import CatBox from "@/pages/collection/cat-box.vue";
 import { reactive, ref } from "vue";
-import { DefaultCommunityId, StorageKeys } from "@/utils/const";
+import { StorageKeys } from "@/utils/const";
 import { onClickCatBox } from "@/pages/collection/utils";
 import {
   getCatPreviews,
@@ -177,13 +178,13 @@ onPullDownRefresh(() => {
 });
 
 function setBranch(e: string, index: number) {
-  uni.setStorageSync("communityId", campuses.data[index].id);
+  uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
   currentCampus.value = e;
 }
 
 function onClickSwitch() {
   uni.navigateTo({
-    url: "/pages/community/school-select"
+    url: Pages.SchoolSelect
   });
 }
 

@@ -40,15 +40,10 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  // eslint-disable-next-line no-unused-vars
   (e: "updateText", newText: string): void;
-  // eslint-disable-next-line no-unused-vars
   (e: "update:placeholderText", newText: string): void;
-  // eslint-disable-next-line no-unused-vars
   (e: "doLike"): void;
-  // eslint-disable-next-line no-unused-vars
   (e: "afterCreateComment"): void;
-  // eslint-disable-next-line no-unused-vars
   (e: "afterBlur"): void;
 }>();
 

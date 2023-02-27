@@ -14,11 +14,7 @@
   </uni-nav-bar>
   <view class="school-box">
     <view class="school-select-box">
-      <image
-        class="arrow"
-        src="/static/images/location.png"
-        @click="onClickSwitch"
-      />
+      <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
       <view class="names" @click="onClickSwitch">
         <view class="school-name">
           {{ currentSchool }}
@@ -61,6 +57,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
+import { Icons } from "@/utils/url";
 import Masonry from "@/pages/community/masonry.vue";
 import CarouselFrame from "@/pages/community/carousel-frame.vue";
 import { onPullDownRefresh, onReachBottom, onShow } from "@dcloudio/uni-app";

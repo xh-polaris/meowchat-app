@@ -48,14 +48,14 @@
       <image
         style="width: 60rpx"
         mode="widthFix"
-        src="/static/images/search.png"
+        :src="Icons.Search"
         @click="onClickSearch"
       />
     </view>
     <!-- 校区选择框   -->
     <view class="school-box">
       <view class="school-select-box">
-        <image class="arrow" src="../../static/images/location.png" />
+        <image class="arrow" :src="Icons.Location" />
         <view class="school-name">
           {{ currentSchool }}
         </view>
@@ -127,12 +127,13 @@
       </view>
     </view>
     <view v-else>
-      <image src="https://static.xhpolaris.com/nodata.png" />
+      <image :src="Pictures.NoData" />
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
+import { Pictures, Icons, Pages } from "@/utils/url";
 import { reactive, ref, getCurrentInstance } from "vue";
 import { onClickCatBox, onClickCollect } from "@/pages/collection/utils";
 import {
@@ -162,7 +163,7 @@ const catImage = ref("");
 const catName = ref("猫猫");
 const catId = ref("");
 
-function choose(avatarUrl, name, id) {
+function choose(avatarUrl: string, name: string, id: string) {
   catImage.value = avatarUrl;
   catName.value = name;
   catId.value = id;
@@ -227,10 +228,10 @@ getCampus();
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
   page: 0,
-  communityId: "637ce159b15d9764c31f9c84"
+  communityId: uni.getStorageSync(StorageKeys.CommunityId)
 });
 let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
-  communityId: "637ce159b15d9764c31f9c84",
+  communityId: uni.getStorageSync(StorageKeys.CommunityId),
   page: 0,
   keyword: ""
 });
@@ -263,7 +264,7 @@ function setBranch(e: string) {
 
 function onClickSwitch() {
   uni.navigateTo({
-    url: "/pages/community/school-select"
+    url: Pages.ChooseCat
   });
 }
 

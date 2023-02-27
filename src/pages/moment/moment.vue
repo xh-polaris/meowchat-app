@@ -119,6 +119,7 @@ import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply.vue";
 import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
 import CommentBox from "@/pages/moment/comment-box.vue";
+import { Pages } from "@/utils/url";
 
 const props = defineProps<{
   id: string;
@@ -262,7 +263,7 @@ const deleteThisMoment = () => {
   }).then(
     () => {
       uni.reLaunch({
-        url: "/pages/community/community"
+        url: Pages.Community
       });
     },
     (reason) => {

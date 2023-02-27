@@ -1,9 +1,6 @@
 <template>
   <view class="container">
-    <image
-      class="bg-set"
-      src="https://static.xhpolaris.com/profile_background.png"
-    />
+    <image class="bg-set" :src="Pictures.ProfileBackground" />
     <view class="choose-avatar-row">
       <button
         class="avatar-wrapper"
@@ -45,9 +42,10 @@
 <script lang="ts" setup>
 import { updateUserInfo } from "@/apis/user/user";
 import { UpdateUserInfoReq } from "@/apis/user/user-interfaces";
-import { putObject } from "@/apis/cos/cos";
+import { Prefixes, putObject } from "@/apis/cos/cos";
 import { reactive, ref } from "vue";
 import { onShow } from "@dcloudio/uni-app";
+import { Pages, Pictures } from "@/utils/url";
 
 const props = defineProps<{
   avatarUrl: string;
@@ -68,7 +66,8 @@ function setSchool() {
 const userInfo = reactive<UpdateUserInfoReq>({});
 function onChooseAvatar(e: any) {
   putObject({
-    filePath: e.detail.avatarUrl
+    filePath: e.detail.avatarUrl,
+    prefix: Prefixes.Avatar
   }).then((res) => {
     userInfo.avatarUrl = res.url;
   });
@@ -90,7 +89,7 @@ function onClickConfirm() {
   });
   setSchool();
   uni.reLaunch({
-    url: "/pages/profile/profile"
+    url: Pages.Profile
   });
 }
 onShow(() => {
