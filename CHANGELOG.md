@@ -1,5 +1,12 @@
 
 
+## [1.6.3](https://github.com/xh-polaris/meowchat-app/compare/v1.6.2...v1.6.3) (2023-02-27)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 确保启动时绑定了一个有效的校区 ([26ed7bd](https://github.com/xh-polaris/meowchat-app/commit/26ed7bd140f1f12652e1eae1c43fe423df633abe))
+
 ## [1.6.2](https://github.com/xh-polaris/meowchat-app/compare/v1.6.1...v1.6.2) (2023-02-26)
 
 
