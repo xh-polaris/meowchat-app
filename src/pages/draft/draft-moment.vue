@@ -93,7 +93,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { putObject } from "@/apis/cos/cos";
+import { Prefixes, putObject } from "@/apis/cos/cos";
 import { onShow, onUnload } from "@dcloudio/uni-app";
 
 import { newMoment } from "@/apis/moment/moment";
@@ -148,7 +148,8 @@ function addImage() {
         });
         console.log(imagesData);
         putObject({
-          filePath: item.tempFilePath
+          filePath: item.tempFilePath,
+          prefix: Prefixes.Moment
         }).then(function (url) {
           //将返回的url添加进photos
           photos.push(url.url);

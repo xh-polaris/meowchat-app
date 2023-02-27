@@ -91,7 +91,7 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from "vue";
 import { newPost } from "@/apis/post/post";
-import { putObject } from "@/apis/cos/cos";
+import { Prefixes, putObject } from "@/apis/cos/cos";
 
 import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
@@ -144,7 +144,8 @@ function addImage() {
           url: path
         });
         putObject({
-          filePath: path
+          filePath: path,
+          prefix: Prefixes.Post
         }).then(function (res) {
           coverUrl.value = res.url;
           disablePublish.value = false;
