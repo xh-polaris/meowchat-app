@@ -35,9 +35,6 @@
               <view class="nickname">
                 {{ userInfo.nickname }}
               </view>
-              <view class="unit">
-                <text>{{ school }}</text>
-              </view>
             </view>
           </view>
         </navigator>
