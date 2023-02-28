@@ -25,7 +25,7 @@
           :is-counter="true"
           color="black"
           height="350rpx"
-          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          placeholder="说点什么吧！内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
           text="默认按钮"
         >
         </fui-button>
@@ -275,8 +275,6 @@ input {
 textarea {
   box-sizing: border-box;
   margin-bottom: calc(10 / 390 * 100vw);
-  word-wrap: break-word;
-  white-space: pre-line;
 }
 
 textarea ::selection {
