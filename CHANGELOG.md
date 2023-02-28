@@ -1,5 +1,24 @@
 
 
+## [1.6.5](https://github.com/xh-polaris/meowchat-app/compare/v1.6.4...v1.6.5) (2023-02-28)
+
+
+### ✨ Features | 新功能
+
+* 完善选择历史与社区界面校区显示 ([#193](https://github.com/xh-polaris/meowchat-app/issues/193)) ([6b7665b](https://github.com/xh-polaris/meowchat-app/commit/6b7665b3001f86936ea200f93972f2e364790d6b))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决喵世界瀑布流动态不全问题 ([#194](https://github.com/xh-polaris/meowchat-app/issues/194)) ([db1cfca](https://github.com/xh-polaris/meowchat-app/commit/db1cfca12108054b5e00eec26a3a3a2b8d041c3c))
+
+## [1.6.4](https://github.com/xh-polaris/meowchat-app/compare/v1.6.3...v1.6.4) (2023-02-28)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复选择校区无法点击的bug ([52c912f](https://github.com/xh-polaris/meowchat-app/commit/52c912f4a52f47ce81a7b696c9a298ad6e67cb84))
+
 ## [1.6.3](https://github.com/xh-polaris/meowchat-app/compare/v1.6.2...v1.6.3) (2023-02-27)
 
 

@@ -18,6 +18,6 @@ export const enum Pages {
   DraftNav = "/pages/draft/draft-nav/draft-nav",
   Collection = "/pages/collection/collection",
   Moment = "/pages/moment/moment",
-  SchoolSelect = "/pages/community/school-select",
+  SchoolSelect = "/pages/community/school-select/school-select",
   Search = "/pages/search/search"
 }
