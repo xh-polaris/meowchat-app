@@ -25,7 +25,7 @@
           :is-counter="true"
           color="black"
           height="350rpx"
-          placeholder="说点什么吧！&#10;内容编辑完成后，将通过2-3小时的审核时间，审核通过后即发布成功，请耐心等待"
+          placeholder="说点什么吧！&#10;内容编辑完成后，将经过审核，审核通过后即发布成功，请耐心等待"
           text="默认按钮"
         >
         </fui-button>
@@ -75,17 +75,19 @@
       </button>
       <view class="notice">
         发布前请先阅读
-        <navigator class="nobody-will-read" url="">
+        <view class="nobody-will-read" @click="showDeal">
           《用户服务协议》
-        </navigator>
+        </view>
         及
-        <navigator class="nobody-will-read" url="">
+        <view class="nobody-will-read" @click="showPolicy">
           《个人信息保护政策》
-        </navigator>
+        </view>
         ，一旦发布即被视为同意上述协议和政策
       </view>
     </view>
   </view>
+  <deal v-if="isShow && type === 1"></deal>
+  <policy v-if="isShow && type === 2"></policy>
 </template>
 
 <script lang="ts" setup>
@@ -97,6 +99,8 @@ import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 import { Pages } from "@/utils/url";
 import { Tag } from "@/apis/schemas";
+import Deal from "@/components/deal-policy/deal.vue";
+import Policy from "@/components/deal-policy/policy.vue";
 
 const imagesData = reactive<
   {
@@ -196,6 +200,18 @@ function publishPost() {
       }
     });
   });
+}
+
+// 控制协议和政策区域
+const isShow = ref(false);
+const type = ref(0);
+function showDeal() {
+  type.value = 1;
+  isShow.value = !isShow.value;
+}
+function showPolicy() {
+  type.value = 2;
+  isShow.value = !isShow.value;
 }
 </script>
 
