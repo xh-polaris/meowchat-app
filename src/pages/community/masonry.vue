@@ -134,7 +134,6 @@ const addBatch = async () => {
         communityId: uni.getStorageSync("communityId")
       })
     ).moments;
-    console.log(moments);
   } else if (props.search === "moment") {
     moments = (
       await searchMomentPreviews({
@@ -164,7 +163,6 @@ const addBatch = async () => {
     } else {
       firstLoadingAmount = 0;
       secondLoadingAmount = batchLoadingAmount;
-      console.log("onLoadAddBatch");
       onLoad();
     }
   } else {
@@ -176,14 +174,12 @@ const onLoadLeft = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
   leftHeight =
     target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
-  console.log("onLoadLeft");
   onLoad();
 };
 const onLoadRight = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
   rightHeight =
     target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
-  console.log("onLoadRight");
   onLoad();
 };
 
