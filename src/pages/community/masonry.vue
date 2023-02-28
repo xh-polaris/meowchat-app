@@ -16,14 +16,14 @@
               :src="moment.photos[0]"
               class="img"
               mode="widthFix"
-              @load.once="(ev) => onLoadLeft(ev, moment.title)"
+              @load.once="onLoadLeft"
             />
             <image
               v-else
               :src="moment.photos[0]"
               class="img"
               mode="widthFix"
-              @load.once="(ev) => onLoadRight(ev, moment.title)"
+              @load.once="onLoadRight"
             />
           </view>
 
@@ -87,7 +87,7 @@ const isLeftTallerThanRight = () => {
 let indexInBatch = 0;
 let batchLength: number;
 let batchFirstPartLength: number;
-let batchSecondPartLength: number;
+// let batchSecondPartLength: number;
 const batchSecondPartDefaultLength = 4;
 
 let isNoMoreMoments = false;
@@ -174,15 +174,13 @@ const addBatch = async () => {
   }
 };
 
-const onLoadLeft = (ev: Event, title: any) => {
-  console.log(title);
+const onLoadLeft = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
   leftHeight =
     target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
   onLoad();
 };
-const onLoadRight = (ev: Event, title: any) => {
-  console.log(title);
+const onLoadRight = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
   rightHeight =
     target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
@@ -190,7 +188,6 @@ const onLoadRight = (ev: Event, title: any) => {
 };
 
 const onLoad = () => {
-  console.log(leftHeight, rightHeight);
   loadedAmount += 1;
   // 加完上一步后，表示已经加载好了这一batch中多少moment的图片
   // 所以对于没有firstPart而直接开始onLoad的，要预先讲loadedAmount设为-1，才能使得这里加完是0
