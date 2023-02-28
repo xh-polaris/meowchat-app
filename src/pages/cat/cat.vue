@@ -134,10 +134,11 @@ import { Cat } from "@/apis/schemas";
 import { getCatDetail } from "@/apis/collection/collection";
 import { GetCatDetailReq } from "@/apis/collection/collection-interfaces";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
+import { Pages } from "@/utils/url";
 
 function draftImage() {
   uni.navigateTo({
-    url: "/pages/draft/draft-image"
+    url: Pages.DraftImage
   });
 }
 
