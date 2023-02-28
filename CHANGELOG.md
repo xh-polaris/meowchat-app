@@ -1,5 +1,12 @@
 
 
+## [1.6.7](https://github.com/xh-polaris/meowchat-app/compare/v1.6.6...v1.6.7) (2023-02-28)
+
+
+### ✨ Features | 新功能
+
+* 添加用户服务协议与个人信息保护政策界面 ([#197](https://github.com/xh-polaris/meowchat-app/issues/197)) ([d535495](https://github.com/xh-polaris/meowchat-app/commit/d53549545831483b0460b49e9317f3f411c30ebd))
+
 ## [1.6.6](https://github.com/xh-polaris/meowchat-app/compare/v1.6.5...v1.6.6) (2023-02-28)
 
 
