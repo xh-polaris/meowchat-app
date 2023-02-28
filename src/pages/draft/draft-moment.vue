@@ -78,17 +78,19 @@
       </button>
       <view class="notice">
         发布前请先阅读
-        <navigator class="nobody-will-read" url="">
+        <view class="nobody-will-read" @click="showDeal">
           《用户服务协议》
-        </navigator>
+        </view>
         及
-        <navigator class="nobody-will-read" url="">
+        <view class="nobody-will-read" @click="showPolicy">
           《个人信息保护政策》
-        </navigator>
+        </view>
         ，一旦发布即被视为同意上述协议和政策
       </view>
     </view>
   </view>
+  <deal v-if="isShow && type === 1" @click="change"></deal>
+  <policy v-if="isShow && type === 2"></policy>
 </template>
 
 <script lang="ts" setup>
@@ -100,6 +102,8 @@ import { newMoment } from "@/apis/moment/moment";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
 import { Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
+import Deal from "@/components/deal-policy/deal.vue";
+import Policy from "@/components/deal-policy/policy.vue";
 
 const imagesData = reactive<any>([]);
 
@@ -207,6 +211,18 @@ function publishMoment() {
       }
     });
   });
+}
+
+// 控制协议和政策区域
+const isShow = ref(false);
+const type = ref(0);
+function showDeal() {
+  type.value = 1;
+  isShow.value = !isShow.value;
+}
+function showPolicy() {
+  type.value = 2;
+  isShow.value = !isShow.value;
 }
 </script>
 
