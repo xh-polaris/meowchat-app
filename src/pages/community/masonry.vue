@@ -74,22 +74,26 @@ const props = withDefaults(defineProps<Props>(), {
  * search.type --- "default"
  */
 
-let moments: Moment[];
+let momentsInBatch: Moment[];
 const leftMoments = reactive<Moment[]>([]);
 const rightMoments = reactive<Moment[]>([]);
 
-let batchLoadingAmount: number;
-let firstLoadingAmount: number;
-let secondLoadingAmount: number;
-const defaultSecondLoadingAmount = 4;
+let leftHeight = 0;
+let rightHeight = 0;
+const isLeftTallerThanRight = () => {
+  return leftHeight > rightHeight;
+};
 
-let isLastBatch = false;
-let lastBatchAmount: number;
+let indexInBatch = 0;
+let batchLength: number;
+let batchFirstPartLength: number;
+// let batchSecondPartLength: number;
+const batchSecondPartDefaultLength = 4;
 
-let index = 0;
+let isNoMoreMoments = false;
 let loadedAmount = 0;
-let isBatchLoaded = false;
-let isBatchLoadedAll = false;
+let isBatchLoading = false;
+
 let page = 0; //每往下翻页一次page加1直到没有内容
 
 /**
@@ -111,32 +115,24 @@ let page = 0; //每往下翻页一次page加1直到没有内容
  * 所有的moment都放完后，又初始化为index=0, loadedAmount=0, isBatchLoaded=true
  */
 
-let leftHeight = 0;
-let rightHeight = 0;
-
-const isLeftTallerThanRight = () => {
-  return leftHeight > rightHeight;
-};
-
 onReachBottom(() => {
-  if (isBatchLoaded && !isBatchLoadedAll) {
-    isBatchLoaded = false;
+  if (!isBatchLoading && !isNoMoreMoments) {
+    isBatchLoading = true;
     addBatch();
   }
 });
 
 const addBatch = async () => {
-  moments = [];
+  momentsInBatch = [];
   if (props.search === "default") {
-    moments = (
+    momentsInBatch = (
       await getMomentPreviews({
         page,
         communityId: uni.getStorageSync("communityId")
       })
     ).moments;
-    console.log(moments);
   } else if (props.search === "moment") {
-    moments = (
+    momentsInBatch = (
       await searchMomentPreviews({
         page: page,
         communityId: uni.getStorageSync("communityId"),
@@ -145,30 +141,36 @@ const addBatch = async () => {
     ).moments;
   }
 
-  if (moments) {
+  if (momentsInBatch.length > 0) {
     page += 1;
-    batchLoadingAmount = moments.length;
-    if (defaultSecondLoadingAmount < batchLoadingAmount) {
-      firstLoadingAmount = batchLoadingAmount - defaultSecondLoadingAmount;
-      secondLoadingAmount = defaultSecondLoadingAmount;
-      if (firstLoadingAmount > 0 && firstLoadingAmount % 2 !== 0) {
-        firstLoadingAmount -= 1;
-        secondLoadingAmount += 1;
+    batchLength = momentsInBatch.length;
+    if (batchSecondPartDefaultLength < batchLength) {
+      batchFirstPartLength = batchLength - batchSecondPartDefaultLength;
+      // batchSecondPartLength = batchSecondPartDefaultLength;
+      if (batchFirstPartLength % 2 !== 0) {
+        batchFirstPartLength -= 1;
+        // batchSecondPartLength += 1;
       }
-      for (let i = 0; i < firstLoadingAmount / 2; i++) {
-        addTile(index, "left");
-        index += 1;
-        addTile(index, "right");
-        index += 1;
+      if (batchFirstPartLength > 0) {
+        for (let i = 0; i < batchFirstPartLength / 2; i++) {
+          addTile(indexInBatch, "left");
+          indexInBatch += 1;
+          addTile(indexInBatch, "right");
+          indexInBatch += 1;
+        }
+      } else {
+        loadedAmount = -1;
+        onLoad();
       }
     } else {
-      firstLoadingAmount = 0;
-      secondLoadingAmount = batchLoadingAmount;
-      console.log("onLoadAddBatch");
+      batchFirstPartLength = 0;
+      // batchSecondPartLength = batchLength;
+      loadedAmount = -1;
       onLoad();
     }
   } else {
-    isBatchLoadedAll = true;
+    isNoMoreMoments = true;
+    isBatchLoading = false;
   }
 };
 
@@ -176,45 +178,33 @@ const onLoadLeft = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
   leftHeight =
     target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
-  console.log("onLoadLeft");
   onLoad();
 };
 const onLoadRight = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
   rightHeight =
     target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
-  console.log("onLoadRight");
   onLoad();
 };
 
 const onLoad = () => {
-  isBatchLoaded = false;
   loadedAmount += 1;
-  if (!isLastBatch) {
-    if (loadedAmount >= firstLoadingAmount) {
-      if (loadedAmount <= firstLoadingAmount + secondLoadingAmount) {
-        addTile(index, "either");
-        index += 1;
-      } else {
-        loadedAmount = 0;
-        index = 0;
-        isBatchLoaded = true;
-      }
-    }
-  } else {
-    if (index < lastBatchAmount) {
-      addTile(index, "either");
-      index += 1;
+  // 加完上一步后，表示已经加载好了这一batch中多少moment的图片
+  // 所以对于没有firstPart而直接开始onLoad的，要预先讲loadedAmount设为-1，才能使得这里加完是0
+  if (loadedAmount >= batchFirstPartLength) {
+    if (loadedAmount < batchLength) {
+      addTile(indexInBatch, "either");
+      indexInBatch += 1;
     } else {
       loadedAmount = 0;
-      index = 0;
-      isBatchLoaded = true;
+      indexInBatch = 0;
+      isBatchLoading = false;
     }
   }
 };
 
 const addTile = (tileIndex: number, side: string) => {
-  const tile = moments[tileIndex];
+  const tile = momentsInBatch[tileIndex];
   if (side === "left") {
     leftMoments.push(tile);
   } else if (side === "right") {
@@ -229,6 +219,7 @@ const addTile = (tileIndex: number, side: string) => {
 };
 
 onBeforeMount(() => {
+  isBatchLoading = true;
   addBatch();
 });
 
@@ -316,6 +307,9 @@ $avatarWidth: calc(21 / 390 * 100vw);
       color: #000000;
       line-height: calc ($titleFontSize * 1.5);
       margin-top: calc(5 / 390 * 100vw);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .other-info {

@@ -291,8 +291,6 @@ input {
 textarea {
   box-sizing: border-box;
   margin-bottom: calc(10 / 390 * 100vw);
-  word-wrap: break-word;
-  white-space: pre-line;
 }
 
 textarea ::selection {

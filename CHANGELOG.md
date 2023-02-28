@@ -1,5 +1,14 @@
 
 
+## [1.6.6](https://github.com/xh-polaris/meowchat-app/compare/v1.6.5...v1.6.6) (2023-02-28)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 我的页面暂时不显示学校信息 ([#195](https://github.com/xh-polaris/meowchat-app/issues/195)) ([a2439fd](https://github.com/xh-polaris/meowchat-app/commit/a2439fd1437038153875ff078c32ad1f6c73b515)), closes [#144](https://github.com/xh-polaris/meowchat-app/issues/144) [#145](https://github.com/xh-polaris/meowchat-app/issues/145) [#146](https://github.com/xh-polaris/meowchat-app/issues/146)
+* 修复了喵社区动态标题显示过长问题 ([#196](https://github.com/xh-polaris/meowchat-app/issues/196)) ([5b7ef7f](https://github.com/xh-polaris/meowchat-app/commit/5b7ef7f4459884bd7fba7294d995374b40d7b4ad))
+* 修复上传猫片的路径错误 ([c21dc4e](https://github.com/xh-polaris/meowchat-app/commit/c21dc4e884d53bf134b80259d37614921d13f2c7))
+
 ## [1.6.5](https://github.com/xh-polaris/meowchat-app/compare/v1.6.4...v1.6.5) (2023-02-28)
 
 
