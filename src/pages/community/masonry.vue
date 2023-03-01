@@ -132,7 +132,7 @@ const addBatch = async () => {
       })
     ).moments;
   } else if (props.search === "search") {
-	  console.log(props.keyword);
+    console.log(props.keyword);
     momentsInBatch = (
       await searchMomentPreviews({
         page: page,
