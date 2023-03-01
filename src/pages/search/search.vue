@@ -70,7 +70,7 @@
         </view>
         <view v-show="current === 1">
           <!-- 动态 -->
-          <masonry v-if="!isRefreshing" search="moment" :keyword="searchText" />
+          <masonry search="search" :keyword="searchText" />
         </view>
         <view v-show="current === 2">
           <!-- 图鉴 -->
