@@ -5,7 +5,7 @@ import { StorageKeys } from "@/utils/const";
 uni.addInterceptor("request", {
   invoke(args: UniNamespace.RequestOptions) {
     if (args.url[0] === "/") {
-      args.url = import.meta.env.VITE_BASIC_URL + args.url;
+      args.url = "http://test.meowchat.cn" + args.url;
       args.header = {
         Authorization: uni.getStorageSync(StorageKeys.AccessToken)
       };

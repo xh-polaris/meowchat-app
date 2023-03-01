@@ -1,5 +1,5 @@
 <template>
-  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
+  <uni-nav-bar :fixed="true" background-color="#f9f9f9" shadow status-bar>
     <view>
       <view
         style="
@@ -8,8 +8,8 @@
           font-size: 35rpx;
           font-weight: bold;
         "
-        >图鉴</view
-      >
+        >图鉴
+      </view>
     </view>
   </uni-nav-bar>
   <view class="content">
@@ -29,16 +29,16 @@
         placeholder="搜索猫咪"
       />
       <image
-        style="width: 60rpx"
         mode="widthFix"
         src="/static/images/search.png"
+        style="width: 60rpx"
         @click="onClickSearch"
       />
     </view>
     <!-- 校区选择框   -->
     <view class="school-box">
       <view class="school-select-box">
-        <image class="arrow" :src="Icons.Location" />
+        <image :src="Icons.Location" class="arrow" />
         <view class="school-name">
           {{ currentSchool }}
         </view>
@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Pictures, Icons, Pages } from "@/utils/url";
+import { Icons, Pages, Pictures } from "@/utils/url";
 import CatBox from "@/pages/collection/cat-box.vue";
 import { reactive, ref } from "vue";
 import { StorageKeys } from "@/utils/const";
@@ -103,6 +103,7 @@ let parentId = ref("");
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
+
 const lists = reactive<{
   data: Community[];
 }>({
@@ -122,6 +123,7 @@ async function schoolList() {
     })
   ).communities;
 }
+
 async function getCampus() {
   schoolList().then(async () => {
     init();
@@ -143,6 +145,7 @@ async function getCampus() {
     ).communities;
   });
 }
+
 getCampus();
 
 const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
@@ -155,6 +158,7 @@ let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
   keyword: ""
 });
 const allCats = ref<CatPreview[]>([]);
+
 let cats = ref<CatPreview[]>([]);
 let whetherSearch = false;
 
@@ -164,17 +168,24 @@ const getCatPreviewsHandler = () => {
     cats.value.push(...res.cats);
   });
 };
-getCatPreviewsHandler();
 
 function pageRefresh() {
   allCats.value = [];
   cats.value = [];
+  getCatPreviewsReq.page = 0;
+  getCatPreviewsReq.communityId = uni.getStorageSync(StorageKeys.CommunityId);
+  searchCatPreviewsReq.page = 0;
+  searchCatPreviewsReq.communityId = uni.getStorageSync(
+    StorageKeys.CommunityId
+  );
   getCatPreviewsHandler();
 }
 
 onPullDownRefresh(() => {
+  setTimeout(function () {
+    uni.stopPullDownRefresh();
+  }, 1000);
   pageRefresh();
-  uni.stopPullDownRefresh();
 });
 
 function setBranch(e: string, index: number) {
