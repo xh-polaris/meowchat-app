@@ -131,7 +131,8 @@ const addBatch = async () => {
         communityId: uni.getStorageSync("communityId")
       })
     ).moments;
-  } else if (props.search === "moment") {
+  } else if (props.search === "search") {
+    console.log(props.keyword);
     momentsInBatch = (
       await searchMomentPreviews({
         page: page,
