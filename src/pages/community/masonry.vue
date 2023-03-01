@@ -50,6 +50,7 @@
   <view v-if="isNoData">
     <image src="https://static.xhpolaris.com/nodata.png" />
   </view>
+  <view v-else class="blue-background" />
 </template>
 
 <script lang="ts" setup>
@@ -338,5 +339,15 @@ $avatarWidth: calc(21 / 390 * 100vw);
 .get-dom {
   width: 1px;
   height: 1px;
+}
+
+.blue-background {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fafcff;
+  position: fixed;
+  z-index: -1;
+  left: 0;
+  top: 0;
 }
 </style>
