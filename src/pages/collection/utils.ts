@@ -1,9 +1,9 @@
 import { CatPreview } from "@/apis/schemas";
 import { Pages } from "@/utils/url";
 
-export function onClickCatBox(id: string) {
+export function onClickCatBox(id: string,name:string) {
   uni.navigateTo({
-    url: `${Pages.Cat}?id=${id}`
+    url: `${Pages.Cat}?id=${id}&name=${name}`
   });
 }
 

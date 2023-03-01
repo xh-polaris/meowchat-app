@@ -5,10 +5,16 @@ import {
   GetCatDetailResp,
   GetCatPreviewsReq,
   GetCatPreviewsResp,
+  GetImageByCatReq,
+  GetImageByCatResp,
   NewCatReq,
   NewCatResp,
   SearchCatPreviewsReq,
-  SearchCatPreviewsResp
+  SearchCatPreviewsResp,
+  CreateImageResp,
+  CreateImageReq,
+  DeleteImageReq,
+  DeleteImageResp
 } from "./collection-interfaces";
 import { PictureStyle } from "@/apis/cos/cos-interface";
 
@@ -113,6 +119,64 @@ export async function getCatDetail(req: GetCatDetailReq) {
           reject(res);
         }
         const data = res.data as GetCatDetailResp;
+        resolve(data);
+      }
+    });
+  });
+}
+
+/**
+ * @description
+ * @param req
+ */
+export async function getCatImage(req: GetImageByCatReq) {
+  return await new Promise<GetImageByCatResp>((resolve, reject) => {
+    uni.request({
+      url: "/collection/get_image_by_cat",
+      data: req,
+      method: "GET",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as GetImageByCatResp;
+        resolve(data);
+      }
+    });
+  });
+}
+
+/**
+ * @description
+ * @param req
+ */
+export async function CreateImage(req: CreateImageReq): Promise<CreateImageResp> {
+  return await new Promise<CreateImageResp>((resolve, reject) => {
+    uni.request({
+      url: "/collection/create_image",
+      data: req,
+      method: "POST",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as CreateImageResp;
+        resolve(data);
+      }
+    });
+  });
+}
+export async function deletePost(req: DeleteImageReq) {
+  return await new Promise<DeleteImageResp>((resolve, reject) => {
+    uni.request({
+      url: "/collection/delete_image",
+      data: req,
+      method: "POST",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as DeleteImageResp;
         resolve(data);
       }
     });

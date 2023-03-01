@@ -20,5 +20,5 @@ export const enum Pages {
   Moment = "/pages/moment/moment",
   SchoolSelect = "/pages/community/school-select/school-select",
   Search = "/pages/search/search",
-  DraftImage = "/pages/draft/draft/draft-image"
+  DraftImage = "/pages/draft/draft-image/draft-image"
 }
