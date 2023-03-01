@@ -1,32 +1,38 @@
 <template>
-  <!-- 通知暂时隐藏 -->
-  <view v-show="false" class="px-4">
+  <view class="px-4">
     <!-- 公告 -->
-    <view class="" style="background-color: #fafcff">
-      <view class="d-flex px-3 py-3 a-center j-sb">
-        <view class="d-flex a-center">
-          <image
-            src="/static/images/notice.png"
-            mode="widthFix"
-            style="width: 80rpx"
-          ></image>
-          <view class="font-lg">公告</view>
-        </view>
-        <view class="">
-          <image
-            src="/static/images/arrow-right.png"
-            mode="widthFix"
-            style="width: 50rpx"
-          ></image>
+    <view v-if="notices">
+      <view v-for="(item, index) in notices" :key="index">
+        <view class="" style="background-color: #fafcff">
+          <view class="d-flex px-3 py-3 a-center j-sb">
+            <view class="d-flex a-center">
+              <image
+                src="/static/images/notice.png"
+                mode="widthFix"
+                style="width: 80rpx"
+              ></image>
+              <view class="font-lg">公告</view>
+            </view>
+            <view class="">
+              <image
+                src="/static/images/arrow-right.png"
+                mode="widthFix"
+                style="width: 50rpx"
+              ></image>
+            </view>
+          </view>
+          <view class="font-md px-4 mb-5">{{ item.text }}</view>
+          <view class="font-md px-4 py-3" style="color: #b4b4b4"
+            >{{ item.createAt }} 发布</view
+          >
         </view>
       </view>
-      <view class="font-md px-4 mb-5">{{ publishContent }}</view>
-      <view class="font-md px-4 py-3" style="color: #b4b4b4"
-        >{{ publishTime }} 发布</view
-      >
+    </view>
+    <view class="v-else">
+      <image src="https://static.xhpolaris.com/nodata.png" mode=""></image>
     </view>
     <!-- 回复 -->
-    <view v-for="(item, index) in replyList" :key="index">
+    <view v-for="(item, index) in replyList" v-show="false" :key="index">
       <view class="d-flex mt-2">
         <!-- 左侧 -->
         <view class="">
@@ -88,12 +94,16 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import Divider from "@/components/divider/divider.vue";
-const publishTime = ref("2022-3-1");
-const publishContent = ref(
-  "公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告公告"
-);
+import { getNotices } from "@/apis/notice/notice";
+
+const notices = (
+  await getNotices({
+    communityId: uni.getStorageSync("communityId")
+  })
+).notices;
+
 const replyList = reactive([
   {
     avatar:
