@@ -1,6 +1,6 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <view>
+    <block>
       <view class="d-flex a-center">
         <view
           class="d-flex a-center"
@@ -14,14 +14,14 @@
               style="width: 45rpx"
             ></image>
           </view>
-          <!-- TODO 暂时隐藏通知数量-->
-          <view v-show="false" class="font-sm px-1 message-count">23</view>
+      		  <!-- 暂时将数量写为0 -->
+          <view class="font-sm px-1 message-count">0</view>
         </view>
         <view style="margin-left: 165rpx; font-size: 35rpx; font-weight: bold"
           >喵世界</view
         >
       </view>
-    </view>
+    </block>
   </uni-nav-bar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
