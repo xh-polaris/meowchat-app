@@ -39,7 +39,7 @@
           《用户服务协议》
         </view>
         及
-       <view class="nobody-will-read" @click="showPolicy">
+        <view class="nobody-will-read" @click="showPolicy">
           《个人信息保护政策》
         </view>
         ，一旦发布即被视为同意上述协议和政策
@@ -47,7 +47,7 @@
     </view>
   </view>
   <deal v-if="isShow && type === 1"></deal>
-    <policy v-if="isShow && type === 2"></policy>
+  <policy v-if="isShow && type === 2"></policy>
 </template>
 
 <script lang="ts" setup>
