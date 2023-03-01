@@ -150,7 +150,9 @@ export async function getCatImage(req: GetImageByCatReq) {
  * @description
  * @param req
  */
-export async function CreateImage(req: CreateImageReq): Promise<CreateImageResp> {
+export async function CreateImage(
+  req: CreateImageReq
+): Promise<CreateImageResp> {
   return await new Promise<CreateImageResp>((resolve, reject) => {
     uni.request({
       url: "/collection/create_image",

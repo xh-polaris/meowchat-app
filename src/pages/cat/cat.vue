@@ -131,8 +131,8 @@
 import { reactive, ref } from "vue";
 import { Cat } from "@/apis/schemas";
 import { getCatDetail, getCatImage } from "@/apis/collection/collection";
-import{Image}from"@/apis/collection/collection-interfaces";
 import {
+  Image,
   GetCatDetailReq,
   GetImageByCatReq
 } from "@/apis/collection/collection-interfaces";
@@ -140,28 +140,28 @@ import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { Pages } from "@/utils/url";
 function draftImage() {
   uni.navigateTo({
-   url: `${Pages.DraftImage}?catId=${props.id}&catName=${props.name}`
+    url: `${Pages.DraftImage}?catId=${props.id}&catName=${props.name}`
   });
 }
 
 const isRefreshing = ref(false);
 const props = defineProps<{
   id: string;
-  name:string;
+  name: string;
 }>();
 const getCatDetailReq = reactive<GetCatDetailReq>({
   catId: props.id
 });
-let number=0;
+let number = 0;
 let getCatImageReq = reactive<GetImageByCatReq>({
   catId: props.id,
   prevId: "",
-  limit: 6,
+  limit: 6
 });
-let imgUrlList=ref<Image[]>([]);
+let imgUrlList = ref<Image[]>([]);
 let Sterilized: string;
 let Snipped: string;
-let noMore=false;
+let noMore = false;
 const cat = reactive<Cat>({
   id: "",
   createAt: 0,
@@ -214,18 +214,18 @@ const getCatDetailHandler = () => {
 getCatDetailHandler();
 
 const getCatImageHandler = () => {
-  if(!noMore)
-  getCatImage(getCatImageReq).then((res) => {
-    imgUrlList.value.push(...res.images);
-	var arr:Array<any> = Object.keys(res.images);
-	number+=arr.length
-	  if(number===0||imgUrlList.value[number-1].id===getCatImageReq.prevId)
-	  {
-		noMore=true;	
-	  }
-	  else
-	  getCatImageReq.prevId=imgUrlList.value[number-1].id;
-  });
+  if (!noMore)
+    getCatImage(getCatImageReq).then((res) => {
+      imgUrlList.value.push(...res.images);
+      var arr: Array<any> = Object.keys(res.images);
+      number += arr.length;
+      if (
+        number === 0 ||
+        imgUrlList.value[number - 1].id === getCatImageReq.prevId
+      ) {
+        noMore = true;
+      } else getCatImageReq.prevId = imgUrlList.value[number - 1].id;
+    });
 };
 getCatImageHandler();
 function pageRefresh() {

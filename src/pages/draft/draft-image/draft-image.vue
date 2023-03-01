@@ -20,7 +20,7 @@
 
     <view class="panel">
       <view class="choose-cats-bar">
-        <view class="choose-cats"> 照片将上传至猫咪：{{props.catName}}</view>
+        <view class="choose-cats"> 照片将上传至猫咪：{{ props.catName }}</view>
       </view>
       <view class="images1">
         <template v-for="image in imagesData" :key="image.id">
@@ -30,7 +30,9 @@
           />
         </template>
       </view>
-      <button class="publish" :disabled="disablePublish" @click="createImage">上传至照片墙</button>
+      <button class="publish" :disabled="disablePublish" @click="createImage">
+        上传至照片墙
+      </button>
       <view class="notice">
         发布前请先阅读
         <navigator class="nobody-will-read" url="">
@@ -49,8 +51,8 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
-import {CatImage}from"@/apis/collection/collection-interfaces";
-import {CreateImage}from"@/apis/collection/collection";
+import { CatImage } from "@/apis/collection/collection-interfaces";
+import { CreateImage } from "@/apis/collection/collection";
 import { Pages } from "@/utils/url";
 const props = defineProps<{
   catId: string;
@@ -80,8 +82,11 @@ function addImage() {
         putObject({
           filePath: path
         }).then(function (url) {
-		const catImage = reactive<CatImage>({catId:props.catId,url:url.url});
-		photos.push(catImage);
+          const catImage = reactive<CatImage>({
+            catId: props.catId,
+            url: url.url
+          });
+          photos.push(catImage);
           //将返回的信息添加进photos
           disablePublish.value = false;
         });
@@ -99,18 +104,18 @@ function addImage() {
   });
 }
 function createImage() {
-	CreateImage({
-      images:photos
-	}).then(() => {
+  CreateImage({
+    images: photos
+  }).then(() => {
     uni.switchTab({
-     url: Pages.Collection,
+      url: Pages.Collection,
       success() {
         uni.reLaunch({
           url: Pages.Collection
         });
       }
     });
-  })
+  });
 }
 </script>
 
