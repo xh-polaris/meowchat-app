@@ -31,7 +31,7 @@
     <view class="text">
       {{ post.data.text }}
     </view>
-    <view class="commentNum"> 评论 {{ post.data.comments }} </view>
+    <view class="commentNum"> 评论</view>
 
     <comment-box
       v-for="(item, index) in comments.data"
@@ -472,7 +472,7 @@ $postPadding: 15px 27px 0 21px;
   z-index: 30;
   left: 0;
   right: 0;
-  height: 0rpx;
+  height: 0;
   bottom: 56px;
   opacity: 1;
   overflow-y: scroll;

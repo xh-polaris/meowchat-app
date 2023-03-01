@@ -24,15 +24,6 @@
         @blur="onNickName"
       />
     </view>
-    <text class="nickname">学校名</text>
-    <view class="choose-nickname-row">
-      <input
-        class="update-nickname"
-        placeholder="请输入学校"
-        :value="school"
-        @blur="onSchool"
-      />
-    </view>
     <button class="confirm-change" @click="onClickConfirm()">
       <text class="save">确认</text>
     </button>
@@ -52,17 +43,6 @@ const props = defineProps<{
   nickname: string;
 }>();
 
-let school = ref("");
-function getSchool() {
-  if (!uni.getStorageSync("school")) {
-    uni.setStorageSync("school", "华东师范大学");
-  }
-  school.value = uni.getStorageSync("school");
-}
-function setSchool() {
-  uni.setStorageSync("school", school.value);
-}
-
 const userInfo = reactive<UpdateUserInfoReq>({});
 function onChooseAvatar(e: any) {
   putObject({
@@ -77,24 +57,16 @@ function onNickName(e: any) {
   userInfo.nickname = e.detail.value;
 }
 
-function onSchool(e: any) {
-  school.value = e.detail.value;
-}
-
 function onClickConfirm() {
   updateUserInfo(userInfo).then((res) => {
     uni.showToast({
       title: res.msg
     });
   });
-  setSchool();
   uni.reLaunch({
     url: Pages.Profile
   });
 }
-onShow(() => {
-  getSchool();
-});
 </script>
 
 <style lang="scss" scoped>
