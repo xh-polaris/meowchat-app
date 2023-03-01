@@ -50,7 +50,7 @@ export async function getNotices(req: GetNoticeReq) {
     uni.request({
       url: "/notice/get_notices",
       method: "GET",
-	  data:req,
+      data: req,
       success(res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode !== 200) {
           reject(res);
