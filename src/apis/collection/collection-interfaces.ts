@@ -1,4 +1,3 @@
-import exp from "constants";
 import { Cat, CatPreview } from "../schemas";
 
 export interface GetCatPreviewsReq {
@@ -67,7 +66,7 @@ export interface DeleteCatResp {
 export interface GetImageByCatReq {
   catId: string;
   prevId: string;
-  limit:number;
+  limit: number;
 }
 
 export interface GetImageByCatResp {
@@ -77,27 +76,27 @@ export interface GetImageByCatResp {
   msg: string;
 }
 export interface CreateImageReq {
-    images: CatImage[];
+  images: CatImage[];
 }
 
 export interface CatImage {
-    catId: string;
-    url: string;
+  catId: string;
+  url: string;
 }
-export interface Image{
-	id:string;
-	url:string;
-	catId:string;
+export interface Image {
+  id: string;
+  url: string;
+  catId: string;
 }
-export interface CreateImageResp{
-	    code: number;
-	    msg: string;
-		images:Image[]
+export interface CreateImageResp {
+  code: number;
+  msg: string;
+  images: Image[];
 }
-export interface DeleteImageReq{
-	id:string
+export interface DeleteImageReq {
+  id: string;
 }
-export interface DeleteImageResp{
-	code: number;
-	msg: string;
+export interface DeleteImageResp {
+  code: number;
+  msg: string;
 }
