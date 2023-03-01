@@ -3,6 +3,7 @@ import {
   GetAdminsResp,
   GetNewsReq,
   GetNewsResp,
+  GetNoticeReq,
   GetNoticesResp,
   NewNewReq,
   NewNewResp,
@@ -44,11 +45,12 @@ export async function getAdmins(req: GetAdminsReq) {
   });
 }
 
-export async function getNotices() {
+export async function getNotices(req: GetNoticeReq) {
   return await new Promise<GetNoticesResp>((resolve, reject) => {
     uni.request({
       url: "/notice/get_notices",
       method: "GET",
+	  data:req,
       success(res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode !== 200) {
           reject(res);

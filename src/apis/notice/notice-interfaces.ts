@@ -4,6 +4,10 @@ export interface GetNewsReq {
   communityId: string;
 }
 
+export interface GetNoticeReq {
+  communityId?: string;
+}
+
 export interface GetNewsResp {
   code: number;
   msg: string;
