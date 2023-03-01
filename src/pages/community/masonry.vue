@@ -47,13 +47,13 @@
       </template>
     </view>
   </view>
-  <view v-if="leftHeight === 0 && rightHeight === 0">
+  <view v-if="isNoData">
     <image src="https://static.xhpolaris.com/nodata.png" />
   </view>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, reactive } from "vue";
+import { onBeforeMount, reactive, ref } from "vue";
 import { getMomentPreviews, searchMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/utils";
@@ -73,6 +73,8 @@ const props = withDefaults(defineProps<Props>(), {
  * 在父组件用<masonry :search="{...}"/>
  * search.type --- "default"
  */
+
+const isNoData = ref(true);
 
 let momentsInBatch: Moment[];
 const leftMoments = reactive<Moment[]>([]);
@@ -143,6 +145,7 @@ const addBatch = async () => {
   }
 
   if (momentsInBatch.length > 0) {
+    isNoData.value = false;
     page += 1;
     batchLength = momentsInBatch.length;
     if (batchSecondPartDefaultLength < batchLength) {
