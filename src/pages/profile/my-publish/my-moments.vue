@@ -1,36 +1,34 @@
-<template>
-  <template v-if="momentsData">
-    <template v-for="moment in momentsData" :key="moment.id">
-      <view class="post" @click="onClickMoment(moment.id)">
+<template v-if="momentsData">
+  <template>
+    <template v-for="Moment in momentsData" :key="Moment.id">
+      <view class="post" @click="onClickMoment(Moment.id)">
         <view class="post-info-box">
           <view class="poster-info-box">
-            <image :src="moment.user.avatarUrl" class="poster-profile" />
+            <image :src="Moment.user.avatarUrl" class="poster-profile" />
             <text class="poster-name">
-              {{ moment.user.nickname }}
+              {{ Moment.user.nickname }}
             </text>
             <text class="post-time">
-              · {{ displayTime(moment.createAt) }}
+              {{ displayTime(Moment.createAt) }}
             </text>
           </view>
           <view class="post-content font-md">
-            {{ moment.text }}
+            {{ Moment.text }}
           </view>
-          <view :class="chooseImageClass(moment.photos.length)">
+          <view :class="chooseImageClass(Moment.photos.length)">
             <image
-              v-for="(item, index) in moment.photos"
+              v-for="(item, index) in Moment.photos"
               :key="index"
-              :mode="chooseImageMode(moment.photos.length)"
+              :mode="chooseImageMode(Moment.photos.length)"
               :src="item"
-              @click="onClickImage(index, moment.photos)"
+              @click="onClickImage(index, Moment.photos)"
             />
           </view>
           <view class="lower">
-            <view class="like-info">
-              {{ moment.likeData.count }} 位喵友觉得很赞</view
-            >
-            <view class="delete" @click.stop="onClickDelete(post.id)">
+            <view class="font-sm">3位喵友觉得很赞</view>
+            <view class="delete" @click.stop="onClickDelete(Moment.id)">
               <image class="deletepic" src="/static/images/delete.png" />
-              <view class="font-sm">删除帖子</view>
+              <view class="font-sm">删除动态</view>
             </view>
           </view>
         </view>
@@ -50,12 +48,16 @@ import { DeleteMomentReq } from "@/apis/moment/moment-components";
 import { Moment } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
+import {
+  chooseImageClass,
+  chooseImageMode,
+  onClickImage
+} from "@/pages/moment/utils";
 import { onClickMoment } from "./utils";
 
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
 let momentsData = ref<Moment[]>([]);
 let page = 0;
-
 const getMomentsPreviewsAsync = async () => {
   let moments = (
     await getOwnMomentPreviews({
@@ -88,8 +90,11 @@ async function onClickDelete(id: string) {
 }
 
 async function createMomentsDataBatch() {
+  console.log("asdhaifhaejkdc");
   const moments = await getMomentsPreviewsAsync();
   momentsData.value.push(...moments);
+  console.log(moments);
+  console.log(momentsData);
 }
 
 createMomentsDataBatch();
@@ -138,6 +143,7 @@ onReachBottom(() => {
       }
 
       .post-time {
+        margin-left: 300rpx;
         color: #aaa;
         font-size: 14px;
       }
