@@ -62,3 +62,41 @@ export interface DeleteCatResp {
   code: number;
   msg: string;
 }
+
+export interface GetImageByCatReq {
+  catId: string;
+  prevId: string;
+  limit: number;
+}
+
+export interface GetImageByCatResp {
+  code: number;
+  images: Image[];
+  lastId: string;
+  msg: string;
+}
+export interface CreateImageReq {
+  images: CatImage[];
+}
+
+export interface CatImage {
+  catId: string;
+  url: string;
+}
+export interface Image {
+  id: string;
+  url: string;
+  catId: string;
+}
+export interface CreateImageResp {
+  code: number;
+  msg: string;
+  images: Image[];
+}
+export interface DeleteImageReq {
+  id: string;
+}
+export interface DeleteImageResp {
+  code: number;
+  msg: string;
+}

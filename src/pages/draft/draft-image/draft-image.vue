@@ -20,7 +20,7 @@
 
     <view class="panel">
       <view class="choose-cats-bar">
-        <view class="choose-cats"> 照片将上传至猫咪</view>
+        <view class="choose-cats"> 照片将上传至猫咪：{{ props.catName }}</view>
       </view>
       <view class="images1">
         <template v-for="image in imagesData" :key="image.id">
@@ -29,12 +29,10 @@
             class="added-cats"
           />
         </template>
-        <view class="flex-column">
-          <view v-if="imagesData.length < 5" class="cat-thumbnail" />
-          <text class="choose-text"> 选择猫咪</text>
-        </view>
       </view>
-      <button class="publish" :disabled="disablePublish">上传至照片墙</button>
+      <button class="publish" :disabled="disablePublish" @click="createImage">
+        上传至照片墙
+      </button>
       <view class="notice">
         发布前请先阅读
         <view class="nobody-will-read" @click="showDeal">
@@ -57,7 +55,13 @@ import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
 import Deal from "@/components/deal-policy/deal.vue";
 import Policy from "@/components/deal-policy/policy.vue";
-
+import { CatImage } from "@/apis/collection/collection-interfaces";
+import { CreateImage } from "@/apis/collection/collection";
+import { Pages } from "@/utils/url";
+const props = defineProps<{
+  catId: string;
+  catName: string;
+}>();
 const imagesData = reactive<any>([]);
 
 const disablePublish = ref(false);
@@ -82,8 +86,12 @@ function addImage() {
         putObject({
           filePath: path
         }).then(function (url) {
-          //将返回的url添加进photos
-          photos.push(url.url);
+          const catImage = reactive<CatImage>({
+            catId: props.catId,
+            url: url.url
+          });
+          photos.push(catImage);
+          //将返回的信息添加进photos
           disablePublish.value = false;
         });
       });
@@ -99,8 +107,20 @@ function addImage() {
     }
   });
 }
-
-// 控制协议和政策区域
+function createImage() {
+  CreateImage({
+    images: photos
+  }).then(() => {
+    uni.switchTab({
+      url: Pages.Collection,
+      success() {
+        uni.reLaunch({
+          url: Pages.Collection
+        });
+      }
+    });
+  });
+}
 const isShow = ref(false);
 const type = ref(0);
 function showDeal() {

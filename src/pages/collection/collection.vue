@@ -63,7 +63,7 @@
     </view>
     <view v-if="cats.length > 0">
       <view v-for="cat of cats" :key="cat.id" class="out">
-        <view class="row" @click="onClickCatBox(cat.id)">
+        <view class="row" @click="onClickCatBox(cat.id, cat.name)">
           <cat-box :cat="cat" />
         </view>
       </view>
