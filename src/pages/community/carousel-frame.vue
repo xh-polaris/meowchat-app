@@ -14,7 +14,9 @@ let carouselContents = reactive<News[]>([]);
 getNews({ communityId: uni.getStorageSync(StorageKeys.CommunityId) }).then(
   (res) => {
     carouselContents = res.news;
-    isCarouselInitialized.value = true;
+    if (carouselContents.length !== 0) {
+      isCarouselInitialized.value = true;
+    }
   }
 );
 </script>
