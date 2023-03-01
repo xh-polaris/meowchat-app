@@ -1,5 +1,21 @@
 
 
+## [1.7.0](https://github.com/xh-polaris/meowchat-app/compare/v1.6.7...v1.7.0) (2023-03-01)
+
+
+### ✨ Features | 新功能
+
+* 上传图片界面添加协议与政策 校区选择逻辑修改 ([#203](https://github.com/xh-polaris/meowchat-app/issues/203)) ([2d8a576](https://github.com/xh-polaris/meowchat-app/commit/2d8a576d62b6a238c7372106aee07869d1da60b9))
+* 照片墙接口对接 ([#206](https://github.com/xh-polaris/meowchat-app/issues/206)) ([04feb52](https://github.com/xh-polaris/meowchat-app/commit/04feb5251890a00ea995ef86099cebb76e1980b2)), closes [#144](https://github.com/xh-polaris/meowchat-app/issues/144) [#145](https://github.com/xh-polaris/meowchat-app/issues/145) [#146](https://github.com/xh-polaris/meowchat-app/issues/146)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决动态没有搜索结果的问题 ([#198](https://github.com/xh-polaris/meowchat-app/issues/198)) ([e08c3fc](https://github.com/xh-polaris/meowchat-app/commit/e08c3fcd3e2713b4c1f6ff428bae474fba60e7ea))
+* 图鉴刷新bug修复 ([#208](https://github.com/xh-polaris/meowchat-app/issues/208)) ([878a569](https://github.com/xh-polaris/meowchat-app/commit/878a569f3c61ccd5fed252ead8648073533bf421))
+* 修复喵社区瀑布流在有图片时仍出现nodata.png的问题 修复喵社区无轮播图数据时仍然空位的问题 修复喵社区瀑布流图片较少时背景颜色不一致问题 ([#202](https://github.com/xh-polaris/meowchat-app/issues/202)) ([dcf4cbf](https://github.com/xh-polaris/meowchat-app/commit/dcf4cbfca10c4914c39be86203bd1ad1a4b9013c))
+* 修改消息处红点和修改公告 ([#207](https://github.com/xh-polaris/meowchat-app/issues/207)) ([10fc7ac](https://github.com/xh-polaris/meowchat-app/commit/10fc7acb7738e21c3550f1e7997c489b1e2e0823))
+
 ## [1.6.7](https://github.com/xh-polaris/meowchat-app/compare/v1.6.6...v1.6.7) (2023-02-28)
 
 
