@@ -15,7 +15,7 @@
             ></image>
           </view>
           <!-- 暂时将数量写为0 -->
-          <view class="font-sm px-1 message-count">0</view>
+          <view v-show="false" class="font-sm px-1 message-count">0</view>
         </view>
         <view style="margin-left: 165rpx; font-size: 35rpx; font-weight: bold"
           >喵世界</view
