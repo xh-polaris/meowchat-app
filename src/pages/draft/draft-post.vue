@@ -59,17 +59,6 @@
     </view>
 
     <view class="panel">
-      <view class="toggle-bar">
-        <view class="toggle-text"> 匿名信息</view>
-        <view
-          :class="'toggle ' + (isAnonymous ? 'active' : '')"
-          @click="toggleAnonymous"
-        >
-          <view class="toggle-capsule">
-            <view class="toggle-circle" />
-          </view>
-        </view>
-      </view>
       <button :disabled="disablePublish" class="publish" @click="publishPost">
         发布帖子
       </button>
@@ -127,10 +116,6 @@ watch(tags, (newValue) => {
     tags = newValue.slice(0, 3);
   }
 });
-
-function toggleAnonymous() {
-  isAnonymous.value = !isAnonymous.value;
-}
 
 function addImage() {
   disablePublish.value = true;
@@ -354,51 +339,8 @@ textarea ::selection {
   padding: calc(33 / 390 * 100vw) calc(33 / 390 * 100vw) calc(60 / 390 * 100vw);
 }
 
-.toggle-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: calc(8 / 390 * 100vw);
-
-  .toggle-text {
-    font-size: calc(14 / 390 * 100vw);
-    font-weight: bold;
-  }
-
-  .toggle {
-    .toggle-capsule {
-      width: calc(38 / 390 * 100vw);
-      height: calc(20 / 390 * 100vw);
-      border-radius: calc(19 / 390 * 100vw);
-      background-color: #eeeeee;
-      display: flex;
-      align-items: center;
-      transition-duration: 0.1s;
-
-      .toggle-circle {
-        width: calc(18 / 390 * 100vw);
-        height: calc(18 / 390 * 100vw);
-        margin-left: calc(1 / 390 * 100vw);
-        border-radius: 50%;
-        background-color: #ffffff;
-        transition-duration: 0.1s;
-      }
-    }
-
-    &.active {
-      .toggle-capsule {
-        background-color: #1fa1ff;
-      }
-
-      .toggle-circle {
-        margin-left: calc(19 / 390 * 100vw);
-      }
-    }
-  }
-}
-
 .publish {
-  margin-top: calc(25 / 390 * 100vw);
+  margin-top: calc(-15 / 390 * 100vw);
   margin-bottom: calc(19 / 390 * 100vw);
   width: 100%;
   background-color: #1fa1ff;
