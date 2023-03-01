@@ -1,6 +1,6 @@
 <template>
-	<!-- 通知暂时隐藏 -->
-  <view class="px-4" v-show="false">
+  <!-- 通知暂时隐藏 -->
+  <view v-show="false" class="px-4">
     <!-- 公告 -->
     <view class="" style="background-color: #fafcff">
       <view class="d-flex px-3 py-3 a-center j-sb">
