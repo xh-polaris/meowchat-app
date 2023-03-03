@@ -20,22 +20,20 @@
     </view>
     <view class="link_content">
       <text class="title"> 问卷链接: </text>
-      <view class="link" @click="CopyURLToClipboard()"
-        >https://www.wjx.cn/vj/mBnSgB8.aspx</view
-      >
+      <view class="link">https://www.wjx.cn/vj/mBnSgB8.aspx</view>
     </view>
   </view>
 </template>
 
-<script lang="ts">
-import { CopyToClipboard } from "@/pages/profile/utils";
-export default {
-  methods: {
-    CopyURLToClipboard() {
-      CopyToClipboard("https://www.wjx.cn/vj/mBnSgB8.aspx");
-    }
-  }
-};
+<script lang="ts" setup>
+import { CopyToClipboard, showPage } from "@/pages/profile/utils";
+import { onShow } from "@dcloudio/uni-app";
+function CopyURLToClipboard() {
+  CopyToClipboard("https://www.wjx.cn/vj/mBnSgB8.aspx");
+}
+onShow(() => {
+  showPage();
+});
 </script>
 
 <style lang="scss" scoped>
