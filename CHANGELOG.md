@@ -1,5 +1,12 @@
 
 
+## [1.7.2](https://github.com/xh-polaris/meowchat-app/compare/v1.7.1...v1.7.2) (2023-03-04)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **collection:** 修复底部猫咪无法完整显示的bug，并调整了刷新时机 ([#211](https://github.com/xh-polaris/meowchat-app/issues/211)) ([c1b71ef](https://github.com/xh-polaris/meowchat-app/commit/c1b71ef101f432b98605264f8c17b8206b496a73))
+
 ## [1.7.1](https://github.com/xh-polaris/meowchat-app/compare/v1.7.0...v1.7.1) (2023-03-04)
 
 
