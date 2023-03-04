@@ -1,5 +1,17 @@
 
 
+## [1.7.1](https://github.com/xh-polaris/meowchat-app/compare/v1.7.0...v1.7.1) (2023-03-04)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复我的发布中动态无法显示的问题 ([#209](https://github.com/xh-polaris/meowchat-app/issues/209)) ([3f9fd50](https://github.com/xh-polaris/meowchat-app/commit/3f9fd50d88f83c92ddc838ce172c3abbf219a653))
+
+
+### ✨ Features | 新功能
+
+* 申请领养板块改为开发中 ([#210](https://github.com/xh-polaris/meowchat-app/issues/210)) ([3ad2685](https://github.com/xh-polaris/meowchat-app/commit/3ad26855182d500e368909b84799902113aa319f))
+
 ## [1.7.0](https://github.com/xh-polaris/meowchat-app/compare/v1.6.7...v1.7.0) (2023-03-01)
 
 
