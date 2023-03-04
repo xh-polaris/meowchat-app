@@ -62,16 +62,18 @@
       </view>
     </view>
     <view v-if="cats.length > 0">
-      <view v-for="cat of cats" :key="cat.id" class="out">
+      <view v-for="(cat, index) in cats" :key="index" class="out">
         <view class="row" @click="onClickCatBox(cat.id, cat.name)">
           <cat-box :cat="cat" />
         </view>
       </view>
+      <view class="p-5 m-3"></view>
     </view>
     <view v-else>
       <image :src="Pictures.NoData" />
     </view>
   </view>
+  <touch-disable-page v-if="isRefreshing"></touch-disable-page>
   <tab-bar id="3"></tab-bar>
 </template>
 
@@ -94,6 +96,7 @@ import { CatPreview, Community } from "@/apis/schemas";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
+import TouchDisablePage from "@/components/touch-disable-page/touch-disable-page.vue";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
@@ -169,7 +172,7 @@ const getCatPreviewsHandler = () => {
   });
 };
 
-function pageRefresh() {
+async function pageRefresh() {
   allCats.value = [];
   cats.value = [];
   getCatPreviewsReq.page = 0;
@@ -181,10 +184,13 @@ function pageRefresh() {
   getCatPreviewsHandler();
 }
 
+let isRefreshing = ref<boolean>(false);
 onPullDownRefresh(() => {
   setTimeout(function () {
     uni.stopPullDownRefresh();
+    isRefreshing.value = false;
   }, 1000);
+  isRefreshing.value = true;
   pageRefresh();
 });
 
@@ -235,8 +241,10 @@ onReachBottom(() => {
 });
 
 onShow(() => {
-  getCampus();
-  pageRefresh();
+  if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
+    getCampus();
+    pageRefresh();
+  }
 });
 </script>
 
