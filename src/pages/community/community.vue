@@ -31,7 +31,7 @@
     </view>
   </view>
 
-  <view>
+  <view v-if="!isRefreshing">
     <carousel-frame />
   </view>
 
