@@ -138,6 +138,7 @@ function chooseCats() {
 function addImage() {
   disablePublish.value = true;
   uni.chooseMedia({
+    mediaType: ["image"],
     success: (chooseImageRes) => {
       let isTooManyImages = false;
       let tempFilePaths = chooseImageRes.tempFiles as Array<any>;
@@ -150,7 +151,6 @@ function addImage() {
           id: item.tempFilePath,
           url: item.tempFilePath
         });
-        console.log(imagesData);
         putObject({
           filePath: item.tempFilePath,
           prefix: Prefixes.Moment

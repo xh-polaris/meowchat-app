@@ -222,7 +222,12 @@ onPullDownRefresh(() => {
 onShow(() => {
   getCampus();
   getHistories();
-  pageRefresh();
+  if (
+    !communityId.value ||
+    communityId.value != uni.getStorageSync(StorageKeys.CommunityId)
+  ) {
+    pageRefresh();
+  }
 });
 onLoad(() => {
   getCampus();
