@@ -10,7 +10,7 @@
           <view class="left d-flex">
             <image
               :src="Icons.Message"
-              style="width: 45rpx;height:38rpx"
+              style="width: 45rpx; height: 38rpx"
             ></image>
           </view>
           <!-- 暂时将数量写为0 -->

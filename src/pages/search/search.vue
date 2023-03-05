@@ -5,14 +5,12 @@
       style="border-radius: 70rpx; height: 70rpx"
     >
       <view class="d-flex a-center">
-		  
         <image
           class="ml-2"
-          style="width: 40rpx;height: 40rpx;"
+          style="width: 40rpx; height: 40rpx"
           :src="Icons.Search"
         >
-		</image
->
+        </image>
         <input
           ref="getValue"
           v-model="searchText"
@@ -90,7 +88,7 @@ import WorldPosts from "@/pages/world/world-posts.vue";
 import Masonry from "@/pages/community/masonry.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
-import {Icons} from "@/utils/url";
+import { Icons } from "@/utils/url";
 
 const items = ["帖子", "动态", "图鉴"];
 
