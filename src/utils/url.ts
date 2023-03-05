@@ -6,7 +6,9 @@ export const enum Icons {
   Location = "/static/images/location.png",
   Search = "/static/images/search.png",
   DownBlack = "/static/images/down-black.png",
-  UpBlack = "/static/images/up-black.png"
+  UpBlack = "/static/images/up-black.png",
+  NewImage="/static/images/add.png",
+  Message="/static/images/message-black.png"
 }
 export const enum Pages {
   Cat = "/pages/cat/cat",

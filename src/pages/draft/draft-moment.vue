@@ -50,11 +50,10 @@
 
     <view class="d-flex wrap">
       <view style="margin-left: calc(10 / 390 * 100vw)" @click="chooseCats">
-        <view class="">
+        <view>
           <image
-            src="/static/images/add.png"
-            mode="widthFix"
-            style="width: 150rpx"
+            :src="Icons.NewImage"
+            style="width: 150rpx;height: 150rpx;"
           ></image>
         </view>
         <view class="font-md text-center" style="color: #b8b8b8">
@@ -100,7 +99,7 @@ import { onShow, onUnload } from "@dcloudio/uni-app";
 
 import { newMoment } from "@/apis/moment/moment";
 import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
-import { Pages } from "@/utils/url";
+import { Pages,Icons } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import Deal from "@/components/deal-policy/deal.vue";
 import Policy from "@/components/deal-policy/policy.vue";

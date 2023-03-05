@@ -5,12 +5,14 @@
       style="border-radius: 70rpx; height: 70rpx"
     >
       <view class="d-flex a-center">
+		  
         <image
           class="ml-2"
-          style="width: 40rpx"
-          mode="widthFix"
-          src="/static/images/search.png"
-        />
+          style="width: 40rpx;height: 40rpx;"
+          :src="Icons.Search"
+        >
+		</image
+>
         <input
           ref="getValue"
           v-model="searchText"
@@ -81,13 +83,14 @@
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import Masonry from "@/pages/community/masonry.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
+import {Icons} from "@/utils/url";
 
 const items = ["帖子", "动态", "图鉴"];
 

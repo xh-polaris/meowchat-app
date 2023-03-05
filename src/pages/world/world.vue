@@ -9,9 +9,8 @@
         >
           <view class="left d-flex">
             <image
-              src="/static/images/message-black.png"
-              mode="widthFix"
-              style="width: 45rpx"
+              :src="Icons.Message"
+              style="width: 45rpx;height:38rpx"
             ></image>
           </view>
           <!-- 暂时将数量写为0 -->
@@ -54,6 +53,7 @@ import { reactive, ref } from "vue";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
 
 import { init } from "@/utils/init";
+import { Icons } from "@/utils/url";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
