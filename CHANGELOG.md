@@ -1,5 +1,12 @@
 
 
+## [1.7.4](https://github.com/xh-polaris/meowchat-app/compare/v1.7.3...v1.7.4) (2023-03-05)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 修改申请领养Toast显示形式 ([#214](https://github.com/xh-polaris/meowchat-app/issues/214)) ([7226e3a](https://github.com/xh-polaris/meowchat-app/commit/7226e3aed8b84fd0ae79f1f2f9bab0c8be6891ad))
+
 ## [1.7.3](https://github.com/xh-polaris/meowchat-app/compare/v1.7.2...v1.7.3) (2023-03-04)
 
 
