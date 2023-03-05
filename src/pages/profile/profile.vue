@@ -42,7 +42,12 @@
       <!-- 功能栏 -->
       <view class="com-item">
         <view class="com-wrap">
-          <view v-for="(item, index) in userOptions" :key="index" class="cell">
+          <view
+            v-for="(item, index) in userOptions"
+            :key="index"
+            class="cell"
+            @click="item.function"
+          >
             <navigator :url="item.url" hover-class="none">
               <view class="cell-left">
                 <image
@@ -79,13 +84,6 @@ const userInfo = reactive<User>({
   nickname: "微信用户",
   avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
 });
-let school = ref("");
-function getSchool() {
-  if (!uni.getStorageSync("school")) {
-    uni.setStorageSync("school", "华东师范大学");
-  }
-  school.value = uni.getStorageSync("school");
-}
 
 onShow(() => {
   getUserInfo().then((res) => {
@@ -93,8 +91,14 @@ onShow(() => {
     userInfo.nickname = res.user.nickname;
     userInfo.avatarUrl = res.user.avatarUrl;
   });
-  getSchool();
 });
+function showToast() {
+  uni.showToast({
+    title: "页面暂未开放",
+    icon: "error",
+    duration: 2000
+  });
+}
 const userOptions = [
   {
     title: "我的发布",
@@ -109,7 +113,8 @@ const userOptions = [
   {
     title: "申请领养",
     icon: "/static/images/apply_adopt.png",
-    url: "/pages/profile/apply-adopt/apply-adopt"
+    url: "",
+    function: showToast
   },
   {
     title: "申请管理",
