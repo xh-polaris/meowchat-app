@@ -1,5 +1,12 @@
 
 
+## [1.7.5](https://github.com/xh-polaris/meowchat-app/compare/v1.7.4...v1.7.5) (2023-03-06)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修改icon变形问题 ([#215](https://github.com/xh-polaris/meowchat-app/issues/215)) ([3d78cb9](https://github.com/xh-polaris/meowchat-app/commit/3d78cb9e417f08578557135653827dc0927f31cd))
+
 ## [1.7.4](https://github.com/xh-polaris/meowchat-app/compare/v1.7.3...v1.7.4) (2023-03-05)
 
 
