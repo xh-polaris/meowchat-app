@@ -36,22 +36,6 @@
   </view>
 
   <view>
-    <!--    <view class="masonry-header">-->
-    <!--      <view class="title"> 最新动态</view>-->
-    <!--      <view class="toggle">-->
-    <!--        <view :class="types[0].className" @click.prevent="types[0].onClick">-->
-    <!--          {{ types[0].name }}-->
-    <!--        </view>-->
-    <!--        |-->
-    <!--        <view :class="types[1].className" @click.prevent="types[1].onClick">-->
-    <!--          {{ types[1].name }}-->
-    <!--        </view>-->
-    <!--        |-->
-    <!--        <view :class="types[2].className" @click.prevent="types[2].onClick">-->
-    <!--          {{ types[2].name }}-->
-    <!--        </view>-->
-    <!--      </view>-->
-    <!--    </view>-->
     <masonry v-if="!isRefreshing" search="default" />
   </view>
   <view class="empty-bottom"></view>
