@@ -1,5 +1,17 @@
 
 
+## [1.7.6](https://github.com/xh-polaris/meowchat-app/compare/v1.7.5...v1.7.6) (2023-03-06)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 追加修复图标变形问题 ([afece7a](https://github.com/xh-polaris/meowchat-app/commit/afece7a58a3c97b5ad52447b89a15f816bc2247f))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 修改选择校区历史和学校选择点击时下拉框显示形式 ([#216](https://github.com/xh-polaris/meowchat-app/issues/216)) ([1047241](https://github.com/xh-polaris/meowchat-app/commit/10472416c428fbd990808565213ff2d77477326d))
+
 ## [1.7.5](https://github.com/xh-polaris/meowchat-app/compare/v1.7.4...v1.7.5) (2023-03-06)
 
 
