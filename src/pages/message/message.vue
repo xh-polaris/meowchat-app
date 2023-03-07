@@ -3,7 +3,16 @@
     <!-- 公告 -->
     <view v-if="notices.data">
       <view v-for="(item, index) in notices.data" :key="index">
-        <view class="" style="background-color: #fafcff">
+        <view
+          class="mb-1"
+          style="
+            background-color: #fafcff;
+            border: solid;
+            border-radius: 30rpx;
+            border-color: #949494;
+            border-width: 0.1vw;
+          "
+        >
           <view class="d-flex px-3 py-3 a-center j-sb">
             <view class="d-flex a-center">
               <image
@@ -28,7 +37,7 @@
         </view>
       </view>
     </view>
-    <view class="v-else">
+    <view v-else>
       <image src="https://static.xhpolaris.com/nodata.png" mode=""></image>
     </view>
     <!-- 回复 -->
@@ -114,7 +123,7 @@ async function noticesList() {
     })
   ).notices;
 }
-console.log(notices.data);
+
 noticesList();
 
 const replyList = reactive([
