@@ -1,5 +1,18 @@
 
 
+## [1.7.10](https://github.com/xh-polaris/meowchat-app/compare/v1.7.9...v1.7.10) (2023-03-07)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 点击猫片可以看大图 ([3cd505b](https://github.com/xh-polaris/meowchat-app/commit/3cd505ba72451b89020004acac28b2d092f08425))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复帖子的评论被错误设置scope的问题 ([0c2cba9](https://github.com/xh-polaris/meowchat-app/commit/0c2cba96dccfdca412668ced5bb4978be680bde1))
+* 修复照片墙照片点赞数目变化问题 ([#221](https://github.com/xh-polaris/meowchat-app/issues/221)) ([871c128](https://github.com/xh-polaris/meowchat-app/commit/871c1289c4dbda05f922378db034425b72666849))
+
 ## [1.7.9](https://github.com/xh-polaris/meowchat-app/compare/v1.7.8...v1.7.9) (2023-03-07)
 
 
