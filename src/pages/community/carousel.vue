@@ -52,7 +52,7 @@ const touchEnd = (ev: any) => {
     }
   }
 };
-
+setInterval(leftward, 5000);
 const currentContent = ref(0);
 const displayContents = reactive([
   contents[(currentContent.value + contents.length - 2) % contents.length],

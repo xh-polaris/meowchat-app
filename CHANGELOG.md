@@ -1,5 +1,19 @@
 
 
+## [1.7.8](https://github.com/xh-polaris/meowchat-app/compare/v1.7.7...v1.7.8) (2023-03-07)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 轮播图每隔5秒自动轮换 ([9883783](https://github.com/xh-polaris/meowchat-app/commit/9883783869bb0a24deb80ff5b641f5e18acc2189))
+
+## [1.7.7](https://github.com/xh-polaris/meowchat-app/compare/v1.7.6...v1.7.7) (2023-03-07)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修改搜索时退出时直接退出小程序的bug ([#217](https://github.com/xh-polaris/meowchat-app/issues/217)) ([b755e4a](https://github.com/xh-polaris/meowchat-app/commit/b755e4ace59f7d46534c955fdefed0401db715cc))
+
 ## [1.7.6](https://github.com/xh-polaris/meowchat-app/compare/v1.7.5...v1.7.6) (2023-03-06)
 
 
