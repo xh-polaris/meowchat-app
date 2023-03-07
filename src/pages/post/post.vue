@@ -187,7 +187,7 @@ const localGetCommentsData = async () => {
   isCommentsLoaded = false;
   getCommentsData({
     id: props.id,
-    scope: "moment",
+    scope: "post",
     page: page
   }).then((res) => {
     for (let i = 0; i < res.data.length; i++) {
@@ -226,7 +226,6 @@ const refreshReplyIndex = (index: number) => {
     newCommentReq.scope = "comment";
   } else {
     newCommentReq.id = props.id;
-    newCommentReq.scope = "moment";
     commentReplyIndex.value = -1;
   }
 };
@@ -286,7 +285,7 @@ const init = async () => {
   await localGetCommentsData();
   commentReplyIndex.value = -1;
   newCommentReq.text = "";
-  newCommentReq.scope = "moment";
+  newCommentReq.scope = "post";
   newCommentReq.id = props.id;
   initLock = false;
 };

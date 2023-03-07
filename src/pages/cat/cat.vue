@@ -181,8 +181,7 @@ function clickLike(id: string, index: number) {
   if (imgUrlList[index].isLiked) {
     imgUrlList[index].isLiked = false;
     imgUrlList[index].likeNumber--;
-    if (imgUrlList[index].likeNumber < 0)
-      imgUrlList[index].likeNumber = 0;
+    if (imgUrlList[index].likeNumber < 0) imgUrlList[index].likeNumber = 0;
   } else {
     imgUrlList[index].isLiked = true;
     imgUrlList[index].likeNumber++;
