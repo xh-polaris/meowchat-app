@@ -29,9 +29,8 @@
         placeholder="搜索猫咪"
       />
       <image
-        mode="widthFix"
-        src="/static/images/search.png"
-        style="width: 60rpx"
+        :src="Icons.Search"
+        style="width: 60rpx; height: 60rpx"
         @click="onClickSearch"
       />
     </view>

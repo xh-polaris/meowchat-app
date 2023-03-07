@@ -221,6 +221,7 @@ function changeCampusByHistory(
   id: string,
   parent: string
 ) {
+  sel.value = true;
   currentCampus.value = campus;
   currentSchool.value = school;
   parentId.value = parent;
@@ -232,6 +233,7 @@ function changeSchool(name: string, index: number) {
   currentSchool.value = name;
   parentId.value = schools.data[index].id;
   currentCampus.value = "请选择校区";
+  sel.value = false;
   getCampus();
 }
 </script>
