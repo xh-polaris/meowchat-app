@@ -8,7 +8,8 @@ export const enum Icons {
   DownBlack = "/static/images/down-black.png",
   UpBlack = "/static/images/up-black.png",
   NewImage = "/static/images/add.png",
-  Message = "/static/images/message-black.png"
+  Message = "/static/images/message-black.png",
+  Collection="/static/images/collection-grey.png"
 }
 export const enum Pages {
   Cat = "/pages/cat/cat",
