@@ -119,14 +119,18 @@
       <view class="imgs">
         <view class="qz_imgs qz_imgs3 clearfix">
           <li v-for="(image, index) in imgUrlList" :key="index">
-            <image :src="image.url" mode="aspectFill" />
+            <image
+              :src="image.url"
+              mode="aspectFill"
+              @click="onClickImage(index, imgUrls)"
+            />
             <view v-if="image.isLiked">
               <view class="liked">
                 <image
                   src="/static/images/like_grey_0.png"
                   mode="widthFix"
                   style="width: 20rpx"
-                  @click="ClickLike(image.id, index)"
+                  @click="clickLike(image.id, index)"
                 />
               </view>
             </view>
@@ -136,7 +140,7 @@
                   src="/static/images/like_grey_1.png"
                   mode="widthFix"
                   style="width: 20rpx"
-                  @click="ClickLike(image.id, index)"
+                  @click="clickLike(image.id, index)"
                 />
               </view>
             </view>
@@ -155,8 +159,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { Cat } from "@/apis/schemas";
+import { onClickImage } from "@/pages/cat/utils";
 import { getCatDetail, getCatImage } from "@/apis/collection/collection";
 import {
   ImageInfo,
@@ -172,15 +177,15 @@ function draftImage() {
   });
 }
 
-function ClickLike(id: string, index: number) {
-  if (imgUrlList.value[index].isLiked) {
-    imgUrlList.value[index].isLiked = false;
-    imgUrlList.value[index].likeNumber--;
-    if (imgUrlList.value[index].likeNumber < 0)
-      imgUrlList.value[index].likeNumber = 0;
+function clickLike(id: string, index: number) {
+  if (imgUrlList[index].isLiked) {
+    imgUrlList[index].isLiked = false;
+    imgUrlList[index].likeNumber--;
+    if (imgUrlList[index].likeNumber < 0)
+      imgUrlList[index].likeNumber = 0;
   } else {
-    imgUrlList.value[index].isLiked = true;
-    imgUrlList.value[index].likeNumber++;
+    imgUrlList[index].isLiked = true;
+    imgUrlList[index].likeNumber++;
   }
   doLike({ targetId: id, targetType: 5 });
 }
@@ -198,7 +203,14 @@ let getCatImageReq = reactive<GetImageByCatReq>({
   prevId: "",
   limit: 6
 });
-let imgUrlList = ref<ImageInfo[]>([]);
+let imgUrlList = reactive<ImageInfo[]>([]);
+const imgUrls = computed(() => {
+  const tmp = <string[]>[];
+  for (const img of imgUrlList) {
+    tmp.push(img.url);
+  }
+  return tmp;
+});
 let Sterilized: string;
 let Snipped: string;
 let noMore = ref<boolean>(false);
@@ -272,17 +284,14 @@ const getCatImageHandler = () => {
         getCount({ targetId: res.images[i].id, targetType: 5 }).then((res) => {
           imageUrl.likeNumber = res.count;
         });
-        imgUrlList.value.push(imageUrl);
+        imgUrlList.push(imageUrl);
       }
-      let arr: Array<any> = Object.keys(res.images);
+      let arr = Object.keys(res.images);
       //获取得到的images的长度用以判断是否还有尚未加载的照片
       number += arr.length;
-      if (
-        number === 0 ||
-        imgUrlList.value[number - 1].id === getCatImageReq.prevId
-      ) {
+      if (number === 0 || imgUrlList[number - 1].id === getCatImageReq.prevId) {
         noMore.value = true;
-      } else getCatImageReq.prevId = imgUrlList.value[number - 1].id;
+      } else getCatImageReq.prevId = imgUrlList[number - 1].id;
     });
 };
 getCatImageHandler();
