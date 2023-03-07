@@ -13,27 +13,6 @@
     </view>
   </uni-nav-bar>
   <view class="content">
-    <!-- 搜索框 -->
-    <view
-      class="border d-flex mx-3 a-center j-sb px-3 mt-1"
-      style="
-        height: 80rpx;
-        border-radius: 50rpx;
-        border-color: #a0cce9;
-        border-width: 3rpx;
-      "
-    >
-      <input
-        v-model="searchCatPreviewsReq.keyword"
-        maxlength="20"
-        placeholder="搜索猫咪"
-      />
-      <image
-        :src="Icons.Search"
-        style="width: 60rpx; height: 60rpx"
-        @click="onClickSearch"
-      />
-    </view>
     <!-- 校区选择框   -->
     <view class="school-box">
       <view class="school-select-box">

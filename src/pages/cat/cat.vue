@@ -51,7 +51,7 @@
         </view>
       </view>
       <view class="combination">
-        <view class="attribute"> 当前地区</view>
+        <view class="attribute"> 出没地区</view>
         <view class="area-content font-weight font-lg">
           {{ cat.area }}
         </view>

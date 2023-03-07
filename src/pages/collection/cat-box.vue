@@ -13,7 +13,7 @@
         <text>花色：{{ cat.color }}</text>
       </view>
       <view class="data">
-        <text>当前地区： {{ cat.area }}</text>
+        <text>出没地区： {{ cat.area }}</text>
       </view>
     </view>
   </view>

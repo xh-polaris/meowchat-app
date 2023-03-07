@@ -16,7 +16,7 @@
           v-model="searchText"
           class="search-text ml-2"
           maxlength="20"
-          placeholder="搜索帖子|动态|图鉴"
+          placeholder="帖子 | 动态 | 图鉴"
           type="text"
         />
       </view>

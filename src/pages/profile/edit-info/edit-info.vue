@@ -17,7 +17,7 @@
     <text class="nickname">昵称</text>
     <view class="choose-nickname-row">
       <input
-        class="weui-input"
+        class="update-nickname"
         placeholder="请输入昵称"
         type="nickname"
         :value="userInfo.nickname ? userInfo.nickname : props.nickname"
@@ -34,8 +34,7 @@
 import { updateUserInfo } from "@/apis/user/user";
 import { UpdateUserInfoReq } from "@/apis/user/user-interfaces";
 import { Prefixes, putObject } from "@/apis/cos/cos";
-import { reactive, ref } from "vue";
-import { onShow } from "@dcloudio/uni-app";
+import { reactive } from "vue";
 import { Pages, Pictures } from "@/utils/url";
 
 const props = defineProps<{

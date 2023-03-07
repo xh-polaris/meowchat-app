@@ -5,14 +5,16 @@
       "path": "pages/world/world",
       "style": {
         "navigationBarTitleText": "喵世界",
-        "navigationStyle": "custom"
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
       }
     },
     {
       "path": "pages/community/community",
       "style": {
         "navigationBarTitleText": "喵社区",
-        "navigationStyle": "custom"
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -28,7 +30,8 @@
       "path": "pages/profile/profile",
       "style": {
         "navigationBarTitleText": "个人中心",
-        "navigationStyle": "custom"
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -70,13 +73,15 @@
     {
       "path": "pages/moment/moment",
       "style": {
-        "navigationBarTitleText": "动态详情"
+        "navigationBarTitleText": "动态详情",
+        "enablePullDownRefresh": true
       }
     },
     {
       "path": "pages/post/post",
       "style": {
-        "navigationBarTitleText": "帖子详情"
+        "navigationBarTitleText": "帖子详情",
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -89,46 +94,19 @@
       "path": "pages/cat/cat",
       "style": {
         "navigationBarTitleText": "喵详情",
-        //"navigationStyle": "custom",
-        "app-plus": {
-          "bounce": "none",
-          //关闭窗口回弹效果
-          "titleNView": {
-            "buttons": [
-              //原生标题栏按钮配置,
-              {
-                "type": "none",
-                // "text": "\u2713",
-                "float": "right"
-              },
-              {
-                "text": "城市",
-                "fontSrc": "",
-                "fontSize": "16",
-                "float": "left",
-                "color": "#101010"
-              }
-            ]
-          }
-        }
+        "enablePullDownRefresh": true
       }
     },
     {
       "path": "pages/search/search",
       "style": {
-        "navigationBarTitleText": "搜索",
-        "app-plus": {
-          "titleNView": {
-            "autoBackButton": false
-          }
-        }
+        "navigationBarTitleText": "搜索"
       }
     },
     {
       "path": "pages/draft/draft-nav/draft-nav",
       "style": {
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "navigationStyle": "custom"
       }
     },
     {
@@ -152,7 +130,8 @@
 	{
 	  "path": "pages/draft/choose-cat/choose-cat",
 	  "style": {
-	    "navigationBarTitleText": "选择猫咪"
+	    "navigationBarTitleText": "选择猫咪",
+        "enablePullDownRefresh": true
 	  }
 	},
     {
@@ -163,8 +142,7 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "喵世界",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8",
-    "enablePullDownRefresh": true
+    "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
     "custom": true,

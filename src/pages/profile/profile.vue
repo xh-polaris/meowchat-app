@@ -72,10 +72,10 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
-import { onShow } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
@@ -84,12 +84,16 @@ const userInfo = reactive<User>({
   nickname: "微信用户",
   avatarUrl: "https://static.xhpolaris.com/cat_world.jpg"
 });
-
-onShow(() => {
-  getUserInfo().then((res) => {
-    userInfo.id = res.user.id;
-    userInfo.nickname = res.user.nickname;
-    userInfo.avatarUrl = res.user.avatarUrl;
+const refresh = async () => {
+  const res = await getUserInfo();
+  userInfo.id = res.user.id;
+  userInfo.nickname = res.user.nickname;
+  userInfo.avatarUrl = res.user.avatarUrl;
+};
+onShow(refresh);
+onPullDownRefresh(() => {
+  refresh().then(() => {
+    uni.stopPullDownRefresh();
   });
 });
 function showToast() {
