@@ -1,5 +1,24 @@
 
 
+## [1.7.9](https://github.com/xh-polaris/meowchat-app/compare/v1.7.8...v1.7.9) (2023-03-07)
+
+
+### ✨ Features | 新功能
+
+* 新增图鉴照片墙点赞，修复修改姓名问题 ([#219](https://github.com/xh-polaris/meowchat-app/issues/219)) ([f0b1311](https://github.com/xh-polaris/meowchat-app/commit/f0b1311ceb5ff233106950692fb3a975b9288c47))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复公告处的问题 ([#220](https://github.com/xh-polaris/meowchat-app/issues/220)) ([6f8f489](https://github.com/xh-polaris/meowchat-app/commit/6f8f4896c471eec06df27e21bcfc524382f00da5))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 禁用没有设置刷新的页面的下拉刷新功能，移除图鉴的搜索框 ([a91c12b](https://github.com/xh-polaris/meowchat-app/commit/a91c12b553ebee5d0d2f2d9a9617999d8ba43588))
+* 上传头像时，在图片上传完成前禁止确认 ([9cab060](https://github.com/xh-polaris/meowchat-app/commit/9cab0606c56a395a64b2dc33e62c4c9a1424e5a7))
+* 搜索页面的动态和帖子在无数据时显示效果一致 ([11dd475](https://github.com/xh-polaris/meowchat-app/commit/11dd475637f7667646808c2b9d6df9dae078eb90))
+
 ## [1.7.8](https://github.com/xh-polaris/meowchat-app/compare/v1.7.7...v1.7.8) (2023-03-07)
 
 
