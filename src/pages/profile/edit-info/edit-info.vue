@@ -17,7 +17,7 @@
     <text class="nickname">昵称</text>
     <view class="choose-nickname-row">
       <input
-        class="update-nickname"
+        class="weui-input"
         placeholder="请输入昵称"
         type="nickname"
         :value="userInfo.nickname ? userInfo.nickname : props.nickname"

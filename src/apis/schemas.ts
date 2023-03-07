@@ -122,9 +122,10 @@ export interface Moment {
   photos: Array<string>;
 }
 
-export enum TargetType {
+export const enum TargetType {
   Post = 1,
   Comment,
   Cat,
-  Moment
+  Moment,
+  Cat_Photo
 }
