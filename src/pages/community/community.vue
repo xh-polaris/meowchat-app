@@ -34,7 +34,7 @@
   <view v-if="!isRefreshing">
     <carousel-frame />
   </view>
-
+  <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
   <view>
     <masonry v-if="!isRefreshing" search="default" />
   </view>

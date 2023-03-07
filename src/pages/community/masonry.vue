@@ -227,25 +227,6 @@ onBeforeMount(() => {
   isBatchLoading = true;
   addBatch();
 });
-
-// onPullDownRefresh(() => {
-//   pageRefresh();
-// });
-
-// function pageRefresh() {
-//   leftMoments.splice(0);
-//   rightMoments.splice(0);
-//   isLastBatch = false;
-//   index = 0;
-//   loadedAmount = 0;
-//   isBatchLoaded = false;
-//   isBatchLoadedAll = false;
-//   page = 0;
-//   leftHeight = 0;
-//   rightHeight = 0;
-//   addBatch();
-//   uni.stopPullDownRefresh();
-// }
 </script>
 
 <style lang="scss" scoped>
@@ -263,7 +244,6 @@ $avatarWidth: calc(21 / 390 * 100vw);
 .masonry {
   background-color: #fafcff;
   display: flex;
-  padding-top: calc(12 / 390 * 100vw);
 }
 
 .column-left {
