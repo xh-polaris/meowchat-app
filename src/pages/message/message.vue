@@ -1,8 +1,8 @@
 <template>
   <view class="px-4">
     <!-- 公告 -->
-    <view v-if="notices">
-      <view v-for="(item, index) in notices" :key="index">
+    <view v-if="notices.data">
+      <view v-for="(item, index) in notices.data" :key="index">
         <view class="" style="background-color: #fafcff">
           <view class="d-flex px-3 py-3 a-center j-sb">
             <view class="d-flex a-center">
@@ -97,12 +97,25 @@
 import { reactive } from "vue";
 import Divider from "@/components/divider/divider.vue";
 import { getNotices } from "@/apis/notice/notice";
+import { Notice } from "@/apis/schemas";
 
-const notices = (
-  await getNotices({
-    communityId: uni.getStorageSync("communityId")
-  })
-).notices;
+// const notices = (
+//   await getNotices({
+//     communityId: uni.getStorageSync("communityId")
+//   })
+// ).notices;
+
+const notices = reactive<{ data: Notice[] }>({ data: [] });
+
+async function noticesList() {
+  notices.data = (
+    await getNotices({
+      communityId: uni.getStorageSync("communityId")
+    })
+  ).notices;
+}
+console.log(notices.data);
+noticesList();
 
 const replyList = reactive([
   {
