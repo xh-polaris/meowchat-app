@@ -123,7 +123,8 @@ const userOptions = [
   {
     title: "申请管理",
     icon: "/static/images/apply_admin.png",
-    url: "/pages/profile/apply-admin/apply-admin"
+    url: "",
+    function: showToast
   }
 ];
 </script>

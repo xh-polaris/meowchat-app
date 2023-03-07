@@ -24,7 +24,11 @@
         @blur="onNickName"
       />
     </view>
-    <button class="confirm-change" @click="onClickConfirm()">
+    <button
+      class="confirm-change"
+      :disabled="disableConfirm"
+      @click="onClickConfirm()"
+    >
       <text class="save">确认</text>
     </button>
   </view>
@@ -34,20 +38,22 @@
 import { updateUserInfo } from "@/apis/user/user";
 import { UpdateUserInfoReq } from "@/apis/user/user-interfaces";
 import { Prefixes, putObject } from "@/apis/cos/cos";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { Pages, Pictures } from "@/utils/url";
 
 const props = defineProps<{
   avatarUrl: string;
   nickname: string;
 }>();
-
+const disableConfirm = ref(false);
 const userInfo = reactive<UpdateUserInfoReq>({});
 function onChooseAvatar(e: any) {
+  disableConfirm.value = true;
   putObject({
     filePath: e.detail.avatarUrl,
     prefix: Prefixes.Avatar
   }).then((res) => {
+    disableConfirm.value = false;
     userInfo.avatarUrl = res.url;
   });
 }
