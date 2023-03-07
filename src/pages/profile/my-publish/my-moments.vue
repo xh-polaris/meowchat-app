@@ -38,6 +38,7 @@
       <image src="https://static.xhpolaris.com/nodata.png" />
     </view>
     <view class="nomore">没有更多喵~</view>
+    <view style="width: 100%; height: 40rpx"></view>
   </template>
 </template>
 

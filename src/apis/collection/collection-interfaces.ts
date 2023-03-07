@@ -88,6 +88,13 @@ export interface Image {
   url: string;
   catId: string;
 }
+export interface ImageInfo {
+  id: string;
+  url: string;
+  catId: string;
+  isLiked: boolean;
+  likeNumber: number;
+}
 export interface CreateImageResp {
   code: number;
   msg: string;

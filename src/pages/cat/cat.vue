@@ -118,11 +118,36 @@
       </view>
       <view class="imgs">
         <view class="qz_imgs qz_imgs3 clearfix">
-          <li v-for="image in imgUrlList" :key="image.id">
+          <li v-for="(image, index) in imgUrlList" :key="index">
             <image :src="image.url" mode="aspectFill" />
+            <view v-if="image.isLiked">
+              <view class="liked">
+                <image
+                  src="/static/images/like_grey_0.png"
+                  mode="widthFix"
+                  style="width: 20rpx"
+                  @click="ClickLike(image.id,index)"
+                />
+              </view>
+            </view>
+            <view v-else>
+              <view class="liked">
+                <image
+                  src="/static/images/like_grey_1.png"
+                  mode="widthFix"
+                  style="width: 20rpx"
+                  @click="ClickLike(image.id,index)"
+                />
+              </view>
+            </view>
+            <span class="liked_number">{{ image.likeNumber }}</span>
           </li>
         </view>
       </view>
+      <view v-if="noMore">
+        <view class="nomore"> 没有更多喵~ </view>
+      </view>
+      <view style="width: 100%; height: 25rpx"></view>
     </view>
   </view>
 </template>
@@ -132,18 +157,26 @@ import { reactive, ref } from "vue";
 import { Cat } from "@/apis/schemas";
 import { getCatDetail, getCatImage } from "@/apis/collection/collection";
 import {
-  Image,
+  ImageInfo,
   GetCatDetailReq,
   GetImageByCatReq
 } from "@/apis/collection/collection-interfaces";
 import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { Pages } from "@/utils/url";
+import { doLike, getUserLiked, getCount } from "@/apis/like/like";
 function draftImage() {
   uni.navigateTo({
     url: `${Pages.DraftImage}?catId=${props.id}&catName=${props.name}`
   });
 }
 
+function ClickLike(id:string,index:number) {
+  if(imgUrlList.value[index].isLiked)
+  imgUrlList.value[index].isLiked=false;
+  else
+  imgUrlList.value[index].isLiked=true;
+  doLike({ targetId: id, targetType: 5 });
+}
 const isRefreshing = ref(false);
 const props = defineProps<{
   id: string;
@@ -158,10 +191,10 @@ let getCatImageReq = reactive<GetImageByCatReq>({
   prevId: "",
   limit: 6
 });
-let imgUrlList = ref<Image[]>([]);
+let imgUrlList = ref<ImageInfo[]>([]);
 let Sterilized: string;
 let Snipped: string;
-let noMore = false;
+let noMore = ref<boolean>(false);
 const cat = reactive<Cat>({
   id: "",
   createAt: 0,
@@ -214,16 +247,33 @@ const getCatDetailHandler = () => {
 getCatDetailHandler();
 
 const getCatImageHandler = () => {
-  if (!noMore)
+  if (!noMore.value)
     getCatImage(getCatImageReq).then((res) => {
-      imgUrlList.value.push(...res.images);
+      for (var i = 0; i < res.images.length; i++) {
+        let imageUrl = reactive<ImageInfo>({
+          id: res.images[i].id,
+          url: res.images[i].url,
+          catId: res.images[i].catId,
+          isLiked: false,
+          likeNumber: 0
+        });
+        getUserLiked({ targetId: res.images[i].id, targetType: 5 }).then(
+          (res) => {
+            imageUrl.isLiked = res.liked;
+          }
+        );
+        getCount({ targetId: res.images[i].id, targetType: 5 }).then((res) => {
+          imageUrl.likeNumber = res.count;
+        });
+        imgUrlList.value.push(imageUrl);
+      }
       var arr: Array<any> = Object.keys(res.images);
       number += arr.length;
       if (
         number === 0 ||
         imgUrlList.value[number - 1].id === getCatImageReq.prevId
       ) {
-        noMore = true;
+        noMore.value = true;
       } else getCatImageReq.prevId = imgUrlList.value[number - 1].id;
     });
 };
@@ -478,6 +528,22 @@ onReachBottom(() => {
   }
 }
 
+.liked {
+  position: relative;
+  width: 20rpx;
+  height: 20rpx;
+  top: -33rpx;
+  left: 160rpx;
+}
+.liked_number {
+  position: relative;
+  width: 16rpx;
+  height: 40rpx;
+  top: -40rpx;
+  left: 165rpx;
+  color: #ffffff;
+}
+
 .spread {
   text {
     font-size: 25rpx;
@@ -505,5 +571,6 @@ onReachBottom(() => {
   font-size: 20rpx;
   line-height: 20rpx;
   text-align: center;
+  margin-bottom: 100rpx;
 }
 </style>
