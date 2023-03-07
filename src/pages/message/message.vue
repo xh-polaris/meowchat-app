@@ -114,7 +114,7 @@ async function noticesList() {
     })
   ).notices;
 }
-
+console.log(notices.data);
 noticesList();
 
 const replyList = reactive([

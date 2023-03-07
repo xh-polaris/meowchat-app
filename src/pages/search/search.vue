@@ -25,23 +25,33 @@
       </view>
     </view>
     <view v-if="!isClickSearch">
-      <view v-if="list.length !== 0" class="pl-2 pb-1 font-md">历史记录</view>
+      <view v-if="list.length !== 0">
+        <view class="d-flex a-center pl-2 pb-1">
+          <image
+            :src="Icons.Collection"
+            style="width: 45rpx; height: 45rpx"
+          ></image>
+          <view class="ml-1 mb-1" style="color: #999999; font-size: 32rpx"
+            >最近搜索</view
+          >
+        </view>
 
-      <!-- 搜索历史列表 -->
-      <view v-if="list.length !== 0" class="px-1 mb-2">
-        <view
-          v-for="(item, index) in list"
-          :key="index"
-          hover-class="bg-light"
-          class="px-2 py-1 border d-inline-block m-1 font-md"
-          :style="getStyle"
-          style="border-radius: 20rpx"
-          @click="clickSearchHistory(item)"
-        >
-          {{ item }}
+        <!-- 搜索历史列表 -->
+        <view class="px-1 mb-2">
+          <view
+            v-for="(item, index) in list"
+            :key="index"
+            hover-class="bg-light"
+            class="px-3 py-1 border d-inline-block m-1 font-md"
+            :style="getStyle"
+            style="border-radius: 40rpx; color: #515151"
+            @click="clickSearchHistory(item)"
+          >
+            {{ item }}
+          </view>
         </view>
       </view>
-      <view v-if="list.length === 0" class="pl-2 font-md">
+      <view v-else class="pl-2 font-md" style="color: #999999">
         还没有搜索历史~
       </view>
     </view>
@@ -83,7 +93,6 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
-import { onLoad } from "@dcloudio/uni-app";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import Masonry from "@/pages/community/masonry.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
@@ -104,14 +113,12 @@ const isClickSearch = ref(false);
 
 isClickSearch.value = uni.getStorageSync("isClickSearch");
 
-onLoad(() => {
-  let historyText = uni.getStorageSync("historySearchText");
-  if (list.length === 0 && historyText) {
-    list = JSON.parse(
-      decodeURIComponent(uni.getStorageSync("historySearchText"))
-    );
-  }
-});
+let historyText = uni.getStorageSync("historySearchText");
+if (list.length === 0 && historyText) {
+  list = JSON.parse(
+    decodeURIComponent(uni.getStorageSync("historySearchText"))
+  );
+}
 
 function onClickItem(e: any) {
   if (current.value !== e.currentIndex) {
@@ -154,7 +161,7 @@ function onClickSearch() {
       icon: "none"
     });
   }
-  uni.reLaunch({
+  uni.navigateTo({
     url: "/pages/search/search"
   });
 }
