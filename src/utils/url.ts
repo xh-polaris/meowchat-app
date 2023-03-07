@@ -9,7 +9,7 @@ export const enum Icons {
   UpBlack = "/static/images/up-black.png",
   NewImage = "/static/images/add.png",
   Message = "/static/images/message-black.png",
-  Collection="/static/images/collection-grey.png"
+  Collection = "/static/images/collection-grey.png"
 }
 export const enum Pages {
   Cat = "/pages/cat/cat",
