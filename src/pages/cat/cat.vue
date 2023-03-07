@@ -126,7 +126,7 @@
                   src="/static/images/like_grey_0.png"
                   mode="widthFix"
                   style="width: 20rpx"
-                  @click="ClickLike(image.id,index)"
+                  @click="ClickLike(image.id, index)"
                 />
               </view>
             </view>
@@ -136,7 +136,7 @@
                   src="/static/images/like_grey_1.png"
                   mode="widthFix"
                   style="width: 20rpx"
-                  @click="ClickLike(image.id,index)"
+                  @click="ClickLike(image.id, index)"
                 />
               </view>
             </view>
@@ -170,11 +170,9 @@ function draftImage() {
   });
 }
 
-function ClickLike(id:string,index:number) {
-  if(imgUrlList.value[index].isLiked)
-  imgUrlList.value[index].isLiked=false;
-  else
-  imgUrlList.value[index].isLiked=true;
+function ClickLike(id: string, index: number) {
+  if (imgUrlList.value[index].isLiked) imgUrlList.value[index].isLiked = false;
+  else imgUrlList.value[index].isLiked = true;
   doLike({ targetId: id, targetType: 5 });
 }
 const isRefreshing = ref(false);
