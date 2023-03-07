@@ -140,7 +140,9 @@
                 />
               </view>
             </view>
-            <span class="liked_number">{{ image.likeNumber }}</span>
+            <span class="liked_number" @click="ClickLike(image.id, index)">{{
+              image.likeNumber
+            }}</span>
           </li>
         </view>
       </view>
@@ -171,8 +173,15 @@ function draftImage() {
 }
 
 function ClickLike(id: string, index: number) {
-  if (imgUrlList.value[index].isLiked) imgUrlList.value[index].isLiked = false;
-  else imgUrlList.value[index].isLiked = true;
+  if (imgUrlList.value[index].isLiked) {
+    imgUrlList.value[index].isLiked = false;
+    imgUrlList.value[index].likeNumber--;
+    if (imgUrlList.value[index].likeNumber < 0)
+      imgUrlList.value[index].likeNumber = 0;
+  } else {
+    imgUrlList.value[index].isLiked = true;
+    imgUrlList.value[index].likeNumber++;
+  }
   doLike({ targetId: id, targetType: 5 });
 }
 const isRefreshing = ref(false);
@@ -247,7 +256,7 @@ getCatDetailHandler();
 const getCatImageHandler = () => {
   if (!noMore.value)
     getCatImage(getCatImageReq).then((res) => {
-      for (var i = 0; i < res.images.length; i++) {
+      for (let i = 0; i < res.images.length; i++) {
         let imageUrl = reactive<ImageInfo>({
           id: res.images[i].id,
           url: res.images[i].url,
@@ -265,7 +274,8 @@ const getCatImageHandler = () => {
         });
         imgUrlList.value.push(imageUrl);
       }
-      var arr: Array<any> = Object.keys(res.images);
+      let arr: Array<any> = Object.keys(res.images);
+      //获取得到的images的长度用以判断是否还有尚未加载的照片
       number += arr.length;
       if (
         number === 0 ||
