@@ -130,7 +130,7 @@ export interface MomentData {
   text: string;
   user: User;
   photos: Array<string>;
-  likedNumber:number;
+  likedNumber: number;
 }
 export const enum TargetType {
   Post = 1,
