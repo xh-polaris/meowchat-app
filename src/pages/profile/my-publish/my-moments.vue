@@ -25,7 +25,7 @@
             />
           </view>
           <view class="lower">
-            <view class="font-sm">3位喵友觉得很赞</view>
+            <view class="font-sm">{{ Moment.likedNumber }}位喵友觉得很赞</view>
             <view class="delete" @click.stop="onClickDelete(Moment.id)">
               <image class="deletepic" src="/static/images/delete.png" />
               <view class="font-sm">删除动态</view>
@@ -46,7 +46,7 @@
 import { reactive, ref } from "vue";
 import { getOwnMomentPreviews, deleteMoment } from "@/apis/moment/moment";
 import { DeleteMomentReq } from "@/apis/moment/moment-components";
-import { Moment } from "@/apis/schemas";
+import { MomentData } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import {
@@ -55,9 +55,10 @@ import {
   onClickImage
 } from "@/pages/moment/utils";
 import { onClickMoment } from "./utils";
+import { getCount } from "@/apis/like/like";
 
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
-let momentsData = ref<Moment[]>([]);
+let momentsData = ref<MomentData[]>([]);
 let page = 0;
 const getMomentsPreviewsAsync = async () => {
   let moments = (
@@ -91,11 +92,24 @@ async function onClickDelete(id: string) {
 }
 
 async function createMomentsDataBatch() {
-  console.log("asdhaifhaejkdc");
   const moments = await getMomentsPreviewsAsync();
-  momentsData.value.push(...moments);
-  console.log(moments);
-  console.log(momentsData);
+  for (let i = 0; i < moments.length; i++) {
+    let momentData = reactive<MomentData>({
+      id: moments[i].id,
+      createAt: moments[i].createAt,
+      title: moments[i].title,
+      catId: moments[i].catId,
+      communityId: moments[i].communityId,
+      text: moments[i].text,
+      user: moments[i].user,
+      photos: moments[i].photos,
+      likedNumber: 0
+    });
+    getCount({ targetId: moments[i].id, targetType: 4 }).then((res) => {
+      momentData.likedNumber = res.count;
+    });
+    momentsData.value.push(momentData);
+  }
 }
 
 createMomentsDataBatch();

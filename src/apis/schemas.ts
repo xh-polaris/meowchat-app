@@ -121,7 +121,17 @@ export interface Moment {
   user: User;
   photos: Array<string>;
 }
-
+export interface MomentData {
+  id: string;
+  createAt: number;
+  title: string;
+  catId?: string;
+  communityId: string;
+  text: string;
+  user: User;
+  photos: Array<string>;
+  likedNumber: number;
+}
 export const enum TargetType {
   Post = 1,
   Comment,
