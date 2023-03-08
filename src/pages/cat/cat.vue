@@ -122,31 +122,36 @@
             <image
               :src="image.url"
               mode="aspectFill"
+              class="cat-image"
               @click="onClickImage(index, imgUrls)"
-            />
-            <view v-if="image.isLiked">
-              <view class="liked">
-                <image
-                  src="/static/images/like_grey_0.png"
-                  mode="widthFix"
-                  style="width: 20rpx"
-                  @click="clickLike(image.id, index)"
-                />
+            >
+              <view class="shadow" />
+              <view class="liked-info">
+                <view
+                  v-if="image.isLiked"
+                  class="liked"
+                  style="
+                    background-image: url('/static/images/like_grey_1.png');
+                  "
+                  @click.prevent="clickLike(image.id, index)"
+                >
+                </view>
+                <view
+                  v-else
+                  class="liked"
+                  style="
+                    background-image: url('/static/images/like_grey_0.png');
+                  "
+                  @click.prevent="clickLike(image.id, index)"
+                >
+                </view>
+                <span
+                  class="liked_number"
+                  @click.prevent="ClickLike(image.id, index)"
+                  >{{ image.likeNumber }}</span
+                >
               </view>
-            </view>
-            <view v-else>
-              <view class="liked">
-                <image
-                  src="/static/images/like_grey_1.png"
-                  mode="widthFix"
-                  style="width: 20rpx"
-                  @click="clickLike(image.id, index)"
-                />
-              </view>
-            </view>
-            <span class="liked_number" @click="ClickLike(image.id, index)">{{
-              image.likeNumber
-            }}</span>
+            </image>
           </li>
         </view>
       </view>
@@ -544,20 +549,34 @@ onReachBottom(() => {
   }
 }
 
-.liked {
+.cat-image {
   position: relative;
-  width: 20rpx;
-  height: 20rpx;
-  top: -33rpx;
-  left: 160rpx;
-}
-.liked_number {
-  position: relative;
-  width: 16rpx;
-  height: 40rpx;
-  top: -40rpx;
-  left: 165rpx;
-  color: #ffffff;
+  .shadow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 80upx;
+    width: 100%;
+    background: linear-gradient(#22222200, #222222aa);
+  }
+  .liked-info {
+    position: absolute;
+    bottom: 12upx;
+    right: 12upx;
+    display: flex;
+    align-items: center;
+    .liked {
+      width: 28upx;
+      height: 28upx;
+      background-size: 100% 100%;
+      filter: brightness(200%);
+      margin-right: 8upx;
+    }
+    .liked_number {
+      font-size: 28upx;
+      color: #eeeeee;
+    }
+  }
 }
 
 .spread {
