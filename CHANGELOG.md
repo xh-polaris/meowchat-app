@@ -1,5 +1,17 @@
 
 
+## [1.8.0](https://github.com/xh-polaris/meowchat-app/compare/v1.7.11...v1.8.0) (2023-03-08)
+
+
+### ✨ Features | 新功能
+
+* 添加了图鉴详情中猫片阴影，完善了点赞的样式 ([#225](https://github.com/xh-polaris/meowchat-app/issues/225)) ([7894dff](https://github.com/xh-polaris/meowchat-app/commit/7894dffcdf6e6f5ff04b2dbaa29de704cbf6dd0c))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复school-select显示异常 ([#226](https://github.com/xh-polaris/meowchat-app/issues/226)) ([9ffc082](https://github.com/xh-polaris/meowchat-app/commit/9ffc082825399b83c0b92b8f16bd83b783d77509))
+
 ## [1.7.11](https://github.com/xh-polaris/meowchat-app/compare/v1.7.10...v1.7.11) (2023-03-08)
 
 
