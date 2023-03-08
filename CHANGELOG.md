@@ -1,5 +1,7 @@
 
 
+## [1.7.12](https://github.com/xh-polaris/meowchat-app/compare/v1.7.11...v1.7.12) (2023-03-08)
+
 ## [1.7.11](https://github.com/xh-polaris/meowchat-app/compare/v1.7.10...v1.7.11) (2023-03-08)
 
 
