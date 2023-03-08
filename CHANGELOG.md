@@ -1,5 +1,13 @@
 
 
+## [1.7.11](https://github.com/xh-polaris/meowchat-app/compare/v1.7.10...v1.7.11) (2023-03-08)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复瀑布流显示异常 ([#224](https://github.com/xh-polaris/meowchat-app/issues/224)) ([68ca829](https://github.com/xh-polaris/meowchat-app/commit/68ca829a7c8568a03328673ebe7c583747b7de77))
+* 修改我的发布中动态的点赞数目为实际值 ([#223](https://github.com/xh-polaris/meowchat-app/issues/223)) ([b6160ec](https://github.com/xh-polaris/meowchat-app/commit/b6160ecaa6a0d586aa16e4317b1222101d96520b)), closes [#190](https://github.com/xh-polaris/meowchat-app/issues/190)
+
 ## [1.7.10](https://github.com/xh-polaris/meowchat-app/compare/v1.7.9...v1.7.10) (2023-03-07)
 
 
