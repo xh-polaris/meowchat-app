@@ -25,7 +25,7 @@
             />
           </view>
           <view class="lower">
-            <view class="font-sm">{{Moment.likedNumber}}位喵友觉得很赞</view>
+            <view class="font-sm">{{ Moment.likedNumber }}位喵友觉得很赞</view>
             <view class="delete" @click.stop="onClickDelete(Moment.id)">
               <image class="deletepic" src="/static/images/delete.png" />
               <view class="font-sm">删除动态</view>
@@ -93,24 +93,22 @@ async function onClickDelete(id: string) {
 
 async function createMomentsDataBatch() {
   const moments = await getMomentsPreviewsAsync();
-  for(let i=0;i<moments.length;i++){
-	  let momentData= reactive<MomentData>({
-          id: moments[i].id,
-          createAt: moments[i].createAt,
-          title: moments[i].title,
-          catId: moments[i].catId,
-          communityId: moments[i].communityId,
-          text: moments[i].text,
-          user: moments[i].user,
-          photos: moments[i].photos,
-          likedNumber: 0,
-        });
-		getCount({targetId:moments[i].id,targetType:4}).then(
-          (res) => {
-            momentData.likedNumber = res.count;
-          }
-        );
-		momentsData.value.push(momentData);
+  for (let i = 0; i < moments.length; i++) {
+    let momentData = reactive<MomentData>({
+      id: moments[i].id,
+      createAt: moments[i].createAt,
+      title: moments[i].title,
+      catId: moments[i].catId,
+      communityId: moments[i].communityId,
+      text: moments[i].text,
+      user: moments[i].user,
+      photos: moments[i].photos,
+      likedNumber: 0
+    });
+    getCount({ targetId: moments[i].id, targetType: 4 }).then((res) => {
+      momentData.likedNumber = res.count;
+    });
+    momentsData.value.push(momentData);
   }
   console.log(moments);
   console.log(momentsData);
