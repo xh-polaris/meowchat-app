@@ -181,14 +181,16 @@ const addBatch = async () => {
 
 const onLoadLeft = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
+  // 事实上 target.offsetHeight 是拿不到的
   leftHeight =
-    target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
+    target.offsetTop + (target?.offsetHeight ? target.offsetHeight : target.height);
   onLoad();
 };
 const onLoadRight = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
+  // 事实上 target.offsetHeight 是拿不到的
   rightHeight =
-    target.offsetTop + (target?.offsetHeight ? target.offsetHeight : 0);
+    target.offsetTop + (target?.offsetHeight ? target.offsetHeight : target.height);
   onLoad();
 };
 
