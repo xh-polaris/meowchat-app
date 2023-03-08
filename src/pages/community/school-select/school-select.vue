@@ -26,11 +26,13 @@
       <view class="current_school">
         <view class="current_school_text">{{ currentSchool }}</view>
       </view>
-      <view v-if="sel" class="select" @click="change">
-        <text>{{ currentCampus }}</text>
-        <image class="arrow" :src="Icons.DownBlack" />
+      <view v-if="sel">
+        <view class="select" @click="change">
+          <text>{{ currentCampus }}</text>
+          <image class="arrow" :src="Icons.DownBlack" />
+        </view>
       </view>
-      <view v-else class="box">
+      <view v-else>
         <view class="select2" @click="change">
           <text>{{ currentCampus }}</text>
           <image class="arrow" :src="Icons.UpBlack" />
@@ -343,12 +345,12 @@ function changeSchool(name: string, index: number) {
 .select {
   padding: 10rpx 10rpx 10rpx 20rpx;
   border: black 1px solid;
-  border-radius: 20px;
+  border-radius: 12px;
   position: relative;
   margin-top: 10rpx;
   margin-right: 20rpx;
-  outline: none;
   display: flex;
+  align-items: center;
 
   text {
     font-size: 25rpx;
@@ -362,13 +364,13 @@ function changeSchool(name: string, index: number) {
   padding: 10rpx 10rpx 10rpx 20rpx;
   border: black 1px solid;
   border-bottom: none;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   position: relative;
   margin-top: 10rpx;
   margin-right: 20rpx;
-  outline: none;
   display: flex;
+  align-items: center;
 
   text {
     font-size: 25rpx;
@@ -378,30 +380,24 @@ function changeSchool(name: string, index: number) {
   }
 }
 
-.box {
-  flex-direction: column;
-}
-
 .arrow {
   width: 25rpx;
   height: 15rpx;
-  margin-top: 10rpx;
   margin-right: 10rpx;
 }
 
 .option {
   border: black 1px solid;
   border-top: none;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
   position: absolute;
   line-height: 60rpx;
   margin-right: 25rpx;
-  flex-direction: row;
   z-index: 100;
 
   text {
-    padding: 0 10rpx 0 20rpx;
+    padding-left: 20rpx;
     color: #7f7f81;
     font-size: 25rpx;
     font-weight: bold;
@@ -413,8 +409,6 @@ function changeSchool(name: string, index: number) {
   text::before {
     content: "";
     position: absolute;
-    left: 5%;
-    top: 0;
     width: 90%;
     height: 1rpx;
     background-color: #7f7f81;
