@@ -110,8 +110,6 @@ async function createMomentsDataBatch() {
     });
     momentsData.value.push(momentData);
   }
-  console.log(moments);
-  console.log(momentsData);
 }
 
 createMomentsDataBatch();
