@@ -1,5 +1,12 @@
 
 
+## [1.8.1](https://github.com/xh-polaris/meowchat-app/compare/v1.8.0...v1.8.1) (2023-03-09)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 提高底部导航栏的清晰度 ([9ab8bb8](https://github.com/xh-polaris/meowchat-app/commit/9ab8bb86a160d2d15c779697e567f5b24841b3d2))
+
 ## [1.8.0](https://github.com/xh-polaris/meowchat-app/compare/v1.7.11...v1.8.0) (2023-03-08)
 
 
