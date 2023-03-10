@@ -1,5 +1,12 @@
 
 
+## [1.8.7](https://github.com/xh-polaris/meowchat-app/compare/v1.8.6...v1.8.7) (2023-03-10)
+
+
+### ✨ Features | 新功能
+
+* 图片可拖拽排序 ([#229](https://github.com/xh-polaris/meowchat-app/issues/229)) ([9f399e2](https://github.com/xh-polaris/meowchat-app/commit/9f399e2ade0c0d93502ac62f1980ad5ce2d4c2f8))
+
 ## [1.8.6](https://github.com/xh-polaris/meowchat-app/compare/v1.8.5...v1.8.6) (2023-03-10)
 
 
