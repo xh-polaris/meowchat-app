@@ -1,6 +1,11 @@
 <template>
   <view v-if="!isRefreshing">
-    <image :src="mainImgUrl" class="img" mode="widthFix" />
+    <image
+      :src="mainImgUrl"
+      class="img"
+      mode="widthFix"
+      @click="onClickAvatar(mainImgUrl, cat.avatars)"
+    />
     <view>
       <scroll-view scroll-x="true" class="scroll-view-item_H" scroll-left="120">
         <li
@@ -166,7 +171,7 @@
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
 import { Cat } from "@/apis/schemas";
-import { onClickImage } from "@/pages/cat/utils";
+import { onClickImage, onClickAvatar } from "@/pages/cat/utils";
 import { getCatDetail, getCatImage } from "@/apis/collection/collection";
 import {
   ImageInfo,

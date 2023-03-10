@@ -4,3 +4,10 @@ export function onClickImage(index: number, images: string[]) {
     current: index
   });
 }
+
+export function onClickAvatar(current: string, images: string[]) {
+  uni.previewImage({
+    urls: images,
+    current: current
+  });
+}
