@@ -7,10 +7,8 @@
           class="mb-1"
           style="
             background-color: #fafcff;
-            border: solid;
             border-radius: 30rpx;
-            border-color: #949494;
-            border-width: 0.1vw;
+            border: 0.1vw solid #949494;
           "
         >
           <view class="d-flex px-3 py-3 a-center j-sb">
@@ -32,7 +30,7 @@
           </view>
           <view class="font-md px-4 mb-5">{{ item.text }}</view>
           <view class="font-md px-4 py-3" style="color: #b4b4b4"
-            >{{ item.createAt }} 发布</view
+            >{{ displayTime(item.createAt) }} 发布</view
           >
         </view>
       </view>
@@ -107,6 +105,7 @@ import { reactive } from "vue";
 import Divider from "@/components/divider/divider.vue";
 import { getNotices } from "@/apis/notice/notice";
 import { Notice } from "@/apis/schemas";
+import { displayTime } from "@/utils/time";
 
 // const notices = (
 //   await getNotices({

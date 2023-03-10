@@ -13,7 +13,7 @@
     <view class="head-info">
       {{ displayTime(post.data.createAt) }} · {{ post.data.comments }}条回复
     </view>
-    <view class="tags">
+    <view v-if="post.data.tags" class="tags">
       <image class="tagIcon" src="/static/images/tag.png" />
       <view v-for="(item, index) in post.data.tags" :key="index" class="tag">
         {{ item }}
