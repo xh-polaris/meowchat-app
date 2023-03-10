@@ -20,6 +20,9 @@
       <view class="post-content font-md">
         {{ moment.data.text }}
       </view>
+      <view v-if="catName" class="font-md mb-2" style="color: #5272ff">
+        @{{ catName }}
+      </view>
       <view class="like-info"> {{ moment.likeData.count }} 位喵友觉得很赞</view>
       <view :class="chooseImageClass(moment.data.photos.length)">
         <image
@@ -105,6 +108,7 @@ import {
   onClickImage
 } from "@/pages/moment/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
+import { getCatDetail } from "@/apis/collection/collection";
 import { getUserInfo } from "@/apis/user/user";
 import { deleteMoment, getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
@@ -124,6 +128,7 @@ import { Pages } from "@/utils/url";
 const props = defineProps<{
   id: string;
 }>();
+
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
   momentId: props.id
 });
@@ -150,6 +155,7 @@ const moment = reactive<{
     count: 0
   }
 });
+
 const myUserId = ref("");
 
 const likeReq = reactive<GetCountReq>({
@@ -159,12 +165,21 @@ const likeReq = reactive<GetCountReq>({
 
 const isShowDeleteDialogue = ref(false);
 
+let catName = ref("");
+
 const getData = async () => {
   moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
   moment.likeData = await getLikeData(likeReq);
   getUserInfo().then((res) => {
     myUserId.value = res.user.id;
   });
+  if (moment.data.catId) {
+    getCatDetail({
+      catId: moment.data.catId
+    }).then((res) => {
+      catName.value = res.cat.name;
+    });
+  }
 };
 
 const getCommentsReq = reactive<GetCommentsReq>({
@@ -407,7 +422,7 @@ function leaveReply() {
     }
 
     .post-content {
-      margin-bottom: 15px;
+      margin-bottom: 20rpx;
       line-height: 1.5em;
       letter-spacing: 0.05em;
       font-weight: 500;
