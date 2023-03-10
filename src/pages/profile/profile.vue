@@ -207,7 +207,7 @@ const userOptions = [
   align-items: center;
   background: rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid #f8f8f8;
-
+  opacity: 0.85; //设置透明度
   .cell-left {
     display: flex;
     align-items: center;

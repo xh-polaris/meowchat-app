@@ -481,7 +481,7 @@ onReachBottom(() => {
     white-space: nowrap;
     //padding-left: 30rpx;
     padding-top: 10rpx;
-    border-radius: 30rpx;
+    border-radius: 20rpx 20rpx 5rpx 5rpx;
   }
 
   .end {
@@ -492,8 +492,8 @@ onReachBottom(() => {
     min-height: 200rpx;
     color: white;
     // background: linear-gradient(90deg, #0688f3, white);
-    background: #fcf7e5;
-    border-radius: 30rpx;
+    background: #eaf6ff;
+    border-radius: 5rpx 5rpx 20rpx 20rpx;
   }
 
   .detail_info {

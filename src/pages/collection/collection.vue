@@ -324,9 +324,9 @@ onShow(() => {
 
   .row {
     background-color: #ffffff;
-    border-radius: 25px;
+    border-radius: 15px;
     border: 5rpx solid #f1f1f1;
-    padding: 10rpx 0;
+    padding: 12rpx 0;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
   }
 }
