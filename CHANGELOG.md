@@ -1,5 +1,14 @@
 
 
+## [1.8.5](https://github.com/xh-polaris/meowchat-app/compare/v1.8.4...v1.8.5) (2023-03-10)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 草稿状态无法查看大图 ([#227](https://github.com/xh-polaris/meowchat-app/issues/227)) ([28d0fd0](https://github.com/xh-polaris/meowchat-app/commit/28d0fd08df9886022d1d3b07012f116a0c8abd14))
+* 修改反馈的样式问题 11 12 14 17 ([#228](https://github.com/xh-polaris/meowchat-app/issues/228)) ([9df03da](https://github.com/xh-polaris/meowchat-app/commit/9df03dadb29c2433fee71a083d6529020643af86))
+* 修改选择猫咪处UI的显示问题 ([#230](https://github.com/xh-polaris/meowchat-app/issues/230)) ([59610bd](https://github.com/xh-polaris/meowchat-app/commit/59610bd548417150383228da82933a78814a1ad7))
+
 ## [1.8.4](https://github.com/xh-polaris/meowchat-app/compare/v1.8.3...v1.8.4) (2023-03-10)
 
 
