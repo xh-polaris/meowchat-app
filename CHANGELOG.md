@@ -1,5 +1,12 @@
 
 
+## [1.8.3](https://github.com/xh-polaris/meowchat-app/compare/v1.8.2...v1.8.3) (2023-03-10)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 猫咪详情内可以保存猫咪头像 ([530c00e](https://github.com/xh-polaris/meowchat-app/commit/530c00e52790b801a8e97e97ad35d7b8ad51b39c))
+
 ## [1.8.2](https://github.com/xh-polaris/meowchat-app/compare/v1.8.1...v1.8.2) (2023-03-10)
 
 
