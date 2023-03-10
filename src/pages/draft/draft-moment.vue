@@ -2,8 +2,12 @@
   <view class="all">
     <view class="main">
       <view class="images">
-        <template v-for="image in imagesData" :key="image.id">
-          <image :src="image.url" class="added-image" />
+        <template v-for="(image, index) in imagesData" :key="image.id">
+          <image
+            :src="image.url"
+            class="added-image"
+            @click="showImage(index)"
+          />
         </template>
         <view
           v-if="imagesData.length < 9"
@@ -103,6 +107,7 @@ import { Pages, Icons } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import Deal from "@/components/deal-policy/deal.vue";
 import Policy from "@/components/deal-policy/policy.vue";
+import { onClickImage } from "@/pages/cat/utils";
 
 const imagesData = reactive<any>([]);
 
@@ -210,6 +215,11 @@ function publishMoment() {
       }
     });
   });
+}
+
+function showImage(index: number) {
+  const imageUrl = imagesData.map((item: any) => item.url);
+  onClickImage(index, imageUrl);
 }
 
 // 控制协议和政策区域
