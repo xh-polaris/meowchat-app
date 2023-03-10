@@ -226,8 +226,8 @@ onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这�
 @import "@/common/third-party/zcm-main.css";
 
 .arrow {
-  width: 44rpx;
-  height: 50rpx;
+  width: 32rpx;
+  height: 40rpx;
   margin: 30rpx 0 30rpx 20rpx;
 }
 

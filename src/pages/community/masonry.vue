@@ -307,7 +307,8 @@ $avatarWidth: calc(21 / 390 * 100vw);
       justify-content: space-between;
 
       .time {
-        margin-top: 18rpx;
+        font-size: calc(6 / 390 * 150vw);
+        color: #939393;
       }
     }
   }

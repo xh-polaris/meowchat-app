@@ -4,15 +4,15 @@
   padding: calc(8 / 390 * 100vw) 0;
 
   .avatar {
-    width: calc(21 / 390 * 150vw);
-    height: calc(21 / 390 * 150vw);
+    width: calc(12 / 390 * 150vw);
+    height: calc(12 / 390 * 150vw);
     border-radius: 50%;
     background-color: #ccc;
     margin-right: calc(4 / 390 * 100vw);
   }
 
   .username {
-    font-size: calc(8 / 390 * 150vw);
-    color: #696969;
+    font-size: calc(6 / 390 * 150vw);
+    color: #939393;
   }
 }
