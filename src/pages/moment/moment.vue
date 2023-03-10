@@ -12,7 +12,7 @@
           · {{ displayTime(moment.data.createAt) }}
         </text>
         <view
-          v-if="myUserId === moment.data.user.id"
+          v-if="myUserId && myUserId === moment.data.user.id"
           class="delete"
           @click="showDeleteDialogue"
         ></view>
