@@ -2,10 +2,11 @@
   <view class="all">
     <view class="main">
       <view class="images">
-        <template v-for="image in imagesData" :key="image.id">
+        <template v-for="(image, index) in imagesData" :key="image.id">
           <view
             :style="{ backgroundImage: 'url(' + image.url + ')' }"
             class="added-image"
+            @click="showImage(index)"
           />
         </template>
         <view
@@ -58,6 +59,7 @@ import Policy from "@/components/deal-policy/policy.vue";
 import { CatImage } from "@/apis/collection/collection-interfaces";
 import { CreateImage } from "@/apis/collection/collection";
 import { Pages } from "@/utils/url";
+import { onClickImage } from "@/pages/cat/utils";
 const props = defineProps<{
   catId: string;
   catName: string;
@@ -131,6 +133,10 @@ function showDeal() {
 function showPolicy() {
   type.value = 2;
   isShow.value = !isShow.value;
+}
+function showImage(index: number) {
+  const imageUrl = imagesData.map((item: any) => item.url);
+  onClickImage(index, imageUrl);
 }
 </script>
 
