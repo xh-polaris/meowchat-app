@@ -107,12 +107,6 @@ import { getNotices } from "@/apis/notice/notice";
 import { Notice } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 
-// const notices = (
-//   await getNotices({
-//     communityId: uni.getStorageSync("communityId")
-//   })
-// ).notices;
-
 const notices = reactive<{ data: Notice[] }>({ data: [] });
 
 async function noticesList() {

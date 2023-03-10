@@ -91,17 +91,6 @@
                 <view class="name">
                   {{ cat.name }}
                 </view>
-                <view class="collect">
-                  <image
-                    :src="
-                      cat.isCollected
-                        ? '/static/images/collect.png'
-                        : '/static/images/collect_HL.png'
-                    "
-                    mode="aspectFill"
-                    @click.stop="onClickCollect"
-                  />
-                </view>
               </view>
               <view class="d-flex a-center j-sb">
                 <view class="">
@@ -113,8 +102,8 @@
                   </view>
                 </view>
                 <view
-                  class="border px-3 py-1 font-md"
-                  style="border-radius: 50rpx"
+                  class="border px-2 py-1 font-md text-center"
+                  style="border-radius: 50rpx;width: 100rpx;"
                   @click.stop="choose(cat.avatarUrl, cat.name, cat.id)"
                 >
                   选择
@@ -135,7 +124,7 @@
 <script lang="ts" setup>
 import { Pictures, Icons, Pages } from "@/utils/url";
 import { reactive, ref, getCurrentInstance } from "vue";
-import { onClickCatBox, onClickCollect } from "@/pages/collection/utils";
+import { onClickCatBox} from "@/pages/collection/utils";
 import {
   getCatPreviews,
   searchCatPreviews
