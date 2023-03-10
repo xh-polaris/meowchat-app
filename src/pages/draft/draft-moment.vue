@@ -13,7 +13,7 @@
       </view>
       <view class="image-num"> {{ imagesData.length }}/9</view>
       <view class="m-2">
-        <fui-button
+        <FuiTextArea
           v-model="title"
           text="默认按钮"
           height="50rpx"
@@ -25,20 +25,21 @@
           bottom-left="20"
           bottom-right="20"
           :border-bottom="true"
-        ></fui-button>
+        ></FuiTextArea>
       </view>
 
       <view class="mx-2 mt-2">
-        <fui-button
+        <FuiTextArea
           v-model="text"
           text="默认按钮"
           color="black"
+          maxlength="2000"
           :is-counter="true"
           :border-top="false"
           :border-bottom="false"
           placeholder="说点什么吧!"
           height="350rpx"
-        ></fui-button>
+        ></FuiTextArea>
       </view>
 
       <view class="choose-cats-bar">
@@ -98,7 +99,7 @@ import { Prefixes, putObject } from "@/apis/cos/cos";
 import { onShow, onUnload } from "@dcloudio/uni-app";
 
 import { newMoment } from "@/apis/moment/moment";
-import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
+import FuiTextArea from "@/components/third-party/fui-textarea/fui-textarea.vue";
 import { Pages, Icons } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import Deal from "@/components/deal-policy/deal.vue";

@@ -2,7 +2,7 @@
   <view class="all">
     <view class="main">
       <view class="m-2">
-        <fui-button
+        <FuiTextArea
           v-model="title"
           :border-bottom="true"
           :border-top="false"
@@ -14,12 +14,13 @@
           height="50rpx"
           placeholder="输入标题"
           text="默认按钮"
-        ></fui-button>
+        ></FuiTextArea>
       </view>
 
       <view class="mx-2 mt-2">
-        <fui-button
+        <FuiTextArea
           v-model="text"
+          maxlength="2000"
           :border-bottom="false"
           :border-top="false"
           :is-counter="true"
@@ -28,7 +29,7 @@
           placeholder="说点什么吧！&#10;内容编辑完成后，将经过审核，审核通过后即发布成功，请耐心等待"
           text="默认按钮"
         >
-        </fui-button>
+        </FuiTextArea>
       </view>
 
       <view class="">
@@ -49,12 +50,12 @@
     <!-- 添加标签 -->
     <view class="mx-4 tag-box">
       <view class="p-2">
-        <robby-tags
+        <RobbyTags
           v-model="tags"
           :enable-add="true"
           :enable-del="true"
           :value="tags"
-        ></robby-tags>
+        ></RobbyTags>
       </view>
     </view>
 
@@ -85,7 +86,7 @@ import { newPost } from "@/apis/post/post";
 import { Prefixes, putObject } from "@/apis/cos/cos";
 
 import RobbyTags from "@/components/third-party/robby-tags/robby-tags.vue";
-import FuiButton from "@/components/third-party/fui-textarea/fui-textarea.vue";
+import FuiTextArea from "@/components/third-party/fui-textarea/fui-textarea.vue";
 import { Pages } from "@/utils/url";
 import { Tag } from "@/apis/schemas";
 import Deal from "@/components/deal-policy/deal.vue";
