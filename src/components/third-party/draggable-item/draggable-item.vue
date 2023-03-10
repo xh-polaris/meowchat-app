@@ -27,11 +27,12 @@
 
 <script>
 export default {
+  // 完全魔改自 https://blog.csdn.net/LueLueLue77/article/details/124471060
   name: "DraggableItem",
   props: {
     containerSize: {
       type: Object,
-      default: () => ({width: '100vw', height: '100vh'}),
+      default: () => ({width: '100vw', height: '100vh'})
     },
     // 控件的大小
     controlsSize: {
@@ -43,6 +44,7 @@ export default {
       type: Array,
       default: () => []
     },
+    // 修改COS顺序
     photos: {
       type: Array,
       default: () => []
@@ -90,6 +92,7 @@ export default {
   },
   methods: {
     dummy() {
+      // 防止冒泡
       // do nothing
     },
     /** 初始化各个控件的位置 */
@@ -129,8 +132,11 @@ export default {
       if (
           this.currentControlsIndex + 1 !== this.imagesData.length &&
           (this.currentControlsIndex + 1) % this.maxWidthCount !== 0 &&
-          this.controlsPositionArray[this.currentControlsIndex].left + this.controlsSize.width >=
-          this.recordInitControlsPositionList[this.currentControlsIndex].left + this.controlsSize.width + this.controlsSize.margin + this.controlsSize.width / 2
+          this.controlsPositionArray[this.currentControlsIndex].left +
+          this.controlsSize.width >=
+          this.recordInitControlsPositionList[this.currentControlsIndex].left +
+          this.controlsSize.width + this.controlsSize.margin +
+          this.controlsSize.width / 2
       ) {
         this._handleChangeControlsPosition(this.currentControlsIndex + 1);
       }

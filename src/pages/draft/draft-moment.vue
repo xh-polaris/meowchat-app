@@ -183,7 +183,7 @@ function addImage() {
         isTooManyImages = true;
         tempFilePaths = tempFilePaths.slice(0, 9 - imagesData.length);
       }
-      tempFilePaths.map((item) => {
+      tempFilePaths.map((item, index) => {
         imagesData.push({
           id: item.tempFilePath,
           url: item.tempFilePath
@@ -193,7 +193,8 @@ function addImage() {
           prefix: Prefixes.Moment
         }).then(function (url) {
           //将返回的url添加进photos
-          photos.push(url.url);
+          //注意异步添加顺序
+          photos[index] = url.url;
           disablePublish.value = false;
         });
       });
