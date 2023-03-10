@@ -1,5 +1,12 @@
 
 
+## [1.8.4](https://github.com/xh-polaris/meowchat-app/compare/v1.8.3...v1.8.4) (2023-03-10)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 修改动态和帖子字数限制为2000 ([0700c6f](https://github.com/xh-polaris/meowchat-app/commit/0700c6fb7c0d6495b1aa6a6823449fd0760d0ada))
+
 ## [1.8.3](https://github.com/xh-polaris/meowchat-app/compare/v1.8.2...v1.8.3) (2023-03-10)
 
 
