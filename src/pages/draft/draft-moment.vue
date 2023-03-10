@@ -2,18 +2,37 @@
   <view class="all">
     <view class="main">
       <view class="images">
-        <template v-for="(image, index) in imagesData" :key="image.id">
-          <image
-            :src="image.url"
-            class="added-image"
-            @click="showImage(index)"
-          />
-        </template>
-        <view
-          v-if="imagesData.length < 9"
-          class="new-image"
-          @click="addImage"
-        />
+        <draggable-item
+          :images-data="imagesData"
+          :photos="photos"
+          :controls-size="{
+            width: imageWidth,
+            height: imageWidth,
+            margin: imageMargin
+          }"
+          :container-size="{
+            width: '100%',
+            height:
+              Math.ceil(Math.min(imagesData.length + 1, 9) / 3.0) *
+                (imageWidth + imageMargin) +
+              'px'
+          }"
+        >
+          <template #content="{ image, index }">
+            <image
+              :src="image.url"
+              class="added-image"
+              @click="showImage(index)"
+            />
+          </template>
+          <template #addImage>
+            <view
+              v-if="imagesData.length < 9"
+              class="new-image"
+              @click="addImage"
+            />
+          </template>
+        </draggable-item>
       </view>
       <view class="image-num"> {{ imagesData.length }}/9</view>
       <view class="m-2">
@@ -109,6 +128,7 @@ import { StorageKeys } from "@/utils/const";
 import Deal from "@/components/deal-policy/deal.vue";
 import Policy from "@/components/deal-policy/policy.vue";
 import { onClickImage } from "@/pages/cat/utils";
+import DraggableItem from "@/components/third-party/draggable-item/draggable-item.vue";
 
 const imagesData = reactive<any>([]);
 
@@ -121,6 +141,18 @@ const photos = reactive<any>([]);
 const catImage = ref("");
 const catName = ref("猫猫");
 const catId = ref("");
+
+/*
+$margin: calc(20 / 390 * 100vw);
+$imagesWidth: calc(100vw - $margin * 2);
+$imageWidth: calc(110 / 390 * 100vw);
+$imageGap: calc(($imagesWidth - 3 * $imageWidth) / 2);
+*/
+const windowWidth = ref(uni.getSystemInfoSync().windowWidth);
+const margin = ref((20.0 / 390) * windowWidth.value);
+const imagesWidth = ref(windowWidth.value - margin.value * 2);
+const imageWidth = ref((110.0 / 390) * windowWidth.value);
+const imageMargin = ref((imagesWidth.value - 3 * imageWidth.value) / 2);
 
 onShow(() => {
   catId.value = uni.getStorageSync("idSelected");
@@ -161,7 +193,14 @@ function addImage() {
           prefix: Prefixes.Moment
         }).then(function (url) {
           //将返回的url添加进photos
-          photos.push(url.url);
+          //注意异步添加顺序
+          let index = -1;
+          for (let i = 0; i < imagesData.length; i++) {
+            if (imagesData[i].url === item.tempFilePath) {
+              index = i;
+            }
+          }
+          photos[index] = url.url;
           disablePublish.value = false;
         });
       });
