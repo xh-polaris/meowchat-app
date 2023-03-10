@@ -1,5 +1,13 @@
 
 
+## [1.8.6](https://github.com/xh-polaris/meowchat-app/compare/v1.8.5...v1.8.6) (2023-03-10)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复动态和帖子在加载前会显示删除按钮的问题 ([cc3e040](https://github.com/xh-polaris/meowchat-app/commit/cc3e040018bdc211601cf79d160c54326f42269e))
+* 在动态详情处添加@某只猫咪 ([#231](https://github.com/xh-polaris/meowchat-app/issues/231)) ([f6543cb](https://github.com/xh-polaris/meowchat-app/commit/f6543cbabc87bc78e3c30db8d395f400b79e450d))
+
 ## [1.8.5](https://github.com/xh-polaris/meowchat-app/compare/v1.8.4...v1.8.5) (2023-03-10)
 
 
