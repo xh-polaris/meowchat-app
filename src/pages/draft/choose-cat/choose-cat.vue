@@ -103,7 +103,7 @@
                 </view>
                 <view
                   class="border px-2 py-1 font-md text-center"
-                  style="border-radius: 50rpx;width: 100rpx;"
+                  style="border-radius: 50rpx; width: 100rpx"
                   @click.stop="choose(cat.avatarUrl, cat.name, cat.id)"
                 >
                   选择
@@ -124,7 +124,7 @@
 <script lang="ts" setup>
 import { Pictures, Icons, Pages } from "@/utils/url";
 import { reactive, ref, getCurrentInstance } from "vue";
-import { onClickCatBox} from "@/pages/collection/utils";
+import { onClickCatBox } from "@/pages/collection/utils";
 import {
   getCatPreviews,
   searchCatPreviews
