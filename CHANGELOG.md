@@ -1,5 +1,12 @@
 
 
+## [1.8.2](https://github.com/xh-polaris/meowchat-app/compare/v1.8.1...v1.8.2) (2023-03-10)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 公告显示时间，帖子在没有tag时不显示图标 ([89bae5f](https://github.com/xh-polaris/meowchat-app/commit/89bae5f9ad59ce35b3b5f041a9cd683c5516a4e4))
+
 ## [1.8.1](https://github.com/xh-polaris/meowchat-app/compare/v1.8.0...v1.8.1) (2023-03-09)
 
 
