@@ -57,8 +57,10 @@
       </view>
       <view class="combination">
         <view class="attribute"> 出没地区</view>
-        <view class="area-content font-weight font-lg">
-          {{ cat.area }}
+        <view v-for="(item, index) in areaList" :key="index">
+          <view class="area-content font-weight font-lg">
+            {{ item }}
+          </view>
         </view>
       </view>
     </view>
@@ -239,9 +241,11 @@ const cat = reactive<Cat>({
   isSterilized: true,
   avatars: []
 });
+
 const mainImgUrl = ref("");
 const imgActiveIndex = ref(0);
 const spread = ref(true);
+let areaList = reactive<string[]>([]);
 const getCatDetailHandler = () => {
   getCatDetail(getCatDetailReq).then((res) => {
     cat.id = res.cat.id;
@@ -255,6 +259,10 @@ const getCatDetailHandler = () => {
     cat.sex = res.cat.sex;
     cat.status = res.cat.status;
     cat.area = res.cat.area;
+    let list = cat.area.split(",");
+    for (let i of list) {
+      areaList.push(i);
+    }
     cat.isSnipped = res.cat.isSnipped;
     cat.isSterilized = res.cat.isSterilized;
     cat.avatars = res.cat.avatars;
