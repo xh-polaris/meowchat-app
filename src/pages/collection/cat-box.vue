@@ -1,21 +1,15 @@
 <template>
   <view class="cats-box">
-    <view>
-      <image :src="cat.avatarUrl" mode="aspectFill" />
-    </view>
+    <image class="avatar" :src="cat.avatarUrl" mode="aspectFill" />
     <view class="text">
-      <view class="title">
-        <view class="name">
-          {{ cat.name }}
-        </view>
-      </view>
-      <view class="data">
-        <text>花色：{{ cat.color }}</text>
-      </view>
-      <view class="data">
-        <text>出没地区： {{ cat.area }}</text>
+      <view class="title">{{ cat.name }}</view>
+      <view class="details">
+        <view class="info">花色：{{ cat.color }}</view>
+        <view class="info">出没地区： {{ cat.area }}</view>
       </view>
     </view>
+    <!--    <view v-if="cat.isCollected" class="star collected"></view>-->
+    <!--    <view v-else class="star"></view>-->
   </view>
 </template>
 

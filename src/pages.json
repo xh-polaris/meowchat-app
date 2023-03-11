@@ -65,6 +65,12 @@
 	  }
 	},
     {
+      "path": "pages/profile/my-follow/my-follow",
+      "style": {
+        "navigationBarTitleText": "我的关注"
+      }
+    },
+    {
       "path": "pages/profile/about-us/about-us",
       "style": {
         "navigationBarTitleText": "关于我们"
