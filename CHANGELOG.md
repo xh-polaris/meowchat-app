@@ -1,5 +1,20 @@
 
 
+## [1.9.0](https://github.com/xh-polaris/meowchat-app/compare/v1.8.7...v1.9.0) (2023-03-11)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 调整底部导航栏位置，将社区放在首页 ([54441c4](https://github.com/xh-polaris/meowchat-app/commit/54441c4deb246acd283ca4e22248a4a2967e300e))
+* 允许动态没有标题和正文 ([1f1a214](https://github.com/xh-polaris/meowchat-app/commit/1f1a214da46b9aa5ea6c4228053e9405b8279c4e))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 初步修复无法看到底部评论的问题 ([#234](https://github.com/xh-polaris/meowchat-app/issues/234)) ([2b8f3fd](https://github.com/xh-polaris/meowchat-app/commit/2b8f3fdeafbcadd1eb91b95bc6e6fcacc6bb5f37))
+* 修复图鉴处的猫咪搜索 ([#233](https://github.com/xh-polaris/meowchat-app/issues/233)) ([55079f6](https://github.com/xh-polaris/meowchat-app/commit/55079f6cc159b9cccc2286e7048e4d307163b682))
+* 修改动态评论样式 ([#232](https://github.com/xh-polaris/meowchat-app/issues/232)) ([6fc52c1](https://github.com/xh-polaris/meowchat-app/commit/6fc52c1f5b0b88b5cb111fef4596b8f0fc56fff3))
+
 ## [1.8.7](https://github.com/xh-polaris/meowchat-app/compare/v1.8.6...v1.8.7) (2023-03-10)
 
 
