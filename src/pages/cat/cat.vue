@@ -45,20 +45,20 @@
     <view class="info">
       <view class="combination">
         <view class="attribute"> 年龄</view>
-        <view class="content font-weight font-lg">
+        <view class="content font-weight font-big">
           {{ cat.age }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute"> 花色</view>
-        <view class="content font-weight font-lg">
+        <view class="content font-weight font-big">
           {{ cat.color }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute"> 出没地区</view>
         <view v-for="(item, index) in areaList" :key="index">
-          <view class="area-content font-weight font-lg">
+          <view class="area-content font-weight font-big">
             {{ item }}
           </view>
         </view>
@@ -67,19 +67,19 @@
     <view class="info">
       <view class="combination">
         <view class="attribute"> 性别</view>
-        <view class="content font-weight font-lg">
+        <view class="content font-weight font-big">
           {{ cat.sex }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute"> 绝育情况</view>
-        <view class="content font-weight font-lg">
+        <view class="content font-weight font-big">
           {{ Sterilized }}
         </view>
       </view>
       <view class="combination">
         <view class="attribute"> 是否剪耳</view>
-        <view class="content font-weight font-lg">
+        <view class="content font-weight font-big">
           {{ Snipped }}
         </view>
       </view>
@@ -90,10 +90,9 @@
         <text class="maopian"> 猫片</text>
         <button class="switch" size="mini" @click="draftImage">我要上传</button>
       </view>
-      <view class="dd">
+      <view v-if="spread" class="dd">
         <text class="detail_info"> 撸猫指南：{{ cat.details }}</text>
         <view
-          v-if="spread"
           class="spread"
           @click="
             () => {
@@ -104,8 +103,10 @@
           <text>点击展开</text>
           <image src="/static/images/open.png"></image>
         </view>
+      </view>
+      <view v-if="!spread" class="dd1">
+        <text class="detail_info"> 撸猫指南：{{ cat.details }}</text>
         <view
-          v-if="!spread"
           class="spread"
           @click="
             () => {
@@ -365,7 +366,7 @@ onReachBottom(() => {
 
 .area-content {
   text-align: center;
-  font-size: 30rpx;
+  font-size: 35rpx;
 }
 
 .selector {
@@ -391,7 +392,7 @@ onReachBottom(() => {
     //display: inline-block;
     text-align: center;
     color: #37393a;
-    font-size: 40rpx;
+    font-size: 48rpx;
   }
 
   .text-box2 {
@@ -420,14 +421,14 @@ onReachBottom(() => {
     .attribute {
       text-align: center;
       color: #6fc2ff;
-      font-size: 25rpx;
+      font-size: 27rpx;
       margin-bottom: 10rpx;
     }
 
     .content {
       text-align: center;
       color: #37393a;
-      font-size: 30rpx;
+      font-size: 35rpx;
     }
   }
 }
@@ -489,6 +490,23 @@ onReachBottom(() => {
     white-space: nowrap;
     //padding-left: 30rpx;
     padding-top: 10rpx;
+    border-radius: 20rpx 20rpx 20rpx 20rpx;
+  }
+
+  .dd1 {
+    //text-align: center;
+    margin-right: auto;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+    width: 95%;
+    color: white;
+    //background: linear-gradient(90deg, #0688f3, white);
+    background: #eaf6ff;
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
+    //padding-left: 30rpx;
+    padding-top: 10rpx;
     border-radius: 20rpx 20rpx 5rpx 5rpx;
   }
 
@@ -510,6 +528,7 @@ onReachBottom(() => {
     width: 70%;
     margin-top: 5rpx;
     margin-bottom: 20rpx;
+    padding-left: 10rpx;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
