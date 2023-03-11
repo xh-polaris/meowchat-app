@@ -42,9 +42,10 @@
       @on-click-replies="onClickReplies(index)"
       @local-do-like="commentDoLike(index)"
     />
-    <view style="margin-bottom: 120rpx"></view>
+    <view style="padding-bottom: 150rpx"></view>
 
     <write-comment-box
+      ref="writeCommentBox"
       v-model:placeholder-text="placeholderText"
       :focus="newCommentFocus"
       :like-data="post.likeData"
@@ -518,6 +519,7 @@ $postPadding: 15px 27px 0 21px;
         color: #353535;
         font-size: calc(18 / 390 * 100vw);
       }
+
       .subtitle {
         color: #353535;
         font-size: calc(12 / 390 * 100vw);
@@ -536,14 +538,18 @@ $postPadding: 15px 27px 0 21px;
         height: calc(40 / 390 * 100vw);
         border-radius: calc(6 / 390 * 100vw);
         line-height: calc(40 / 390 * 100vw);
+
         &.blue {
           background-color: #1fa1ff;
+
           &:active {
             background-color: #0579d0;
           }
         }
+
         &.grey {
           background-color: #d1d1d1;
+
           &:active {
             background-color: #949494;
           }

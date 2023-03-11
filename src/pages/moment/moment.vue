@@ -40,8 +40,8 @@
       </view>
     </view>
     <view class="commentNum">
-      评论 {{ comments.data.length + comments.replyNumber }}</view
-    >
+      评论 {{ comments.data.length + comments.replyNumber }}
+    </view>
     <view v-if="comments.data.length === 0">
       <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
     </view>
@@ -54,7 +54,7 @@
       @on-click-replies="onClickReplies(index)"
       @local-do-like="commentDoLike(index)"
     />
-    <view style="margin-bottom: 120rpx"></view>
+    <view style="padding-bottom: 150rpx"></view>
 
     <write-comment-box
       v-model:placeholder-text="placeholderText"
@@ -495,6 +495,7 @@ function leaveReply() {
     }
   }
 }
+
 .commentNum {
   white-space: pre-line;
   font-size: 20px;
@@ -506,6 +507,7 @@ function leaveReply() {
   color: #353535;
   margin-bottom: 20rpx;
 }
+
 .nomore {
   margin-top: 50rpx;
   font-size: 20rpx;
@@ -513,6 +515,7 @@ function leaveReply() {
   text-align: center;
   color: #b8b8b8;
 }
+
 .confirm-to-delete {
   width: 100vw;
   height: 100vh;
@@ -542,6 +545,7 @@ function leaveReply() {
         color: #353535;
         font-size: calc(18 / 390 * 100vw);
       }
+
       .subtitle {
         color: #353535;
         font-size: calc(12 / 390 * 100vw);
@@ -560,14 +564,18 @@ function leaveReply() {
         height: calc(40 / 390 * 100vw);
         border-radius: calc(6 / 390 * 100vw);
         line-height: calc(40 / 390 * 100vw);
+
         &.blue {
           background-color: #1fa1ff;
+
           &:active {
             background-color: #0579d0;
           }
         }
+
         &.grey {
           background-color: #d1d1d1;
+
           &:active {
             background-color: #949494;
           }
