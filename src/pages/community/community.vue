@@ -49,7 +49,7 @@
     <masonry v-if="!isRefreshing" search="default" />
   </view>
   <view class="empty-bottom"></view>
-  <tab-bar id="2"></tab-bar>
+  <tab-bar id="1"></tab-bar>
 </template>
 
 <script lang="ts" setup>

@@ -15,6 +15,7 @@
   <view class="content">
     <!-- 搜索框 -->
     <view
+      v-if="false"
       class="border d-flex mx-3 a-center j-sb px-3 mt-1"
       style="
         height: 80rpx;
@@ -25,9 +26,8 @@
     >
       <input v-model="searchText" maxlength="20" placeholder="搜索猫咪" />
       <image
-        mode="widthFix"
         src="/static/images/search.png"
-        style="width: 60rpx"
+        style="width: 60rpx; height: 60rpx"
         @click="onClickSearch"
       />
     </view>
@@ -64,7 +64,7 @@
     ></search-cats>
     <search-cats v-if="!isClickCollectionSearch" search="default"></search-cats>
   </view>
-  <tab-bar id="3"></tab-bar>
+  <tab-bar id="2"></tab-bar>
 </template>
 
 <script lang="ts" setup>
@@ -91,9 +91,9 @@ let searchText = ref("");
  */
 let isClickCollectionSearch = ref(false);
 
-searchText.value = uni.getStorageSync(StorageKeys.searchText);
+searchText.value = uni.getStorageSync(StorageKeys.SearchText);
 isClickCollectionSearch.value = uni.getStorageSync(
-  StorageKeys.isClickCollectionSearch
+  StorageKeys.IsClickCollectionSearch
 );
 
 function init() {
@@ -105,17 +105,14 @@ const lists = reactive<{ data: Community[] }>({ data: [] });
 const campuses = reactive<{ data: Community[] }>({ data: [] });
 
 function onClickSearch() {
-  isClickCollectionSearch.value = true;
-  if (searchText.value === "") {
-    isClickCollectionSearch.value = false;
-  }
-  uni.setStorageSync(StorageKeys.searchText, searchText.value);
+  isClickCollectionSearch.value = searchText.value !== "";
+  uni.setStorageSync(StorageKeys.SearchText, searchText.value);
   uni.setStorageSync(
-    StorageKeys.isClickCollectionSearch,
+    StorageKeys.IsClickCollectionSearch,
     isClickCollectionSearch.value
   );
   uni.reLaunch({
-    url: "/pages/collection/collection"
+    url: Pages.Collection
   });
 }
 

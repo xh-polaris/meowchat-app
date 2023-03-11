@@ -43,23 +43,21 @@
 
   <view class="top-padding" />
 
-  <world-posts v-if="isInitialized && !isRefreshing" search="default" />
+  <world-posts v-if="!isRefreshing" search="default" />
   <view class="empty-bottom"></view>
-  <tab-bar id="1"></tab-bar>
+  <tab-bar id="3"></tab-bar>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
-
-import { init } from "@/utils/init";
 import { Icons } from "@/utils/url";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import { StorageKeys } from "@/utils/const";
-const isInitialized = ref(false);
+
 //搜索界面需要用到的缓存
 uni.removeStorageSync("search");
 uni.setStorageSync("isClickSearch", false);
@@ -128,10 +126,6 @@ function pageRefresh() {
 onPullDownRefresh(() => {
   pageRefresh();
   uni.stopPullDownRefresh();
-});
-
-init().then(() => {
-  isInitialized.value = true;
 });
 
 function enterMessage() {

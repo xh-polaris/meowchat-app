@@ -27,17 +27,17 @@ const momentUrl = `${Pages.DraftNav}?type=moment`;
 const tabContent = [
   {
     id: "1",
-    icon: "/static/images/world-grey.png",
-    activeIcon: "/static/images/world-blue.png",
-    url: Pages.World,
-    text: "世界"
-  },
-  {
-    id: "2",
     icon: "/static/images/community-grey.png",
     activeIcon: "/static/images/community-blue.png",
     url: Pages.Community,
     text: "社区"
+  },
+  {
+    id: "2",
+    icon: "/static/images/collection-grey.png",
+    activeIcon: "/static/images/collection-blue.png",
+    url: Pages.Collection,
+    text: "图鉴"
   },
   {
     id: "0",
@@ -48,10 +48,10 @@ const tabContent = [
   },
   {
     id: "3",
-    icon: "/static/images/collection-grey.png",
-    activeIcon: "/static/images/collection-blue.png",
-    url: Pages.Collection,
-    text: "图鉴"
+    icon: "/static/images/world-grey.png",
+    activeIcon: "/static/images/world-blue.png",
+    url: Pages.World,
+    text: "世界"
   },
   {
     id: "4",

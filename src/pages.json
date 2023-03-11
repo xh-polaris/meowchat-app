@@ -2,6 +2,12 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
+      "path": "pages/first-page/first-page",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
       "path": "pages/world/world",
       "style": {
         "navigationBarTitleText": "喵世界",
@@ -152,12 +158,6 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/world/world",
-        "iconPath": "static/images/world-grey.png",
-        "selectedIconPath": "static/images/world-blue.png",
-        "text": "世界"
-      },
-      {
         "pagePath": "pages/community/community",
         "iconPath": "static/images/community-grey.png",
         "selectedIconPath": "static/images/community-blue.png",
@@ -168,6 +168,12 @@
         "iconPath": "static/images/collection-grey.png",
         "selectedIconPath": "static/images/collection-blue.png",
         "text": "图鉴"
+      },
+      {
+        "pagePath": "pages/world/world",
+        "iconPath": "static/images/world-grey.png",
+        "selectedIconPath": "static/images/world-blue.png",
+        "text": "世界"
       },
       {
         "pagePath": "pages/profile/profile",
