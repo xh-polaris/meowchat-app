@@ -64,6 +64,7 @@
     ></search-cats>
     <search-cats v-if="!isClickCollectionSearch" search="default"></search-cats>
   </view>
+  <view class="empty-bottom"></view>
   <tab-bar id="2"></tab-bar>
 </template>
 
@@ -245,6 +246,7 @@ onShow(() => {
   height: 12vh;
   display: flex;
   flex-direction: column;
+  margin-bottom: 24upx;
 }
 
 .school-select-box {
@@ -287,5 +289,9 @@ onShow(() => {
     padding: 10rpx 0;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
   }
+}
+
+.empty-bottom {
+  height: 200rpx;
 }
 </style>

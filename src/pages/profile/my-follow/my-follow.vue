@@ -48,6 +48,7 @@
     </view>
     <view v-if="currentToggle === '猫咪'" class="cats">
       <search-cats search="default"></search-cats>
+      <view class="empty-bottom"></view>
     </view>
   </view>
 </template>
@@ -99,7 +100,8 @@ const changeUserIsFollwing = (user: any, isFollowing: boolean) => {
   display: flex;
   width: 268upx;
   justify-content: space-between;
-  margin: 40upx auto 0;
+  padding-top: 40upx;
+  margin: 0 auto;
   color: #1d1d1d;
 
   .toggle {
@@ -181,5 +183,8 @@ const changeUserIsFollwing = (user: any, isFollowing: boolean) => {
       }
     }
   }
+}
+.empty-bottom {
+  height: 20upx;
 }
 </style>
