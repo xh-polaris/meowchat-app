@@ -1,5 +1,26 @@
 
 
+## [1.9.1](https://github.com/xh-polaris/meowchat-app/compare/v1.9.0...v1.9.1) (2023-03-11)
+
+
+### ✨ Features | 新功能
+
+* 实现了我的关注页面样式 完善猫咪盒子样式 ([#238](https://github.com/xh-polaris/meowchat-app/issues/238)) ([ef24522](https://github.com/xh-polaris/meowchat-app/commit/ef24522d96fb7e789361750114cd44507ebb8b1a))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决刷新一次后猫咪地区增加的问题 ([#237](https://github.com/xh-polaris/meowchat-app/issues/237)) ([b20728e](https://github.com/xh-polaris/meowchat-app/commit/b20728e2599ce1e9d98a007af949045dd86a07ae))
+* 新建动态时，选择猫咪后不再显示不选择猫咪字样 ([1090cee](https://github.com/xh-polaris/meowchat-app/commit/1090cee52be1f6f560117e3560521dfc171eb6e3))
+* 修复发动态选择猫咪样式崩溃问题 ([#239](https://github.com/xh-polaris/meowchat-app/issues/239)) ([c738990](https://github.com/xh-polaris/meowchat-app/commit/c738990ce940ce91a42bc593ab1702bf740f1327))
+* 修复改变底部导航栏布局后，新建动态、帖子的位置问题 ([78f4007](https://github.com/xh-polaris/meowchat-app/commit/78f40077814fae3bd56bdde0eb79cf85329d4c6a))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 根据反馈修改图鉴及图鉴详情的显示效果 ([#235](https://github.com/xh-polaris/meowchat-app/issues/235)) ([8bf100a](https://github.com/xh-polaris/meowchat-app/commit/8bf100a100c5a3d5afeb7ccfd0c485e538f50124))
+* 修改新建内容时的顶部字样，标识动态&帖子与社区&世界的关系 ([678975c](https://github.com/xh-polaris/meowchat-app/commit/678975cd2518a458286275485ec54a6f7d7aa5c2))
+
 ## [1.9.0](https://github.com/xh-polaris/meowchat-app/compare/v1.8.7...v1.9.0) (2023-03-11)
 
 
