@@ -63,8 +63,8 @@ const isInitialized = ref(false);
 //搜索界面需要用到的缓存
 uni.removeStorageSync("search");
 uni.setStorageSync("isClickSearch", false);
-uni.setStorageSync(StorageKeys.searchText,"")
-uni.setStorageSync(StorageKeys.isClickCollectionSearch,false)
+uni.setStorageSync(StorageKeys.searchText, "");
+uni.setStorageSync(StorageKeys.isClickCollectionSearch, false);
 const types = reactive([
   {
     name: "官方",

@@ -23,11 +23,7 @@
         border-width: 3rpx;
       "
     >
-      <input
-        v-model="searchText"
-        maxlength="20"
-        placeholder="搜索猫咪"
-      />
+      <input v-model="searchText" maxlength="20" placeholder="搜索猫咪" />
       <image
         mode="widthFix"
         src="/static/images/search.png"
@@ -61,14 +57,18 @@
         </view>
       </view>
     </view>
-	<search-cats search="cat" :keyword="searchText" v-if="isClickCollectionSearch"></search-cats>
-	<search-cats search="default" v-if="!isClickCollectionSearch"></search-cats>
+    <search-cats
+      v-if="isClickCollectionSearch"
+      search="cat"
+      :keyword="searchText"
+    ></search-cats>
+    <search-cats v-if="!isClickCollectionSearch" search="default"></search-cats>
   </view>
   <tab-bar id="3"></tab-bar>
 </template>
 
 <script lang="ts" setup>
-import { Icons, Pages} from "@/utils/url";
+import { Icons, Pages } from "@/utils/url";
 import { reactive, ref } from "vue";
 import { StorageKeys } from "@/utils/const";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
@@ -83,35 +83,40 @@ const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
 
-let searchText=ref("");
+let searchText = ref("");
 
 /**
  * isClickSearch为false时显示所有猫咪
  * 为true时显示搜索猫咪
  */
-let isClickCollectionSearch=ref(false)
+let isClickCollectionSearch = ref(false);
 
-searchText.value=uni.getStorageSync(StorageKeys.searchText)
-isClickCollectionSearch.value=uni.getStorageSync(StorageKeys.isClickCollectionSearch)
+searchText.value = uni.getStorageSync(StorageKeys.searchText);
+isClickCollectionSearch.value = uni.getStorageSync(
+  StorageKeys.isClickCollectionSearch
+);
 
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 
-const lists = reactive<{data: Community[];}>({data: []});
+const lists = reactive<{ data: Community[] }>({ data: [] });
 
-const campuses = reactive<{data: Community[];}>({data: []});
+const campuses = reactive<{ data: Community[] }>({ data: [] });
 
-function onClickSearch(){
-	isClickCollectionSearch.value=true
-	if(searchText.value===""){
-		isClickCollectionSearch.value=false
-	}
-	uni.setStorageSync(StorageKeys.searchText,searchText.value)
-	uni.setStorageSync(StorageKeys.isClickCollectionSearch,isClickCollectionSearch.value)
-	uni.reLaunch({
-		url:'/pages/collection/collection'
-	})
+function onClickSearch() {
+  isClickCollectionSearch.value = true;
+  if (searchText.value === "") {
+    isClickCollectionSearch.value = false;
+  }
+  uni.setStorageSync(StorageKeys.searchText, searchText.value);
+  uni.setStorageSync(
+    StorageKeys.isClickCollectionSearch,
+    isClickCollectionSearch.value
+  );
+  uni.reLaunch({
+    url: "/pages/collection/collection"
+  });
 }
 
 async function schoolList() {
@@ -146,8 +151,6 @@ async function getCampus() {
 
 getCampus();
 
-
-
 let isRefreshing = ref<boolean>(false);
 onPullDownRefresh(() => {
   setTimeout(function () {
@@ -155,13 +158,11 @@ onPullDownRefresh(() => {
     isRefreshing.value = false;
   }, 1000);
   isRefreshing.value = true;
-
 });
 
 function setBranch(e: string, index: number) {
   uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
   currentCampus.value = e;
-
 }
 
 function onClickSwitch() {
@@ -169,7 +170,6 @@ function onClickSwitch() {
     url: Pages.SchoolSelect
   });
 }
-
 
 onShow(() => {
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
