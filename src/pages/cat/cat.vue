@@ -261,6 +261,7 @@ const getCatDetailHandler = () => {
     cat.status = res.cat.status;
     cat.area = res.cat.area;
     let list = cat.area.split(",");
+	areaList=[]
     for (let i of list) {
       areaList.push(i);
     }
