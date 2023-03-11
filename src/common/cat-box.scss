@@ -1,58 +1,51 @@
 .cats-box {
+  width: 700upx;
+  height: 200upx;
+  border-radius: 36upx;
   display: flex;
-  font-family: sans-serif;
-
-  image {
-    width: 150rpx;
-    height: 150rpx;
-    border-radius: 15px;
-    margin-left: 30rpx;
-    margin-top: 10rpx;
+  align-items: center;
+  justify-content: left;
+  position: relative;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 8upx rgba(0, 0, 0, 0.1);
+  margin-bottom: 12upx;
+  .avatar {
+    width: 174upx;
+    height: 174upx;
+    border-radius: 24upx;
+    margin-left: 24upx;
+    margin-right: 40upx;
   }
-}
+  .text {
+    flex: 1;
+    margin-right: 64upx;
+    height: 144upx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .title {
+      font-size: 36upx;
+      color: #1d1d1d;
+    }
+    .details {
+      font-size: 20upx;
+      color: #939393;
+      .info {
 
-.name {
-  width: 380rpx;
-  font-weight:  bold;
-}
-
-.text {
-  margin-left: 30rpx;
-  margin-top: 10rpx;
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*justify-content: space-between;*/
-}
-
-.title {
-  font-size: 35rpx;
-  color: #333;
-  margin-top: 15rpx;
-  margin-bottom: 10rpx;
-  /*text-overflow: -o-ellipsis-lastline;*/
-  /*溢出内容隐藏*/
-  overflow: hidden;
-  /*文本溢出部分用省略号表示*/
-  text-overflow: ellipsis;
-  /*特别显示模式*/
-  display: -webkit-box;
-  /*行数*/
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  /*盒子中内容竖直排列*/
-  -webkit-box-orient: horizontal;
-
-  .collect {
-    image {
-      margin-top: -2rpx;
-      width: 40rpx;
-      height: 40rpx;
+      }
     }
   }
-}
-
-.data {
-  font-size: 20rpx;
-  color: #999;
-  margin-bottom: 5rpx;
+  .star {
+    position: absolute;
+    right: 36upx;
+    top: 36upx;
+    width: 30upx;
+    height: 30upx;
+    background-size: 100% 100%;
+    background-image: url("/static/images/star-grey.png");
+    &.collected {
+      background-image: url("/static/images/star-yellow.png");
+    }
+  }
 }

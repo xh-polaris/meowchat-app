@@ -1,8 +1,8 @@
 <template>
   <template v-if="catsData">
     <view v-if="catsData">
-      <view v-for="cat of catsData" :key="cat.id" class="out">
-        <view class="row" @click="onClickCatBox(cat.id)">
+      <view v-for="cat of catsData" :key="cat.id">
+        <view @click="onClickCatBox(cat.id)">
           <cat-box :cat="cat" />
         </view>
       </view>
@@ -75,18 +75,4 @@ function onClickCatBox(id: string) {
 }
 </script>
 
-<style lang="scss">
-.out {
-  padding-right: 30rpx;
-  padding-left: 30rpx;
-  margin-bottom: 10rpx;
-
-  .row {
-    border-radius: 18px;
-    border: 1px solid #dad6d6;
-    padding-top: 10rpx;
-    padding-bottom: 10rpx;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  }
-}
-</style>
+<style lang="scss"></style>
