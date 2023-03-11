@@ -67,8 +67,8 @@
 
       <view class="choose-cats-bar">
         <view class="choose-cats"> 选择猫咪</view>
-        <view class="right-arrow" />
-        <view class="choose-followed-cats"> 不选择猫咪</view>
+        <view v-if="!catId" class="right-arrow" />
+        <view v-if="!catId" class="choose-followed-cats"> 不选择猫咪</view>
       </view>
     </view>
 
@@ -174,7 +174,7 @@ function chooseCats() {
 }
 
 const onClickCat = () => {
-  catName.value = "";
+  catId.value = "";
   catImage.value = "";
   catName.value = "";
 };
