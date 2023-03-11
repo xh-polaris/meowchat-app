@@ -81,7 +81,7 @@ const tabChange = (path: string) => {
   });
 };
 const tabSwitch = (path: string) => {
-  if (selectedId.value === "1") {
+  if (selectedId.value === "3") {
     uni.navigateTo({
       url: path
     });

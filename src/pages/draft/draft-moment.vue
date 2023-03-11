@@ -90,6 +90,7 @@
           mode="widthFix"
           style="width: 150rpx; border-radius: 30rpx"
           class="border mx-1"
+          @click="onClickCat()"
         ></image>
         <view class="font-md text-center">{{ catName }}</view>
       </view>
@@ -171,6 +172,12 @@ function chooseCats() {
     url: Pages.ChooseCat
   });
 }
+
+const onClickCat = () => {
+  catName.value = "";
+  catImage.value = "";
+  catName.value = "";
+};
 
 function addImage() {
   disablePublish.value = true;

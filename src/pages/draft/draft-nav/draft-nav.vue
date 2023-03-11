@@ -2,14 +2,13 @@
   <view class="outer" :style="{ height: height + 'px' }">
     <view class="inner">
       <view class="close" @click="close"></view>
-
       <template v-if="type === 'post'">
-        <view class="nav current">发帖子</view>
         <view class="nav" @click="type = 'moment'">发动态</view>
+        <view class="nav current">发帖子</view>
       </template>
       <template v-if="type === 'moment'">
-        <view class="nav" @click="type = 'post'">发帖子</view>
         <view class="nav current">发动态</view>
+        <view class="nav" @click="type = 'post'">发帖子</view>
       </template>
     </view>
   </view>
