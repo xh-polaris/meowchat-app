@@ -58,11 +58,13 @@ import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
-
+import { StorageKeys } from "@/utils/const";
 const isInitialized = ref(false);
+//搜索界面需要用到的缓存
 uni.removeStorageSync("search");
 uni.setStorageSync("isClickSearch", false);
-
+uni.setStorageSync(StorageKeys.searchText,"")
+uni.setStorageSync(StorageKeys.isClickCollectionSearch,false)
 const types = reactive([
   {
     name: "官方",

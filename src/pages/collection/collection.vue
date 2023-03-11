@@ -13,6 +13,28 @@
     </view>
   </uni-nav-bar>
   <view class="content">
+    <!-- 搜索框 -->
+    <view
+      class="border d-flex mx-3 a-center j-sb px-3 mt-1"
+      style="
+        height: 80rpx;
+        border-radius: 50rpx;
+        border-color: #a0cce9;
+        border-width: 3rpx;
+      "
+    >
+      <input
+        v-model="searchText"
+        maxlength="20"
+        placeholder="搜索猫咪"
+      />
+      <image
+        mode="widthFix"
+        src="/static/images/search.png"
+        style="width: 60rpx"
+        @click="onClickSearch"
+      />
+    </view>
     <!-- 校区选择框   -->
     <view class="school-box">
       <view class="school-select-box">
@@ -39,63 +61,58 @@
         </view>
       </view>
     </view>
-    <view v-if="cats.length > 0">
-      <view v-for="(cat, index) in cats" :key="index" class="out">
-        <view class="row" @click="onClickCatBox(cat.id, cat.name)">
-          <cat-box :cat="cat" />
-        </view>
-      </view>
-      <view class="p-5 m-3"></view>
-    </view>
-    <view v-else>
-      <image :src="Pictures.NoData" />
-    </view>
+	<search-cats search="cat" :keyword="searchText" v-if="isClickCollectionSearch"></search-cats>
+	<search-cats search="default" v-if="!isClickCollectionSearch"></search-cats>
   </view>
-  <touch-disable-page v-if="isRefreshing"></touch-disable-page>
   <tab-bar id="3"></tab-bar>
 </template>
 
 <script lang="ts" setup>
-import { Icons, Pages, Pictures } from "@/utils/url";
-import CatBox from "@/pages/collection/cat-box.vue";
+import { Icons, Pages} from "@/utils/url";
 import { reactive, ref } from "vue";
 import { StorageKeys } from "@/utils/const";
-import { onClickCatBox } from "@/pages/collection/utils";
-import {
-  getCatPreviews,
-  searchCatPreviews
-} from "@/apis/collection/collection";
-import { onPullDownRefresh, onReachBottom, onShow } from "@dcloudio/uni-app";
-import {
-  GetCatPreviewsReq,
-  SearchCatPreviewsReq
-} from "@/apis/collection/collection-interfaces";
-import { CatPreview, Community } from "@/apis/schemas";
+import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
+import { Community } from "@/apis/schemas";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
-import TouchDisablePage from "@/components/touch-disable-page/touch-disable-page.vue";
+import SearchCats from "@/pages/search/search-cats.vue";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
 
+let searchText=ref("");
+
+/**
+ * isClickSearch为false时显示所有猫咪
+ * 为true时显示搜索猫咪
+ */
+let isClickCollectionSearch=ref(false)
+
+searchText.value=uni.getStorageSync(StorageKeys.searchText)
+isClickCollectionSearch.value=uni.getStorageSync(StorageKeys.isClickCollectionSearch)
+
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 
-const lists = reactive<{
-  data: Community[];
-}>({
-  data: []
-});
+const lists = reactive<{data: Community[];}>({data: []});
 
-const campuses = reactive<{
-  data: Community[];
-}>({
-  data: []
-});
+const campuses = reactive<{data: Community[];}>({data: []});
+
+function onClickSearch(){
+	isClickCollectionSearch.value=true
+	if(searchText.value===""){
+		isClickCollectionSearch.value=false
+	}
+	uni.setStorageSync(StorageKeys.searchText,searchText.value)
+	uni.setStorageSync(StorageKeys.isClickCollectionSearch,isClickCollectionSearch.value)
+	uni.reLaunch({
+		url:'/pages/collection/collection'
+	})
+}
 
 async function schoolList() {
   lists.data = (
@@ -129,38 +146,7 @@ async function getCampus() {
 
 getCampus();
 
-const getCatPreviewsReq = reactive<GetCatPreviewsReq>({
-  page: 0,
-  communityId: uni.getStorageSync(StorageKeys.CommunityId)
-});
-let searchCatPreviewsReq = reactive<SearchCatPreviewsReq>({
-  communityId: uni.getStorageSync(StorageKeys.CommunityId),
-  page: 0,
-  keyword: ""
-});
-const allCats = ref<CatPreview[]>([]);
 
-let cats = ref<CatPreview[]>([]);
-let whetherSearch = false;
-
-const getCatPreviewsHandler = () => {
-  getCatPreviews(getCatPreviewsReq).then((res) => {
-    allCats.value.push(...res.cats);
-    cats.value.push(...res.cats);
-  });
-};
-
-async function pageRefresh() {
-  allCats.value = [];
-  cats.value = [];
-  getCatPreviewsReq.page = 0;
-  getCatPreviewsReq.communityId = uni.getStorageSync(StorageKeys.CommunityId);
-  searchCatPreviewsReq.page = 0;
-  searchCatPreviewsReq.communityId = uni.getStorageSync(
-    StorageKeys.CommunityId
-  );
-  getCatPreviewsHandler();
-}
 
 let isRefreshing = ref<boolean>(false);
 onPullDownRefresh(() => {
@@ -169,13 +155,13 @@ onPullDownRefresh(() => {
     isRefreshing.value = false;
   }, 1000);
   isRefreshing.value = true;
-  pageRefresh();
+
 });
 
 function setBranch(e: string, index: number) {
   uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
   currentCampus.value = e;
-  pageRefresh();
+
 }
 
 function onClickSwitch() {
@@ -184,44 +170,10 @@ function onClickSwitch() {
   });
 }
 
-function onClickSearch() {
-  searchCatPreviews(searchCatPreviewsReq).then((res) => {
-    if (res.cats.length != 0) {
-      cats.value = res.cats;
-      whetherSearch = true;
-    } else {
-      cats.value = allCats.value;
-      whetherSearch = false;
-    }
-  });
-}
-
-onReachBottom(() => {
-  if (!whetherSearch) {
-    getCatPreviewsReq.page++;
-    getCatPreviews(getCatPreviewsReq).then((res) => {
-      if (res.cats.length === 0) {
-        uni.stopPullDownRefresh();
-      } else {
-        cats.value.push(...res.cats);
-      }
-    });
-  } else {
-    searchCatPreviewsReq.page++;
-    searchCatPreviews(searchCatPreviewsReq).then((res) => {
-      if (res.cats.length === 0) {
-        uni.stopPullDownRefresh();
-      } else {
-        cats.value.push(...res.cats);
-      }
-    });
-  }
-});
 
 onShow(() => {
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
     getCampus();
-    pageRefresh();
   }
 });
 </script>
@@ -324,9 +276,9 @@ onShow(() => {
 
   .row {
     background-color: #ffffff;
-    border-radius: 15px;
+    border-radius: 25px;
     border: 5rpx solid #f1f1f1;
-    padding: 12rpx 0;
+    padding: 10rpx 0;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
   }
 }
