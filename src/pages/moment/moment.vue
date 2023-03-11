@@ -34,7 +34,12 @@
         />
       </view>
     </view>
-
+    <view class="commentNum">
+      评论 {{ comments.data.length + comments.replyNumber }}</view
+    >
+    <view v-if="comments.data.length === 0">
+      <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
+    </view>
     <comment-box
       v-for="(item, index) in comments.data"
       :key="index"
@@ -191,9 +196,11 @@ const getCommentsReq = reactive<GetCommentsReq>({
 const comments = reactive<{
   data: Comment[];
   likeData: LikeStruct[];
+  replyNumber: number;
 }>({
   data: [],
-  likeData: []
+  likeData: [],
+  replyNumber: 0
 });
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
@@ -205,9 +212,11 @@ const localGetCommentsData = async () => {
     scope: "moment",
     page: page
   }).then((res) => {
+    comments.replyNumber = 0;
     for (let i = 0; i < res.data.length; i++) {
       comments.data.push(res.data[i]);
       comments.likeData.push(res.likeData[i]);
+      comments.replyNumber += res.data[i].comments;
     }
     isCommentsLoaded = true;
     page += 1;
@@ -475,7 +484,24 @@ function leaveReply() {
     }
   }
 }
+.commentNum {
+  white-space: pre-line;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 25px;
+  /* or 157% */
 
+  /* darkgrey02 */
+  color: #353535;
+  margin-bottom: 20rpx;
+}
+.nomore {
+  margin-top: 50rpx;
+  font-size: 20rpx;
+  line-height: 20rpx;
+  text-align: center;
+  color: #b8b8b8;
+}
 .confirm-to-delete {
   width: 100vw;
   height: 100vh;
