@@ -67,8 +67,8 @@
 
       <view class="choose-cats-bar">
         <view class="choose-cats"> 选择猫咪</view>
-        <view class="right-arrow" />
-        <view class="choose-followed-cats"> 不选择猫咪</view>
+        <view v-if="!catId" class="right-arrow" />
+        <view v-if="!catId" class="choose-followed-cats"> 不选择猫咪</view>
       </view>
     </view>
 
@@ -90,6 +90,7 @@
           mode="widthFix"
           style="width: 150rpx; border-radius: 30rpx"
           class="border mx-1"
+          @click="onClickCat()"
         ></image>
         <view class="font-md text-center">{{ catName }}</view>
       </view>
@@ -171,6 +172,12 @@ function chooseCats() {
     url: Pages.ChooseCat
   });
 }
+
+const onClickCat = () => {
+  catId.value = "";
+  catImage.value = "";
+  catName.value = "";
+};
 
 function addImage() {
   disablePublish.value = true;
