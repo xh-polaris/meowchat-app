@@ -5,7 +5,7 @@
     <view class="title">
       {{ post.data.title }}
       <view
-        v-if="myUserId === post.data.user.id"
+        v-if="myUserId && myUserId === post.data.user.id"
         class="delete"
         @click="showDeleteDialogue"
       ></view>

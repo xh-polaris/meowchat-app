@@ -1,16 +1,26 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <view>
-      <view
-        style="
-          margin-left: 165rpx;
-          margin-top: 23rpx;
-          font-size: 35rpx;
-          font-weight: bold;
-        "
-        >喵社区</view
-      >
-    </view>
+    <block>
+      <view class="d-flex a-center">
+        <view
+          class="d-flex a-center"
+          style="position: absolute; left: 38rpx"
+          @click="enterMessage"
+        >
+          <view class="left d-flex">
+            <image
+              :src="Icons.Message"
+              style="width: 45rpx; height: 38rpx"
+            ></image>
+          </view>
+          <!-- 暂时将数量写为0 -->
+          <view v-show="false" class="font-sm px-1 message-count">0</view>
+        </view>
+        <view style="margin-left: 130rpx; font-size: 35rpx; font-weight: bold"
+          >喵社区</view
+        >
+      </view>
+    </block>
   </uni-nav-bar>
   <view class="school-box">
     <view class="school-select-box">
@@ -73,7 +83,11 @@ let history = reactive({
 let historyJSON = reactive({
   histories: reactive<Array<any>>([])
 });
-
+function enterMessage() {
+  uni.navigateTo({
+    url: "/pages/message/message"
+  });
+}
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }

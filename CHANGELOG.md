@@ -1,5 +1,29 @@
 
 
+## [1.8.7](https://github.com/xh-polaris/meowchat-app/compare/v1.8.6...v1.8.7) (2023-03-10)
+
+
+### ✨ Features | 新功能
+
+* 图片可拖拽排序 ([#229](https://github.com/xh-polaris/meowchat-app/issues/229)) ([9f399e2](https://github.com/xh-polaris/meowchat-app/commit/9f399e2ade0c0d93502ac62f1980ad5ce2d4c2f8))
+
+## [1.8.6](https://github.com/xh-polaris/meowchat-app/compare/v1.8.5...v1.8.6) (2023-03-10)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复动态和帖子在加载前会显示删除按钮的问题 ([cc3e040](https://github.com/xh-polaris/meowchat-app/commit/cc3e040018bdc211601cf79d160c54326f42269e))
+* 在动态详情处添加@某只猫咪 ([#231](https://github.com/xh-polaris/meowchat-app/issues/231)) ([f6543cb](https://github.com/xh-polaris/meowchat-app/commit/f6543cbabc87bc78e3c30db8d395f400b79e450d))
+
+## [1.8.5](https://github.com/xh-polaris/meowchat-app/compare/v1.8.4...v1.8.5) (2023-03-10)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 草稿状态无法查看大图 ([#227](https://github.com/xh-polaris/meowchat-app/issues/227)) ([28d0fd0](https://github.com/xh-polaris/meowchat-app/commit/28d0fd08df9886022d1d3b07012f116a0c8abd14))
+* 修改反馈的样式问题 11 12 14 17 ([#228](https://github.com/xh-polaris/meowchat-app/issues/228)) ([9df03da](https://github.com/xh-polaris/meowchat-app/commit/9df03dadb29c2433fee71a083d6529020643af86))
+* 修改选择猫咪处UI的显示问题 ([#230](https://github.com/xh-polaris/meowchat-app/issues/230)) ([59610bd](https://github.com/xh-polaris/meowchat-app/commit/59610bd548417150383228da82933a78814a1ad7))
+
 ## [1.8.4](https://github.com/xh-polaris/meowchat-app/compare/v1.8.3...v1.8.4) (2023-03-10)
 
 
