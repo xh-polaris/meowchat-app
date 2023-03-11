@@ -2,5 +2,7 @@ export const enum StorageKeys {
   CommunityId = "communityId",
   UserId = "userId",
   AccessToken = "accessToken",
-  HistoryCampuses = "historyCampuses"
+  HistoryCampuses = "historyCampuses",
+  SearchText = "searchText",
+  IsClickCollectionSearch = "isClickCollectionSearch"
 }

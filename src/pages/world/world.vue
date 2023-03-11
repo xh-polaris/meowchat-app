@@ -1,6 +1,6 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <block>
+    <view>
       <view class="d-flex a-center">
         <view
           class="d-flex a-center"
@@ -20,7 +20,7 @@
           >喵世界</view
         >
       </view>
-    </block>
+    </view>
   </uni-nav-bar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
@@ -63,8 +63,8 @@ const isInitialized = ref(false);
 //搜索界面需要用到的缓存
 uni.removeStorageSync("search");
 uni.setStorageSync("isClickSearch", false);
-uni.setStorageSync(StorageKeys.searchText, "");
-uni.setStorageSync(StorageKeys.isClickCollectionSearch, false);
+uni.setStorageSync(StorageKeys.SearchText, "");
+uni.setStorageSync(StorageKeys.IsClickCollectionSearch, false);
 const types = reactive([
   {
     name: "官方",

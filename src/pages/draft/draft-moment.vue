@@ -2,7 +2,7 @@
   <view class="all">
     <view class="main">
       <view class="images">
-        <draggable-item
+        <DraggableItem
           :images-data="imagesData"
           :photos="photos"
           :controls-size="{
@@ -32,7 +32,7 @@
               @click="addImage"
             />
           </template>
-        </draggable-item>
+        </DraggableItem>
       </view>
       <view class="image-num"> {{ imagesData.length }}/9</view>
       <view class="m-2">
@@ -218,20 +218,6 @@ function addImage() {
 }
 
 function publishMoment() {
-  if (title.value === "") {
-    uni.showToast({
-      title: "请输入标题",
-      icon: "none"
-    });
-    return;
-  }
-  if (text.value === "") {
-    uni.showToast({
-      title: "请输入正文",
-      icon: "none"
-    });
-    return;
-  }
   if (photos.length == 0) {
     uni.showToast({
       title: "至少上传一张图片哦",
