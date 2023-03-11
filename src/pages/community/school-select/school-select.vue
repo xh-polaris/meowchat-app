@@ -28,23 +28,28 @@
       </view>
       <view v-if="sel">
         <view class="select" @click="change">
-          <text>{{ currentCampus }}</text>
-          <image class="arrow" :src="Icons.DownBlack" />
+          <view class="text"
+            >{{ currentCampus }}
+            <image :src="Icons.DownBlack" />
+          </view>
         </view>
       </view>
       <view v-else>
         <view class="select2" @click="change">
-          <text>{{ currentCampus }}</text>
-          <image class="arrow" :src="Icons.UpBlack" />
+          <view class="text"
+            >{{ currentCampus }}
+            <image :src="Icons.UpBlack" />
+          </view>
         </view>
         <view class="option" @click="change">
-          <text
+          <view
             v-for="(item, index) in campuses.data"
             :key="index"
+            class="text"
             @click="changeCampus(item.name, index)"
           >
             {{ item.name }}
-          </text>
+          </view>
         </view>
       </view>
     </view>
@@ -345,18 +350,23 @@ function changeSchool(name: string, index: number) {
 .select {
   padding: 10rpx 10rpx 10rpx 20rpx;
   border: black 1px solid;
-  border-radius: 12px;
+  border-radius: 15px;
   position: relative;
-  margin-top: 10rpx;
+  margin-top: 15rpx;
   margin-right: 20rpx;
   display: flex;
   align-items: center;
-
-  text {
+  image {
+    width: 26rpx;
+    height: 15rpx;
+    padding-right: 10rpx;
+    margin-top: 8rpx;
+    float: right;
+  }
+  .text {
     font-size: 25rpx;
     font-weight: bold;
-    width: 200rpx;
-    //text-align: center;
+    width: 225rpx;
   }
 }
 
@@ -364,52 +374,51 @@ function changeSchool(name: string, index: number) {
   padding: 10rpx 10rpx 10rpx 20rpx;
   border: black 1px solid;
   border-bottom: none;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   position: relative;
-  margin-top: 10rpx;
+  margin-top: 15rpx;
   margin-right: 20rpx;
   display: flex;
   align-items: center;
-
-  text {
+  image {
+    width: 26rpx;
+    height: 15rpx;
+    padding-right: 10rpx;
+    margin-top: 8rpx;
+    float: right;
+  }
+  .text {
     font-size: 25rpx;
     font-weight: bold;
-    width: 200rpx;
-    //text-align: center;
+    width: 225rpx;
   }
-}
-
-.arrow {
-  width: 25rpx;
-  height: 15rpx;
-  margin-right: 10rpx;
 }
 
 .option {
+  padding: 2rpx 10rpx 2rpx 20rpx;
   border: black 1px solid;
   border-top: none;
-  border-bottom-right-radius: 12px;
-  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
   position: absolute;
   line-height: 60rpx;
-  margin-right: 25rpx;
+  margin-right: 20rpx;
   z-index: 100;
 
-  text {
-    padding-left: 20rpx;
+  .text {
     color: #7f7f81;
     font-size: 25rpx;
     font-weight: bold;
-    width: 235rpx;
+    width: 225rpx;
     position: relative;
-    display: inline-block;
+    display: flex;
   }
 
-  text::before {
+  .text::before {
     content: "";
     position: absolute;
-    width: 90%;
+    width: 98%;
     height: 1rpx;
     background-color: #7f7f81;
   }

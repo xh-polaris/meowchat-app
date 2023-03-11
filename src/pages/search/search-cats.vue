@@ -77,12 +77,16 @@ function onClickCatBox(id: string) {
 
 <style lang="scss">
 .out {
-  padding: 20rpx 30rpx 10rpx;
+  padding-right: 30rpx;
+  padding-left: 30rpx;
+  margin-bottom: 10rpx;
 
   .row {
-    border-radius: 25px;
+    border-radius: 18px;
     border: 1px solid #dad6d6;
-    padding: 10rpx 0;
+    padding-top: 10rpx;
+    padding-bottom: 10rpx;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   }
 }
 </style>

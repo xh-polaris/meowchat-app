@@ -39,9 +39,9 @@
           {{ currentSchool }}
         </view>
         <view class="switch-box">
-          <button class="switch" size="mini" @click="onClickSwitch">
-            ⇌ 切换学校
-          </button>
+          <view class="switch" @click="onClickSwitch"
+            ><text class="font-md">⇌</text> {{ switchText }}
+          </view>
         </view>
       </view>
       <view class="school-select-box">
@@ -78,6 +78,7 @@ import { listCommunity } from "@/apis/community/community";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 
+const switchText = ref("\u00A0 切换学校");
 const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
@@ -176,23 +177,32 @@ onShow(() => {
 </script>
 
 <style lang="scss" scoped>
+.global {
+  background-color: #fafcff;
+  width: 100vh;
+  height: 100vh;
+}
+
 .arrow {
-  width: 44rpx;
-  height: 50rpx;
-  margin: 25rpx 0 30rpx 20rpx;
+  width: 40rpx;
+  height: 48rpx;
+  margin: 27rpx 0 30rpx 20rpx;
 }
 
 .content {
   background-color: #fafcff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   padding-top: 20rpx;
+  width: 100vw;
+  height: 100vh;
 }
 
 .switch {
+  padding: 5rpx 25rpx 5rpx 25rpx;
   border-radius: 20px;
   margin-right: 20rpx;
+  margin-top: 5rpx;
   color: #1fa1ff;
   font-size: 25rpx;
   background: white;
@@ -206,22 +216,22 @@ onShow(() => {
   font-size: calc(15 / 390 * 100vw);
   align-items: baseline;
   width: 100vw;
-  margin: 0 0 0 60rpx;
+  margin: 0 0 0 50rpx;
   transition-duration: 0.4s;
 }
 
 .navbtn {
   color: #939393;
-  font-size: 20rpx;
+  font-size: 28rpx;
   margin: 0 20rpx;
 
   &.current {
     color: #ffffff;
     background-color: #1fa1ff;
-    padding: 10rpx 15rpx 10rpx 15rpx;
+    padding: 12rpx 20rpx 15rpx 20rpx;
     border-radius: 15rpx;
-    font-size: 25rpx;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    font-size: 28rpx;
+    box-shadow: 0 4px 10px rgba(74, 128, 240, 0.3);
   }
 }
 
@@ -235,14 +245,13 @@ onShow(() => {
   height: 12vh;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10rpx;
 }
 
 .school-select-box {
   background-color: #fafcff;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  //justify-content: space-around;
 }
 
 .school-name {
