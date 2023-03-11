@@ -20,7 +20,12 @@
       <view class="post-content font-md">
         {{ moment.data.text }}
       </view>
-      <view v-if="catName" class="font-md mb-2" style="color: #5272ff" @click="onClickCatBox(moment.data.catId)">
+      <view
+        v-if="catName"
+        class="font-md mb-2"
+        style="color: #5272ff"
+        @click="onClickCatBox(moment.data.catId)"
+      >
         @{{ catName }}
       </view>
       <view class="like-info"> {{ moment.likeData.count }} 位喵友觉得很赞</view>
