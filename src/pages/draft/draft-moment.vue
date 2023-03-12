@@ -13,7 +13,7 @@
           :container-size="{
             width: '100%',
             height:
-              Math.ceil(Math.min(imagesData.length + 1, 9) / 3.0) *
+              Math.ceil(Math.min(imagesData.length + 1, 30) / 3.0) *
                 (imageWidth + imageMargin) +
               'px'
           }"
@@ -27,14 +27,14 @@
           </template>
           <template #addImage>
             <view
-              v-if="imagesData.length < 9"
+              v-if="imagesData.length < 30"
               class="new-image"
               @click="addImage"
             />
           </template>
         </DraggableItem>
       </view>
-      <view class="image-num"> {{ imagesData.length }}/9</view>
+      <view class="image-num"> {{ imagesData.length }}/30</view>
       <view class="m-2">
         <FuiTextArea
           v-model="title"
@@ -186,9 +186,9 @@ function addImage() {
     success: (chooseImageRes) => {
       let isTooManyImages = false;
       let tempFilePaths = chooseImageRes.tempFiles as Array<any>;
-      if (imagesData.length + tempFilePaths.length > 9) {
+      if (imagesData.length + tempFilePaths.length > 30) {
         isTooManyImages = true;
-        tempFilePaths = tempFilePaths.slice(0, 9 - imagesData.length);
+        tempFilePaths = tempFilePaths.slice(0, 30 - imagesData.length);
       }
       tempFilePaths.map((item) => {
         imagesData.push({
@@ -213,7 +213,7 @@ function addImage() {
       });
       if (isTooManyImages) {
         uni.showToast({
-          title: "最多可上传9张图片！",
+          title: "最多可上传30张图片！",
           icon: "error"
         });
       }

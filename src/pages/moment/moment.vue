@@ -31,15 +31,22 @@
       <view class="like-info"> {{ moment.likeData.count }} 位喵友觉得很赞</view>
       <view :class="chooseImageClass(moment.data.photos.length)">
         <image
-          v-for="(item, index) in moment.data.photos"
+          v-for="(item, index) in moment.data.photos.slice(0, 9)"
           :key="index"
           :mode="chooseImageMode(moment.data.photos.length)"
           :src="item"
           @click="onClickImage(index, moment.data.photos)"
         />
+        <view
+          v-if="moment.data.photos.length > 9"
+          class="lastImg"
+          @click="onClickImage('8', moment.data.photos)"
+          >+{{ moment.data.photos.length - 9 }}</view
+        >
       </view>
     </view>
-    <view class="commentNum">
+    <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
+    <view v-else class="commentNum">
       评论 {{ comments.data.length + comments.replyNumber }}
     </view>
     <view v-if="comments.data.length === 0">
@@ -491,6 +498,18 @@ function leaveReply() {
           float: left;
           margin: 5rpx 5rpx 5rpx 5rpx;
         }
+      }
+      .lastImg {
+        width: 220rpx;
+        height: 220rpx;
+        border-radius: 3px;
+        color: #ffffff;
+        background: rgb(0, 0, 0, 0.5);
+        font-size: 70rpx;
+        line-height: 220rpx;
+        text-align: center;
+        margin: -225rpx 5rpx 5rpx 460rpx;
+        z-index: 100;
       }
     }
   }

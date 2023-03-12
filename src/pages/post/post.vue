@@ -32,6 +32,9 @@
       {{ post.data.text }}
     </view>
     <view class="commentNum"> 评论</view>
+    <view v-if="comments.data.length === 0">
+      <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
+    </view>
 
     <comment-box
       v-for="(item, index) in comments.data"
@@ -488,6 +491,14 @@ $postPadding: 15px 27px 0 21px;
   /* darkgrey02 */
   color: #353535;
   margin-bottom: 20rpx;
+}
+
+.nomore {
+  margin-top: 50rpx;
+  font-size: 20rpx;
+  line-height: 20rpx;
+  text-align: center;
+  color: #b8b8b8;
 }
 
 .confirm-to-delete {
