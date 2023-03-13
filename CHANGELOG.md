@@ -1,5 +1,17 @@
 
 
+## [1.9.2](https://github.com/xh-polaris/meowchat-app/compare/v1.9.1...v1.9.2) (2023-03-13)
+
+
+### ✨ Features | 新功能
+
+* 将动态上传图片限制调整至30张，并调整图片多于9张时的显示效果 ([#240](https://github.com/xh-polaris/meowchat-app/issues/240)) ([891e2aa](https://github.com/xh-polaris/meowchat-app/commit/891e2aa9e3021d3469f1612a56013d419f7abb10))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复图鉴刷新失效 ([424ab8d](https://github.com/xh-polaris/meowchat-app/commit/424ab8dbb1dc0cf0a40917c14579a0b90ae37f2a))
+
 ## [1.9.1](https://github.com/xh-polaris/meowchat-app/compare/v1.9.0...v1.9.1) (2023-03-11)
 
 
