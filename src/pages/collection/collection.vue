@@ -57,12 +57,17 @@
         </view>
       </view>
     </view>
-    <search-cats
-      v-if="isClickCollectionSearch"
-      search="cat"
-      :keyword="searchText"
-    ></search-cats>
-    <search-cats v-if="!isClickCollectionSearch" search="default"></search-cats>
+    <template v-if="!isRefreshing">
+      <search-cats
+        v-if="isClickCollectionSearch"
+        search="cat"
+        :keyword="searchText"
+      ></search-cats>
+      <search-cats
+        v-if="!isClickCollectionSearch"
+        search="default"
+      ></search-cats>
+    </template>
   </view>
   <view class="empty-bottom"></view>
   <tab-bar id="2"></tab-bar>
@@ -84,7 +89,6 @@ const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
-
 let searchText = ref("");
 
 /**
@@ -152,16 +156,21 @@ getCampus();
 
 let isRefreshing = ref<boolean>(false);
 onPullDownRefresh(() => {
+  refresh();
+});
+
+function refresh() {
   setTimeout(function () {
     uni.stopPullDownRefresh();
     isRefreshing.value = false;
-  }, 1000);
+  }, 1);
   isRefreshing.value = true;
-});
+}
 
 function setBranch(e: string, index: number) {
   uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
   currentCampus.value = e;
+  refresh();
 }
 
 function onClickSwitch() {
