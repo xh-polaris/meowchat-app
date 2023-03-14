@@ -1,5 +1,19 @@
 
 
+## [1.9.3](https://github.com/xh-polaris/meowchat-app/compare/v1.9.2...v1.9.3) (2023-03-14)
+
+
+### ✨ Features | 新功能
+
+* 我的发布页面每条动态/帖子显示点赞与回复数量 ([#242](https://github.com/xh-polaris/meowchat-app/issues/242)) ([792d32a](https://github.com/xh-polaris/meowchat-app/commit/792d32a325ef849ae7e46a7b109327b0b024186d))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 调整动态显示效果 ([bc5afb4](https://github.com/xh-polaris/meowchat-app/commit/bc5afb4a4efd9a53349cb21778ba11d51d85d0d6))
+* 为获取社区列表添加缓存，仅需调用一次接口 ([5d91e11](https://github.com/xh-polaris/meowchat-app/commit/5d91e11eea1692b994e50d310349174d0548c8e3))
+* 允许点击帖子的封面图进行预览 ([e4806bc](https://github.com/xh-polaris/meowchat-app/commit/e4806bcdabab2b4b37ebfb4dc2d04854a176d6df))
+
 ## [1.9.2](https://github.com/xh-polaris/meowchat-app/compare/v1.9.1...v1.9.2) (2023-03-13)
 
 
