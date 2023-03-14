@@ -65,7 +65,7 @@ export interface DeleteCatResp {
 
 export interface GetImageByCatReq {
   catId: string;
-  prevId: string;
+  prevId?: string;
   limit: number;
 }
 

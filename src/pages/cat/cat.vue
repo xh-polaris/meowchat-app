@@ -212,7 +212,6 @@ const getCatDetailReq = reactive<GetCatDetailReq>({
 let number = 0;
 let getCatImageReq = reactive<GetImageByCatReq>({
   catId: props.id,
-  prevId: "",
   limit: 6
 });
 let imgUrlList = reactive<ImageInfo[]>([]);

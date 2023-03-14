@@ -178,11 +178,7 @@ const campuses = reactive<{
 });
 
 async function schoolList() {
-  lists.data = (
-    await listCommunity({
-      parentId: ""
-    })
-  ).communities;
+  lists.data = (await listCommunity({})).communities;
 }
 async function getCampus() {
   schoolList().then(async () => {

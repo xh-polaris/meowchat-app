@@ -123,11 +123,7 @@ function onClickSearch() {
 }
 
 async function schoolList() {
-  lists.data = (
-    await listCommunity({
-      parentId: ""
-    })
-  ).communities;
+  lists.data = (await listCommunity({})).communities;
 }
 
 async function getCampus() {
@@ -183,6 +179,7 @@ onShow(() => {
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
     getCampus();
   }
+  refresh();
 });
 </script>
 
