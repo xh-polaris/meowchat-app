@@ -46,10 +46,12 @@
                 <view class="font-sm">{{ post.comments }}条回复</view>
               </view>
             </view>
-            <view
+            <image
               v-if="post.coverUrl"
-              :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
+              :src="post.coverUrl"
               class="image"
+              mode="aspectFill"
+              @click.stop="onClickCover(post.coverUrl)"
             />
           </view>
         </view>
@@ -66,7 +68,7 @@ import { reactive } from "vue";
 import { getPostPreviews, searchPostPreviews } from "@/apis/post/post";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
-import { onClickPost } from "./utils";
+import { onClickPost, onClickCover } from "./utils";
 import { Post } from "@/apis/schemas";
 
 interface Props {
@@ -194,9 +196,6 @@ onReachBottom(() => {
   height: calc(112 / 390 * 100vw);
   border-radius: calc(6 / 390 * 100vw);
   margin-left: calc(16 / 390 * 100vw);
-  margin-top: calc(30 / 390 * 100vw);
-  background-size: cover;
-  background-position: center;
 }
 
 .lower {
