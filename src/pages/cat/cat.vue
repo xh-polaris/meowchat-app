@@ -186,7 +186,7 @@ import { Pages } from "@/utils/url";
 import { doLike, getUserLiked, getCount } from "@/apis/like/like";
 function draftImage() {
   uni.navigateTo({
-    url: `${Pages.DraftImage}?catId=${props.id}&catName=${props.name}`
+    url: `${Pages.DraftImage}?catId=${props.id}&catName=${cat.name}`
   });
 }
 
@@ -204,7 +204,6 @@ function clickLike(id: string, index: number) {
 const isRefreshing = ref(false);
 const props = defineProps<{
   id: string;
-  name: string;
 }>();
 const getCatDetailReq = reactive<GetCatDetailReq>({
   catId: props.id

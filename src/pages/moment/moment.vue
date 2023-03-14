@@ -17,18 +17,7 @@
           @click="showDeleteDialogue"
         ></view>
       </view>
-      <view class="post-content font-md">
-        {{ moment.data.text }}
-      </view>
-      <view
-        v-if="catName"
-        class="font-md mb-2"
-        style="color: #5272ff"
-        @click="onClickCatBox(moment.data.catId)"
-      >
-        @{{ catName }}
-      </view>
-      <view class="like-info"> {{ moment.likeData.count }} 位喵友觉得很赞</view>
+      <!-- 图片区域 -->
       <view :class="chooseImageClass(moment.data.photos.length)">
         <image
           v-for="(item, index) in moment.data.photos.slice(0, 9)"
@@ -44,6 +33,18 @@
           >+{{ moment.data.photos.length - 9 }}</view
         >
       </view>
+      <view
+        v-if="catName"
+        class="font-md mb-2"
+        style="color: #5272ff; margin: 10rpx 0 0"
+        @click="onClickCatBox(moment.data.catId)"
+      >
+        @{{ catName }}
+      </view>
+      <view v-if="moment.data.text" class="post-content font-md">
+        {{ moment.data.text }}
+      </view>
+      <view class="like-info"> {{ moment.likeData.count }} 位喵友觉得很赞</view>
     </view>
     <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
     <view v-else class="commentNum">
@@ -449,16 +450,16 @@ function leaveReply() {
     }
 
     .post-content {
-      margin-bottom: 20rpx;
+      margin-top: 10rpx;
       line-height: 1.5em;
       letter-spacing: 0.05em;
       font-weight: 500;
     }
 
     .like-info {
-      margin-bottom: 15px;
       color: #aaa;
       font-size: 12px;
+      margin-top: 10rpx;
     }
 
     // 根据图片数量自适应图片排版方式
@@ -528,7 +529,7 @@ function leaveReply() {
 }
 
 .nomore {
-  margin-top: 50rpx;
+  margin: 50rpx 0;
   font-size: 20rpx;
   line-height: 20rpx;
   text-align: center;
