@@ -11,6 +11,7 @@ export interface GetCommentsResp {
   code: number;
   msg: string;
   comments: Comment[];
+  total: number;
 }
 
 export interface NewCommentReq {

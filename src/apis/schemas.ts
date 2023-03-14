@@ -131,6 +131,7 @@ export interface MomentData {
   user: User;
   photos: Array<string>;
   likedNumber: number;
+  comments: number;
 }
 export const enum TargetType {
   Post = 1,

@@ -25,6 +25,7 @@
             />
           </view>
           <view class="lower">
+            <view class="comment font-sm">{{ Moment.comments }}条回复</view>
             <view class="font-sm">{{ Moment.likedNumber }}位喵友觉得很赞</view>
             <view class="delete" @click.stop="onClickDelete(Moment.id)">
               <image class="deletepic" src="/static/images/delete.png" />
@@ -56,6 +57,7 @@ import {
 } from "@/pages/moment/utils";
 import { onClickMoment } from "./utils";
 import { getCount } from "@/apis/like/like";
+import { getComments } from "@/apis/comment/comment";
 
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
 let momentsData = ref<MomentData[]>([]);
@@ -103,10 +105,14 @@ async function createMomentsDataBatch() {
       text: moments[i].text,
       user: moments[i].user,
       photos: moments[i].photos,
-      likedNumber: 0
+      likedNumber: 0,
+      comments: 0
     });
     getCount({ targetId: moments[i].id, targetType: 4 }).then((res) => {
       momentData.likedNumber = res.count;
+    });
+    getComments({ scope: "moment", page: 0, id: moments[i].id }).then((res) => {
+      momentData.comments = res.total;
     });
     momentsData.value.push(momentData);
   }
@@ -241,6 +247,10 @@ onReachBottom(() => {
           margin-right: 10rpx;
           float: left;
         }
+      }
+
+      .comment {
+        margin-right: calc(16 / 390 * 100vw);
       }
     }
   }
