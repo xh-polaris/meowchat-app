@@ -41,7 +41,8 @@
           <view class="time font-sm">
             {{ displayTime(post.createAt) }}
           </view>
-          <view class="font-sm">{{ post.comments }}条回复</view>
+          <view class="comment font-sm">{{ post.comments }}条回复</view>
+          <view class="font-sm">{{ post.likes }}位喵友觉得很赞</view>
           <view class="delete" @click.stop="onClickDelete(post.id)">
             <image class="deletepic" src="/static/images/delete.png" />
             <view class="font-sm">删除帖子</view>
@@ -215,7 +216,8 @@ onReachBottom(() => {
       float: left;
     }
   }
-  .time {
+  .time,
+  .comment {
     margin-right: calc(16 / 390 * 100vw);
   }
 }
