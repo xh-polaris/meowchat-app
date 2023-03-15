@@ -15,7 +15,6 @@
   <view class="content">
     <!-- 搜索框 -->
     <view
-      v-if="false"
       class="border d-flex mx-3 a-center j-sb px-3 mt-1"
       style="
         height: 80rpx;
@@ -62,10 +61,12 @@
         v-if="isClickCollectionSearch"
         search="cat"
         :keyword="searchText"
+        choose="detail"
       ></search-cats>
       <search-cats
         v-if="!isClickCollectionSearch"
         search="default"
+        choose="detail"
       ></search-cats>
     </template>
   </view>
@@ -117,9 +118,7 @@ function onClickSearch() {
     StorageKeys.IsClickCollectionSearch,
     isClickCollectionSearch.value
   );
-  uni.reLaunch({
-    url: Pages.Collection
-  });
+  refresh();
 }
 
 async function schoolList() {
@@ -179,6 +178,8 @@ onShow(() => {
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
     getCampus();
   }
+  isClickCollectionSearch.value = false;
+  searchText.value = "";
   refresh();
 });
 </script>
@@ -200,7 +201,6 @@ onShow(() => {
   background-color: #fafcff;
   display: flex;
   flex-direction: column;
-  padding-top: 20rpx;
   width: 100vw;
 }
 

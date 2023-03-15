@@ -70,6 +70,9 @@ import { Community } from "@/apis/schemas";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import { StorageKeys } from "@/utils/const";
 
+uni.setStorageSync(StorageKeys.SearchText, "");
+uni.setStorageSync(StorageKeys.IsClickCollectionSearch, false);
+
 const currentSchool = ref("");
 const currentCampus = ref("");
 let communityId = ref("");

@@ -66,36 +66,42 @@
       </view>
 
       <view class="choose-cats-bar">
-        <view class="choose-cats"> 选择猫咪</view>
-        <view v-if="!catId" class="right-arrow" />
-        <view v-if="!catId" class="choose-followed-cats"> 不选择猫咪</view>
+        <view v-if="!catId" class="font-md" style="color: #b8b8b8">
+          选择猫咪</view
+        >
+        <view v-if="catId" class="font-md" style="color: #b8b8b8"
+          >图片将上传至猫咪</view
+        >
       </view>
     </view>
 
     <view class="d-flex wrap">
-      <view style="margin-left: calc(10 / 390 * 100vw)" @click="chooseCats">
-        <view>
+      <view @click="chooseCats">
+        <view style="margin-left: calc(10 / 390 * 100vw)">
           <image
             :src="Icons.NewImage"
-            style="width: 150rpx; height: 150rpx"
+            style="width: 200rpx; height: 200rpx"
           ></image>
-        </view>
-        <view class="font-md text-center" style="color: #b8b8b8">
-          {{ catImage ? "重新选择" : "选择猫咪" }}
         </view>
       </view>
       <view v-if="catImage">
         <image
           :src="catImage"
-          mode="widthFix"
-          style="width: 150rpx; border-radius: 30rpx"
-          class="border mx-1"
+          style="
+            width: 160rpx;
+            height: 160rpx;
+            border-radius: 30rpx;
+            border-color: #1fa1ff;
+            border-width: 0.1em;
+          "
+          class="border mx-1 mt-2"
           @click="onClickCat()"
         ></image>
-        <view class="font-md text-center">{{ catName }}</view>
+        <view class="font-md text-center mt-2" style="color: #1fa1ff">{{
+          catName
+        }}</view>
       </view>
     </view>
-
     <view class="panel">
       <button class="publish" :disabled="disablePublish" @click="publishMoment">
         发布动态
@@ -156,15 +162,15 @@ const imageWidth = ref((110.0 / 390) * windowWidth.value);
 const imageMargin = ref((imagesWidth.value - 3 * imageWidth.value) / 2);
 
 onShow(() => {
-  catId.value = uni.getStorageSync("idSelected");
-  catName.value = uni.getStorageSync("nameSelected");
-  catImage.value = uni.getStorageSync("avatarSelected");
+  catId.value = uni.getStorageSync(StorageKeys.idSelected);
+  catName.value = uni.getStorageSync(StorageKeys.nameSelected);
+  catImage.value = uni.getStorageSync(StorageKeys.avatarSelected);
 });
 
 onUnload(() => {
-  uni.removeStorageSync("idSelected");
-  uni.removeStorageSync("nameSelected");
-  uni.removeStorageSync("avatarSelected");
+  uni.removeStorageSync(StorageKeys.idSelected);
+  uni.removeStorageSync(StorageKeys.nameSelected);
+  uni.removeStorageSync(StorageKeys.avatarSelected);
 });
 
 function chooseCats() {

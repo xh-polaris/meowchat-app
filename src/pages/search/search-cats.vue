@@ -2,7 +2,7 @@
   <template v-if="catsData">
     <view v-if="catsData">
       <view v-for="cat of catsData" :key="cat.id">
-        <view @click="onClickCatBox(cat.id)">
+        <view @click="onClickCatBox(cat.avatarUrl, cat.name, cat.id)">
           <cat-box :cat="cat" />
         </view>
       </view>
@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { Pages, Pictures } from "@/utils/url";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import {
   getCatPreviews,
   searchCatPreviews
@@ -26,10 +26,12 @@ import { StorageKeys } from "@/utils/const";
 interface Props {
   search?: "default" | "cat";
   keyword?: string;
+  choose?: "detail" | "choose";
 }
 const props = withDefaults(defineProps<Props>(), {
   search: "default",
-  keyword: "cat"
+  keyword: "cat",
+  choose: "detail"
 });
 
 const catsData = reactive<CatPreview[]>([]);
@@ -68,10 +70,26 @@ onReachBottom(() => {
   createCatsDataBatch();
 });
 
-function onClickCatBox(id: string) {
-  uni.navigateTo({
-    url: `${Pages.Cat}?id=${id}`
-  });
+// 点击选择的猫咪照片
+const catImage = ref("");
+const catName = ref("猫猫");
+const catId = ref("");
+function onClickCatBox(avatarUrl: string, name: string, id: string) {
+  if (props.choose === "detail") {
+    uni.navigateTo({
+      url: `${Pages.Cat}?id=${id}`
+    });
+  } else if (props.choose === "choose") {
+    catImage.value = avatarUrl;
+    catName.value = name;
+    catId.value = id;
+    uni.setStorageSync(StorageKeys.idSelected, catId.value);
+    uni.setStorageSync(StorageKeys.nameSelected, catName.value);
+    uni.setStorageSync(StorageKeys.avatarSelected, catImage.value);
+    uni.navigateBack({
+      delta: 1
+    });
+  }
 }
 </script>
 
