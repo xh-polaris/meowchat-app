@@ -95,7 +95,7 @@ const tabSwitch = (path: string) => {
 
 <style lang="scss" scoped>
 .tab-box {
-  padding: 5px 0;
+  padding: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

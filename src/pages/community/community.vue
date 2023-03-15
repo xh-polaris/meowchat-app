@@ -1,5 +1,5 @@
 <template>
-  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
+  <UniNavBar :fixed="true" shadow status-bar background-color="#f9f9f9">
     <view>
       <view class="d-flex a-center">
         <view
@@ -21,7 +21,7 @@
         >
       </view>
     </view>
-  </uni-nav-bar>
+  </UniNavBar>
   <view class="school-box">
     <view class="school-select-box">
       <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
@@ -42,14 +42,14 @@
   </view>
 
   <view v-if="!isRefreshing">
-    <carousel-frame />
+    <CarouselFrame />
   </view>
   <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
   <view>
-    <masonry v-if="!isRefreshing" search="default" />
+    <Masonry v-if="!isRefreshing" search="default" />
   </view>
   <view class="empty-bottom"></view>
-  <tab-bar id="1"></tab-bar>
+  <TabBar id="1"></TabBar>
 </template>
 
 <script lang="ts" setup>
@@ -336,6 +336,7 @@ onShow(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 20rpx;
 }
 
 .logo {

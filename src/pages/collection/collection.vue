@@ -177,10 +177,10 @@ function onClickSwitch() {
 onShow(() => {
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
     getCampus();
+    refresh();
   }
   isClickCollectionSearch.value = false;
   searchText.value = "";
-  refresh();
 });
 </script>
 
