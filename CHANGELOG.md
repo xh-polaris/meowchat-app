@@ -1,5 +1,14 @@
 
 
+## [1.9.4](https://github.com/xh-polaris/meowchat-app/compare/v1.9.3...v1.9.4) (2023-03-15)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 图鉴底部显示bug ([#243](https://github.com/xh-polaris/meowchat-app/issues/243)) ([c170c6a](https://github.com/xh-polaris/meowchat-app/commit/c170c6ab7c5de7e1699ad68f20761b607951fd71))
+* 修复无法看到底部评论的问题 ([#236](https://github.com/xh-polaris/meowchat-app/issues/236)) ([c84f447](https://github.com/xh-polaris/meowchat-app/commit/c84f44796763c11de1ad54ea1fb89c9bbe2b9ee4))
+* 修改图鉴搜索刷新问题 ([#245](https://github.com/xh-polaris/meowchat-app/issues/245)) ([95e52cd](https://github.com/xh-polaris/meowchat-app/commit/95e52cd82f8a1f7ce9e851b17af39662a40a2afc))
+
 ## [1.9.3](https://github.com/xh-polaris/meowchat-app/compare/v1.9.2...v1.9.3) (2023-03-14)
 
 
