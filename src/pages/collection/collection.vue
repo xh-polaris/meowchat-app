@@ -1,5 +1,5 @@
 <template>
-  <uni-nav-bar :fixed="true" background-color="#f9f9f9" shadow status-bar>
+  <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>
     <view>
       <view
         style="
@@ -11,7 +11,7 @@
         >图鉴
       </view>
     </view>
-  </uni-nav-bar>
+  </UniNavBar>
   <view class="content">
     <!-- 搜索框 -->
     <view
@@ -20,7 +20,7 @@
         height: 80rpx;
         border-radius: 50rpx;
         border-color: #a0cce9;
-        border-width: 3rpx;
+        margin: 30rpx 20rpx 10rpx;
       "
     >
       <input v-model="searchText" maxlength="20" placeholder="搜索猫咪" />
@@ -57,12 +57,12 @@
       </view>
     </view>
     <template v-if="!isRefreshing">
-      <search-cats
+      <SearchCats
         v-if="isClickCollectionSearch"
         search="cat"
         :keyword="searchText"
         choose="detail"
-      ></search-cats>
+      ></SearchCats>
       <search-cats
         v-if="!isClickCollectionSearch"
         search="default"
@@ -71,7 +71,7 @@
     </template>
   </view>
   <view class="empty-bottom"></view>
-  <tab-bar id="2"></tab-bar>
+  <TabBar id="2"></TabBar>
 </template>
 
 <script lang="ts" setup>

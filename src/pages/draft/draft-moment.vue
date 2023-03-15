@@ -149,7 +149,7 @@ const catImage = ref("");
 const catName = ref("猫猫");
 const catId = ref("");
 
-/*
+/**
 $margin: calc(20 / 390 * 100vw);
 $imagesWidth: calc(100vw - $margin * 2);
 $imageWidth: calc(110 / 390 * 100vw);
@@ -162,15 +162,15 @@ const imageWidth = ref((110.0 / 390) * windowWidth.value);
 const imageMargin = ref((imagesWidth.value - 3 * imageWidth.value) / 2);
 
 onShow(() => {
-  catId.value = uni.getStorageSync(StorageKeys.idSelected);
-  catName.value = uni.getStorageSync(StorageKeys.nameSelected);
-  catImage.value = uni.getStorageSync(StorageKeys.avatarSelected);
+  catId.value = uni.getStorageSync(StorageKeys.IdSelected);
+  catName.value = uni.getStorageSync(StorageKeys.NameSelected);
+  catImage.value = uni.getStorageSync(StorageKeys.AvatarSelected);
 });
 
 onUnload(() => {
-  uni.removeStorageSync(StorageKeys.idSelected);
-  uni.removeStorageSync(StorageKeys.nameSelected);
-  uni.removeStorageSync(StorageKeys.avatarSelected);
+  uni.removeStorageSync(StorageKeys.IdSelected);
+  uni.removeStorageSync(StorageKeys.NameSelected);
+  uni.removeStorageSync(StorageKeys.AvatarSelected);
 });
 
 function chooseCats() {

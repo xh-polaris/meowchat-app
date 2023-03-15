@@ -28,7 +28,7 @@
             <view class="comment font-sm">{{ Moment.comments }}条回复</view>
             <view class="font-sm">{{ Moment.likedNumber }}位喵友觉得很赞</view>
             <view class="delete" @click.stop="onClickDelete(Moment.id)">
-              <image class="deletepic" src="/static/images/delete.png" />
+              <image class="deletepic" :src="Icons.Delete" />
               <view class="font-sm">删除动态</view>
             </view>
           </view>
@@ -36,7 +36,7 @@
       </view>
     </template>
     <view v-if="momentsData.length === 0">
-      <image src="https://static.xhpolaris.com/nodata.png" />
+      <image :src="Pictures.NoData" />
     </view>
     <view class="nomore">没有更多喵~</view>
     <view style="width: 100%; height: 40rpx"></view>
@@ -50,6 +50,7 @@ import { DeleteMomentReq } from "@/apis/moment/moment-components";
 import { MomentData } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
+import { Pictures, Pages, Icons } from "@/utils/url";
 import {
   chooseImageClass,
   chooseImageMode,
@@ -58,6 +59,7 @@ import {
 import { onClickMoment } from "./utils";
 import { getCount } from "@/apis/like/like";
 import { getComments } from "@/apis/comment/comment";
+import { StorageKeys } from "@/utils/const";
 
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
 let momentsData = ref<MomentData[]>([]);
@@ -66,7 +68,7 @@ const getMomentsPreviewsAsync = async () => {
   let moments = (
     await getOwnMomentPreviews({
       page: page,
-      communityId: uni.getStorageSync("communityId")
+      communityId: uni.getStorageSync(StorageKeys.CommunityId)
     })
   ).moments;
   page++;
@@ -86,7 +88,7 @@ async function onClickDelete(id: string) {
           });
         });
         uni.reLaunch({
-          url: "/pages/profile/my-publish/my-publish?id=${userInfo.id}"
+          url: Pages.MyPublish
         });
       }
     }

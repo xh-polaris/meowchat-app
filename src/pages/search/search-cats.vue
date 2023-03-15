@@ -83,9 +83,9 @@ function onClickCatBox(avatarUrl: string, name: string, id: string) {
     catImage.value = avatarUrl;
     catName.value = name;
     catId.value = id;
-    uni.setStorageSync(StorageKeys.idSelected, catId.value);
-    uni.setStorageSync(StorageKeys.nameSelected, catName.value);
-    uni.setStorageSync(StorageKeys.avatarSelected, catImage.value);
+    uni.setStorageSync(StorageKeys.IdSelected, catId.value);
+    uni.setStorageSync(StorageKeys.NameSelected, catName.value);
+    uni.setStorageSync(StorageKeys.AvatarSelected, catImage.value);
     uni.navigateBack({
       delta: 1
     });

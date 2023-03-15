@@ -44,14 +44,14 @@
           <view class="comment font-sm">{{ post.comments }}条回复</view>
           <view class="font-sm">{{ post.likes }}位喵友觉得很赞</view>
           <view class="delete" @click.stop="onClickDelete(post.id)">
-            <image class="deletepic" src="/static/images/delete.png" />
+            <image class="deletepic" :src="Icons.Delete" />
             <view class="font-sm">删除帖子</view>
           </view>
         </view>
       </view>
     </template>
     <view v-if="postsData.length === 0">
-      <image src="https://static.xhpolaris.com/nodata.png" />
+      <image :src="Pictures.NoData" />
     </view>
     <view class="nomore">没有更多喵~</view>
     <view style="width: 100%; height: 40rpx"></view>
@@ -67,6 +67,7 @@ import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
 import { StorageKeys } from "@/utils/const";
+import { Pages, Pictures, Icons } from "@/utils/url";
 const deleteID = reactive<DeletePostReq>({ id: "" });
 let postsData = ref<Post[]>([]);
 let token: string;
@@ -92,7 +93,7 @@ async function onClickDelete(id: string) {
           });
         });
         uni.reLaunch({
-          url: "/pages/profile/my-publish/my-publish?id=${userInfo.id}"
+          url: Pages.MyPublish
         });
       }
     }

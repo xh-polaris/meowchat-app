@@ -1,5 +1,5 @@
 <template>
-  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
+  <UniNavBar :fixed="true" shadow status-bar background-color="#f9f9f9">
     <view>
       <view class="d-flex a-center">
         <view
@@ -21,7 +21,7 @@
         >
       </view>
     </view>
-  </uni-nav-bar>
+  </UniNavBar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
       {{ types[0].name }}
@@ -43,15 +43,19 @@
 
   <view class="top-padding" />
 
-  <world-posts v-if="!isRefreshing" search="default" />
+  <WorldPosts
+    v-if="!isRefreshing"
+    search="default"
+    :only-official="onlyOfficial"
+  />
   <view class="empty-bottom"></view>
-  <tab-bar id="3"></tab-bar>
+  <TabBar id="3"></TabBar>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { onPullDownRefresh } from "@dcloudio/uni-app";
-import { Icons } from "@/utils/url";
+import { Icons, Pages } from "@/utils/url";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
@@ -59,8 +63,9 @@ import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.v
 import { StorageKeys } from "@/utils/const";
 
 //搜索界面需要用到的缓存
-uni.removeStorageSync(StorageKeys.search);
-uni.setStorageSync(StorageKeys.isClickSearch, false);
+uni.removeStorageSync(StorageKeys.Search);
+uni.setStorageSync(StorageKeys.IsClickSearch, false);
+const onlyOfficial = ref(false);
 const types = reactive([
   {
     name: "官方",
@@ -68,6 +73,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("官方");
+      onlyOfficial.value = true;
       pageRefresh();
     }
   },
@@ -77,6 +83,7 @@ const types = reactive([
     className: "navbtn current",
     onClick: () => {
       toggleSelf("热度");
+      onlyOfficial.value = false;
       pageRefresh();
     }
   },
@@ -86,6 +93,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("最新");
+      onlyOfficial.value = false;
       pageRefresh();
     }
   },
@@ -95,6 +103,7 @@ const types = reactive([
     className: "navbtn",
     onClick: () => {
       toggleSelf("关注");
+      onlyOfficial.value = false;
       pageRefresh();
     }
   }
@@ -128,7 +137,7 @@ onPullDownRefresh(() => {
 
 function enterMessage() {
   uni.navigateTo({
-    url: "/pages/message/message"
+    url: Pages.Message
   });
 }
 </script>

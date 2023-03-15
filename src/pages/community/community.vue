@@ -5,7 +5,7 @@
         <view
           class="d-flex a-center"
           style="position: absolute; left: 38rpx"
-          @click="enterMessage"
+          @click="onClickMessage"
         >
           <view class="left d-flex">
             <image
@@ -57,18 +57,14 @@ import { reactive, ref } from "vue";
 import { Icons } from "@/utils/url";
 import Masonry from "@/pages/community/masonry.vue";
 import CarouselFrame from "@/pages/community/carousel-frame.vue";
-import {
-  onLoad,
-  onPullDownRefresh,
-  onReachBottom,
-  onShow
-} from "@dcloudio/uni-app";
+import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import { Community } from "@/apis/schemas";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import { StorageKeys } from "@/utils/const";
+import { onClickMessage } from "./event";
 
 uni.setStorageSync(StorageKeys.SearchText, "");
 uni.setStorageSync(StorageKeys.IsClickCollectionSearch, false);
@@ -86,11 +82,7 @@ let history = reactive({
 let historyJSON = reactive({
   histories: reactive<Array<any>>([])
 });
-function enterMessage() {
-  uni.navigateTo({
-    url: "/pages/message/message"
-  });
-}
+
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
@@ -106,26 +98,24 @@ async function schoolList() {
 }
 
 async function getCampus() {
-  schoolList().then(() => {
-    init();
-    for (let i = 0; i < lists.data.length; i++) {
-      if (lists.data[i].id === communityId.value) {
-        currentCampus.value = lists.data[i].name;
-        parentId.value = <string>lists.data[i].parentId;
-      }
+  await schoolList();
+  init();
+  for (let i = 0; i < lists.data.length; i++) {
+    if (lists.data[i].id === communityId.value) {
+      currentCampus.value = lists.data[i].name;
+      parentId.value = <string>lists.data[i].parentId;
     }
-    for (let j = 0; j < lists.data.length; j++) {
-      if (lists.data[j].id === parentId.value) {
-        currentSchool.value = lists.data[j].name;
-      }
+  }
+  for (let j = 0; j < lists.data.length; j++) {
+    if (lists.data[j].id === parentId.value) {
+      currentSchool.value = lists.data[j].name;
     }
-    history.campusName = currentCampus.value;
-    history.schoolName = currentSchool.value;
-    history.communityId = communityId.value;
-    history.schoolId = parentId.value;
-  });
+  }
+  history.campusName = currentCampus.value;
+  history.schoolName = currentSchool.value;
+  history.communityId = communityId.value;
+  history.schoolId = parentId.value;
 }
-getCampus();
 
 function getHistories() {
   if (uni.getStorageSync(StorageKeys.HistoryCampuses)) {
@@ -226,13 +216,6 @@ onShow(() => {
     pageRefresh();
   }
 });
-onLoad(() => {
-  getCampus();
-  getHistories();
-});
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-onReachBottom(() => {}); //这里的空的onReachBottom别删！！！有了这个masonry.vue的onReachBottom才能生效
 </script>
 
 <style lang="scss" scoped>

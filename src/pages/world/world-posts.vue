@@ -58,7 +58,7 @@
       </view>
     </template>
     <view v-if="postsData.length === 0">
-      <image src="https://static.xhpolaris.com/nodata.png" />
+      <image :src="Pictures.NoData" />
     </view>
   </template>
 </template>
@@ -68,12 +68,14 @@ import { reactive } from "vue";
 import { getPostPreviews } from "@/apis/post/post";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
+import { Pictures } from "@/utils/url";
 import { onClickPost, onClickCover } from "./utils";
 import { Post } from "@/apis/schemas";
 
 interface Props {
   search?: string;
   keyword?: string;
+  onlyOfficial?: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
   search: "default",
@@ -85,12 +87,16 @@ let token: string;
 const getPostPreviewsAsync = async () => {
   let posts: Array<Post> = [];
   if (props.search === "default") {
-    const res = await getPostPreviews({ lastToken: token });
+    const res = await getPostPreviews({
+      lastToken: token,
+      onlyOfficial: props.onlyOfficial
+    });
     token = res.token;
     posts = res.posts;
   } else if (props.search === "post") {
     const res = await getPostPreviews({
       lastToken: token,
+      onlyOfficial: props.onlyOfficial,
       searchOptions: {
         key: props.keyword
       }

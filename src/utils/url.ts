@@ -9,7 +9,8 @@ export const enum Icons {
   UpBlack = "/static/images/up-black.png",
   NewImage = "/static/images/add.png",
   Message = "/static/images/message-black.png",
-  Collection = "/static/images/collection-grey.png"
+  Collection = "/static/images/collection-grey.png",
+  Delete = "/static/images/delete.png"
 }
 export const enum Pages {
   Cat = "/pages/cat/cat",
@@ -23,5 +24,7 @@ export const enum Pages {
   Moment = "/pages/moment/moment",
   SchoolSelect = "/pages/community/school-select/school-select",
   Search = "/pages/search/search",
-  DraftImage = "/pages/draft/draft-image/draft-image"
+  DraftImage = "/pages/draft/draft-image/draft-image",
+  MyPublish = "/pages/profile/my-publish/my-publish",
+  Message = "/pages/message/message"
 }
