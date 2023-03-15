@@ -60,23 +60,23 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { getOwnPostPreviews, deletePost } from "@/apis/post/post";
+import { deletePost, getPostPreviews } from "@/apis/post/post";
 import { DeletePostReq } from "@/apis/post/post-interfaces";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
+import { StorageKeys } from "@/utils/const";
 const deleteID = reactive<DeletePostReq>({ id: "" });
 let postsData = ref<Post[]>([]);
-let page = 0;
+let token: string;
 const getPostPreviewsAsync = async () => {
-  let posts = (
-    await getOwnPostPreviews({
-      page: page
-    })
-  ).posts;
-  page++;
-  return posts;
+  const res = await getPostPreviews({
+    lastToken: token,
+    onlyUserId: uni.getStorageSync(StorageKeys.UserId)
+  });
+  token = res.token;
+  return res.posts;
 };
 
 async function onClickDelete(id: string) {

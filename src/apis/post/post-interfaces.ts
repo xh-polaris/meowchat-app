@@ -1,25 +1,30 @@
 import { Post, Tag } from "../schemas";
 
+interface AllFieldsKey {
+  key: string;
+}
+
+interface MultiFieldsKey {
+  title?: string;
+  text?: string;
+  tag?: string;
+}
+
 export interface GetPostPreviewsReq {
-  page: number;
+  limit?: string;
+  offset?: string;
+  lastToken?: string;
+  backward?: boolean;
+  onlyOfficial?: boolean;
+  onlyUserId?: string;
+  searchOptions?: AllFieldsKey | MultiFieldsKey;
 }
 
 export interface GetPostPreviewsResp {
   posts: Post[];
   code: number;
   msg: string;
-}
-
-export interface SearchPostPreviewsReq {
-  page: number;
-  keyword: string;
-  Authorization?: string;
-}
-
-export interface SearchPostPreviewsResp {
-  posts: Post[];
-  code: number;
-  msg: string;
+  token: string;
 }
 
 export interface GetPostDetailReq {

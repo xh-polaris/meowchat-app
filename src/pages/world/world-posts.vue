@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
-import { getPostPreviews, searchPostPreviews } from "@/apis/post/post";
+import { getPostPreviews } from "@/apis/post/post";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost, onClickCover } from "./utils";
@@ -81,24 +81,23 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 let postsData: Array<Post> = reactive([]);
-let page = 0;
+let token: string;
 const getPostPreviewsAsync = async () => {
   let posts: Array<Post> = [];
   if (props.search === "default") {
-    posts = (
-      await getPostPreviews({
-        page: page
-      })
-    ).posts;
+    const res = await getPostPreviews({ lastToken: token });
+    token = res.token;
+    posts = res.posts;
   } else if (props.search === "post") {
-    posts = (
-      await searchPostPreviews({
-        page: page,
-        keyword: props.keyword
-      })
-    ).posts;
+    const res = await getPostPreviews({
+      lastToken: token,
+      searchOptions: {
+        key: props.keyword
+      }
+    });
+    token = res.token;
+    posts = res.posts;
   }
-  page++;
   return posts;
 };
 
