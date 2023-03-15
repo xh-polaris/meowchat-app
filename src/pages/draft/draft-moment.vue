@@ -162,15 +162,15 @@ const imageWidth = ref((110.0 / 390) * windowWidth.value);
 const imageMargin = ref((imagesWidth.value - 3 * imageWidth.value) / 2);
 
 onShow(() => {
-  catId.value = uni.getStorageSync("idSelected");
-  catName.value = uni.getStorageSync("nameSelected");
-  catImage.value = uni.getStorageSync("avatarSelected");
+  catId.value = uni.getStorageSync(StorageKeys.idSelected);
+  catName.value = uni.getStorageSync(StorageKeys.nameSelected);
+  catImage.value = uni.getStorageSync(StorageKeys.avatarSelected);
 });
 
 onUnload(() => {
-  uni.removeStorageSync("idSelected");
-  uni.removeStorageSync("nameSelected");
-  uni.removeStorageSync("avatarSelected");
+  uni.removeStorageSync(StorageKeys.idSelected);
+  uni.removeStorageSync(StorageKeys.nameSelected);
+  uni.removeStorageSync(StorageKeys.avatarSelected);
 });
 
 function chooseCats() {

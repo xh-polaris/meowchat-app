@@ -69,7 +69,6 @@ import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { Community } from "@/apis/schemas";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 
 const switchText = ref("\u00A0 切换学校");
