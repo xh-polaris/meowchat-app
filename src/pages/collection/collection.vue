@@ -202,7 +202,6 @@ onShow(() => {
   flex-direction: column;
   padding-top: 20rpx;
   width: 100vw;
-  height: 100vh;
 }
 
 .switch {
@@ -298,6 +297,6 @@ onShow(() => {
 }
 
 .empty-bottom {
-  height: 200rpx;
+  height: 140rpx;
 }
 </style>
