@@ -176,6 +176,8 @@ onShow(() => {
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
     getCampus();
   }
+  isClickCollectionSearch.value=false
+  searchText.value=""
   refresh();
 });
 </script>
