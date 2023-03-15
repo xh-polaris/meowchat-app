@@ -61,12 +61,12 @@
         v-if="isClickCollectionSearch"
         search="cat"
         :keyword="searchText"
-		choose="detail"
+        choose="detail"
       ></search-cats>
       <search-cats
         v-if="!isClickCollectionSearch"
         search="default"
-		choose="detail"
+        choose="detail"
       ></search-cats>
     </template>
   </view>
