@@ -66,8 +66,12 @@
       </view>
 
       <view class="choose-cats-bar">
-        <view class="font-md" style="color: #b8b8b8;" v-if="!catId"> 选择猫咪</view>
-		<view class="font-md" style="color: #b8b8b8;" v-if="catId">图片将上传至猫咪</view>
+        <view v-if="!catId" class="font-md" style="color: #b8b8b8">
+          选择猫咪</view
+        >
+        <view v-if="catId" class="font-md" style="color: #b8b8b8"
+          >图片将上传至猫咪</view
+        >
       </view>
     </view>
 
@@ -83,11 +87,19 @@
       <view v-if="catImage">
         <image
           :src="catImage"
-          style="width: 160rpx;height: 160rpx; border-radius: 30rpx;border-color: #1FA1FF;border-width: 0.1em;"
+          style="
+            width: 160rpx;
+            height: 160rpx;
+            border-radius: 30rpx;
+            border-color: #1fa1ff;
+            border-width: 0.1em;
+          "
           class="border mx-1 mt-2"
           @click="onClickCat()"
         ></image>
-        <view class="font-md text-center mt-2" style="color: #1FA1FF;">{{ catName }}</view>
+        <view class="font-md text-center mt-2" style="color: #1fa1ff">{{
+          catName
+        }}</view>
       </view>
     </view>
     <view class="panel">

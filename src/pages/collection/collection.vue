@@ -15,7 +15,6 @@
   <view class="content">
     <!-- 搜索框 -->
     <view
-      v-if="false"
       class="border d-flex mx-3 a-center j-sb px-3 mt-1"
       style="
         height: 80rpx;
@@ -117,9 +116,7 @@ function onClickSearch() {
     StorageKeys.IsClickCollectionSearch,
     isClickCollectionSearch.value
   );
-  uni.reLaunch({
-    url: Pages.Collection
-  });
+  refresh()
 }
 
 async function schoolList() {
