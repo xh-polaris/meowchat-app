@@ -7,8 +7,7 @@ export const enum StorageKeys {
   IsClickCollectionSearch = "isClickCollectionSearch",
   search = "search",
   isClickSearch = "isClickSearch",
-  idSelected="idSelected",
-  nameSelected="nameSelected",
-  avatarSelected="avatarSelected"
-  
+  idSelected = "idSelected",
+  nameSelected = "nameSelected",
+  avatarSelected = "avatarSelected"
 }
