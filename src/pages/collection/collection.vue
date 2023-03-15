@@ -61,10 +61,12 @@
         v-if="isClickCollectionSearch"
         search="cat"
         :keyword="searchText"
+		choose="detail"
       ></search-cats>
       <search-cats
         v-if="!isClickCollectionSearch"
         search="default"
+		choose="detail"
       ></search-cats>
     </template>
   </view>
@@ -199,7 +201,6 @@ onShow(() => {
   background-color: #fafcff;
   display: flex;
   flex-direction: column;
-  padding-top: 20rpx;
   width: 100vw;
 }
 
