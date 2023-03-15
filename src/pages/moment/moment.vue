@@ -62,29 +62,30 @@
       @on-click-replies="onClickReplies(index)"
       @local-do-like="commentDoLike(index)"
     />
-    <view style="padding-bottom: 150rpx"></view>
-
-    <write-comment-box
-      v-model:placeholder-text="placeholderText"
-      :focus="newCommentFocus"
-      :like-data="moment.likeData"
-      :new-comment-req="newCommentReq"
-      @update-text="
-        (newText) => {
-          newCommentReq.text = newText;
-        }
-      "
-      @do-like="
-        localDoLike({
-          targetId: id,
-          targetType: TargetType.Moment
-        }).then((res) => {
-          moment.likeData = res;
-        })
-      "
-      @after-create-comment="init"
-      @after-blur="afterBlur"
-    />
+    <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
+    <view class="out-write-comment-box">
+      <write-comment-box
+        v-model:placeholder-text="placeholderText"
+        :focus="newCommentFocus"
+        :like-data="moment.likeData"
+        :new-comment-req="newCommentReq"
+        @update-text="
+          (newText) => {
+            newCommentReq.text = newText;
+          }
+        "
+        @do-like="
+          localDoLike({
+            targetId: id,
+            targetType: TargetType.Moment
+          }).then((res) => {
+            moment.likeData = res;
+          })
+        "
+        @after-create-comment="init"
+        @after-blur="afterBlur"
+      />
+    </view>
   </view>
   <view v-if="isReplyOpened" class="reply">
     <reply
@@ -113,7 +114,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import {
   chooseImageClass,
   chooseImageMode,
@@ -333,6 +334,18 @@ const init = async () => {
   newCommentReq.id = props.id;
   initLock = false;
 };
+
+const wcbHeight = ref(81);
+
+onMounted(() => {
+  const query = uni.createSelectorQuery();
+  const dom = query.select(".out-write-comment-box >>> .write-comment-box");
+  dom
+    .boundingClientRect((data) => {
+      wcbHeight.value = data.height;
+    })
+    .exec();
+});
 
 onLoad(() => {
   init();
