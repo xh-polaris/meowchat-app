@@ -4,5 +4,7 @@ export const enum StorageKeys {
   AccessToken = "accessToken",
   HistoryCampuses = "historyCampuses",
   SearchText = "searchText",
-  IsClickCollectionSearch = "isClickCollectionSearch"
+  IsClickCollectionSearch = "isClickCollectionSearch",
+  search="search",
+  isClickSearch="isClickSearch"
 }

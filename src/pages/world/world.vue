@@ -59,10 +59,8 @@ import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.v
 import { StorageKeys } from "@/utils/const";
 
 //搜索界面需要用到的缓存
-uni.removeStorageSync("search");
-uni.setStorageSync("isClickSearch", false);
-uni.setStorageSync(StorageKeys.SearchText, "");
-uni.setStorageSync(StorageKeys.IsClickCollectionSearch, false);
+uni.removeStorageSync(StorageKeys.search);
+uni.setStorageSync(StorageKeys.isClickSearch, false);
 const types = reactive([
   {
     name: "官方",

@@ -116,7 +116,7 @@ function onClickSearch() {
     StorageKeys.IsClickCollectionSearch,
     isClickCollectionSearch.value
   );
-  refresh()
+  refresh();
 }
 
 async function schoolList() {
