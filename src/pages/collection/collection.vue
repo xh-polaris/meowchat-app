@@ -63,7 +63,7 @@
         :keyword="searchText"
         choose="detail"
       ></SearchCats>
-      <search-cats
+     <search-cats
         v-if="!isClickCollectionSearch"
         search="default"
         choose="detail"
@@ -106,6 +106,8 @@ isClickCollectionSearch.value = uni.getStorageSync(
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
+
+init()
 
 const lists = reactive<{ data: Community[] }>({ data: [] });
 
@@ -175,6 +177,8 @@ function onClickSwitch() {
 }
 
 onShow(() => {
+	console.log(uni.getStorageSync(StorageKeys.CommunityId))
+	console.log(communityId.value)
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
     getCampus();
     refresh();
