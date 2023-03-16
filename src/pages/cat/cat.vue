@@ -137,19 +137,13 @@
               <view class="liked-info">
                 <view
                   v-if="image.isLiked"
-                  class="liked"
-                  style="
-                    background-image: url('/static/images/like_grey_1.png');
-                  "
+                  class="like liked"
                   @click.prevent="clickLike(image.id, index)"
                 >
                 </view>
                 <view
                   v-else
-                  class="liked"
-                  style="
-                    background-image: url('/static/images/like_grey_0.png');
-                  "
+                  class="like"
                   @click.prevent="clickLike(image.id, index)"
                 >
                 </view>
@@ -328,6 +322,7 @@ onReachBottom(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/common/icon.scss";
 .scroll-view-item_H {
   display: inline-block;
   width: 330rpx;
@@ -596,12 +591,15 @@ onReachBottom(() => {
     right: 12upx;
     display: flex;
     align-items: center;
-    .liked {
+    .like {
       width: 28upx;
       height: 28upx;
       background-size: 100% 100%;
-      filter: brightness(200%);
       margin-right: 8upx;
+      background-image: $like-grey-border-url;
+      &.liked {
+        background-image: $like-blue-url;
+      }
     }
     .liked_number {
       font-size: 28upx;
