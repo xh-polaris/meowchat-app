@@ -1,102 +1,149 @@
-<template v-if="momentsData">
-  <template>
-    <template v-for="Moment in momentsData" :key="Moment.id">
-      <view class="post" @click="onClickMoment(Moment.id)">
-        <view class="post-info-box">
-          <view class="poster-info-box">
-            <image :src="Moment.user.avatarUrl" class="poster-profile" />
-            <text class="poster-name">
-              {{ Moment.user.nickname }}
-            </text>
-            <text class="post-time">
-              {{ displayTime(Moment.createAt) }}
-            </text>
-          </view>
-          <view class="post-content font-md">
-            {{ Moment.text }}
-          </view>
-          <view :class="chooseImageClass(Moment.photos.length)">
+<template>
+  <view class="masonry">
+    <view
+      v-for="i in 2"
+      :key="i"
+      :class="i === 1 ? 'column-left' : 'column-right'"
+    >
+      <template
+        v-for="moment in i === 1 ? leftMoments : rightMoments"
+        :key="moment.id"
+      >
+        <view class="tile" @click="onClickMoment(moment.id)">
+          <view class="img-frame">
             <image
-              v-for="(item, index) in Moment.photos"
-              :key="index"
-              :mode="chooseImageMode(Moment.photos.length)"
-              :src="item"
-              @click="onClickImage(index, Moment.photos)"
+              v-if="i === 1"
+              :src="moment.photos[0]"
+              class="img"
+              mode="widthFix"
+              @load.once="onLoadLeft"
+            />
+            <image
+              v-else
+              :src="moment.photos[0]"
+              class="img"
+              mode="widthFix"
+              @load.once="onLoadRight"
             />
           </view>
-          <view class="lower">
-            <view class="comment font-sm">{{ Moment.comments }}条回复</view>
-            <view class="font-sm">{{ Moment.likedNumber }}位喵友觉得很赞</view>
-            <view class="delete" @click.stop="onClickDelete(Moment.id)">
-              <image class="deletepic" :src="Icons.Delete" />
-              <view class="font-sm">删除动态</view>
+
+          <view class="tile-info">
+            <view class="info">
+              <view class="title">{{ moment.title }}</view>
+              <view class="delete" @click.stop="onClickDelete(moment.id)">
+                <image class="deletepic" src="/static/images/delete.png" />
+              </view>
+            </view>
+            <view class="other-info">
+              <view class="user-info">
+                <image :src="moment.user.avatarUrl" class="avatar" />
+                <view class="username font-md">
+                  {{ moment.user.nickname }}
+                </view>
+              </view>
+              <view class="time font-sm">
+                {{ displayTime(moment.createAt) }}
+              </view>
+            </view>
+            <view class="other-info">
+              <view class="font-sm"
+                >{{ moment.likedNumber }}位喵友觉得很赞</view
+              >
+              <view class="comment font-sm">{{ moment.comments }}条回复</view>
             </view>
           </view>
         </view>
-      </view>
-    </template>
-    <view v-if="momentsData.length === 0">
-      <image :src="Pictures.NoData" />
+      </template>
     </view>
-    <view class="nomore">没有更多喵~</view>
-    <view style="width: 100%; height: 40rpx"></view>
-  </template>
+  </view>
+  <view v-if="isNoData">
+    <image src="https://static.xhpolaris.com/nodata.png" />
+  </view>
+  <view v-else class="blue-background" />
+  <view class="nomore">没有更多喵~</view>
+  <view style="width: 100%; height: 40rpx"></view>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { onBeforeMount, reactive, ref } from "vue";
 import { getOwnMomentPreviews, deleteMoment } from "@/apis/moment/moment";
 import { DeleteMomentReq } from "@/apis/moment/moment-components";
 import { MomentData } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
-import { Pictures, Pages, Icons } from "@/utils/url";
-import {
-  chooseImageClass,
-  chooseImageMode,
-  onClickImage
-} from "@/pages/moment/utils";
 import { onClickMoment } from "./utils";
 import { getCount } from "@/apis/like/like";
 import { getComments } from "@/apis/comment/comment";
-import { StorageKeys } from "@/utils/const";
 
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
-let momentsData = ref<MomentData[]>([]);
-let page = 0;
-const getMomentsPreviewsAsync = async () => {
+const isNoData = ref(true);
+
+let momentsInBatch = ref<MomentData[]>([]);
+const leftMoments = reactive<MomentData[]>([]);
+const rightMoments = reactive<MomentData[]>([]);
+
+let leftHeight = 0;
+let rightHeight = 0;
+const isLeftTallerThanRight = () => {
+  return leftHeight > rightHeight;
+};
+
+let indexInBatch = 0;
+let batchLength: number;
+let batchFirstPartLength: number;
+const batchSecondPartDefaultLength = 4;
+
+let isNoMoreMoments = false;
+let loadedAmount = 0;
+let isBatchLoading = false;
+let page = 0; //每往下翻页一次page加1直到没有内容
+
+onReachBottom(() => {
+  if (!isBatchLoading && !isNoMoreMoments) {
+    isBatchLoading = true;
+    addBatch();
+    console.log(momentsInBatch.value.length);
+  }
+});
+
+const onLoad = () => {
+  loadedAmount += 1;
+  // 加完上一步后，表示已经加载好了这一batch中多少moment的图片
+  // 所以对于没有firstPart而直接开始onLoad的，要预先讲loadedAmount设为-1，才能使得这里加完是0
+  if (loadedAmount >= batchFirstPartLength) {
+    if (loadedAmount < batchLength) {
+      addTile(indexInBatch, "either");
+      indexInBatch += 1;
+    } else {
+      loadedAmount = 0;
+      indexInBatch = 0;
+      isBatchLoading = false;
+    }
+  }
+};
+
+const addTile = (tileIndex: number, side: string) => {
+  const tile = momentsInBatch.value[tileIndex];
+  if (side === "left") {
+    leftMoments.push(tile);
+  } else if (side === "right") {
+    rightMoments.push(tile);
+  } else if (side === "either") {
+    if (isLeftTallerThanRight()) {
+      rightMoments.push(tile);
+    } else {
+      leftMoments.push(tile);
+    }
+  }
+};
+
+const addBatch = async () => {
   let moments = (
     await getOwnMomentPreviews({
       page: page,
-      communityId: uni.getStorageSync(StorageKeys.CommunityId)
+      communityId: uni.getStorageSync("communityId")
     })
   ).moments;
-  page++;
-  return moments;
-};
-
-async function onClickDelete(id: string) {
-  deleteID.momentId = id;
-  uni.showModal({
-    title: "确认删除",
-    content: "是否删除该动态",
-    success: function (res) {
-      if (res.confirm) {
-        deleteMoment(deleteID).then((res) => {
-          uni.showToast({
-            title: res.msg
-          });
-        });
-        uni.reLaunch({
-          url: Pages.MyPublish
-        });
-      }
-    }
-  });
-}
-
-async function createMomentsDataBatch() {
-  const moments = await getMomentsPreviewsAsync();
   for (let i = 0; i < moments.length; i++) {
     let momentData = reactive<MomentData>({
       id: moments[i].id,
@@ -114,150 +161,206 @@ async function createMomentsDataBatch() {
       momentData.likedNumber = res.count;
     });
     getComments({ scope: "moment", page: 0, id: moments[i].id }).then((res) => {
-      momentData.comments = res.total;
+      momentData.comments += res.total;
+      for (let i = 0; i < res.comments.length; i++) {
+        momentData.comments += res.comments[i].comments;
+      }
     });
-    momentsData.value.push(momentData);
+    momentsInBatch.value.push(momentData);
   }
-}
+  if (momentsInBatch.value.length > 0) {
+    isNoData.value = false;
+    page += 1;
+    batchLength = momentsInBatch.value.length;
+    if (batchSecondPartDefaultLength < batchLength) {
+      batchFirstPartLength = batchLength - batchSecondPartDefaultLength;
+      // batchSecondPartLength = batchSecondPartDefaultLength;
+      if (batchFirstPartLength % 2 !== 0) {
+        batchFirstPartLength -= 1;
+        // batchSecondPartLength += 1;
+      }
+      if (batchFirstPartLength > 0) {
+        for (let i = 0; i < batchFirstPartLength / 2; i++) {
+          addTile(indexInBatch, "left");
+          indexInBatch += 1;
+          addTile(indexInBatch, "right");
+          indexInBatch += 1;
+        }
+      } else {
+        loadedAmount = -1;
+        onLoad();
+      }
+    } else {
+      batchFirstPartLength = 0;
+      // batchSecondPartLength = batchLength;
+      loadedAmount = -1;
+      onLoad();
+    }
+  } else {
+    isNoMoreMoments = true;
+    isBatchLoading = false;
+  }
+};
+const onLoadLeft = (ev: Event) => {
+  const target = ev.target as HTMLImageElement;
+  // 事实上 target.offsetHeight 是拿不到的
+  leftHeight =
+    target.offsetTop +
+    (target?.offsetHeight ? target.offsetHeight : target.height);
+  onLoad();
+};
+const onLoadRight = (ev: Event) => {
+  const target = ev.target as HTMLImageElement;
+  // 事实上 target.offsetHeight 是拿不到的
+  rightHeight =
+    target.offsetTop +
+    (target?.offsetHeight ? target.offsetHeight : target.height);
+  onLoad();
+};
 
-createMomentsDataBatch();
-
-onReachBottom(() => {
-  createMomentsDataBatch();
+onBeforeMount(() => {
+  isBatchLoading = true;
+  addBatch();
 });
+
+async function onClickDelete(id: string) {
+  deleteID.momentId = id;
+  uni.showModal({
+    title: "确认删除",
+    content: "是否删除该动态",
+    success: function (res) {
+      if (res.confirm) {
+        deleteMoment(deleteID).then((res) => {
+          uni.showToast({
+            title: res.msg
+          });
+        });
+        uni.reLaunch({
+          url: "/pages/profile/my-publish/my-publish?id=${userInfo.id}"
+        });
+      }
+    }
+  });
+}
 </script>
 
 <style lang="scss" scoped>
+$sideMargin: calc(12 / 390 * 100vw);
+$horizontalGap: calc(8 / 390 * 100vw);
+$verticalGap: calc(10 / 390 * 100vw);
+
+$radius: calc(6 / 390 * 100vw);
+$titleFontSize: calc(12 / 390 * 100vw);
+$smallFontSize: calc(8 / 390 * 100vw);
+$avatarWidth: calc(21 / 390 * 100vw);
+
 @import "@/common/user-info.scss";
 
-.post {
-  background-color: #ffffff;
-  //border-top: 2px #f4f9ff solid;
-  border-bottom: 15rpx #fafcff solid;
-  padding: 32rpx;
-  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.03);
-  border-radius: 5px;
-  .post-info-box {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+.masonry {
+  background-color: #fafcff;
+  display: flex;
+}
 
-    .poster-info-box {
+.column-left {
+  width: calc(50vw - $sideMargin - $horizontalGap / 2);
+  margin-left: $sideMargin;
+  margin-right: calc($horizontalGap / 2);
+  height: fit-content;
+}
+
+.column-right {
+  width: calc(50vw - $sideMargin - $horizontalGap / 2);
+  margin-left: calc($horizontalGap / 2);
+  margin-right: $sideMargin;
+  height: fit-content;
+}
+
+.tile {
+  margin-bottom: calc($verticalGap - 2px);
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.25);
+  border-radius: $radius;
+  font-family: sans-serif;
+
+  .img-frame {
+    max-height: calc((50vw - $sideMargin - $horizontalGap / 2) * 1.8);
+    overflow: hidden;
+
+    .img {
+      width: calc(50vw - $sideMargin - $horizontalGap / 2);
+      display: block;
+      border-radius: $radius $radius 0 0;
+      height: 1px;
+    }
+  }
+
+  .tile-info {
+    transform: translateY(-2px);
+    background-color: #ffffff;
+    border-radius: 0 0 $radius $radius;
+    font-size: $smallFontSize;
+    color: #696969;
+    font-weight: 500;
+    padding: calc(4 / 390 * 100vw) calc(12 / 390 * 100vw) calc(6 / 390 * 100vw);
+    .info {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
-
-      .poster-profile {
-        width: 80rpx;
-        height: 80rpx;
-        max-width: 50px;
-        max-height: 50px;
-        min-width: 36px;
-        min-height: 36px;
-        background-color: #cccccc;
-        margin-right: 12px;
-        border-radius: 50%;
+      justify-content: space-between;
+      .title {
+        font-size: 30rpx;
+        color: #000000;
+        line-height: calc ($titleFontSize * 1.5);
+        margin-top: calc(5 / 390 * 100vw);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
-
-      .poster-name {
-        margin-right: 12px;
-        font-weight: bold;
-        font-size: 16px;
-      }
-
-      .post-time {
-        margin-left: 300rpx;
-        color: #aaa;
-        font-size: 14px;
-      }
-
-      .delete {
-        position: absolute;
-        width: calc(15 / 390 * 100vw);
-        height: calc(15 / 390 * 100vw);
-        background-size: 100% 100%;
-        background-image: url("@/static/images/dustbin.png");
-        right: calc(21 / 390 * 100vw);
-      }
-    }
-
-    .post-content {
-      margin-bottom: 15px;
-      line-height: 1.5em;
-      letter-spacing: 0.05em;
-      font-weight: 500;
-    }
-
-    .like-info {
-      margin-bottom: 15px;
-      color: #aaa;
-      font-size: 12px;
-    }
-
-    // 根据图片数量自适应图片排版方式
-    .imgs {
-      position: relative;
-      display: flex;
-      overflow: hidden;
-      flex-wrap: wrap;
-
-      &.imgs1 {
-        image {
-          width: 680rpx;
-          object-fit: none;
-          border-radius: 3px;
-          float: left;
-          margin: 5rpx 5rpx 5rpx 5rpx;
-        }
-      }
-
-      &.imgs2 {
-        image {
-          width: 330rpx;
-          height: 330rpx;
-          object-fit: none;
-          border-radius: 3px;
-          float: left;
-          margin: 5rpx 5rpx 5rpx 5rpx;
-        }
-      }
-
-      &.imgs5 {
-        image {
-          width: 220rpx;
-          height: 220rpx;
-          object-fit: none;
-          border-radius: 3px;
-          float: left;
-          margin: 5rpx 5rpx 5rpx 5rpx;
-        }
-      }
-    }
-    .lower {
-      margin-top: calc(12 / 390 * 100vw);
-      display: flex;
-      align-items: center;
-      color: #b8b8b8;
-      font-size: calc(10 / 390 * 100vw);
       .delete {
         display: flex;
         align-items: center;
         .deletepic {
           height: 20rpx;
           width: 20rpx;
+          margin-top: 15rpx;
           margin-left: 50rpx;
           margin-right: 10rpx;
           float: left;
         }
       }
-
-      .comment {
-        margin-right: calc(16 / 390 * 100vw);
+    }
+    .other-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #b8b8b8;
+      .time {
+        font-size: calc(6 / 390 * 150vw);
+        color: #939393;
       }
     }
   }
 }
 
+.username {
+  max-width: calc(60 / 390 * 100vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.get-dom {
+  width: 1px;
+  height: 1px;
+}
+
+.blue-background {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fafcff;
+  position: fixed;
+  z-index: -1;
+  left: 0;
+  top: 0;
+}
 .nomore {
   margin-top: 50rpx;
   font-size: 20rpx;

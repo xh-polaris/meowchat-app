@@ -31,7 +31,10 @@
     <view class="text">
       {{ post.data.text }}
     </view>
-    <view class="commentNum"> 评论</view>
+    <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
+    <view v-else class="commentNum">
+      评论 {{ comments.data.length + comments.replyNumber }}
+    </view>
     <view v-if="comments.data.length === 0">
       <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
     </view>
@@ -180,9 +183,11 @@ const getCommentsReq = reactive<GetCommentsReq>({
 const comments = reactive<{
   data: Comment[];
   likeData: LikeStruct[];
+  replyNumber: number;
 }>({
   data: [],
-  likeData: []
+  likeData: [],
+  replyNumber: 0
 });
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
@@ -194,9 +199,11 @@ const localGetCommentsData = async () => {
     scope: "post",
     page: page
   }).then((res) => {
+    comments.replyNumber = 0;
     for (let i = 0; i < res.data.length; i++) {
       comments.data.push(res.data[i]);
       comments.likeData.push(res.likeData[i]);
+      comments.replyNumber += res.data[i].comments;
     }
     isCommentsLoaded = true;
     page += 1;
