@@ -2,7 +2,7 @@
   <view class="content">
     <!-- 搜索框 -->
     <view
-      class="border d-flex mx-3 a-center j-sb px-3 mt-1"
+      class="border d-flex mx-3 a-center j-sb px-3 mt-2"
       style="
         height: 80rpx;
         border-radius: 50rpx;
