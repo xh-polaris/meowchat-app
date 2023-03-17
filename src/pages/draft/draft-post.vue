@@ -38,6 +38,7 @@
             <image
               :src="image.url"
               class="added-image"
+              mode="aspectFill"
               @click="showImage(index)"
             />
           </template>
@@ -96,6 +97,8 @@ import { Tag } from "@/apis/schemas";
 import Deal from "@/components/deal-policy/deal.vue";
 import Policy from "@/components/deal-policy/policy.vue";
 import { onClickImage } from "@/pages/cat/utils";
+import { onUnload } from "@dcloudio/uni-app";
+import { StorageKeys } from "@/utils/const";
 
 const imagesData = reactive<
   {
@@ -110,8 +113,65 @@ const title = ref("");
 const text = ref("");
 const coverUrl = ref("");
 const disablePublish = ref(false);
-
+const isPublished = ref(false);
+const draft = reactive({
+  title: title,
+  text: text,
+  coverUrl: coverUrl,
+  imagesData: imagesData
+});
+let draftJSON = reactive({
+  title: "",
+  text: "",
+  coverUrl: "",
+  imagesData: []
+});
 let tags = reactive<Tag[]>([]);
+onUnload(() => {
+  if (
+    (title.value !== "" || text.value !== "" || imagesData.length !== 0) &&
+    !isPublished.value
+  ) {
+    uni.showModal({
+      content: "是否要保存为草稿?",
+      cancelText: "不保存",
+      confirmText: "保存",
+      success: (res) => {
+        if (res.confirm) {
+          uni.setStorageSync(
+            StorageKeys.DraftPost,
+            encodeURIComponent(JSON.stringify(draft))
+          );
+        } else {
+          uni.setStorageSync(StorageKeys.DraftPost, "");
+        }
+      }
+    });
+  }
+});
+function loadDraftPost() {
+  if (uni.getStorageSync(StorageKeys.DraftPost)) {
+    uni.showModal({
+      content: "是否加载上次的草稿?",
+      cancelText: "否",
+      confirmText: "是",
+      success: (res) => {
+        if (res.confirm) {
+          draftJSON = JSON.parse(
+            decodeURIComponent(uni.getStorageSync(StorageKeys.DraftPost))
+          );
+          title.value = draftJSON.title;
+          text.value = draftJSON.text;
+          coverUrl.value = draftJSON.coverUrl;
+          for (let i = 0; i < draftJSON.imagesData.length; ++i) {
+            imagesData[i] = draftJSON.imagesData[i];
+          }
+        }
+      }
+    });
+  }
+}
+loadDraftPost();
 
 watch(tags, (newValue) => {
   if (newValue.length > 3) {
@@ -175,6 +235,8 @@ function publishPost() {
     });
     return;
   }
+  uni.setStorageSync(StorageKeys.DraftPost, "");
+  isPublished.value = !isPublished.value;
   newPost({
     title: title.value,
     text: text.value,

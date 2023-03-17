@@ -17,6 +17,9 @@
           @click="showDeleteDialogue"
         ></view>
       </view>
+      <view v-if="moment.data.title" class="post-content font-lg">
+        {{ moment.data.title }}
+      </view>
       <!-- 图片区域 -->
       <view :class="chooseImageClass(moment.data.photos.length)">
         <image
@@ -463,7 +466,8 @@ function leaveReply() {
     }
 
     .post-content {
-      margin-top: 10rpx;
+      margin-top: 20rpx;
+      margin-bottom: 40rpx;
       line-height: 1.5em;
       letter-spacing: 0.05em;
       font-weight: 500;

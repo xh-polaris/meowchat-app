@@ -231,7 +231,8 @@ onShow(() => {
 .navbtn {
   color: #939393;
   font-size: 28rpx;
-  margin: 0 20rpx;
+  margin: 0 10rpx;
+  padding: 12rpx 20rpx 15rpx 20rpx;
 
   &.current {
     color: #ffffff;

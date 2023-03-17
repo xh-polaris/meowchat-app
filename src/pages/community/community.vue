@@ -71,17 +71,8 @@ uni.setStorageSync(StorageKeys.IsClickCollectionSearch, false);
 
 const currentSchool = ref("");
 const currentCampus = ref("");
-let communityId = ref("");
-let parentId = ref("");
-let history = reactive({
-  campusName: "",
-  schoolName: "",
-  communityId: "",
-  schoolId: ""
-});
-let historyJSON = reactive({
-  histories: reactive<Array<any>>([])
-});
+const communityId = ref("");
+const parentId = ref("");
 
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
@@ -111,42 +102,6 @@ async function getCampus() {
       currentSchool.value = lists.data[j].name;
     }
   }
-  history.campusName = currentCampus.value;
-  history.schoolName = currentSchool.value;
-  history.communityId = communityId.value;
-  history.schoolId = parentId.value;
-}
-
-function getHistories() {
-  if (uni.getStorageSync(StorageKeys.HistoryCampuses)) {
-    historyJSON = JSON.parse(
-      decodeURIComponent(uni.getStorageSync(StorageKeys.HistoryCampuses))
-    );
-  }
-  if (checkRepeat(history.communityId)) {
-    if (historyJSON.histories.length === 3) {
-      historyJSON.histories.pop();
-      historyJSON.histories.unshift(history);
-    } else {
-      historyJSON.histories.unshift(history);
-    }
-  }
-  uni.setStorageSync(
-    StorageKeys.HistoryCampuses,
-    encodeURIComponent(JSON.stringify(historyJSON))
-  );
-}
-function checkRepeat(id: string) {
-  let flag = true;
-  for (let i = 0; i < historyJSON.histories.length; i++) {
-    if (id === historyJSON.histories[i].communityId) {
-      flag = false;
-    }
-  }
-  if (id === "") {
-    flag = false;
-  }
-  return flag;
 }
 
 const types = reactive([
@@ -208,7 +163,7 @@ onPullDownRefresh(() => {
 
 onShow(() => {
   getCampus();
-  getHistories();
+  // getHistories();
   if (
     !communityId.value ||
     communityId.value != uni.getStorageSync(StorageKeys.CommunityId)

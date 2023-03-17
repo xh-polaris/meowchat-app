@@ -31,6 +31,12 @@
     <view class="text">
       {{ post.data.text }}
     </view>
+    <image
+      :src="post.data.coverUrl"
+      class="imgs imgs1 clearfix"
+      mode="widthFix"
+      @click="onClickImage(post.data.coverUrl)"
+    />
     <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
     <view v-else class="commentNum">
       评论 {{ comments.data.length + comments.replyNumber }}
@@ -124,6 +130,7 @@ import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import { GetCountReq } from "@/apis/like/like-interface";
 import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
 import CommentBox from "@/pages/moment/comment-box.vue";
+import { onClickImage } from "@/pages/post/utils";
 
 const props = defineProps<{
   id: string;
@@ -476,7 +483,7 @@ $postPadding: 15px 27px 0 21px;
 
     /* darkgrey02 */
     color: #353535;
-    margin-bottom: 100rpx;
+    margin-bottom: 50rpx;
   }
 }
 
@@ -585,6 +592,23 @@ $postPadding: 15px 27px 0 21px;
           }
         }
       }
+    }
+  }
+}
+.imgs {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  margin-bottom: 50rpx;
+  width: 670rpx;
+
+  &.imgs1 {
+    image {
+      object-fit: none;
+      border-radius: 3px;
+      float: left;
+      margin: 5rpx 5rpx 5rpx 5rpx;
     }
   }
 }
