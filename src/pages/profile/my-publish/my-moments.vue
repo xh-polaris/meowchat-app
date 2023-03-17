@@ -78,7 +78,7 @@ import { getComments } from "@/apis/comment/comment";
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
 const isNoData = ref(true);
 
-let momentsInBatch = ref<MomentData[]>([]);
+let momentsInBatch: MomentData[];
 const leftMoments = reactive<MomentData[]>([]);
 const rightMoments = reactive<MomentData[]>([]);
 
@@ -102,7 +102,7 @@ onReachBottom(() => {
   if (!isBatchLoading && !isNoMoreMoments) {
     isBatchLoading = true;
     addBatch();
-    console.log(momentsInBatch.value.length);
+    console.log(momentsInBatch.length);
   }
 });
 
@@ -123,7 +123,7 @@ const onLoad = () => {
 };
 
 const addTile = (tileIndex: number, side: string) => {
-  const tile = momentsInBatch.value[tileIndex];
+  const tile = momentsInBatch[tileIndex];
   if (side === "left") {
     leftMoments.push(tile);
   } else if (side === "right") {
@@ -138,12 +138,14 @@ const addTile = (tileIndex: number, side: string) => {
 };
 
 const addBatch = async () => {
+  momentsInBatch = [];
   let moments = (
     await getOwnMomentPreviews({
       page: page,
       communityId: uni.getStorageSync("communityId")
     })
   ).moments;
+  page += 1;
   for (let i = 0; i < moments.length; i++) {
     let momentData = reactive<MomentData>({
       id: moments[i].id,
@@ -166,12 +168,11 @@ const addBatch = async () => {
         momentData.comments += res.comments[i].comments;
       }
     });
-    momentsInBatch.value.push(momentData);
+    momentsInBatch.push(momentData);
   }
-  if (momentsInBatch.value.length > 0) {
+  if (momentsInBatch.length > 0) {
     isNoData.value = false;
-    page += 1;
-    batchLength = momentsInBatch.value.length;
+    batchLength = momentsInBatch.length;
     if (batchSecondPartDefaultLength < batchLength) {
       batchFirstPartLength = batchLength - batchSecondPartDefaultLength;
       // batchSecondPartLength = batchSecondPartDefaultLength;
