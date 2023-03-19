@@ -11,7 +11,9 @@
               <view class="user-info">
                 <template v-if="!post.isAnonymous">
                   <image :src="post.user.avatarUrl" class="avatar" />
-                  <view class="username">
+                  <view
+                    :class="post.isOfficial ? 'username-official' : 'username'"
+                  >
                     {{ post.user.nickname }}
                   </view>
                 </template>

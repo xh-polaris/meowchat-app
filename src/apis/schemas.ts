@@ -42,6 +42,7 @@ export interface Post {
   comments: number;
   user: User;
   status: number;
+  isOfficial: boolean;
 }
 
 export interface Tag {
