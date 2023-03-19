@@ -88,7 +88,7 @@ export function chooseImageMode(length: number) {
   if (length === 1) {
     return "widthFix";
   } else if (length === 2 || length === 4) {
-    return "scaleToFill";
+    return "aspectFill";
   } else {
     return "aspectFill";
   }

@@ -22,6 +22,7 @@
             <image
               :src="image.url"
               class="added-image"
+              mode="aspectFill"
               @click="showImage(index)"
             />
           </template>
@@ -126,7 +127,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { Prefixes, putObject } from "@/apis/cos/cos";
-import { onShow, onUnload } from "@dcloudio/uni-app";
+import { onBackPress, onLoad, onShow, onUnload } from "@dcloudio/uni-app";
 
 import { newMoment } from "@/apis/moment/moment";
 import FuiTextArea from "@/components/third-party/fui-textarea/fui-textarea.vue";
@@ -137,17 +138,36 @@ import Policy from "@/components/deal-policy/policy.vue";
 import { onClickImage } from "@/pages/cat/utils";
 import DraggableItem from "@/components/third-party/draggable-item/draggable-item.vue";
 
-const imagesData = reactive<any>([]);
-
 const title = ref("");
 const text = ref("");
-const disablePublish = ref(false);
-
 const photos = reactive<any>([]);
+const imagesData = reactive<any>([]);
+
+const disablePublish = ref(false);
+const isPublished = ref(false);
 
 const catImage = ref("");
 const catName = ref("猫猫");
 const catId = ref("");
+
+const draft = reactive({
+  title: title,
+  text: text,
+  photos: photos,
+  imagesData: imagesData,
+  catImage: catImage,
+  catName: catName,
+  catId: catId
+});
+let draftJSON = reactive({
+  title: "",
+  text: "",
+  photos: [],
+  imagesData: [],
+  catImage: "",
+  catName: "",
+  catId: ""
+});
 
 /**
 $margin: calc(20 / 390 * 100vw);
@@ -168,11 +188,64 @@ onShow(() => {
 });
 
 onUnload(() => {
+  if (
+    (title.value !== "" ||
+      text.value !== "" ||
+      imagesData.length !== 0 ||
+      catImage.value !== "") &&
+    !isPublished.value
+  ) {
+    uni.showModal({
+      content: "是否要保存为草稿?",
+      cancelText: "不保存",
+      confirmText: "保存",
+      success: (res) => {
+        if (res.confirm) {
+          uni.setStorageSync(
+            StorageKeys.DraftMoment,
+            encodeURIComponent(JSON.stringify(draft))
+          );
+        } else {
+          uni.setStorageSync(StorageKeys.DraftMoment, "");
+        }
+      }
+    });
+  }
   uni.removeStorageSync(StorageKeys.IdSelected);
   uni.removeStorageSync(StorageKeys.NameSelected);
   uni.removeStorageSync(StorageKeys.AvatarSelected);
 });
-
+function loadDraftMoment() {
+  if (uni.getStorageSync(StorageKeys.DraftMoment)) {
+    uni.showModal({
+      content: "是否加载上次的草稿?",
+      cancelText: "否",
+      confirmText: "是",
+      success: (res) => {
+        if (res.confirm) {
+          draftJSON = JSON.parse(
+            decodeURIComponent(uni.getStorageSync(StorageKeys.DraftMoment))
+          );
+          title.value = draftJSON.title;
+          text.value = draftJSON.text;
+          for (let i = 0; i < draftJSON.photos.length; ++i) {
+            photos[i] = draftJSON.photos[i];
+          }
+          for (let i = 0; i < draftJSON.imagesData.length; ++i) {
+            imagesData[i] = draftJSON.imagesData[i];
+          }
+          catName.value = draftJSON.catName;
+          uni.setStorageSync(StorageKeys.NameSelected, draftJSON.catName);
+          catImage.value = draftJSON.catImage;
+          uni.setStorageSync(StorageKeys.AvatarSelected, draftJSON.catImage);
+          catId.value = draftJSON.catId;
+          uni.setStorageSync(StorageKeys.IdSelected, draftJSON.catId);
+        }
+      }
+    });
+  }
+}
+loadDraftMoment();
 function chooseCats() {
   uni.navigateTo({
     url: Pages.ChooseCat
@@ -238,6 +311,8 @@ function publishMoment() {
     });
     return;
   }
+  uni.setStorageSync(StorageKeys.DraftMoment, "");
+  isPublished.value = !isPublished.value;
   newMoment({
     title: title.value,
     communityId: uni.getStorageSync(StorageKeys.CommunityId),

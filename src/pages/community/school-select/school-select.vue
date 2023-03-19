@@ -117,8 +117,14 @@ import { Icons } from "@/utils/url";
 
 const currentSchool = ref("");
 const currentCampus = ref("");
-let communityId = ref("");
-let parentId = ref("");
+const communityId = ref("");
+const parentId = ref("");
+let history = reactive({
+  campusName: "",
+  schoolName: "",
+  communityId: "",
+  schoolId: ""
+});
 
 let historyJSON = reactive({
   histories: reactive<Array<any>>([])
@@ -126,18 +132,45 @@ let historyJSON = reactive({
 
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
-  if (!uni.getStorageSync("communityId")) {
-    uni.setStorageSync("communityId", "637ce159b15d9764c31f9c84");
+  if (!uni.getStorageSync(StorageKeys.CommunityId)) {
+    uni.setStorageSync(StorageKeys.CommunityId, "637ce159b15d9764c31f9c84");
   }
-  communityId.value = uni.getStorageSync("communityId");
+  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
+
 function getHistories() {
-  historyJSON = JSON.parse(
-    decodeURIComponent(uni.getStorageSync(StorageKeys.HistoryCampuses))
+  if (uni.getStorageSync(StorageKeys.HistoryCampuses)) {
+    historyJSON = JSON.parse(
+      decodeURIComponent(uni.getStorageSync(StorageKeys.HistoryCampuses))
+    );
+  }
+  if (checkRepeat(history.communityId)) {
+    if (historyJSON.histories.length === 3) {
+      historyJSON.histories.pop();
+      historyJSON.histories.unshift(history);
+    } else {
+      historyJSON.histories.unshift(history);
+    }
+  }
+  uni.setStorageSync(
+    StorageKeys.HistoryCampuses,
+    encodeURIComponent(JSON.stringify(historyJSON))
   );
 }
+function checkRepeat(id: string) {
+  let flag = true;
+  for (let i = 0; i < historyJSON.histories.length; i++) {
+    if (id === historyJSON.histories[i].communityId) {
+      flag = false;
+    }
+  }
+  if (id === "") {
+    flag = false;
+  }
+  return flag;
+}
 onLoad(() => {
-  getHistories();
+  getCampus();
 });
 
 const lists = reactive<{
@@ -158,6 +191,7 @@ const schools = reactive<{
   data: []
 });
 
+// 所有Community列表
 async function schoolList() {
   lists.data = (await listCommunity({})).communities;
 }
@@ -197,6 +231,11 @@ async function getCampus() {
           currentSchool.value = lists.data[j].name;
         }
       }
+      history.campusName = currentCampus.value;
+      history.schoolName = currentSchool.value;
+      history.communityId = communityId.value;
+      history.schoolId = parentId.value;
+      getHistories();
       campuses.data = (
         await listCommunity({
           parentId: parentId.value
