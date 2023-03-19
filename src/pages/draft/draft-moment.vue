@@ -68,7 +68,7 @@
 
       <view class="choose-cats-bar">
         <view v-if="!catId" class="font-md" style="color: #b8b8b8">
-          选择猫咪</view
+          如果动态是为某喵发的，可以点"+"选择它噢</view
         >
         <view v-if="catId" class="font-md" style="color: #b8b8b8"
           >图片将上传至猫咪</view
