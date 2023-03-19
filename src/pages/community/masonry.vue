@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, reactive, ref } from "vue";
+import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
 import { getMomentPreviews, searchMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/utils";
@@ -96,6 +96,10 @@ const batchSecondPartDefaultLength = 4;
 let isNoMoreMoments = false;
 let loadedAmount = 0;
 let isBatchLoading = false;
+const instance = getCurrentInstance();
+const query = uni.createSelectorQuery().in(instance);
+let imgWidth = 160;
+let isFirstLoadImg = true;
 
 let page = 0; //每往下翻页一次page加1直到没有内容
 
@@ -181,18 +185,34 @@ const addBatch = async () => {
 
 const onLoadLeft = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
-  // 事实上 target.offsetHeight 是拿不到的
-  leftHeight =
-    target.offsetTop +
-    (target?.offsetHeight ? target.offsetHeight : target.height);
+  if (isFirstLoadImg) {
+    isFirstLoadImg = false;
+    query.select(".img").boundingClientRect();
+    query.exec((res: any) => {
+      if (res.length != 0) {
+        imgWidth = res[0].width;
+      }
+    });
+  }
+
+  let height = (target.height / target.width) * imgWidth;
+  leftHeight = target.offsetTop + height;
   onLoad();
 };
 const onLoadRight = (ev: Event) => {
   const target = ev.target as HTMLImageElement;
-  // 事实上 target.offsetHeight 是拿不到的
-  rightHeight =
-    target.offsetTop +
-    (target?.offsetHeight ? target.offsetHeight : target.height);
+  if (isFirstLoadImg) {
+    isFirstLoadImg = false;
+    query.select(".img").boundingClientRect();
+    query.exec((res: any) => {
+      if (res.length != 0) {
+        imgWidth = res[0].width;
+      }
+    });
+  }
+
+  let height = (target.height / target.width) * imgWidth;
+  rightHeight = target.offsetTop + height;
   onLoad();
 };
 
