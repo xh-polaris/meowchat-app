@@ -409,16 +409,16 @@ body {
 .delete-image {
   background-color: cyan;
   background-image: url("/static/images/x-black.png");
-  background-size: $imageWidth / 10 $imageWidth / 10;
+  background-size: calc($imageWidth / 10) calc($imageWidth / 10);
   background-repeat: no-repeat;
   background-position: center;
   filter: invert(100%);
   position: absolute;
   border-radius: 50%;
-  top: $imageWidth / 25;
-  right: $imageGap + $imageWidth / 25;
-  width: $imageWidth / 5;
-  height: $imageWidth / 5;
+  top: calc($imageWidth / 25);
+  right: calc($imageGap + $imageWidth / 25);
+  width: calc($imageWidth / 5);
+  height: calc($imageWidth / 5);
   opacity: 0.9;
 }
 
