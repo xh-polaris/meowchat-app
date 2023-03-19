@@ -17,6 +17,7 @@
       <image class="arrow-right" src="/static/images/arrow_right_blue.png" />
     </view>
     <view v-if="like" class="like-box">
+      <text class="reply" @click="emit('interactWithComment')">回复</text>
       <view
         v-if="like.isLike"
         class="like-icon liked"
@@ -106,6 +107,15 @@ const emit = defineEmits<{
       width: 6px;
       height: 10px;
     }
+  }
+}
+
+.reply {
+  color: #1fa1ff;
+  margin-right: 32upx;
+  font-size: 28upx;
+  &:active {
+    color: #077cce;
   }
 }
 </style>
