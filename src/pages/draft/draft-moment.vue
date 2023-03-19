@@ -19,12 +19,15 @@
           }"
         >
           <template #content="{ image, index }">
-            <image
-              :src="image.url"
-              class="added-image"
-              mode="aspectFill"
-              @click="showImage(index)"
-            />
+            <div style="position: relative">
+              <image
+                :src="image.url"
+                class="added-image"
+                mode="aspectFill"
+                @click="showImage(index)"
+              />
+              <div class="delete-image" @click="deleteImage(index)" />
+            </div>
           </template>
           <template #addImage>
             <view
@@ -303,6 +306,11 @@ function addImage() {
   });
 }
 
+function deleteImage(index: number) {
+  imagesData.splice(index, 1);
+  photos.splice(index, 1);
+}
+
 function publishMoment() {
   if (photos.length == 0) {
     uni.showToast({
@@ -396,6 +404,22 @@ body {
   background-size: 24% 24%;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.delete-image {
+  background-color: cyan;
+  background-image: url("/static/images/x-black.png");
+  background-size: calc($imageWidth / 10) calc($imageWidth / 10);
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: invert(100%);
+  position: absolute;
+  border-radius: 50%;
+  top: calc($imageWidth / 25);
+  right: calc($imageGap + $imageWidth / 25);
+  width: calc($imageWidth / 5);
+  height: calc($imageWidth / 5);
+  opacity: 0.9;
 }
 
 .image-num {
