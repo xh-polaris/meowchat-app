@@ -1,5 +1,27 @@
 
 
+## [1.9.6](https://github.com/xh-polaris/meowchat-app/compare/v1.9.5...v1.9.6) (2023-03-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决图鉴第一次进入时多次请求的问题 ([#246](https://github.com/xh-polaris/meowchat-app/issues/246)) ([119b1d0](https://github.com/xh-polaris/meowchat-app/commit/119b1d045d5cf1212921f49ce323c86df1d478ce))
+* 修复瀑布流 ([#251](https://github.com/xh-polaris/meowchat-app/issues/251)) ([280ecfe](https://github.com/xh-polaris/meowchat-app/commit/280ecfec1cf0adc51d9cf44afbd9c3b7b3d9709c))
+* 修复我的发布中动态重复加载的问题 ([#249](https://github.com/xh-polaris/meowchat-app/issues/249)) ([71f6cab](https://github.com/xh-polaris/meowchat-app/commit/71f6cab1041ac4908caed4af654a654aaaae5c9c))
+
+
+### ✨ Features | 新功能
+
+* 初步修改我的发布中动态的样式为瀑布流，修正帖子详情中评论数量不符的问题 ([#247](https://github.com/xh-polaris/meowchat-app/issues/247)) ([7105b4f](https://github.com/xh-polaris/meowchat-app/commit/7105b4f3ccb246baacc0e18ac2b6aac0720e7720))
+* 实现了动态和帖子评论中“回复”字样及其点击效果 ([#252](https://github.com/xh-polaris/meowchat-app/issues/252)) ([40c6f56](https://github.com/xh-polaris/meowchat-app/commit/40c6f56d8d0c9d83c2fe83022f1a35ea7b9a57c2))
+* 为发动态和发帖子添加草稿功能 ([#250](https://github.com/xh-polaris/meowchat-app/issues/250)) ([daffc07](https://github.com/xh-polaris/meowchat-app/commit/daffc07877e1bb76bf3a927247a12bf5ec08e170))
+* draft-moment图片删除(Test) ([#253](https://github.com/xh-polaris/meowchat-app/issues/253)) ([e21774d](https://github.com/xh-polaris/meowchat-app/commit/e21774d98788164f655729be6e54e64054b2fb8e))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 时间显示格式改为月-日 ([df01ad1](https://github.com/xh-polaris/meowchat-app/commit/df01ad1079a42fe41272d2fa32f4bb576906d473))
+
 ## [1.9.5](https://github.com/xh-polaris/meowchat-app/compare/v1.9.4...v1.9.5) (2023-03-15)
 
 ## [1.9.4](https://github.com/xh-polaris/meowchat-app/compare/v1.9.3...v1.9.4) (2023-03-15)
