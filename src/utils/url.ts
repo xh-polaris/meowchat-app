@@ -14,6 +14,7 @@ export const enum Icons {
 }
 export const enum Pages {
   Cat = "/pages/cat/cat",
+  Post = "/pages/post/post",
   WebView = "/pages/web-frame/web-frame",
   Profile = "/pages/profile/profile",
   ChooseCat = "/pages/draft/choose-cat/choose-cat",

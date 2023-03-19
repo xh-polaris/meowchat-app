@@ -1,18 +1,20 @@
 import { PictureStyle } from "@/apis/cos/cos-interface";
+import { Pages } from "@/utils/url";
 
 export function onClickPost(id: string) {
   uni.navigateTo({
-    url: `/pages/post/post?id=${id}`
+    url: `${Pages.Post}?id=${id}`
   });
 }
 export function search() {
   uni.navigateTo({
-    url: "/pages/search/search"
+    url: Pages.Search
   });
 }
 
 export function onClickCover(coverUrl: string) {
+  const index = coverUrl.indexOf(PictureStyle.thumbnail);
   uni.previewImage({
-    urls: [coverUrl.substring(0, coverUrl.indexOf(PictureStyle.thumbnail))]
+    urls: [index == -1 ? coverUrl : coverUrl.substring(0, index)]
   });
 }

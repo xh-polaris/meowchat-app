@@ -51,6 +51,7 @@
               :src="post.coverUrl"
               class="image"
               mode="aspectFill"
+              @click.stop="onClickCover(post.coverUrl)"
             />
           </view>
         </view>

@@ -7,6 +7,10 @@ export function displayTime(secTime: number) {
   if (now < secTime) {
     secTime = now;
   }
-  const timeStr = moment(secTime).fromNow();
-  return timeStr.replace(" ", "");
+  const time = moment(secTime);
+  if (time.year() != moment(now).year()) {
+    return time.format("YYYY-MM-DD");
+  } else {
+    return time.format("MM-DD");
+  }
 }

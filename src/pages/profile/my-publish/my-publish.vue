@@ -9,11 +9,11 @@
     </zzx-tabs>
   </view>
   <view class="wrap">
-    <view v-show="current === 0">
-      <my-posts></my-posts>
-    </view>
-    <view v-show="current === 1">
+    <view v-if="current === 0">
       <my-moments></my-moments>
+    </view>
+    <view v-if="current === 1">
+      <my-posts></my-posts>
     </view>
   </view>
 </template>
@@ -23,7 +23,7 @@ import { ref } from "vue";
 import MyPosts from "@/pages/profile/my-publish/my-posts.vue";
 import MyMoments from "@/pages/profile/my-publish/my-moments.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
-const items = ["帖子", "动态"];
+const items = ["动态", "帖子"];
 let current = ref(0);
 function onClickItem(e: any) {
   if (current.value !== e.currentIndex) {
