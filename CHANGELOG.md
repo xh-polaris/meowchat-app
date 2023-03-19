@@ -1,5 +1,12 @@
 
 
+## [1.9.7](https://github.com/xh-polaris/meowchat-app/compare/v1.9.6...v1.9.7) (2023-03-19)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 官方帖子显示为蓝色 ([74979c6](https://github.com/xh-polaris/meowchat-app/commit/74979c629c906c83dff17c0996d2263acd17a3db))
+
 ## [1.9.6](https://github.com/xh-polaris/meowchat-app/compare/v1.9.5...v1.9.6) (2023-03-19)
 
 
