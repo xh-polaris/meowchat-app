@@ -66,8 +66,6 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-console.log(props.getPreviewsHandler);
-
 /**
  * 在父组件用<masonry :search="{...}"/>
  * search.type --- "default"
