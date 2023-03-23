@@ -45,8 +45,8 @@
     <CarouselFrame />
   </view>
   <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
-  <view>
-    <Masonry v-if="!isRefreshing" search="default" />
+  <view v-if="!isRefreshing">
+    <MasonryFrame search="default"></MasonryFrame>
   </view>
   <view class="empty-bottom"></view>
   <TabBar id="1"></TabBar>
@@ -55,7 +55,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { Icons } from "@/utils/url";
-import Masonry from "@/pages/community/masonry.vue";
+import MasonryFrame from "@/pages/community/masonry-frame.vue";
 import CarouselFrame from "@/pages/community/carousel-frame.vue";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";

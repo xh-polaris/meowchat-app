@@ -62,13 +62,9 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 
 interface Props {
-  search?: string;
-  keyword?: string;
+  getPreviewsHandler: any;
 }
-const props = withDefaults(defineProps<Props>(), {
-  search: "default",
-  keyword: "cat"
-});
+const props = defineProps<Props>();
 
 /**
  * 在父组件用<masonry :search="{...}"/>
@@ -130,24 +126,7 @@ onReachBottom(() => {
 });
 
 const addBatch = async () => {
-  momentsInBatch = [];
-  if (props.search === "default") {
-    momentsInBatch = (
-      await getMomentPreviews({
-        page,
-        communityId: uni.getStorageSync("communityId")
-      })
-    ).moments;
-  } else if (props.search === "search") {
-    console.log(props.keyword);
-    momentsInBatch = (
-      await searchMomentPreviews({
-        page: page,
-        communityId: uni.getStorageSync("communityId"),
-        keyword: props.keyword
-      })
-    ).moments;
-  }
+  momentsInBatch = (await props.getPreviewsHandler(page)).moments;
 
   if (momentsInBatch.length > 0) {
     isNoData.value = false;

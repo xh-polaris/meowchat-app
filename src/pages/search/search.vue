@@ -80,7 +80,7 @@
         </view>
         <view v-show="current === 1">
           <!-- 动态 -->
-          <masonry search="search" :keyword="searchText" />
+          <MasonryFrame search="search" :keyword="searchText"></MasonryFrame>
         </view>
         <view v-show="current === 2">
           <!-- 图鉴 -->
@@ -94,7 +94,7 @@
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
 import WorldPosts from "@/pages/world/world-posts.vue";
-import Masonry from "@/pages/community/masonry.vue";
+import MasonryFrame from "@/pages/community/masonry-frame.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 import { Icons } from "@/utils/url";
