@@ -78,7 +78,7 @@
 import { Icons, Pages } from "@/utils/url";
 import { reactive, ref } from "vue";
 import { StorageKeys } from "@/utils/const";
-import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
+import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import { Community } from "@/apis/schemas";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
@@ -175,6 +175,16 @@ function onClickSwitch() {
     url: Pages.SchoolSelect
   });
 }
+
+onLoad(() => {
+  uni.showLoading({
+    title: "加载中"
+  });
+});
+
+onReady(() => {
+  uni.hideLoading();
+});
 
 onShow(() => {
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
