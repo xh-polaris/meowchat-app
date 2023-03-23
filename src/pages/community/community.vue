@@ -57,7 +57,7 @@ import { reactive, ref } from "vue";
 import { Icons } from "@/utils/url";
 import Masonry from "@/pages/community/masonry.vue";
 import CarouselFrame from "@/pages/community/carousel-frame.vue";
-import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
+import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
@@ -159,6 +159,16 @@ function pageRefresh() {
 onPullDownRefresh(() => {
   pageRefresh();
   uni.stopPullDownRefresh();
+});
+
+onLoad(() => {
+  uni.showLoading({
+    title: "加载中"
+  });
+});
+
+onReady(() => {
+  uni.hideLoading();
 });
 
 onShow(() => {

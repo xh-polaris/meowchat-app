@@ -75,7 +75,7 @@
 import { reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
-import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
+import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 
@@ -132,6 +132,16 @@ const userOptions = [
     function: showToast
   }
 ];
+
+onLoad(() => {
+  uni.showLoading({
+    title: "加载中"
+  });
+});
+
+onReady(() => {
+  uni.hideLoading();
+});
 </script>
 
 <style lang="scss" scoped>

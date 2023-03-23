@@ -54,7 +54,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { onPullDownRefresh } from "@dcloudio/uni-app";
+import { onLoad, onPullDownRefresh, onReady } from "@dcloudio/uni-app";
 import { Icons, Pages } from "@/utils/url";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
@@ -140,6 +140,16 @@ function enterMessage() {
     url: Pages.Message
   });
 }
+
+onLoad(() => {
+  uni.showLoading({
+    title: "加载中"
+  });
+});
+
+onReady(() => {
+  uni.hideLoading();
+});
 </script>
 
 <style lang="scss" scoped>
