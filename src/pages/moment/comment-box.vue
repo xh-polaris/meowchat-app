@@ -1,10 +1,10 @@
 <template>
   <view class="comment-box">
-    <!--    <view-->
-    <!--      v-if="myUserId && myUserId === comment.user.id"-->
-    <!--      class="delete"-->
-    <!--      @click="showDeleteDialogue"-->
-    <!--    ></view>-->
+    <view
+      v-if="myUserId && myUserId === comment.user.id"
+      class="delete"
+      @click="showDeleteDialogue"
+    ></view>
     <view class="commenter-info-box">
       <image :src="comment.user.avatarUrl" class="commenter-profile" />
       <text class="commenter-name">
@@ -57,6 +57,7 @@ import { getLikeData, LikeStruct } from "@/pages/moment/utils";
 import { Comment } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { deletePost, getPostDetail } from "@/apis/post/post";
+import { deleteCommment } from "@/apis/comment/comment";
 import { getUserInfo } from "@/apis/user/user";
 import { ref } from "vue";
 import command from "cac/deno/Command";
@@ -91,18 +92,16 @@ const closeDeleteDialogue = () => {
 };
 const deleteThisPost = () => {
   console.log("删除！");
-  // deletePost({
-  //   id: props.comment.id
-  // }).then(
-  //     () => {
-  //       uni.reLaunch({
-  //         url: "/pages/world/world"
-  //       });
-  //     },
-  //     (reason) => {
-  //       console.log("reject-reason", reason);
-  //     }
-  // );
+  deleteCommment({
+    commentId: props.comment.id
+  }).then(
+    () => {
+      console.log("ok");
+    },
+    (reason) => {
+      console.log("reject-reason", reason);
+    }
+  );
 };
 </script>
 
