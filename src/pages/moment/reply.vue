@@ -53,7 +53,7 @@
               <view class="lower">{{ item.text }}</view>
             </view>
             <view v-if="comments.likeData[index]" class="right">
-              <view class="likes-frame" @click="replyDoLike(index)">
+              <view class="likes-frame" @click="asyncReplyDoLike(index)">
                 <view
                   v-if="comments.likeData[index].isLike"
                   class="thumb liked"
@@ -72,20 +72,19 @@
 <script lang="ts" setup>
 import { Comment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
-import { reactive } from "vue";
+import { onBeforeUnmount, reactive, toRefs } from "vue";
 import { getCommentsData, LikeStruct } from "@/pages/moment/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
-import { doLike, getCount, getUserLiked } from "@/apis/like/like";
+import { doLike } from "@/apis/like/like";
 
 const props = defineProps<{
   mainComment: Comment;
   likeData: LikeStruct;
 }>();
 
-const mainCommentLikeData = reactive({
-  count: props.likeData.count,
-  isLike: props.likeData.isLike
-});
+const mainCommentLikeData = {
+  ...toRefs(props.likeData)
+};
 
 const comments = reactive<{
   data: Comment[];
@@ -116,25 +115,31 @@ const localGetCommentsData = async () => {
 };
 
 const mainCommentDoLike = async () => {
-  const likeReq = {
-    targetId: props.mainComment.id,
-    targetType: TargetType.Comment
-  };
-  await doLike(likeReq);
-  mainCommentLikeData.count = (await getCount(likeReq)).count;
-  mainCommentLikeData.isLike = (await getUserLiked(likeReq)).liked;
-
+  // 延迟到reply父组件中提交，这里只emit
   emits("updateLikeData");
 };
 
-const replyDoLike = async (index: number) => {
+// also see post.vue/moment.vue
+const replyDoLikeMap = new Map<string, number>();
+const asyncReplyDoLike = (index: number) => {
+  if (replyDoLikeMap.has(comments.data[index].id)) {
+    replyDoLikeMap.delete(comments.data[index].id);
+  } else {
+    replyDoLikeMap.set(comments.data[index].id, index);
+  }
+  if (comments.likeData[index].isLike) {
+    comments.likeData[index].count--;
+  } else {
+    comments.likeData[index].count++;
+  }
+  comments.likeData[index].isLike = !comments.likeData[index].isLike;
+};
+const replyDoLike = async (id: string) => {
   const likeReq = {
-    targetId: comments.data[index].id,
+    targetId: id,
     targetType: TargetType.Comment
   };
   await doLike(likeReq);
-  comments.likeData[index].count = (await getCount(likeReq)).count;
-  comments.likeData[index].isLike = (await getUserLiked(likeReq)).liked;
 };
 
 localGetCommentsData();
@@ -150,6 +155,14 @@ const emits = defineEmits(["closeReply", "updateLikeData"]);
 function closeSelf() {
   emits("closeReply");
 }
+
+onBeforeUnmount(() => {
+  Promise.all(
+    Array.from(replyDoLikeMap.keys()).map((id) => replyDoLike(id))
+  ).finally(() => {
+    replyDoLikeMap.clear();
+  });
+});
 </script>
 
 <style lang="scss" scoped>

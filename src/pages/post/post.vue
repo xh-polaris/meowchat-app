@@ -290,7 +290,7 @@ onUnload(() => {
   }
   Promise.all(
     Array.from(commentDoLikeMap.keys()).map((id) => commentDoLike(id))
-  ).then(() => {
+  ).finally(() => {
     commentDoLikeMap.clear();
   });
 });
@@ -302,12 +302,7 @@ const focusReplyComment = (index: number) => {
 };
 
 const updateLikeData = async (index: number) => {
-  const likeReq = {
-    targetId: comments.data[index].id,
-    targetType: TargetType.Comment
-  };
-  comments.likeData[index].count = (await getCount(likeReq)).count;
-  comments.likeData[index].isLike = (await getUserLiked(likeReq)).liked;
+  asyncCommentDoLike(index);
 };
 
 const showDeleteDialogue = () => {
