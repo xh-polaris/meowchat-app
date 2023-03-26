@@ -75,6 +75,7 @@ const emit = defineEmits<{
   (e: "interactWithComment"): void;
   (e: "onClickReplies"): void;
   (e: "localDoLike"): void;
+  (e: "afterDelete"): void;
 }>();
 
 const getData = async () => {
@@ -96,7 +97,7 @@ const deleteThisPost = () => {
     commentId: props.comment.id
   }).then(
     () => {
-      console.log("ok");
+      emit("afterDelete");
     },
     (reason) => {
       console.log("reject-reason", reason);
