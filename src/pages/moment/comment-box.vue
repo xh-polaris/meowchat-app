@@ -1,5 +1,6 @@
 <template>
   <view class="comment-box">
+    <view v-if="myUserId && myUserId === comment.user.id" class="delete"></view>
     <view class="commenter-info-box">
       <image :src="comment.user.avatarUrl" class="commenter-profile" />
       <text class="commenter-name">
@@ -32,24 +33,39 @@
 </template>
 
 <script lang="ts" setup>
-import { LikeStruct } from "@/pages/moment/utils";
+import { getLikeData, LikeStruct } from "@/pages/moment/utils";
 import { Comment } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
+import { getPostDetail } from "@/apis/post/post";
+import { getUserInfo } from "@/apis/user/user";
+import { ref } from "vue";
 
 const props = defineProps<{
   like: LikeStruct;
   comment: Comment;
 }>();
+// console.log(myUserId, props.comment.user.id);
+
+const myUserId = ref("");
 
 const emit = defineEmits<{
   (e: "interactWithComment"): void;
   (e: "onClickReplies"): void;
   (e: "localDoLike"): void;
 }>();
+
+const getData = async () => {
+  getUserInfo().then((res) => {
+    myUserId.value = res.user.id;
+  });
+};
+getData();
+console.log(myUserId.value);
 </script>
 
 <style lang="scss" scoped>
 @import "@/common/like-box.scss";
+@import "@/common/icon.scss";
 
 .comment-box {
   background-color: #fff;
@@ -59,6 +75,17 @@ const emit = defineEmits<{
   margin-left: -10rpx;
   margin-right: -10rpx;
   padding: 20rpx 20rpx;
+  position: relative;
+
+  .delete {
+    background-image: $dustbin-url;
+    width: 20upx;
+    height: 20upx;
+    background-size: 100%;
+    position: absolute;
+    right: 40upx;
+    top: 40upx;
+  }
 
   .commenter-info-box {
     display: flex;
