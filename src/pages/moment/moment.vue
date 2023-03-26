@@ -61,6 +61,7 @@
       :key="index"
       :comment="item"
       :like="comments.likeData[index]"
+      @after-delete="init()"
       @interact-with-comment="focusReplyComment(index)"
       @on-click-replies="onClickReplies(index)"
       @local-do-like="commentDoLike(index)"
@@ -309,14 +310,18 @@ const deleteThisMoment = () => {
     momentId: moment.data.id
   }).then(
     () => {
-      uni.reLaunch({
-        url: Pages.Community
-      });
+      relaunchCurrentPage();
     },
     (reason) => {
       console.log("reject-reason", reason);
     }
   );
+};
+
+const relaunchCurrentPage = () => {
+  uni.reLaunch({
+    url: Pages.Community
+  });
 };
 
 let initLock = false;

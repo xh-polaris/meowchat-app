@@ -46,3 +46,24 @@ export async function getComments(req: GetCommentsReq) {
     });
   });
 }
+
+/**
+ * @description
+ * @param req
+ */
+export async function deleteCommment(req: object) {
+  return await new Promise<object>((resolve, reject) => {
+    uni.request({
+      url: "/comment/delete_comment",
+      data: req,
+      method: "POST",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as GetCommentsResp;
+        resolve(data);
+      }
+    });
+  });
+}
