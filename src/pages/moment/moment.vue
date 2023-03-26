@@ -63,7 +63,7 @@
       :like="comments.likeData[index]"
       @interact-with-comment="focusReplyComment(index)"
       @on-click-replies="onClickReplies(index)"
-      @local-do-like="commentDoLike(index)"
+      @local-do-like="asyncCommentDoLike(index)"
     />
     <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
     <view class="out-write-comment-box">
@@ -77,14 +77,7 @@
             newCommentReq.text = newText;
           }
         "
-        @do-like="
-          localDoLike({
-            targetId: id,
-            targetType: TargetType.Moment
-          }).then((res) => {
-            moment.likeData = res;
-          })
-        "
+        @do-like="asyncDoLike"
         @after-create-comment="init"
         @after-blur="afterBlur"
       />
@@ -141,7 +134,12 @@ import {
   GetCommentsReq,
   NewCommentReq
 } from "@/apis/comment/comment-interfaces";
-import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
+import {
+  onLoad,
+  onPullDownRefresh,
+  onReachBottom,
+  onUnload
+} from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/reply.vue";
 import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
 import CommentBox from "@/pages/moment/comment-box.vue";
@@ -177,6 +175,29 @@ const moment = reactive<{
     count: 0
   }
 });
+
+const commentDoLikeMap = new Map<string, number>();
+const asyncCommentDoLike = (index: number) => {
+  if (commentDoLikeMap.has(comments.data[index].id)) {
+    commentDoLikeMap.delete(comments.data[index].id);
+  } else {
+    commentDoLikeMap.set(comments.data[index].id, index);
+  }
+  if (comments.likeData[index].isLike) {
+    comments.likeData[index].count--;
+  } else {
+    comments.likeData[index].count++;
+  }
+  comments.likeData[index].isLike = !comments.likeData[index].isLike;
+};
+
+const commentDoLike = async (id: string) => {
+  let commentLikeReq = {
+    targetId: id,
+    targetType: TargetType.Comment
+  };
+  await doLike(commentLikeReq);
+};
 
 const myUserId = ref("");
 
@@ -229,6 +250,10 @@ let allCommentsLoaded = false;
 let isCommentsLoaded = true;
 let page = 0;
 const localGetCommentsData = async () => {
+  await Promise.all(
+    Array.from(commentDoLikeMap.keys()).map((id) => commentDoLike(id))
+  );
+  commentDoLikeMap.clear();
   isCommentsLoaded = false;
   getCommentsData({
     id: props.id,
@@ -245,15 +270,6 @@ const localGetCommentsData = async () => {
     page += 1;
     if (res.data.length < 10) allCommentsLoaded = true;
   });
-};
-
-const commentDoLike = async (index: number) => {
-  let commentLikeReq = {
-    targetId: comments.data[index].id,
-    targetType: TargetType.Comment
-  };
-  await doLike(commentLikeReq);
-  comments.likeData[index] = await getLikeData(commentLikeReq);
 };
 
 let commentReplyIndex = ref(-1);
@@ -282,6 +298,32 @@ const afterBlur = () => {
   newCommentFocus.value = false;
   refreshReplyIndex(-1);
 };
+
+// 判断是否改变了点赞状态，如果改变了则在onUnload阶段进行提交
+let isDoLike = false;
+const asyncDoLike = () => {
+  isDoLike = !isDoLike;
+  if (moment.likeData.isLike) {
+    moment.likeData.count--;
+  } else {
+    moment.likeData.count++;
+  }
+  moment.likeData.isLike = !moment.likeData.isLike;
+};
+
+onUnload(() => {
+  if (isDoLike) {
+    localDoLike({
+      targetId: props.id,
+      targetType: TargetType.Moment
+    });
+  }
+  Promise.all(
+    Array.from(commentDoLikeMap.keys()).map((id) => commentDoLike(id))
+  ).then(() => {
+    commentDoLikeMap.clear();
+  });
+});
 
 const focusReplyComment = (index: number) => {
   placeholderText.value = "回复 @" + comments.data[index].user.nickname + ": ";
