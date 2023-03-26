@@ -1,10 +1,10 @@
 <template>
   <view class="comment-box">
-    <view
-      v-if="myUserId && myUserId === comment.user.id"
-      class="delete"
-      @click="showDeleteDialogue"
-    ></view>
+    <!--    <view-->
+    <!--      v-if="myUserId && myUserId === comment.user.id"-->
+    <!--      class="delete"-->
+    <!--      @click="showDeleteDialogue"-->
+    <!--    ></view>-->
     <view class="commenter-info-box">
       <image :src="comment.user.avatarUrl" class="commenter-profile" />
       <text class="commenter-name">
