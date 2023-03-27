@@ -28,8 +28,7 @@
       "style": {
         "navigationBarTitleText": "图鉴",
         "enablePullDownRefresh": true,
-        "onReachBottomDistance": 150,
-        "navigationStyle": "custom"
+        "onReachBottomDistance": 150
       }
     },
     {

@@ -1,17 +1,4 @@
 <template>
-  <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>
-    <view>
-      <view
-        style="
-          margin-left: 181rpx;
-          margin-top: 23rpx;
-          font-size: 35rpx;
-          font-weight: bold;
-        "
-        >图鉴
-      </view>
-    </view>
-  </UniNavBar>
   <view class="content">
     <!-- 搜索框 -->
     <view
