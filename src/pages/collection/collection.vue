@@ -1,4 +1,7 @@
 <template>
+  <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>
+    <view class="font-weight font-md2" style="margin: auto">图鉴 </view>
+  </UniNavBar>
   <view class="content">
     <!-- 搜索框 -->
     <view
@@ -251,7 +254,6 @@ onShow(() => {
   height: 12vh;
   display: flex;
   flex-direction: column;
-  margin-bottom: 24upx;
 }
 
 .school-select-box {

@@ -1,16 +1,6 @@
 <template>
   <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <view>
-      <view
-        style="
-          margin-left: 150rpx;
-          margin-top: 23rpx;
-          font-size: 35rpx;
-          font-weight: bold;
-        "
-        >个人中心</view
-      >
-    </view>
+    <view class="font-weight font-md2" style="margin: auto">个人中心</view>
   </uni-nav-bar>
   <view class="container">
     <image
