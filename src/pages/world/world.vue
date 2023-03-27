@@ -1,26 +1,15 @@
 <template>
   <UniNavBar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <view>
-      <view class="d-flex a-center">
-        <view
-          class="d-flex a-center"
-          style="position: absolute; left: 38rpx"
-          @click="enterMessage"
-        >
-          <view class="left d-flex">
-            <image
-              :src="Icons.Message"
-              style="width: 45rpx; height: 38rpx"
-            ></image>
-          </view>
-          <!-- 暂时将数量写为0 -->
-          <view v-show="false" class="font-sm px-1 message-count">0</view>
-        </view>
-        <view style="margin-left: 130rpx; font-size: 35rpx; font-weight: bold"
-          >喵世界</view
-        >
-      </view>
+    <view
+      class="d-flex a-center left"
+      style="position: absolute; left: 40rpx; bottom: 25rpx"
+      @click="enterMessage"
+    >
+      <image :src="Icons.Message" style="width: 45rpx; height: 35rpx"></image>
+      <!-- 暂时将数量写为0 -->
+      <view v-show="false" class="font-sm px-1 message-count">0</view>
     </view>
+    <view class="font-weight font-md2" style="margin: auto">喵世界</view>
   </UniNavBar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
