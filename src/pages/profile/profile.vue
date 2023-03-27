@@ -69,6 +69,11 @@
     </view>
   </view>
   <tab-bar id="4"></tab-bar>
+  <view
+    class="font-sm text-center w-100"
+    style="position: absolute; bottom: 140rpx; color: #696969"
+    >版本号：1.9.7</view
+  >
 </template>
 
 <script lang="ts" setup>

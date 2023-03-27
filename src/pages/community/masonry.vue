@@ -277,7 +277,7 @@ $avatarWidth: calc(21 / 390 * 100vw);
       width: calc(50vw - $sideMargin - $horizontalGap / 2);
       display: block;
       border-radius: $radius $radius 0 0;
-      height: 1px;
+      height: 300rpx;
     }
   }
 

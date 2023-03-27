@@ -1,6 +1,6 @@
 <template>
   <UniNavBar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <view>
+    <block>
       <view class="d-flex a-center">
         <view
           class="d-flex a-center"
@@ -20,7 +20,7 @@
           >喵社区</view
         >
       </view>
-    </view>
+    </block>
   </UniNavBar>
   <view class="school-box">
     <view class="school-select-box">
