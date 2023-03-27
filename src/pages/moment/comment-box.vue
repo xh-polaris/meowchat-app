@@ -7,41 +7,46 @@
     ></view>
     <view class="commenter-info-box">
       <view class="d-flex a-start">
-		  <image :src="comment.user.avatarUrl" class="commenter-profile" />
-	  </view>
-      <view style="margin-top: 12rpx;margin-left: 12rpx;width: 100%;">
-		  <view class="d-flex a-center">
-			  <view class="commenter-name">
-				{{ comment.user.nickname }}
-			  </view>
-			  <view class="comment-time"> · {{ displayTime(comment.createAt) }}</view>
-		  </view>
-		  <view>
-		  	<view class="comment-content" @click="emit('interactWithComment')">
-		  	  {{ comment.text }}
-		  	</view>
-		  	<view v-if="comment.comments > 0" class="reply-info">
-		  	  <text @click="emit('onClickReplies')">
-		  	    {{ comment.comments }}条相关回复
-		  	  </text>
-		  	  <image class="arrow-right" src="/static/images/arrow_right_blue.png" />
-		  	</view>
-		  	<view v-if="like" class="like-box">
-		  	  <text class="reply" @click="emit('interactWithComment')">回复</text>
-		  	  <view class="d-flex a-center" style="margin-right: 11rpx;">
-		  		  <view
-		  		    v-if="like.isLike"
-		  		    class="like-icon liked"
-		  		    @click="emit('localDoLike')"
-		  		  />
-		  		  <view v-else class="like-icon" @click="$emit('localDoLike')" />
-		  		  <text class="like-num">
-		  		    {{ like.count }}
-		  		  </text>
-		  	  </view>
-		  	</view>
-		  </view>
-	  </view>
+        <image :src="comment.user.avatarUrl" class="commenter-profile" />
+      </view>
+      <view style="margin-top: 12rpx; margin-left: 12rpx; width: 100%">
+        <view class="d-flex a-center">
+          <view class="commenter-name">
+            {{ comment.user.nickname }}
+          </view>
+          <view class="comment-time">
+            · {{ displayTime(comment.createAt) }}</view
+          >
+        </view>
+        <view>
+          <view class="comment-content" @click="emit('interactWithComment')">
+            {{ comment.text }}
+          </view>
+          <view v-if="comment.comments > 0" class="reply-info">
+            <text @click="emit('onClickReplies')">
+              {{ comment.comments }}条相关回复
+            </text>
+            <image
+              class="arrow-right"
+              src="/static/images/arrow_right_blue.png"
+            />
+          </view>
+          <view v-if="like" class="like-box">
+            <text class="reply" @click="emit('interactWithComment')">回复</text>
+            <view class="d-flex a-center" style="margin-right: 11rpx">
+              <view
+                v-if="like.isLike"
+                class="like-icon liked"
+                @click="emit('localDoLike')"
+              />
+              <view v-else class="like-icon" @click="$emit('localDoLike')" />
+              <text class="like-num">
+                {{ like.count }}
+              </text>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
   <view
@@ -136,7 +141,7 @@ const deleteThisPost = () => {
     height: 30upx;
     background-size: 100%;
     position: absolute;
-	line-height: 2;
+    line-height: 2;
     right: 45upx;
     top: 30upx;
   }
@@ -166,8 +171,8 @@ const deleteThisPost = () => {
 
   .comment-content {
     line-height: 1.5em;
-	margin-top: 20rpx;
-	margin-bottom: 30rpx;
+    margin-top: 20rpx;
+    margin-bottom: 30rpx;
     letter-spacing: 0.05em;
     font-weight: 500;
     font-size: 14px;
@@ -178,7 +183,7 @@ const deleteThisPost = () => {
     font-size: 12px;
     display: flex;
     align-items: center;
-	margin-bottom: 20rpx;
+    margin-bottom: 20rpx;
 
     .arrow-right {
       margin-left: 5px;
