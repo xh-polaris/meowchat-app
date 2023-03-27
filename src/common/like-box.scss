@@ -1,21 +1,24 @@
 .like-box {
   margin-left: calc(47 / 390 * 100vw);
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  align-content: center;
 
   .like-icon {
-    width: calc(16 / 390 * 100vw);
-    height: calc(16 / 390 * 100vw);
+    width: calc(16 / 410 * 100vw);
+    height: calc(16 / 410 * 100vw);
     background-size: 100% 100%;
     background-image: url("/static/images/like_grey_0.png");
-
+	margin-top: 10rpx;
     &.liked {
       background-image: url("/static/images/like_grey_1.png");
     }
   }
 
   .like-num {
-    margin-left: calc(4 / 390 * 100vw);
+    margin-left: calc(4 / 400 * 100vw);
+	margin-top: 10rpx;
     font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;

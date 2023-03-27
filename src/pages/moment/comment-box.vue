@@ -23,15 +23,17 @@
     </view>
     <view v-if="like" class="like-box">
       <text class="reply" @click="emit('interactWithComment')">回复</text>
-      <view
-        v-if="like.isLike"
-        class="like-icon liked"
-        @click="emit('localDoLike')"
-      />
-      <view v-else class="like-icon" @click="$emit('localDoLike')" />
-      <text class="like-num">
-        {{ like.count }}
-      </text>
+      <view class="d-flex a-center" style="margin-right: 11rpx;">
+		  <view
+		    v-if="like.isLike"
+		    class="like-icon liked"
+		    @click="emit('localDoLike')"
+		  />
+		  <view v-else class="like-icon" @click="$emit('localDoLike')" />
+		  <text class="like-num">
+		    {{ like.count }}
+		  </text>
+	  </view>
     </view>
   </view>
   <view
@@ -117,17 +119,18 @@ const deleteThisPost = () => {
   margin-bottom: 15px;
   margin-left: -10rpx;
   margin-right: -10rpx;
-  padding: 20rpx 20rpx;
+  padding: 40rpx 40rpx;
   position: relative;
 
   .delete {
     background-image: $dustbin-url;
-    width: 20upx;
-    height: 20upx;
+    width: 30upx;
+    height: 30upx;
     background-size: 100%;
     position: absolute;
-    right: 40upx;
-    top: 40upx;
+	line-height: 2;
+    right: 45upx;
+    top: 30upx;
   }
 
   .commenter-info-box {
@@ -157,8 +160,9 @@ const deleteThisPost = () => {
 
   .comment-content {
     margin-left: calc(47 / 390 * 100vw);
-    margin-bottom: 30rpx;
     line-height: 1.5em;
+	margin-top: 20rpx;
+	margin-bottom: 30rpx;
     letter-spacing: 0.05em;
     font-weight: 500;
     font-size: 14px;
@@ -168,9 +172,9 @@ const deleteThisPost = () => {
     margin-left: calc(47 / 390 * 100vw);
     color: #63bdff;
     font-size: 12px;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
+	margin-bottom: 20rpx;
 
     .arrow-right {
       margin-left: 5px;
