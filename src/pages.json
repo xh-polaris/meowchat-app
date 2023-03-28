@@ -27,6 +27,7 @@
       "path": "pages/collection/collection",
       "style": {
         "navigationBarTitleText": "图鉴",
+        "navigationStyle": "custom",
         "enablePullDownRefresh": true,
         "onReachBottomDistance": 150
       }

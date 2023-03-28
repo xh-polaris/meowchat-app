@@ -254,13 +254,13 @@ onShow(() => {
   height: 12vh;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10upx;
 }
 
 .school-select-box {
   background-color: #fafcff;
   display: flex;
   flex-direction: row;
-  //justify-content: space-around;
 }
 
 .school-name {
