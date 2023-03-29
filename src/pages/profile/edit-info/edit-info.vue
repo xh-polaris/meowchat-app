@@ -73,7 +73,6 @@ function onClickConfirm() {
   });
   updateUserInfo(userInfo).catch(
     (res: UniNamespace.RequestSuccessCallbackResult) => {
-      console.log(res.statusCode);
       if (res.statusCode === 400) {
         uni.showToast({
           icon: "error",
