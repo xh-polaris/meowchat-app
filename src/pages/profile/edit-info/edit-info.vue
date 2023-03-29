@@ -67,10 +67,21 @@ function onClickConfirm() {
     uni.showToast({
       title: res.msg
     });
+    uni.reLaunch({
+      url: Pages.Profile
+    });
   });
-  uni.reLaunch({
-    url: Pages.Profile
-  });
+  updateUserInfo(userInfo).catch(
+    (res: UniNamespace.RequestSuccessCallbackResult) => {
+      console.log(res.statusCode);
+      if (res.statusCode === 400) {
+        uni.showToast({
+          icon: "error",
+          title: "该用户名已存在"
+        });
+      }
+    }
+  );
 }
 </script>
 

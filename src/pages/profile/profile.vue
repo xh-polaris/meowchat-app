@@ -104,11 +104,16 @@ const userOptions = [
     icon: "/static/images/my_publish.png",
     url: "/pages/profile/my-publish/my-publish"
   },
-  // {
-  //   title: "我的关注",
-  //   icon: "/static/images/my_follow.png",
-  //   url: "/pages/profile/my-follow/my-follow"
-  // },
+  //{
+  // title: "我的关注",
+  //icon: "/static/images/my_follow.png",
+  // url: "/pages/profile/my-follow/my-follow"
+  //},
+  //{
+  //title: "我的点赞",
+  //icon: "/static/images/my_follow.png",
+  //url: "/pages/profile/my-liked/my-liked"
+  //},
   {
     title: "快速联系",
     icon: "/static/images/quick_contact.png",
