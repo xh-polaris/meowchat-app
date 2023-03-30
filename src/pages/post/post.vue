@@ -1,77 +1,98 @@
 <template>
   <view class="reply-mask" @click="leaveReply()" />
 
-  <view class="header">
-    <view class="title">
-      {{ post.data.title }}
-      <view
-        v-if="myUserId && myUserId === post.data.user.id"
-        class="delete"
-        @click="showDeleteDialogue"
-      ></view>
-    </view>
-    <view class="head-info">
-      {{ displayTime(post.data.createAt) }} · {{ post.data.comments }}条回复
-    </view>
-    <view v-if="post.data.tags" class="tags">
-      <image class="tagIcon" src="/static/images/tag.png" />
-      <view v-for="(item, index) in post.data.tags" :key="index" class="tag">
-        {{ item }}
+  <view
+    class="content-frame"
+    :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
+  >
+    <view class="header">
+      <view class="title">
+        {{ post.data.title }}
+        <view
+          v-if="myUserId && myUserId === post.data.user.id"
+          class="delete"
+          @click="showDeleteDialogue"
+        ></view>
       </view>
+      <view class="head-info">
+        {{ displayTime(post.data.createAt) }} · {{ post.data.comments }}条回复
+      </view>
+      <view v-if="post.data.tags" class="tags">
+        <image class="tagIcon" src="/static/images/tag.png" />
+        <view v-for="(item, index) in post.data.tags" :key="index" class="tag">
+          {{ item }}
+        </view>
+      </view>
+    </view>
+
+    <view class="post">
+      <view class="user">
+        <image :src="post.data.user.avatarUrl" class="avatar" />
+        <view class="name">
+          {{ post.data.user.nickname }}
+        </view>
+      </view>
+      <view class="text">
+        {{ post.data.text }}
+      </view>
+      <image
+        :src="post.data.coverUrl"
+        class="imgs imgs1 clearfix"
+        mode="widthFix"
+        @click="onClickImage(post.data.coverUrl)"
+      />
+      <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
+      <view v-else class="commentNum">
+        评论 {{ comments.data.length + comments.replyNumber }}
+      </view>
+      <view v-if="comments.data.length === 0">
+        <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
+      </view>
+
+      <comment-box
+        v-for="(item, index) in comments.data"
+        :key="index"
+        :comment="item"
+        :like="comments.likeData[index]"
+        @after-delete="init"
+        @interact-with-comment="focusReplyComment(index)"
+        @on-click-replies="onClickReplies(index)"
+        @local-do-like="asyncCommentDoLike(index)"
+      />
+      <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
+      <!--    <view class="out-write-comment-box">-->
+      <!--      <write-comment-box-->
+      <!--        v-model:placeholder-text="placeholderText"-->
+      <!--        :focus="newCommentFocus"-->
+      <!--        :like-data="post.likeData"-->
+      <!--        :new-comment-req="newCommentReq"-->
+      <!--        @update-text="-->
+      <!--          (newText) => {-->
+      <!--            newCommentReq.text = newText;-->
+      <!--          }-->
+      <!--        "-->
+      <!--        @do-like="asyncDoLike"-->
+      <!--        @after-create-comment="init"-->
+      <!--        @after-blur="afterBlur"-->
+      <!--      />-->
+      <!--    </view>-->
     </view>
   </view>
-
-  <view class="post">
-    <view class="user">
-      <image :src="post.data.user.avatarUrl" class="avatar" />
-      <view class="name">
-        {{ post.data.user.nickname }}
-      </view>
-    </view>
-    <view class="text">
-      {{ post.data.text }}
-    </view>
-    <image
-      :src="post.data.coverUrl"
-      class="imgs imgs1 clearfix"
-      mode="widthFix"
-      @click="onClickImage(post.data.coverUrl)"
+  <view class="input-frame">
+    <write-comment-box
+      v-model:placeholder-text="placeholderText"
+      :focus="newCommentFocus"
+      :like-data="post.likeData"
+      :new-comment-req="newCommentReq"
+      @update-text="
+        (newText) => {
+          newCommentReq.text = newText;
+        }
+      "
+      @do-like="asyncDoLike"
+      @after-create-comment="init"
+      @after-blur="afterBlur"
     />
-    <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
-    <view v-else class="commentNum">
-      评论 {{ comments.data.length + comments.replyNumber }}
-    </view>
-    <view v-if="comments.data.length === 0">
-      <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
-    </view>
-
-    <comment-box
-      v-for="(item, index) in comments.data"
-      :key="index"
-      :comment="item"
-      :like="comments.likeData[index]"
-      @after-delete="init"
-      @interact-with-comment="focusReplyComment(index)"
-      @on-click-replies="onClickReplies(index)"
-      @local-do-like="asyncCommentDoLike(index)"
-    />
-    <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
-    <view class="out-write-comment-box">
-      <write-comment-box
-        v-model:placeholder-text="placeholderText"
-        :focus="newCommentFocus"
-        :like-data="post.likeData"
-        :new-comment-req="newCommentReq"
-        @update-text="
-          (newText) => {
-            newCommentReq.text = newText;
-          }
-        "
-        @do-like="asyncDoLike"
-        @after-create-comment="init"
-        @after-blur="afterBlur"
-      />
-    </view>
   </view>
 
   <view v-if="isReplyOpened" class="reply">
@@ -134,6 +155,8 @@ import { onClickImage } from "@/pages/post/utils";
 const props = defineProps<{
   id: string;
 }>();
+
+const keyboardHeight = ref(0);
 
 const getPostDetailReq = reactive<GetPostDetailReq>({
   postId: props.id
@@ -373,6 +396,10 @@ onPullDownRefresh(() => {
     uni.stopPullDownRefresh();
   }, 1000);
   if (!initLock) init();
+});
+
+uni.onKeyboardHeightChange((res) => {
+  keyboardHeight.value = res.height;
 });
 
 const selectIndex = ref(0);
@@ -649,5 +676,11 @@ $postPadding: 15px 27px 0 21px;
       margin: 5rpx 5rpx 5rpx 5rpx;
     }
   }
+}
+.content-frame {
+  overflow-y: scroll;
+}
+.input-frame {
+  height: 16vw;
 }
 </style>
