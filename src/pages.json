@@ -70,6 +70,12 @@
         "navigationBarTitleText": "我的关注"
       }
     },
+	{
+	  "path": "pages/profile/my-liked/my-liked",
+	  "style": {
+	    "navigationBarTitleText": "我的点赞"
+	  }
+	},
     {
       "path": "pages/profile/about-us/about-us",
       "style": {
@@ -149,7 +155,7 @@
     {
       "path": "pages/web-frame/web-frame"
     }
-  ],
+    ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "喵世界",
