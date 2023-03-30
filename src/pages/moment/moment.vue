@@ -1,89 +1,114 @@
 <template>
   <view class="reply-mask" @click="leaveReply()" />
 
-  <view class="container">
-    <view class="post-info-box">
-      <view class="poster-info-box">
-        <image :src="moment.data.user.avatarUrl" class="poster-profile" />
-        <text class="poster-name">
-          {{ moment.data.user.nickname }}
-        </text>
-        <text class="post-time">
-          · {{ displayTime(moment.data.createAt) }}
-        </text>
+  <view
+    class="content-frame"
+    :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
+  >
+    <view class="container">
+      <view class="post-info-box">
+        <view class="poster-info-box">
+          <image :src="moment.data.user.avatarUrl" class="poster-profile" />
+          <text class="poster-name">
+            {{ moment.data.user.nickname }}
+          </text>
+          <text class="post-time">
+            · {{ displayTime(moment.data.createAt) }}
+          </text>
+          <view
+            v-if="myUserId && myUserId === moment.data.user.id"
+            class="delete"
+            @click="showDeleteDialogue"
+          ></view>
+        </view>
+        <view v-if="moment.data.title" class="post-content font-lg">
+          {{ moment.data.title }}
+        </view>
+        <!-- 图片区域 -->
+        <view :class="chooseImageClass(moment.data.photos.length)">
+          <image
+            v-for="(item, index) in moment.data.photos.slice(0, 9)"
+            :key="index"
+            :mode="chooseImageMode(moment.data.photos.length)"
+            :src="item"
+            @click="onClickImage(index, moment.data.photos)"
+          />
+          <view
+            v-if="moment.data.photos.length > 9"
+            class="lastImg"
+            @click="onClickImage('8', moment.data.photos)"
+            >+{{ moment.data.photos.length - 9 }}</view
+          >
+        </view>
         <view
-          v-if="myUserId && myUserId === moment.data.user.id"
-          class="delete"
-          @click="showDeleteDialogue"
-        ></view>
-      </view>
-      <view v-if="moment.data.title" class="post-content font-lg">
-        {{ moment.data.title }}
-      </view>
-      <!-- 图片区域 -->
-      <view :class="chooseImageClass(moment.data.photos.length)">
-        <image
-          v-for="(item, index) in moment.data.photos.slice(0, 9)"
-          :key="index"
-          :mode="chooseImageMode(moment.data.photos.length)"
-          :src="item"
-          @click="onClickImage(index, moment.data.photos)"
-        />
-        <view
-          v-if="moment.data.photos.length > 9"
-          class="lastImg"
-          @click="onClickImage('8', moment.data.photos)"
-          >+{{ moment.data.photos.length - 9 }}</view
+          v-if="catName"
+          class="font-md mb-2"
+          style="color: #5272ff; margin: 10rpx 0 0"
+          @click="onClickCatBox(moment.data.catId)"
+        >
+          @{{ catName }}
+        </view>
+        <view v-if="moment.data.text" class="post-content font-md">
+          {{ moment.data.text }}
+        </view>
+        <view class="like-info">
+          {{ moment.likeData.count }} 位喵友觉得很赞</view
         >
       </view>
-      <view
-        v-if="catName"
-        class="font-md mb-2"
-        style="color: #5272ff; margin: 10rpx 0 0"
-        @click="onClickCatBox(moment.data.catId)"
-      >
-        @{{ catName }}
+      <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
+      <view v-else class="commentNum">
+        评论 {{ comments.data.length + comments.replyNumber }}
       </view>
-      <view v-if="moment.data.text" class="post-content font-md">
-        {{ moment.data.text }}
+      <view v-if="comments.data.length === 0">
+        <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
       </view>
-      <view class="like-info"> {{ moment.likeData.count }} 位喵友觉得很赞</view>
-    </view>
-    <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
-    <view v-else class="commentNum">
-      评论 {{ comments.data.length + comments.replyNumber }}
-    </view>
-    <view v-if="comments.data.length === 0">
-      <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
-    </view>
-    <comment-box
-      v-for="(item, index) in comments.data"
-      :key="index"
-      :comment="item"
-      :like="comments.likeData[index]"
-      @after-delete="init()"
-      @interact-with-comment="focusReplyComment(index)"
-      @on-click-replies="onClickReplies(index)"
-      @local-do-like="asyncCommentDoLike(index)"
-    />
-    <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
-    <view class="out-write-comment-box">
-      <write-comment-box
-        v-model:placeholder-text="placeholderText"
-        :focus="newCommentFocus"
-        :like-data="moment.likeData"
-        :new-comment-req="newCommentReq"
-        @update-text="
-          (newText) => {
-            newCommentReq.text = newText;
-          }
-        "
-        @do-like="asyncDoLike"
-        @after-create-comment="init"
-        @after-blur="afterBlur"
+      <comment-box
+        v-for="(item, index) in comments.data"
+        :key="index"
+        :comment="item"
+        :like="comments.likeData[index]"
+        @after-delete="init()"
+        @interact-with-comment="focusReplyComment(index)"
+        @on-click-replies="onClickReplies(index)"
+        @local-do-like="asyncCommentDoLike(index)"
       />
+      <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
+      <!--      <view class="out-write-comment-box">-->
+      <!--        <write-comment-box-->
+      <!--          v-model:placeholder-text="placeholderText"-->
+      <!--          :focus="newCommentFocus"-->
+      <!--          :like-data="moment.likeData"-->
+      <!--          :new-comment-req="newCommentReq"-->
+      <!--          @update-text="-->
+      <!--            (newText) => {-->
+      <!--              newCommentReq.text = newText;-->
+      <!--            }-->
+      <!--          "-->
+      <!--          @do-like="asyncDoLike"-->
+      <!--          @after-create-comment="init"-->
+      <!--          @after-blur="afterBlur"-->
+      <!--        />-->
+      <!--      </view>-->
     </view>
   </view>
+
+  <view class="input-frame">
+    <write-comment-box
+      v-model:placeholder-text="placeholderText"
+      :focus="newCommentFocus"
+      :like-data="moment.likeData"
+      :new-comment-req="newCommentReq"
+      @update-text="
+        (newText) => {
+          newCommentReq.text = newText;
+        }
+      "
+      @do-like="asyncDoLike"
+      @after-create-comment="init"
+      @after-blur="afterBlur"
+    />
+  </view>
+
   <view v-if="isReplyOpened" class="reply">
     <reply
       :like-data="comments.likeData[selectIndex]"
@@ -149,6 +174,8 @@ import { Pages } from "@/utils/url";
 const props = defineProps<{
   id: string;
 }>();
+
+const keyboardHeight = ref(0);
 
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
   momentId: props.id
@@ -392,6 +419,10 @@ onMounted(() => {
     .exec();
 });
 
+uni.onKeyboardHeightChange((res) => {
+  keyboardHeight.value = res.height;
+});
+
 onLoad(() => {
   init();
 });
@@ -595,6 +626,11 @@ function leaveReply() {
   color: #b8b8b8;
 }
 
+.write-comment-box-frame {
+  position: fixed;
+  bottom: 0;
+}
+
 .confirm-to-delete {
   width: 100vw;
   height: 100vh;
@@ -662,5 +698,12 @@ function leaveReply() {
       }
     }
   }
+}
+
+.content-frame {
+  overflow-y: scroll;
+}
+.input-frame {
+  height: 16vw;
 }
 </style>

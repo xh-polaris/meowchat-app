@@ -81,16 +81,14 @@ const blur = () => {
 <style lang="scss" scoped>
 @import "@/common/icon.scss";
 .write-comment-box {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
   z-index: 50;
   display: flex;
+  width: 100vw;
+  box-sizing: border-box;
   align-items: center;
-  background-color: #fff;
+  height: 16vw;
   box-shadow: 0 -1px 2px #eee;
-  padding: 20rpx 30rpx 70rpx 30rpx;
+  padding: 0 30rpx;
 
   .write-comment {
     width: 64%;
