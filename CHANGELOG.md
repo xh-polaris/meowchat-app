@@ -1,5 +1,20 @@
 
 
+## [1.11.0](https://github.com/xh-polaris/meowchat-app/compare/v1.10.0...v1.11.0) (2023-03-30)
+
+
+### ✨ Features | 新功能
+
+* 初步新增我的点赞页面，修改昵称时若重名增加提示 ([#268](https://github.com/xh-polaris/meowchat-app/issues/268)) ([3c22fec](https://github.com/xh-polaris/meowchat-app/commit/3c22fec7cbbf6740151d9ad7fd81a7a7aff14dbc))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 关闭collection页面原生顶栏 ([#265](https://github.com/xh-polaris/meowchat-app/issues/265)) ([e49ecca](https://github.com/xh-polaris/meowchat-app/commit/e49eccab81b5891e00201beea2e296f71370a88d))
+* 解决所有图片上传完毕后按钮才可用 ([#269](https://github.com/xh-polaris/meowchat-app/issues/269)) ([e5a6a40](https://github.com/xh-polaris/meowchat-app/commit/e5a6a40da534aec1784ec30bdfed1b9a0119e526))
+* 修复了评论输入框样式问题 ([#270](https://github.com/xh-polaris/meowchat-app/issues/270)) ([473421b](https://github.com/xh-polaris/meowchat-app/commit/473421b2eb144fd4a188a8292cc279bb68533944))
+* 修复了图片加载失败导致后续瀑布流无法继续加载的问题 ([#266](https://github.com/xh-polaris/meowchat-app/issues/266)) ([2b7ab6a](https://github.com/xh-polaris/meowchat-app/commit/2b7ab6a1f52d573b4a22f841a8b81c7efe0c3bd4)), closes [#265](https://github.com/xh-polaris/meowchat-app/issues/265)
+
 ## [1.10.0](https://github.com/xh-polaris/meowchat-app/compare/v1.9.7...v1.10.0) (2023-03-27)
 
 

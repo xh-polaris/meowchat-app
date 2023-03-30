@@ -1,5 +1,5 @@
 <template>
-  <uni-nav-bar :fixed="true" shadow status-bar background-color="#f9f9f9">
+  <uni-nav-bar :fixed="true" background-color="#f9f9f9" shadow status-bar>
     <view class="font-weight font-md2" style="margin: auto">个人中心</view>
   </uni-nav-bar>
   <view class="container">
@@ -11,8 +11,8 @@
       <!-- 用户信息：昵称、权限、单位 -->
       <view class="fot-xh">
         <navigator
-          hover-class="none"
           :url="`/pages/profile/edit-info/edit-info?avatarUrl=${userInfo.avatarUrl}&nickname=${userInfo.nickname}`"
+          hover-class="none"
         >
           <view class="pic">
             <image
@@ -62,8 +62,8 @@
   <view
     class="font-sm text-center w-100"
     style="position: absolute; bottom: 140rpx; color: #696969"
-    >版本号：1.9.7</view
-  >
+    >版本号：1.11.0
+  </view>
 </template>
 
 <script lang="ts" setup>
@@ -91,6 +91,7 @@ onPullDownRefresh(() => {
     uni.stopPullDownRefresh();
   });
 });
+
 function showToast() {
   uni.showToast({
     title: "页面暂未开放",
@@ -98,6 +99,7 @@ function showToast() {
     duration: 2000
   });
 }
+
 const userOptions = [
   {
     title: "我的发布",
@@ -212,6 +214,7 @@ onReady(() => {
   overflow: hidden;
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
 }
+
 .cell {
   height: 100rpx;
   padding-left: 20rpx;
