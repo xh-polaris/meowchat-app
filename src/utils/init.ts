@@ -3,6 +3,7 @@ import { getUserInfo, updateUserInfo } from "@/apis/user/user";
 import { SignInResp } from "@/apis/auth/auth-interfaces";
 import { StorageKeys } from "@/utils/const";
 import { listCommunity } from "@/apis/community/community";
+import { Pages } from "@/utils/url";
 
 const DefaultUserAvatarUrl = "https://static.xhpolaris.com/cat_world.jpg";
 
@@ -40,12 +41,16 @@ function afterSignIn(signInResp: SignInResp) {
   uni.setStorageSync(StorageKeys.UserId, signInResp.userId);
   checkCommunityId().then();
   getUserInfo().catch((res: UniNamespace.RequestSuccessCallbackResult) => {
-    if (res.statusCode === 400) {
+    if (res.statusCode == 400) {
       const id = signInResp.userId;
       updateUserInfo({
         nickname: "用户_" + id.substring(id.length - 13),
         avatarUrl: DefaultUserAvatarUrl
-      }).then();
+      }).then(() => {
+        uni.navigateTo({
+          url: Pages.SchoolSelect
+        });
+      });
     }
   });
 }
