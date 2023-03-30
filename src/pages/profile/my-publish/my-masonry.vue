@@ -30,8 +30,10 @@
           <view class="tile-info">
             <view class="info">
               <view class="title">{{ moment.title }}</view>
-              <view class="delete" @click.stop="onClickDelete(moment.id)">
-                <image class="deletepic" src="/static/images/delete.png" />
+              <view v-if="moment.user.id === myUserId && myUserId">
+                <view class="delete" @click.stop="onClickDelete(moment.id)">
+                  <image class="deletepic" src="/static/images/delete.png" />
+                </view>
               </view>
             </view>
             <view class="other-info">
@@ -66,22 +68,32 @@
 
 <script setup lang="ts">
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
-import { getOwnMomentPreviews, deleteMoment } from "@/apis/moment/moment";
+import {
+  getOwnMomentPreviews,
+  deleteMoment,
+  getMomentPreviews
+} from "@/apis/moment/moment";
 import { DeleteMomentReq } from "@/apis/moment/moment-components";
-import { MomentData } from "@/apis/schemas";
+import { MomentData, Moment } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickMoment } from "./utils";
+import { getUserInfo } from "@/apis/user/user";
 import { getCount } from "@/apis/like/like";
 import { getComments } from "@/apis/comment/comment";
+interface Props {
+  type?: string;
+}
+const props = defineProps<Props>();
 
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
 const isNoData = ref(true);
 
 let momentsInBatch: MomentData[];
+let moments: Moment[];
 const leftMoments = reactive<MomentData[]>([]);
 const rightMoments = reactive<MomentData[]>([]);
-
+const myUserId = ref("");
 let leftHeight = 0;
 let rightHeight = 0;
 const isLeftTallerThanRight = () => {
@@ -142,13 +154,25 @@ const addTile = (tileIndex: number, side: string) => {
 
 const addBatch = async () => {
   momentsInBatch = [];
-  let moments = (
-    await getOwnMomentPreviews({
-      page: page,
-      communityId: uni.getStorageSync("communityId")
-    })
-  ).moments;
-  page += 1;
+  if (page === 0)
+    getUserInfo().then((res) => {
+      myUserId.value = res.user.id;
+    });
+  if (props.type === "my") {
+    moments = (
+      await getOwnMomentPreviews({
+        page: page,
+        communityId: uni.getStorageSync("communityId")
+      })
+    ).moments;
+  } else if (props.type === "liked") {
+    moments = (
+      await getMomentPreviews({
+        page: page,
+        communityId: uni.getStorageSync("communityId")
+      })
+    ).moments;
+  }
   for (let i = 0; i < moments.length; i++) {
     let momentData = reactive<MomentData>({
       id: moments[i].id,
@@ -175,6 +199,7 @@ const addBatch = async () => {
   }
   if (momentsInBatch.length > 0) {
     isNoData.value = false;
+    page += 1;
     batchLength = momentsInBatch.length;
     if (batchSecondPartDefaultLength < batchLength) {
       batchFirstPartLength = batchLength - batchSecondPartDefaultLength;
@@ -381,6 +406,7 @@ $avatarWidth: calc(21 / 390 * 100vw);
   left: 0;
   top: 0;
 }
+
 .nomore {
   margin-top: 50rpx;
   font-size: 20rpx;
