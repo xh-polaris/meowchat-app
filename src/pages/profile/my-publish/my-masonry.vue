@@ -30,8 +30,10 @@
           <view class="tile-info">
             <view class="info">
               <view class="title">{{ moment.title }}</view>
-              <view class="delete" @click.stop="onClickDelete(moment.id)">
-                <image class="deletepic" src="/static/images/delete.png" />
+              <view v-if="moment.user.id === myUserId && myUserId">
+                <view class="delete" @click.stop="onClickDelete(moment.id)">
+                  <image class="deletepic" src="/static/images/delete.png" />
+                </view>
               </view>
             </view>
             <view class="other-info">
@@ -60,28 +62,32 @@
     <image src="https://static.xhpolaris.com/nodata.png" />
   </view>
   <view v-else class="blue-background" />
-  <view class="nomore">没有更多喵~</view>
-  <view style="width: 100%; height: 40rpx"></view>
 </template>
 
 <script setup lang="ts">
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
-import { getOwnMomentPreviews, deleteMoment } from "@/apis/moment/moment";
+import { deleteMoment } from "@/apis/moment/moment";
 import { DeleteMomentReq } from "@/apis/moment/moment-components";
-import { MomentData } from "@/apis/schemas";
+import { MomentData, Moment } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickMoment } from "./utils";
 import { getCount } from "@/apis/like/like";
 import { getComments } from "@/apis/comment/comment";
+import { getUserInfo } from "@/apis/user/user";
+interface Props {
+  getPreviewsHandler: any;
+}
+const props = defineProps<Props>();
 
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
 const isNoData = ref(true);
 
 let momentsInBatch: MomentData[];
+let moments: Moment[];
 const leftMoments = reactive<MomentData[]>([]);
 const rightMoments = reactive<MomentData[]>([]);
-
+const myUserId = ref("");
 let leftHeight = 0;
 let rightHeight = 0;
 const isLeftTallerThanRight = () => {
@@ -141,14 +147,12 @@ const addTile = (tileIndex: number, side: string) => {
 };
 
 const addBatch = async () => {
+  if (page === 0)
+    getUserInfo().then((res) => {
+      myUserId.value = res.user.id;
+    });
   momentsInBatch = [];
-  let moments = (
-    await getOwnMomentPreviews({
-      page: page,
-      communityId: uni.getStorageSync("communityId")
-    })
-  ).moments;
-  page += 1;
+  moments = (await props.getPreviewsHandler(page)).moments;
   for (let i = 0; i < moments.length; i++) {
     let momentData = reactive<MomentData>({
       id: moments[i].id,
@@ -380,11 +384,5 @@ $avatarWidth: calc(21 / 390 * 100vw);
   z-index: -1;
   left: 0;
   top: 0;
-}
-.nomore {
-  margin-top: 50rpx;
-  font-size: 20rpx;
-  line-height: 20rpx;
-  text-align: center;
 }
 </style>

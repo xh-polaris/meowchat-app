@@ -10,7 +10,7 @@
   </view>
   <view class="wrap">
     <view v-if="current === 0">
-      <my-moments></my-moments>
+      <MyMasonryFrame type="my"></MyMasonryFrame>
     </view>
     <view v-if="current === 1">
       <my-posts></my-posts>
@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import MyPosts from "@/pages/profile/my-publish/my-posts.vue";
-import MyMoments from "@/pages/profile/my-publish/my-moments.vue";
+import MyMasonryFrame from "@/pages/profile/my-publish/my-masonry-frame.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 const items = ["动态", "帖子"];
 let current = ref(0);
