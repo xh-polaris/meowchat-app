@@ -272,27 +272,33 @@ function addImage() {
         isTooManyImages = true;
         tempFilePaths = tempFilePaths.slice(0, 30 - imagesData.length);
       }
-      tempFilePaths.map((item) => {
+      const promises = tempFilePaths.map((item) => {
         imagesData.push({
           id: item.tempFilePath,
           url: item.tempFilePath
         });
-        putObject({
+        return putObject({
           filePath: item.tempFilePath,
           prefix: Prefixes.Moment
-        }).then(function (url) {
-          //将返回的url添加进photos
-          //注意异步添加顺序
-          let index = -1;
-          for (let i = 0; i < imagesData.length; i++) {
-            if (imagesData[i].url === item.tempFilePath) {
-              index = i;
-            }
-          }
-          photos[index] = url.url;
-          disablePublish.value = false;
         });
       });
+      Promise.all(promises)
+        .then((urls) => {
+          urls.forEach((url: any, index: number) => {
+            //将返回的url添加进photos
+            //注意异步添加顺序，urls顺序和tempFilePaths相同
+            let changeIndex = -1;
+            for (let i = 0; i < imagesData.length; i++) {
+              if (imagesData[i].url === tempFilePaths[index].tempFilePath) {
+                changeIndex = i;
+              }
+            }
+            photos[changeIndex] = url.url;
+          });
+        })
+        .finally(() => {
+          disablePublish.value = false;
+        });
       if (isTooManyImages) {
         uni.showToast({
           title: "最多可上传30张图片！",
