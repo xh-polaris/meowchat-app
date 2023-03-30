@@ -3,6 +3,7 @@ import { getUserInfo, updateUserInfo } from "@/apis/user/user";
 import { SignInResp } from "@/apis/auth/auth-interfaces";
 import { StorageKeys } from "@/utils/const";
 import { listCommunity } from "@/apis/community/community";
+import { Pages } from "@/utils/url";
 
 const DefaultUserAvatarUrl = "https://static.xhpolaris.com/cat_world.jpg";
 
@@ -45,7 +46,11 @@ function afterSignIn(signInResp: SignInResp) {
       updateUserInfo({
         nickname: "用户_" + id.substring(id.length - 13),
         avatarUrl: DefaultUserAvatarUrl
-      }).then();
+      }).then(() => {
+        uni.navigateTo({
+          url: Pages.SchoolSelect
+        });
+      });
     }
   });
 }

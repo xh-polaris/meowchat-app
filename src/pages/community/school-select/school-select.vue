@@ -7,7 +7,7 @@
         height: 60rpx;
         border-color: #938b8e;
         border-width: 2rpx;
-        margin-top: 10rpx;
+        margin: 10rpx 50rpx 0 50rpx;
       "
     >
       <input
@@ -79,7 +79,7 @@
       <view class="small"> 热门学校</view>
     </view>
     <view class="big">
-      <view>
+      <view style="margin-right: 50rpx">
         <view
           v-for="(item, index) in schools.data"
           :key="index"
@@ -388,7 +388,7 @@ function changeSchool(name: string, index: number) {
   border-radius: 15px;
   position: relative;
   margin-top: 15rpx;
-  margin-right: 20rpx;
+  margin-right: 50rpx;
   display: flex;
   align-items: center;
   image {
@@ -413,7 +413,7 @@ function changeSchool(name: string, index: number) {
   border-top-right-radius: 15px;
   position: relative;
   margin-top: 15rpx;
-  margin-right: 20rpx;
+  margin-right: 50rpx;
   display: flex;
   align-items: center;
   image {
