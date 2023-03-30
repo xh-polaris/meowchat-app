@@ -41,7 +41,7 @@ function afterSignIn(signInResp: SignInResp) {
   uni.setStorageSync(StorageKeys.UserId, signInResp.userId);
   checkCommunityId().then();
   getUserInfo().catch((res: UniNamespace.RequestSuccessCallbackResult) => {
-    if (res.statusCode == 400) {
+    if (res.statusCode === 400) {
       const id = signInResp.userId;
       updateUserInfo({
         nickname: "用户_" + id.substring(id.length - 13),
