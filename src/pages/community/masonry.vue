@@ -17,6 +17,7 @@
               class="img"
               mode="widthFix"
               @load.once="onLoadLeft"
+              @error="onLoad"
             />
             <image
               v-else
@@ -24,6 +25,7 @@
               class="img"
               mode="widthFix"
               @load.once="onLoadRight"
+              @error="onLoad"
             />
           </view>
 
