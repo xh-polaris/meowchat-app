@@ -14,23 +14,25 @@
       </button>
       <text class="avatar-hint">点击更换头像</text>
     </view>
-    <text class="nickname">昵称</text>
-    <view class="choose-nickname-row">
-      <input
-        class="update-nickname"
-        placeholder="请输入昵称"
-        type="nickname"
-        :value="userInfo.nickname ? userInfo.nickname : props.nickname"
-        @blur="onNickName"
-      />
-    </view>
-    <button
-      class="confirm-change"
-      :disabled="disableConfirm"
-      @click="onClickConfirm()"
-    >
-      <text class="save">确认</text>
-    </button>
+    <form @submit="formSubmit">
+      <text class="nickname">昵称</text>
+      <view class="choose-nickname-row">
+        <input
+          class="update-nickname"
+          placeholder="请输入昵称"
+          type="nickname"
+          name="nickname"
+          :value="userInfo.nickname ? userInfo.nickname : props.nickname"
+        />
+      </view>
+      <button
+        class="confirm-change"
+        :disabled="disableConfirm"
+        form-type="submit"
+      >
+        <text class="save">确认</text>
+      </button>
+    </form>
   </view>
 </template>
 
@@ -57,30 +59,28 @@ function onChooseAvatar(e: any) {
     userInfo.avatarUrl = res.url;
   });
 }
-
-function onNickName(e: any) {
-  userInfo.nickname = e.detail.value;
-}
-
-function onClickConfirm() {
-  updateUserInfo(userInfo).then((res) => {
-    uni.showToast({
-      title: res.msg
-    });
-    uni.reLaunch({
-      url: Pages.Profile
-    });
-  });
-  updateUserInfo(userInfo).catch(
-    (res: UniNamespace.RequestSuccessCallbackResult) => {
+function formSubmit(e: any) {
+  userInfo.nickname = e.detail.value.nickname;
+  updateUserInfo(userInfo)
+    .then(() => {
+      uni.showToast({
+        title: "修改信息成功"
+      });
+      setTimeout(() => {
+        uni.reLaunch({
+          url: Pages.Profile
+        });
+      }, 1000);
+    })
+    .catch((res: UniNamespace.RequestSuccessCallbackResult) => {
       if (res.statusCode === 400) {
         uni.showToast({
           icon: "error",
-          title: "该用户名已存在"
+          title: "该用户名已存在",
+          duration: 1000
         });
       }
-    }
-  );
+    });
 }
 </script>
 
