@@ -64,7 +64,7 @@
           :is-counter="true"
           :border-top="false"
           :border-bottom="false"
-          placeholder="说点什么吧!"
+          placeholder="说点什么吧! (可空)"
           height="350rpx"
         ></FuiTextArea>
       </view>
