@@ -3,6 +3,10 @@
     <template v-for="post in postsData" :key="post.id">
       <view class="pb-1 first">
         <view class="post" @click="onClickPost(post.id)">
+          <view
+            v-if="post.user.id === '63f4fad2473a6b7cf27603c6'"
+            class="official-mark"
+          ></view>
           <view class="upper">
             <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
               <view class="title">
@@ -59,8 +63,8 @@
         </view>
       </view>
     </template>
-    <view v-if="postsData.length === 0">
-      <image :src="Pictures.NoData" />
+    <view v-if="postsData.length === 0" class="no-cat-here-frame">
+      <image :src="Pictures.NoCatHere" class="no-cat-here" />
     </view>
   </template>
 </template>
@@ -123,6 +127,7 @@ onReachBottom(() => {
 
 <style lang="scss" scoped>
 @import "@/common/user-info.scss";
+@import "@/common/icon.scss";
 .first {
   background-color: #fafcff;
 }
@@ -132,6 +137,17 @@ onReachBottom(() => {
   border-top: 2px #f4f5f6 solid;
   border-bottom: 2px #f4f5f6 solid;
   padding: 32rpx;
+  position: relative;
+}
+
+.official-mark {
+  width: 220upx;
+  height: 58upx;
+  background-image: $official-mark;
+  background-size: 100% 100%;
+  position: absolute;
+  right: 20upx;
+  top: 20upx;
 }
 
 .upper {
@@ -199,10 +215,11 @@ onReachBottom(() => {
 }
 
 .image {
-  width: calc(125 / 390 * 100vw);
-  height: calc(112 / 390 * 100vw);
+  width: 280upx;
+  height: 200upx;
   border-radius: calc(6 / 390 * 100vw);
   margin-left: calc(16 / 390 * 100vw);
+  margin-top: 60upx;
 }
 
 .lower {
@@ -214,6 +231,16 @@ onReachBottom(() => {
 
   .time {
     margin-right: calc(16 / 390 * 100vw);
+  }
+}
+.no-cat-here-frame {
+  width: 100vw;
+  margin-top: 20vh;
+  display: flex;
+  justify-content: center;
+  .no-cat-here {
+    width: 400upx;
+    height: 222upx;
   }
 }
 </style>

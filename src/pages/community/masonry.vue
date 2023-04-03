@@ -49,8 +49,8 @@
       </template>
     </view>
   </view>
-  <view v-if="isNoData">
-    <image src="https://static.xhpolaris.com/nodata.png" />
+  <view v-if="isNoData" class="no-cat-here-frame">
+    <image :src="Pictures.NoCatHere" class="no-cat-here" />
   </view>
   <view v-else class="blue-background" />
 </template>
@@ -62,6 +62,7 @@ import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
+import { Pictures } from "@/utils/url";
 
 interface Props {
   getPreviewsHandler: any;
@@ -335,5 +336,16 @@ $avatarWidth: calc(21 / 390 * 100vw);
   z-index: -1;
   left: 0;
   top: 0;
+}
+
+.no-cat-here-frame {
+  width: 100vw;
+  margin-top: 20vh;
+  display: flex;
+  justify-content: center;
+  .no-cat-here {
+    width: 400upx;
+    height: 222upx;
+  }
 }
 </style>

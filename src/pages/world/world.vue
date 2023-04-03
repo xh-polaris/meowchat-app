@@ -30,14 +30,17 @@
     <view class="search" @click.prevent="search" />
   </view>
 
-  <view class="top-padding" />
+  <view class="blue-background">
+    <view class="top-padding" />
 
-  <WorldPosts
-    v-if="!isRefreshing"
-    search="default"
-    :only-official="onlyOfficial"
-  />
-  <view class="empty-bottom"></view>
+    <WorldPosts
+      v-if="!isRefreshing"
+      search="default"
+      :only-official="onlyOfficial"
+    />
+    <view class="empty-bottom"></view>
+  </view>
+
   <TabBar id="3"></TabBar>
 </template>
 
@@ -146,6 +149,12 @@ onReady(() => {
 
 body {
   font-family: sans-serif;
+  background-color: #fafcff;
+}
+
+.blue-background {
+  width: 100vw;
+  height: 100vh;
   background-color: #fafcff;
 }
 
