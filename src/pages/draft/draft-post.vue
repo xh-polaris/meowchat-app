@@ -26,7 +26,7 @@
           :is-counter="true"
           color="black"
           height="350rpx"
-          placeholder="说点什么吧！&#10;内容编辑完成后，将经过审核，审核通过后即发布成功，请耐心等待"
+          :placeholder="placeholder"
           text="默认按钮"
         >
         </FuiTextArea>
@@ -99,6 +99,9 @@ import Policy from "@/components/deal-policy/policy.vue";
 import { onClickImage } from "@/pages/cat/utils";
 import { onUnload } from "@dcloudio/uni-app";
 import { StorageKeys } from "@/utils/const";
+
+const placeholder =
+  "说点什么吧! 内容编辑完成后，将经过审核，审核通过后即发布成功，请耐心等待 (可空)";
 
 const imagesData = reactive<
   {
