@@ -3,7 +3,10 @@
     <template v-for="post in postsData" :key="post.id">
       <view class="pb-1 first">
         <view class="post" @click="onClickPost(post.id)">
-          <view class="official-mark"></view>
+          <view
+            v-if="post.user.id === '63f4fad2473a6b7cf27603c6'"
+            class="official-mark"
+          ></view>
           <view class="upper">
             <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
               <view class="title">
@@ -96,6 +99,7 @@ const getPostPreviewsAsync = async () => {
     });
     token = res.token;
     posts = res.posts;
+    console.log(posts);
   } else if (props.search === "post") {
     const res = await getPostPreviews({
       lastToken: token,
