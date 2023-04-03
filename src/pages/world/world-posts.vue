@@ -64,7 +64,7 @@
       </view>
     </template>
     <view v-if="postsData.length === 0">
-      <image :src="Pictures.NoData" />
+      <image :src="Pictures.NoCatHere" />
     </view>
   </template>
 </template>
@@ -99,7 +99,6 @@ const getPostPreviewsAsync = async () => {
     });
     token = res.token;
     posts = res.posts;
-    console.log(posts);
   } else if (props.search === "post") {
     const res = await getPostPreviews({
       lastToken: token,
