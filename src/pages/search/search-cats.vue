@@ -7,7 +7,9 @@
         </view>
       </view>
     </view>
-    <view v-if="catsData.length === 0"> <image :src="Pictures.NoData" /> </view>
+    <view v-if="catsData.length === 0" class="no-cat-here-frame">
+      <image :src="Pictures.NoCatHere" class="no-cat-here" />
+    </view>
   </template>
 </template>
 
@@ -93,4 +95,15 @@ function onClickCatBox(avatarUrl: string, name: string, id: string) {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.no-cat-here-frame {
+  width: 100vw;
+  margin-top: 10vh;
+  display: flex;
+  justify-content: center;
+  .no-cat-here {
+    width: 400upx;
+    height: 222upx;
+  }
+}
+</style>
