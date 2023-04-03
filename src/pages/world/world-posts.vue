@@ -63,8 +63,8 @@
         </view>
       </view>
     </template>
-    <view v-if="postsData.length === 0">
-      <image :src="Pictures.NoCatHere" />
+    <view v-if="postsData.length === 0" class="no-cat-here-frame">
+      <image :src="Pictures.NoCatHere" class="no-cat-here" />
     </view>
   </template>
 </template>
@@ -231,6 +231,16 @@ onReachBottom(() => {
 
   .time {
     margin-right: calc(16 / 390 * 100vw);
+  }
+}
+.no-cat-here-frame {
+  width: 100vw;
+  margin-top: 20vh;
+  display: flex;
+  justify-content: center;
+  .no-cat-here {
+    width: 400upx;
+    height: 222upx;
   }
 }
 </style>
