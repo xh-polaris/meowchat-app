@@ -1,5 +1,18 @@
 
 
+## [1.12.0](https://github.com/xh-polaris/meowchat-app/compare/v1.11.0...v1.12.0) (2023-04-03)
+
+
+### ✨ Features | 新功能
+
+* 实现了官方帖子添加水印 实现了喵世界喵社区图鉴没有内容时的显示“这里还没有猫咪来过”图片以及淡蓝色背景 ([#273](https://github.com/xh-polaris/meowchat-app/issues/273)) ([3e95029](https://github.com/xh-polaris/meowchat-app/commit/3e950294fc2abdb08feef5398ab11b0309e42b67))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 发布正文说明可以不填 ([#272](https://github.com/xh-polaris/meowchat-app/issues/272)) ([16e144d](https://github.com/xh-polaris/meowchat-app/commit/16e144da59f40db02dbf45b31acebf8e84b7c487))
+* 修复修改昵称时因为不触发失焦而不修改的问题 ([#271](https://github.com/xh-polaris/meowchat-app/issues/271)) ([aced7c1](https://github.com/xh-polaris/meowchat-app/commit/aced7c1ca11d7f0bc629547905c8aa76779022d8))
+
 ## [1.11.0](https://github.com/xh-polaris/meowchat-app/compare/v1.10.0...v1.11.0) (2023-03-30)
 
 
