@@ -30,14 +30,17 @@
     </view>
   </view>
 
-  <view v-if="!isRefreshing">
-    <CarouselFrame />
+  <view class="blue-background">
+    <view v-if="!isRefreshing">
+      <CarouselFrame />
+    </view>
+    <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
+    <view v-if="!isRefreshing">
+      <MasonryFrame search="default"></MasonryFrame>
+    </view>
+    <view class="empty-bottom"></view>
   </view>
-  <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
-  <view v-if="!isRefreshing">
-    <MasonryFrame search="default"></MasonryFrame>
-  </view>
-  <view class="empty-bottom"></view>
+
   <TabBar id="1"></TabBar>
 </template>
 
@@ -174,6 +177,12 @@ onShow(() => {
 
 <style lang="scss" scoped>
 @import "@/common/third-party/zcm-main.css";
+
+.blue-background {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fafcff;
+}
 
 .arrow {
   width: 32rpx;
