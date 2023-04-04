@@ -11,7 +11,8 @@ export const enum Icons {
   NewImage = "/static/images/add.png",
   Message = "/static/images/message-black.png",
   Collection = "/static/images/collection-grey.png",
-  Delete = "/static/images/delete.png"
+  Delete = "/static/images/delete.png",
+  Guide = "/static/images/guide.png"
 }
 export const enum Pages {
   Cat = "/pages/cat/cat",

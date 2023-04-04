@@ -84,45 +84,17 @@
         </view>
       </view>
     </view>
-    <view class="divider" />
+    <view class="dd">
+      <image :src="Icons.Guide" class="guide"></image>
+      <!--      <view class="brief">-->
+      <!--        <view class="text"> 胆小怕生，不喜欢摸头 </view>-->
+      <!--      </view>-->
+      <view class="detail"> {{ cat.details }} </view>
+    </view>
     <view class="photo">
       <view class="row">
         <text class="maopian"> 猫片</text>
         <button class="switch" size="mini" @click="draftImage">我要上传</button>
-      </view>
-      <view v-if="spread" class="dd">
-        <text class="detail_info"> 撸猫指南：{{ cat.details }}</text>
-        <view
-          class="spread"
-          @click="
-            () => {
-              spread = !spread;
-            }
-          "
-        >
-          <text>点击展开</text>
-          <image src="/static/images/open.png"></image>
-        </view>
-      </view>
-      <view v-if="!spread" class="dd1">
-        <text class="detail_info"> 撸猫指南：{{ cat.details }}</text>
-        <view
-          class="spread"
-          @click="
-            () => {
-              spread = !spread;
-            }
-          "
-        >
-          <text>点击收起</text>
-          <image src="/static/images/back.png"></image>
-        </view>
-      </view>
-      <view v-if="!spread" class="divider1" />
-      <view v-if="!spread" class="end">
-        <text style="font-size: 30rpx">
-          {{ cat.details }}
-        </text>
       </view>
       <view class="imgs">
         <view class="qz_imgs qz_imgs3 clearfix">
@@ -176,7 +148,7 @@ import {
   GetImageByCatReq
 } from "@/apis/collection/collection-interfaces";
 import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
-import { Pages } from "@/utils/url";
+import { Icons, Pages } from "@/utils/url";
 import { doLike, getUserLiked, getCount } from "@/apis/like/like";
 function draftImage() {
   uni.navigateTo({
@@ -454,7 +426,7 @@ onReachBottom(() => {
 
     font-family: "Abel", serif;
     font-style: normal;
-    font-size: 35rpx;
+    font-size: 40rpx;
     font-weight: bold;
     line-height: 41rpx;
     margin-left: 20rpx;
@@ -470,78 +442,13 @@ onReachBottom(() => {
     margin-left: 20rpx;
   }
 
-  .dd {
-    //text-align: center;
-    margin-right: auto;
-    margin-left: 20rpx;
-    margin-top: 20rpx;
-    width: 95%;
-    color: white;
-    //background: linear-gradient(90deg, #0688f3, white);
-    background: #eaf6ff;
-    display: flex;
-    justify-content: space-between;
-    white-space: nowrap;
-    //padding-left: 30rpx;
-    padding-top: 10rpx;
-    border-radius: 20rpx 20rpx 20rpx 20rpx;
-  }
-
-  .dd1 {
-    //text-align: center;
-    margin-right: auto;
-    margin-left: 20rpx;
-    margin-top: 20rpx;
-    width: 95%;
-    color: white;
-    //background: linear-gradient(90deg, #0688f3, white);
-    background: #eaf6ff;
-    display: flex;
-    justify-content: space-between;
-    white-space: nowrap;
-    //padding-left: 30rpx;
-    padding-top: 10rpx;
-    border-radius: 20rpx 20rpx 5rpx 5rpx;
-  }
-
-  .end {
-    text-align: center;
-    margin-right: auto;
-    margin-left: 20rpx;
-    width: 95%;
-    min-height: 200rpx;
-    color: white;
-    // background: linear-gradient(90deg, #0688f3, white);
-    background: #eaf6ff;
-    border-radius: 5rpx 5rpx 20rpx 20rpx;
-  }
-
-  .detail_info {
-    font-size: 28rpx;
-    font-weight: 400;
-    width: 70%;
-    margin-top: 5rpx;
-    margin-bottom: 20rpx;
-    padding-left: 10rpx;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
   .imgs {
     margin-top: 30rpx;
     margin-left: 20rpx;
     margin-bottom: 30rpx;
     text {
       /* 11月 */
-
-      //position: absolute;
-      //width: 27rpx;
-      //height: 17rpx;
-      //left: 16rpx;
       margin-left: auto;
-      //margin-bottom: 30rpx;
-
       font-family: "Inter", serif;
       font-style: normal;
       font-weight: 500;
@@ -573,6 +480,76 @@ onReachBottom(() => {
       }
     }
   }
+}
+
+// 撸猫指南样式
+.dd {
+  margin: 100rpx 20rpx 80rpx 20rpx;
+  width: 95%;
+  color: #000000;
+  background: #f8f8f8;
+  display: grid;
+  justify-content: space-between;
+  padding-top: 10rpx;
+  border-radius: 20rpx 20rpx 20rpx 20rpx;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.09);
+}
+.guide {
+  margin: 20rpx 20rpx 20rpx 10rpx;
+  width: 250rpx;
+  height: 70rpx;
+}
+
+.brief {
+  position: relative;
+  width: 70%;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
+  margin-left: 40rpx;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 100;
+}
+.text {
+  display: inline-block;
+  position: relative;
+  font-size: 33rpx;
+  height: 50rpx;
+  z-index: 100;
+}
+.text::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 2rpx; /* 调整倾斜矩形的位置 */
+  left: 20rpx;
+  width: 100%;
+  height: 15rpx; /* 调整倾斜矩形的高度 */
+  background: rgba(31, 161, 255, 0.67);
+  transform: skew(30deg, 0);
+  z-index: -1;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: 400;
+  width: 70%;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
+  margin-left: 20rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detail {
+  margin: 5rpx 20rpx 20rpx 10rpx;
+  border-radius: 5rpx 5rpx 20rpx 20rpx;
+  padding: 10rpx 0 20rpx 20rpx;
+  line-height: 40rpx;
+  font-size: 25rpx;
 }
 
 .cat-image {
@@ -629,6 +606,7 @@ onReachBottom(() => {
   font-size: 23rpx;
   background: white;
   border: solid #1fa1ff 1px;
+  letter-spacing: 2rpx;
 }
 .nomore {
   margin-top: 50rpx;

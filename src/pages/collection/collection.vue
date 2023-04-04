@@ -33,7 +33,7 @@
           </view>
         </view>
       </view>
-      <view class="school-select-box">
+      <view v-if="campuses.data.length !== 1" class="school-select-box">
         <view class="navbar">
           <view
             v-for="(item, index) in campuses.data"
@@ -251,10 +251,9 @@ onShow(() => {
 }
 
 .school-box {
-  height: 12vh;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10upx;
+  margin-bottom: 30upx;
 }
 
 .school-select-box {
