@@ -57,8 +57,6 @@
       ></search-cats>
     </template>
   </view>
-  <view class="empty-bottom"></view>
-  <tab-bar id="2"></tab-bar>
 </template>
 
 <script lang="ts" setup>
@@ -67,7 +65,6 @@ import { reactive, ref } from "vue";
 import { StorageKeys } from "@/utils/const";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { Community } from "@/apis/schemas";
-import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import SearchCats from "@/pages/search/search-cats.vue";
 
