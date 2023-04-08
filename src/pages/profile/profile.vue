@@ -60,9 +60,16 @@
   </view>
   <tab-bar id="4"></tab-bar>
   <view
+    v-if="version"
     class="font-sm text-center w-100"
     style="position: absolute; bottom: 140rpx; color: #696969"
-    >版本号：1.12.0
+    >版本号：{{version}}
+  </view>
+  <view
+    v-else
+    class="font-sm text-center w-100"
+    style="position: absolute; bottom: 140rpx; color: #696969"
+    >版本号：体验版
   </view>
 </template>
 
@@ -73,6 +80,11 @@ import { User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
+import { ref } from "vue";
+
+//获取版本号
+const version=uni.getAccountInfoSync().miniProgram.version
+
 
 const userInfo = reactive<User>({
   id: "",
