@@ -69,12 +69,12 @@
     v-else
     class="font-sm text-center w-100"
     style="position: absolute; bottom: 140rpx; color: #696969"
-    >版本号：体验版
+    >版本号：1.12.1
   </view>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";

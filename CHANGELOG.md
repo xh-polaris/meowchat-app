@@ -1,5 +1,18 @@
 
 
+## [1.12.1](https://github.com/xh-polaris/meowchat-app/compare/v1.12.0...v1.12.1) (2023-04-09)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 撸猫指南样式修改、只有一个校区时不显示校区 ([#274](https://github.com/xh-polaris/meowchat-app/issues/274)) ([5b78a7f](https://github.com/xh-polaris/meowchat-app/commit/5b78a7f2b759ec9456a30f0470d53f93cdf739c9))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 去除选择猫咪搜索猫咪时的底部导航栏 ([#276](https://github.com/xh-polaris/meowchat-app/issues/276)) ([e9d5b09](https://github.com/xh-polaris/meowchat-app/commit/e9d5b094e7d0339b001fab16260bda61550a3e09))
+* 修复官方帖子水印无法正常显示问题 ([#275](https://github.com/xh-polaris/meowchat-app/issues/275)) ([d9c27e2](https://github.com/xh-polaris/meowchat-app/commit/d9c27e22ac66c2d455a5ca0037248ff75d21189a))
+
 ## [1.12.0](https://github.com/xh-polaris/meowchat-app/compare/v1.11.0...v1.12.0) (2023-04-03)
 
 
