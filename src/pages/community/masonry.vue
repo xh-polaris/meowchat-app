@@ -57,7 +57,6 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
-import { getMomentPreviews, searchMomentPreviews } from "@/apis/moment/moment";
 import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
@@ -65,7 +64,7 @@ import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
 
 interface Props {
-  getPreviewsHandler: any;
+  getPreviews: () => Promise<Moment[]>;
 }
 const props = defineProps<Props>();
 
@@ -100,15 +99,14 @@ const query = uni.createSelectorQuery().in(instance);
 let imgWidth = 160;
 let isFirstLoadImg = true;
 
-let page = 0; //每往下翻页一次page加1直到没有内容
-
 /**
  * 大致逻辑：
  * batch是每一批加上去的moment，分为first和second
  * first是左边n个右边n个直接放
  * first放上去但图片还没加载完，放的那些图片加载完毕时触发来放second的东西
  *
- * 具体步骤：batch 20, first 16, second 4
+ * 具体步骤：
+ * 假设 batch 20, first 16, second 4
  * 最开始index=0, loadedAmount=0, isBatchLoaded=true
  * 这时addBatch()，moments变成新的20个moments
  * 放first，左边8个右边8个，每放一个就加一下index，很快index加到16
@@ -121,19 +119,11 @@ let page = 0; //每往下翻页一次page加1直到没有内容
  * 所有的moment都放完后，又初始化为index=0, loadedAmount=0, isBatchLoaded=true
  */
 
-onReachBottom(() => {
-  if (!isBatchLoading && !isNoMoreMoments) {
-    isBatchLoading = true;
-    addBatch();
-  }
-});
-
 const addBatch = async () => {
-  momentsInBatch = (await props.getPreviewsHandler(page)).moments;
+  momentsInBatch = await props.getPreviews();
 
   if (momentsInBatch.length > 0) {
     isNoData.value = false;
-    page += 1;
     batchLength = momentsInBatch.length;
     if (batchSecondPartDefaultLength < batchLength) {
       batchFirstPartLength = batchLength - batchSecondPartDefaultLength;
@@ -232,6 +222,13 @@ const addTile = (tileIndex: number, side: string) => {
 onBeforeMount(() => {
   isBatchLoading = true;
   addBatch();
+});
+
+onReachBottom(() => {
+  if (!isBatchLoading && !isNoMoreMoments) {
+    isBatchLoading = true;
+    addBatch();
+  }
 });
 </script>
 
