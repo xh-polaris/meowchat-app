@@ -1,15 +1,6 @@
 <template>
-  <view class="content2">
-    <view
-      class="d-flex border a-center mx-2 j-sb px-3"
-      style="
-        border-radius: 70rpx;
-        height: 60rpx;
-        border-color: #938b8e;
-        border-width: 2rpx;
-        margin: 10rpx 50rpx 0 50rpx;
-      "
-    >
+  <view class="content">
+    <view class="d-flex border a-center mx-2 j-sb px-3 search">
       <input
         class="search-text"
         maxlength="10"
@@ -17,17 +8,15 @@
         type="text"
         value=""
       />
-      <image style="width: 40rpx" mode="widthFix" :src="Icons.Search" />
+      <image :src="Icons.Search" />
     </view>
-    <view class="search-bar">
-      <view class="small"> 当前选择</view>
-    </view>
+    <view class="subContent"> 当前选择</view>
     <view class="school-select-box">
       <view class="current_school">
         <view class="current_school_text">{{ currentSchool }}</view>
       </view>
       <view v-if="sel">
-        <view class="select" @click="change">
+        <view class="selectClose" @click="change">
           <view class="text"
             >{{ currentCampus }}
             <image :src="Icons.DownBlack" />
@@ -35,13 +24,13 @@
         </view>
       </view>
       <view v-else>
-        <view class="select2" @click="change">
+        <view class="selectOpen" @click="change">
           <view class="text"
             >{{ currentCampus }}
             <image :src="Icons.UpBlack" />
           </view>
         </view>
-        <view class="option" @click="change">
+        <view class="options" @click="change">
           <view
             v-for="(item, index) in campuses.data"
             :key="index"
@@ -53,13 +42,11 @@
         </view>
       </view>
     </view>
-    <view class="search-bar">
-      <view class="small"> 定位/历史记录</view>
-    </view>
+    <view class="subContent"> 定位/历史记录</view>
     <view
       v-for="(item, index) in historyJSON.histories"
       :key="index"
-      class="big"
+      class="bubbleBox"
     >
       <view
         class="bubble"
@@ -72,16 +59,17 @@
           )
         "
       >
-        {{ item.schoolName }} ({{ item.campusName }})</view
-      >
+        {{ item.schoolName }} ({{ item.campusName }})
+      </view>
     </view>
     <view class="search-bar">
       <view class="small"> 热门学校</view>
     </view>
-    <view class="big">
-      <view style="margin-right: 50rpx">
+    <view class="subContent"> 热门学校</view>
+    <view class="bubbleBox">
+      <view>
         <view
-          v-for="(item, index) in schools.data"
+          v-for="(item, index) in schools.data.slice(0, 2)"
           :key="index"
           class="bubble"
           @click="changeSchool(item.name, index)"
@@ -92,10 +80,10 @@
     </view>
   </view>
 
-  <view class="blank" />
+  <view class="divider" />
 
-  <view class="content2">
-    <view class="small"> 所有学校</view>
+  <view class="content">
+    <view class="subContent"> 所有学校</view>
     <view
       v-for="(item1, index1) in schools.data"
       :key="index1"
@@ -281,10 +269,39 @@ function changeSchool(name: string, index: number) {
 </script>
 
 <style lang="scss" scoped>
-.top-padding {
-  height: calc(58 / 390 * 100vw);
+// 全局样式
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+// 搜索框
+.search {
+  border-radius: 70rpx;
+  height: 60rpx;
+  border-color: #938b8e;
+  border-width: 2rpx;
+  margin: 10rpx 50rpx 0 50rpx;
+
+  image {
+    width: 40rpx;
+    height: 40rpx;
+  }
 }
 
+// 小字
+.subContent {
+  height: 40rpx;
+  width: 100%;
+  display: flex;
+  position: relative;
+  margin-top: 40rpx;
+  margin-left: 50rpx;
+  font-size: 25rpx;
+  color: #afafaf;
+}
+
+//学校名
 .school {
   margin: 30rpx 50rpx 0 50rpx;
   font-size: 25rpx;
@@ -295,7 +312,7 @@ function changeSchool(name: string, index: number) {
 }
 
 // 分隔栏
-.blank {
+.divider {
   background-color: #f6f6f6;
   margin-top: 40rpx;
   display: flex;
@@ -303,11 +320,13 @@ function changeSchool(name: string, index: number) {
   height: 20rpx;
 }
 
-.history {
-  width: 450rpx;
+// 气泡
+.bubbleBox {
+  display: flex;
+  width: 100%;
+  height: auto;
 }
 
-// 气泡
 .bubble {
   background-color: #f6f6f6;
   margin-left: 50rpx;
@@ -339,36 +358,6 @@ function changeSchool(name: string, index: number) {
   font-size: 35rpx;
 }
 
-.small {
-  height: 40rpx;
-  width: 100%;
-  display: flex;
-  position: relative;
-  margin-top: 40rpx;
-  margin-left: 50rpx;
-  font-size: 25rpx;
-  color: #afafaf;
-}
-
-.big {
-  display: flex;
-  width: 100%;
-  height: auto;
-}
-
-.content1 {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.content2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .cancel {
   width: 40rpx;
   height: 40rpx;
@@ -381,8 +370,8 @@ function changeSchool(name: string, index: number) {
   margin-top: 2%;
 }
 
-// 下拉菜单
-.select {
+// 下拉菜单收起时
+.selectClose {
   padding: 10rpx 10rpx 10rpx 20rpx;
   border: black 1px solid;
   border-radius: 15px;
@@ -405,7 +394,8 @@ function changeSchool(name: string, index: number) {
   }
 }
 
-.select2 {
+// 下拉菜单展开时
+.selectOpen {
   padding: 10rpx 10rpx 10rpx 20rpx;
   border: black 1px solid;
   border-bottom: none;
@@ -430,7 +420,8 @@ function changeSchool(name: string, index: number) {
   }
 }
 
-.option {
+// 选项
+.options {
   padding: 2rpx 10rpx 2rpx 20rpx;
   border: black 1px solid;
   border-top: none;
