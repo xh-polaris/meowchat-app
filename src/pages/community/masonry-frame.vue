@@ -1,14 +1,12 @@
 <template>
-  <Masonry
-    v-if="isInitialized"
-    :get-previews-handler="getPreviewsHandler"
-  ></Masonry>
+  <Masonry v-if="isInitialized" :get-previews="getPreviews"></Masonry>
 </template>
 
 <script setup lang="ts">
 import Masonry from "@/pages/community/masonry.vue";
 import { getMomentPreviews, searchMomentPreviews } from "@/apis/moment/moment";
 import { ref } from "vue";
+import { Moment } from "@/apis/schemas";
 
 interface Props {
   search?: string;
@@ -19,22 +17,28 @@ const props = withDefaults(defineProps<Props>(), {
   keyword: "cat"
 });
 
+const page = ref<number>(0); //每往下翻页一次page加1直到没有内容
+
 const isInitialized = ref(false);
-const getPreviewsHandler = ref();
+const getPreviews = ref<() => Promise<Moment[]>>();
 if (props.search === "default") {
-  getPreviewsHandler.value = async (page: number) => {
-    return await getMomentPreviews({
-      page,
-      communityId: uni.getStorageSync("communityId")
-    });
+  getPreviews.value = async () => {
+    return (
+      await getMomentPreviews({
+        page: page.value++,
+        communityId: uni.getStorageSync("communityId")
+      })
+    ).moments;
   };
 } else if (props.search === "search") {
-  getPreviewsHandler.value = async (page: number) => {
-    return await searchMomentPreviews({
-      page,
-      communityId: uni.getStorageSync("communityId"),
-      keyword: props.keyword
-    });
+  getPreviews.value = async () => {
+    return (
+      await searchMomentPreviews({
+        page: page.value++,
+        communityId: uni.getStorageSync("communityId"),
+        keyword: props.keyword
+      })
+    ).moments;
   };
 }
 isInitialized.value = true;

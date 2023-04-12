@@ -37,6 +37,7 @@
     <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
     <view v-if="!isRefreshing">
       <MasonryFrame search="default"></MasonryFrame>
+      <!--      <MasonryData></MasonryData>-->
     </view>
     <view class="empty-bottom"></view>
   </view>
