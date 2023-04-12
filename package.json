@@ -4,7 +4,7 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "version": "1.12.1",
+  "version": "1.13.0",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
@@ -62,7 +62,7 @@
     "husky": "^8.0.3",
     "miniprogram-ci": "^1.9.5",
     "prettier": "^2.8.3",
-    "release-it": "^15.6.0",
+    "release-it": "^15.10.1",
     "sass": "^1.56.1",
     "typescript": "^4.9.3",
     "vite": "2.9.14"

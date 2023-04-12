@@ -1,5 +1,12 @@
 
 
+## [1.13.0](https://github.com/xh-polaris/meowchat-app/compare/v1.12.1...v1.13.0) (2023-04-12)
+
+
+### ✨ Features | 新功能
+
+* 选择学校页面搜索功能 ([#277](https://github.com/xh-polaris/meowchat-app/issues/277)) ([977e0f9](https://github.com/xh-polaris/meowchat-app/commit/977e0f90afa83dbe53e7ddad2e995df2fcac3a5a))
+
 ## [1.12.1](https://github.com/xh-polaris/meowchat-app/compare/v1.12.0...v1.12.1) (2023-04-09)
 
 
