@@ -2,13 +2,21 @@
   <view class="content">
     <view class="d-flex border a-center mx-2 j-sb px-3 search">
       <input
+        v-model="searchText"
         class="search-text"
         maxlength="10"
-        placeholder="输入学校名称或拼音查询"
+        placeholder="输入学校名称查询"
         type="text"
-        value=""
       />
-      <image :src="Icons.Search" />
+      <image
+        style="width: 40rpx"
+        mode="widthFix"
+        :src="Icons.Search"
+        @click="onClickSearch"
+      />
+    </view>
+    <view class="search-bar">
+      <view class="small"> 当前选择</view>
     </view>
     <view class="subContent"> 当前选择</view>
     <view class="school-select-box">
@@ -72,7 +80,7 @@
           v-for="(item, index) in schools.data.slice(0, 2)"
           :key="index"
           class="bubble"
-          @click="changeSchool(item.name, index)"
+          @click="changeSchool(item.name, item.id)"
         >
           {{ item.name }}
         </view>
@@ -85,10 +93,10 @@
   <view class="content">
     <view class="subContent"> 所有学校</view>
     <view
-      v-for="(item1, index1) in schools.data"
-      :key="index1"
+      v-for="item1 in schools.computedData"
+      :key="item1.id"
       class="school"
-      @click="changeSchool(item1.name, index1)"
+      @click="changeSchool(item1.name, item1.id)"
     >
       {{ item1.name }}
     </view>
@@ -175,8 +183,10 @@ const campuses = reactive<{
 
 const schools = reactive<{
   data: Community[];
+  computedData: Community[];
 }>({
-  data: []
+  data: [],
+  computedData: []
 });
 
 // 所有Community列表
@@ -193,6 +203,7 @@ async function getSchools() {
         j++;
       }
     }
+    schools.computedData = [...schools.data];
   });
 }
 getSchools();
@@ -259,12 +270,26 @@ function changeCampusByHistory(
   getCampus();
 }
 // 选择校区
-function changeSchool(name: string, index: number) {
+function changeSchool(name: string, id: string) {
   currentSchool.value = name;
-  parentId.value = schools.data[index].id;
+  parentId.value = id;
   currentCampus.value = "请选择校区";
   sel.value = false;
   getCampus();
+}
+
+let searchText = ref("");
+
+// 搜索学校
+function onClickSearch() {
+  schools.computedData.splice(0);
+  if (searchText.value === "") {
+    schools.computedData.push(...schools.data);
+  } else {
+    schools.computedData.push(
+      ...schools.data.filter((school) => school.name.includes(searchText.value))
+    );
+  }
 }
 </script>
 
