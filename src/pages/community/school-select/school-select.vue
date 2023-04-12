@@ -15,9 +15,6 @@
         @click="onClickSearch"
       />
     </view>
-    <view class="search-bar">
-      <view class="small"> 当前选择</view>
-    </view>
     <view class="subContent"> 当前选择</view>
     <view class="school-select-box">
       <view class="current_school">
@@ -69,9 +66,6 @@
       >
         {{ item.schoolName }} ({{ item.campusName }})
       </view>
-    </view>
-    <view class="search-bar">
-      <view class="small"> 热门学校</view>
     </view>
     <view class="subContent"> 热门学校</view>
     <view class="bubbleBox">
