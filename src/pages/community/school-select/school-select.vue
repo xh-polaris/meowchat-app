@@ -15,7 +15,12 @@
         @click="onClickSearch"
       />
     </view>
-    <view class="subContent"> 当前选择</view>
+    <view class="d-flex">
+      <view class="subContent"> 当前选择</view>
+      <view v-if="onChoose" class="confirmButton" @click="confirmChoose"
+        >确定切换</view
+      >
+    </view>
     <view class="school-select-box">
       <view class="current_school">
         <view class="current_school_text">{{ currentSchool }}</view>
@@ -109,6 +114,7 @@ const currentSchool = ref("");
 const currentCampus = ref("");
 const communityId = ref("");
 const parentId = ref("");
+const onChoose = ref(false);
 let history = reactive({
   campusName: "",
   schoolName: "",
@@ -247,6 +253,7 @@ function change() {
 }
 // 选择学校
 function changeCampus(name: string, index: number) {
+  onChoose.value = true;
   currentCampus.value = name;
   uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
 }
@@ -256,6 +263,7 @@ function changeCampusByHistory(
   id: string,
   parent: string
 ) {
+  onChoose.value = true;
   sel.value = true;
   currentCampus.value = campus;
   currentSchool.value = school;
@@ -285,6 +293,13 @@ function onClickSearch() {
     );
   }
 }
+
+// 确认选择校区操作
+function confirmChoose() {
+  uni.navigateBack({
+    delta: 1
+  });
+}
 </script>
 
 <style lang="scss" scoped>
@@ -311,7 +326,7 @@ function onClickSearch() {
 // 小字
 .subContent {
   height: 40rpx;
-  width: 100%;
+  width: 40%;
   display: flex;
   position: relative;
   margin-top: 40rpx;
@@ -328,6 +343,22 @@ function onClickSearch() {
   display: grid;
   padding-bottom: 15rpx;
   border-bottom: 1px solid #f6f6f6;
+}
+
+// 确认键
+.confirmButton {
+  padding: 0 30rpx 0 30rpx;
+  height: 40rpx;
+  display: flex;
+  border: #1fa1ff 1px solid;
+  color: #1fa1ff;
+  font-size: 25rpx;
+  border-radius: 50rpx;
+  position: relative;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: 50rpx;
+  align-items: center;
 }
 
 // 分隔栏
@@ -399,6 +430,8 @@ function onClickSearch() {
   margin-right: 50rpx;
   display: flex;
   align-items: center;
+  background-color: #ffffff;
+
   image {
     width: 26rpx;
     height: 15rpx;
@@ -425,6 +458,8 @@ function onClickSearch() {
   margin-right: 50rpx;
   display: flex;
   align-items: center;
+  background-color: #ffffff;
+
   image {
     width: 26rpx;
     height: 15rpx;
@@ -449,6 +484,7 @@ function onClickSearch() {
   position: absolute;
   line-height: 60rpx;
   margin-right: 20rpx;
+  background-color: #ffffff;
   z-index: 100;
 
   .text {
