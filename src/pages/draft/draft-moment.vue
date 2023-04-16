@@ -320,10 +320,10 @@ function deleteImage(index: number) {
 // 将图片链接转为base64
 function urlTobase64(img: string) {
   return new Promise((resolve, reject) => {
-    uni.downloadFile({
+    wx.downloadFile({
       url: img,
       success(res) {
-        uni.getFileSystemManager().readFile({
+        wx.getFileSystemManager().readFile({
           filePath: res.tempFilePath,
           encoding: "base64",
           success: (res) => {

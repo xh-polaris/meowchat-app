@@ -14,7 +14,8 @@ module.exports = {
   globals: {
     uni: "readonly",
     UniNamespace: "readonly",
-	uniCloud:true
+    uniCloud: true,
+	wx:true
   },
   extends: [
     "eslint:recommended",

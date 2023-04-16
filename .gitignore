@@ -9,7 +9,6 @@ _MACOSX
 npm-debug.log*
 yarn-error.log
 src/uni_modules
-uniCloud-aliyun
 
 coverage
 yarn.lock
@@ -31,3 +30,5 @@ screenshot
 .eslintcache
 
 build
+
+uniCloud-aliyun
