@@ -69,7 +69,7 @@
     v-else
     class="font-sm text-center w-100"
     style="position: absolute; bottom: 140rpx; color: #696969"
-    >版本号：1.13.1
+    >版本号：1.14.0
   </view>
 </template>
 

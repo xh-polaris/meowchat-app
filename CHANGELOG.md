@@ -1,5 +1,17 @@
 
 
+## [1.14.0](https://github.com/xh-polaris/meowchat-app/compare/v1.13.1...v1.14.0) (2023-04-16)
+
+
+### ✨ Features | 新功能
+
+* 选择校区界面增加完成切换后的确认按钮 ([#281](https://github.com/xh-polaris/meowchat-app/issues/281)) ([cd91b6d](https://github.com/xh-polaris/meowchat-app/commit/cd91b6d32dbd7130824f6eed713d2c8efc0b823d))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 添加发布帖子和动态时的内容审核 ([#283](https://github.com/xh-polaris/meowchat-app/issues/283)) ([ab4a29f](https://github.com/xh-polaris/meowchat-app/commit/ab4a29f18eac33be6adb2fb5aebde22ce75976cd))
+
 ## [1.13.1](https://github.com/xh-polaris/meowchat-app/compare/v1.13.0...v1.13.1) (2023-04-13)
 
 
