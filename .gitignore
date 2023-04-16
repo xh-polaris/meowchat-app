@@ -8,6 +8,8 @@ _MACOSX
 .DS_Store
 npm-debug.log*
 yarn-error.log
+src/uni_modules
+uniCloud-aliyun
 
 coverage
 yarn.lock
