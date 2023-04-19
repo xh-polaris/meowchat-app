@@ -24,8 +24,9 @@
         <view v-else class="campus-name"></view>
       </view>
       <view class="switch-box">
-        <view class="switch-icon" />
-        <view class="switch" @click="onClickSwitch"> 切换学校</view>
+        <view class="switch" @click="onClickSwitch"
+          ><text class="font-md">⇌</text> 切换学校
+        </view>
       </view>
     </view>
   </view>
@@ -264,19 +265,11 @@ onShow(() => {
   border-radius: 50rpx;
   margin-right: calc(10 / 390 * 100vw);
 
-  .switch-icon {
-    width: calc(12 / 390 * 100vw);
-    height: calc(12 / 390 * 100vw);
-    background-image: url("@/static/images/switch-blue.png");
-    background-size: 100% 100%;
-  }
-
   .switch {
     outline-style: none;
     color: #1fa1ff;
     font-size: calc(12 / 390 * 100vw);
     line-height: calc(12 / 390 * 100vw);
-    margin-left: calc(8 / 390 * 100vw);
   }
 }
 
