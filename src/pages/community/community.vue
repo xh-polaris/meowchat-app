@@ -31,7 +31,7 @@
   </view>
 
   <view class="blue-background">
-    <view>
+    <view v-if="!isRefreshing">
       <CarouselFrame />
     </view>
     <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
