@@ -1,5 +1,12 @@
 
 
+## [1.14.1](https://github.com/xh-polaris/meowchat-app/compare/v1.14.0...v1.14.1) (2023-04-20)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 切换箭头图标的分辨度 ([cd6bcb1](https://github.com/xh-polaris/meowchat-app/commit/cd6bcb16ea8215342fe090b75e7d00d174799671))
+
 ## [1.14.0](https://github.com/xh-polaris/meowchat-app/compare/v1.13.1...v1.14.0) (2023-04-16)
 
 
