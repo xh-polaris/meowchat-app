@@ -60,6 +60,7 @@ import { StorageKeys } from "@/utils/const";
 import { onClickMessage } from "./event";
 
 uni.setStorageSync(StorageKeys.SearchText, "");
+
 uni.setStorageSync(StorageKeys.IsClickCollectionSearch, false);
 
 const currentSchool = ref("");
