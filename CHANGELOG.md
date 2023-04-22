@@ -1,5 +1,13 @@
 
 
+## [1.14.2](https://github.com/xh-polaris/meowchat-app/compare/v1.14.1...v1.14.2) (2023-04-22)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 添加评论审核 ([#286](https://github.com/xh-polaris/meowchat-app/issues/286)) ([d97012b](https://github.com/xh-polaris/meowchat-app/commit/d97012bc139be58340959c6c7e8263b46d639f11))
+* 修复清除缓存后重新进入小程序不显示轮播图的bug ([#285](https://github.com/xh-polaris/meowchat-app/issues/285)) ([dc9475b](https://github.com/xh-polaris/meowchat-app/commit/dc9475b67533ca389a677cb1076f0d2f6953c7ea))
+
 ## [1.14.1](https://github.com/xh-polaris/meowchat-app/compare/v1.14.0...v1.14.1) (2023-04-20)
 
 
