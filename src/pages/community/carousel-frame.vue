@@ -10,7 +10,7 @@ import { News } from "@/apis/schemas";
 import { StorageKeys } from "@/utils/const";
 
 let isCarouselInitialized = ref(false);
-let carouselContents = reactive<News[]>([]);
+let carouselContents;
 getNews({ communityId: uni.getStorageSync(StorageKeys.CommunityId) }).then(
   (res) => {
     carouselContents = res.news;
