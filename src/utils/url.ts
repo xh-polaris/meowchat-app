@@ -1,6 +1,6 @@
 export const enum Pictures {
   NoData = "https://static.xhpolaris.com/nodata.png",
-  ProfileBackground = "https://static.xhpolaris.com/profile_background.png",
+  ProfileBackground = "https://static-1308722423.cos.ap-shanghai.myqcloud.com/profile_background.png",
   NoCatHere = "/static/images/no_cat_here.png"
 }
 export const enum Icons {
