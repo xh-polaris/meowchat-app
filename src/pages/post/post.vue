@@ -26,7 +26,7 @@
     </view>
 
     <view class="post">
-      <view class="user">
+      <view class="user" @click="toPersonInfo(post.data.user.id, myUserId)">
         <image :src="post.data.user.avatarUrl" class="avatar" />
         <view class="name">
           {{ post.data.user.nickname }}
@@ -131,6 +131,7 @@ import {
   localDoLike
 } from "../moment/utils";
 import Reply from "@/pages/moment/reply.vue";
+import { toPersonInfo } from "@/pages/profile/utils";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
 import { Comment, Post, TargetType } from "@/apis/schemas";
 import { deletePost, getPostDetail } from "@/apis/post/post";

@@ -1,14 +1,16 @@
 import {
   GetUserInfoResp,
+  GetUserInfoReq,
   UpdateUserInfoReq,
   UpdateUserInfoResp
 } from "./user-interfaces";
 import { PictureStyle } from "@/apis/cos/cos-interface";
 
-export async function getUserInfo() {
+export async function getUserInfo(req: GetUserInfoReq) {
   return await new Promise<GetUserInfoResp>((resolve, reject) => {
     uni.request({
       url: "/user/get_user_info",
+      data: req,
       method: "GET",
       success(res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode !== 200) {

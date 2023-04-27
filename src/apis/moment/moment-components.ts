@@ -38,14 +38,21 @@ export interface NewMomentResp {
 }
 
 export interface GetMomentPreviewsReq {
-  page: number;
+  backward?: number;
   communityId: string;
+  isParent?: number;
+  lastToken?: string;
+  limit?: number;
+  onlyUserId?: string;
+  page: number;
 }
 
 export interface GetMomentPreviewsResp {
   code: number;
   msg: string;
   moments: Moment[];
+  total: number;
+  token: string;
 }
 
 export interface GetMomentDetailReq {
