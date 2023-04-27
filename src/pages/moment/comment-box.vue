@@ -6,12 +6,18 @@
       @click="showDeleteDialogue"
     ></view>
     <view class="commenter-info-box">
-      <view class="d-flex a-start">
+      <view
+        class="d-flex a-start"
+        @click="toPersonInfo(comment.user.id, myUserId)"
+      >
         <image :src="comment.user.avatarUrl" class="commenter-profile" />
       </view>
       <view style="margin-top: 12rpx; margin-left: 12rpx; width: 100%">
         <view class="d-flex a-center">
-          <view class="commenter-name">
+          <view
+            class="commenter-name"
+            @click="toPersonInfo(comment.user.id, myUserId)"
+          >
             {{ comment.user.nickname }}
           </view>
           <view class="comment-time">
@@ -76,7 +82,7 @@ import { deleteCommment } from "@/apis/comment/comment";
 import { getUserInfo } from "@/apis/user/user";
 import { ref } from "vue";
 import command from "cac/deno/Command";
-
+import { toPersonInfo } from "@/pages/profile/utils";
 const props = defineProps<{
   like: LikeStruct;
   comment: Comment;

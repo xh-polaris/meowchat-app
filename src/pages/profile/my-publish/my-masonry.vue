@@ -58,37 +58,41 @@
       </template>
     </view>
   </view>
-  <view v-if="isNoData">
-    <image src="https://static.xhpolaris.com/nodata.png" />
-  </view>
-  <view v-else class="blue-background" />
-  <view class="nomore">没有更多喵~</view>
-  <view style="width: 100%; height: 40rpx"></view>
+  <view style="width: 100%; height: 250rpx"></view>
+  <view class="nomore"
+    ><image
+      src="/static/images/nomore.png"
+      style="width: 200rpx; height: 186rpx"
+  /></view>
+  <view style="width: 100%; height: 200rpx"></view>
 </template>
 
 <script setup lang="ts">
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
 import {
-  getOwnMomentPreviews,
   deleteMoment,
-  getMomentPreviews
+  getMomentPreviews,
+  getMomentDetail
 } from "@/apis/moment/moment";
 import { DeleteMomentReq } from "@/apis/moment/moment-components";
+import { Like } from "@/apis/like/like-interface";
 import { MomentData, Moment } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickMoment } from "./utils";
-import { getUserInfo } from "@/apis/user/user";
-import { getCount } from "@/apis/like/like";
+import { getCount, getUserLikes, doLike } from "@/apis/like/like";
 import { getComments } from "@/apis/comment/comment";
 interface Props {
   type?: string;
+  userId?: string;
+  likeType?: string;
 }
 const props = defineProps<Props>();
-
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
 const isNoData = ref(true);
-
+const isLikedLoaded = ref(false);
+let LikedLoaded = 0;
+let LikedList = reactive<Like[]>([]);
 let momentsInBatch: MomentData[];
 let moments: Moment[];
 const leftMoments = reactive<MomentData[]>([]);
@@ -99,12 +103,10 @@ let rightHeight = 0;
 const isLeftTallerThanRight = () => {
   return leftHeight > rightHeight;
 };
-
 let indexInBatch = 0;
 let batchLength: number;
 let batchFirstPartLength: number;
 const batchSecondPartDefaultLength = 4;
-
 let isNoMoreMoments = false;
 let loadedAmount = 0;
 let isBatchLoading = false;
@@ -113,14 +115,12 @@ const instance = getCurrentInstance();
 const query = uni.createSelectorQuery().in(instance);
 let imgWidth = 160;
 let isFirstLoadImg = true;
-
 onReachBottom(() => {
   if (!isBatchLoading && !isNoMoreMoments) {
     isBatchLoading = true;
     addBatch();
   }
 });
-
 const onLoad = () => {
   loadedAmount += 1;
   // 加完上一步后，表示已经加载好了这一batch中多少moment的图片
@@ -136,7 +136,6 @@ const onLoad = () => {
     }
   }
 };
-
 const addTile = (tileIndex: number, side: string) => {
   const tile = momentsInBatch[tileIndex];
   if (side === "left") {
@@ -151,52 +150,106 @@ const addTile = (tileIndex: number, side: string) => {
     }
   }
 };
-
 const addBatch = async () => {
   momentsInBatch = [];
-  if (page === 0)
-    getUserInfo().then((res) => {
-      myUserId.value = res.user.id;
-    });
-  if (props.type === "my") {
-    moments = (
-      await getOwnMomentPreviews({
-        page: page,
-        communityId: uni.getStorageSync("communityId")
+  myUserId.value = uni.getStorageSync("userId");
+  if (props.type === "liked") {
+    if (isLikedLoaded.value === false) {
+      let targetUser = props.userId;
+      if (targetUser === undefined) targetUser = myUserId.value;
+      LikedList = (
+        await getUserLikes({
+          userId: targetUser,
+          targetType: 4
+        })
+      ).likes;
+      isLikedLoaded.value = true;
+    }
+    for (let i = 0; i < 5; i++) {
+      await getMomentDetail({
+        momentId: LikedList[LikedLoaded].targetId
       })
-    ).moments;
-  } else if (props.type === "liked") {
-    moments = (
-      await getMomentPreviews({
+        .then((res) => {
+          let momentData = reactive<MomentData>({
+            id: res.moment.id,
+            createAt: res.moment.createAt,
+            title: res.moment.title,
+            catId: res.moment.catId,
+            communityId: res.moment.communityId,
+            text: res.moment.text,
+            user: res.moment.user,
+            photos: res.moment.photos,
+            likedNumber: 0,
+            comments: 0
+          });
+          getCount({ targetId: res.moment.id, targetType: 4 }).then((res1) => {
+            momentData.likedNumber = res1.count;
+          });
+          getComments({ scope: "moment", page: 0, id: res.moment.id }).then(
+            (res2) => {
+              momentData.comments += res2.total;
+              for (let i = 0; i < res2.comments.length; i++) {
+                momentData.comments += res2.comments[i].comments;
+              }
+            }
+          );
+          momentsInBatch.push(momentData);
+        })
+        .catch((res: UniNamespace.RequestSuccessCallbackResult) => {
+          if (res.statusCode === 400) {
+            doLike({
+              targetId: LikedList[LikedLoaded].targetId,
+              targetType: 4
+            });
+          }
+        });
+      LikedLoaded++;
+      if (LikedLoaded >= LikedList.length) break;
+    }
+  } else {
+    if (props.type === "my") {
+      const res = await getMomentPreviews({
         page: page,
-        communityId: uni.getStorageSync("communityId")
-      })
-    ).moments;
+        communityId: uni.getStorageSync("communityId"),
+        onlyUserId: myUserId.value
+      });
+      moments = res.moments;
+    } else {
+      const res = await getMomentPreviews({
+        page: page,
+        communityId: uni.getStorageSync("communityId"),
+        onlyUserId: props.userId
+      });
+      moments = res.moments;
+    }
+    for (let i = 0; i < moments.length; i++) {
+      let momentData = reactive<MomentData>({
+        id: moments[i].id,
+        createAt: moments[i].createAt,
+        title: moments[i].title,
+        catId: moments[i].catId,
+        communityId: moments[i].communityId,
+        text: moments[i].text,
+        user: moments[i].user,
+        photos: moments[i].photos,
+        likedNumber: 0,
+        comments: 0
+      });
+      getCount({ targetId: moments[i].id, targetType: 4 }).then((res) => {
+        momentData.likedNumber = res.count;
+      });
+      getComments({ scope: "moment", page: 0, id: moments[i].id }).then(
+        (res) => {
+          momentData.comments += res.total;
+          for (let i = 0; i < res.comments.length; i++) {
+            momentData.comments += res.comments[i].comments;
+          }
+        }
+      );
+      momentsInBatch.push(momentData);
+    }
   }
-  for (let i = 0; i < moments.length; i++) {
-    let momentData = reactive<MomentData>({
-      id: moments[i].id,
-      createAt: moments[i].createAt,
-      title: moments[i].title,
-      catId: moments[i].catId,
-      communityId: moments[i].communityId,
-      text: moments[i].text,
-      user: moments[i].user,
-      photos: moments[i].photos,
-      likedNumber: 0,
-      comments: 0
-    });
-    getCount({ targetId: moments[i].id, targetType: 4 }).then((res) => {
-      momentData.likedNumber = res.count;
-    });
-    getComments({ scope: "moment", page: 0, id: moments[i].id }).then((res) => {
-      momentData.comments += res.total;
-      for (let i = 0; i < res.comments.length; i++) {
-        momentData.comments += res.comments[i].comments;
-      }
-    });
-    momentsInBatch.push(momentData);
-  }
+
   if (momentsInBatch.length > 0) {
     isNoData.value = false;
     page += 1;
@@ -241,7 +294,6 @@ const onLoadLeft = (ev: Event) => {
       }
     });
   }
-
   let height = (target.height / target.width) * imgWidth;
   leftHeight = target.offsetTop + height;
   onLoad();
@@ -257,17 +309,14 @@ const onLoadRight = (ev: Event) => {
       }
     });
   }
-
   let height = (target.height / target.width) * imgWidth;
   rightHeight = target.offsetTop + height;
   onLoad();
 };
-
 onBeforeMount(() => {
   isBatchLoading = true;
   addBatch();
 });
-
 async function onClickDelete(id: string) {
   deleteID.momentId = id;
   uni.showModal({
@@ -293,43 +342,35 @@ async function onClickDelete(id: string) {
 $sideMargin: calc(12 / 390 * 100vw);
 $horizontalGap: calc(8 / 390 * 100vw);
 $verticalGap: calc(10 / 390 * 100vw);
-
 $radius: calc(6 / 390 * 100vw);
 $titleFontSize: calc(12 / 390 * 100vw);
 $smallFontSize: calc(8 / 390 * 100vw);
 $avatarWidth: calc(21 / 390 * 100vw);
-
 @import "@/common/user-info.scss";
-
 .masonry {
-  background-color: #fafcff;
+  background-color: #ffff;
   display: flex;
 }
-
 .column-left {
   width: calc(50vw - $sideMargin - $horizontalGap / 2);
   margin-left: $sideMargin;
   margin-right: calc($horizontalGap / 2);
   height: fit-content;
 }
-
 .column-right {
   width: calc(50vw - $sideMargin - $horizontalGap / 2);
   margin-left: calc($horizontalGap / 2);
   margin-right: $sideMargin;
   height: fit-content;
 }
-
 .tile {
   margin-bottom: calc($verticalGap - 2px);
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.25);
   border-radius: $radius;
   font-family: sans-serif;
-
   .img-frame {
     max-height: calc((50vw - $sideMargin - $horizontalGap / 2) * 1.8);
     overflow: hidden;
-
     .img {
       width: calc(50vw - $sideMargin - $horizontalGap / 2);
       display: block;
@@ -337,7 +378,6 @@ $avatarWidth: calc(21 / 390 * 100vw);
       height: 1px;
     }
   }
-
   .tile-info {
     transform: translateY(-2px);
     background-color: #ffffff;
@@ -384,32 +424,19 @@ $avatarWidth: calc(21 / 390 * 100vw);
     }
   }
 }
-
 .username {
   max-width: calc(60 / 390 * 100vw);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .get-dom {
   width: 1px;
   height: 1px;
 }
 
-.blue-background {
-  width: 100vw;
-  height: 100vh;
-  background-color: #fafcff;
-  position: fixed;
-  z-index: -1;
-  left: 0;
-  top: 0;
-}
-
 .nomore {
-  margin-top: 50rpx;
-  font-size: 20rpx;
+  margin-top: 10rpx;
   line-height: 20rpx;
   text-align: center;
 }

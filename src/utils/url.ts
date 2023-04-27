@@ -29,5 +29,6 @@ export const enum Pages {
   Search = "/pages/search/search",
   DraftImage = "/pages/draft/draft-image/draft-image",
   MyPublish = "/pages/profile/my-publish/my-publish",
-  Message = "/pages/message/message"
+  Message = "/pages/message/message",
+  Person = "/pages/profile/personal-info/personal-info"
 }

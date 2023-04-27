@@ -22,3 +22,13 @@ export function showPage() {
     });
   }, 1500);
 }
+export function toPersonInfo(id: string, ownid: string) {
+  if (id === ownid)
+    uni.switchTab({
+      url: `${Pages.Profile}`
+    });
+  else
+    uni.navigateTo({
+      url: `${Pages.Person}?userId=${id}`
+    });
+}
