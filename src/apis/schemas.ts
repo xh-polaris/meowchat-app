@@ -9,6 +9,10 @@ export interface User {
   id: string;
   nickname: string;
   avatarUrl: string;
+  motto: string;
+  article: number;
+  follower: number;
+  following: number;
 }
 
 export interface Auth {
@@ -139,5 +143,6 @@ export const enum TargetType {
   Comment,
   Cat,
   Moment,
-  Cat_Photo
+  Cat_Photo,
+  User
 }

@@ -25,6 +25,17 @@
           :value="userInfo.nickname ? userInfo.nickname : props.nickname"
         />
       </view>
+      <view class="motto">个性签名</view>
+      <view class="motto-input">
+        <textarea
+          class="textarea-inherit"
+          placeholder="&nbsp 请输入新的个性签名"
+          placeholder-style="color: #B8B8B8;"
+          type="motto"
+          name="motto"
+          :value="userInfo.motto ? userInfo.motto : props.motto"
+        />
+      </view>
       <button
         class="confirm-change"
         :disabled="disableConfirm"
@@ -46,6 +57,7 @@ import { Pages, Pictures } from "@/utils/url";
 const props = defineProps<{
   avatarUrl: string;
   nickname: string;
+  motto: string;
 }>();
 const disableConfirm = ref(false);
 const userInfo = reactive<UpdateUserInfoReq>({});
@@ -61,6 +73,7 @@ function onChooseAvatar(e: any) {
 }
 function formSubmit(e: any) {
   userInfo.nickname = e.detail.value.nickname;
+  userInfo.motto = e.detail.value.motto;
   updateUserInfo(userInfo)
     .then(() => {
       uni.showToast({
@@ -161,5 +174,27 @@ function formSubmit(e: any) {
     color: #fcfcfc;
     font-size: 40rpx;
   }
+}
+.motto {
+  margin-left: 70rpx;
+  font-size: 40rpx;
+  color: #858585;
+}
+.motto-input {
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  font-size: 30rpx;
+  width: 92%;
+  font-size: 30rpx;
+  display: flex;
+  background-color: #f8f8f8;
+}
+
+.textarea-inherit {
+  margin-left: 30rpx;
+  font-size: 32rpx;
+  width: 92%;
+  overflow: auto;
+  word-break: break-all; //解决兼容问题
 }
 </style>

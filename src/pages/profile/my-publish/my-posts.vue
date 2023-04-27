@@ -43,18 +43,22 @@
           </view>
           <view class="comment font-sm">{{ post.comments }}条回复</view>
           <view class="font-sm">{{ post.likes }}位喵友觉得很赞</view>
-          <view class="delete" @click.stop="onClickDelete(post.id)">
-            <image class="deletepic" :src="Icons.Delete" />
-            <view class="font-sm">删除帖子</view>
+          <view v-if="post.user.id === myUserId && myUserId">
+            <view class="delete" @click.stop="onClickDelete(post.id)">
+              <image class="deletepic" :src="Icons.Delete" />
+              <view class="font-sm">删除帖子</view>
+            </view>
           </view>
         </view>
       </view>
     </template>
-    <view v-if="postsData.length === 0">
-      <image :src="Pictures.NoData" />
-    </view>
-    <view class="nomore">没有更多喵~</view>
-    <view style="width: 100%; height: 40rpx"></view>
+    <view style="width: 100%; height: 250rpx"></view>
+    <view class="nomore"
+      ><image
+        src="/static/images/nomore.png"
+        style="width: 200rpx; height: 186rpx"
+    /></view>
+    <view style="width: 100%; height: 200rpx"></view>
   </template>
 </template>
 
@@ -68,18 +72,35 @@ import { onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
 import { StorageKeys } from "@/utils/const";
 import { Pages, Pictures, Icons } from "@/utils/url";
+interface Props {
+  type?: string;
+  userId?: string;
+}
+const props = defineProps<Props>();
 const deleteID = reactive<DeletePostReq>({ id: "" });
+let userId: string | undefined;
 let postsData = ref<Post[]>([]);
 let token: string;
+const myUserId = ref("");
 const getPostPreviewsAsync = async () => {
-  const res = await getPostPreviews({
-    lastToken: token,
-    onlyUserId: uni.getStorageSync(StorageKeys.UserId)
-  });
-  token = res.token;
-  return res.posts;
+  myUserId.value = uni.getStorageSync("userId");
+  userId = props.userId;
+  if (props.type === "my") {
+    const res = await getPostPreviews({
+      lastToken: token,
+      onlyUserId: myUserId.value
+    });
+    token = res.token;
+    return res.posts;
+  } else {
+    const res = await getPostPreviews({
+      lastToken: token,
+      onlyUserId: userId
+    });
+    token = res.token;
+    return res.posts;
+  }
 };
-
 async function onClickDelete(id: string) {
   deleteID.id = id;
   uni.showModal({
@@ -99,14 +120,11 @@ async function onClickDelete(id: string) {
     }
   });
 }
-
 async function createPostsDataBatch() {
   const posts = await getPostPreviewsAsync();
   postsData.value.push(...posts);
 }
-
 createPostsDataBatch();
-
 onReachBottom(() => {
   createPostsDataBatch();
 });
@@ -114,28 +132,23 @@ onReachBottom(() => {
 
 <style lang="scss" scoped>
 @import "@/common/user-info.scss";
-
 .post {
-  background-color: #ffffff;
+  background-color: #ffff;
   //border-top: 2px #f4f9ff solid;
   border-bottom: 15rpx #fafcff solid;
   padding: 32rpx;
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.03);
   border-radius: 5px;
 }
-
 .upper {
   display: flex;
   align-items: center;
 }
-
 .main {
   color: #353535;
-
   &.hasImage {
     width: calc(251 / 390 * 100vw);
   }
-
   .title {
     font-size: 35rpx;
     font-weight: bold;
@@ -145,7 +158,6 @@ onReachBottom(() => {
     display: -webkit-box;
     -webkit-box-orient: vertical;
   }
-
   .description {
     font-size: calc(12 / 390 * 100vw);
     line-height: calc(17 / 390 * 100vw);
@@ -155,7 +167,6 @@ onReachBottom(() => {
     display: -webkit-box;
     -webkit-box-orient: vertical;
   }
-
   .tags {
     display: flex;
     flex-wrap: wrap;
@@ -164,7 +175,6 @@ onReachBottom(() => {
     //height: calc(18 / 390 * 100vw);
     //line-height: calc(18 / 390 * 100vw);
     padding-top: 10rpx;
-
     .tag {
       margin-top: calc(4 / 390 * 100vw);
       font-style: normal;
@@ -177,7 +187,6 @@ onReachBottom(() => {
       letter-spacing: calc(0.5 / 390 * 100vw);
       /* blue02 */
       color: #1fa1ff;
-
       min-width: calc(28 / 390 * 100vw);
       height: calc(20 / 390 * 100vw);
       padding: calc(0 / 390 * 100vw) calc(8 / 390 * 100vw);
@@ -187,7 +196,6 @@ onReachBottom(() => {
     }
   }
 }
-
 .image {
   width: calc(142 / 390 * 100vw);
   height: calc(93 / 390 * 100vw);
@@ -195,11 +203,9 @@ onReachBottom(() => {
   margin-left: calc(16 / 390 * 100vw);
   background-size: cover;
   background-position: center;
-
   //text-align: center;
   //line-height: calc(93 / 390 * 100vw);
 }
-
 .lower {
   margin-top: calc(12 / 390 * 100vw);
   display: flex;
@@ -222,8 +228,9 @@ onReachBottom(() => {
     margin-right: calc(16 / 390 * 100vw);
   }
 }
+
 .nomore {
-  margin-top: 50rpx;
+  margin-top: 10rpx;
   font-size: 20rpx;
   line-height: 20rpx;
   text-align: center;

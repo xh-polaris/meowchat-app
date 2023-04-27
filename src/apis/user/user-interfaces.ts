@@ -4,9 +4,13 @@ export interface GetUserInfoResp {
   msg: string;
   user: User;
 }
+export interface GetUserInfoReq {
+  userId?: string;
+}
 export interface UpdateUserInfoReq {
   avatarUrl?: string;
   nickname?: string;
+  motto?: string;
 }
 export interface UpdateUserInfoResp {
   code: number;

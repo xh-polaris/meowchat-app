@@ -31,3 +31,19 @@ export interface GetCountResp {
   msg: string;
   count: number;
 }
+
+export interface GetUserLikesReq {
+  userId?: string;
+  targetType: TargetType;
+}
+
+export interface GetUserLikesResp {
+  code: number;
+  likes: Like[];
+  msg: string;
+}
+
+export interface Like {
+  associatedId: string;
+  targetId: string;
+}

@@ -8,8 +8,15 @@
     <view class="container">
       <view class="post-info-box">
         <view class="poster-info-box">
-          <image :src="moment.data.user.avatarUrl" class="poster-profile" />
-          <text class="poster-name">
+          <image
+            :src="moment.data.user.avatarUrl"
+            class="poster-profile"
+            @click="toPersonInfo(moment.data.user.id, myUserId)"
+          />
+          <text
+            class="poster-name"
+            @click="toPersonInfo(moment.data.user.id, myUserId)"
+          >
             {{ moment.data.user.nickname }}
           </text>
           <text class="post-time">
@@ -148,6 +155,7 @@ import {
   localDoLike,
   onClickImage
 } from "@/pages/moment/utils";
+import { toPersonInfo } from "@/pages/profile/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
 import { getCatDetail } from "@/apis/collection/collection";
 import { getUserInfo } from "@/apis/user/user";

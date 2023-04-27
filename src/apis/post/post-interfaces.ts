@@ -25,6 +25,7 @@ export interface GetPostPreviewsResp {
   code: number;
   msg: string;
   token: string;
+  total: number;
 }
 
 export interface GetPostDetailReq {
