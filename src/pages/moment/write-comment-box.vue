@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import { NewCommentReq } from "@/apis/comment/comment-interfaces";
 import { createComment, LikeStruct } from "@/pages/moment/utils";
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps<{
@@ -53,36 +53,18 @@ const preReq = reactive<NewCommentReq>({
   text: ""
 });
 
-const localCreateComment = () => {
-  // 检测文本内容安全
-  uniCloud
-    .callFunction({
-      name: "msgSecCheck",
-      data: {
-        text: props.newCommentReq.text
-      }
-    })
-    .then((res) => {
-      uni.hideLoading();
-      if (res.result.data.errcode == 0) {
-        if (props.focus) {
-          res = createComment(props.newCommentReq);
-        } else {
-          res = createComment({
-            id: preReq.id,
-            scope: preReq.scope,
-            text: props.newCommentReq.text
-          });
-        }
-        emit("afterCreateComment");
-      } else {
-        uni.showModal({
-          title: "温馨提示",
-          content: "文本存在违规行为",
-          showCancel: false
-        });
-      }
+const localCreateComment = async () => {
+  let res = null;
+  if (props.focus) {
+    res = await createComment(props.newCommentReq);
+  } else {
+    res = await createComment({
+      id: preReq.id,
+      scope: preReq.scope,
+      text: props.newCommentReq.text
     });
+  }
+  if (res) emit("afterCreateComment");
 };
 
 const onFocus = () => {

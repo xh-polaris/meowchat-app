@@ -317,27 +317,7 @@ function deleteImage(index: number) {
   photos.splice(index, 1);
 }
 
-// 将图片链接转为base64
-function urlTobase64(img: string) {
-  return new Promise((resolve, reject) => {
-    wx.downloadFile({
-      url: img,
-      success(res) {
-        wx.getFileSystemManager().readFile({
-          filePath: res.tempFilePath,
-          encoding: "base64",
-          success: (res) => {
-            resolve("data:image/png;base64," + res.data);
-          }
-        });
-      }
-    });
-  });
-}
-
 function publishMoment() {
-  isPublished.value = !isPublished.value;
-  disablePublish.value = true;
   if (photos.length == 0) {
     uni.showToast({
       title: "至少上传一张图片哦",
@@ -345,58 +325,8 @@ function publishMoment() {
     });
     return;
   }
-
-  //检测文本和图片安全
-  uniCloud
-    .callFunction({
-      name: "msgSecCheck",
-      data: {
-        text: title.value + text.value
-      }
-    })
-    .then((res) => {
-      uni.hideLoading();
-      if (res.result.data.errcode == 0 || res.result.data.errcode == 44004) {
-        // 检测图片内容
-        for (let i = 0; i < photos.length; i++) {
-          //转为base64
-          urlTobase64(photos[i]).then((res) => {
-            uniCloud
-              .callFunction({
-                name: "imgSecCheck",
-                data: {
-                  image: res
-                }
-              })
-              .then((res) => {
-                if (res.result.data.errcode == 87014) {
-                  uni.showModal({
-                    title: "温馨提示",
-                    content: "图片存在违规行为",
-                    showCancel: false
-                  });
-                  disablePublish.value = false;
-                  return;
-                } else {
-                  //安全
-                  publishSuccess();
-                }
-              });
-          });
-        }
-      } else {
-        uni.showModal({
-          title: "温馨提示",
-          content: "文本存在违规行为",
-          showCancel: false
-        });
-        disablePublish.value = false;
-      }
-    });
-}
-
-function publishSuccess() {
   uni.setStorageSync(StorageKeys.DraftMoment, "");
+  isPublished.value = !isPublished.value;
   newMoment({
     title: title.value,
     communityId: uni.getStorageSync(StorageKeys.CommunityId),
