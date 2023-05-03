@@ -97,7 +97,7 @@ import { Tag } from "@/apis/schemas";
 import Deal from "@/components/deal-policy/deal.vue";
 import Policy from "@/components/deal-policy/policy.vue";
 import { onClickImage } from "@/pages/cat/utils";
-import { onShow, onUnload } from "@dcloudio/uni-app";
+import { onUnload } from "@dcloudio/uni-app";
 import { StorageKeys } from "@/utils/const";
 
 const placeholder =
@@ -130,11 +130,6 @@ let draftJSON = reactive({
   imagesData: []
 });
 let tags = reactive<Tag[]>([]);
-
-onShow(() => {
-  disablePublish.value = false;
-});
-
 onUnload(() => {
   if (
     (title.value !== "" || text.value !== "" || imagesData.length !== 0) &&
@@ -229,7 +224,6 @@ function addImage() {
 }
 
 function publishPost() {
-  disablePublish.value = true;
   if (title.value === "") {
     uni.showToast({
       title: "请输入标题",
@@ -237,60 +231,15 @@ function publishPost() {
     });
     return;
   }
-
-  //检测文本和图片安全
-  uniCloud
-    .callFunction({
-      name: "msgSecCheck",
-      data: {
-        text: title.value + text.value
-      }
-    })
-    .then((res) => {
-      uni.hideLoading();
-      if (res.result.data.errcode == 0 || res.result.data.errcode == 44004) {
-        if (coverUrl.value == "") {
-          publishSuccess();
-        } else {
-          // 检测图片内容
-          urlTobase64(coverUrl.value).then((res) => {
-            uniCloud
-              .callFunction({
-                name: "imgSecCheck",
-                data: {
-                  image: res
-                }
-              })
-              .then((res) => {
-                if (res.result.data.errcode == 87014) {
-                  uni.showModal({
-                    title: "温馨提示",
-                    content: "图片存在违规行为",
-                    showCancel: false
-                  });
-                  disablePublish.value = false;
-                  return;
-                } else {
-                  //安全
-                  publishSuccess();
-                }
-              });
-          });
-        }
-      } else {
-        uni.showModal({
-          title: "温馨提示",
-          content: "文本存在违规行为",
-          showCancel: false
-        });
-        disablePublish.value = false;
-      }
+  if (text.value === "") {
+    uni.showToast({
+      title: "请输入正文",
+      icon: "none"
     });
-}
-
-function publishSuccess() {
-  isPublished.value = !isPublished.value;
+    return;
+  }
   uni.setStorageSync(StorageKeys.DraftPost, "");
+  isPublished.value = !isPublished.value;
   newPost({
     title: title.value,
     text: text.value,
@@ -303,24 +252,6 @@ function publishSuccess() {
       success() {
         uni.reLaunch({
           url: Pages.World
-        });
-      }
-    });
-  });
-}
-
-// 将图片链接转为base64
-function urlTobase64(img: string) {
-  return new Promise((resolve, reject) => {
-    wx.downloadFile({
-      url: img,
-      success(res) {
-        wx.getFileSystemManager().readFile({
-          filePath: res.tempFilePath,
-          encoding: "base64",
-          success: (res) => {
-            resolve("data:image/png;base64," + res.data);
-          }
         });
       }
     });
