@@ -35,6 +35,7 @@
       </view>
     </view>
   </view>
+  <view :style="{ height: navBarHeight + 'px' }"></view>
 
   <view class="blue-background">
     <view v-if="!isRefreshing">
@@ -269,8 +270,10 @@ onShow(() => {
 }
 
 .nav-bar {
+  position: fixed;
   background-color: #fafcff;
   width: 100vw;
+  z-index: 100;
 }
 .top-bar {
   width: 100vw;
