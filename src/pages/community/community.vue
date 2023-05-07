@@ -266,7 +266,7 @@ onShow(() => {
 .arrow {
   width: 32rpx;
   height: 40rpx;
-  margin: 30rpx 0 30rpx 20rpx;
+  margin-left: 20rpx;
 }
 
 .nav-bar {
@@ -305,13 +305,12 @@ onShow(() => {
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
-}
-
-.school-select-box {
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  //justify-content: space-around;
+  .school-select-box {
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    //justify-content: space-around;
+  }
 }
 
 .names {
