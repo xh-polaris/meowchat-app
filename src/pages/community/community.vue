@@ -13,30 +13,28 @@
   <!--  </UniNavBar>-->
   <view class="nav-bar" :style="{ height: navBarHeight + 'px' }">
     <view class="top-bar" :style="{ height: topBarHeight + 'px' }"></view>
-    <view
-      class="capsule-bar"
-      :style="{ height: capsuleBarHeight + 'px' }"
-    ></view>
+    <view class="capsule-bar" :style="{ height: capsuleBarHeight + 'px' }">
+      <view class="school-box">
+        <view class="school-select-box">
+          <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
+          <view class="names" @click="onClickSwitch">
+            <view class="school-name">
+              {{ currentSchool }}
+            </view>
+            <view v-if="currentSchool !== currentCampus" class="campus-name">
+              ({{ currentCampus }})</view
+            >
+            <view v-else class="campus-name"></view>
+          </view>
+          <!--          <view class="switch-box">-->
+          <!--            <view class="switch" @click="onClickSwitch"-->
+          <!--              ><text class="font-md">⇌</text> 切换学校-->
+          <!--            </view>-->
+          <!--          </view>-->
+        </view>
+      </view>
+    </view>
   </view>
-  <!--  <view class="school-box">-->
-  <!--    <view class="school-select-box">-->
-  <!--      <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />-->
-  <!--      <view class="names" @click="onClickSwitch">-->
-  <!--        <view class="school-name">-->
-  <!--          {{ currentSchool }}-->
-  <!--        </view>-->
-  <!--        <view v-if="currentSchool !== currentCampus" class="campus-name">-->
-  <!--          ({{ currentCampus }})</view-->
-  <!--        >-->
-  <!--        <view v-else class="campus-name"></view>-->
-  <!--      </view>-->
-  <!--      <view class="switch-box">-->
-  <!--        <view class="switch" @click="onClickSwitch"-->
-  <!--          ><text class="font-md">⇌</text> 切换学校-->
-  <!--        </view>-->
-  <!--      </view>-->
-  <!--    </view>-->
-  <!--  </view>-->
 
   <view class="blue-background">
     <view v-if="!isRefreshing">
@@ -279,6 +277,8 @@ onShow(() => {
 }
 .capsule-bar {
   width: 100vw;
+  display: flex;
+  align-items: center;
 }
 
 .navbtn {
@@ -298,17 +298,17 @@ onShow(() => {
 
 .school-box {
   background-color: #fafcff;
-  height: 14vw;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
 }
 
 .school-select-box {
-  height: 14vw;
+  height: fit-content;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  //justify-content: space-around;
 }
 
 .names {
