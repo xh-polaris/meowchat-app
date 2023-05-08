@@ -1,35 +1,41 @@
 <template>
-  <UniNavBar :fixed="true" shadow status-bar background-color="#f9f9f9">
-    <view
-      class="d-flex a-center left"
-      style="position: absolute; left: 40rpx; bottom: 25rpx"
-      @click="onClickMessage"
-    >
-      <image :src="Icons.Message" style="width: 45rpx; height: 35rpx"></image>
-      <!-- 暂时将数量写为0 -->
-      <view v-show="false" class="font-sm px-1 message-count">0</view>
-    </view>
-    <view class="font-weight font-md2" style="margin: auto">喵社区</view>
-  </UniNavBar>
-  <view class="school-box">
-    <view class="school-select-box">
-      <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
-      <view class="names" @click="onClickSwitch">
-        <view class="school-name">
-          {{ currentSchool }}
-        </view>
-        <view v-if="currentSchool !== currentCampus" class="campus-name">
-          ({{ currentCampus }})</view
-        >
-        <view v-else class="campus-name"></view>
-      </view>
-      <view class="switch-box">
-        <view class="switch" @click="onClickSwitch"
-          ><text class="font-md">⇌</text> 切换学校
+  <!--  <UniNavBar :fixed="true" status-bar background-color="#fafcff">-->
+  <!--    <view-->
+  <!--      class="d-flex a-center left"-->
+  <!--      style="position: absolute; left: 40rpx; bottom: 25rpx"-->
+  <!--      @click="onClickMessage"-->
+  <!--    >-->
+  <!--      &lt;!&ndash;      <image :src="Icons.Message" style="width: 45rpx; height: 35rpx"></image>&ndash;&gt;-->
+  <!--      &lt;!&ndash;      &lt;!&ndash; 暂时将数量写为0 &ndash;&gt;&ndash;&gt;-->
+  <!--      &lt;!&ndash;      <view v-show="false" class="font-sm px-1 message-count">0</view>&ndash;&gt;-->
+  <!--    </view>-->
+  <!--    &lt;!&ndash;    <view class="font-weight font-md2" style="margin: auto">喵社区</view>&ndash;&gt;-->
+  <!--  </UniNavBar>-->
+  <view class="nav-bar" :style="{ height: navBarHeight + 'px' }">
+    <view class="top-bar" :style="{ height: topBarHeight + 'px' }"></view>
+    <view class="capsule-bar" :style="{ height: capsuleBarHeight + 'px' }">
+      <view class="school-box">
+        <view class="school-select-box">
+          <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
+          <view class="names" @click="onClickSwitch">
+            <view class="school-name">
+              {{ currentSchool }}
+            </view>
+            <view v-if="currentSchool !== currentCampus" class="campus-name">
+              ({{ currentCampus }})</view
+            >
+            <view v-else class="campus-name"></view>
+          </view>
+          <!--          <view class="switch-box">-->
+          <!--            <view class="switch" @click="onClickSwitch"-->
+          <!--              ><text class="font-md">⇌</text> 切换学校-->
+          <!--            </view>-->
+          <!--          </view>-->
         </view>
       </view>
     </view>
   </view>
+  <view :style="{ height: navBarHeight + 'px' }"></view>
 
   <view class="blue-background">
     <view v-if="!isRefreshing">
@@ -116,6 +122,15 @@ const currentCampus = ref("");
 const communityId = ref("");
 const parentId = ref("");
 const cardList = reactive(["", "", "", "", "", ""]);
+
+const topBarHeight = uni.getSystemInfoSync().statusBarHeight as number;
+const capsuleData = uni.getMenuButtonBoundingClientRect();
+const capsuleBarHeight =
+  capsuleData.height + (capsuleData.top - topBarHeight) * 2;
+const navBarHeight = topBarHeight + capsuleBarHeight;
+
+// console.log(b);
+// navbarHeight.value = ;
 
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
@@ -251,18 +266,22 @@ onShow(() => {
 .arrow {
   width: 32rpx;
   height: 40rpx;
-  margin: 30rpx 0 30rpx 20rpx;
+  margin-left: 20rpx;
 }
 
-.navbar {
-  background-color: #ffffff;
-  display: flex;
-  color: #b8b8b8;
-  font-size: calc(15 / 390 * 100vw);
-  align-items: baseline;
+.nav-bar {
+  position: fixed;
+  background-color: #fafcff;
   width: 100vw;
-  margin: 0 0 0 60rpx;
-  transition-duration: 0.4s;
+  z-index: 100;
+}
+.top-bar {
+  width: 100vw;
+}
+.capsule-bar {
+  width: 100vw;
+  display: flex;
+  align-items: center;
 }
 
 .navbtn {
@@ -282,17 +301,16 @@ onShow(() => {
 
 .school-box {
   background-color: #fafcff;
-  height: 14vw;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
-}
-
-.school-select-box {
-  height: 14vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  .school-select-box {
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    //justify-content: space-around;
+  }
 }
 
 .names {

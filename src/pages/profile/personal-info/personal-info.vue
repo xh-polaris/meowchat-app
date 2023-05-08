@@ -16,7 +16,7 @@
       <view class="info">创作</view>
       <view v-if="followInfo.followed === false">
         <view class="subscribe" @click="onClickFollow()"
-          ><view class="follow">+关注</view></view
+          ><view class="follow">+ 关注</view></view
         >
       </view>
       <view v-else>
@@ -153,10 +153,10 @@ onBeforeUnmount(() => {
       font-weight: 400;
     }
     .subscribe {
-      width: 110rpx;
+      width: 125rpx;
       height: 50rpx;
       margin-left: 170rpx;
-      border-radius: 20rpx;
+      border-radius: 30rpx;
       background-color: #1fa1ff;
       .follow {
         line-height: 50rpx;
@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
       width: 130rpx;
       height: 50rpx;
       margin-left: 170rpx;
-      border-radius: 20rpx;
+      border-radius: 30rpx;
       background-color: #dfdfdf;
       .unfollow {
         line-height: 50rpx;
