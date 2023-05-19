@@ -12,9 +12,6 @@
           {{ userInfo.nickname }}
         </view>
         <view class="motto"> 个性签名:{{ userInfo.motto }} </view>
-        <view class="location">
-          <view class="location-info">华东师范大学</view>
-        </view>
       </view>
     </view>
   </view>
@@ -110,19 +107,5 @@ onPullDownRefresh(() => {
   font-size: 24rpx;
   color: #939393;
   margin-bottom: 10rpx;
-}
-.fot-xh .txt .info .location {
-  height: 30rpx;
-  width: 120rpx;
-  border-radius: 15rpx;
-  margin-bottom: 30rpx;
-  font-weight: bold;
-  background-color: #8ed2ff;
-  .location-info {
-    line-height: 30rpx;
-    text-align: center;
-    font-size: 16rpx;
-    color: #1fa1ff;
-  }
 }
 </style>

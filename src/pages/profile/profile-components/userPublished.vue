@@ -7,7 +7,7 @@
       @click-item="onClickItem"
     >
     </zzx-tabs>
-    <view class="wrap">
+    <view class="wrap tab">
       <view v-if="current === 0">
         <MyMasonry :type="props.type" :user-id="props.userId"></MyMasonry>
       </view>
@@ -39,4 +39,8 @@ function onClickItem(e: any) {
 }
 </script>
 
-<style></style>
+<style>
+.tab {
+  padding-top: 10rpx;
+}
+</style>
