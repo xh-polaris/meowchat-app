@@ -1,5 +1,12 @@
 
 
+## [1.15.2](https://github.com/xh-polaris/meowchat-app/compare/v1.15.1...v1.15.2) (2023-05-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 用户主页不显示校区 ([0716451](https://github.com/xh-polaris/meowchat-app/commit/071645100836c6344faec988669991651b14905f))
+
 ## [1.15.1](https://github.com/xh-polaris/meowchat-app/compare/v1.15.0...v1.15.1) (2023-05-19)
 
 ## [1.15.0](https://github.com/xh-polaris/meowchat-app/compare/v1.14.2...v1.15.0) (2023-05-19)
