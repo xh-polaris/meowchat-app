@@ -1,5 +1,23 @@
 
 
+## [1.15.0](https://github.com/xh-polaris/meowchat-app/compare/v1.14.2...v1.15.0) (2023-05-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 去除动态和帖子和评论审核 ([#296](https://github.com/xh-polaris/meowchat-app/issues/296)) ([b7d04de](https://github.com/xh-polaris/meowchat-app/commit/b7d04de2343536b1e78844a84cfa5b627335dfcd))
+* 审核时的跨域问题 ([#287](https://github.com/xh-polaris/meowchat-app/issues/287)) ([15d4e64](https://github.com/xh-polaris/meowchat-app/commit/15d4e64e501a6f57dc4905901b920457b91a8c6d))
+* 添加社区卡片样式，因没有数据，暂时隐藏 ([#294](https://github.com/xh-polaris/meowchat-app/issues/294)) ([4f3af4b](https://github.com/xh-polaris/meowchat-app/commit/4f3af4bacd3390faf5fa20c9dab245f21c546d96))
+
+
+### ✨ Features | 新功能
+
+* 初步实现喵社区顶部导航栏新样式 ([b3a7aa7](https://github.com/xh-polaris/meowchat-app/commit/b3a7aa77aad31e4ce5fecfddf734cf5d624d27cd))
+* 初步修改profile界面，搭建新profile界面框架 ([#288](https://github.com/xh-polaris/meowchat-app/issues/288)) ([e06a76b](https://github.com/xh-polaris/meowchat-app/commit/e06a76b976001139457ea0e327ef5cebc2ad85c1))
+* 实现喵社区顶部导航栏新样式框架 ([1c8e559](https://github.com/xh-polaris/meowchat-app/commit/1c8e559572d872fe4ca9e75d4e2544677601eae9))
+* 实现喵社区顶部导航栏悬浮 ([6aaf0f4](https://github.com/xh-polaris/meowchat-app/commit/6aaf0f4f2470ea4c9e32ae519088cbdd14ce588a))
+* 新profile页面 ([a7b2a91](https://github.com/xh-polaris/meowchat-app/commit/a7b2a916567fc6549396f63634824246da947b92))
+
 ## [1.14.2](https://github.com/xh-polaris/meowchat-app/compare/v1.14.1...v1.14.2) (2023-04-22)
 
 
