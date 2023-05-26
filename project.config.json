@@ -1,0 +1,24 @@
+{
+  "miniprogramRoot": "unpackage/dist/dev/mp-weixin/",
+  "appid": "wxd39cebf05e21d3b6",
+  "compileType": "miniprogram",
+  "libVersion": "2.32.0",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "condition": false
+  },
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "srcMiniprogramRoot": "unpackage/dist/dev/mp-weixin/"
+}
