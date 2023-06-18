@@ -381,4 +381,7 @@ $avatarWidth: calc(21 / 390 * 100vw);
     height: 222upx;
   }
 }
+.other-info {
+  color: #b8b8b8;
+}
 </style>
