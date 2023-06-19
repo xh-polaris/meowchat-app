@@ -44,6 +44,12 @@
                 {{ displayTime(moment.createAt) }}
               </view>
             </view>
+            <view class="other-info">
+              <view class="font-sm"
+                >{{ moment.likedNumber }}位喵友觉得很赞</view
+              >
+              <view class="comment font-sm">{{ moment.comments }}条回复</view>
+            </view>
           </view>
         </view>
       </template>
@@ -57,11 +63,14 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
-import { Moment } from "@/apis/schemas";
+import { Moment, MomentData } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
+import { getMomentPreviews } from "@/apis/moment/moment";
+import { getCount } from "@/apis/like/like";
+import { getComments } from "@/apis/comment/comment";
 
 interface Props {
   getPreviews: () => Promise<Moment[]>;
@@ -75,9 +84,9 @@ const props = defineProps<Props>();
 
 const isNoData = ref(true);
 
-let momentsInBatch: Moment[];
-const leftMoments = reactive<Moment[]>([]);
-const rightMoments = reactive<Moment[]>([]);
+let momentsInBatch: MomentData[];
+const leftMoments = reactive<MomentData[]>([]);
+const rightMoments = reactive<MomentData[]>([]);
 
 let leftHeight = 0;
 let rightHeight = 0;
@@ -120,7 +129,34 @@ let isFirstLoadImg = true;
  */
 
 const addBatch = async () => {
-  momentsInBatch = await props.getPreviews();
+  momentsInBatch = [];
+  const moments = await props.getPreviews();
+  for (let i = 0; i < moments.length; i++) {
+    let momentData = reactive<MomentData>({
+      id: moments[i].id,
+      createAt: moments[i].createAt,
+      title: moments[i].title,
+      catId: moments[i].catId,
+      communityId: moments[i].communityId,
+      text: moments[i].text,
+      user: moments[i].user,
+      photos: moments[i].photos,
+      likedNumber: 0,
+      comments: 0
+    });
+    getCount({ targetId: moments[i].id, targetType: 4 }).then((res) => {
+      momentData.likedNumber = res.count;
+    });
+    getComments({ scope: "moment", page: 0, id: moments[i].id }).then((res) => {
+      momentData.comments += res.total;
+      for (let i = 0; i < res.comments.length; i++) {
+        momentData.comments += res.comments[i].comments;
+      }
+    });
+    momentsInBatch.push(momentData);
+  }
+
+  // momentsInBatch = await props.getPreviews();
 
   if (momentsInBatch.length > 0) {
     isNoData.value = false;
@@ -344,5 +380,8 @@ $avatarWidth: calc(21 / 390 * 100vw);
     width: 400upx;
     height: 222upx;
   }
+}
+.other-info {
+  color: #b8b8b8;
 }
 </style>
