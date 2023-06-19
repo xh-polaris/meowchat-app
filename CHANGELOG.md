@@ -1,5 +1,12 @@
 
 
+## [1.16.0](https://github.com/xh-polaris/meowchat-app/compare/v1.15.2...v1.16.0) (2023-06-19)
+
+
+### ✨ Features | 新功能
+
+* 实现喵社区瀑布流帖子带赞数和回复数 ([#316](https://github.com/xh-polaris/meowchat-app/issues/316)) ([6db5556](https://github.com/xh-polaris/meowchat-app/commit/6db555631feccdda940546e9cca0d5b8176c557e))
+
 ## [1.15.2](https://github.com/xh-polaris/meowchat-app/compare/v1.15.1...v1.15.2) (2023-05-19)
 
 
