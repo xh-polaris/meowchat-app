@@ -50,7 +50,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-3071120230427001",
     "@release-it/conventional-changelog": "^5.1.1",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.46.0",
+    "@typescript-eslint/parser": "^5.60.0",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-alias": "^1.1.2",
