@@ -324,6 +324,7 @@ function deleteImage(index: number) {
 }
 
 function publishMoment() {
+  if (isPublished.value === true) return;
   if (photos.length == 0) {
     uni.showToast({
       title: "至少上传一张图片哦",
@@ -331,8 +332,8 @@ function publishMoment() {
     });
     return;
   }
+  isPublished.value = true;
   uni.setStorageSync(StorageKeys.DraftMoment, "");
-  isPublished.value = !isPublished.value;
   newMoment({
     title: title.value,
     communityId: uni.getStorageSync(StorageKeys.CommunityId),
