@@ -39,6 +39,9 @@
         </DraggableItem>
       </view>
       <view class="image-num"> {{ imagesData.length }}/30</view>
+      <view v-if="disablePublish" class="uploading"
+        >后台上传图片中，上传结束才能发布动态噢</view
+      >
       <view class="m-2">
         <FuiTextArea
           v-model="title"
@@ -512,5 +515,10 @@ textarea ::selection {
 .nobody-will-read {
   display: inline;
   color: #1fa1ff;
+}
+
+.uploading {
+  margin-left: 6vw;
+  color: #1d1d1d;
 }
 </style>
