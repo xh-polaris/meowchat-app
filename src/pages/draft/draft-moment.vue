@@ -39,6 +39,9 @@
         </DraggableItem>
       </view>
       <view class="image-num"> {{ imagesData.length }}/30</view>
+      <view v-if="disablePublish" class="uploading"
+        >后台上传图片中，上传结束才能发布动态噢</view
+      >
       <view class="m-2">
         <FuiTextArea
           v-model="title"
@@ -262,10 +265,12 @@ const onClickCat = () => {
 };
 
 function addImage() {
+  //点击+ 选择文件的时候 就到这里
   disablePublish.value = true;
   uni.chooseMedia({
     mediaType: ["image"],
     success: (chooseImageRes) => {
+      //成功在文件中选择了图片 在这里
       let isTooManyImages = false;
       let tempFilePaths = chooseImageRes.tempFiles as Array<any>;
       if (imagesData.length + tempFilePaths.length > 30) {
@@ -297,6 +302,7 @@ function addImage() {
           });
         })
         .finally(() => {
+          //图片成功在后端上传了 在这里
           disablePublish.value = false;
         });
       if (isTooManyImages) {
@@ -318,6 +324,7 @@ function deleteImage(index: number) {
 }
 
 function publishMoment() {
+  if (isPublished.value === true) return;
   if (photos.length == 0) {
     uni.showToast({
       title: "至少上传一张图片哦",
@@ -325,8 +332,8 @@ function publishMoment() {
     });
     return;
   }
+  isPublished.value = true;
   uni.setStorageSync(StorageKeys.DraftMoment, "");
-  isPublished.value = !isPublished.value;
   newMoment({
     title: title.value,
     communityId: uni.getStorageSync(StorageKeys.CommunityId),
@@ -509,5 +516,10 @@ textarea ::selection {
 .nobody-will-read {
   display: inline;
   color: #1fa1ff;
+}
+
+.uploading {
+  margin-left: 6vw;
+  color: #1d1d1d;
 }
 </style>
