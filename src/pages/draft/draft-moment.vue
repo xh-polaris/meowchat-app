@@ -262,10 +262,12 @@ const onClickCat = () => {
 };
 
 function addImage() {
+  //点击+ 选择文件的时候 就到这里
   disablePublish.value = true;
   uni.chooseMedia({
     mediaType: ["image"],
     success: (chooseImageRes) => {
+      //成功在文件中选择了图片 在这里
       let isTooManyImages = false;
       let tempFilePaths = chooseImageRes.tempFiles as Array<any>;
       if (imagesData.length + tempFilePaths.length > 30) {
@@ -297,6 +299,7 @@ function addImage() {
           });
         })
         .finally(() => {
+          //图片成功在后端上传了 在这里
           disablePublish.value = false;
         });
       if (isTooManyImages) {
