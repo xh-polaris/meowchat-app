@@ -53,7 +53,7 @@
   </view>
   <UserPublished type="my"></UserPublished>
   <tab-bar id="4"></tab-bar>
-  <!--  <debug-panel></debug-panel>-->
+  <debug-panel></debug-panel>
 </template>
 
 <script lang="ts" setup>
