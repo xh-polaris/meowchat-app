@@ -6,7 +6,8 @@ export function createInterceptors() {
       if (args.url[0] === "/") {
         args.url = import.meta.env.VITE_BASIC_URL + args.url;
         args.header = {
-          Authorization: uni.getStorageSync(StorageKeys.AccessToken)
+          Authorization: uni.getStorageSync(StorageKeys.AccessToken),
+          "X-Xh-Env": import.meta.env.VITE_XH_ENV
         };
       }
     },
