@@ -6,13 +6,29 @@
       <view class="clickable" @click="setIsDebugOn(false)">最小化</view>
     </view>
     <view class="env">
-      <view class="toggle" @click="setIsProductionEnv(true)">正式环境</view>
-      <view class="toggle" @click="setIsProductionEnv(false)">测试环境</view>
+      <view
+        :class="'toggle ' + (isProductionEnv ? 'current' : '')"
+        @click="setIsProductionEnv(true)"
+        >正式环境
+      </view>
+      <view
+        :class="'toggle ' + (!isProductionEnv ? 'current' : '')"
+        @click="setIsProductionEnv(false)"
+        >测试环境
+      </view>
     </view>
     <view class="lane">
-      <view>当前泳道</view>
-      <input type="text" class="laneInput" />
-      <view class="clickable">{{ true ? "修改" : "确认" }}</view>
+      <view class="label">当前泳道</view>
+      <input
+        type="text"
+        :class="'laneInput ' + (laneInputEditable ? 'editable' : '')"
+        :disabled="!laneInputEditable"
+      />
+      <view
+        class="clickable"
+        @click="setLaneInputEditable(!laneInputEditable)"
+        >{{ laneInputEditable ? "确认" : "修改" }}</view
+      >
     </view>
   </view>
 </template>
@@ -30,6 +46,10 @@ const setIsProductionEnv = ref((isTrue: boolean) => {
     uni.setStorageSync("isProductionEnv", isTrue);
     isProductionEnv.value = isTrue;
   }
+});
+const laneInputEditable = ref(false);
+const setLaneInputEditable = ref((isTrue: boolean) => {
+  laneInputEditable.value = isTrue;
 });
 </script>
 
@@ -59,7 +79,7 @@ const setIsProductionEnv = ref((isTrue: boolean) => {
   .clickable {
     background-color: #222222;
     border-radius: 2vw;
-    padding: 0 1vw;
+    padding: 1vw 2vw;
     &:active {
       background-color: #333333;
     }
@@ -80,13 +100,17 @@ const setIsProductionEnv = ref((isTrue: boolean) => {
   }
   .env {
     .toggle {
-      background-color: #333333;
+      border: 1px solid #888888;
       height: 4vw;
       width: fit-content;
       padding: 2vw;
       line-height: 4vw;
       border-radius: 2vw;
       margin-right: 2vw;
+      &.current {
+        background-color: #888888;
+        color: #000000;
+      }
     }
     margin-bottom: 2vw;
   }
@@ -95,10 +119,13 @@ const setIsProductionEnv = ref((isTrue: boolean) => {
     justify-content: space-between;
     align-items: baseline;
     .laneInput {
+      width: 40vw;
+      margin-left: 4vw;
       padding: 1vw 3vw;
       border-radius: 2vw;
-      background-color: #333333;
-      font-family: monospace;
+      &.editable {
+        background-color: #333333;
+      }
     }
   }
 }
