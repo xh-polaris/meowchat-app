@@ -53,6 +53,7 @@
   </view>
   <UserPublished type="my"></UserPublished>
   <tab-bar id="4"></tab-bar>
+  <debug-panel></debug-panel>
 </template>
 
 <script lang="ts" setup>
@@ -63,6 +64,7 @@ import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
+import DebugPanel from "@/components/debug-panel/debug-panel.vue";
 //获取版本号
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { StorageKeys } from "@/utils/const";

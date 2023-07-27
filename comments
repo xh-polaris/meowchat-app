@@ -1,0 +1,5 @@
+uni.setStorageSync(KEY,DATA)
+uni.getStorageSync(KEY)
+
+debug工具涉及到的：
+isDebugOn 也就是是否显示"我的"那里的debug工具
