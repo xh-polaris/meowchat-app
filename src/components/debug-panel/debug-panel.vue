@@ -1,18 +1,20 @@
 <template>
-  <view v-if="!isDebugOn" class="button" @click="setIsDebugOn(true)">调试</view>
+  <view v-if="!isDebugOn" class="button" @click="setIsDebugOn(true)">{{
+    laneName
+  }}</view>
   <view v-else class="panel">
     <view class="header">
-      <view class="title">调试面板</view>
+      <view class="title">泳道设置</view>
       <view class="clickable" @click="setIsDebugOn(false)">最小化</view>
     </view>
     <view class="env">
       <view
-        :class="'toggle ' + (isProductionEnv ? 'current' : '')"
+        :class="'toggle green ' + (isProductionEnv ? 'current' : '')"
         @click="setIsProductionEnv(true)"
         >正式环境
       </view>
       <view
-        :class="'toggle ' + (!isProductionEnv ? 'current' : '')"
+        :class="'toggle orange ' + (!isProductionEnv ? 'current' : '')"
         @click="setIsProductionEnv(false)"
         >测试环境
       </view>
@@ -20,10 +22,18 @@
     <view class="lane">
       <view class="label">当前泳道</view>
       <input
+        v-model="inputValue"
         type="text"
         :class="'laneInput ' + (laneInputEditable ? 'editable' : '')"
         :disabled="!laneInputEditable"
       />
+      <view
+        v-if="laneInputEditable"
+        class="clickable"
+        style="transform: translateX(2vw)"
+        @click="emptyInputValue()"
+        >清空</view
+      >
       <view
         class="clickable"
         @click="setLaneInputEditable(!laneInputEditable)"
@@ -35,8 +45,10 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+const laneInputEditable = ref(false);
 const isDebugOn = ref(uni.getStorageSync("isDebugOn"));
 const setIsDebugOn = ref((isTrue: boolean) => {
+  if (!isTrue && laneInputEditable.value) return;
   uni.setStorageSync("isDebugOn", isTrue);
   isDebugOn.value = isTrue;
 });
@@ -47,8 +59,15 @@ const setIsProductionEnv = ref((isTrue: boolean) => {
     isProductionEnv.value = isTrue;
   }
 });
-const laneInputEditable = ref(false);
+const laneName = ref("基准");
+const inputValue = ref("基准");
+const emptyInputValue = ref(() => (inputValue.value = ""));
+
 const setLaneInputEditable = ref((isTrue: boolean) => {
+  if (!isTrue) {
+    if (inputValue.value === "") inputValue.value = "基准";
+  }
+  laneName.value = inputValue.value;
   laneInputEditable.value = isTrue;
 });
 </script>
@@ -82,6 +101,7 @@ const setLaneInputEditable = ref((isTrue: boolean) => {
     padding: 1vw 2vw;
     &:active {
       background-color: #333333;
+      z-index: 20;
     }
   }
   .header,
@@ -107,9 +127,24 @@ const setLaneInputEditable = ref((isTrue: boolean) => {
       line-height: 4vw;
       border-radius: 2vw;
       margin-right: 2vw;
+      //&.green {
+      //  border: 1px solid seagreen;
+      //}
+      //&.orange {
+      //  border: 1px solid #f89512;
+      //}
       &.current {
         background-color: #888888;
+
         color: #000000;
+        &.green {
+          background-color: #45bb76;
+          border: 1px solid #45bb76;
+        }
+        &.orange {
+          background-color: #da8b28;
+          border: 1px solid #da8b28;
+        }
       }
     }
     margin-bottom: 2vw;
@@ -119,7 +154,7 @@ const setLaneInputEditable = ref((isTrue: boolean) => {
     justify-content: space-between;
     align-items: baseline;
     .laneInput {
-      width: 40vw;
+      flex: 1;
       margin-left: 4vw;
       padding: 1vw 3vw;
       border-radius: 2vw;
