@@ -1,12 +1,11 @@
 <template>
   <view
     v-if="!isDebugOn"
-    :class="'button ' + (isProductionEnv ? 'green' : 'orange')"
+    :class="
+      'button ' + (backendEnv === BackendEnv.Product ? 'green' : 'orange')
+    "
     @click="setIsDebugOn(true)"
-    >{{
-      (isProductionEnv ? "正式: " : "测试: ") +
-      (laneName !== "" ? laneName : "基准")
-    }}</view
+    >{{ laneName !== "" ? laneName : "基准" }}</view
   >
   <view v-else class="panel">
     <view class="header">
@@ -15,20 +14,24 @@
     </view>
     <view class="env">
       <view
-        :class="'toggle green ' + (isProductionEnv ? 'current' : '')"
-        @click="setIsProductionEnv(true)"
+        :class="
+          'toggle green ' + (backendEnv === BackendEnv.Product ? 'current' : '')
+        "
+        @click="setEnv(BackendEnv.Product)"
         >正式环境
       </view>
       <view
-        :class="'toggle orange ' + (!isProductionEnv ? 'current' : '')"
-        @click="setIsProductionEnv(false)"
+        :class="
+          'toggle orange ' + (backendEnv === BackendEnv.Test ? 'current' : '')
+        "
+        @click="setEnv(BackendEnv.Test)"
         >测试环境
       </view>
     </view>
     <view class="lane">
       <view class="label">当前泳道</view>
       <input
-        v-model="inputValue"
+        v-model="laneName"
         placeholder="基准"
         type="text"
         :class="'laneInput ' + (laneInputEditable ? 'editable' : '')"
@@ -53,34 +56,33 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Pages } from "@/utils/url";
+import { StorageKeys, BackendEnv } from "@/utils/const";
 const reboot = () => {
   uni.reLaunch({
-    url: Pages.Community
+    url: Pages.FirstPage
   });
 };
 const laneInputEditable = ref(false);
-const isDebugOn = ref(uni.getStorageSync("isDebugOn"));
-const setIsDebugOn = ref((isTrue: boolean) => {
+const isDebugOn = ref(false);
+const setIsDebugOn = (isTrue: boolean) => {
   if (!isTrue && laneInputEditable.value) return;
-  uni.setStorageSync("isDebugOn", isTrue);
   isDebugOn.value = isTrue;
-});
-const isProductionEnv = ref(uni.getStorageSync("isProductionEnv"));
-const setIsProductionEnv = ref((isTrue: boolean) => {
-  if (isProductionEnv.value !== isTrue) {
-    uni.setStorageSync("isProductionEnv", isTrue);
-    isProductionEnv.value = isTrue;
-  }
+};
+const backendEnv = ref(uni.getStorageSync(StorageKeys.BackendEnv));
+const setEnv = (env: string) => {
+  uni.setStorageSync(StorageKeys.BackendEnv, env);
   reboot();
-});
-const laneName = ref("");
-const inputValue = ref("");
-const emptyInputValue = ref(() => (inputValue.value = ""));
+};
+const laneName = ref(uni.getStorageSync(StorageKeys.BackendLane));
+const emptyInputValue = () => (laneName.value = "");
 
-const setLaneInputEditable = ref((isTrue: boolean) => {
-  if (!isTrue) laneName.value = inputValue.value;
+const setLaneInputEditable = (isTrue: boolean) => {
+  if (!isTrue) {
+    uni.setStorageSync(StorageKeys.BackendLane, laneName.value);
+    reboot();
+  }
   laneInputEditable.value = isTrue;
-});
+};
 </script>
 
 <style scoped lang="scss">

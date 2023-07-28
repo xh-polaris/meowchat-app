@@ -2,12 +2,13 @@ import { signIn } from "@/apis/auth/auth";
 import { getUserInfo, updateUserInfo } from "@/apis/user/user";
 import { SignInResp } from "@/apis/auth/auth-interfaces";
 import { StorageKeys } from "@/utils/const";
-import { listCommunity } from "@/apis/community/community";
+import { clearCache, listCommunity } from "@/apis/community/community";
 import { Pages } from "@/utils/url";
 
 const DefaultUserAvatarUrl = "https://static.xhpolaris.com/cat_world.jpg";
 
 export async function init() {
+  clearCache();
   return await new Promise<void>((resolve, reject) => {
     uni.getProvider({
       service: "oauth",
@@ -40,7 +41,7 @@ function afterSignIn(signInResp: SignInResp) {
   uni.setStorageSync(StorageKeys.AccessToken, signInResp.accessToken);
   uni.setStorageSync(StorageKeys.UserId, signInResp.userId);
   checkCommunityId().then();
-  getUserInfo().catch((res: UniNamespace.RequestSuccessCallbackResult) => {
+  getUserInfo({}).catch((res: UniNamespace.RequestSuccessCallbackResult) => {
     if (res.statusCode === 400) {
       const id = signInResp.userId;
       updateUserInfo({

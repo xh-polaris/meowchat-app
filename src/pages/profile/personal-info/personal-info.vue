@@ -1,9 +1,6 @@
 <template>
   <view class="container">
-    <image
-      src="https://static-1308722423.cos.ap-shanghai.myqcloud.com/profile_background.png"
-      class="bg-set"
-    />
+    <image :src="Pictures.ProfileBackground" class="bg-set" />
     <UserInfo type="other" :user-id="props.userId"></UserInfo>
   </view>
   <view class="com-item">
@@ -37,6 +34,8 @@ import { doLike, getUserLiked } from "@/apis/like/like";
 import { User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
+import { Pictures } from "@/utils/url";
+
 const props = defineProps<{
   userId?: string;
 }>();

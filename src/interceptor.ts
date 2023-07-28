@@ -4,11 +4,13 @@ export function createInterceptors() {
   uni.addInterceptor("request", {
     invoke(args: UniNamespace.RequestOptions) {
       if (args.url[0] === "/") {
-        const isProductionEnv = uni.getStorageSync("isProductionEnv");
+        const env = uni.getStorageSync(StorageKeys.BackendEnv);
+        const lane = uni.getStorageSync(StorageKeys.BackendLane);
         args.url = import.meta.env.VITE_BASIC_URL + args.url;
         args.header = {
           Authorization: uni.getStorageSync(StorageKeys.AccessToken),
-          "X-Xh-Env": isProductionEnv ? "" : import.meta.env.VITE_XH_ENV
+          "X-Xh-Env": env ? env : import.meta.env.VITE_XH_ENV,
+          "X-Xh-Lane": lane ? lane : ""
         };
       }
     },

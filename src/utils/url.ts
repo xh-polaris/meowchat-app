@@ -1,6 +1,6 @@
 export const enum Pictures {
   NoData = "https://static.xhpolaris.com/nodata.png",
-  ProfileBackground = "https://static-1308722423.cos.ap-shanghai.myqcloud.com/profile_background.png",
+  ProfileBackground = "https://static.xhpolaris.com/profile_background.png",
   NoCatHere = "/static/images/no_cat_here.png"
 }
 export const enum Icons {
@@ -15,6 +15,7 @@ export const enum Icons {
   Guide = "/static/images/guide.png"
 }
 export const enum Pages {
+  FirstPage = "/pages/first-page/first-page",
   Cat = "/pages/cat/cat",
   Post = "/pages/post/post",
   WebView = "/pages/web-frame/web-frame",
@@ -30,5 +31,6 @@ export const enum Pages {
   DraftImage = "/pages/draft/draft-image/draft-image",
   MyPublish = "/pages/profile/my-publish/my-publish",
   Message = "/pages/message/message",
-  Person = "/pages/profile/personal-info/personal-info"
+  Person = "/pages/profile/personal-info/personal-info",
+  EditInfo = "/pages/profile/edit-info/edit-info"
 }
