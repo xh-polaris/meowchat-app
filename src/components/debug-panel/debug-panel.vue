@@ -53,9 +53,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Pages } from "@/utils/url";
-const refreshPage = () => {
+const reboot = () => {
   uni.reLaunch({
-    url: Pages.Profile
+    url: Pages.Community
   });
 };
 const laneInputEditable = ref(false);
@@ -71,7 +71,7 @@ const setIsProductionEnv = ref((isTrue: boolean) => {
     uni.setStorageSync("isProductionEnv", isTrue);
     isProductionEnv.value = isTrue;
   }
-  refreshPage();
+  reboot();
 });
 const laneName = ref("");
 const inputValue = ref("");
