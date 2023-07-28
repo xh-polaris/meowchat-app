@@ -11,5 +11,12 @@ export const enum StorageKeys {
   NameSelected = "nameSelected",
   AvatarSelected = "avatarSelected",
   DraftMoment = "draftMoment",
-  DraftPost = "draftPost"
+  DraftPost = "draftPost",
+  BackendEnv = "backendEnv",
+  BackendLane = "backendLane"
+}
+
+export const enum BackendEnv {
+  Product = "pro",
+  Test = "test"
 }

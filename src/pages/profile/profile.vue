@@ -3,10 +3,7 @@
     <view class="font-weight font-md2" style="margin: auto">个人中心</view>
   </uni-nav-bar>
   <view class="container">
-    <image
-      src="https://static-1308722423.cos.ap-shanghai.myqcloud.com/profile_background.png"
-      class="bg-set"
-    />
+    <image :src="Pictures.ProfileBackground" class="bg-set" />
     <UserInfo type="my"></UserInfo>
     <!-- 功能栏 -->
     <view class="com-item">
@@ -19,7 +16,7 @@
           <view class="number">{{ userInfo.article }}</view>
           <view class="info">创作</view>
           <navigator
-            :url="`/pages/profile/edit-info/edit-info?avatarUrl=${userInfo.avatarUrl}&nickname=${userInfo.nickname}`"
+            :url="`${Pages.EditInfo}?avatarUrl=${userInfo.avatarUrl}&nickname=${userInfo.nickname}`"
             hover-class="none"
           >
             <view class="edit-info"><view class="edit">编辑资料</view></view>
@@ -65,9 +62,8 @@ import TabBar from "@/components/tab-bar/tab-bar.vue";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
 import DebugPanel from "@/components/debug-panel/debug-panel.vue";
-//获取版本号
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
-import { StorageKeys } from "@/utils/const";
+import { Pictures, Pages } from "@/utils/url";
 const version = uni.getAccountInfoSync().miniProgram.version;
 const userInfo = reactive<User>({
   id: "",

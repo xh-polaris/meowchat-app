@@ -3,7 +3,7 @@ import {
   ListCommunityResp
 } from "@/apis/community/community-interfaces";
 
-let cache: ListCommunityResp;
+let cache: ListCommunityResp | null;
 
 export async function listCommunity(req: ListCommunityReq) {
   return await new Promise<ListCommunityResp>((resolve, reject) => {
@@ -39,4 +39,8 @@ export async function listCommunity(req: ListCommunityReq) {
       }
     });
   });
+}
+
+export function clearCache() {
+  cache = null;
 }
