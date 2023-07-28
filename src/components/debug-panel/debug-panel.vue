@@ -1,7 +1,13 @@
 <template>
-  <view v-if="!isDebugOn" class="button" @click="setIsDebugOn(true)">{{
-    isProductionEnv ? "正式环境 " : "测试环境 " + laneName
-  }}</view>
+  <view
+    v-if="!isDebugOn"
+    :class="'button ' + (isProductionEnv ? 'green' : 'orange')"
+    @click="setIsDebugOn(true)"
+    >{{
+      (isProductionEnv ? "正式: " : "测试: ") +
+      (laneName !== "" ? laneName : "基准")
+    }}</view
+  >
   <view v-else class="panel">
     <view class="header">
       <view class="title">泳道设置</view>
@@ -23,6 +29,7 @@
       <view class="label">当前泳道</view>
       <input
         v-model="inputValue"
+        placeholder="基准"
         type="text"
         :class="'laneInput ' + (laneInputEditable ? 'editable' : '')"
         :disabled="!laneInputEditable"
@@ -66,15 +73,12 @@ const setIsProductionEnv = ref((isTrue: boolean) => {
   }
   refreshPage();
 });
-const laneName = ref("基准");
-const inputValue = ref("基准");
+const laneName = ref("");
+const inputValue = ref("");
 const emptyInputValue = ref(() => (inputValue.value = ""));
 
 const setLaneInputEditable = ref((isTrue: boolean) => {
-  if (!isTrue) {
-    if (inputValue.value === "") inputValue.value = "基准";
-  }
-  laneName.value = inputValue.value;
+  if (!isTrue) laneName.value = inputValue.value;
   laneInputEditable.value = isTrue;
 });
 </script>
@@ -83,13 +87,15 @@ const setLaneInputEditable = ref((isTrue: boolean) => {
 .button {
   padding: 2vw 4vw;
   border-radius: 2vw;
-  background-color: #222222;
-  color: #cccccc;
+  color: #000000;
   position: fixed;
   left: 2vw;
   bottom: 32vw;
-  &:active {
-    background-color: #444444;
+  &.green {
+    background-color: #45bb76;
+  }
+  &.orange {
+    background-color: #da8b28;
   }
 }
 .panel {
