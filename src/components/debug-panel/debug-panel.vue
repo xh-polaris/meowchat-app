@@ -1,6 +1,6 @@
 <template>
   <view v-if="!isDebugOn" class="button" @click="setIsDebugOn(true)">{{
-    laneName
+    isProductionEnv ? "正式环境 " : "测试环境 " + laneName
   }}</view>
   <view v-else class="panel">
     <view class="header">
@@ -45,6 +45,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { Pages } from "@/utils/url";
+const refreshPage = () => {
+  uni.reLaunch({
+    url: Pages.Profile
+  });
+};
 const laneInputEditable = ref(false);
 const isDebugOn = ref(uni.getStorageSync("isDebugOn"));
 const setIsDebugOn = ref((isTrue: boolean) => {
@@ -58,6 +64,7 @@ const setIsProductionEnv = ref((isTrue: boolean) => {
     uni.setStorageSync("isProductionEnv", isTrue);
     isProductionEnv.value = isTrue;
   }
+  refreshPage();
 });
 const laneName = ref("基准");
 const inputValue = ref("基准");
