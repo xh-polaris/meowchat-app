@@ -156,7 +156,7 @@ onBeforeUnmount(() => {
       width: 125rpx;
       height: 50rpx;
       margin-left: 170rpx;
-      border-radius: 30rpx;
+      border-radius: 31rpx;
       background-color: #1fa1ff;
       .follow {
         line-height: 50rpx;
