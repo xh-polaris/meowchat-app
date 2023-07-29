@@ -152,10 +152,10 @@ onBeforeUnmount(() => {
       font-weight: 400;
     }
     .subscribe {
-      width: 110rpx;
+      width: 125rpx;
       height: 50rpx;
       margin-left: 170rpx;
-      border-radius: 20rpx;
+      border-radius: 30rpx;
       background-color: #1fa1ff;
       .follow {
         line-height: 50rpx;
