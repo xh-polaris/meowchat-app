@@ -142,12 +142,6 @@ const setLaneInputEditable = (isTrue: boolean) => {
       line-height: 4vw;
       border-radius: 2vw;
       margin-right: 2vw;
-      //&.green {
-      //  border: 1px solid seagreen;
-      //}
-      //&.orange {
-      //  border: 1px solid #f89512;
-      //}
       &.current {
         background-color: #888888;
 
