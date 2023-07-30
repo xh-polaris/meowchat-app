@@ -7,41 +7,12 @@
       @click="onClickAvatar(mainImgUrl, cat.avatars)"
     />
     <view>
-      <scroll-view scroll-x="true" class="scroll-view-item_H" scroll-left="120">
-        <li
-          v-for="(item, index) in cat.avatars"
-          :key="index"
-          class="img-li"
-          @click="
-            () => {
-              (mainImgUrl = item), (imgActiveIndex = index);
-            }
-          "
-        >
-          <image
-            :class="index === imgActiveIndex ? 'img_activeBorder' : ''"
-            :src="item"
-            style="width: 50px; height: 50px"
-          />
-        </li>
-      </scroll-view>
+      <text>{{ cat.name }}</text>
     </view>
-    <view class="progress-box">
-      <view class="text-box1 font-weight">
-        <text>{{ cat.name }}</text>
-      </view>
+    <meta-info :cat="cat" />
+    <guide :cat="cat" />
+    <story :cat="cat" />
 
-      <view class="text-box2">
-        <progress
-          :percent="cat.popularity"
-          :stroke-width="10"
-          activeColor="#63A4F9"
-          backgroundColor="#F5F5F5"
-          border-radius="6px"
-        />
-        <text>{{ cat.popularity }}人气值</text>
-      </view>
-    </view>
     <view class="info">
       <view class="combination">
         <view class="attribute"> 年龄</view>
@@ -139,6 +110,10 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
+
+import Guide from "@/pages/cat/guide.vue";
+import Story from "@/pages/cat/story.vue";
+import MetaInfo from "@/pages/cat/meta-info.vue";
 import { Cat } from "@/apis/schemas";
 import { onClickImage, onClickAvatar } from "@/pages/cat/utils";
 import { getCatDetail, getCatImage } from "@/apis/collection/collection";
