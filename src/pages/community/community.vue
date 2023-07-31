@@ -20,7 +20,7 @@
   </view>
   <view :style="{ height: navBarHeight + 'px' }"></view>
 
-  <view class="blue-background">
+  <view class="background">
     <view v-if="!isRefreshing">
       <CarouselFrame />
     </view>
@@ -30,11 +30,13 @@
       <Cards :card-list="cardList" />
     </view>
 
-    <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
+    <view style="height: 4vw"></view>
+
     <view v-if="!isRefreshing">
       <MasonryFrame search="default"></MasonryFrame>
     </view>
-    <view class="empty-bottom"></view>
+
+    <view style="height: 18vw"></view>
   </view>
 
   <TabBar id="1"></TabBar>
@@ -99,48 +101,6 @@ async function getCampus() {
   }
 }
 
-const types = reactive([
-  {
-    name: "热门",
-    isCurrent: true,
-    className: "label current",
-    onClick: () => {
-      toggleSelf("热门");
-      pageRefresh();
-    }
-  },
-  {
-    name: "最新",
-    isCurrent: false,
-    className: "label",
-    onClick: () => {
-      toggleSelf("最新");
-      pageRefresh();
-    }
-  },
-  {
-    name: "关注",
-    isCurrent: false,
-    className: "label",
-    onClick: () => {
-      toggleSelf("关注");
-      pageRefresh();
-    }
-  }
-]);
-
-const toggleSelf = (name: string) => {
-  if (!types.filter((type) => type.name === name)[0].isCurrent) {
-    types.map((type) => {
-      type.isCurrent = false;
-      type.className = "label";
-    });
-    const currentType = types.filter((type) => type.name === name)[0];
-    currentType.isCurrent = true;
-    currentType.className = "label current";
-  }
-};
-
 const isRefreshing = ref(false);
 
 function pageRefresh() {
@@ -179,7 +139,7 @@ onShow(() => {
 </script>
 
 <style lang="scss" scoped>
-.blue-background {
+.background {
   width: 100vw;
   height: 100vh;
   background-color: #fafcff;
@@ -254,103 +214,5 @@ onShow(() => {
     font-size: calc(16 / 390 * 100vw);
     margin-left: calc(8 / 390 * 100vw);
   }
-}
-
-.switch-box {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  border: solid #1fa1ff calc(1 / 390 * 100vw);
-  padding: 0 calc(12 / 390 * 100vw) 0 calc(12 / 390 * 100vw);
-  height: calc(22 / 390 * 100vw);
-  border-radius: 50rpx;
-  margin-right: calc(10 / 390 * 100vw);
-
-  .switch {
-    outline-style: none;
-    color: #1fa1ff;
-    font-size: calc(12 / 390 * 100vw);
-    line-height: calc(12 / 390 * 100vw);
-  }
-}
-
-.swiper-box {
-  width: 100vw;
-}
-
-.swiper {
-  height: 20vh;
-}
-
-.swiper-item {
-  display: block;
-  height: 20vh;
-  line-height: 15vh;
-  text-align: center;
-}
-
-.content {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 20rpx;
-}
-
-.logo {
-  height: 200rpx;
-  margin: 200rpx auto 50rpx;
-  width: 200rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  color: #8f8f94;
-  font-size: 36rpx;
-}
-
-.masonry-header {
-  border-top: 10px #fafcff solid;
-  background-color: #fafcff;
-  margin: 0 calc(12 / 390 * 100vw);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .title {
-    color: #353535;
-    font-weight: bold;
-    font-size: calc(18 / 390 * 100vw);
-  }
-
-  .toggle {
-    display: flex;
-    align-items: center;
-    color: #b8b8b8;
-    font-size: calc(10 / 390 * 100vw);
-    transform: translateX(calc(9 / 390 * 100vw));
-
-    .label {
-      color: #939393;
-      font-size: calc(12 / 390 * 100vw);
-      padding: 0 calc(9 / 390 * 100vw);
-
-      &:active {
-        color: #1e1e1e !important;
-      }
-
-      &.current {
-        color: #353535;
-      }
-    }
-  }
-}
-
-.empty-bottom {
-  height: 130rpx;
 }
 </style>
