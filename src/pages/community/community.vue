@@ -24,53 +24,12 @@
     <view v-if="!isRefreshing">
       <CarouselFrame />
     </view>
+
+    <!--cards是未使用的功能，暂时不管-->
     <view v-if="false">
-      <view v-if="cardList.length == 1" class="">
-        <view
-          class="mx-2 my-2"
-          style="
-            height: 200rpx;
-            background-color: #ececec;
-            border-radius: 20rpx;
-          "
-        ></view>
-      </view>
-      <view
-        v-if="cardList.length > 1 && cardList.length <= 3"
-        class="d-flex mx-2 my-2"
-      >
-        <view
-          v-for="(item, index) in cardList"
-          :key="index"
-          style="
-            height: 200rpx;
-            background-color: #ececec;
-            width: 50%;
-            border-radius: 20rpx;
-          "
-          class="mx-1"
-        >
-        </view>
-      </view>
-      <scroll-view
-        v-if="cardList.length > 3"
-        scroll-x="true"
-        class="d-flex mx-2 my-2 w-100 scroll-view_H"
-      >
-        <view
-          v-for="(item, index) in cardList"
-          :key="index"
-          style="
-            height: 200rpx;
-            background-color: #ececec;
-            width: 40%;
-            border-radius: 20rpx;
-          "
-          class="mx-1 scroll-view-item_H"
-        >
-        </view>
-      </scroll-view>
+      <Cards :card-list="cardList" />
     </view>
+
     <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
     <view v-if="!isRefreshing">
       <MasonryFrame search="default"></MasonryFrame>
@@ -85,6 +44,7 @@
 import { reactive, ref } from "vue";
 import { Icons } from "@/utils/url";
 import MasonryFrame from "@/pages/community/masonry-frame.vue";
+import Cards from "@/pages/community/cards/cards.vue";
 import CarouselFrame from "@/pages/community/carousel-frame.vue";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import { onClickSwitch } from "@/pages/community/utils";
@@ -219,21 +179,6 @@ onShow(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/common/third-party/zcm-main.css";
-
-.scroll-view_H {
-  white-space: nowrap;
-  width: 100%;
-}
-.scroll-view-item_H {
-  display: inline-block;
-  width: 100%;
-  height: 300rpx;
-  line-height: 300rpx;
-  text-align: center;
-  font-size: 36rpx;
-}
-
 .blue-background {
   width: 100vw;
   height: 100vh;
@@ -286,7 +231,6 @@ onShow(() => {
     height: fit-content;
     display: flex;
     align-items: center;
-    //justify-content: space-around;
   }
 }
 
