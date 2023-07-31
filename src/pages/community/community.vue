@@ -1,16 +1,4 @@
 <template>
-  <!--  <UniNavBar :fixed="true" status-bar background-color="#fafcff">-->
-  <!--    <view-->
-  <!--      class="d-flex a-center left"-->
-  <!--      style="position: absolute; left: 40rpx; bottom: 25rpx"-->
-  <!--      @click="onClickMessage"-->
-  <!--    >-->
-  <!--      &lt;!&ndash;      <image :src="Icons.Message" style="width: 45rpx; height: 35rpx"></image>&ndash;&gt;-->
-  <!--      &lt;!&ndash;      &lt;!&ndash; 暂时将数量写为0 &ndash;&gt;&ndash;&gt;-->
-  <!--      &lt;!&ndash;      <view v-show="false" class="font-sm px-1 message-count">0</view>&ndash;&gt;-->
-  <!--    </view>-->
-  <!--    &lt;!&ndash;    <view class="font-weight font-md2" style="margin: auto">喵社区</view>&ndash;&gt;-->
-  <!--  </UniNavBar>-->
   <view class="nav-bar" :style="{ height: navBarHeight + 'px' }">
     <view class="top-bar" :style="{ height: topBarHeight + 'px' }"></view>
     <view class="capsule-bar" :style="{ height: capsuleBarHeight + 'px' }">
@@ -26,11 +14,6 @@
             >
             <view v-else class="campus-name"></view>
           </view>
-          <!--          <view class="switch-box">-->
-          <!--            <view class="switch" @click="onClickSwitch"-->
-          <!--              ><text class="font-md">⇌</text> 切换学校-->
-          <!--            </view>-->
-          <!--          </view>-->
         </view>
       </view>
     </view>
@@ -91,7 +74,6 @@
     <view style="padding-bottom: calc(12 / 390 * 100vw)"></view>
     <view v-if="!isRefreshing">
       <MasonryFrame search="default"></MasonryFrame>
-      <!--      <MasonryData></MasonryData>-->
     </view>
     <view class="empty-bottom"></view>
   </view>
@@ -109,9 +91,7 @@ import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import { Community } from "@/apis/schemas";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import { StorageKeys } from "@/utils/const";
-import { onClickMessage } from "./event";
 
 uni.setStorageSync(StorageKeys.SearchText, "");
 
@@ -128,9 +108,6 @@ const capsuleData = uni.getMenuButtonBoundingClientRect();
 const capsuleBarHeight =
   capsuleData.height + (capsuleData.top - topBarHeight) * 2;
 const navBarHeight = topBarHeight + capsuleBarHeight;
-
-// console.log(b);
-// navbarHeight.value = ;
 
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
