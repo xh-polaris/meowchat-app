@@ -5,12 +5,18 @@
     <!--      mode="widthFix"-->
     <!--      @click="onClickAvatar(mainImgUrl, cat.avatars)"-->
     <!--    />-->
-    <view class="cat-img" />
+    <image
+      :src="mainImgUrl"
+      class="cat-image"
+      mode="widthFix"
+      @click="onClickAvatar(mainImgUrl, cat.avatars)"
+    />
+    <view style="height: 20vh"></view>
     <view class="main">
-      <!--      <view>-->
-      <!--        <text>{{ cat.name }}</text>-->
-      <!--      </view>-->
-      <Header />
+      <!-- <view>
+              <text>{{ cat.name }}</text>
+           </view> -->
+      <Header :cat="cat" />
       <MetaInfo :cat="cat" />
       <Guide :cat="cat" />
       <Story :cat="cat" />
@@ -96,4 +102,17 @@ onPullDownRefresh(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cat-image {
+  position: fixed;
+  width: 100vw;
+  height: 30vh;
+  z-index: -1;
+}
+.main {
+  border-radius: 3% 3% 0 0;
+  height: 80vh;
+  width: 100vw;
+  background-color: #ffffff;
+}
+</style>
