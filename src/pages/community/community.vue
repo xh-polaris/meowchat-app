@@ -1,24 +1,7 @@
 <template>
-  <view class="nav-bar" :style="{ height: navBarHeight + 'px' }">
-    <view class="top-bar" :style="{ height: topBarHeight + 'px' }"></view>
-    <view class="capsule-bar" :style="{ height: capsuleBarHeight + 'px' }">
-      <view class="school-box">
-        <view class="school-select-box">
-          <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
-          <view class="names" @click="onClickSwitch">
-            <view class="school-name">
-              {{ currentSchool }}
-            </view>
-            <view v-if="currentSchool !== currentCampus" class="campus-name">
-              ({{ currentCampus }})</view
-            >
-            <view v-else class="campus-name"></view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-  <view :style="{ height: navBarHeight + 'px' }"></view>
+  <TopBar bg-color="#fafcff">
+    <SchoolSelect />
+  </TopBar>
 
   <view class="background">
     <view v-if="!isRefreshing">
@@ -44,12 +27,12 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { Icons } from "@/utils/url";
+import TopBar from "@/components/TopBar.vue";
+import SchoolSelect from "@/components/SchoolSelect.vue";
 import MasonryFrame from "@/pages/community/masonry-frame.vue";
 import Cards from "@/pages/community/cards/cards.vue";
 import CarouselFrame from "@/pages/community/carousel-frame.vue";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
-import { onClickSwitch } from "@/pages/community/utils";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import { Community } from "@/apis/schemas";
@@ -64,12 +47,6 @@ const currentCampus = ref("");
 const communityId = ref("");
 const parentId = ref("");
 const cardList = reactive(["", "", "", "", "", ""]);
-
-const topBarHeight = uni.getSystemInfoSync().statusBarHeight as number;
-const capsuleData = uni.getMenuButtonBoundingClientRect();
-const capsuleBarHeight =
-  capsuleData.height + (capsuleData.top - topBarHeight) * 2;
-const navBarHeight = topBarHeight + capsuleBarHeight;
 
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
@@ -143,76 +120,5 @@ onShow(() => {
   width: 100vw;
   height: 100vh;
   background-color: #fafcff;
-}
-
-.arrow {
-  width: 32rpx;
-  height: 40rpx;
-  margin-left: 20rpx;
-}
-
-.nav-bar {
-  position: fixed;
-  background-color: #fafcff;
-  width: 100vw;
-  z-index: 100;
-}
-.top-bar {
-  width: 100vw;
-}
-.capsule-bar {
-  width: 100vw;
-  display: flex;
-  align-items: center;
-}
-
-.navbtn {
-  color: #939393;
-  font-size: calc(10 / 390 * 100vw);
-  margin: 0 calc(10 / 390 * 100vw);
-
-  &.current {
-    color: #ffffff;
-    background-color: #1fa1ff;
-    padding: 10rpx 15rpx 10rpx 15rpx;
-    border-radius: 15rpx;
-    font-size: calc(15 / 390 * 100vw);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-  }
-}
-
-.school-box {
-  background-color: #fafcff;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  font-family: sans-serif;
-  .school-select-box {
-    height: fit-content;
-    display: flex;
-    align-items: center;
-  }
-}
-
-.names {
-  display: flex;
-  align-items: baseline;
-
-  .school-name {
-    font-weight: bold;
-    border-bottom: 2px solid #1fa1ff;
-    line-height: calc(18 / 390 * 100vw);
-    margin-left: calc(8 / 390 * 100vw);
-    padding-bottom: calc(4 / 390 * 100vw);
-    font-size: calc(18 / 390 * 100vw);
-  }
-
-  .campus-name {
-    color: #939393;
-    font-weight: bold;
-    letter-spacing: calc(0.5 / 390 * 100vw);
-    font-size: calc(16 / 390 * 100vw);
-    margin-left: calc(8 / 390 * 100vw);
-  }
 }
 </style>
