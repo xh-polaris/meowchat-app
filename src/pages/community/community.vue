@@ -1,24 +1,20 @@
 <template>
-  <view class="nav-bar" :style="{ height: navBarHeight + 'px' }">
-    <view class="top-bar" :style="{ height: topBarHeight + 'px' }"></view>
-    <view class="capsule-bar" :style="{ height: capsuleBarHeight + 'px' }">
-      <view class="school-box">
-        <view class="school-select-box">
-          <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
-          <view class="names" @click="onClickSwitch">
-            <view class="school-name">
-              {{ currentSchool }}
-            </view>
-            <view v-if="currentSchool !== currentCampus" class="campus-name">
-              ({{ currentCampus }})</view
-            >
-            <view v-else class="campus-name"></view>
+  <TopBar bg-color="#fafcff">
+    <view class="school-box">
+      <view class="school-select-box">
+        <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
+        <view class="names" @click="onClickSwitch">
+          <view class="school-name">
+            {{ currentSchool }}
           </view>
+          <view v-if="currentSchool !== currentCampus" class="campus-name">
+            ({{ currentCampus }})</view
+          >
+          <view v-else class="campus-name"></view>
         </view>
       </view>
     </view>
-  </view>
-  <view :style="{ height: navBarHeight + 'px' }"></view>
+  </TopBar>
 
   <view class="background">
     <view v-if="!isRefreshing">
@@ -44,6 +40,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
+import TopBar from "@/components/TopBar.vue";
 import { Icons } from "@/utils/url";
 import MasonryFrame from "@/pages/community/masonry-frame.vue";
 import Cards from "@/pages/community/cards/cards.vue";
@@ -149,21 +146,6 @@ onShow(() => {
   width: 32rpx;
   height: 40rpx;
   margin-left: 20rpx;
-}
-
-.nav-bar {
-  position: fixed;
-  background-color: #fafcff;
-  width: 100vw;
-  z-index: 100;
-}
-.top-bar {
-  width: 100vw;
-}
-.capsule-bar {
-  width: 100vw;
-  display: flex;
-  align-items: center;
 }
 
 .navbtn {
