@@ -6,7 +6,7 @@
       <!-- <image class="like" mode="widthFix" :src="Icons.Location"/> -->
     </view>
     <view class="second-line">
-      {{ props.cat.name }}
+      {{ props.cat.color }}
     </view>
   </view>
 </template>
@@ -22,10 +22,11 @@ const props = defineProps<Props>();
 
 <style scoped lang="scss">
 .header {
-  margin-top: 5vh;
-  margin-left: 4vw;
+  margin-top: 4vw;
+  margin-left: 6vw;
+  margin-right: 6vw;
   .first-line {
-    font-size: 24px;
+    font-size: 6vw;
     color: #1d1d1d;
     font-weight: 600;
     display: flex;
@@ -38,7 +39,7 @@ const props = defineProps<Props>();
 	} */
   }
   .second-line {
-    font-size: 14px;
+    font-size: 4vw;
     color: #d1d1d1;
     margin-bottom: 5vw;
   }

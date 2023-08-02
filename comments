@@ -1,3 +1,10 @@
+代码规范：
+
+长宽单位统一用vw（高度上的也是vw，字号也是，都以屏幕宽度为准），不用rpx（不是原生的，经常容易标红报错）
+<image mode="aspectFill"/> 用aspectFill可以使得在长宽固定的情况下 图片居中且填满整个长宽 多余的会被隐藏起来 不会让图片变形
+
+
+
 uni.setStorageSync(KEY,DATA)
 uni.getStorageSync(KEY)
 
