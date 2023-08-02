@@ -5,10 +5,12 @@
     <!--      mode="widthFix"-->
     <!--      @click="onClickAvatar(mainImgUrl, cat.avatars)"-->
     <!--    />-->
-    <view>
+    <view class="cat-img" />
+    <view class="main">
       <!--      <view>-->
       <!--        <text>{{ cat.name }}</text>-->
       <!--      </view>-->
+      <Header />
       <MetaInfo :cat="cat" />
       <Guide :cat="cat" />
       <Story :cat="cat" />
@@ -25,6 +27,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 
+import Header from "@/pages/cat/header.vue";
 import Guide from "@/pages/cat/guide.vue";
 import Story from "@/pages/cat/story.vue";
 import MetaInfo from "@/pages/cat/meta-info.vue";
