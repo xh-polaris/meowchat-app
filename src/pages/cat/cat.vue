@@ -1,21 +1,12 @@
 <template>
   <view v-if="!isRefreshing">
-    <!--    <image-->
-    <!--      :src="mainImgUrl"-->
-    <!--      mode="widthFix"-->
-    <!--      @click="onClickAvatar(mainImgUrl, cat.avatars)"-->
-    <!--    />-->
     <image
       :src="mainImgUrl"
       class="cat-image"
-      mode="widthFix"
+      mode="aspectFill"
       @click="onClickAvatar(mainImgUrl, cat.avatars)"
     />
-    <view style="height: 20vh"></view>
     <view class="main">
-      <!-- <view>
-              <text>{{ cat.name }}</text>
-           </view> -->
       <Header :cat="cat" />
       <MetaInfo :cat="cat" />
       <Guide :cat="cat" />
@@ -106,12 +97,13 @@ onPullDownRefresh(() => {
 .cat-image {
   position: fixed;
   width: 100vw;
-  height: 30vh;
+  height: 48vw;
   z-index: -1;
+  top: 0;
 }
 .main {
-  border-radius: 3% 3% 0 0;
-  height: 80vh;
+  border-radius: 4vw 4vw 0 0;
+  margin-top: 43vw;
   width: 100vw;
   background-color: #ffffff;
 }
