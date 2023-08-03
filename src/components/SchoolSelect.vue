@@ -1,16 +1,17 @@
 <template>
   <view class="school-box">
-    <view class="school-select-box">
-      <image class="arrow" :src="Icons.Location" @click="onClickSwitch" />
-      <view class="names" @click="onClickSwitch">
+    <view class="school-select-box" @click="onClickSwitch">
+      <image class="arrow" :src="Icons.Location" />
+      <view class="names">
         <view class="school-name">
-          {{ currentSchool }}
+          {{
+            currentSchool !== currentCampus
+              ? currentSchool + currentCampus
+              : currentSchool
+          }}
         </view>
-        <view v-if="currentSchool !== currentCampus" class="campus-name">
-          ({{ currentCampus }})</view
-        >
-        <view v-else class="campus-name"></view>
       </view>
+      <view class="triangle"></view>
     </view>
   </view>
 </template>
@@ -55,7 +56,7 @@ async function getCampus() {
 getCampus();
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .school-box {
   background-color: #fafcff;
   height: fit-content;
@@ -66,12 +67,23 @@ getCampus();
     height: fit-content;
     display: flex;
     align-items: center;
+    margin-left: 3vw;
+    margin-right: 3vw;
   }
 }
 .arrow {
-  width: 32rpx;
-  height: 40rpx;
-  margin-left: 20rpx;
+  width: 4vw;
+  height: 5vw;
+  margin-left: 1vw;
+}
+.triangle {
+  width: 0;
+  height: 0;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  border-left: 1.15vw solid transparent;
+  border-right: 1.15vw solid transparent;
+  border-top: 2vw solid #1d1d1d;
 }
 .names {
   display: flex;
@@ -79,19 +91,10 @@ getCampus();
 
   .school-name {
     font-weight: bold;
-    border-bottom: 2px solid #1fa1ff;
     line-height: calc(18 / 390 * 100vw);
     margin-left: calc(8 / 390 * 100vw);
     padding-bottom: calc(4 / 390 * 100vw);
     font-size: calc(18 / 390 * 100vw);
-  }
-
-  .campus-name {
-    color: #939393;
-    font-weight: bold;
-    letter-spacing: calc(0.5 / 390 * 100vw);
-    font-size: calc(16 / 390 * 100vw);
-    margin-left: calc(8 / 390 * 100vw);
   }
 }
 </style>

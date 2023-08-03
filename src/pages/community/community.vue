@@ -1,6 +1,8 @@
 <template>
   <TopBar bg-color="#fafcff">
-    <SchoolSelect />
+    <view v-if="!isRefreshing">
+      <SchoolSelect />
+    </view>
   </TopBar>
 
   <view class="background">
