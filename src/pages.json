@@ -97,13 +97,13 @@
         "enablePullDownRefresh": true
       }
     },
-	{
-	  "path": "pages/profile/personal-info/personal-info" ,
-	  "style": {
-	    "navigationBarTitleText": "用户详情",
-	    "enablePullDownRefresh": true
-	  }
-	},
+    {
+      "path": "pages/profile/personal-info/personal-info",
+      "style": {
+        "navigationBarTitleText": "用户详情",
+        "enablePullDownRefresh": true
+      }
+    },
     {
       "path": "pages/search/search",
       "style": {
@@ -122,29 +122,29 @@
         "navigationBarTitleText": "我的消息"
       }
     },
-	{
-		"path": "pages/message/message",
-		"style": {
-			"navigationBarTitleText": "我的消息"
-		}
-	},
+    {
+      "path": "pages/message/message",
+      "style": {
+        "navigationBarTitleText": "我的消息"
+      }
+    },
     {
       "path": "pages/draft/draft-image/draft-image",
       "style": {
         "navigationBarTitleText": "上传猫片"
       }
     },
-	{
-	  "path": "pages/draft/choose-cat/choose-cat",
-	  "style": {
-	    "navigationBarTitleText": "选择猫咪",
+    {
+      "path": "pages/draft/choose-cat/choose-cat",
+      "style": {
+        "navigationBarTitleText": "选择猫咪",
         "enablePullDownRefresh": true
-	  }
-	},
+      }
+    },
     {
       "path": "pages/web-frame/web-frame"
     }
-    ],
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "喵世界",

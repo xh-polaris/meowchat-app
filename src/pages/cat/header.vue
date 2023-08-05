@@ -11,20 +11,23 @@
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Cat } from "@/apis/schemas";
+
 /* import {Icons} from "@/utils/url"; */
 interface Props {
   cat: Cat;
 }
+
 const props = defineProps<Props>();
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .header {
   margin-top: 4vw;
   margin-left: 6vw;
   margin-right: 6vw;
+
   .first-line {
     font-size: 6vw;
     color: #1d1d1d;
@@ -38,6 +41,7 @@ const props = defineProps<Props>();
 		height: 5vw;
 	} */
   }
+
   .second-line {
     font-size: 4vw;
     color: #d1d1d1;

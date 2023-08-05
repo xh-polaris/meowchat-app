@@ -2,8 +2,8 @@
   <view class="reply-mask" @click="leaveReply()" />
 
   <view
-    class="content-frame"
     :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
+    class="content-frame"
   >
     <view class="container">
       <view class="post-info-box">
@@ -44,8 +44,8 @@
             v-if="moment.data.photos.length > 9"
             class="lastImg"
             @click="onClickImage('8', moment.data.photos)"
-            >+{{ moment.data.photos.length - 9 }}</view
-          >
+            >+{{ moment.data.photos.length - 9 }}
+          </view>
         </view>
         <view
           v-if="catName"
@@ -59,10 +59,10 @@
           {{ moment.data.text }}
         </view>
         <view class="like-info">
-          {{ moment.likeData.count }} 位喵友觉得很赞</view
-        >
+          {{ moment.likeData.count }} 位喵友觉得很赞
+        </view>
       </view>
-      <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
+      <view v-if="comments.data.length === 0" class="commentNum"> 评论</view>
       <view v-else class="commentNum">
         评论 {{ comments.data.length + comments.replyNumber }}
       </view>
@@ -163,7 +163,7 @@ import { deleteMoment, getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { GetCountReq } from "@/apis/like/like-interface";
-import { doLike, getCount, getUserLiked } from "@/apis/like/like";
+import { doLike } from "@/apis/like/like";
 import {
   GetCommentsReq,
   NewCommentReq
@@ -255,7 +255,7 @@ function onClickCatBox(id: string) {
 const getData = async () => {
   moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
   moment.likeData = await getLikeData(likeReq);
-  getUserInfo().then((res) => {
+  getUserInfo({}).then((res) => {
     myUserId.value = res.user.id;
   });
   if (moment.data.catId) {
@@ -598,6 +598,7 @@ function leaveReply() {
           margin: 5rpx 5rpx 5rpx 5rpx;
         }
       }
+
       .lastImg {
         width: 220rpx;
         height: 220rpx;
@@ -711,6 +712,7 @@ function leaveReply() {
 .content-frame {
   overflow-y: scroll;
 }
+
 .input-frame {
   height: 16vw;
 }

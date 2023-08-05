@@ -2,16 +2,18 @@
   <Masonry v-if="isInitialized" :get-previews="getPreviews"></Masonry>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import Masonry from "@/pages/community/masonry.vue";
 import { getMomentPreviews, searchMomentPreviews } from "@/apis/moment/moment";
 import { ref } from "vue";
 import { Moment } from "@/apis/schemas";
+import { StorageKeys } from "@/utils/const";
 
 interface Props {
   search?: string;
   keyword?: string;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   search: "default",
   keyword: "cat"
@@ -26,7 +28,7 @@ if (props.search === "default") {
     return (
       await getMomentPreviews({
         page: page.value++,
-        communityId: uni.getStorageSync("communityId")
+        communityId: uni.getStorageSync(StorageKeys.CommunityId)
       })
     ).moments;
   };
@@ -35,7 +37,7 @@ if (props.search === "default") {
     return (
       await searchMomentPreviews({
         page: page.value++,
-        communityId: uni.getStorageSync("communityId"),
+        communityId: uni.getStorageSync(StorageKeys.CommunityId),
         keyword: props.keyword
       })
     ).moments;

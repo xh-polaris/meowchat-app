@@ -13,7 +13,7 @@
   </template>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Pages, Pictures } from "@/utils/url";
 import { reactive, ref } from "vue";
 import {
@@ -30,6 +30,7 @@ interface Props {
   keyword?: string;
   choose?: "detail" | "choose";
 }
+
 const props = withDefaults(defineProps<Props>(), {
   search: "default",
   keyword: "cat",
@@ -76,6 +77,7 @@ onReachBottom(() => {
 const catImage = ref("");
 const catName = ref("猫猫");
 const catId = ref("");
+
 function onClickCatBox(avatarUrl: string, name: string, id: string) {
   if (props.choose === "detail") {
     uni.navigateTo({
@@ -101,6 +103,7 @@ function onClickCatBox(avatarUrl: string, name: string, id: string) {
   margin-top: 10vh;
   display: flex;
   justify-content: center;
+
   .no-cat-here {
     width: 400upx;
     height: 222upx;

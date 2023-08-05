@@ -11,7 +11,7 @@
         <view class="nickname">
           {{ userInfo.nickname }}
         </view>
-        <view class="motto"> 个性签名:{{ userInfo.motto }} </view>
+        <view class="motto"> 个性签名:{{ userInfo.motto }}</view>
       </view>
     </view>
   </view>
@@ -21,12 +21,13 @@
 import { reactive, ref } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
-import { onShow, onPullDownRefresh } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 
 interface Props {
   type?: string;
   userId?: string;
 }
+
 const props = defineProps<Props>();
 const userInfo = reactive<User>({
   id: "",
@@ -40,9 +41,7 @@ const userInfo = reactive<User>({
 const isFollowed = ref(false);
 const refresh = async () => {
   if (props.type === "my") {
-    const res = await getUserInfo({
-      userId: ""
-    });
+    const res = await getUserInfo({});
     userInfo.id = res.user.id;
     userInfo.nickname = res.user.nickname;
     userInfo.avatarUrl = res.user.avatarUrl;

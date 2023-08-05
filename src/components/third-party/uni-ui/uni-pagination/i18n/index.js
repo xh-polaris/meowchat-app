@@ -5,9 +5,9 @@ import zhHans from "./zh-Hans.json";
 import zhHant from "./zh-Hant.json";
 
 export default {
-  en,
-  es,
-  fr,
-  "zh-Hans": zhHans,
-  "zh-Hant": zhHant,
+    en,
+    es,
+    fr,
+    "zh-Hans": zhHans,
+    "zh-Hant": zhHant,
 };

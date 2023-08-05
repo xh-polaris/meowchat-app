@@ -1,5 +1,5 @@
 <template>
-  <UniNavBar :fixed="true" shadow status-bar background-color="#f9f9f9">
+  <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>
     <view
       class="d-flex a-center left"
       style="position: absolute; left: 40rpx; bottom: 25rpx"
@@ -35,8 +35,8 @@
 
     <WorldPosts
       v-if="!isRefreshing"
-      search="default"
       :only-official="onlyOfficial"
+      search="default"
     />
     <view class="empty-bottom"></view>
   </view>

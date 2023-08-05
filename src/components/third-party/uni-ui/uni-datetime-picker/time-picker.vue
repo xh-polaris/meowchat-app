@@ -3,11 +3,11 @@
     <view @click="initTimePicker">
       <slot>
         <view
-          class="uni-datetime-picker-timebox-pointer"
-          :class="{
+            :class="{
             'uni-datetime-picker-disabled': disabled,
             'uni-datetime-picker-timebox': border,
           }"
+            class="uni-datetime-picker-timebox-pointer"
         >
           <text class="uni-datetime-picker-text">{{ time }}</text>
           <view v-if="!time" class="uni-datetime-picker-time">
@@ -17,57 +17,57 @@
       </slot>
     </view>
     <view
-      v-if="visible"
-      id="mask"
-      class="uni-datetime-picker-mask"
-      @click="tiggerTimePicker"
+        v-if="visible"
+        id="mask"
+        class="uni-datetime-picker-mask"
+        @click="tiggerTimePicker"
     ></view>
     <view
-      v-if="visible"
-      class="uni-datetime-picker-popup"
-      :class="[dateShow && timeShow ? '' : 'fix-nvue-height']"
-      :style="fixNvueBug"
+        v-if="visible"
+        :class="[dateShow && timeShow ? '' : 'fix-nvue-height']"
+        :style="fixNvueBug"
+        class="uni-datetime-picker-popup"
     >
       <view class="uni-title">
         <text class="uni-datetime-picker-text">{{ selectTimeText }}</text>
       </view>
       <view v-if="dateShow" class="uni-datetime-picker__container-box">
         <picker-view
-          class="uni-datetime-picker-view"
-          :indicator-style="indicatorStyle"
-          :value="ymd"
-          @change="bindDateChange"
+            :indicator-style="indicatorStyle"
+            :value="ymd"
+            class="uni-datetime-picker-view"
+            @change="bindDateChange"
         >
           <picker-view-column>
             <view
-              class="uni-datetime-picker-item"
-              v-for="(item, index) in years"
-              :key="index"
+                v-for="(item, index) in years"
+                :key="index"
+                class="uni-datetime-picker-item"
             >
               <text class="uni-datetime-picker-item"
-                >{{ lessThanTen(item) }}
+              >{{ lessThanTen(item) }}
               </text>
             </view>
           </picker-view-column>
           <picker-view-column>
             <view
-              class="uni-datetime-picker-item"
-              v-for="(item, index) in months"
-              :key="index"
+                v-for="(item, index) in months"
+                :key="index"
+                class="uni-datetime-picker-item"
             >
               <text class="uni-datetime-picker-item"
-                >{{ lessThanTen(item) }}
+              >{{ lessThanTen(item) }}
               </text>
             </view>
           </picker-view-column>
           <picker-view-column>
             <view
-              class="uni-datetime-picker-item"
-              v-for="(item, index) in days"
-              :key="index"
+                v-for="(item, index) in days"
+                :key="index"
+                class="uni-datetime-picker-item"
             >
               <text class="uni-datetime-picker-item"
-                >{{ lessThanTen(item) }}
+              >{{ lessThanTen(item) }}
               </text>
             </view>
           </picker-view-column>
@@ -78,54 +78,54 @@
       </view>
       <view v-if="timeShow" class="uni-datetime-picker__container-box">
         <picker-view
-          class="uni-datetime-picker-view"
-          :class="[hideSecond ? 'time-hide-second' : '']"
-          :indicator-style="indicatorStyle"
-          :value="hms"
-          @change="bindTimeChange"
+            :class="[hideSecond ? 'time-hide-second' : '']"
+            :indicator-style="indicatorStyle"
+            :value="hms"
+            class="uni-datetime-picker-view"
+            @change="bindTimeChange"
         >
           <picker-view-column>
             <view
-              class="uni-datetime-picker-item"
-              v-for="(item, index) in hours"
-              :key="index"
+                v-for="(item, index) in hours"
+                :key="index"
+                class="uni-datetime-picker-item"
             >
               <text class="uni-datetime-picker-item"
-                >{{ lessThanTen(item) }}
+              >{{ lessThanTen(item) }}
               </text>
             </view>
           </picker-view-column>
           <picker-view-column>
             <view
-              class="uni-datetime-picker-item"
-              v-for="(item, index) in minutes"
-              :key="index"
+                v-for="(item, index) in minutes"
+                :key="index"
+                class="uni-datetime-picker-item"
             >
               <text class="uni-datetime-picker-item"
-                >{{ lessThanTen(item) }}
+              >{{ lessThanTen(item) }}
               </text>
             </view>
           </picker-view-column>
           <picker-view-column v-if="!hideSecond">
             <view
-              class="uni-datetime-picker-item"
-              v-for="(item, index) in seconds"
-              :key="index"
+                v-for="(item, index) in seconds"
+                :key="index"
+                class="uni-datetime-picker-item"
             >
               <text class="uni-datetime-picker-item"
-                >{{ lessThanTen(item) }}
+              >{{ lessThanTen(item) }}
               </text>
             </view>
           </picker-view-column>
         </picker-view>
         <!-- 兼容 nvue 不支持伪类 -->
         <text
-          class="uni-datetime-picker-sign"
-          :class="[hideSecond ? 'sign-center' : 'sign-left']"
-          >:
+            :class="[hideSecond ? 'sign-center' : 'sign-left']"
+            class="uni-datetime-picker-sign"
+        >:
         </text>
         <text v-if="!hideSecond" class="uni-datetime-picker-sign sign-right"
-          >:
+        >:
         </text>
       </view>
       <view class="uni-datetime-picker-btn">
@@ -152,10 +152,10 @@
 // #ifdef H5
 import keypress from "./keypress";
 // #endif
-import { initVueI18n } from "@dcloudio/uni-i18n";
+import {initVueI18n} from "@dcloudio/uni-i18n";
 import messages from "./i18n/index.js";
 
-const { t } = initVueI18n(messages);
+const {t} = initVueI18n(messages);
 
 /**
  * DatetimePicker 时间选择器
@@ -354,18 +354,18 @@ export default {
     // 当前 date 是 start
     currentDateIsStart() {
       return (
-        this.year === this.startYear &&
-        this.month === this.startMonth &&
-        this.day === this.startDay
+          this.year === this.startYear &&
+          this.month === this.startMonth &&
+          this.day === this.startDay
       );
     },
 
     // 当前 date 是 end
     currentDateIsEnd() {
       return (
-        this.year === this.endYear &&
-        this.month === this.endMonth &&
-        this.day === this.endDay
+          this.year === this.endYear &&
+          this.month === this.endMonth &&
+          this.day === this.endDay
       );
     },
 
@@ -463,9 +463,9 @@ export default {
     minSecond() {
       if (this.type === "datetime") {
         if (
-          this.currentDateIsStart &&
-          this.hour === this.startHour &&
-          this.minute === this.startMinute
+            this.currentDateIsStart &&
+            this.hour === this.startHour &&
+            this.minute === this.startMinute
         ) {
           return this.startSecond;
         } else {
@@ -483,9 +483,9 @@ export default {
     maxSecond() {
       if (this.type === "datetime") {
         if (
-          this.currentDateIsEnd &&
-          this.hour === this.endHour &&
-          this.minute === this.endMinute
+            this.currentDateIsEnd &&
+            this.hour === this.endHour &&
+            this.minute === this.endMinute
         ) {
           return this.endSecond;
         } else {
@@ -559,16 +559,16 @@ export default {
       let defaultValue = null;
       if (datetime) {
         defaultValue = this.compareValueWithStartAndEnd(
-          datetime,
-          this.start,
-          this.end
+            datetime,
+            this.start,
+            this.end
         );
       } else {
         defaultValue = Date.now();
         defaultValue = this.compareValueWithStartAndEnd(
-          defaultValue,
-          this.start,
-          this.end
+            defaultValue,
+            this.start,
+            this.end
         );
       }
       this.parseValue(defaultValue);
@@ -692,8 +692,8 @@ export default {
       } else {
         if (!point) {
           pointType === "start"
-            ? (this.startYear = this.year - 60)
-            : (this.endYear = this.year + 60);
+              ? (this.startYear = this.year - 60)
+              : (this.endYear = this.year + 60);
           return;
         }
         if (Number(point) && Number(point) !== NaN) {
@@ -702,10 +702,10 @@ export default {
         // datetime 的 end 没有时分秒, 则不限制
         const hasTime = /[0-9]:[0-9]/;
         if (
-          this.type === "datetime" &&
-          pointType === "end" &&
-          typeof point === "string" &&
-          !hasTime.test(point)
+            this.type === "datetime" &&
+            pointType === "end" &&
+            typeof point === "string" &&
+            !hasTime.test(point)
         ) {
           point = point + " 23:59:59";
         }
@@ -725,9 +725,9 @@ export default {
     getCurrentRange(value) {
       const range = [];
       for (
-        let i = this["min" + this.capitalize(value)];
-        i <= this["max" + this.capitalize(value)];
-        i++
+          let i = this["min" + this.capitalize(value)];
+          i <= this["max" + this.capitalize(value)];
+          i++
       ) {
         range.push(i);
       }
@@ -782,14 +782,14 @@ export default {
      */
     createDomSting() {
       const yymmdd =
-        this.year +
-        "-" +
-        this.lessThanTen(this.month) +
-        "-" +
-        this.lessThanTen(this.day);
+          this.year +
+          "-" +
+          this.lessThanTen(this.month) +
+          "-" +
+          this.lessThanTen(this.day);
 
       let hhmmss =
-        this.lessThanTen(this.hour) + ":" + this.lessThanTen(this.minute);
+          this.lessThanTen(this.hour) + ":" + this.lessThanTen(this.minute);
 
       if (!this.hideSecond) {
         hhmmss = hhmmss + ":" + this.lessThanTen(this.second);

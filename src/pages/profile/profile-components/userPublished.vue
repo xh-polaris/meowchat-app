@@ -2,8 +2,8 @@
   <view style="background-color: #ffff">
     <zzx-tabs
       ref="mytabs"
-      :items="items"
       :current="current"
+      :items="items"
       @click-item="onClickItem"
     >
     </zzx-tabs>
@@ -15,7 +15,7 @@
         <my-posts :type="props.type" :user-id="props.userId"></my-posts>
       </view>
       <view v-if="current === 2">
-        <MyMasonry type="liked" :user-id="props.userId"></MyMasonry>
+        <MyMasonry :user-id="props.userId" type="liked"></MyMasonry>
       </view>
     </view>
   </view>
@@ -26,12 +26,14 @@ import MyPosts from "@/pages/profile/my-publish/my-posts.vue";
 import MyMasonry from "@/pages/profile/my-publish/my-masonry.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 import { ref } from "vue";
+
 const props = defineProps<{
   type?: string;
   userId?: string;
 }>();
 const items = ["动态", "帖子", "喜欢"];
 let current = ref(0);
+
 function onClickItem(e: any) {
   if (current.value !== e.currentIndex) {
     current.value = e.currentIndex;

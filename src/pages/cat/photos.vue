@@ -9,8 +9,8 @@
         <li v-for="(image, index) in imgUrlList" :key="index">
           <image
             :src="image.url"
-            mode="aspectFill"
             class="cat-image"
+            mode="aspectFill"
             @click="onClickImage(index, imgUrls)"
           >
             <view class="shadow" />
@@ -38,13 +38,13 @@
       </view>
     </view>
     <view v-if="noMore">
-      <view class="nomore"> 没有更多喵~ </view>
+      <view class="nomore"> 没有更多喵~</view>
     </view>
     <view style="width: 100%; height: 25rpx"></view>
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Pages } from "@/utils/url";
 import { computed, reactive, ref } from "vue";
 import {
@@ -52,10 +52,11 @@ import {
   ImageInfo
 } from "@/apis/collection/collection-interfaces";
 import { doLike, getCount, getUserLiked } from "@/apis/like/like";
-import { onClickImage, onClickAvatar } from "@/pages/cat/utils";
+import { onClickImage } from "@/pages/cat/utils";
 import { Cat } from "@/apis/schemas";
 import { getCatImage } from "@/apis/collection/collection";
 import { onReachBottom } from "@dcloudio/uni-app";
+
 const props = defineProps<{
   id: string;
   cat: Cat;
@@ -69,6 +70,7 @@ const imgUrls = computed(() => {
   return tmp;
 });
 let noMore = ref<boolean>(false);
+
 function clickLike(id: string, index: number) {
   if (imgUrlList[index].isLiked) {
     imgUrlList[index].isLiked = false;
@@ -86,6 +88,7 @@ function draftImage() {
     url: `${Pages.DraftImage}?catId=${props.id}&catName=${props.cat.name}`
   });
 }
+
 let getCatImageReq = reactive<GetImageByCatReq>({
   catId: props.id,
   limit: 6
@@ -130,8 +133,9 @@ onReachBottom(() => {
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "@/common/icon.scss";
+
 .photo {
   margin-top: 40rpx;
 
@@ -165,6 +169,7 @@ onReachBottom(() => {
     margin-top: 30rpx;
     margin-left: 20rpx;
     margin-bottom: 30rpx;
+
     text {
       /* 11月 */
       margin-left: auto;
@@ -200,8 +205,10 @@ onReachBottom(() => {
     }
   }
 }
+
 .cat-image {
   position: relative;
+
   .shadow {
     position: absolute;
     bottom: 0;
@@ -210,28 +217,33 @@ onReachBottom(() => {
     width: 100%;
     background: linear-gradient(#22222200, #222222aa);
   }
+
   .liked-info {
     position: absolute;
     bottom: 12upx;
     right: 12upx;
     display: flex;
     align-items: center;
+
     .like {
       width: 28upx;
       height: 28upx;
       background-size: 100% 100%;
       margin-right: 8upx;
       background-image: $like-grey-border-url;
+
       &.liked {
         background-image: $like-blue-url;
       }
     }
+
     .liked_number {
       font-size: 28upx;
       color: #eeeeee;
     }
   }
 }
+
 .nomore {
   margin-top: 50rpx;
   font-size: 20rpx;
@@ -239,6 +251,7 @@ onReachBottom(() => {
   text-align: center;
   margin-bottom: 100rpx;
 }
+
 .switch {
   border-radius: 20px;
   margin-top: -10rpx;

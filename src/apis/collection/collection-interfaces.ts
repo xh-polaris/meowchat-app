@@ -75,6 +75,7 @@ export interface GetImageByCatResp {
   lastId: string;
   msg: string;
 }
+
 export interface CreateImageReq {
   images: CatImage[];
 }
@@ -83,11 +84,13 @@ export interface CatImage {
   catId: string;
   url: string;
 }
+
 export interface Image {
   id: string;
   url: string;
   catId: string;
 }
+
 export interface ImageInfo {
   id: string;
   url: string;
@@ -95,14 +98,17 @@ export interface ImageInfo {
   isLiked: boolean;
   likeNumber: number;
 }
+
 export interface CreateImageResp {
   code: number;
   msg: string;
   images: Image[];
 }
+
 export interface DeleteImageReq {
   id: string;
 }
+
 export interface DeleteImageResp {
   code: number;
   msg: string;

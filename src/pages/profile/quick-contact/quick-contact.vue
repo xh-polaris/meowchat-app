@@ -16,9 +16,9 @@
             <view class="name">
               {{ item.name }}
             </view>
-            <view class="position"> {{ item.title }} </view>
+            <view class="position"> {{ item.title }}</view>
             <view class="content">
-              <view class="info"> 微信: {{ item.wechat }} </view>
+              <view class="info"> 微信: {{ item.wechat }}</view>
               <image
                 class="copy"
                 mode="widthFix"
@@ -28,7 +28,7 @@
               />
             </view>
             <view class="content">
-              <view class="info"> 电话: {{ item.phone }} </view>
+              <view class="info"> 电话: {{ item.phone }}</view>
               <image
                 class="copy"
                 mode="widthFix"

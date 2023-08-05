@@ -482,7 +482,7 @@ export default {
   z-index: 102;
   overflow: hidden;
   /* #ifdef APP-NVUE */
-  width: 750 rpx;
+  width: 750rpx;
   /* #endif */
 }
 

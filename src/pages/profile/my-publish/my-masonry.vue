@@ -49,8 +49,8 @@
             </view>
             <view class="other-info">
               <view class="font-sm"
-                >{{ moment.likedNumber }}位喵友觉得很赞</view
-              >
+                >{{ moment.likedNumber }}位喵友觉得很赞
+              </view>
               <view class="comment font-sm">{{ moment.comments }}条回复</view>
             </view>
           </view>
@@ -59,34 +59,37 @@
     </view>
   </view>
   <view style="width: 100%; height: 250rpx"></view>
-  <view class="nomore"
-    ><image
+  <view class="nomore">
+    <image
       src="/static/images/nomore.png"
       style="width: 200rpx; height: 186rpx"
-  /></view>
+    />
+  </view>
   <view style="width: 100%; height: 200rpx"></view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
 import {
   deleteMoment,
-  getMomentPreviews,
-  getMomentDetail
+  getMomentDetail,
+  getMomentPreviews
 } from "@/apis/moment/moment";
 import { DeleteMomentReq } from "@/apis/moment/moment-components";
 import { Like } from "@/apis/like/like-interface";
-import { MomentData, Moment } from "@/apis/schemas";
+import { Moment, MomentData } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickMoment } from "./utils";
-import { getCount, getUserLikes, doLike } from "@/apis/like/like";
+import { doLike, getCount, getUserLikes } from "@/apis/like/like";
 import { getComments } from "@/apis/comment/comment";
+
 interface Props {
   type?: string;
   userId?: string;
   likeType?: string;
 }
+
 const props = defineProps<Props>();
 const deleteID = reactive<DeleteMomentReq>({ momentId: "" });
 const isNoData = ref(true);
@@ -317,6 +320,7 @@ onBeforeMount(() => {
   isBatchLoading = true;
   addBatch();
 });
+
 async function onClickDelete(id: string) {
   deleteID.momentId = id;
   uni.showModal({
@@ -351,26 +355,31 @@ $avatarWidth: calc(21 / 390 * 100vw);
   background-color: #ffff;
   display: flex;
 }
+
 .column-left {
   width: calc(50vw - $sideMargin - $horizontalGap / 2);
   margin-left: $sideMargin;
   margin-right: calc($horizontalGap / 2);
   height: fit-content;
 }
+
 .column-right {
   width: calc(50vw - $sideMargin - $horizontalGap / 2);
   margin-left: calc($horizontalGap / 2);
   margin-right: $sideMargin;
   height: fit-content;
 }
+
 .tile {
   margin-bottom: calc($verticalGap - 2px);
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.25);
   border-radius: $radius;
   font-family: sans-serif;
+
   .img-frame {
     max-height: calc((50vw - $sideMargin - $horizontalGap / 2) * 1.8);
     overflow: hidden;
+
     .img {
       width: calc(50vw - $sideMargin - $horizontalGap / 2);
       display: block;
@@ -378,6 +387,7 @@ $avatarWidth: calc(21 / 390 * 100vw);
       height: 1px;
     }
   }
+
   .tile-info {
     transform: translateY(-2px);
     background-color: #ffffff;
@@ -386,10 +396,12 @@ $avatarWidth: calc(21 / 390 * 100vw);
     color: #696969;
     font-weight: 500;
     padding: calc(4 / 390 * 100vw) calc(12 / 390 * 100vw) calc(6 / 390 * 100vw);
+
     .info {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .title {
         font-size: 30rpx;
         color: #000000;
@@ -399,9 +411,11 @@ $avatarWidth: calc(21 / 390 * 100vw);
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+
       .delete {
         display: flex;
         align-items: center;
+
         .deletepic {
           height: 20rpx;
           width: 20rpx;
@@ -412,11 +426,13 @@ $avatarWidth: calc(21 / 390 * 100vw);
         }
       }
     }
+
     .other-info {
       display: flex;
       align-items: center;
       justify-content: space-between;
       color: #b8b8b8;
+
       .time {
         font-size: calc(6 / 390 * 150vw);
         color: #939393;
@@ -424,12 +440,14 @@ $avatarWidth: calc(21 / 390 * 100vw);
     }
   }
 }
+
 .username {
   max-width: calc(60 / 390 * 100vw);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .get-dom {
   width: 1px;
   height: 1px;

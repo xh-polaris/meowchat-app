@@ -2,8 +2,8 @@
   <view class="reply-mask" @click="leaveReply()" />
 
   <view
-    class="content-frame"
     :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
+    class="content-frame"
   >
     <view class="header">
       <view class="title">
@@ -41,7 +41,7 @@
         mode="widthFix"
         @click="onClickImage(post.data.coverUrl)"
       />
-      <view v-if="comments.data.length === 0" class="commentNum"> 评论 </view>
+      <view v-if="comments.data.length === 0" class="commentNum"> 评论</view>
       <view v-else class="commentNum">
         评论 {{ comments.data.length + comments.replyNumber }}
       </view>
@@ -136,7 +136,7 @@ import { GetPostDetailReq } from "@/apis/post/post-interfaces";
 import { Comment, Post, TargetType } from "@/apis/schemas";
 import { deletePost, getPostDetail } from "@/apis/post/post";
 import { displayTime } from "@/utils/time";
-import { doLike, getCount, getUserLiked } from "@/apis/like/like";
+import { doLike } from "@/apis/like/like";
 import { getUserInfo } from "@/apis/user/user";
 import {
   GetCommentsReq,
@@ -222,7 +222,7 @@ const isShowDeleteDialogue = ref(false);
 const getData = async () => {
   post.data = (await getPostDetail(getPostDetailReq)).post;
   post.likeData = await getLikeData(likeReq);
-  getUserInfo().then((res) => {
+  getUserInfo({}).then((res) => {
     myUserId.value = res.user.id;
   });
 };
@@ -661,6 +661,7 @@ $postPadding: 15px 27px 0 21px;
     }
   }
 }
+
 .imgs {
   position: relative;
   display: flex;
@@ -678,9 +679,11 @@ $postPadding: 15px 27px 0 21px;
     }
   }
 }
+
 .content-frame {
   overflow-y: scroll;
 }
+
 .input-frame {
   height: 16vw;
 }

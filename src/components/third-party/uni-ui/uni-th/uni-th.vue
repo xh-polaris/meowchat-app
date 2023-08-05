@@ -130,12 +130,12 @@ export default {
           // 携带了 px
           return this.width.replace("px", "");
         } else if (this.width.match(regexHaveUnitRpx) !== null) {
-          // 携带了 rpx
+          // 携带了rpx
           let numberRpx = Number(this.width.replace("rpx", ""));
           let widthCoe = uni.getSystemInfoSync().screenWidth / 750;
           return Math.round(numberRpx * widthCoe);
         } else if (this.width.match(regexHaveNotUnit) !== null) {
-          // 未携带 rpx或px 的纯数字 String
+          // 未携带rpx或px 的纯数字 String
           return this.width;
         } else {
           // 不符合格式

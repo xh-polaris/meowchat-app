@@ -5,7 +5,7 @@
       src="https://static.xhpolaris.com/profile_background.png"
     />
     <view class="intro_wrap">
-      <view class="intro"> 您好，我们是华东师范大学小动物保护协会 </view>
+      <view class="intro"> 您好，我们是华东师范大学小动物保护协会</view>
       <view class="intro">
         感谢您选择领养代替购买，但养猫的实际情况可能会和您想象的不太一样，请扫描下方二维码阅读全部内容，认真考虑是否领养，并如实填写问卷
       </view>
@@ -19,7 +19,7 @@
       />
     </view>
     <view class="link_content">
-      <text class="title"> 问卷链接: </text>
+      <text class="title"> 问卷链接:</text>
       <view class="link">https://www.wjx.cn/vj/mBnSgB8.aspx</view>
     </view>
   </view>
@@ -28,9 +28,11 @@
 <script lang="ts" setup>
 import { CopyToClipboard, showPage } from "@/pages/profile/utils";
 import { onShow } from "@dcloudio/uni-app";
+
 function CopyURLToClipboard() {
   CopyToClipboard("https://www.wjx.cn/vj/mBnSgB8.aspx");
 }
+
 onShow(() => {
   showPage();
 });

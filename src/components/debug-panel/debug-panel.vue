@@ -5,8 +5,8 @@
       'button ' + (backendEnv === BackendEnv.Product ? 'green' : 'orange')
     "
     @click="setIsDebugOn(true)"
-    >{{ laneName !== "" ? laneName : "基准" }}</view
-  >
+    >{{ laneName !== "" ? laneName : "基准" }}
+  </view>
   <view v-else class="panel">
     <view class="header">
       <view class="title">泳道设置</view>
@@ -32,31 +32,30 @@
       <view class="label">当前泳道</view>
       <input
         v-model="laneName"
-        placeholder="基准"
-        type="text"
         :class="'laneInput ' + (laneInputEditable ? 'editable' : '')"
         :disabled="!laneInputEditable"
+        placeholder="基准"
+        type="text"
       />
       <view
         v-if="laneInputEditable"
         class="clickable"
         style="transform: translateX(2vw)"
         @click="emptyInputValue()"
-        >清空</view
-      >
-      <view
-        class="clickable"
-        @click="setLaneInputEditable(!laneInputEditable)"
-        >{{ laneInputEditable ? "确认" : "修改" }}</view
-      >
+        >清空
+      </view>
+      <view class="clickable" @click="setLaneInputEditable(!laneInputEditable)"
+        >{{ laneInputEditable ? "确认" : "修改" }}
+      </view>
     </view>
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { Pages } from "@/utils/url";
-import { StorageKeys, BackendEnv } from "@/utils/const";
+import { BackendEnv, StorageKeys } from "@/utils/const";
+
 const reboot = () => {
   uni.reLaunch({
     url: Pages.FirstPage
@@ -85,7 +84,7 @@ const setLaneInputEditable = (isTrue: boolean) => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .button {
   padding: 2vw 4vw;
   border-radius: 2vw;
@@ -93,13 +92,16 @@ const setLaneInputEditable = (isTrue: boolean) => {
   position: fixed;
   left: 2vw;
   bottom: 32vw;
+
   &.green {
     background-color: #45bb76;
   }
+
   &.orange {
     background-color: #da8b28;
   }
 }
+
 .panel {
   padding: 4vw;
   border-radius: 2vw;
@@ -110,29 +112,35 @@ const setLaneInputEditable = (isTrue: boolean) => {
   width: 96vw;
   background-color: #222222;
   color: #cccccc;
+
   .clickable {
     background-color: #222222;
     border-radius: 2vw;
     padding: 1vw 2vw;
+
     &:active {
       background-color: #333333;
       z-index: 20;
     }
   }
+
   .header,
   .env,
   .lane {
     display: flex;
   }
+
   .header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8vw;
+
     .title {
       font-size: 6vw;
       font-weight: bold;
     }
   }
+
   .env {
     .toggle {
       border: 1px solid #888888;
@@ -142,31 +150,38 @@ const setLaneInputEditable = (isTrue: boolean) => {
       line-height: 4vw;
       border-radius: 2vw;
       margin-right: 2vw;
+
       &.current {
         background-color: #888888;
 
         color: #000000;
+
         &.green {
           background-color: #45bb76;
           border: 1px solid #45bb76;
         }
+
         &.orange {
           background-color: #da8b28;
           border: 1px solid #da8b28;
         }
       }
     }
+
     margin-bottom: 2vw;
   }
+
   .lane {
     margin-left: 2vw;
     justify-content: space-between;
     align-items: baseline;
+
     .laneInput {
       flex: 1;
       margin-left: 4vw;
       padding: 1vw 3vw;
       border-radius: 2vw;
+
       &.editable {
         background-color: #333333;
       }

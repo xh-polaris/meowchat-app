@@ -170,7 +170,7 @@ export default {
       type: String,
       default: "#333",
     },
-    //label 最小宽度 rpx
+    //label 最小宽度rpx
     labelWidth: {
       type: [Number, String],
       default: 140,
@@ -266,7 +266,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    //输入框字体大小 rpx
+    //输入框字体大小rpx
     size: {
       type: [Number, String],
       default: 32,
@@ -337,7 +337,7 @@ export default {
       type: String,
       default: "#FFFFFE",
     },
-    //输入框margin-top值 rpx
+    //输入框margin-top值rpx
     marginTop: {
       type: Number,
       default: 0,
@@ -352,7 +352,7 @@ export default {
       type: String,
       default: "#B2B2B2",
     },
-    //计数文本大小 rpx
+    //计数文本大小rpx
     counterSize: {
       type: [Number, String],
       default: 28,

@@ -3,6 +3,7 @@ export const enum Pictures {
   ProfileBackground = "https://static.xhpolaris.com/profile_background.png",
   NoCatHere = "/static/images/no_cat_here.png"
 }
+
 export const enum Icons {
   Location = "/static/images/location.png",
   Search = "/static/images/search.png",
@@ -14,6 +15,7 @@ export const enum Icons {
   Delete = "/static/images/delete.png",
   Guide = "/static/images/guide.png"
 }
+
 export const enum Pages {
   FirstPage = "/pages/first-page/first-page",
   Cat = "/pages/cat/cat",

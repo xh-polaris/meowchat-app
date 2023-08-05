@@ -2,36 +2,38 @@
   <view class="tagController">
     <view class="tagContainer mb-2">
       <view
-        class="tagItem"
-        :class="tagBgColor"
-        v-bind:key="index"
-        v-for="(tagText, index) in nowValue"
+          v-for="(tagText, index) in nowValue"
+          v-bind:key="index"
+          :class="tagBgColor"
+          class="tagItem"
       >
-        <text @tap="tapTag" :data-text="tagText" style="color: white">{{
-          tagText
-        }}</text>
+        <text :data-text="tagText" style="color: white" @tap="tapTag">{{
+            tagText
+          }}
+        </text>
         <text
-          v-if="isShowDelIcon"
-          class="tagDelIcon"
-          @tap="delTag"
-          :data-text="tagText"
-          style="color: white"
-          >x</text
+            v-if="isShowDelIcon"
+            :data-text="tagText"
+            class="tagDelIcon"
+            style="color: white"
+            @tap="delTag"
+        >x
+        </text
         >
       </view>
     </view>
-    <view class="tagInput" v-if="isShowAdd">
+    <view v-if="isShowAdd" class="tagInput">
       <input
-        type="text"
-        v-model="tagString"
-        placeholder="输入逗号分隔的标签"
-        class="tag"
+          v-model="tagString"
+          class="tag"
+          placeholder="输入逗号分隔的标签"
+          type="text"
       />
       <image
-        src="/static/images/add.png"
-        mode="widthFix"
-        @tap="createTags"
-        style="width: 60rpx"
+          mode="widthFix"
+          src="/static/images/add.png"
+          style="width: 60rpx"
+          @tap="createTags"
       ></image>
     </view>
   </view>
@@ -97,13 +99,13 @@ export default {
         const newvalue = this.tagString.split(/,|，/u);
         for (let i = 0; i < newvalue.length; i++) {
           const newTag = newvalue[i].trim();
-		  if(newTag.length>6){
-			  uni.showToast({
-			  	title: '每个标签最多6个字',
-				icon:"none"
-			  });
-			  return;
-		  }
+          if (newTag.length > 6) {
+            uni.showToast({
+              title: '每个标签最多6个字',
+              icon: "none"
+            });
+            return;
+          }
           if (newTag !== "" && this.value.indexOf(newTag) < 0) {
             tempTagArr.push(newTag);
           }

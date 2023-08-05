@@ -66,13 +66,13 @@
   </template>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { reactive } from "vue";
 import { getPostPreviews } from "@/apis/post/post";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
-import { onClickPost, onClickCover } from "./utils";
+import { onClickCover, onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
 
 interface Props {
@@ -80,6 +80,7 @@ interface Props {
   keyword?: string;
   onlyOfficial?: boolean;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   search: "default",
   keyword: "post"
@@ -91,14 +92,18 @@ const getPostPreviewsAsync = async () => {
   let posts: Array<Post> = [];
   if (props.search === "default") {
     const res = await getPostPreviews({
-      lastToken: token,
+      paginationOption: {
+        lastToken: token
+      },
       onlyOfficial: props.onlyOfficial
     });
     token = res.token;
     posts = res.posts;
   } else if (props.search === "post") {
     const res = await getPostPreviews({
-      lastToken: token,
+      paginationOption: {
+        lastToken: token
+      },
       onlyOfficial: props.onlyOfficial,
       searchOptions: {
         key: props.keyword
@@ -125,6 +130,7 @@ onReachBottom(() => {
 <style lang="scss" scoped>
 @import "@/common/user-info.scss";
 @import "@/common/icon.scss";
+
 .first {
   background-color: #fafcff;
 }
@@ -230,11 +236,13 @@ onReachBottom(() => {
     margin-right: calc(16 / 390 * 100vw);
   }
 }
+
 .no-cat-here-frame {
   width: 100vw;
   margin-top: 20vh;
   display: flex;
   justify-content: center;
+
   .no-cat-here {
     width: 400upx;
     height: 222upx;

@@ -1,6 +1,6 @@
 import {
-  GetUserInfoResp,
   GetUserInfoReq,
+  GetUserInfoResp,
   UpdateUserInfoReq,
   UpdateUserInfoResp
 } from "./user-interfaces";

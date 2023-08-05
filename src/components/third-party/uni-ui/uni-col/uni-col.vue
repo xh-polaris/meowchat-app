@@ -164,20 +164,20 @@ export default {
       ["span", "offset", "pull", "push"].forEach((size) => {
         const curSize = this[size];
         if ((curSize || curSize === 0) && curSize !== -1) {
-          let RPX = (1 / 24) * curSize * width;
-          RPX = Number(RPX);
+          letrpx = (1 / 24) * curSize * width;
+         rpx = Number(RPX);
           switch (size) {
             case "span":
-              this.nvueWidth = RPX;
+              this.nvueWidth =rpx;
               break;
             case "offset":
-              this.marginLeft = RPX;
+              this.marginLeft =rpx;
               break;
             case "pull":
-              this.right = RPX;
+              this.right =rpx;
               break;
             case "push":
-              this.left = RPX;
+              this.left =rpx;
               break;
           }
         }

@@ -1,5 +1,5 @@
 <template>
-  <view class="outer" :style="{ height: height + 'px' }">
+  <view :style="{ height: height + 'px' }" class="outer">
     <view class="inner">
       <view class="close" @click="close"></view>
       <template v-if="type === 'post'">
@@ -13,7 +13,7 @@
     </view>
   </view>
 
-  <view class="empty" :style="{ height: height + 'px' }"></view>
+  <view :style="{ height: height + 'px' }" class="empty"></view>
 
   <draft-post v-if="type === 'post'"></draft-post>
   <draft-moment v-if="type === 'moment'"></draft-moment>

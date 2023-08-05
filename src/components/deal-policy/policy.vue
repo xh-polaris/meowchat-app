@@ -55,8 +55,8 @@
         如果你认为开发者未遵守上述约定，或有其他的投诉建议、或未成年人个人信息保护相关问题，可通过以下方式与开发者联系；或者向微信进行投诉。微信号
         : 13958319703
       </view>
-      <view class="confirm" @click="closeText"> 我已确认个人信息保护政策 </view>
-      <view class="cancel" @click="goBack"> 我再想想 </view>
+      <view class="confirm" @click="closeText"> 我已确认个人信息保护政策</view>
+      <view class="cancel" @click="goBack"> 我再想想</view>
     </view>
   </view>
 </template>
@@ -66,9 +66,11 @@ import { ref } from "vue";
 import { Pages } from "@/utils/url";
 
 const isShow = ref(true);
+
 function closeText() {
   isShow.value = !isShow.value;
 }
+
 function goBack() {
   uni.reLaunch({
     url: Pages.Community

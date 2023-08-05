@@ -16,7 +16,7 @@
         />
       </view>
       <view class="image-num"> {{ imagesData.length }}/9</view>
-      <view class="m-2"> </view>
+      <view class="m-2"></view>
     </view>
 
     <view class="panel">
@@ -31,7 +31,7 @@
           />
         </template>
       </view>
-      <button class="publish" :disabled="disablePublish" @click="createImage">
+      <button :disabled="disablePublish" class="publish" @click="createImage">
         上传至照片墙
       </button>
       <view class="notice">
@@ -60,6 +60,7 @@ import { CatImage } from "@/apis/collection/collection-interfaces";
 import { CreateImage } from "@/apis/collection/collection";
 import { Pages } from "@/utils/url";
 import { onClickImage } from "@/pages/cat/utils";
+
 const props = defineProps<{
   catId: string;
   catName: string;
@@ -109,6 +110,7 @@ function addImage() {
     }
   });
 }
+
 function createImage() {
   CreateImage({
     images: photos
@@ -123,17 +125,21 @@ function createImage() {
     });
   });
 }
+
 const isShow = ref(false);
 const type = ref(0);
+
 function showDeal() {
   type.value = 1;
   isShow.value = !isShow.value;
   console.log(isShow.value);
 }
+
 function showPolicy() {
   type.value = 2;
   isShow.value = !isShow.value;
 }
+
 function showImage(index: number) {
   const imageUrl = imagesData.map((item: any) => item.url);
   onClickImage(index, imageUrl);
@@ -164,6 +170,7 @@ body {
   margin: $margin $margin 0;
   flex-wrap: wrap;
 }
+
 .images1 {
   display: flex;
   width: calc(100vw - $margin * 2 + $imageGap);
@@ -180,6 +187,7 @@ body {
   margin-right: $imageGap;
   margin-bottom: $imageGap;
 }
+
 .added-cats,
 .cat-thumbnail {
   box-sizing: border-box;
@@ -193,6 +201,7 @@ body {
   background-size: cover;
   background-position: center;
 }
+
 .added-cats {
   background-size: cover;
   background-position: center;
@@ -206,6 +215,7 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
 .cat-thumbnail {
   background-color: #fafafa;
   border: #d1d1d1 solid calc(1 / 390 * 100vw);
@@ -214,6 +224,7 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
 .choose-text {
   font-size: 20rpx;
   color: #939393;

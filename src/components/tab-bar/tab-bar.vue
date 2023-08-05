@@ -61,6 +61,7 @@ const tabContent = [
     text: "我的"
   }
 ];
+
 function chooseIconClass(id: string) {
   if (id === "0") {
     return "tab-con0";
@@ -68,6 +69,7 @@ function chooseIconClass(id: string) {
     return "tab-con";
   }
 }
+
 function chooseTextClass(id: string) {
   if (id === selectedId.value) {
     return "icon-text0";
@@ -75,6 +77,7 @@ function chooseTextClass(id: string) {
     return "icon-text1";
   }
 }
+
 const tabChange = (path: string) => {
   uni.switchTab({
     url: path
@@ -107,21 +110,25 @@ const tabSwitch = (path: string) => {
   background: #fdfdfd;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   height: 132rpx;
+
   .tab {
     display: grid;
   }
+
   .tab-con {
     will-change: auto;
     width: 70rpx;
     height: 70rpx;
     margin: 0 30rpx 0 30rpx;
   }
+
   .tab-con0 {
     will-change: auto;
     width: 110rpx;
     height: 110rpx;
     margin: 0 30rpx 0 30rpx;
   }
+
   .icon-text1 {
     font-size: 20rpx;
     color: #7f7f81;
@@ -129,6 +136,7 @@ const tabSwitch = (path: string) => {
     margin-left: auto;
     margin-right: auto;
   }
+
   .icon-text0 {
     font-size: 20rpx;
     color: #1fa1ff;

@@ -19,7 +19,9 @@
             :url="`${Pages.EditInfo}?avatarUrl=${userInfo.avatarUrl}&nickname=${userInfo.nickname}`"
             hover-class="none"
           >
-            <view class="edit-info"><view class="edit">编辑资料</view></view>
+            <view class="edit-info">
+              <view class="edit">编辑资料</view>
+            </view>
           </navigator>
         </view>
         <view class="cell-line">
@@ -59,11 +61,12 @@ import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
+import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import DebugPanel from "@/components/debug-panel/debug-panel.vue";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
-import { Pictures, Pages } from "@/utils/url";
+import { Pages, Pictures } from "@/utils/url";
+
 const version = uni.getAccountInfoSync().miniProgram.version;
 const userInfo = reactive<User>({
   id: "",
@@ -76,9 +79,7 @@ const userInfo = reactive<User>({
 });
 
 const refresh = async () => {
-  const res = await getUserInfo({
-    userId: ""
-  });
+  const res = await getUserInfo({});
   userInfo.id = res.user.id;
   userInfo.nickname = res.user.nickname;
   userInfo.avatarUrl = res.user.avatarUrl;
@@ -137,12 +138,14 @@ onReady(() => {
 
 <style lang="scss" scoped>
 @import "@/common/search-input.scss";
+
 .wrap {
   margin-top: 20rpx;
   color: #999999;
   font-size: 24rpx;
   height: 260rpx;
 }
+
 .bg-set {
   position: fixed;
   width: 750rpx;
@@ -162,17 +165,20 @@ onReady(() => {
   justify-content: space-between;
   align-items: center;
   background: #ffff;
+
   .line-info {
     margin-top: 24rpx;
     margin-left: 36rpx;
     display: flex;
     align-items: center;
+
     .number {
       height: 50rpx;
       font-size: 36rpx;
       color: #353535;
       font-weight: 400;
     }
+
     .info {
       margin-left: 10rpx;
       margin-right: 42rpx;
@@ -182,12 +188,14 @@ onReady(() => {
       color: #212121;
       font-weight: 400;
     }
+
     .edit-info {
       width: 110rpx;
       height: 33rpx;
       margin-left: 200rpx;
       border-radius: 20rpx;
       background-color: #d1d1d1;
+
       .edit {
         line-height: 33rpx;
         text-align: center;
@@ -197,6 +205,7 @@ onReady(() => {
       }
     }
   }
+
   .cell-line {
     display: flex;
     align-items: center;
@@ -205,6 +214,7 @@ onReady(() => {
     margin-bottom: 32rpx;
     overflow-x: scroll;
     overflow-y: scroll;
+
     .cell {
       height: 100rpx;
       width: 240rpx;
@@ -214,18 +224,22 @@ onReady(() => {
       align-items: center;
       background: rgba(255, 255, 255, 0.8);
       border-bottom: 1px solid #f8f8f8;
+
       .cell-content {
         display: flex;
         align-items: center;
+
         .cell-icon {
           margin-left: 10rpx;
           align-items: center;
           background: #ececec;
         }
+
         .cell-text {
           width: 200rpx;
           height: 80rpx;
           margin-left: 14rpx;
+
           .title {
             width: 120rpx;
             height: 45rpx;
@@ -234,6 +248,7 @@ onReady(() => {
             font-weight: 400;
             margin-bottom: 8rpx;
           }
+
           .des {
             width: 140rpx;
             height: 45rpx;
@@ -245,6 +260,7 @@ onReady(() => {
       }
     }
   }
+
   .cell-line::-webkit-scrollbar {
     width: 0;
     height: 0;

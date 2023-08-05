@@ -1,6 +1,6 @@
 <template>
   <view class="cats-box">
-    <image class="avatar" :src="cat.avatarUrl" mode="aspectFill" />
+    <image :src="cat.avatarUrl" class="avatar" mode="aspectFill" />
     <view class="text">
       <view class="title">{{ cat.name }}</view>
       <view class="details">
@@ -34,6 +34,7 @@ const cat = reactive(props.cat);
   background-color: #ffffff;
   box-shadow: 0 0 8upx rgba(0, 0, 0, 0.1);
   margin-bottom: 12upx;
+
   .avatar {
     width: 174upx;
     height: 174upx;
@@ -41,6 +42,7 @@ const cat = reactive(props.cat);
     margin-left: 24upx;
     margin-right: 40upx;
   }
+
   .text {
     flex: 1;
     margin-right: 64upx;
@@ -48,17 +50,21 @@ const cat = reactive(props.cat);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     .title {
       font-size: 36upx;
       color: #1d1d1d;
     }
+
     .details {
       font-size: 20upx;
       color: #939393;
+
       .info {
       }
     }
   }
+
   .star {
     position: absolute;
     right: 36upx;
@@ -67,6 +73,7 @@ const cat = reactive(props.cat);
     height: 30upx;
     background-size: 100% 100%;
     background-image: url("/static/images/star-grey.png");
+
     &.collected {
       background-image: url("/static/images/star-yellow.png");
     }

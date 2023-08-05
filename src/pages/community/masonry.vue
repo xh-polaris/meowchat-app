@@ -16,16 +16,16 @@
               :src="moment.photos[0]"
               class="img"
               mode="widthFix"
-              @load.once="onLoadLeft"
               @error="onLoad"
+              @load.once="onLoadLeft"
             />
             <image
               v-else
               :src="moment.photos[0]"
               class="img"
               mode="widthFix"
-              @load.once="onLoadRight"
               @error="onLoad"
+              @load.once="onLoadRight"
             />
           </view>
 
@@ -46,8 +46,8 @@
             </view>
             <view class="other-info">
               <view class="font-sm"
-                >{{ moment.likedNumber }}位喵友觉得很赞</view
-              >
+                >{{ moment.likedNumber }}位喵友觉得很赞
+              </view>
               <view class="comment font-sm">{{ moment.comments }}条回复</view>
             </view>
           </view>
@@ -68,13 +68,13 @@ import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
-import { getMomentPreviews } from "@/apis/moment/moment";
 import { getCount } from "@/apis/like/like";
 import { getComments } from "@/apis/comment/comment";
 
 interface Props {
   getPreviews: () => Promise<Moment[]>;
 }
+
 const props = defineProps<Props>();
 
 /**
@@ -376,11 +376,13 @@ $avatarWidth: calc(21 / 390 * 100vw);
   margin-top: 20vh;
   display: flex;
   justify-content: center;
+
   .no-cat-here {
     width: 400upx;
     height: 222upx;
   }
 }
+
 .other-info {
   color: #b8b8b8;
 }

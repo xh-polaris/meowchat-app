@@ -12,6 +12,12 @@ import { PictureStyle } from "@/apis/cos/cos-interface";
 
 export async function getPostPreviews(req: GetPostPreviewsReq) {
   return await new Promise<GetPostPreviewsResp>((resolve, reject) => {
+    req.page = 2;
+    if (!req.paginationOption) {
+      req.paginationOption = { limit: 10 };
+    } else if (!req.paginationOption.limit) {
+      req.paginationOption.limit = 10;
+    }
     uni.request({
       url: "/post/get_post_previews",
       method: "POST",

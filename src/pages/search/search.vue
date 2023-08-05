@@ -6,9 +6,9 @@
     >
       <view class="d-flex a-center">
         <image
+          :src="Icons.Search"
           class="ml-2"
           style="width: 40rpx; height: 40rpx"
-          :src="Icons.Search"
         >
         </image>
         <input
@@ -20,7 +20,7 @@
           type="text"
         />
       </view>
-      <view style="color: #57a4da" class="mr-2" @click="onClickSearch">
+      <view class="mr-2" style="color: #57a4da" @click="onClickSearch">
         搜索
       </view>
     </view>
@@ -32,8 +32,8 @@
             style="width: 45rpx; height: 45rpx"
           ></image>
           <view class="ml-1 mb-1" style="color: #999999; font-size: 32rpx"
-            >最近搜索</view
-          >
+            >最近搜索
+          </view>
         </view>
 
         <!-- 搜索历史列表 -->
@@ -41,9 +41,9 @@
           <view
             v-for="(item, index) in list"
             :key="index"
-            hover-class="bg-light"
-            class="px-3 py-1 border d-inline-block m-1 font-md"
             :style="getStyle"
+            class="px-3 py-1 border d-inline-block m-1 font-md"
+            hover-class="bg-light"
             style="border-radius: 40rpx; color: #515151"
             @click="clickSearchHistory(item)"
           >
@@ -60,8 +60,8 @@
       <view style="margin-top: 20upx">
         <zzx-tabs
           ref="mytabs"
-          :items="items"
           :current="current"
+          :items="items"
           @click-item="onClickItem"
         >
         </zzx-tabs>
@@ -76,15 +76,15 @@
       >
         <view v-show="current === 0">
           <!-- 帖子 -->
-          <world-posts search="post" :keyword="searchText"></world-posts>
+          <world-posts :keyword="searchText" search="post"></world-posts>
         </view>
         <view v-show="current === 1">
           <!-- 动态 -->
-          <MasonryFrame search="search" :keyword="searchText"></MasonryFrame>
+          <MasonryFrame :keyword="searchText" search="search"></MasonryFrame>
         </view>
         <view v-show="current === 2">
           <!-- 图鉴 -->
-          <search-cats search="cat" :keyword="searchText"></search-cats>
+          <search-cats :keyword="searchText" search="cat"></search-cats>
         </view>
       </view>
     </view>
@@ -165,6 +165,7 @@ function onClickSearch() {
     url: "/pages/search/search"
   });
 }
+
 let getStyle = computed(() => {
   let color = {
     borderColor: ["#eea6aa", "#98d5d8", "#9dbe93", "#bccd99", "#EAD6BC"],
@@ -181,7 +182,7 @@ function clickSearchHistory(item: string) {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .QS-tabs-box {
   width: 100%;
   position: sticky;

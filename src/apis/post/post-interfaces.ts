@@ -1,4 +1,4 @@
-import { Post, Tag } from "../schemas";
+import { PaginationOptions, Post, Tag } from "../schemas";
 
 interface AllFieldsKey {
   key: string;
@@ -11,10 +11,8 @@ interface MultiFieldsKey {
 }
 
 export interface GetPostPreviewsReq {
-  limit?: string;
-  offset?: string;
-  lastToken?: string;
-  backward?: boolean;
+  page?: number;
+  paginationOption?: PaginationOptions;
   onlyOfficial?: boolean;
   onlyUserId?: string;
   searchOptions?: AllFieldsKey | MultiFieldsKey;
