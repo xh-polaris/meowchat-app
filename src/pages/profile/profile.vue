@@ -209,9 +209,7 @@ onReady(() => {
   .cell-line {
     display: flex;
     align-items: center;
-    margin-left: 30rpx;
-    margin-top: 40rpx;
-    margin-bottom: 32rpx;
+    margin: 40rpx 30rpx 32rpx;
     overflow-x: scroll;
     overflow-y: scroll;
 
@@ -223,7 +221,7 @@ onReady(() => {
       justify-content: space-between;
       align-items: center;
       background: rgba(255, 255, 255, 0.8);
-      border-bottom: 1px solid #f8f8f8;
+      border-bottom: 1px solid #ececec;
 
       .cell-content {
         display: flex;
@@ -232,7 +230,6 @@ onReady(() => {
         .cell-icon {
           margin-left: 10rpx;
           align-items: center;
-          background: #ececec;
         }
 
         .cell-text {
