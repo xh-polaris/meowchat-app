@@ -5,15 +5,17 @@
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Cat } from "@/apis/schemas";
+
 interface Props {
   cat: Cat;
 }
+
 const props = defineProps<Props>();
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .main {
   margin: 0 6vw;
 }

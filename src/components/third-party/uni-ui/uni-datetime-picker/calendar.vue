@@ -1,39 +1,39 @@
 <template>
   <view class="uni-calendar" @mouseleave="leaveCale">
     <view
-      v-if="!insert && show"
-      class="uni-calendar__mask"
-      :class="{ 'uni-calendar--mask-show': aniMaskShow }"
-      @click="
+        v-if="!insert && show"
+        :class="{ 'uni-calendar--mask-show': aniMaskShow }"
+        class="uni-calendar__mask"
+        @click="
         clean();
         maskClick();
       "
     ></view>
     <view
-      v-if="insert || show"
-      class="uni-calendar__content"
-      :class="{
+        v-if="insert || show"
+        :class="{
         'uni-calendar--fixed': !insert,
         'uni-calendar--ani-show': aniMaskShow,
         'uni-calendar__content-mobile': aniMaskShow,
       }"
+        class="uni-calendar__content"
     >
       <view
-        class="uni-calendar__header"
-        :class="{ 'uni-calendar__header-mobile': !insert }"
+          :class="{ 'uni-calendar__header-mobile': !insert }"
+          class="uni-calendar__header"
       >
         <view
-          v-if="left"
-          class="uni-calendar__header-btn-box"
-          @click.stop="pre"
+            v-if="left"
+            class="uni-calendar__header-btn-box"
+            @click.stop="pre"
         >
           <view class="uni-calendar__header-btn uni-calendar--left"></view>
         </view>
         <picker
-          mode="date"
-          :value="date"
-          fields="month"
-          @change="bindDateChange"
+            :value="date"
+            fields="month"
+            mode="date"
+            @change="bindDateChange"
         >
           <text class="uni-calendar__header-text">
             {{
@@ -45,17 +45,17 @@
           </text>
         </picker>
         <view
-          v-if="right"
-          class="uni-calendar__header-btn-box"
-          @click.stop="next"
+            v-if="right"
+            class="uni-calendar__header-btn-box"
+            @click.stop="next"
         >
           <view class="uni-calendar__header-btn uni-calendar--right"></view>
         </view>
         <view v-if="!insert" class="dialog-close" @click="clean">
           <view class="dialog-close-plus" data-id="close"></view>
           <view
-            class="dialog-close-plus dialog-close-rotate"
-            data-id="close"
+              class="dialog-close-plus dialog-close-rotate"
+              data-id="close"
           ></view>
         </view>
 
@@ -89,86 +89,86 @@
           </view>
         </view>
         <view
-          class="uni-calendar__weeks"
-          v-for="(item, weekIndex) in weeks"
-          :key="weekIndex"
+            v-for="(item, weekIndex) in weeks"
+            :key="weekIndex"
+            class="uni-calendar__weeks"
         >
           <view
-            class="uni-calendar__weeks-item"
-            v-for="(weeks, weeksIndex) in item"
-            :key="weeksIndex"
+              v-for="(weeks, weeksIndex) in item"
+              :key="weeksIndex"
+              class="uni-calendar__weeks-item"
           >
             <calendar-item
-              class="uni-calendar-item--hook"
-              :weeks="weeks"
-              :calendar="calendar"
-              :selected="selected"
-              :lunar="lunar"
-              :checkHover="range"
-              @change="choiceDate"
-              @handleMouse="handleMouse"
+                :calendar="calendar"
+                :checkHover="range"
+                :lunar="lunar"
+                :selected="selected"
+                :weeks="weeks"
+                class="uni-calendar-item--hook"
+                @change="choiceDate"
+                @handleMouse="handleMouse"
             >
             </calendar-item>
           </view>
         </view>
       </view>
       <view
-        v-if="!insert && !range && typeHasTime"
-        class="uni-date-changed uni-calendar--fixed-top"
-        style="padding: 0 80px"
+          v-if="!insert && !range && typeHasTime"
+          class="uni-date-changed uni-calendar--fixed-top"
+          style="padding: 0 80px"
       >
         <view class="uni-date-changed--time-date"
-          >{{ tempSingleDate ? tempSingleDate : selectDateText }}
+        >{{ tempSingleDate ? tempSingleDate : selectDateText }}
         </view>
         <time-picker
-          type="time"
-          :start="reactStartTime"
-          :end="reactEndTime"
-          v-model="time"
-          :disabled="!tempSingleDate"
-          :border="false"
-          :hide-second="hideSecond"
-          class="time-picker-style"
+            v-model="time"
+            :border="false"
+            :disabled="!tempSingleDate"
+            :end="reactEndTime"
+            :hide-second="hideSecond"
+            :start="reactStartTime"
+            class="time-picker-style"
+            type="time"
         >
         </time-picker>
       </view>
 
       <view
-        v-if="!insert && range && typeHasTime"
-        class="uni-date-changed uni-calendar--fixed-top"
+          v-if="!insert && range && typeHasTime"
+          class="uni-date-changed uni-calendar--fixed-top"
       >
         <view class="uni-date-changed--time-start">
           <view class="uni-date-changed--time-date"
-            >{{ tempRange.before ? tempRange.before : startDateText }}
+          >{{ tempRange.before ? tempRange.before : startDateText }}
           </view>
           <time-picker
-            type="time"
-            :start="reactStartTime"
-            v-model="timeRange.startTime"
-            :border="false"
-            :hide-second="hideSecond"
-            :disabled="!tempRange.before"
-            class="time-picker-style"
+              v-model="timeRange.startTime"
+              :border="false"
+              :disabled="!tempRange.before"
+              :hide-second="hideSecond"
+              :start="reactStartTime"
+              class="time-picker-style"
+              type="time"
           >
           </time-picker>
         </view>
         <uni-icons
-          type="arrowthinright"
-          color="#999"
-          style="line-height: 50px"
+            color="#999"
+            style="line-height: 50px"
+            type="arrowthinright"
         ></uni-icons>
         <view class="uni-date-changed--time-end">
           <view class="uni-date-changed--time-date"
-            >{{ tempRange.after ? tempRange.after : endDateText }}
+          >{{ tempRange.after ? tempRange.after : endDateText }}
           </view>
           <time-picker
-            type="time"
-            :end="reactEndTime"
-            v-model="timeRange.endTime"
-            :border="false"
-            :hide-second="hideSecond"
-            :disabled="!tempRange.after"
-            class="time-picker-style"
+              v-model="timeRange.endTime"
+              :border="false"
+              :disabled="!tempRange.after"
+              :end="reactEndTime"
+              :hide-second="hideSecond"
+              class="time-picker-style"
+              type="time"
           >
           </time-picker>
         </view>
@@ -178,7 +178,7 @@
           <text class="uni-calendar__button-text uni-calendar--fixed-width">{{okText}}</text>
         </view> -->
         <view class="uni-datetime-picker--btn" @click="confirm"
-          >{{ confirmText }}
+        >{{ confirmText }}
         </view>
       </view>
     </view>
@@ -189,10 +189,10 @@
 import Calendar from "./util.js";
 import calendarItem from "./calendar-item.vue";
 import timePicker from "./time-picker.vue";
-import { initVueI18n } from "@dcloudio/uni-i18n";
+import {initVueI18n} from "@dcloudio/uni-i18n";
 import messages from "./i18n/index.js";
 
-const { t } = initVueI18n(messages);
+const {t} = initVueI18n(messages);
 /**
  * Calendar 日历
  * @description 日历组件可以查看日期，选择任意范围内的日期，打点操作。常用场景如：酒店日期预订、火车机票选择购买日期、上下班打卡等
@@ -360,7 +360,7 @@ export default {
     pleStatus: {
       immediate: true,
       handler(newVal, oldVal) {
-        const { before, after, fulldate, which } = newVal;
+        const {before, after, fulldate, which} = newVal;
         this.tempRange.before = before;
         this.tempRange.after = after;
         setTimeout(() => {
@@ -394,16 +394,16 @@ export default {
   computed: {
     reactStartTime() {
       const activeDate = this.range
-        ? this.tempRange.before
-        : this.calendar.fullDate;
+          ? this.tempRange.before
+          : this.calendar.fullDate;
       const res =
-        activeDate === this.startDate ? this.selectableTimes.start : "";
+          activeDate === this.startDate ? this.selectableTimes.start : "";
       return res;
     },
     reactEndTime() {
       const activeDate = this.range
-        ? this.tempRange.after
-        : this.calendar.fullDate;
+          ? this.tempRange.after
+          : this.calendar.fullDate;
       const res = activeDate === this.endDate ? this.selectableTimes.end : "";
       return res;
     },
@@ -475,7 +475,7 @@ export default {
     handleMouse(weeks) {
       if (weeks.disable) return;
       if (this.cale.lastHover) return;
-      let { before, after } = this.cale.multipleStatus;
+      let {before, after} = this.cale.multipleStatus;
       if (!before) return;
       this.calendar = weeks;
       // 设置范围选
@@ -592,7 +592,7 @@ export default {
      * 选择月份触发
      */
     monthSwitch() {
-      let { year, month } = this.nowDate;
+      let {year, month} = this.nowDate;
       this.$emit("monthSwitch", {
         year,
         month: Number(month),
@@ -603,7 +603,7 @@ export default {
      * @param {Object} name
      */
     setEmit(name) {
-      let { year, month, date, fullDate, lunar, extraInfo } = this.calendar;
+      let {year, month, date, fullDate, lunar, extraInfo} = this.calendar;
       this.$emit(name, {
         range: this.cale.multipleStatus,
         year,
@@ -668,9 +668,9 @@ export default {
      */
     pre() {
       const preDate = this.cale.getDate(
-        this.nowDate.fullDate,
-        -1,
-        "month"
+          this.nowDate.fullDate,
+          -1,
+          "month"
       ).fullDate;
       this.setDate(preDate);
       this.monthSwitch();
@@ -680,9 +680,9 @@ export default {
      */
     next() {
       const nextDate = this.cale.getDate(
-        this.nowDate.fullDate,
-        +1,
-        "month"
+          this.nowDate.fullDate,
+          +1,
+          "month"
       ).fullDate;
       this.setDate(nextDate);
       this.monthSwitch();

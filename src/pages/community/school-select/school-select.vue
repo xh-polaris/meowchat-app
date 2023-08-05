@@ -9,17 +9,17 @@
         type="text"
       />
       <image
-        style="width: 40rpx"
-        mode="widthFix"
         :src="Icons.Search"
+        mode="widthFix"
+        style="width: 40rpx"
         @click="onClickSearch"
       />
     </view>
     <view class="d-flex">
       <view class="subContent"> 当前选择</view>
       <view v-if="onChoose" class="confirmButton" @click="confirmChoose"
-        >确定切换</view
-      >
+        >确定切换
+      </view>
     </view>
     <view class="school-select-box">
       <view class="current_school">
@@ -153,6 +153,7 @@ function getHistories() {
     encodeURIComponent(JSON.stringify(historyJSON))
   );
 }
+
 function checkRepeat(id: string) {
   let flag = true;
   for (let i = 0; i < historyJSON.histories.length; i++) {
@@ -165,6 +166,7 @@ function checkRepeat(id: string) {
   }
   return flag;
 }
+
 onLoad(() => {
   getCampus();
 });
@@ -193,6 +195,7 @@ const schools = reactive<{
 async function schoolList() {
   lists.data = (await listCommunity({})).communities;
 }
+
 // 找所有学校
 async function getSchools() {
   schoolList().then(async () => {
@@ -206,6 +209,7 @@ async function getSchools() {
     schools.computedData = [...schools.data];
   });
 }
+
 getSchools();
 
 // 找该学校的所有校区
@@ -243,6 +247,7 @@ async function getCampus() {
     });
   }
 }
+
 getCampus();
 
 const sel = ref(true);
@@ -251,12 +256,14 @@ const sel = ref(true);
 function change() {
   sel.value = !sel.value;
 }
+
 // 选择学校
 function changeCampus(name: string, index: number) {
   onChoose.value = true;
   currentCampus.value = name;
   uni.setStorageSync(StorageKeys.CommunityId, campuses.data[index].id);
 }
+
 function changeCampusByHistory(
   campus: string,
   school: string,
@@ -271,6 +278,7 @@ function changeCampusByHistory(
   uni.setStorageSync("communityId", id);
   getCampus();
 }
+
 // 选择校区
 function changeSchool(name: string, id: string) {
   currentSchool.value = name;
@@ -309,6 +317,7 @@ function confirmChoose() {
   flex-direction: column;
   justify-content: center;
 }
+
 // 搜索框
 .search {
   border-radius: 70rpx;
@@ -439,6 +448,7 @@ function confirmChoose() {
     margin-top: 8rpx;
     float: right;
   }
+
   .text {
     font-size: 25rpx;
     font-weight: bold;
@@ -467,6 +477,7 @@ function confirmChoose() {
     margin-top: 8rpx;
     float: right;
   }
+
   .text {
     font-size: 25rpx;
     font-weight: bold;

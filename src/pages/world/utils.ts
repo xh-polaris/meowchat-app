@@ -6,6 +6,7 @@ export function onClickPost(id: string) {
     url: `${Pages.Post}?id=${id}`
   });
 }
+
 export function search() {
   uni.navigateTo({
     url: Pages.Search

@@ -1,7 +1,7 @@
 <template>
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
-    <UserInfo type="other" :user-id="props.userId"></UserInfo>
+    <UserInfo :user-id="props.userId" type="other"></UserInfo>
   </view>
   <view class="com-item">
     <view class="line-info">
@@ -12,22 +12,21 @@
       <view class="number">{{ userInfo.article }}</view>
       <view class="info">创作</view>
       <view v-if="followInfo.followed === false">
-        <view class="subscribe" @click="onClickFollow()"
-          ><view class="follow">+关注</view></view
-        >
+        <view class="subscribe" @click="onClickFollow()">
+          <view class="follow">+关注</view>
+        </view>
       </view>
       <view v-else>
-        <view class="unsubscribe" @click="onClickFollow()"
-          ><view class="unfollow">取消关注</view></view
-        >
+        <view class="unsubscribe" @click="onClickFollow()">
+          <view class="unfollow">取消关注</view>
+        </view>
       </view>
     </view>
   </view>
-  <UserPublished type="other" :user-id="props.userId"></UserPublished>
+  <UserPublished :user-id="props.userId" type="other"></UserPublished>
 </template>
 
 <script lang="ts" setup>
-import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
 import { onBeforeUnmount, reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { doLike, getUserLiked } from "@/apis/like/like";
@@ -39,10 +38,12 @@ import { Pictures } from "@/utils/url";
 const props = defineProps<{
   userId?: string;
 }>();
+
 interface FollowedInfo {
   followed: boolean;
   originFollow: boolean;
 }
+
 const followInfo = reactive<FollowedInfo>({
   followed: true,
   originFollow: true
@@ -111,12 +112,14 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 @import "@/common/search-input.scss";
+
 .wrap {
   margin-top: 20rpx;
   color: #999999;
   font-size: 24rpx;
   height: 260rpx;
 }
+
 .bg-set {
   position: fixed;
   width: 750rpx;
@@ -125,6 +128,7 @@ onBeforeUnmount(() => {
   z-index: -1;
   opacity: 0.9; //设置透明度
 }
+
 .com-item {
   margin-top: 250rpx;
   margin-bottom: 50rpx;
@@ -132,16 +136,19 @@ onBeforeUnmount(() => {
   overflow: hidden;
   justify-content: space-between;
   align-items: center;
+
   .line-info {
     margin-left: 36rpx;
     display: flex;
     align-items: center;
+
     .number {
       height: 50rpx;
       font-size: 36rpx;
       color: #353535;
       font-weight: 400;
     }
+
     .info {
       margin-left: 10rpx;
       margin-right: 42rpx;
@@ -151,12 +158,14 @@ onBeforeUnmount(() => {
       color: #212121;
       font-weight: 400;
     }
+
     .subscribe {
       width: 125rpx;
       height: 50rpx;
       margin-left: 170rpx;
       border-radius: 30rpx;
       background-color: #1fa1ff;
+
       .follow {
         line-height: 50rpx;
         text-align: center;
@@ -165,12 +174,14 @@ onBeforeUnmount(() => {
         font-weight: 400;
       }
     }
+
     .unsubscribe {
       width: 130rpx;
       height: 50rpx;
       margin-left: 170rpx;
       border-radius: 20rpx;
       background-color: #dfdfdf;
+
       .unfollow {
         line-height: 50rpx;
         text-align: center;

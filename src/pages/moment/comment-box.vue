@@ -21,8 +21,8 @@
             {{ comment.user.nickname }}
           </view>
           <view class="comment-time">
-            · {{ displayTime(comment.createAt) }}</view
-          >
+            · {{ displayTime(comment.createAt) }}
+          </view>
         </view>
         <view>
           <view class="comment-content" @click="emit('interactWithComment')">
@@ -74,15 +74,14 @@
 </template>
 
 <script lang="ts" setup>
-import { getLikeData, LikeStruct } from "@/pages/moment/utils";
+import { LikeStruct } from "@/pages/moment/utils";
 import { Comment } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
-import { deletePost, getPostDetail } from "@/apis/post/post";
 import { deleteCommment } from "@/apis/comment/comment";
 import { getUserInfo } from "@/apis/user/user";
 import { ref } from "vue";
-import command from "cac/deno/Command";
 import { toPersonInfo } from "@/pages/profile/utils";
+
 const props = defineProps<{
   like: LikeStruct;
   comment: Comment;
@@ -100,7 +99,7 @@ const emit = defineEmits<{
 }>();
 
 const getData = async () => {
-  getUserInfo().then((res) => {
+  getUserInfo({}).then((res) => {
     myUserId.value = res.user.id;
   });
 };
@@ -113,7 +112,6 @@ const closeDeleteDialogue = () => {
   isShowDeleteDialogue.value = false;
 };
 const deleteThisPost = () => {
-  console.log("删除！");
   deleteCommment({
     commentId: props.comment.id
   }).then(
@@ -198,6 +196,7 @@ const deleteThisPost = () => {
     }
   }
 }
+
 .confirm-to-delete {
   width: 100vw;
   height: 100vh;
@@ -270,6 +269,7 @@ const deleteThisPost = () => {
 .reply {
   color: #1fa1ff;
   font-size: 28upx;
+
   &:active {
     color: #077cce;
   }

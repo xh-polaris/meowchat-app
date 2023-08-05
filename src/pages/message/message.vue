@@ -14,29 +14,29 @@
           <view class="d-flex px-3 py-3 a-center j-sb">
             <view class="d-flex a-center">
               <image
-                src="/static/images/notice.png"
                 mode="widthFix"
+                src="/static/images/notice.png"
                 style="width: 80rpx"
               ></image>
               <view class="font-lg">公告</view>
             </view>
             <view class="">
               <image
-                src="/static/images/arrow-right.png"
                 mode="widthFix"
+                src="/static/images/arrow-right.png"
                 style="width: 50rpx"
               ></image>
             </view>
           </view>
           <view class="font-md px-4 mb-5">{{ item.text }}</view>
           <view class="font-md px-4 py-3" style="color: #b4b4b4"
-            >{{ displayTime(item.createAt) }} 发布</view
-          >
+            >{{ displayTime(item.createAt) }} 发布
+          </view>
         </view>
       </view>
     </view>
     <view v-else>
-      <image src="https://static.xhpolaris.com/nodata.png" mode=""></image>
+      <image mode="" src="https://static.xhpolaris.com/nodata.png"></image>
     </view>
     <!-- 回复 -->
     <view v-for="(item, index) in replyList" v-show="false" :key="index">
@@ -67,21 +67,21 @@
                     white-space: nowrap;
                     width: 30%;
                   "
-                  >{{ item.userName }}</view
-                >
+                  >{{ item.userName }}
+                </view>
                 <view
                   class="font-md"
                   style="color: #b4b4b4; letter-spacing: 3rpx"
                 >
-                  回复了你的动态</view
-                >
+                  回复了你的动态
+                </view>
               </view>
               <view class="font-md py-2" style="letter-spacing: 4rpx">
                 {{ item.content }}
               </view>
-              <view class="font-md pb-2" style="color: #b4b4b4">{{
-                item.time
-              }}</view>
+              <view class="font-md pb-2" style="color: #b4b4b4"
+                >{{ item.time }}
+              </view>
             </view>
           </view>
         </view>
@@ -89,9 +89,9 @@
         <view class="">
           <image
             :src="item.cover"
-            style="width: 150rpx; height: 150rpx; border-radius: 20rpx"
             class="ml-5"
             mode="aspectFill"
+            style="width: 150rpx; height: 150rpx; border-radius: 20rpx"
           ></image>
         </view>
       </view>
@@ -100,7 +100,7 @@
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { reactive } from "vue";
 import Divider from "@/components/divider/divider.vue";
 import { getNotices } from "@/apis/notice/notice";

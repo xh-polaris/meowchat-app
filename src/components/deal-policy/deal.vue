@@ -2,8 +2,8 @@
   <view v-if="isShow" class="popup">
     <view class="dialog">
       <view class="title">用户服务协议</view>
-      <view class="text"
-        >为使用MeowChat微信小程序服务（以下简称“本服务”或“小程序服务”），您应当仔细阅读并遵守《MeowChat微信小程序用户协议》，您可以自由选择是否使用本程序，您对本服务的登录、查看、发布信息等行为即视为已阅读并同意本条款的约束。
+      <view class="text">
+        为使用MeowChat微信小程序服务（以下简称“本服务”或“小程序服务”），您应当仔细阅读并遵守《MeowChat微信小程序用户协议》，您可以自由选择是否使用本程序，您对本服务的登录、查看、发布信息等行为即视为已阅读并同意本条款的约束。
         <br />
         一、协议的范围
         <br />
@@ -100,10 +100,10 @@
         7.3本协议条款无论因何种原因部分无效或不可执行，其余条款仍有效，对双方都具有约束力。
         <br />
       </view>
-      <view class="confirm" :value="type" @click="closeText">
+      <view :value="type" class="confirm" @click="closeText">
         我已确认用户服务协议
       </view>
-      <view class="cancel" @click="goBack"> 我再想想 </view>
+      <view class="cancel" @click="goBack"> 我再想想</view>
     </view>
   </view>
 </template>
@@ -113,10 +113,12 @@ import { ref } from "vue";
 import { Pages } from "@/utils/url";
 
 const isShow = ref(true);
+
 function closeText() {
   isShow.value = !isShow.value;
   uni.setStorageSync("isShow", false);
 }
+
 function goBack() {
   uni.reLaunch({
     url: Pages.Community

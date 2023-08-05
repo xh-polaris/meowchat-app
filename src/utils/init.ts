@@ -19,8 +19,8 @@ export async function init() {
             success(res: UniNamespace.LoginRes) {
               signIn({
                 authType: "wechat",
-                authId: "123", // 微信登陆时这里随便填什么都可以
-                params: [res.code]
+                authId: "wxd39cebf05e21d3b6",
+                verifyCode: res.code
               })
                 .then((signInRes) => {
                   afterSignIn(signInRes);

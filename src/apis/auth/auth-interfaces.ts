@@ -11,8 +11,8 @@ export interface SendVerifyCodeResp {
 export interface SignInReq {
   authType: "phone" | "email" | "wechat";
   authId: string;
-  password?: string; // 需要在前端md5加密
-  params?: Array<string>; // password和params二选一
+  password?: string;
+  verifyCode?: string;
 }
 
 export interface SignInResp {

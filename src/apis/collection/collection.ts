@@ -1,6 +1,10 @@
 import {
+  CreateImageReq,
+  CreateImageResp,
   DeleteCatReq,
   DeleteCatResp,
+  DeleteImageReq,
+  DeleteImageResp,
   GetCatDetailReq,
   GetCatDetailResp,
   GetCatPreviewsReq,
@@ -10,11 +14,7 @@ import {
   NewCatReq,
   NewCatResp,
   SearchCatPreviewsReq,
-  SearchCatPreviewsResp,
-  CreateImageResp,
-  CreateImageReq,
-  DeleteImageReq,
-  DeleteImageResp
+  SearchCatPreviewsResp
 } from "./collection-interfaces";
 import { PictureStyle } from "@/apis/cos/cos-interface";
 
@@ -168,6 +168,7 @@ export async function CreateImage(
     });
   });
 }
+
 export async function deletePost(req: DeleteImageReq) {
   return await new Promise<DeleteImageResp>((resolve, reject) => {
     uni.request({

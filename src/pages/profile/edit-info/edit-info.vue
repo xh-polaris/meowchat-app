@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <image class="bg-set" :src="Pictures.ProfileBackground" />
+    <image :src="Pictures.ProfileBackground" class="bg-set" />
     <view class="choose-avatar-row">
       <button
         class="avatar-wrapper"
@@ -18,27 +18,27 @@
       <text class="nickname">昵称</text>
       <view class="choose-nickname-row">
         <input
+          :value="userInfo.nickname ? userInfo.nickname : props.nickname"
           class="update-nickname"
+          name="nickname"
           placeholder="请输入昵称"
           type="nickname"
-          name="nickname"
-          :value="userInfo.nickname ? userInfo.nickname : props.nickname"
         />
       </view>
       <view class="motto">个性签名</view>
       <view class="motto-input">
         <textarea
+          :value="userInfo.motto ? userInfo.motto : props.motto"
           class="textarea-inherit"
+          name="motto"
           placeholder="&nbsp 请输入新的个性签名"
           placeholder-style="color: #B8B8B8;"
           type="motto"
-          name="motto"
-          :value="userInfo.motto ? userInfo.motto : props.motto"
         />
       </view>
       <button
-        class="confirm-change"
         :disabled="disableConfirm"
+        class="confirm-change"
         form-type="submit"
       >
         <text class="save">确认</text>
@@ -61,6 +61,7 @@ const props = defineProps<{
 }>();
 const disableConfirm = ref(false);
 const userInfo = reactive<UpdateUserInfoReq>({});
+
 function onChooseAvatar(e: any) {
   disableConfirm.value = true;
   putObject({
@@ -71,6 +72,7 @@ function onChooseAvatar(e: any) {
     userInfo.avatarUrl = res.url;
   });
 }
+
 function formSubmit(e: any) {
   userInfo.nickname = e.detail.value.nickname;
   userInfo.motto = e.detail.value.motto;
@@ -103,6 +105,7 @@ function formSubmit(e: any) {
   height: 40%;
   background-color: #eeeeee;
 }
+
 .bg-set {
   position: fixed;
   width: 100%;
@@ -112,6 +115,7 @@ function formSubmit(e: any) {
   z-index: -1;
   opacity: 0.9; //设置透明度
 }
+
 .choose-avatar-row {
   width: 100%;
   height: 80%;
@@ -119,12 +123,14 @@ function formSubmit(e: any) {
   text-align: center;
   font-size: 28rpx;
   margin-bottom: 10%;
+
   .avatar-wrapper {
     width: 260rpx;
     height: 260rpx;
     margin-top: 40rpx;
     margin-bottom: 40rpx;
     border-radius: 50%;
+
     .avatar {
       width: 260rpx;
       height: 260rpx;
@@ -133,10 +139,12 @@ function formSubmit(e: any) {
     }
   }
 }
+
 .avatar-hint {
   font-size: 30rpx;
   color: #888888;
 }
+
 .nickname {
   margin-left: 70rpx;
   font-size: 40rpx;
@@ -157,6 +165,7 @@ function formSubmit(e: any) {
   border: 5rpx solid #f1f1f1;
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.02);
   border-radius: 25rpx;
+
   .update-nickname {
     margin-left: 40rpx;
     font-size: 40rpx;
@@ -170,16 +179,19 @@ function formSubmit(e: any) {
   width: 93%;
   border-radius: 25rpx;
   background-color: #1fa1ff;
+
   .save {
     color: #fcfcfc;
     font-size: 40rpx;
   }
 }
+
 .motto {
   margin-left: 70rpx;
   font-size: 40rpx;
   color: #858585;
 }
+
 .motto-input {
   margin-top: 30rpx;
   margin-left: 30rpx;

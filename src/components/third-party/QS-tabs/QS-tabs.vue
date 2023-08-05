@@ -1,30 +1,29 @@
 <template>
   <view
-    class="QS-tabs"
-    :style="{
+      :style="{
       'z-index': zIndex,
       'font-size': getFontSize + 'rpx',
       'background-color': getBgColor,
       'transition-duration': getDuration + 's'
     }"
+      class="QS-tabs"
   >
     <scroll-view
-      scroll-x
-      class="QS-tabs-scroll"
-      :scroll-left="left"
-      scroll-with-animation
-      :style="{
+        :scroll-left="left"
+        :style="{
         'z-index': Number(zIndex) + 1
       }"
+        class="QS-tabs-scroll"
+        scroll-with-animation
+        scroll-x
     >
       <view class="QS-tabs-scroll-box">
         <!-- 循环tabs -->
         <view
-          v-for="(item, index) in getTabs"
-          :id="preId + index"
-          :key="index"
-          class="QS-tabs-scroll-item"
-          :style="{
+            v-for="(item, index) in getTabs"
+            :id="preId + index"
+            :key="index"
+            :style="{
             height: getHeight + 'rpx',
             'line-height': getHeight + 'rpx',
             'min-width': getWidth + 'rpx',
@@ -34,24 +33,24 @@
             'transition-duration': getDuration + 's',
             'z-index': Number(zIndex) + 2
           }"
-          @tap="emit(index)"
+            class="QS-tabs-scroll-item"
+            @tap="emit(index)"
         >
           <!-- line1 -->
           <view
-            v-if="animationMode === 'line1'"
-            class="boxStyle"
-            :style="
+              v-if="animationMode === 'line1'"
+              :style="
               getDurationStyle +
               (index === getCurrent ? getActiveStyle : getDefaultStyle)
             "
+              class="boxStyle"
           ></view>
           {{ item.name || item }}
         </view>
         <!-- itemBackground -->
         <view
-          v-if="hasItemBackground"
-          class="itemBackgroundBox"
-          :style="{
+            v-if="hasItemBackground"
+            :style="{
             height: getHeight + 'rpx',
             width:
               (isLine3 && tabsInfo[animationFinishCurrent]
@@ -61,10 +60,10 @@
             'transition-duration': getDuration + 's',
             left: (tabsInfo[getCurrent] ? tabsInfo[getCurrent].left : 0) + 'px'
           }"
+            class="itemBackgroundBox"
         >
           <view
-            class="itemBackground"
-            :style="
+              :style="
               'transition-duration:' +
               getDuration +
               's;' +
@@ -77,13 +76,13 @@
               itemBackgroundStyle +
               ';'
             "
+              class="itemBackground"
           />
         </view>
         <!-- line2 -->
         <view
-          v-if="animationMode === 'line2'"
-          class="boxStyle2"
-          :style="
+            v-if="animationMode === 'line2'"
+            :style="
             getLinezIndex +
             getDurationStyle +
             'width:' +
@@ -98,12 +97,12 @@
             line2Dx +
             'px;'
           "
+            class="boxStyle2"
         />
 
         <view
-          v-if="animationMode === 'line3'"
-          class="boxStyle2"
-          :style="
+            v-if="animationMode === 'line3'"
+            :style="
             getLinezIndex +
             'width:' +
             lW +
@@ -117,6 +116,7 @@
             getLine3Dx +
             'px'
           "
+            class="boxStyle2"
         />
       </view>
     </scroll-view>
@@ -124,7 +124,7 @@
 </template>
 
 <script>
-const { windowWidth } = uni.getSystemInfoSync();
+const {windowWidth} = uni.getSystemInfoSync();
 const preId = "QSTabsID_";
 export default {
   props: {
@@ -199,13 +199,13 @@ export default {
       //line1模式选中项的样式
       type: String,
       default:
-        "bottom:0;left:50%;transform: translate(-50%,-100%);height: 8rpx;border-radius:4rpx;"
+          "bottom:0;left:50%;transform: translate(-50%,-100%);height: 8rpx;border-radius:4rpx;"
     },
     defaultStyle: {
       //line1模式未选中项的样式
       type: String,
       default:
-        "bottom:0;left:50%;transform: translate(-50%,-100%);height: 8rpx;border-radius:4rpx;"
+          "bottom:0;left:50%;transform: translate(-50%,-100%);height: 8rpx;border-radius:4rpx;"
     },
     backgroundColor: {
       //统一背景颜色
@@ -308,7 +308,7 @@ export default {
       const defaultColor = this.itemBackgroundColor || "rgba(255,255,255,0)";
       if (this.getTabs[this.getCurrent] instanceof Object) {
         return (
-          this.getTabs[this.getCurrent].itemBackgroundColor || defaultColor
+            this.getTabs[this.getCurrent].itemBackgroundColor || defaultColor
         );
       } else {
         return defaultColor;
@@ -430,20 +430,20 @@ export default {
       try {
         let view = uni.createSelectorQuery().in(this).select(".QS-tabs");
         view
-          .fields(
-            {
-              size: true
-            },
-            (data) => {
-              if (data) {
-                this.componentsWidth = data.width;
-                if (cb && typeof cb === "function") cb(data);
-              } else {
-                this.retryGetQuery(cb);
-              }
-            }
-          )
-          .exec();
+            .fields(
+                {
+                  size: true
+                },
+                (data) => {
+                  if (data) {
+                    this.componentsWidth = data.width;
+                    if (cb && typeof cb === "function") cb(data);
+                  } else {
+                    this.retryGetQuery(cb);
+                  }
+                }
+            )
+            .exec();
       } catch (e) {
         //TODO handle the exception
         this.componentsWidth = windowWidth;
@@ -453,20 +453,20 @@ export default {
       try {
         let view = uni.createSelectorQuery().select(".QS-tabs");
         view
-          .fields(
-            {
-              size: true
-            },
-            (data) => {
-              if (data) {
-                this.componentsWidth = data.width;
-              } else {
-                this.componentsWidth = windowWidth;
-              }
-              if (cb && typeof cb === "function") cb(data);
-            }
-          )
-          .exec();
+            .fields(
+                {
+                  size: true
+                },
+                (data) => {
+                  if (data) {
+                    this.componentsWidth = data.width;
+                  } else {
+                    this.componentsWidth = windowWidth;
+                  }
+                  if (cb && typeof cb === "function") cb(data);
+                }
+            )
+            .exec();
       } catch (e) {
         //TODO handle the exception
         this.componentsWidth = windowWidth;
@@ -494,11 +494,11 @@ export default {
     },
     setDx(dx) {
       const tab =
-        this.tabsInfo[
-          dx > 0
-            ? this.animationFinishCurrent + 1
-            : this.animationFinishCurrent - 1
-        ];
+          this.tabsInfo[
+              dx > 0
+                  ? this.animationFinishCurrent + 1
+                  : this.animationFinishCurrent - 1
+              ];
       this.line3AddDx = (dx / this.sW) * (tab ? tab.width : this.pxWidth);
     },
     setFinishCurrent(current) {

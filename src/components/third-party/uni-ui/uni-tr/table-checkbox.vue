@@ -1,9 +1,9 @@
 <template>
   <view class="uni-table-checkbox" @click="selected">
     <view
-      v-if="!indeterminate"
-      class="checkbox__inner"
-      :class="{ 'is-checked': isChecked, 'is-disable': isDisabled }"
+        v-if="!indeterminate"
+        :class="{ 'is-checked': isChecked, 'is-disable': isDisabled }"
+        class="checkbox__inner"
     >
       <view class="checkbox__inner-icon"></view>
     </view>

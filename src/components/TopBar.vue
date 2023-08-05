@@ -1,14 +1,14 @@
 <template>
-  <view class="nav-bar" :style="{ height: navBarHeight + 'px' }">
-    <view class="top-bar" :style="{ height: topBarHeight + 'px' }"></view>
-    <view class="capsule-bar" :style="{ height: capsuleBarHeight + 'px' }">
+  <view :style="{ height: navBarHeight + 'px' }" class="nav-bar">
+    <view :style="{ height: topBarHeight + 'px' }" class="top-bar"></view>
+    <view :style="{ height: capsuleBarHeight + 'px' }" class="capsule-bar">
       <slot></slot>
     </view>
   </view>
   <view :style="{ height: navBarHeight + 'px' }"></view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 const topBarHeight = uni.getSystemInfoSync().statusBarHeight as number;
 const capsuleData = uni.getMenuButtonBoundingClientRect();
 const capsuleBarHeight =
@@ -16,16 +16,18 @@ const capsuleBarHeight =
 const navBarHeight = topBarHeight + capsuleBarHeight;
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .nav-bar {
   position: fixed;
   background-color: #fafcff;
   width: 100vw;
   z-index: 100;
 }
+
 .top-bar {
   width: 100vw;
 }
+
 .capsule-bar {
   width: 100vw;
   display: flex;

@@ -1,25 +1,25 @@
 <template>
-  <view class="draggable-wrapper" @touchmove.stop.prevent="dummy" :style="[containerSize]">
+  <view :style="[containerSize]" class="draggable-wrapper" @touchmove.stop.prevent="dummy">
     <view
         v-for="(image, index) in imagesData" :key="index"
-        class="_item"
         :style="{
       transition: currentControlsIndex === index ? 'initial' : '.3s',
       'z-index': currentControlsIndex === index ? 1 : 0,
       top: controlsPositionArray[index].top + 'px',
-      left: controlsPositionArray[index].left + 'px'}">
+      left: controlsPositionArray[index].left + 'px'}"
+        class="_item">
       <view
-          @touchstart="handleTouchstart($event, index)"
+          @touchend="handleTouchend"
           @touchmove="handleTouchmove"
-          @touchend="handleTouchend">
-        <slot name="content" :image="image" :index="index"></slot>
+          @touchstart="handleTouchstart($event, index)">
+        <slot :image="image" :index="index" name="content"></slot>
       </view>
     </view>
     <view
-        class="_item"
         :style="{
         top: controlsPositionArray[imagesData.length].top + 'px',
-        left: controlsPositionArray[imagesData.length].left + 'px'}">
+        left: controlsPositionArray[imagesData.length].left + 'px'}"
+        class="_item">
       <slot name="addImage"></slot>
     </view>
   </view>
@@ -246,7 +246,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .draggable-wrapper {
   position: relative;
   width: 100%;

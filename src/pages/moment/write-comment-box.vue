@@ -80,6 +80,7 @@ const blur = () => {
 
 <style lang="scss" scoped>
 @import "@/common/icon.scss";
+
 .write-comment-box {
   z-index: 50;
   display: flex;

@@ -1,7 +1,7 @@
 <template>
   <view class="school-box">
     <view class="school-select-box" @click="onClickSwitch">
-      <image class="arrow" :src="Icons.Location" />
+      <image :src="Icons.Location" class="arrow" />
       <view class="names">
         <view class="school-name">
           {{
@@ -16,28 +16,33 @@
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { Icons } from "@/utils/url";
 import { onClickSwitch } from "@/pages/community/utils";
 import { listCommunity } from "@/apis/community/community";
 import { StorageKeys } from "@/utils/const";
 import { Community } from "@/apis/schemas";
+
 const currentSchool = ref("");
 const currentCampus = ref("");
 const communityId = ref("");
 const parentId = ref("");
+
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
+
 const lists = reactive<{
   data: Community[];
 }>({
   data: []
 });
+
 async function schoolList() {
   lists.data = (await listCommunity({})).communities;
 }
+
 async function getCampus() {
   await schoolList();
   init();
@@ -53,6 +58,7 @@ async function getCampus() {
     }
   }
 }
+
 getCampus();
 </script>
 
@@ -63,6 +69,7 @@ getCampus();
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
+
   .school-select-box {
     height: fit-content;
     display: flex;
@@ -71,11 +78,13 @@ getCampus();
     margin-right: 3vw;
   }
 }
+
 .arrow {
   width: 4vw;
   height: 5vw;
   margin-left: 1vw;
 }
+
 .triangle {
   width: 0;
   height: 0;
@@ -85,6 +94,7 @@ getCampus();
   border-right: 1.15vw solid transparent;
   border-top: 2vw solid #1d1d1d;
 }
+
 .names {
   display: flex;
   align-items: baseline;

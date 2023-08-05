@@ -1,6 +1,6 @@
 <template>
   <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>
-    <view class="font-weight font-md2" style="margin: auto">图鉴 </view>
+    <view class="font-weight font-md2" style="margin: auto">图鉴</view>
   </UniNavBar>
   <view class="content">
     <!-- 搜索框 -->
@@ -28,8 +28,9 @@
           {{ currentSchool }}
         </view>
         <view class="switch-box">
-          <view class="switch" @click="onClickSwitch"
-            ><text class="font-md">⇌</text> {{ switchText }}
+          <view class="switch" @click="onClickSwitch">
+            <text class="font-md">⇌</text>
+            {{ switchText }}
           </view>
         </view>
       </view>
@@ -49,14 +50,14 @@
     <template v-if="!isRefreshing">
       <SearchCats
         v-if="isClickCollectionSearch"
-        search="cat"
         :keyword="searchText"
         choose="detail"
+        search="cat"
       ></SearchCats>
       <search-cats
         v-if="!isClickCollectionSearch"
-        search="default"
         choose="detail"
+        search="default"
       ></search-cats>
     </template>
   </view>

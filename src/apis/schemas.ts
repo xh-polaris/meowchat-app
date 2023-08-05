@@ -3,6 +3,14 @@ export interface Status {
   msg: string;
 }
 
+export interface PaginationOptions {
+  page?: number;
+  limit?: number;
+  offset?: number;
+  lastToken?: string;
+  backward?: boolean;
+}
+
 // user
 
 export interface User {
@@ -126,6 +134,7 @@ export interface Moment {
   user: User;
   photos: Array<string>;
 }
+
 export interface MomentData {
   id: string;
   createAt: number;
@@ -138,6 +147,7 @@ export interface MomentData {
   likedNumber: number;
   comments: number;
 }
+
 export const enum TargetType {
   Post = 1,
   Comment,

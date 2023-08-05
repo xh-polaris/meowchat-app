@@ -4,13 +4,13 @@
       class="bg-set"
       src="https://static.xhpolaris.com/profile_background.png"
     />
-    <view class="title"> 欢迎来到喵世界，喵~ </view>
+    <view class="title"> 欢迎来到喵世界，喵~</view>
     <view class="app-intro">
       华师喵世界是一款致力于校园猫咪保护和管理的小程序，我们希望通过图鉴的方式让大家更直观的了解学校里的猫咪，并鼓励大家为喜欢的猫咪拍下属于ta的美好时刻，希望每一只猫猫都可以被友好对待！
     </view>
-    <view class="develop-team"> from: 开发团队 华师小世界 </view>
+    <view class="develop-team"> from: 开发团队 华师小世界</view>
     <view class="version-wrap">
-      <view class="version-text"> 当前版本 </view>
+      <view class="version-text"> 当前版本</view>
       <view
         v-for="(item, index) in versionInformation.slice(0, 1)"
         :key="index"
@@ -19,12 +19,12 @@
         <view class="version-number">
           {{ item.createAt }}
         </view>
-        <view class="update-time"> 更新时间:{{ item.createAt }} </view>
+        <view class="update-time"> 更新时间:{{ item.createAt }}</view>
         <view class="content">
           {{ item.text }}
         </view>
       </view>
-      <view class="version-text"> 历史版本 </view>
+      <view class="version-text"> 历史版本</view>
       <view
         v-for="(item, index) in versionInformation.slice(1)"
         :key="index"
@@ -33,7 +33,7 @@
         <view class="version-number">
           {{ item.createAt }}
         </view>
-        <view class="update-time"> 更新时间:{{ item.createAt }} </view>
+        <view class="update-time"> 更新时间:{{ item.createAt }}</view>
         <view class="content">
           {{ item.text }}
         </view>

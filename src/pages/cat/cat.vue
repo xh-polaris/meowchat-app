@@ -101,6 +101,7 @@ onPullDownRefresh(() => {
   z-index: -1;
   top: 0;
 }
+
 .main {
   border-radius: 4vw 4vw 0 0;
   margin-top: 43vw;

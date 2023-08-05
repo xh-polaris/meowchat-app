@@ -3,13 +3,6 @@
     <view class="main">
       <view class="images">
         <DraggableItem
-          :images-data="imagesData"
-          :photos="photos"
-          :controls-size="{
-            width: imageWidth,
-            height: imageWidth,
-            margin: imageMargin
-          }"
           :container-size="{
             width: '100%',
             height:
@@ -17,6 +10,13 @@
                 (imageWidth + imageMargin) +
               'px'
           }"
+          :controls-size="{
+            width: imageWidth,
+            height: imageWidth,
+            margin: imageMargin
+          }"
+          :images-data="imagesData"
+          :photos="photos"
         >
           <template #content="{ image, index }">
             <div style="position: relative">
@@ -40,45 +40,45 @@
       </view>
       <view class="image-num"> {{ imagesData.length }}/30</view>
       <view v-if="disablePublish" class="uploading"
-        >后台上传图片中，上传结束才能发布动态噢</view
-      >
+        >后台上传图片中，上传结束才能发布动态噢
+      </view>
       <view class="m-2">
         <FuiTextArea
           v-model="title"
-          text="默认按钮"
-          height="50rpx"
-          color="black"
-          background-color="white"
-          placeholder="填写标题能获得更多赞哦~"
-          border-color="#1FA1FF"
+          :border-bottom="true"
           :border-top="false"
+          background-color="white"
+          border-color="#1FA1FF"
           bottom-left="20"
           bottom-right="20"
-          :border-bottom="true"
+          color="black"
+          height="50rpx"
+          placeholder="填写标题能获得更多赞哦~"
+          text="默认按钮"
         ></FuiTextArea>
       </view>
 
       <view class="mx-2 mt-2">
         <FuiTextArea
           v-model="text"
-          text="默认按钮"
-          color="black"
-          maxlength="2000"
-          :is-counter="true"
-          :border-top="false"
           :border-bottom="false"
-          placeholder="说点什么吧! (可空)"
+          :border-top="false"
+          :is-counter="true"
+          color="black"
           height="350rpx"
+          maxlength="2000"
+          placeholder="说点什么吧! (可空)"
+          text="默认按钮"
         ></FuiTextArea>
       </view>
 
       <view class="choose-cats-bar">
         <view v-if="!catId" class="font-md" style="color: #b8b8b8">
-          如果动态是为某喵发的，可以点"+"选择它噢</view
-        >
+          如果动态是为某喵发的，可以点"+"选择它噢
+        </view>
         <view v-if="catId" class="font-md" style="color: #b8b8b8"
-          >图片将上传至猫咪</view
-        >
+          >图片将上传至猫咪
+        </view>
       </view>
     </view>
 
@@ -94,6 +94,7 @@
       <view v-if="catImage">
         <image
           :src="catImage"
+          class="border mx-1 mt-2"
           style="
             width: 160rpx;
             height: 160rpx;
@@ -101,16 +102,15 @@
             border-color: #1fa1ff;
             border-width: 0.1em;
           "
-          class="border mx-1 mt-2"
           @click="onClickCat()"
         ></image>
-        <view class="font-md text-center mt-2" style="color: #1fa1ff">{{
-          catName
-        }}</view>
+        <view class="font-md text-center mt-2" style="color: #1fa1ff"
+          >{{ catName }}
+        </view>
       </view>
     </view>
     <view class="panel">
-      <button class="publish" :disabled="disablePublish" @click="publishMoment">
+      <button :disabled="disablePublish" class="publish" @click="publishMoment">
         发布动态
       </button>
       <view class="notice">
@@ -133,11 +133,11 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { Prefixes, putObject } from "@/apis/cos/cos";
-import { onBackPress, onLoad, onShow, onUnload } from "@dcloudio/uni-app";
+import { onShow, onUnload } from "@dcloudio/uni-app";
 
 import { newMoment } from "@/apis/moment/moment";
 import FuiTextArea from "@/components/third-party/fui-textarea/fui-textarea.vue";
-import { Pages, Icons } from "@/utils/url";
+import { Icons, Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import Deal from "@/components/deal-policy/deal.vue";
 import Policy from "@/components/deal-policy/policy.vue";
@@ -176,11 +176,11 @@ let draftJSON = reactive({
 });
 
 /**
-$margin: calc(20 / 390 * 100vw);
-$imagesWidth: calc(100vw - $margin * 2);
-$imageWidth: calc(110 / 390 * 100vw);
-$imageGap: calc(($imagesWidth - 3 * $imageWidth) / 2);
-*/
+ $margin: calc(20 / 390 * 100vw);
+ $imagesWidth: calc(100vw - $margin * 2);
+ $imageWidth: calc(110 / 390 * 100vw);
+ $imageGap: calc(($imagesWidth - 3 * $imageWidth) / 2);
+ */
 const windowWidth = ref(uni.getSystemInfoSync().windowWidth);
 const margin = ref((20.0 / 390) * windowWidth.value);
 const imagesWidth = ref(windowWidth.value - margin.value * 2);
@@ -221,6 +221,7 @@ onUnload(() => {
   uni.removeStorageSync(StorageKeys.NameSelected);
   uni.removeStorageSync(StorageKeys.AvatarSelected);
 });
+
 function loadDraftMoment() {
   if (uni.getStorageSync(StorageKeys.DraftMoment)) {
     uni.showModal({
@@ -251,7 +252,9 @@ function loadDraftMoment() {
     });
   }
 }
+
 loadDraftMoment();
+
 function chooseCats() {
   uni.navigateTo({
     url: Pages.ChooseCat
@@ -360,10 +363,12 @@ function showImage(index: number) {
 // 控制协议和政策区域
 const isShow = ref(false);
 const type = ref(0);
+
 function showDeal() {
   type.value = 1;
   isShow.value = !isShow.value;
 }
+
 function showPolicy() {
   type.value = 2;
   isShow.value = !isShow.value;

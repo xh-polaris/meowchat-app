@@ -2,69 +2,69 @@
   <view class="uni-filter-dropdown">
     <view class="dropdown-btn" @click="onDropdown">
       <view
-        class="icon-select"
-        :class="{ active: canReset }"
-        v-if="isSelect || isRange"
+          v-if="isSelect || isRange"
+          :class="{ active: canReset }"
+          class="icon-select"
       ></view>
-      <view class="icon-search" :class="{ active: canReset }" v-if="isSearch">
+      <view v-if="isSearch" :class="{ active: canReset }" class="icon-search">
         <view class="icon-search-0"></view>
         <view class="icon-search-1"></view>
       </view>
-      <view class="icon-calendar" :class="{ active: canReset }" v-if="isDate">
+      <view v-if="isDate" :class="{ active: canReset }" class="icon-calendar">
         <view class="icon-calendar-0"></view>
         <view class="icon-calendar-1"></view>
       </view>
     </view>
     <view
-      class="uni-dropdown-cover"
-      v-if="isOpened"
-      @click="handleClose"
+        v-if="isOpened"
+        class="uni-dropdown-cover"
+        @click="handleClose"
     ></view>
     <view
-      class="dropdown-popup dropdown-popup-right"
-      v-if="isOpened"
-      @click.stop
+        v-if="isOpened"
+        class="dropdown-popup dropdown-popup-right"
+        @click.stop
     >
       <!-- select-->
       <view v-if="isSelect" class="list">
         <label
-          class="flex-r a-i-c list-item"
-          v-for="(item, index) in dataList"
-          :key="index"
-          @click="onItemClick($event, index)"
+            v-for="(item, index) in dataList"
+            :key="index"
+            class="flex-r a-i-c list-item"
+            @click="onItemClick($event, index)"
         >
-          <check-box class="check" :checked="item.checked" />
+          <check-box :checked="item.checked" class="check"/>
           <view class="checklist-content">
-            <text class="checklist-text" :style="item.styleIconText"
-              >{{ item[map.text] }}
+            <text :style="item.styleIconText" class="checklist-text"
+            >{{ item[map.text] }}
             </text>
           </view>
         </label>
       </view>
       <view v-if="isSelect" class="flex-r opera-area">
         <view
-          class="flex-f btn btn-default"
-          :class="{ disable: !canReset }"
-          @click="handleSelectReset"
+            :class="{ disable: !canReset }"
+            class="flex-f btn btn-default"
+            @click="handleSelectReset"
         >
           {{ resource.reset }}
         </view>
         <view class="flex-f btn btn-submit" @click="handleSelectSubmit"
-          >{{ resource.submit }}
+        >{{ resource.submit }}
         </view>
       </view>
       <!-- search -->
       <view v-if="isSearch" class="search-area">
-        <input class="search-input" v-model="filterValue" />
+        <input v-model="filterValue" class="search-input"/>
       </view>
       <view v-if="isSearch" class="flex-r opera-area">
         <view class="flex-f btn btn-submit" @click="handleSearchSubmit"
-          >{{ resource.search }}
+        >{{ resource.search }}
         </view>
         <view
-          class="flex-f btn btn-default"
-          :class="{ disable: !canReset }"
-          @click="handleSearchReset"
+            :class="{ disable: !canReset }"
+            class="flex-f btn btn-default"
+            @click="handleSearchReset"
         >
           {{ resource.reset }}
         </view>
@@ -72,31 +72,31 @@
       <!-- range -->
       <view v-if="isRange">
         <view class="input-label">{{ resource.gt }}</view>
-        <input class="input" v-model="gtValue" />
+        <input v-model="gtValue" class="input"/>
         <view class="input-label">{{ resource.lt }}</view>
-        <input class="input" v-model="ltValue" />
+        <input v-model="ltValue" class="input"/>
       </view>
       <view v-if="isRange" class="flex-r opera-area">
         <view
-          class="flex-f btn btn-default"
-          :class="{ disable: !canReset }"
-          @click="handleRangeReset"
+            :class="{ disable: !canReset }"
+            class="flex-f btn btn-default"
+            @click="handleRangeReset"
         >
           {{ resource.reset }}
         </view>
         <view class="flex-f btn btn-submit" @click="handleRangeSubmit"
-          >{{ resource.submit }}
+        >{{ resource.submit }}
         </view>
       </view>
       <!-- date -->
       <view v-if="isDate">
         <uni-datetime-picker
-          ref="datetimepicker"
-          :value="dateRange"
-          type="datetimerange"
-          return-type="timestamp"
-          @change="datetimechange"
-          @maskClick="timepickerclose"
+            ref="datetimepicker"
+            :value="dateRange"
+            return-type="timestamp"
+            type="datetimerange"
+            @change="datetimechange"
+            @maskClick="timepickerclose"
         >
           <view></view>
         </uni-datetime-picker>
@@ -187,8 +187,8 @@ export default {
     },
     isDate() {
       return (
-        this.filterType === DropdownType.Date ||
-        this.filterType === DropdownType.Timestamp
+          this.filterType === DropdownType.Date ||
+          this.filterType === DropdownType.Timestamp
       );
     },
   },
@@ -320,9 +320,9 @@ export default {
       this.$emit("change", {
         filterType: this.filterType,
         filter:
-          isReset === true
-            ? []
-            : [parseInt(this.gtValue), parseInt(this.ltValue)],
+            isReset === true
+                ? []
+                : [parseInt(this.gtValue), parseInt(this.ltValue)],
       });
     },
     handleRangeReset() {
@@ -463,7 +463,7 @@ export default {
   top: 100%;
   background-color: #fff;
   box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014,
-    0 9px 28px 8px #0000000d;
+  0 9px 28px 8px #0000000d;
   min-width: 150px;
   z-index: 1000;
 }

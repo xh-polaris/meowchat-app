@@ -20,13 +20,13 @@
       <view class="mx-2 mt-2">
         <FuiTextArea
           v-model="text"
-          maxlength="2000"
           :border-bottom="false"
           :border-top="false"
           :is-counter="true"
+          :placeholder="placeholder"
           color="black"
           height="350rpx"
-          :placeholder="placeholder"
+          maxlength="2000"
           text="默认按钮"
         >
         </FuiTextArea>
@@ -152,6 +152,7 @@ onUnload(() => {
     });
   }
 });
+
 function loadDraftPost() {
   if (uni.getStorageSync(StorageKeys.DraftPost)) {
     uni.showModal({
@@ -174,6 +175,7 @@ function loadDraftPost() {
     });
   }
 }
+
 loadDraftPost();
 
 watch(tags, (newValue) => {
@@ -266,10 +268,12 @@ function showImage(index: number) {
 // 控制协议和政策区域
 const isShow = ref(false);
 const type = ref(0);
+
 function showDeal() {
   type.value = 1;
   isShow.value = !isShow.value;
 }
+
 function showPolicy() {
   type.value = 2;
   isShow.value = !isShow.value;

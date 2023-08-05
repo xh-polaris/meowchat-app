@@ -25,8 +25,9 @@
           {{ currentSchool }}
         </view>
         <view class="switch-box">
-          <view class="switch" @click="onClickSwitch"
-            ><text class="font-md">⇌</text> {{ switchText }}
+          <view class="switch" @click="onClickSwitch">
+            <text class="font-md">⇌</text>
+            {{ switchText }}
           </view>
         </view>
       </view>
@@ -46,14 +47,14 @@
     <template v-if="!isRefreshing">
       <search-cats
         v-if="isClickCollectionSearch"
-        search="cat"
         :keyword="searchText"
         choose="choose"
+        search="cat"
       ></search-cats>
       <search-cats
         v-if="!isClickCollectionSearch"
-        search="default"
         choose="choose"
+        search="default"
       ></search-cats>
     </template>
   </view>

@@ -5,12 +5,12 @@
       src="https://static.xhpolaris.com/profile_background.png"
     />
     <view class="content-wrap">
-      <view class="title"> 写在前面 </view>
+      <view class="title"> 写在前面</view>
       <image class="rightop" src="/static/images/apply_admin_rightop.png" />
       <view class="text">
-        <view class="Blue"> 喵社区 </view>
-        <view class="Black"> 是一款致力于 </view>
-        <view class="Blue"> 流浪动物保护的非盈利性小程序 </view>
+        <view class="Blue"> 喵社区</view>
+        <view class="Black"> 是一款致力于</view>
+        <view class="Blue"> 流浪动物保护的非盈利性小程序</view>
         <view class="Black">
           社区的维护和建设需要依靠所有人的力量。因此我们需要一些小伙伴成为社区的管理员，一起维护小猫咪们的家。
         </view>
@@ -21,8 +21,8 @@
         </view>
       </view>
       <view class="text">
-        <view class="Black"> 管理员负责喵社区 </view>
-        <view class="Blue"> 动态的审核和猫咪信息的维护 </view>
+        <view class="Black"> 管理员负责喵社区</view>
+        <view class="Blue"> 动态的审核和猫咪信息的维护</view>
         <view class="Black">
           ，拥有修改猫咪信息、审核动态、删除动态的权限，如果你也想加入我们，请填写以下信息申请哦。
         </view>
@@ -48,7 +48,7 @@
         />
       </view>
       <button class="confirm" type="primary" @click="checkInput">
-        <view class="send"> 提交申请 </view>
+        <view class="send"> 提交申请</view>
       </button>
     </view>
   </view>
