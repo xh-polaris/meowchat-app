@@ -29,7 +29,7 @@
               </view>
               <span
                 class="liked_number"
-                @click.prevent="ClickLike(image.id, index)"
+                @click.prevent="clickLike(image.id, index)"
                 >{{ image.likeNumber }}</span
               >
             </view>
