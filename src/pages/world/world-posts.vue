@@ -46,7 +46,9 @@
                 <view class="time font-sm">
                   {{ displayTime(post.createAt) }}
                 </view>
-                <view class="font-sm">{{ post.comments }}条回复</view>
+                <view v-if="post.comments" class="font-sm"
+                  >{{ post.comments }}条回复</view
+                >
               </view>
             </view>
             <image
