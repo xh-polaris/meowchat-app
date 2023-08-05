@@ -44,11 +44,16 @@
                 {{ displayTime(moment.createAt) }}
               </view>
             </view>
-            <view class="other-info">
-              <view class="font-sm"
+            <view
+              v-if="moment.likedNumber || moment.comments"
+              class="other-info"
+            >
+              <view v-if="moment.likedNumber" class="font-sm"
                 >{{ moment.likedNumber }}位喵友觉得很赞
               </view>
-              <view class="comment font-sm">{{ moment.comments }}条回复</view>
+              <view v-if="moment.comments" class="comment font-sm"
+                >{{ moment.comments }}条回复</view
+              >
             </view>
           </view>
         </view>
@@ -148,10 +153,14 @@ const addBatch = async () => {
       momentData.likedNumber = res.count;
     });
     getComments({ scope: "moment", page: 0, id: moments[i].id }).then((res) => {
+      console.log(momentData.title, res);
       momentData.comments += res.total;
       for (let i = 0; i < res.comments.length; i++) {
-        momentData.comments += res.comments[i].comments;
+        // eslint-disable-next-line no-prototype-builtins
+        if (res.comments[i].hasOwnProperty("comments"))
+          momentData.comments += res.comments[i].comments;
       }
+      console.log(momentData.comments);
     });
     momentsInBatch.push(momentData);
   }
