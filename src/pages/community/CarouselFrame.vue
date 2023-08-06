@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import Carousel from "./carousel.vue";
+import Carousel from "./Carousel.vue";
 import { getNews } from "@/apis/notice/notice";
 import { StorageKeys } from "@/utils/const";
 

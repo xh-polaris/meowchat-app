@@ -30,17 +30,17 @@ body {
 }
 
 /* 阴影 */
-.shadow-sm {
-    box-shadow: 0 2upx 4upx rgba(114, 130, 138, 0.2) !important;
-}
+/*.shadow-sm {*/
+/*    box-shadow: 0 2upx 4upx rgba(114, 130, 138, 0.2) !important;*/
+/*}*/
 
-.shadow {
-    box-shadow: 0 8upx 16upx rgba(114, 130, 138, 0.2) !important;
-}
+/*.shadow {*/
+/*    box-shadow: 0 8upx 16upx rgba(114, 130, 138, 0.2) !important;*/
+/*}*/
 
-.shadow-lg {
-    box-shadow: 0 16upx 48upx rgba(114, 130, 138, 0.2) !important;
-}
+/*.shadow-lg {*/
+/*    box-shadow: 0 16upx 48upx rgba(114, 130, 138, 0.2) !important;*/
+/*}*/
 
 /* 定位 */
 .position-absolute {

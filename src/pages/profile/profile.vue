@@ -1,7 +1,10 @@
 <template>
-  <uni-nav-bar :fixed="true" background-color="#f9f9f9" shadow status-bar>
-    <view class="font-weight font-md2" style="margin: auto">个人中心</view>
-  </uni-nav-bar>
+  <TopBar>
+    <template #center>个人中心</template>
+  </TopBar>
+  <!--  <uni-nav-bar :fixed="true" background-color="#f9f9f9" shadow status-bar>-->
+  <!--    <view class="font-weight font-md2" style="margin: auto">个人中心</view>-->
+  <!--  </uni-nav-bar>-->
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
     <UserInfo type="my"></UserInfo>
@@ -66,6 +69,7 @@ import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.v
 import DebugPanel from "@/components/debug-panel/debug-panel.vue";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pages, Pictures } from "@/utils/url";
+import TopBar from "@/components/TopBar.vue";
 
 const version = uni.getAccountInfoSync().miniProgram.version;
 const userInfo = reactive<User>({

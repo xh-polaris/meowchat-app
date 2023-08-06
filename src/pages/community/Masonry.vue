@@ -153,14 +153,12 @@ const addBatch = async () => {
       momentData.likedNumber = res.count;
     });
     getComments({ scope: "moment", page: 0, id: moments[i].id }).then((res) => {
-      console.log(momentData.title, res);
       momentData.comments += res.total;
       for (let i = 0; i < res.comments.length; i++) {
         // eslint-disable-next-line no-prototype-builtins
         if (res.comments[i].hasOwnProperty("comments"))
           momentData.comments += res.comments[i].comments;
       }
-      console.log(momentData.comments);
     });
     momentsInBatch.push(momentData);
   }
