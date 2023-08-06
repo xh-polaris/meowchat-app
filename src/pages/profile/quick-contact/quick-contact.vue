@@ -1,4 +1,7 @@
 <template>
+  <TopBar :has-go-back="true">
+    <template #center>快速联系</template>
+  </TopBar>
   <view class="container">
     <image
       class="bg-set"
@@ -49,6 +52,7 @@ import { CopyToClipboard } from "@/pages/profile/utils";
 import { reactive } from "vue";
 import { Admin } from "@/apis/schemas";
 import { getAdmins } from "@/apis/notice/notice";
+import TopBar from "@/components/TopBar.vue";
 
 const managerList = reactive<Admin[]>([]);
 getAdmins({ communityId: uni.getStorageSync("communityId") }).then((res) => {

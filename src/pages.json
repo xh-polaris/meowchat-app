@@ -88,7 +88,8 @@
     {
       "path": "pages/community/school-select/school-select",
       "style": {
-        "navigationBarTitleText": "切换学校"
+        "navigationBarTitleText": "切换学校",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -149,6 +150,7 @@
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "喵世界",
+    "navigationStyle": "custom",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
