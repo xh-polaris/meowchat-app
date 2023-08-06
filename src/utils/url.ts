@@ -13,7 +13,8 @@ export const enum Icons {
   Message = "/static/images/message-black.png",
   Collection = "/static/images/collection-grey.png",
   Delete = "/static/images/delete.png",
-  Guide = "/static/images/guide.png"
+  Guide = "/static/images/guide.png",
+  GoBack = "/static/images/left-black.png"
 }
 
 export const enum Pages {

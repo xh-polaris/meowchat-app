@@ -1,5 +1,5 @@
 <template>
-  <TopBar bg-color="#fafcff" :shadow="false">
+  <TopBar bg-color="#fafcff" :has-shadow="false">
     <template #left>
       <view v-if="!isRefreshing">
         <SchoolSelect />
