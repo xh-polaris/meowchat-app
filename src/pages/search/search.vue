@@ -1,4 +1,7 @@
 <template>
+  <TopBar :has-go-back="true">
+    <template #center>搜索</template>
+  </TopBar>
   <view class="page">
     <view
       class="d-flex border a-center j-sb mx-2 mb-2"
@@ -98,6 +101,7 @@ import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 import { Icons } from "@/utils/url";
+import TopBar from "@/components/TopBar.vue";
 
 const items = ["帖子", "动态", "图鉴"];
 

@@ -1,4 +1,7 @@
 <template>
+  <TopBar :has-go-back="true">
+    <template #center>选择猫咪</template>
+  </TopBar>
   <view class="content">
     <!-- 搜索框 -->
     <view
@@ -68,6 +71,7 @@ import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { Community } from "@/apis/schemas";
 import { listCommunity } from "@/apis/community/community";
 import SearchCats from "@/pages/search/search-cats.vue";
+import TopBar from "@/components/TopBar.vue";
 
 const switchText = ref("\u00A0 切换学校");
 const currentSchool = ref("");

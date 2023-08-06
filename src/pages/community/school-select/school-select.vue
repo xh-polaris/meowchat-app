@@ -1,4 +1,7 @@
 <template>
+  <TopBar :has-go-back="true">
+    <template #center>切换社区</template>
+  </TopBar>
   <view class="content">
     <view class="d-flex border a-center mx-2 j-sb px-3 search">
       <input
@@ -109,6 +112,7 @@ import { listCommunity } from "@/apis/community/community";
 import { onLoad } from "@dcloudio/uni-app";
 import { StorageKeys } from "@/utils/const";
 import { Icons } from "@/utils/url";
+import TopBar from "@/components/TopBar.vue";
 
 const currentSchool = ref("");
 const currentCampus = ref("");

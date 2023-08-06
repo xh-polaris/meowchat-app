@@ -1,4 +1,7 @@
 <template>
+  <TopBar :has-go-back="true">
+    <template #center>修改个人资料</template>
+  </TopBar>
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
     <view class="choose-avatar-row">
@@ -53,6 +56,7 @@ import { UpdateUserInfoReq } from "@/apis/user/user-interfaces";
 import { Prefixes, putObject } from "@/apis/cos/cos";
 import { reactive, ref } from "vue";
 import { Pages, Pictures } from "@/utils/url";
+import TopBar from "@/components/TopBar.vue";
 
 const props = defineProps<{
   avatarUrl: string;

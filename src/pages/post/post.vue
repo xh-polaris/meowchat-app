@@ -1,4 +1,7 @@
 <template>
+  <TopBar :has-go-back="true">
+    <template #center>帖子详情</template>
+  </TopBar>
   <view class="reply-mask" @click="leaveReply()" />
 
   <view
@@ -122,6 +125,7 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
+import TopBar from "@/components/TopBar.vue";
 import {
   enterMask,
   enterReply,

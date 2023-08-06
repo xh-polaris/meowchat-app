@@ -1,4 +1,7 @@
 <template>
+  <TopBar :has-go-back="true">
+    <template #center>用户详情</template>
+  </TopBar>
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
     <UserInfo :user-id="props.userId" type="other"></UserInfo>
@@ -34,6 +37,7 @@ import { User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pictures } from "@/utils/url";
+import TopBar from "@/components/TopBar.vue";
 
 const props = defineProps<{
   userId?: string;
