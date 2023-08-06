@@ -1,8 +1,10 @@
 <template>
-  <TopBar bg-color="#fafcff">
-    <view v-if="!isRefreshing">
-      <SchoolSelect />
-    </view>
+  <TopBar bg-color="#fafcff" :has-shadow="false">
+    <template #left>
+      <view v-if="!isRefreshing">
+        <SchoolSelect />
+      </view>
+    </template>
   </TopBar>
 
   <view class="background">
@@ -31,9 +33,9 @@
 import { reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import SchoolSelect from "@/components/SchoolSelect.vue";
-import MasonryFrame from "@/pages/community/masonry-frame.vue";
+import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import Cards from "@/pages/community/cards/cards.vue";
-import CarouselFrame from "@/pages/community/carousel-frame.vue";
+import CarouselFrame from "@/pages/community/CarouselFrame.vue";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";

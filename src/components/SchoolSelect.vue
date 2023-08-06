@@ -1,18 +1,14 @@
 <template>
-  <view class="school-box">
-    <view class="school-select-box" @click="onClickSwitch">
-      <image :src="Icons.Location" class="arrow" />
-      <view class="names">
-        <view class="school-name">
-          {{
-            currentSchool !== currentCampus
-              ? currentSchool + currentCampus
-              : currentSchool
-          }}
-        </view>
-      </view>
-      <view class="triangle"></view>
+  <view class="school-select-box" @click="onClickSwitch">
+    <image :src="Icons.Location" mode="scaleToFill" class="locationIcon" />
+    <view class="school-name">
+      {{
+        currentSchool !== currentCampus
+          ? currentSchool + currentCampus
+          : currentSchool
+      }}
     </view>
+    <view class="triangle"></view>
   </view>
 </template>
 
@@ -63,48 +59,32 @@ getCampus();
 </script>
 
 <style lang="scss" scoped>
-.school-box {
-  background-color: #fafcff;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  font-family: sans-serif;
-
-  .school-select-box {
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    margin-left: 3vw;
-    margin-right: 3vw;
-  }
-}
-
-.arrow {
-  width: 4vw;
+.school-select-box {
   height: 5vw;
-  margin-left: 1vw;
-}
-
-.triangle {
-  width: 0;
-  height: 0;
+  display: flex;
+  align-items: center;
   margin-left: 2vw;
   margin-right: 2vw;
-  border-left: 1.15vw solid transparent;
-  border-right: 1.15vw solid transparent;
-  border-top: 2vw solid #1d1d1d;
-}
 
-.names {
-  display: flex;
-  align-items: baseline;
-
+  .locationIcon {
+    width: 4vw;
+    height: 5vw;
+  }
   .school-name {
     font-weight: bold;
-    line-height: calc(18 / 390 * 100vw);
-    margin-left: calc(8 / 390 * 100vw);
-    padding-bottom: calc(4 / 390 * 100vw);
-    font-size: calc(18 / 390 * 100vw);
+    height: 5vw;
+    line-height: 5vw;
+    font-size: 4.7vw;
+    margin-left: 1vw;
+  }
+  .triangle {
+    width: 0;
+    height: 0;
+    margin-left: 1vw;
+    border-left: 1.15vw solid transparent;
+    border-right: 1.15vw solid transparent;
+    border-top: 2vw solid #1d1d1d;
+    transform: translateY(0.2vw);
   }
 }
 </style>

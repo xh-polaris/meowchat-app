@@ -1,16 +1,18 @@
 <template>
-  <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>
-    <view
-      class="d-flex a-center left"
-      style="position: absolute; left: 40rpx; bottom: 25rpx"
-      @click="enterMessage"
-    >
-      <image :src="Icons.Message" style="width: 45rpx; height: 35rpx"></image>
-      <!-- 暂时将数量写为0 -->
-      <view v-show="false" class="font-sm px-1 message-count">0</view>
-    </view>
-    <view class="font-weight font-md2" style="margin: auto">喵世界</view>
-  </UniNavBar>
+  <TopBar>
+    <template #left>
+      <view style="height: fit-content" @click="enterMessage">
+        <image
+          :src="Icons.Message"
+          mode="scaleToFill"
+          class="message-image"
+        ></image>
+        <!-- 暂时将数量写为0 -->
+        <view v-show="false" class="font-sm px-1 message-count">0</view>
+      </view>
+    </template>
+    <template #center>喵世界</template>
+  </TopBar>
   <view class="navbar">
     <view :class="types[0].className" @click.prevent="types[0].onClick">
       {{ types[0].name }}
@@ -46,6 +48,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
+import TopBar from "@/components/TopBar.vue";
 import { onLoad, onPullDownRefresh, onReady } from "@dcloudio/uni-app";
 import { Icons, Pages } from "@/utils/url";
 import WorldPosts from "@/pages/world/world-posts.vue";
@@ -146,6 +149,13 @@ onReady(() => {
 
 <style lang="scss" scoped>
 @import "@/common/user-info.scss";
+
+.message-image {
+  width: 6vw;
+  height: 5vw;
+  margin-left: 3vw;
+  transform: translateY(0.8vw);
+}
 
 body {
   font-family: sans-serif;
