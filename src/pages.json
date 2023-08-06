@@ -74,6 +74,7 @@
       "path": "pages/moment/moment",
       "style": {
         "navigationBarTitleText": "动态详情",
+        "navigationStyle": "custom",
         "enablePullDownRefresh": true
       }
     },
