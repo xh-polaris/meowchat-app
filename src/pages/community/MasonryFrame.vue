@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import Masonry from "@/pages/community/masonry.vue";
+import Masonry from "@/pages/community/Masonry.vue";
 import { getMomentPreviews, searchMomentPreviews } from "@/apis/moment/moment";
 import { ref } from "vue";
 import { Moment } from "@/apis/schemas";

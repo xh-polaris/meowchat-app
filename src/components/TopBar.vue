@@ -1,5 +1,8 @@
 <template>
-  <view :style="{ height: navBarHeight + 'px' }" class="nav-bar">
+  <view
+    :style="{ height: navBarHeight + 'px', backgroundColor: props.bgColor }"
+    :class="'nav-bar ' + (props.shadow ? 'shadow' : '')"
+  >
     <view :style="{ height: topBarHeight + 'px' }" class="top-bar"></view>
     <view :style="{ height: capsuleBarHeight + 'px' }" class="capsule-bar">
       <view class="center">
@@ -14,19 +17,33 @@
 </template>
 
 <script lang="ts" setup>
+import { Cat } from "@/apis/schemas";
 const topBarHeight = uni.getSystemInfoSync().statusBarHeight as number;
 const capsuleData = uni.getMenuButtonBoundingClientRect();
 const capsuleBarHeight =
   capsuleData.height + (capsuleData.top - topBarHeight) * 2;
 const navBarHeight = topBarHeight + capsuleBarHeight;
+interface Props {
+  bgColor: string;
+  shadow: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  bgColor: "#fdfdfd",
+  shadow: true
+});
+// const props = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
 .nav-bar {
   position: fixed;
-  background-color: #fafcff;
   width: 100vw;
   z-index: 100;
+  //box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.2), 0 -3px 10px 0 rgba(0, 0, 0, 0.19);
+  &.shadow {
+    box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.2),
+      0 -3px 10px 0 rgba(0, 0, 0, 0.19);
+  }
   .top-bar {
     width: 100vw;
   }
@@ -36,6 +53,10 @@ const navBarHeight = topBarHeight + capsuleBarHeight;
     display: flex;
     align-items: center;
     justify-content: center;
+    .center {
+      font-size: 4.7vw;
+      font-weight: bold;
+    }
     .left {
       position: fixed;
       left: 0;

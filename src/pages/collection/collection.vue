@@ -1,7 +1,10 @@
 <template>
-  <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>
-    <view class="font-weight font-md2" style="margin: auto">图鉴</view>
-  </UniNavBar>
+  <!--  <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>-->
+  <!--    <view class="font-weight font-md2" style="margin: auto">图鉴</view>-->
+  <!--  </UniNavBar>-->
+  <TopBar>
+    <template #center>图鉴</template>
+  </TopBar>
   <view class="content">
     <!-- 搜索框 -->
     <view
@@ -74,6 +77,7 @@ import { Community } from "@/apis/schemas";
 import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
+import TopBar from "@/components/TopBar.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 
 const switchText = ref("\u00A0 切换学校");

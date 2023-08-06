@@ -94,7 +94,7 @@
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
 import WorldPosts from "@/pages/world/world-posts.vue";
-import MasonryFrame from "@/pages/community/masonry-frame.vue";
+import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 import { Icons } from "@/utils/url";
