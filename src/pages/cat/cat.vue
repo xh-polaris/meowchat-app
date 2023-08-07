@@ -64,9 +64,11 @@ const cat = reactive<Cat>({
 
 const mainImgUrl = ref("");
 const goBack = () => {
+  // eslint-disable-next-line no-undef
   let pages = getCurrentPages(); // 当前页面
   let beforePage = pages[pages.length - 2]; // 上一页
   uni.navigateBack({
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     success: function () {}
   });
 };
