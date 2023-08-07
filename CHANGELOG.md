@@ -1,5 +1,41 @@
 
 
+## [1.17.0](https://github.com/xh-polaris/meowchat-app/compare/v1.16.0...v1.17.0) (2023-08-07)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 测试环境的baseurl修改为https协议 ([80db2a3](https://github.com/xh-polaris/meowchat-app/commit/80db2a31f02c76dcb2101763f204ffd826786d1f))
+* 修复错误变量名 ([a745f88](https://github.com/xh-polaris/meowchat-app/commit/a745f8884409bc645ed08caf65cff72820bec2d4))
+* 修复了多次按按钮导致重复发布动态的问题 ([699e946](https://github.com/xh-polaris/meowchat-app/commit/699e94696e0294e3acef520ba2d75ca99dea510a))
+* 修复切换环境时不会清除缓存 ([925301a](https://github.com/xh-polaris/meowchat-app/commit/925301acb23526381a49234fbd5b8e367edd2f1a))
+* 修正个人页面图标显示 ([e8e98ed](https://github.com/xh-polaris/meowchat-app/commit/e8e98ed04a753a7c4ec46dc34cc5047b66134ad7))
+
+
+### ✨ Features | 新功能
+
+* 抽离出部分喵详情内容 ([#339](https://github.com/xh-polaris/meowchat-app/issues/339)) ([137afac](https://github.com/xh-polaris/meowchat-app/commit/137afac0c781085ac3f5060d34827568e1080c26))
+* 初步实现"我的"页面调试按钮 ([a16d529](https://github.com/xh-polaris/meowchat-app/commit/a16d52913a272ddf3802c7940fabd7c9e88d837c))
+* 初步实现"我的"页面调试按钮和面板切换 ([802d365](https://github.com/xh-polaris/meowchat-app/commit/802d365f6395d4719b7c7e9eba9854d6588de1fb))
+* 初步实现"我的"页面泳道设置环境切换 ([#337](https://github.com/xh-polaris/meowchat-app/issues/337)) ([d0e9420](https://github.com/xh-polaris/meowchat-app/commit/d0e9420d108a381629404eadd64cdeddaac3776f))
+* 初步实现切换社区页面重构 ([a2174d7](https://github.com/xh-polaris/meowchat-app/commit/a2174d7243e9ed7cd7445554836edee4cc706bfe))
+* 初步实现新的SearchBar组件 ([7917de9](https://github.com/xh-polaris/meowchat-app/commit/7917de905881b3e2c6b6ec50e35ba43f7d758bfd))
+* 猫咪详情页面样式修改 ([7ec2472](https://github.com/xh-polaris/meowchat-app/commit/7ec2472dfb34c80c3b8bad9cebcae6b7277de5f7))
+* 实现大部分页面自定义TopBar样式 ([b05212d](https://github.com/xh-polaris/meowchat-app/commit/b05212d2cd20dba8712650a456c889a51f687b2e))
+* 实现首页SchoolSelect分离 ([d2b5fd4](https://github.com/xh-polaris/meowchat-app/commit/d2b5fd43129c0d0a96132278d84ffd12783ec8bb))
+* 实现首页TopBar分离 ([5c24763](https://github.com/xh-polaris/meowchat-app/commit/5c2476343c5d25ac275374793017a2cee8b28b35))
+* 实现校区确认切换功能 ([75d1618](https://github.com/xh-polaris/meowchat-app/commit/75d1618fffd54cb2b10af4fcfb1e7d5ee64c163f))
+* 实现泳道面板隐藏 ([58ed4b3](https://github.com/xh-polaris/meowchat-app/commit/58ed4b366331fcfcbc337c60849c2a744fe09450))
+* 实现重构校区切换的搜索功能 ([da5aa09](https://github.com/xh-polaris/meowchat-app/commit/da5aa09a43868808620e16efadb3ab1b4780434e))
+* 实现主要页面TopBar样式统一与进一步抽象 ([82f05c6](https://github.com/xh-polaris/meowchat-app/commit/82f05c62f631121a3edbfef6183dc584d8181507))
+* 实现自定义TopBar返回功能 ([51a7cba](https://github.com/xh-polaris/meowchat-app/commit/51a7cbab2cf4aa726c2b960087695dc088d7d395))
+* 实现TopBar的left和center双插槽 ([7007679](https://github.com/xh-polaris/meowchat-app/commit/7007679c4e856320055e1b6d3619127bb2290205))
+* 添加了后台正在上传图片的提示 ([9584187](https://github.com/xh-polaris/meowchat-app/commit/958418789312c11ba38943fd92b27adcb6527fc9))
+* 无赞无回复不显示 而非"0赞"或"0回复" ([6472efb](https://github.com/xh-polaris/meowchat-app/commit/6472efb055b9392a2732681390f054a6b6677e25))
+* 修改关注图标 ([#338](https://github.com/xh-polaris/meowchat-app/issues/338)) ([b9f0fcd](https://github.com/xh-polaris/meowchat-app/commit/b9f0fcdce171daa1319f5fd877283c8ead8fd608))
+* 暂时关闭点击喵图鉴进入详情 ([99d175c](https://github.com/xh-polaris/meowchat-app/commit/99d175c4cb9bda530aa2709a79a92566ac43417e))
+* schoolSelect页面样式 ([ccddf36](https://github.com/xh-polaris/meowchat-app/commit/ccddf364dd1386d65cca6911674ee3b980a20300))
+
 ## [1.16.0](https://github.com/xh-polaris/meowchat-app/compare/v1.15.2...v1.16.0) (2023-06-19)
 
 
