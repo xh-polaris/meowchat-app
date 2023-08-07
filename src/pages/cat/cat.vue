@@ -6,6 +6,9 @@
       mode="aspectFill"
       @click="onClickAvatar(mainImgUrl, cat.avatars)"
     />
+    <view class="goBackButton" @click="goBack">
+      <view class="left-arrow"></view>
+    </view>
     <view class="main">
       <Header :cat="cat" />
       <MetaInfo :cat="cat" />
@@ -60,6 +63,13 @@ const cat = reactive<Cat>({
 });
 
 const mainImgUrl = ref("");
+const goBack = () => {
+  let pages = getCurrentPages(); // 当前页面
+  let beforePage = pages[pages.length - 2]; // 上一页
+  uni.navigateBack({
+    success: function () {}
+  });
+};
 const getCatDetailHandler = () => {
   getCatDetail(getCatDetailReq).then((res) => {
     cat.id = res.cat.id;
@@ -97,14 +107,41 @@ onPullDownRefresh(() => {
 .cat-image {
   position: fixed;
   width: 100vw;
-  height: 48vw;
+  height: 68vw;
   z-index: -1;
   top: 0;
 }
 
+.goBackButton {
+  position: fixed;
+  width: 10vw;
+  height: 10vw;
+  border-radius: 5vw;
+  background-color: #1d1d1d;
+  margin-top: -48vw;
+  margin-left: 4vw;
+  margin-right: 4vw;
+  opacity: 0.3;
+  z-index: 10;
+}
+
+.left-arrow {
+  position: fixed;
+  border-width: 1vw 1vw 0 0;
+  border-color: #ffffff;
+  border-style: solid;
+  height: 3vw;
+  width: 3vw;
+  margin-top: 2.7vw;
+  margin-left: 3.5vw;
+  margin-right: 3.5vw;
+  transform: matrix(-0.71, 0.71, 0.71, 0.71, 0, 0);
+  z-index: 11;
+}
+
 .main {
   border-radius: 4vw 4vw 0 0;
-  margin-top: 43vw;
+  margin-top: 60vw;
   width: 100vw;
   background-color: #ffffff;
 }
