@@ -19,7 +19,6 @@ export const enum Icons {
 }
 
 export const enum Pages {
-  Test = "/pages/school-select/school-select",
   FirstPage = "/pages/first-page/first-page",
   Cat = "/pages/cat/cat",
   Post = "/pages/post/post",
@@ -31,7 +30,7 @@ export const enum Pages {
   DraftNav = "/pages/draft/draft-nav/draft-nav",
   Collection = "/pages/collection/collection",
   Moment = "/pages/moment/moment",
-  SchoolSelect = "/pages/community/school-select/school-select",
+  SchoolSelect = "/pages/school-select/school-select",
   Search = "/pages/search/search",
   DraftImage = "/pages/draft/draft-image/draft-image",
   MyPublish = "/pages/profile/my-publish/my-publish",

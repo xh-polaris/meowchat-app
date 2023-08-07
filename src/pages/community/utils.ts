@@ -21,6 +21,6 @@ export function onClickMoment(id: string) {
 
 export function onClickSwitch() {
   uni.navigateTo({
-    url: Pages.Test
+    url: Pages.SchoolSelect
   });
 }
