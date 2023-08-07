@@ -93,6 +93,12 @@
       }
     },
     {
+      "path": "pages/school-select/school-select",
+      "style": {
+        "navigationBarTitleText": "切换学校",
+      }
+    },
+    {
       "path": "pages/cat/cat",
       "style": {
         "navigationBarTitleText": "喵详情",

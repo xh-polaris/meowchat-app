@@ -14,10 +14,12 @@ export const enum Icons {
   Collection = "/static/images/collection-grey.png",
   Delete = "/static/images/delete.png",
   Guide = "/static/images/guide.png",
-  GoBack = "/static/images/left-black.png"
+  GoBack = "/static/images/left-black.png",
+  Cancel = "/static/images/cancel.png"
 }
 
 export const enum Pages {
+  Test = "/pages/school-select/school-select",
   FirstPage = "/pages/first-page/first-page",
   Cat = "/pages/cat/cat",
   Post = "/pages/post/post",

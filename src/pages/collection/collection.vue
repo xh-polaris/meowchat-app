@@ -1,9 +1,6 @@
 <template>
-  <!--  <UniNavBar :fixed="true" background-color="#f9f9f9" shadow status-bar>-->
-  <!--    <view class="font-weight font-md2" style="margin: auto">图鉴</view>-->
-  <!--  </UniNavBar>-->
   <TopBar>
-    <template #center>图鉴</template>
+    <template #center>猫咪图鉴</template>
   </TopBar>
   <view class="content">
     <!-- 搜索框 -->
