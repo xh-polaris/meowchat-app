@@ -14,7 +14,7 @@
         @click="clear"
       ></image>
     </view>
-    <view class="search-button">搜索</view>
+    <view class="search-button" @click="search">搜索</view>
   </view>
 </template>
 
@@ -28,8 +28,13 @@ const props = withDefaults(defineProps<Props>(), {
   placeHolder: "请输入搜索内容"
 });
 const searchText = ref("");
+const emits = defineEmits(["clearSearch", "search"]);
 const clear = () => {
   searchText.value = "";
+  emits("clearSearch");
+};
+const search = () => {
+  emits("search", searchText.value);
 };
 </script>
 

@@ -3,7 +3,11 @@
     <template #center>切换社区</template>
   </TopBar>
   <view style="height: 4vw"></view>
-  <SearchBar place-holder="输入学校名称"></SearchBar>
+  <SearchBar
+    place-holder="输入学校名称"
+    @clear-search="clearSearch"
+    @search="search"
+  ></SearchBar>
   <view class="list-title">当前选择</view>
   <CommunityList
     :schools="getCurrentSchools(allSchools, selectedCampusId)"
@@ -20,10 +24,15 @@
       @select-campus="selectCampus"
     ></CommunityList>
   </template>
-  <!--  <template v-else>-->
-  <!--    <view class="list-title">搜索结果</view>-->
-  <!--    <CommunityList :schools="allSchools"></CommunityList>-->
-  <!--  </template>-->
+  <template v-else>
+    <view class="list-title">搜索结果</view>
+    <CommunityList
+      :schools="getFilteredSchools(allSchools, filterText)"
+      :selected-campus-id="selectedCampusId"
+      :selected-school-id="selectedSchoolId"
+      @select-campus="selectCampus"
+    ></CommunityList>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -34,7 +43,10 @@ import { listCommunity } from "@/apis/community/community";
 import CommunityList from "@/pages/school-select/CommunityList.vue";
 import { StorageKeys } from "@/utils/const";
 import { School, Campus } from "@/pages/school-select/Interfaces";
-import { getCurrentSchools } from "@/pages/school-select/SchoolSelect";
+import {
+  getCurrentSchools,
+  getFilteredSchools
+} from "@/pages/school-select/SchoolSelect";
 
 const allSchools = ref<School[]>([]);
 const selectedCampusId = ref("");
@@ -73,6 +85,13 @@ const init = async () => {
   allSchools.value = Object.values(allSchoolsObj);
 };
 init();
+
+const clearSearch = () => {
+  filterText.value = "";
+};
+const search = (text: string) => {
+  filterText.value = text;
+};
 
 const selectCampus = (campusId: string, schoolId: string) => {
   selectedCampusId.value = campusId;

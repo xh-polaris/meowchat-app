@@ -11,9 +11,9 @@ export const getCurrentSchools = (
     return isCurrent;
   });
 };
-// export const getFilteredSchools = (
-//   allSchools: School[],
-//   filterText: string
-// ) => {
-//
-// };
+export const getFilteredSchools = (
+  allSchools: School[],
+  filterText: string
+) => {
+  return allSchools.filter((school) => school.name.includes(filterText));
+};
