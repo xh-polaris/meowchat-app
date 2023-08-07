@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
-import SchoolSelect from "@/components/SchoolSelect.vue";
+import SchoolSelect from "@/components/SchoolSelectBar.vue";
 import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import Cards from "@/pages/community/cards/cards.vue";
 import CarouselFrame from "@/pages/community/CarouselFrame.vue";
