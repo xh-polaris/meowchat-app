@@ -8,13 +8,26 @@
     @clear-search="clearSearch"
     @search="search"
   ></SearchBar>
-  <view class="list-title">当前选择</view>
+  <view style="height: 2vw"></view>
+  <view
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <view class="list-title">当前选择</view>
+    <view
+      v-if="originalCampusId !== selectedCampusId"
+      class="confirm-button"
+      @click="changeCampus"
+      >确认切换</view
+    >
+  </view>
+
   <CommunityList
     :schools="getCurrentSchools(allSchools, selectedCampusId)"
     :selected-campus-id="selectedCampusId"
     :selected-school-id="selectedSchoolId"
     @select-campus="selectCampus"
   ></CommunityList>
+  <view style="height: 2vw"></view>
   <template v-if="filterText === ''">
     <view class="list-title">全部社区</view>
     <CommunityList
@@ -49,6 +62,7 @@ import {
 } from "@/pages/school-select/SchoolSelect";
 
 const allSchools = ref<School[]>([]);
+const originalCampusId = ref("");
 const selectedCampusId = ref("");
 const selectedSchoolId = ref("");
 const filterText = ref("");
@@ -56,6 +70,7 @@ const init = async () => {
   // 获取selectedCampusId
   const campusId = uni.getStorageSync(StorageKeys.CommunityId);
   selectedCampusId.value = campusId;
+  originalCampusId.value = campusId;
 
   // 获取allSchools和selectedSchoolId
   const communities = (await listCommunity({})).communities;
@@ -92,17 +107,34 @@ const clearSearch = () => {
 const search = (text: string) => {
   filterText.value = text;
 };
-
 const selectCampus = (campusId: string, schoolId: string) => {
   selectedCampusId.value = campusId;
   selectedSchoolId.value = schoolId;
+};
+const changeCampus = () => {
+  uni.setStorageSync(StorageKeys.CommunityId, selectedCampusId.value);
+  uni.navigateBack({
+    delta: 1
+  });
 };
 </script>
 
 <style scoped lang="scss">
 .list-title {
+  width: fit-content;
   margin: 2vw 3vw;
   font-size: 4.8vw;
   color: #1fa1ff;
+}
+.confirm-button {
+  margin-right: 3vw;
+  box-sizing: border-box;
+  background-color: #1fa1ff;
+  width: 21vw;
+  height: 8vw;
+  text-align: center;
+  line-height: 8vw;
+  color: #f5f7fa;
+  border-radius: 2vw;
 }
 </style>
