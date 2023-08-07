@@ -1,4 +1,7 @@
 <template>
+  <TopBar :has-go-back="true">
+    <template #center>我的消息</template>
+  </TopBar>
   <view class="px-4">
     <!-- 公告 -->
     <view v-if="notices.data">
@@ -106,6 +109,7 @@ import Divider from "@/components/divider/divider.vue";
 import { getNotices } from "@/apis/notice/notice";
 import { Notice } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
+import TopBar from "@/components/TopBar.vue";
 
 const notices = reactive<{ data: Notice[] }>({ data: [] });
 
