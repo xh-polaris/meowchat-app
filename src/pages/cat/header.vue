@@ -1,6 +1,6 @@
 <template>
   <view class="header">
-    <view style="height: 3vh"></view>
+    <view style="height: 1vw"></view>
     <view class="first-line">
       <text>{{ props.cat.name }}</text>
       <!-- <image class="like" mode="widthFix" :src="Icons.Location"/> -->
@@ -8,6 +8,7 @@
     <view class="second-line">
       {{ props.cat.color }}
     </view>
+    <view class="line"></view>
   </view>
 </template>
 
@@ -35,6 +36,7 @@ const props = defineProps<Props>();
     display: flex;
     align-items: center;
     margin-bottom: 1vw;
+    margin-top: 6vw;
     /* .like{
 		margin-left: 65vw;
 		width:5vw;
@@ -45,7 +47,14 @@ const props = defineProps<Props>();
   .second-line {
     font-size: 4vw;
     color: #d1d1d1;
-    margin-bottom: 5vw;
+    margin-bottom: 3vw;
+  }
+
+  .line {
+    width: 88vw;
+    height: 2vw;
+    margin-bottom: 2vw;
+    border-bottom: 1vw solid #f3f3f3;
   }
 }
 </style>
