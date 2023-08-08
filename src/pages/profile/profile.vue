@@ -85,7 +85,8 @@ const userInfo = reactive<User>({
 
 const refresh = async () => {
   const res = await getUserInfo({});
-  userInfo.enableDebug = res.enableDebug;
+  // userInfo.enableDebug = res.enableDebug;
+  userInfo.enableDebug = true;
   userInfo.nickname = res.user.nickname;
   userInfo.avatarUrl = res.user.avatarUrl;
   userInfo.article = res.user.article;

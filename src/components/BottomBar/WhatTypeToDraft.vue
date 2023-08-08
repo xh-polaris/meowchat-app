@@ -1,14 +1,18 @@
 <template>
-  <view class="background">
+  <view
+    class="background"
+    @click="emits('toggleShowingDraft', false)"
+    @mousedown.prevent.stop
+  >
     <view class="choices">
       <view class="prompt">选择发布类型</view>
-      <view class="choice">
+      <view class="choice" @click="goToPage(Pages.DraftMoment)">
         <text class="text">[社区]动态</text>
         <text v-if="props.current === 'community'" class="current"
           >(当前页)</text
         >
       </view>
-      <view class="choice">
+      <view class="choice" @click="goToPage(Pages.DraftPost)">
         <text class="text">[世界]帖子</text>
         <text v-if="props.current === 'world'" class="current">(当前页)</text>
       </view>
@@ -17,12 +21,20 @@
 </template>
 
 <script setup lang="ts">
+import { Pages } from "@/utils/url";
 interface Props {
   current: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   current: ""
 });
+const momentUrl = `${Pages.DraftNav}?type=moment`;
+const emits = defineEmits(["toggleShowingDraft"]);
+const goToPage = (url: string) => {
+  uni.navigateTo({
+    url: Pages.DraftTest
+  });
+};
 </script>
 
 <style scoped lang="scss">

@@ -4,7 +4,7 @@
       v-for="item in tabContent"
       :key="item.id"
       class="tab"
-      @click="item.id === 'draft' ? tabSwitch(item.url) : tabChange(item.url)"
+      @click="item.id === 'draft' ? draft(item.url) : tabChange(item.url)"
     >
       <image
         :class="chooseIconClass(item.id)"
@@ -23,7 +23,7 @@ interface Props {
   id: string;
 }
 const props = defineProps<Props>();
-const momentUrl = `${Pages.DraftNav}?type=moment`;
+const emits = defineEmits(["toggleShowingDraft"]);
 const tabContent = [
   {
     id: "community",
@@ -79,20 +79,22 @@ function chooseTextClass(id: string) {
 }
 
 const tabChange = (path: string) => {
+  emits("toggleShowingDraft", false);
   uni.switchTab({
     url: path
   });
 };
-const tabSwitch = (path: string) => {
-  if (props.id === "draft") {
-    uni.navigateTo({
-      url: path
-    });
-  } else {
-    uni.navigateTo({
-      url: momentUrl
-    });
-  }
+const draft = () => {
+  emits("toggleShowingDraft", true);
+  // if (props.id === "draft") {
+  //   uni.navigateTo({
+  //     url: path
+  //   });
+  // } else {
+  //   uni.navigateTo({
+  //     url: momentUrl
+  //   });
+  // }
 };
 </script>
 

@@ -1,0 +1,94 @@
+<template>
+  <TopBar :has-go-back="true">
+    <template #center>编辑动态</template>
+  </TopBar>
+  <view style="height: 6vw"></view>
+  <Images
+    @toggle-is-uploading-images="toggleIsUploadingImages"
+    @change-photos="changePhotos"
+  ></Images>
+  <view v-if="isUploadingImages" style="margin: 0 6vw; font-size: 3.8vw"
+    >后台上传图片中...</view
+  >
+  <view style="height: 4vw"></view>
+  <InputArea
+    @change-title="changeTitle"
+    @change-content="changeContent"
+  ></InputArea>
+  <view style="height: 4vw"></view>
+  <ChooseCat></ChooseCat>
+  <view style="height: 8vw"></view>
+  <view style="height: 36vw"></view>
+  <BottomPanel
+    :can-publish="!isUploadingImages"
+    @publish="publish"
+  ></BottomPanel>
+</template>
+
+<script setup lang="ts">
+import Images from "@/pages/draft/Images.vue";
+import ChooseCat from "@/pages/draft/ChooseCat.vue";
+import BottomPanel from "@/pages/draft/BottomPanel.vue";
+import InputArea from "@/pages/draft/InputArea.vue";
+import TopBar from "@/components/TopBar.vue";
+import { reactive, ref } from "vue";
+import { StorageKeys } from "@/utils/const";
+import { newMoment } from "@/apis/moment/moment";
+import { Pages } from "@/utils/url";
+const isUploadingImages = ref(false);
+const toggleIsUploadingImages = (bool: boolean) => {
+  isUploadingImages.value = bool;
+};
+const isPublished = ref(false);
+const title = ref("");
+const content = ref("");
+const photos = ref([]);
+const changeTitle = (text: string) => {
+  console.log("here");
+  title.value = text;
+};
+const changeContent = (text: string) => {
+  content.value = text;
+};
+const changePhotos = (data: any) => {
+  photos.value = data;
+};
+
+const publish = () => {
+  if (isPublished.value) return;
+  if (photos.value.length == 0) {
+    uni.showToast({
+      title: "至少上传一张图片哦",
+      icon: "none"
+    });
+    return;
+  }
+  isPublished.value = true;
+  uni.setStorageSync(StorageKeys.DraftMoment, "");
+  newMoment({
+    title: title.value,
+    communityId: uni.getStorageSync(StorageKeys.CommunityId),
+    text: content.value,
+    photos: [...photos.value],
+    catId: uni.getStorageSync(StorageKeys.IdSelected)
+  }).then(() => {
+    uni.switchTab({
+      url: Pages.Community,
+      success() {
+        uni.reLaunch({
+          url: Pages.Community
+        });
+      }
+    });
+  });
+  console.log({
+    title: title.value,
+    communityId: uni.getStorageSync(StorageKeys.CommunityId),
+    text: content.value,
+    photos: [...photos.value],
+    catId: uni.getStorageSync(StorageKeys.IdSelected)
+  });
+};
+</script>
+
+<style scoped lang="scss"></style>
