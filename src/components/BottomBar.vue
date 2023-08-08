@@ -15,13 +15,20 @@
       </text>
     </view>
   </view>
+  <template v-if="false">
+    <WhatTypeToDraft :current="props.id"></WhatTypeToDraft>
+  </template>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import WhatTypeToDraft from "@/components/BottomBar/WhatTypeToDraft.vue";
 import { Pages } from "@/utils/url";
 
-const props = defineProps<{ id: string }>();
+interface Props {
+  id: string;
+}
+const props = defineProps<Props>();
 const momentUrl = `${Pages.DraftNav}?type=moment`;
 const tabContent = [
   {
@@ -105,10 +112,10 @@ const tabSwitch = (path: string) => {
   left: 0;
   bottom: 0;
   width: 100%;
-  z-index: 100;
+  z-index: 200;
   background: #fdfdfd;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-  height: 132rpx;
+  height: 18vw;
 
   .tab {
     display: grid;
