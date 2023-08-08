@@ -26,10 +26,11 @@
     <view style="height: 18vw"></view>
   </view>
 
-  <TabBar id="1"></TabBar>
+  <BottomBar id="community"></BottomBar>
 </template>
 
 <script lang="ts" setup>
+import BottomBar from "@/components/BottomBar.vue";
 import { reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import SchoolSelectBar from "@/components/SchoolSelectBar.vue";
@@ -37,7 +38,6 @@ import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import Cards from "@/pages/community/cards/cards.vue";
 import CarouselFrame from "@/pages/community/CarouselFrame.vue";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
-import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
 import { Community } from "@/apis/schemas";
 import { StorageKeys } from "@/utils/const";
