@@ -38,7 +38,7 @@ import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pictures } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
-
+import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
 const props = defineProps<{
   userId?: string;
 }>();
@@ -77,15 +77,15 @@ const refresh = async () => {
   userInfo.id = res.user.id;
   userInfo.nickname = res.user.nickname;
   userInfo.avatarUrl = res.user.avatarUrl;
-  userInfo.follower = res.user.follower;
-  userInfo.following = res.user.following;
+  userInfo.follower = res.user.follower ? res.user.follower : 0;
+  userInfo.following = res.user.following ? res.user.following : 0;
   userInfo.article = res.user.article;
   let commentLikeReq = {
     targetId: userInfo.id,
     targetType: 6
   };
   const userLiked = await getUserLiked(commentLikeReq);
-  console.log(userLiked);
+
   followInfo.followed = userLiked.liked;
   followInfo.originFollow = userLiked.liked;
 };
