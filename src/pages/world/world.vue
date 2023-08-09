@@ -43,18 +43,17 @@
     <view class="empty-bottom"></view>
   </view>
 
-  <TabBar id="3"></TabBar>
+  <BottomBar id="world"></BottomBar>
 </template>
 
 <script lang="ts" setup>
+import BottomBar from "@/components/BottomBar.vue";
 import { reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import { onLoad, onPullDownRefresh, onReady } from "@dcloudio/uni-app";
 import { Icons, Pages } from "@/utils/url";
 import WorldPosts from "@/pages/world/world-posts.vue";
 import { search } from "./utils";
-import TabBar from "@/components/tab-bar/tab-bar.vue";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import { StorageKeys } from "@/utils/const";
 
 //搜索界面需要用到的缓存

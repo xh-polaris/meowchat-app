@@ -54,20 +54,19 @@
     </view>
   </view>
   <UserPublished type="my"></UserPublished>
-  <tab-bar id="4"></tab-bar>
+  <BottomBar id="profile"></BottomBar>
   <template v-if="userInfo.enableDebug">
     <debug-panel></debug-panel>
   </template>
 </template>
 
 <script lang="ts" setup>
+import BottomBar from "@/components/BottomBar.vue";
 import { reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
-import TabBar from "@/components/tab-bar/tab-bar.vue";
 import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import DebugPanel from "@/components/debug-panel/debug-panel.vue";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pages, Pictures } from "@/utils/url";
@@ -86,7 +85,8 @@ const userInfo = reactive<User>({
 
 const refresh = async () => {
   const res = await getUserInfo({});
-  userInfo.enableDebug = res.enableDebug;
+  // userInfo.enableDebug = res.enableDebug;
+  userInfo.enableDebug = true;
   userInfo.nickname = res.user.nickname;
   userInfo.avatarUrl = res.user.avatarUrl;
   userInfo.article = res.user.article;

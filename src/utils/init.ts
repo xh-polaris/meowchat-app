@@ -39,6 +39,7 @@ export async function init() {
 
 function afterSignIn(signInResp: SignInResp) {
   uni.setStorageSync(StorageKeys.AccessToken, signInResp.accessToken);
+  // console.log("token", signInResp.accessToken);
   uni.setStorageSync(StorageKeys.UserId, signInResp.userId);
   checkCommunityId().then();
   getUserInfo({}).catch((res: UniNamespace.RequestSuccessCallbackResult) => {

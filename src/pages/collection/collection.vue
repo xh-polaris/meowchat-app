@@ -62,18 +62,17 @@
     </template>
   </view>
   <view class="empty-bottom"></view>
-  <TabBar id="2"></TabBar>
+  <BottomBar id="collection"></BottomBar>
 </template>
 
 <script lang="ts" setup>
+import BottomBar from "@/components/BottomBar.vue";
 import { Icons, Pages } from "@/utils/url";
 import { reactive, ref } from "vue";
 import { StorageKeys } from "@/utils/const";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import { Community } from "@/apis/schemas";
-import TabBar from "@/components/tab-bar/tab-bar.vue";
 import { listCommunity } from "@/apis/community/community";
-import UniNavBar from "@/components/third-party/uni-ui/uni-nav-bar/uni-nav-bar.vue";
 import TopBar from "@/components/TopBar.vue";
 import SearchCats from "@/pages/search/search-cats.vue";
 
