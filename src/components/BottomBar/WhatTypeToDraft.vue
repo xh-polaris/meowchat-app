@@ -12,7 +12,7 @@
           >(当前页)</text
         >
       </view>
-      <view class="choice" @click="goToPage(Pages.DraftPost)">
+      <view class="choice" @click="goToPage(Pages.DraftTest)">
         <text class="text">[世界]帖子</text>
         <text v-if="props.current === 'world'" class="current">(当前页)</text>
       </view>
@@ -28,11 +28,11 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   current: ""
 });
-const momentUrl = `${Pages.DraftNav}?type=moment`;
+// const momentUrl = `${Pages.DraftNav}?type=moment`;
 const emits = defineEmits(["toggleShowingDraft"]);
 const goToPage = (url: string) => {
   uni.navigateTo({
-    url: Pages.DraftTest
+    url
   });
 };
 </script>

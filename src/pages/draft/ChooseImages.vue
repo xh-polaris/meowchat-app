@@ -99,7 +99,7 @@ function addImage() {
         })
         .finally(() => {
           //图片成功在后端上传了 在这里
-          console.log([...photos]);
+          // console.log([...photos]);
           emits("changePhotos", [...photos]);
           emits("toggleIsUploadingImages", false);
         });

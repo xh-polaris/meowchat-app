@@ -38,7 +38,7 @@ export interface GetPostDetailResp {
 
 export interface NewPostReq {
   id?: string;
-  isAnonymous: boolean;
+  isOfficial: boolean;
   title: string;
   text: string;
   coverUrl?: string;

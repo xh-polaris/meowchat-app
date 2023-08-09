@@ -1,334 +1,63 @@
 <template>
-  <view class="all">
-    <view class="main">
-      <view class="images">
-        <DraggableItem
-          :container-size="{
-            width: '100%',
-            height:
-              Math.ceil(Math.min(imagesData.length + 1, 30) / 3.0) *
-                (imageWidth + imageMargin) +
-              'px'
-          }"
-          :controls-size="{
-            width: imageWidth,
-            height: imageWidth,
-            margin: imageMargin
-          }"
-          :images-data="imagesData"
-          :photos="photos"
-        >
-          <template #content="{ image, index }">
-            <div style="position: relative">
-              <image
-                :src="image.url"
-                class="added-image"
-                mode="aspectFill"
-                @click="showImage(index)"
-              />
-              <div class="delete-image" @click="deleteImage(index)" />
-            </div>
-          </template>
-          <template #addImage>
-            <view
-              v-if="imagesData.length < 30"
-              class="new-image"
-              @click="addImage"
-            />
-          </template>
-        </DraggableItem>
-      </view>
-      <view class="image-num"> {{ imagesData.length }}/30</view>
-      <view v-if="disablePublish" class="uploading"
-        >后台上传图片中，上传结束才能发布动态噢
-      </view>
-      <view class="m-2">
-        <FuiTextArea
-          v-model="title"
-          :border-bottom="true"
-          :border-top="false"
-          background-color="white"
-          border-color="#1FA1FF"
-          bottom-left="20"
-          bottom-right="20"
-          color="black"
-          height="50rpx"
-          placeholder="填写标题能获得更多赞哦~"
-          text="默认按钮"
-        ></FuiTextArea>
-      </view>
-
-      <view class="mx-2 mt-2">
-        <FuiTextArea
-          v-model="text"
-          :border-bottom="false"
-          :border-top="false"
-          :is-counter="true"
-          color="black"
-          height="350rpx"
-          maxlength="2000"
-          placeholder="说点什么吧! (可空)"
-          text="默认按钮"
-        ></FuiTextArea>
-      </view>
-
-      <view class="choose-cats-bar">
-        <view v-if="!catId" class="font-md" style="color: #b8b8b8">
-          如果动态是为某喵发的，可以点"+"选择它噢
-        </view>
-        <view v-if="catId" class="font-md" style="color: #b8b8b8"
-          >图片将上传至猫咪
-        </view>
-      </view>
-    </view>
-
-    <view class="d-flex wrap">
-      <view @click="chooseCats">
-        <view style="margin-left: calc(10 / 390 * 100vw)">
-          <image
-            :src="Icons.NewImage"
-            style="width: 200rpx; height: 200rpx"
-          ></image>
-        </view>
-      </view>
-      <view v-if="catImage">
-        <image
-          :src="catImage"
-          class="border mx-1 mt-2"
-          style="
-            width: 160rpx;
-            height: 160rpx;
-            border-radius: 30rpx;
-            border-color: #1fa1ff;
-            border-width: 0.1em;
-          "
-          @click="onClickCat()"
-        ></image>
-        <view class="font-md text-center mt-2" style="color: #1fa1ff"
-          >{{ catName }}
-        </view>
-      </view>
-    </view>
-    <view class="panel">
-      <button :disabled="disablePublish" class="publish" @click="publishMoment">
-        发布动态
-      </button>
-      <view class="notice">
-        发布前请先阅读
-        <view class="nobody-will-read" @click="showDeal">
-          《用户服务协议》
-        </view>
-        及
-        <view class="nobody-will-read" @click="showPolicy">
-          《个人信息保护政策》
-        </view>
-        ，一旦发布即被视为同意上述协议和政策
-      </view>
-    </view>
-  </view>
-  <deal v-if="isShow && type === 1" @click="change"></deal>
-  <policy v-if="isShow && type === 2"></policy>
+  <TopBar :has-go-back="true">
+    <template #center>编辑动态</template>
+  </TopBar>
+  <view style="height: 6vw"></view>
+  <Images
+    @toggle-is-uploading-images="toggleIsUploadingImages"
+    @change-photos="changePhotos"
+  ></Images>
+  <view v-if="isUploadingImages" style="margin: 0 6vw; font-size: 3.8vw"
+    >后台上传图片中...</view
+  >
+  <view style="height: 4vw"></view>
+  <InputArea
+    @change-title="changeTitle"
+    @change-content="changeContent"
+  ></InputArea>
+  <view style="height: 4vw"></view>
+  <ChooseCat></ChooseCat>
+  <view style="height: 8vw"></view>
+  <view style="height: 36vw"></view>
+  <BottomPanel
+    :can-publish="!isUploadingImages"
+    text="发布帖子"
+    @publish="publish"
+  ></BottomPanel>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
+import Images from "@/pages/draft/ChooseImages.vue";
+import ChooseCat from "@/pages/draft/ChooseCat.vue";
+import BottomPanel from "@/pages/draft/BottomPanel.vue";
+import InputArea from "@/pages/draft/InputArea.vue";
+import TopBar from "@/components/TopBar.vue";
 import { reactive, ref } from "vue";
-import { Prefixes, putObject } from "@/apis/cos/cos";
-import { onShow, onUnload } from "@dcloudio/uni-app";
-
-import { newMoment } from "@/apis/moment/moment";
-import FuiTextArea from "@/components/third-party/fui-textarea/fui-textarea.vue";
-import { Icons, Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
-import Deal from "@/components/deal-policy/deal.vue";
-import Policy from "@/components/deal-policy/policy.vue";
-import { onClickImage } from "@/pages/cat/utils";
-import DraggableItem from "@/components/third-party/draggable-item/draggable-item.vue";
-
-const title = ref("");
-const text = ref("");
-const photos = reactive<any>([]);
-const imagesData = reactive<any>([]);
-
-const disablePublish = ref(false);
+import { newMoment } from "@/apis/moment/moment";
+import { Pages } from "@/utils/url";
+const isUploadingImages = ref(false);
+const toggleIsUploadingImages = (bool: boolean) => {
+  isUploadingImages.value = bool;
+};
 const isPublished = ref(false);
-
-const catImage = ref("");
-const catName = ref("猫猫");
-const catId = ref("");
-
-const draft = reactive({
-  title: title,
-  text: text,
-  photos: photos,
-  imagesData: imagesData,
-  catImage: catImage,
-  catName: catName,
-  catId: catId
-});
-let draftJSON = reactive({
-  title: "",
-  text: "",
-  photos: [],
-  imagesData: [],
-  catImage: "",
-  catName: "",
-  catId: ""
-});
-
-/**
- $margin: calc(20 / 390 * 100vw);
- $imagesWidth: calc(100vw - $margin * 2);
- $imageWidth: calc(110 / 390 * 100vw);
- $imageGap: calc(($imagesWidth - 3 * $imageWidth) / 2);
- */
-const windowWidth = ref(uni.getSystemInfoSync().windowWidth);
-const margin = ref((20.0 / 390) * windowWidth.value);
-const imagesWidth = ref(windowWidth.value - margin.value * 2);
-const imageWidth = ref((110.0 / 390) * windowWidth.value);
-const imageMargin = ref((imagesWidth.value - 3 * imageWidth.value) / 2);
-
-onShow(() => {
-  catId.value = uni.getStorageSync(StorageKeys.IdSelected);
-  catName.value = uni.getStorageSync(StorageKeys.NameSelected);
-  catImage.value = uni.getStorageSync(StorageKeys.AvatarSelected);
-});
-
-onUnload(() => {
-  if (
-    (title.value !== "" ||
-      text.value !== "" ||
-      imagesData.length !== 0 ||
-      catImage.value !== "") &&
-    !isPublished.value
-  ) {
-    uni.showModal({
-      content: "是否要保存为草稿?",
-      cancelText: "不保存",
-      confirmText: "保存",
-      success: (res) => {
-        if (res.confirm) {
-          uni.setStorageSync(
-            StorageKeys.DraftMoment,
-            encodeURIComponent(JSON.stringify(draft))
-          );
-        } else {
-          uni.setStorageSync(StorageKeys.DraftMoment, "");
-        }
-      }
-    });
-  }
-  uni.removeStorageSync(StorageKeys.IdSelected);
-  uni.removeStorageSync(StorageKeys.NameSelected);
-  uni.removeStorageSync(StorageKeys.AvatarSelected);
-});
-
-function loadDraftMoment() {
-  if (uni.getStorageSync(StorageKeys.DraftMoment)) {
-    uni.showModal({
-      content: "是否加载上次的草稿?",
-      cancelText: "否",
-      confirmText: "是",
-      success: (res) => {
-        if (res.confirm) {
-          draftJSON = JSON.parse(
-            decodeURIComponent(uni.getStorageSync(StorageKeys.DraftMoment))
-          );
-          title.value = draftJSON.title;
-          text.value = draftJSON.text;
-          for (let i = 0; i < draftJSON.photos.length; ++i) {
-            photos[i] = draftJSON.photos[i];
-          }
-          for (let i = 0; i < draftJSON.imagesData.length; ++i) {
-            imagesData[i] = draftJSON.imagesData[i];
-          }
-          catName.value = draftJSON.catName;
-          uni.setStorageSync(StorageKeys.NameSelected, draftJSON.catName);
-          catImage.value = draftJSON.catImage;
-          uni.setStorageSync(StorageKeys.AvatarSelected, draftJSON.catImage);
-          catId.value = draftJSON.catId;
-          uni.setStorageSync(StorageKeys.IdSelected, draftJSON.catId);
-        }
-      }
-    });
-  }
-}
-
-loadDraftMoment();
-
-function chooseCats() {
-  uni.navigateTo({
-    url: Pages.ChooseCat
-  });
-}
-
-const onClickCat = () => {
-  catId.value = "";
-  catImage.value = "";
-  catName.value = "";
+const title = ref("");
+const content = ref("");
+const photos = ref([]);
+const changeTitle = (text: string) => {
+  console.log("here");
+  title.value = text;
+};
+const changeContent = (text: string) => {
+  content.value = text;
+};
+const changePhotos = (data: any) => {
+  photos.value = data;
 };
 
-function addImage() {
-  //点击+ 选择文件的时候 就到这里
-  disablePublish.value = true;
-  uni.chooseMedia({
-    mediaType: ["image"],
-    success: (chooseImageRes) => {
-      //成功在文件中选择了图片 在这里
-      let isTooManyImages = false;
-      let tempFilePaths = chooseImageRes.tempFiles as Array<any>;
-      if (imagesData.length + tempFilePaths.length > 30) {
-        isTooManyImages = true;
-        tempFilePaths = tempFilePaths.slice(0, 30 - imagesData.length);
-      }
-      const promises = tempFilePaths.map((item) => {
-        imagesData.push({
-          id: item.tempFilePath,
-          url: item.tempFilePath
-        });
-        return putObject({
-          filePath: item.tempFilePath,
-          prefix: Prefixes.Moment
-        });
-      });
-      Promise.all(promises)
-        .then((urls) => {
-          urls.forEach((url: any, index: number) => {
-            //将返回的url添加进photos
-            //注意异步添加顺序，urls顺序和tempFilePaths相同
-            let changeIndex = -1;
-            for (let i = 0; i < imagesData.length; i++) {
-              if (imagesData[i].url === tempFilePaths[index].tempFilePath) {
-                changeIndex = i;
-              }
-            }
-            photos[changeIndex] = url.url;
-          });
-        })
-        .finally(() => {
-          //图片成功在后端上传了 在这里
-          disablePublish.value = false;
-        });
-      if (isTooManyImages) {
-        uni.showToast({
-          title: "最多可上传30张图片！",
-          icon: "error"
-        });
-      }
-    },
-    fail: () => {
-      disablePublish.value = false;
-    }
-  });
-}
-
-function deleteImage(index: number) {
-  imagesData.splice(index, 1);
-  photos.splice(index, 1);
-}
-
-function publishMoment() {
-  if (isPublished.value === true) return;
-  if (photos.length == 0) {
+const publish = () => {
+  if (isPublished.value) return;
+  if (photos.value.length == 0) {
     uni.showToast({
       title: "至少上传一张图片哦",
       icon: "none"
@@ -338,11 +67,12 @@ function publishMoment() {
   isPublished.value = true;
   uni.setStorageSync(StorageKeys.DraftMoment, "");
   newMoment({
+    id: "",
     title: title.value,
     communityId: uni.getStorageSync(StorageKeys.CommunityId),
-    text: text.value,
-    photos: photos,
-    catId: catId.value
+    text: content.value,
+    photos: [...photos.value],
+    catId: uni.getStorageSync(StorageKeys.IdSelected)
   }).then(() => {
     uni.switchTab({
       url: Pages.Community,
@@ -353,178 +83,15 @@ function publishMoment() {
       }
     });
   });
-}
-
-function showImage(index: number) {
-  const imageUrl = imagesData.map((item: any) => item.url);
-  onClickImage(index, imageUrl);
-}
-
-// 控制协议和政策区域
-const isShow = ref(false);
-const type = ref(0);
-
-function showDeal() {
-  type.value = 1;
-  isShow.value = !isShow.value;
-}
-
-function showPolicy() {
-  type.value = 2;
-  isShow.value = !isShow.value;
-}
+  console.log({
+    id: "",
+    title: title.value,
+    communityId: uni.getStorageSync(StorageKeys.CommunityId),
+    text: content.value,
+    photos: [...photos.value],
+    catId: uni.getStorageSync(StorageKeys.IdSelected)
+  });
+};
 </script>
 
-<style lang="scss" scoped>
-$margin: calc(20 / 390 * 100vw);
-$imagesWidth: calc(100vw - $margin * 2);
-$imageWidth: calc(110 / 390 * 100vw);
-$imageGap: calc(($imagesWidth - 3 * $imageWidth) / 2);
-
-body {
-  font-family: sans-serif;
-}
-
-.all {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: calc(100vh - 48px);
-}
-
-.images {
-  display: flex;
-  width: calc(100vw - $margin * 2 + $imageGap);
-  margin: $margin $margin 0;
-  flex-wrap: wrap;
-}
-
-.added-image,
-.new-image {
-  box-sizing: border-box;
-  width: $imageWidth;
-  height: $imageWidth;
-  border-radius: calc(6 / 390 * 100vw);
-  margin-right: $imageGap;
-  margin-bottom: $imageGap;
-}
-
-.added-image {
-  background-size: cover;
-  background-position: center;
-  object-fit: none;
-}
-
-.new-image {
-  background-color: #fafafa;
-  border: #d1d1d1 solid calc(1 / 390 * 100vw);
-  background-image: url("../../static/images/plus-lightgrey.png");
-  background-size: 24% 24%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.delete-image {
-  background-color: cyan;
-  background-image: url("/static/images/x-black.png");
-  background-size: calc($imageWidth / 10) calc($imageWidth / 10);
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: invert(100%);
-  position: absolute;
-  border-radius: 50%;
-  top: calc($imageWidth / 25);
-  right: calc($imageGap + $imageWidth / 25);
-  width: calc($imageWidth / 5);
-  height: calc($imageWidth / 5);
-  opacity: 0.9;
-}
-
-.image-num {
-  font-size: calc(12 / 390 * 100vw);
-  color: #b8b8b8;
-  margin-left: calc(32 / 390 * 100vw);
-  margin-bottom: calc(20 / 390 * 100vw);
-}
-
-textarea {
-  background-color: #fafafa;
-  border-radius: calc(10 / 390 * 100vw);
-  width: calc(100vw - $margin * 2);
-  padding: calc(10 / 390 * 100vw);
-  color: black;
-  margin: 0 $margin calc(28 / 390 * 100vw);
-  font-size: calc(14 / 390 * 100vw);
-  box-sizing: border-box;
-}
-
-::placeholder {
-  color: #939393;
-}
-
-textarea ::selection {
-  background-color: #939393;
-  color: white;
-}
-
-.choose-cats-bar {
-  display: flex;
-  align-items: center;
-  margin: 0 $margin calc(10 / 390 * 100vw);
-
-  .choose-cats {
-    color: #1fa1ff;
-    font-size: calc(14 / 390 * 100vw);
-    margin-right: calc(5 / 390 * 100vw);
-  }
-
-  .right-arrow {
-    width: calc(7 / 390 * 100vw);
-    height: calc(11 / 390 * 100vw);
-    background-image: url("../../static/images/right-blue.png");
-    margin-right: calc(16 / 390 * 100vw);
-  }
-
-  .choose-followed-cats {
-    color: #b8b8b8;
-    font-size: calc(12 / 390 * 100vw);
-  }
-}
-
-.panel {
-  padding: calc(33 / 390 * 100vw) calc(33 / 390 * 100vw) calc(60 / 390 * 100vw);
-}
-
-.publish {
-  margin-top: calc(25 / 390 * 100vw);
-  margin-bottom: calc(19 / 390 * 100vw);
-  width: 100%;
-  background-color: #1fa1ff;
-  color: #ffffff;
-  font-size: calc(16 / 390 * 100vw);
-  text-align: center;
-  height: calc(44 / 390 * 100vw);
-  border-radius: calc(22 / 390 * 100vw);
-  line-height: calc(44 / 390 * 100vw);
-  transition-duration: 0.05s;
-  letter-spacing: 5rpx;
-}
-
-.publish:active {
-  background-color: #bae2ff;
-}
-
-.notice {
-  font-size: calc(10 / 390 * 100vw);
-}
-
-.nobody-will-read {
-  display: inline;
-  color: #1fa1ff;
-}
-
-.uploading {
-  margin-left: 6vw;
-  color: #1d1d1d;
-}
-</style>
+<style scoped lang="scss"></style>

@@ -1,48 +1,45 @@
 <template>
   <TopBar :has-go-back="true">
-    <template #center>编辑动态</template>
+    <template #center>编辑帖子</template>
   </TopBar>
   <view style="height: 6vw"></view>
-  <Images
+  <ChooseImage
     @toggle-is-uploading-images="toggleIsUploadingImages"
-    @change-photos="changePhotos"
-  ></Images>
-  <view v-if="isUploadingImages" style="margin: 0 6vw; font-size: 3.8vw"
-    >后台上传图片中...</view
-  >
+    @change-cover-url="changeCoverUrl"
+  ></ChooseImage>
+  <view style="height: 4vw"></view>
+  <EditTags @change-tags="changeTags"></EditTags>
   <view style="height: 4vw"></view>
   <InputArea
     @change-title="changeTitle"
     @change-content="changeContent"
   ></InputArea>
-  <view style="height: 4vw"></view>
-  <ChooseCat></ChooseCat>
   <view style="height: 8vw"></view>
   <view style="height: 36vw"></view>
+
   <BottomPanel
     :can-publish="!isUploadingImages"
+    text="发布帖子"
     @publish="publish"
   ></BottomPanel>
 </template>
 
 <script setup lang="ts">
-import Images from "@/pages/draft/Images.vue";
-import ChooseCat from "@/pages/draft/ChooseCat.vue";
+import TopBar from "@/components/TopBar.vue";
 import BottomPanel from "@/pages/draft/BottomPanel.vue";
 import InputArea from "@/pages/draft/InputArea.vue";
-import TopBar from "@/components/TopBar.vue";
-import { reactive, ref } from "vue";
+import ChooseImage from "@/pages/draft/ChooseImage.vue";
+import EditTags from "@/pages/draft/EditTags.vue";
+
+import { ref } from "vue";
 import { StorageKeys } from "@/utils/const";
-import { newMoment } from "@/apis/moment/moment";
+import { newPost } from "@/apis/post/post";
 import { Pages } from "@/utils/url";
-const isUploadingImages = ref(false);
-const toggleIsUploadingImages = (bool: boolean) => {
-  isUploadingImages.value = bool;
-};
 const isPublished = ref(false);
 const title = ref("");
 const content = ref("");
-const photos = ref([]);
+const coverUrl = ref("");
+const tags = ref([]);
 const changeTitle = (text: string) => {
   console.log("here");
   title.value = text;
@@ -50,45 +47,63 @@ const changeTitle = (text: string) => {
 const changeContent = (text: string) => {
   content.value = text;
 };
-const changePhotos = (data: any) => {
-  photos.value = data;
+const changeCoverUrl = (url: string) => {
+  coverUrl.value = url;
+};
+const changeTags = (data: any) => {
+  tags.value = data;
+};
+
+const isUploadingImages = ref(false);
+const toggleIsUploadingImages = (bool: boolean) => {
+  isUploadingImages.value = bool;
 };
 
 const publish = () => {
-  if (isPublished.value) return;
-  if (photos.value.length == 0) {
+  console.log("publish");
+  if (title.value === "") {
     uni.showToast({
-      title: "至少上传一张图片哦",
+      title: "请输入标题",
       icon: "none"
     });
     return;
   }
-  isPublished.value = true;
-  uni.setStorageSync(StorageKeys.DraftMoment, "");
-  newMoment({
+  if (content.value === "") {
+    uni.showToast({
+      title: "请输入正文",
+      icon: "none"
+    });
+    return;
+  }
+  uni.setStorageSync(StorageKeys.DraftPost, "");
+  isPublished.value = !isPublished.value;
+  console.log([...tags.value]);
+  console.log({
     title: title.value,
-    communityId: uni.getStorageSync(StorageKeys.CommunityId),
     text: content.value,
-    photos: [...photos.value],
-    catId: uni.getStorageSync(StorageKeys.IdSelected)
+    coverUrl: coverUrl.value,
+    tags: [...tags.value],
+    isOfficial: false,
+    id: ""
+  });
+  newPost({
+    title: title.value,
+    text: content.value,
+    coverUrl: coverUrl.value,
+    tags: [...tags.value],
+    isOfficial: false,
+    id: ""
   }).then(() => {
     uni.switchTab({
-      url: Pages.Community,
+      url: Pages.World,
       success() {
         uni.reLaunch({
-          url: Pages.Community
+          url: Pages.World
         });
       }
     });
   });
-  console.log({
-    title: title.value,
-    communityId: uni.getStorageSync(StorageKeys.CommunityId),
-    text: content.value,
-    photos: [...photos.value],
-    catId: uni.getStorageSync(StorageKeys.IdSelected)
-  });
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped></style>

@@ -4,7 +4,7 @@
       :class="'publish ' + (props.canPublish ? 'can' : 'disabled')"
       @click="publish"
     >
-      发布动态
+      {{ props.text }}
     </button>
     <view class="notice">
       发布前请先阅读
@@ -21,9 +21,11 @@
 <script setup lang="ts">
 interface Props {
   canPublish: boolean;
+  text: string;
 }
 const props = withDefaults(defineProps<Props>(), {
-  canPublish: false
+  canPublish: false,
+  text: "发布"
 });
 const emits = defineEmits(["publish"]);
 

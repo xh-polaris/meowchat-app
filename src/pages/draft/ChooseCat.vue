@@ -62,6 +62,7 @@ onShow(() => {
   catId.value = uni.getStorageSync(StorageKeys.IdSelected);
   catName.value = uni.getStorageSync(StorageKeys.NameSelected);
   catImage.value = uni.getStorageSync(StorageKeys.AvatarSelected);
+  console.log(catId.value);
 });
 const clearCat = () => {
   catId.value = "";
