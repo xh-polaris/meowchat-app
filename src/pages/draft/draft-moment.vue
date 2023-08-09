@@ -73,16 +73,37 @@ const publish = () => {
     text: content.value,
     photos: [...photos.value],
     catId: uni.getStorageSync(StorageKeys.IdSelected)
-  }).then(() => {
-    uni.switchTab({
-      url: Pages.Community,
-      success() {
-        uni.reLaunch({
-          url: Pages.Community
+  })
+    .then(() => {
+      uni.switchTab({
+        url: Pages.Community,
+        success() {
+          uni.reLaunch({
+            url: Pages.Community
+          });
+        }
+      });
+    })
+    .catch((reason) => {
+      const code = reason.data.Code;
+      if (code === 10001) {
+        uni.showToast({
+          title: "文本含不合法内容",
+          icon: "none"
+        });
+      } else if (code === 10002) {
+        uni.showToast({
+          title: "图片含不合法内容",
+          icon: "none"
+        });
+      } else {
+        uni.showToast({
+          title: "发送失败",
+          icon: "none"
         });
       }
+      isPublished.value = false;
     });
-  });
   console.log({
     id: "",
     title: title.value,
