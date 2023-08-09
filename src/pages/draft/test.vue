@@ -93,16 +93,37 @@ const publish = () => {
     tags: [...tags.value],
     isOfficial: false,
     id: ""
-  }).then(() => {
-    uni.switchTab({
-      url: Pages.World,
-      success() {
-        uni.reLaunch({
-          url: Pages.World
+  })
+    .then(() => {
+      uni.switchTab({
+        url: Pages.World,
+        success() {
+          uni.reLaunch({
+            url: Pages.World
+          });
+        }
+      });
+    })
+    .catch((reason) => {
+      const code = reason.data.Code;
+      if (code === 10001) {
+        uni.showToast({
+          title: "文本含不合法内容",
+          icon: "none"
+        });
+      } else if (code === 10002) {
+        uni.showToast({
+          title: "图片含不合法内容",
+          icon: "none"
+        });
+      } else {
+        uni.showToast({
+          title: "发送失败",
+          icon: "none"
         });
       }
+      isPublished.value = false;
     });
-  });
 };
 </script>
 
