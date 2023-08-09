@@ -264,7 +264,7 @@ const localGetCommentsData = async () => {
     for (let i = 0; i < res.data.length; i++) {
       comments.data.push(res.data[i]);
       comments.likeData.push(res.likeData[i]);
-      comments.replyNumber += res.data[i].comments;
+      comments.replyNumber += res.data[i].comments ? res.data[i].comments : 0;
     }
     isCommentsLoaded = true;
     page += 1;

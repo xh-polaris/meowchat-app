@@ -41,8 +41,12 @@
           <view class="time font-sm">
             {{ displayTime(post.createAt) }}
           </view>
-          <view class="comment font-sm">{{ post.comments }}条回复</view>
-          <view class="font-sm">{{ post.likes }}位喵友觉得很赞</view>
+          <view v-if="post.comments" class="comment font-sm"
+            >{{ post.comments }}条回复</view
+          >
+          <view v-if="post.likes" class="font-sm"
+            >{{ post.likes }}位喵友觉得很赞</view
+          >
           <view v-if="post.user.id === myUserId && myUserId">
             <view class="delete" @click.stop="onClickDelete(post.id)">
               <image :src="Icons.Delete" class="deletepic" />
