@@ -1,9 +1,14 @@
 <template>
-  <input v-model="title" type="text" placeholder="标题" class="input" />
+  <input
+    v-model="title"
+    type="text"
+    placeholder="填写标题会有更多赞噢~"
+    class="input"
+  />
   <view class="textarea-frame">
     <textarea
       v-model="content"
-      placeholder="正文"
+      placeholder="说点什么吧"
       class="textarea"
       maxlength="2000"
     ></textarea>
@@ -34,25 +39,28 @@ watch(content, (newContent) => {
 .textarea {
   box-sizing: border-box;
   width: 88vw;
-  font-size: 4.6vw;
+  //font-size: 4.6vw;
   margin-left: 6vw;
-  border: 1px solid #bbbbbb;
+  //border: 1px solid #bbbbbb;
   //background-color: #f7f9fd;
-  border-radius: 1vw;
+  //border-radius: 1vw;
 }
 .input {
   margin-bottom: 3vw;
-  padding: 0 4vw;
+  border-bottom: 1px solid #dedede;
+  //padding: 0 4vw;
   height: 10vw;
 }
 .textarea {
   height: 72vw;
   resize: none;
-  padding: 2vw 4vw 8vw 4vw;
+  padding: 0 0 8vw 0;
+  //padding: 2vw 4vw 8vw 4vw;
 }
 .textarea-frame {
   position: relative;
   .count {
+    color: #cccccc;
     font-size: 3vw;
     position: absolute;
     right: 8vw;

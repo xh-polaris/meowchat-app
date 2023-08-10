@@ -2,15 +2,29 @@
   <view class="all">
     <view class="header">
       <text>关联猫咪：</text>
-      <text class="cat-name">{{ catName ? catName : "[无]" }}</text>
+      <text class="cat-name" @click="chooseCats">{{
+        catName ? catName : "[无]"
+      }}</text>
     </view>
-    <view v-if="!catId" class="button" @click="chooseCats">选择...</view>
-    <view v-else class="cat-box">
-      <image :src="catImage" class="image" @click="chooseCats"></image>
-      <view>
-        <view class="button" @click="chooseCats">重选</view>
-        <view class="button" @click="clearCat">取消</view>
-      </view>
+    <!--    <view v-if="!catId" class="button" @click="chooseCats">选择...</view>-->
+    <view v-if="catId" class="cat-box">
+      <image
+        :src="catImage"
+        class="image"
+        mode="aspectFill"
+        @click="chooseCats"
+      >
+        <image
+          :src="Icons.Cancel"
+          class="clear"
+          mode="scaleToFill"
+          @click.stop="clearCat"
+        ></image>
+      </image>
+      <!--      <view>-->
+      <!--        <view class="button" @click="chooseCats">重选</view>-->
+      <!--        <view class="button" @click="clearCat">取消</view>-->
+      <!--      </view>-->
     </view>
   </view>
 
@@ -47,7 +61,7 @@ import { onShow, onUnload } from "@dcloudio/uni-app";
 import { StorageKeys } from "@/utils/const";
 const catId = ref("");
 const catImage = ref("");
-const catName = ref("猫猫");
+const catName = ref("[无]");
 function chooseCats() {
   uni.navigateTo({
     url: Pages.ChooseCat
@@ -77,10 +91,10 @@ const clearCat = () => {
   margin-right: 6vw;
   .header {
     margin-bottom: 2vw;
-    font-size: 4.8vw;
+    //font-size: 4.8vw;
     .cat-name {
-      color: #1fa1ff;
-      font-weight: bold;
+      //color: #1fa1ff;
+      //font-weight: bold;
     }
   }
   .cat-box {
@@ -93,12 +107,28 @@ const clearCat = () => {
       border-radius: 1vw;
       box-shadow: 0 0 2px #1d1d1d;
       margin-right: 3vw;
+      position: relative;
+      .clear {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 4vw;
+        height: 4vw;
+        background-color: #e6ebee;
+        //background-color: #35dada;
+        border-radius: 3vw;
+        border: solid 1vw #e6ebee;
+        //border: solid 1vw #35dada;
+        //filter: invert(100%);
+      }
     }
   }
   .button {
     width: fit-content;
-    padding: 1vw 3vw;
-    border-radius: 1vw;
+    padding: 0 3vw;
+    height: 8vw;
+    line-height: 8vw;
+    border-radius: 4vw;
     background-color: #1fa1ff;
     color: white;
     margin-bottom: 2vw;

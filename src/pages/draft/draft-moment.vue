@@ -1,5 +1,5 @@
 <template>
-  <TopBar :has-go-back="true">
+  <TopBar :has-go-back="true" :has-shadow="false" bg-color="#ffffff">
     <template #center>编辑动态</template>
   </TopBar>
   <view style="height: 6vw"></view>
@@ -21,7 +21,7 @@
   <view style="height: 36vw"></view>
   <BottomPanel
     :can-publish="!isUploadingImages"
-    text="发布帖子"
+    text="发布动态"
     @publish="publish"
   ></BottomPanel>
 </template>

@@ -3,20 +3,29 @@
     <template v-for="(tag, index) in tags" :key="tag">
       <view class="tag" @click="removeTag(index)">{{ "#" + tag }}</view>
     </template>
-  </view>
-
-  <view v-if="tags.length" class="prompt"
-    >点击已有tag即可删除 tag上限为3个 不可重复</view
-  >
-  <view class="add-tags">
-    <view v-if="isEditingInput" class="button" @click="finishEdit"
+    <view
+      v-if="!isEditingInput && tags.length <= 2"
+      class="tag add"
+      @click="startEdit"
+      >添加tag</view
+    >
+    <view v-if="isEditingInput" class="tag add" @click="finishEdit"
       >确认添加</view
     >
-    <view v-else class="button" @click="startEdit">添加tag</view>
+  </view>
+
+  <view v-if="tags.length && !isEditingInput" class="prompt"
+    >Tips: 点击tag以删除</view
+  >
+  <view class="add-tags">
+    <!--    <view v-if="isEditingInput" class="button" @click="finishEdit"-->
+    <!--      >确认添加</view-->
+    <!--    >-->
+    <!--    <view v-else class="text-button" @click="startEdit">[无tag]</view>-->
     <input
       v-if="isEditingInput"
       v-model="inputText"
-      placeholder="tag不能为空"
+      placeholder="tag不可为空或重复"
       type="text"
       class="input"
       maxlength="20"
@@ -58,28 +67,66 @@ const removeTag = (index: number) => {
   display: flex;
   flex-wrap: wrap;
   .tag {
-    border-radius: 1vw;
-    padding: 0 0.8vw;
-    border: 1px solid #3a3a3a;
-    font-size: 4.7vw;
+    height: 8vw;
+    line-height: 8vw;
+    border-radius: 4vw;
+    font-size: 3vw;
+    padding: 0 3vw;
+    //border: 1px solid #3a3a3a;
+    //font-size: 4.7vw;
     margin-right: 2vw;
     margin-bottom: 1vw;
+    color: #aeaeae;
+    background-color: #f5f5f5;
+    &.add {
+      font-size: 4vw;
+      background-color: #afafaf;
+      color: white;
+    }
   }
+  //.add {
+  //  height: 8vw;
+  //  width: 8vw;
+  //  border-radius: 4vw;
+  //  background-color: #f5f5f5;
+  //}
 }
 .prompt {
   font-size: 3vw;
-  color: #3a3a3a;
+  line-height: 5vw;
+  color: #c5c5c5;
   margin-bottom: 1vw;
+  animation-name: vanish;
+  animation-duration: 1.6s;
+  animation-fill-mode: forwards;
+  overflow: hidden;
+  height: 5vw;
+}
+@keyframes vanish {
+  0% {
+    height: 5vw;
+  }
+  90% {
+    height: 5vw;
+  }
+  100% {
+    height: 0;
+  }
 }
 .add-tags {
   display: flex;
+  .text-button {
+    color: #696969;
+    width: fit-content;
+  }
   .button {
     box-sizing: border-box;
-    height: 10vw;
-    line-height: 10vw;
+    height: 8vw;
+    line-height: 8vw;
+    //color: #696969;
     width: fit-content;
     padding: 0 3vw;
-    border-radius: 1vw;
+    border-radius: 4vw;
     background-color: #1fa1ff;
     color: white;
     &:active {
@@ -88,12 +135,14 @@ const removeTag = (index: number) => {
     margin-right: 3vw;
   }
   .input {
-    border: 1px solid #bbbbbb;
-    border-radius: 1vw;
-    box-sizing: border-box;
+    //border: 1px solid #bbbbbb;
+    //border-radius: 1vw;
+    //box-sizing: border-box;
+    border-bottom: 1px solid #eaeaea;
     width: 40vw;
-    font-size: 4.6vw;
-    padding: 0 4vw;
+    //font-size: 4.6vw;
+    //padding: 0 4vw;
+    line-height: 10vw;
     height: 10vw;
   }
 }
