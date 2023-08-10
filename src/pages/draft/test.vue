@@ -1,5 +1,5 @@
 <template>
-  <TopBar :has-go-back="true">
+  <TopBar :has-go-back="true" bg-color="#ffffff" :has-shadow="false">
     <template #center>编辑帖子</template>
   </TopBar>
   <view style="height: 6vw"></view>
