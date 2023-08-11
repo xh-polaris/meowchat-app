@@ -61,7 +61,7 @@
         <view v-if="moment.data.text" class="post-content font-md">
           {{ moment.data.text }}
         </view>
-        <view class="like-info">
+        <view v-if="moment.likeData.count" class="like-info">
           {{ moment.likeData.count }} 位喵友觉得很赞
         </view>
       </view>
@@ -304,7 +304,7 @@ const localGetCommentsData = async () => {
     for (let i = 0; i < res.data.length; i++) {
       comments.data.push(res.data[i]);
       comments.likeData.push(res.likeData[i]);
-      comments.replyNumber += res.data[i].comments;
+      comments.replyNumber += res.data[i].comments ? res.data[i].comments : 0;
     }
     isCommentsLoaded = true;
     page += 1;

@@ -1,5 +1,5 @@
 <template>
-  <TopBar :has-go-back="true">
+  <TopBar :has-go-back="true" bg-color="#ffffff" :has-shadow="false">
     <template #center>编辑帖子</template>
   </TopBar>
   <view style="height: 6vw"></view>
@@ -93,16 +93,37 @@ const publish = () => {
     tags: [...tags.value],
     isOfficial: false,
     id: ""
-  }).then(() => {
-    uni.switchTab({
-      url: Pages.World,
-      success() {
-        uni.reLaunch({
-          url: Pages.World
+  })
+    .then(() => {
+      uni.switchTab({
+        url: Pages.World,
+        success() {
+          uni.reLaunch({
+            url: Pages.World
+          });
+        }
+      });
+    })
+    .catch((reason) => {
+      const code = reason.data.Code;
+      if (code === 10001) {
+        uni.showToast({
+          title: "文本含不合法内容",
+          icon: "none"
+        });
+      } else if (code === 10002) {
+        uni.showToast({
+          title: "图片含不合法内容",
+          icon: "none"
+        });
+      } else {
+        uni.showToast({
+          title: "发送失败",
+          icon: "none"
         });
       }
+      isPublished.value = false;
     });
-  });
 };
 </script>
 

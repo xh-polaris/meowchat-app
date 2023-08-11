@@ -43,7 +43,7 @@ const publish = () => {
   left: 0;
   width: 100vw;
   height: 36vw;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,7 +58,7 @@ const publish = () => {
     font-size: 4vw;
     text-align: center;
     height: 10vw;
-    border-radius: 1vw;
+    border-radius: 5vw;
     line-height: 10vw;
     transition-duration: 0.05s;
     letter-spacing: 1vw;

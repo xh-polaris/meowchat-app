@@ -1,5 +1,5 @@
 <template>
-  <TopBar :has-go-back="true">
+  <TopBar :has-go-back="true" :has-shadow="false" bg-color="#ffffff">
     <template #center>编辑动态</template>
   </TopBar>
   <view style="height: 6vw"></view>
@@ -21,7 +21,7 @@
   <view style="height: 36vw"></view>
   <BottomPanel
     :can-publish="!isUploadingImages"
-    text="发布帖子"
+    text="发布动态"
     @publish="publish"
   ></BottomPanel>
 </template>
@@ -73,16 +73,37 @@ const publish = () => {
     text: content.value,
     photos: [...photos.value],
     catId: uni.getStorageSync(StorageKeys.IdSelected)
-  }).then(() => {
-    uni.switchTab({
-      url: Pages.Community,
-      success() {
-        uni.reLaunch({
-          url: Pages.Community
+  })
+    .then(() => {
+      uni.switchTab({
+        url: Pages.Community,
+        success() {
+          uni.reLaunch({
+            url: Pages.Community
+          });
+        }
+      });
+    })
+    .catch((reason) => {
+      const code = reason.data.Code;
+      if (code === 10001) {
+        uni.showToast({
+          title: "文本含不合法内容",
+          icon: "none"
+        });
+      } else if (code === 10002) {
+        uni.showToast({
+          title: "图片含不合法内容",
+          icon: "none"
+        });
+      } else {
+        uni.showToast({
+          title: "发送失败",
+          icon: "none"
         });
       }
+      isPublished.value = false;
     });
-  });
   console.log({
     id: "",
     title: title.value,
