@@ -1,35 +1,21 @@
 <template>
   <view class="info">
-    <view class="sterilized">
-      <view class="attribute"> 绝育情况</view>
-      <view class="content font-weight font-big">
+    <view class="tile" style="width: 30vw">
+      <view class="key">绝育情况</view>
+      <view class="value">
         {{ props.cat.isSterilized ? "已绝育" : "未绝育" }}
       </view>
     </view>
-    <view class="color">
-      <view class="attribute"> 花色</view>
-      <view class="content font-weight font-big">
-        {{ cat.color }}
+    <view class="tile" style="width: 25vw">
+      <view class="key">花色</view>
+      <view class="value">
+        {{ props.cat.color }}
       </view>
     </view>
-    <view class="sex">
-      <view class="attribute"> 性别</view>
-      <view class="content font-weight font-big">
+    <view class="tile" style="width: 25vw">
+      <view class="key">性别</view>
+      <view class="value">
         {{ props.cat.sex }}
-      </view>
-    </view>
-  </view>
-  <view class="info">
-    <view class="age">
-      <view class="attribute"> 年龄</view>
-      <view class="content font-weight font-big">
-        {{ props.cat.age }}
-      </view>
-    </view>
-    <view class="area">
-      <view class="attribute"> 出没地区</view>
-      <view class="content font-weight font-big">
-        {{ props.cat.area }}
       </view>
     </view>
   </view>
@@ -46,70 +32,30 @@ const props = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
-.attribute {
-  color: #1fa1ff;
-  font-size: 3.5vw;
-  text-align: center;
-  position: relative;
-  top: 5vw;
-}
-.content {
-  font-size: 4vw;
-  text-align: center;
-  vertical-align: center;
-  position: relative;
-  top: 8vw;
-}
-.sterilized {
-  background-color: rgb(247, 248, 252);
-  width: 37vw;
-  height: 25vw;
-  display: inline-block;
-  align-items: center;
-  border-radius: 15px;
-  position: relative;
-  top: -3vw;
-  left: 3vw;
-}
-.color {
-  background-color: rgb(247, 248, 252);
-  width: 25vw;
-  height: 25vw;
-  display: inline-block;
-  border-radius: 15px;
-  position: relative;
-  top: -3vw;
-  left: 6vw;
-}
-.sex {
-  background-color: rgb(247, 248, 252);
-  width: 25vw;
-  height: 25vw;
-  display: inline-block;
-  border-radius: 15px;
-  position: relative;
-  top: -3vw;
-  left: 9vw;
-}
-
-.age {
-  background-color: rgb(247, 248, 252);
-  width: 25vw;
-  height: 25vw;
-  display: inline-block;
-  border-radius: 15px;
-  position: relative;
-  top: 0vw;
-  left: 3vw;
-}
-.area {
-  background-color: rgb(247, 248, 252);
-  width: 65vw;
-  height: 25vw;
-  display: inline-block;
-  border-radius: 15px;
-  position: relative;
-  top: 0vw;
-  left: 6vw;
+.info {
+  margin-left: 6vw;
+  width: 88vw;
+  display: flex;
+  justify-content: space-between;
+  .tile {
+    border-radius: 2vw;
+    background-color: #f7f8fc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 25vw;
+    .key {
+      color: #1fa1ff;
+      font-size: 3.5vw;
+      width: fit-content;
+      margin-bottom: 4vw;
+    }
+    .value {
+      font-size: 4vw;
+      font-weight: bold;
+      width: fit-content;
+    }
+  }
 }
 </style>

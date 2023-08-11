@@ -80,9 +80,9 @@ const catId = ref("");
 
 function onClickCatBox(avatarUrl: string, name: string, id: string) {
   if (props.choose === "detail") {
-    // uni.navigateTo({
-    //   url: `${Pages.Cat}?id=${id}`
-    // });
+    uni.navigateTo({
+      url: `${Pages.Cat}?id=${id}`
+    });
   } else if (props.choose === "choose") {
     catImage.value = avatarUrl;
     catName.value = name;
