@@ -58,11 +58,28 @@ export const getCommentsData = async (req: GetCommentsReq) => {
 
 export const createComment = async (req: NewCommentReq) => {
   if (req.text !== "") {
-    const res = await newComment(req);
-    uni.showToast({
-      title: res.msg
-    });
-    return true;
+    newComment(req)
+      .then((res) => {
+        uni.showToast({
+          title: res.msg
+        });
+        return true;
+      })
+      .catch((reason) => {
+        const code = reason.data.Code;
+        if (code === 10001) {
+          uni.showToast({
+            title: "文本含不合法内容",
+            icon: "none"
+          });
+        } else {
+          uni.showToast({
+            title: "评论失败",
+            icon: "none"
+          });
+        }
+        return false;
+      });
   }
   return false;
 };
