@@ -48,10 +48,12 @@
               </view>
             </view>
             <view class="other-info">
-              <view class="font-sm"
+              <view v-if="moment.likedNumber" class="font-sm"
                 >{{ moment.likedNumber }}位喵友觉得很赞
               </view>
-              <view class="comment font-sm">{{ moment.comments }}条回复</view>
+              <view v-if="moment.comments" class="comment font-sm"
+                >{{ moment.comments }}条回复</view
+              >
             </view>
           </view>
         </view>

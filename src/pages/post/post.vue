@@ -5,7 +5,7 @@
   <view class="reply-mask" @click="leaveReply()" />
 
   <view
-    :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
+    :style="{ height: 'calc(100vh - 16vw - ' - keyboardHeight + 'px)' }"
     class="content-frame"
   >
     <view class="header">
@@ -81,22 +81,20 @@
       <!--    </view>-->
     </view>
   </view>
-  <view class="input-frame">
-    <write-comment-box
-      v-model:placeholder-text="placeholderText"
-      :focus="newCommentFocus"
-      :like-data="post.likeData"
-      :new-comment-req="newCommentReq"
-      @update-text="
-        (newText) => {
-          newCommentReq.text = newText;
-        }
-      "
-      @do-like="asyncDoLike"
-      @after-create-comment="init"
-      @after-blur="afterBlur"
-    />
-  </view>
+  <write-comment-box
+    v-model:placeholder-text="placeholderText"
+    :focus="newCommentFocus"
+    :like-data="post.likeData"
+    :new-comment-req="newCommentReq"
+    @update-text="
+      (newText) => {
+        newCommentReq.text = newText;
+      }
+    "
+    @do-like="asyncDoLike"
+    @after-create-comment="init"
+    @after-blur="afterBlur"
+  />
 
   <view v-if="isReplyOpened" class="reply">
     <reply
