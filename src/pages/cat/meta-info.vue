@@ -1,6 +1,6 @@
 <template>
   <view class="info">
-    <view class="tile" style="width: 30vw">
+    <view class="tile" style="width: 32vw">
       <view class="key">绝育情况</view>
       <view class="value">
         {{ props.cat.isSterilized ? "已绝育" : "未绝育" }}
@@ -19,6 +19,20 @@
       </view>
     </view>
   </view>
+  <view class="info">
+    <view class="tile" style="width: 25vw">
+      <view class="key">年龄</view>
+      <view class="value">
+        {{ props.cat.age }}
+      </view>
+    </view>
+    <view class="tile" style="width: 60vw">
+      <view class="key">出没地区</view>
+      <view class="value">
+        {{ props.cat.area }}
+      </view>
+    </view>
+  </view>
 </template>
 
 <script lang="ts" setup>
@@ -34,6 +48,7 @@ const props = defineProps<Props>();
 <style lang="scss" scoped>
 .info {
   margin-left: 6vw;
+  margin-top: 3vw;
   width: 88vw;
   display: flex;
   justify-content: space-between;
