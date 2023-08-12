@@ -72,7 +72,7 @@
       <view v-if="comments.data.length === 0">
         <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
       </view>
-      <comment-box
+      <CommentBox
         v-for="(item, index) in comments.data"
         :key="index"
         :comment="item"
@@ -101,7 +101,7 @@
       <!--      </view>-->
     </view>
   </view>
-  <write-comment-box
+  <WriteCommentBox
     v-model:placeholder-text="placeholderText"
     :focus="newCommentFocus"
     :like-data="moment.likeData"
@@ -117,7 +117,7 @@
   />
 
   <view v-if="isReplyOpened" class="reply">
-    <reply
+    <Reply
       :like-data="comments.likeData[selectIndex]"
       :main-comment="comments.data[selectIndex]"
       @close-reply="closeReply"
@@ -175,9 +175,9 @@ import {
   onReachBottom,
   onUnload
 } from "@dcloudio/uni-app";
-import Reply from "@/pages/moment/reply.vue";
-import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
-import CommentBox from "@/pages/moment/comment-box.vue";
+import Reply from "@/pages/moment/Reply.vue";
+import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
+import CommentBox from "@/pages/moment/CommentBox.vue";
 import { Pages } from "@/utils/url";
 
 const props = defineProps<{

@@ -132,7 +132,7 @@ import {
   LikeStruct,
   localDoLike
 } from "../moment/utils";
-import Reply from "@/pages/moment/reply.vue";
+import Reply from "@/pages/moment/Reply.vue";
 import { toPersonInfo } from "@/pages/profile/utils";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
 import { Comment, Post, TargetType } from "@/apis/schemas";
@@ -151,8 +151,8 @@ import {
   onUnload
 } from "@dcloudio/uni-app";
 import { GetCountReq } from "@/apis/like/like-interface";
-import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
-import CommentBox from "@/pages/moment/comment-box.vue";
+import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
+import CommentBox from "@/pages/moment/CommentBox.vue";
 import { onClickImage } from "@/pages/post/utils";
 
 const props = defineProps<{
