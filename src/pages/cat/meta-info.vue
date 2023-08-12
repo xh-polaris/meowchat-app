@@ -43,6 +43,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+// 本页面每个tile的间距是3vw
 </script>
 
 <style lang="scss" scoped>
