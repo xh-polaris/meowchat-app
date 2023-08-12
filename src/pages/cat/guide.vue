@@ -13,7 +13,7 @@ import { ref } from "vue";
 import { Icons } from "@/utils/url";
 import { canvasToTempFilePath } from "@dcloudio/uni-h5"; // 引入图片链接
 import { Cat } from "@/apis/schemas";
-//const subHeading = "胆小怕生不喜欢摸头";
+//const subHeading = "胆小怕生,不喜欢摸头";
 interface Props {
   cat: Cat;
 }
