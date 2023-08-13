@@ -5,16 +5,13 @@
     @mousedown.prevent.stop
   >
     <view class="choices">
-      <view class="prompt">选择发布类型</view>
       <view class="choice" @click="goToPage(Pages.DraftMoment)">
-        <text class="text">[社区]动态</text>
-        <text v-if="props.current === 'community'" class="current"
-          >(当前页)</text
-        >
+        <text class="text">社区动态</text>
+        <text v-if="props.current === 'community'" class="current">当前页</text>
       </view>
       <view class="choice" @click="goToPage(Pages.DraftTest)">
-        <text class="text">[世界]帖子</text>
-        <text v-if="props.current === 'world'" class="current">(当前页)</text>
+        <text class="text">世界帖子</text>
+        <text v-if="props.current === 'world'" class="current">当前页</text>
       </view>
     </view>
   </view>
@@ -50,12 +47,14 @@ const goToPage = (url: string) => {
   justify-content: center;
   align-items: flex-end;
   .choices {
-    width: fit-content;
-    height: fit-content;
-    margin-bottom: 24vw;
+    width: 60vw;
+    height: 30vw;
+    margin-bottom: 19vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #ffffff;
+    border-radius: 4vw;
     .prompt {
       color: white;
       font-size: 4.8vw;
@@ -64,13 +63,23 @@ const goToPage = (url: string) => {
     .choice {
       width: fit-content;
       background-color: #fdfdfd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 2vw 4vw;
       border-radius: 1vw;
-      margin-top: 2vw;
+      margin-top: 3vw;
       .current {
-        margin-left: 2vw;
+        position: absolute;
+        margin-left: 32vw;
+        font-size: 3vw;
         color: #1fa1ff;
       }
+    }
+    .choice:active {
+      background-color: #f3f9fe;
+      width: 45vw;
+      border-radius: 2vw;
     }
   }
 }
