@@ -82,6 +82,9 @@ const blur = () => {
 @import "@/common/icon.scss";
 
 .write-comment-box {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   z-index: 50;
   display: flex;
   width: 100vw;
@@ -90,7 +93,7 @@ const blur = () => {
   height: 16vw;
   box-shadow: 0 -1px 2px #eee;
   padding: 0 30rpx;
-
+  background-color: #fafafa;
   .write-comment {
     width: 64%;
     height: 36px;
