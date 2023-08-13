@@ -5,7 +5,7 @@
   <view class="reply-mask" @click="leaveReply()" />
 
   <view
-    :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
+    :style="{ height: 'calc(100vh - 16vw - ' - keyboardHeight + 'px)' }"
     class="content-frame"
   >
     <view class="header">
@@ -81,22 +81,20 @@
       <!--    </view>-->
     </view>
   </view>
-  <view class="input-frame">
-    <write-comment-box
-      v-model:placeholder-text="placeholderText"
-      :focus="newCommentFocus"
-      :like-data="post.likeData"
-      :new-comment-req="newCommentReq"
-      @update-text="
-        (newText) => {
-          newCommentReq.text = newText;
-        }
-      "
-      @do-like="asyncDoLike"
-      @after-create-comment="init"
-      @after-blur="afterBlur"
-    />
-  </view>
+  <write-comment-box
+    v-model:placeholder-text="placeholderText"
+    :focus="newCommentFocus"
+    :like-data="post.likeData"
+    :new-comment-req="newCommentReq"
+    @update-text="
+      (newText) => {
+        newCommentReq.text = newText;
+      }
+    "
+    @do-like="asyncDoLike"
+    @after-create-comment="init"
+    @after-blur="afterBlur"
+  />
 
   <view v-if="isReplyOpened" class="reply">
     <reply
@@ -134,7 +132,7 @@ import {
   LikeStruct,
   localDoLike
 } from "../moment/utils";
-import Reply from "@/pages/moment/reply.vue";
+import Reply from "@/pages/moment/Reply.vue";
 import { toPersonInfo } from "@/pages/profile/utils";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
 import { Comment, Post, TargetType } from "@/apis/schemas";
@@ -153,8 +151,8 @@ import {
   onUnload
 } from "@dcloudio/uni-app";
 import { GetCountReq } from "@/apis/like/like-interface";
-import WriteCommentBox from "@/pages/moment/write-comment-box.vue";
-import CommentBox from "@/pages/moment/comment-box.vue";
+import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
+import CommentBox from "@/pages/moment/CommentBox.vue";
 import { onClickImage } from "@/pages/post/utils";
 
 const props = defineProps<{
