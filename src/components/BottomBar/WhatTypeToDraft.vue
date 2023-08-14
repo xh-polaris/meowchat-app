@@ -13,7 +13,7 @@
           ></view
         >
       </view>
-      <view class="choice" @click="goToPage(Pages.DraftTest)">
+      <view class="choice" @click="goToPage(Pages.DraftPost)">
         <view class="text"
           >世界帖子
           <view v-if="props.current === 'world'" class="current"
