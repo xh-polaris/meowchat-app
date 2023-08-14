@@ -29,6 +29,7 @@ export const enum Pages {
   World = "/pages/world/world",
   DraftPost = "/pages/draft/draft-post",
   DraftMoment = "/pages/draft/draft-moment",
+  DraftPlan = "/pages/draft/draft-plan",
   DraftNav = "/pages/draft/draft-nav/draft-nav",
   DraftTest = "/pages/draft/test",
   Collection = "/pages/collection/collection",
