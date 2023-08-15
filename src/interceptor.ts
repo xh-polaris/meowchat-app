@@ -13,11 +13,11 @@ export function createInterceptors() {
         //   "X-Xh-Lane": lane ? lane : ""
         // });
         args.header = {
-          Authorization: uni.getStorageSync(StorageKeys.AccessToken),
+          Authorization: uni.getStorageSync(StorageKeys.AccessToken)
           // "X-Xh-Env": "",
           // "X-Xh-Lane": ""
-          "X-Xh-Env": env ? env : import.meta.env.VITE_XH_ENV,
-          "X-Xh-Lane": lane ? lane : ""
+          // "X-Xh-Env": env ? env : import.meta.env.VITE_XH_ENV,
+          // "X-Xh-Lane": lane ? lane : ""
         };
       }
     },
