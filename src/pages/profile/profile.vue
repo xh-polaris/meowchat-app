@@ -55,9 +55,9 @@
   </view>
   <UserPublished type="my"></UserPublished>
   <BottomBar id="profile"></BottomBar>
-  <!--  <template v-if="userInfo.enableDebug">-->
-  <!--    <DebugPanel></DebugPanel>-->
-  <!--  </template>-->
+  <template v-if="userInfo.enableDebug">
+    <DebugPanel></DebugPanel>
+  </template>
 </template>
 
 <script lang="ts" setup>
@@ -85,8 +85,8 @@ const userInfo = reactive<User>({
 
 const refresh = async () => {
   const res = await getUserInfo({});
-  // userInfo.enableDebug = res.enableDebug;
-  userInfo.enableDebug = true;
+  userInfo.enableDebug = res.enableDebug;
+  // userInfo.enableDebug = true;
   userInfo.nickname = res.user.nickname;
   userInfo.avatarUrl = res.user.avatarUrl;
   userInfo.article = res.user.article;
