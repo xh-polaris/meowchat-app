@@ -14,9 +14,9 @@
       <MetaInfo :cat="cat" />
       <Guide :cat="cat" />
       <Story :cat="cat" />
+      <div @click="draftPlan">发起小鱼干计划</div>
       <Photos :id="props.id" :cat="cat" />
     </view>
-
     <!--    <view class="dd">-->
     <!--      <image :src="Icons.Guide" class="guide"></image>-->
     <!--      <view class="detail"> {{ cat.details }} </view>-->
@@ -27,6 +27,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 
+import { Pages } from "@/utils/url";
 import Header from "@/pages/cat/header.vue";
 import Guide from "@/pages/cat/guide.vue";
 import Story from "@/pages/cat/story.vue";
@@ -103,6 +104,13 @@ onPullDownRefresh(() => {
   pageRefresh();
   uni.stopPullDownRefresh();
 });
+
+//后面要分离出来
+const draftPlan = () => {
+  uni.navigateTo({
+    url: Pages.DraftPlan
+  });
+};
 </script>
 
 <style lang="scss" scoped>

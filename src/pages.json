@@ -130,18 +130,24 @@
         "navigationStyle": "custom"
       }
     },
-//    {
-//      "path": "pages/draft/draft-post",
-//      "style": {
-//        "navigationStyle": "custom"
-//      }
-//    },
     {
-      "path": "pages/draft/test",
+      "path": "pages/draft/draft-post",
       "style": {
         "navigationStyle": "custom"
       }
     },
+    {
+      "path": "pages/draft/draft-plan",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+//    {
+//      "path": "pages/draft/test",
+//      "style": {
+//        "navigationStyle": "custom"
+//      }
+//    },
     {
       "path": "pages/notification/notification",
       "style": {

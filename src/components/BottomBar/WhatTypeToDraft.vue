@@ -5,16 +5,21 @@
     @mousedown.prevent.stop
   >
     <view class="choices">
-      <view class="prompt">选择发布类型</view>
       <view class="choice" @click="goToPage(Pages.DraftMoment)">
-        <text class="text">[社区]动态</text>
-        <text v-if="props.current === 'community'" class="current"
-          >(当前页)</text
+        <view class="text"
+          >社区动态
+          <view v-if="props.current === 'community'" class="current"
+            >当前页</view
+          ></view
         >
       </view>
-      <view class="choice" @click="goToPage(Pages.DraftTest)">
-        <text class="text">[世界]帖子</text>
-        <text v-if="props.current === 'world'" class="current">(当前页)</text>
+      <view class="choice" @click="goToPage(Pages.DraftPost)">
+        <view class="text"
+          >世界帖子
+          <view v-if="props.current === 'world'" class="current"
+            >当前页</view
+          ></view
+        >
       </view>
     </view>
   </view>
@@ -28,7 +33,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   current: ""
 });
-// const momentUrl = `${Pages.DraftNav}?type=moment`;
 const emits = defineEmits(["toggleShowingDraft"]);
 const goToPage = (url: string) => {
   uni.navigateTo({
@@ -50,26 +54,37 @@ const goToPage = (url: string) => {
   justify-content: center;
   align-items: flex-end;
   .choices {
-    width: fit-content;
-    height: fit-content;
-    margin-bottom: 24vw;
+    padding: 2vw;
+    margin-bottom: 19vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    .prompt {
-      color: white;
-      font-size: 4.8vw;
-      width: fit-content;
-    }
+    background-color: #ffffff;
+    border-radius: 4vw;
     .choice {
-      width: fit-content;
+      box-sizing: border-box;
+      width: 48vw;
+      height: 10vw;
       background-color: #fdfdfd;
-      padding: 2vw 4vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border-radius: 1vw;
-      margin-top: 2vw;
-      .current {
-        margin-left: 2vw;
-        color: #1fa1ff;
+      .text {
+        width: fit-content;
+        position: relative;
+        .current {
+          position: absolute;
+          right: -10vw;
+          top: 0.4vw;
+          font-size: 3vw;
+          color: #1fa1ff;
+        }
+      }
+      &:active {
+        background-color: #f3f9fe;
+        width: 45vw;
+        border-radius: 2vw;
       }
     }
   }
