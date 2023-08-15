@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'YouSheBiaoTiHei';
+    src: url('src/common/YouSheBiaoTiHei.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'PingFang SC';
+    src: url('src/common/PingFangSCRegular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
