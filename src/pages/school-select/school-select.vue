@@ -123,18 +123,19 @@ const changeCampus = () => {
 .list-title {
   width: fit-content;
   margin: 2vw 3vw;
-  font-size: 4.8vw;
-  color: #1fa1ff;
+  font-size: 3.6vw;
+  color: #939393;
 }
 .confirm-button {
   margin-right: 3vw;
   box-sizing: border-box;
   background-color: #1fa1ff;
-  width: 21vw;
+  width: fit-content;
   height: 8vw;
   text-align: center;
   line-height: 8vw;
+  padding: 0 4vw;
   color: #f5f7fa;
-  border-radius: 2vw;
+  border-radius: 4vw;
 }
 </style>

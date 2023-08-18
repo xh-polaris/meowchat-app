@@ -41,17 +41,20 @@ const search = () => {
 <style scoped lang="scss">
 .search-bar {
   display: flex;
-  margin-left: 3vw;
+  margin: 0 3vw;
+  position: relative;
   .search-box {
-    width: 82vw;
+    width: 80vw;
+    height: 8vw;
     display: flex;
-    border: 0.6vw solid #1fa1ff;
-    border-radius: 2vw 0 0 2vw;
+    border: 0.4vw solid #1fa1ff;
+    border-radius: 4vw 0 0 4vw;
     border-right: none;
     box-sizing: border-box;
     align-items: center;
+    padding-left: 2vw;
     .input {
-      width: 73vw;
+      width: 65vw;
       margin-left: 1vw;
     }
     .clear-icon {
@@ -61,9 +64,11 @@ const search = () => {
     }
   }
   .search-button {
-    width: 12vw;
+    position: absolute;
+    right: 0;
+    width: 18vw;
     height: 8vw;
-    border-radius: 0 2vw 2vw 0;
+    border-radius: 4vw;
     box-sizing: border-box;
     background-color: #1fa1ff;
     color: #f5f7fa;
