@@ -1,5 +1,17 @@
 
 
+## [1.17.2](https://github.com/xh-polaris/meowchat-app/compare/v1.17.1...v1.17.2) (2023-08-15)
+
+
+### ✨ Features | 新功能
+
+* 调整发布动态和发布帖子页面样式 ([73ff524](https://github.com/xh-polaris/meowchat-app/commit/73ff5242c439bf83e2b4769f63234cc02ef8f92b))
+* 评论框样式修改及评论审核提醒 ([7d62323](https://github.com/xh-polaris/meowchat-app/commit/7d623236b7b87d6389cf17ba5ff5d2993d39d5b9))
+* 实现图鉴详情的猫咪信息部分 ([c55aea3](https://github.com/xh-polaris/meowchat-app/commit/c55aea36350e270c067b3878bbec1cddf10a73dd))
+* 修改了guide页面 ([#375](https://github.com/xh-polaris/meowchat-app/issues/375)) ([12305bf](https://github.com/xh-polaris/meowchat-app/commit/12305bf0423428d12a3463f773905c97a3c878c8))
+* 修改猫咪图鉴的猫咪信息部分 ([008bc94](https://github.com/xh-polaris/meowchat-app/commit/008bc9499831c50219dedde4669baeafd6443eb2))
+* 修改选择发布类型界面 ([#376](https://github.com/xh-polaris/meowchat-app/issues/376)) ([572cac8](https://github.com/xh-polaris/meowchat-app/commit/572cac8212d61e75cf466b88ac1f9ec336ed442b))
+
 ## [1.17.1](https://github.com/xh-polaris/meowchat-app/compare/v1.17.0...v1.17.1) (2023-08-09)
 
 

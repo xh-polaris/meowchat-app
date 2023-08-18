@@ -56,7 +56,7 @@
   <UserPublished type="my"></UserPublished>
   <BottomBar id="profile"></BottomBar>
   <template v-if="userInfo.enableDebug">
-    <debug-panel></debug-panel>
+    <DebugPanel></DebugPanel>
   </template>
 </template>
 
@@ -67,7 +67,7 @@ import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
-import DebugPanel from "@/components/debug-panel/debug-panel.vue";
+import DebugPanel from "@/components/DebugPanel.vue";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pages, Pictures } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
@@ -85,8 +85,8 @@ const userInfo = reactive<User>({
 
 const refresh = async () => {
   const res = await getUserInfo({});
-  // userInfo.enableDebug = res.enableDebug;
-  userInfo.enableDebug = true;
+  userInfo.enableDebug = res.enableDebug;
+  // userInfo.enableDebug = true;
   userInfo.nickname = res.user.nickname;
   userInfo.avatarUrl = res.user.avatarUrl;
   userInfo.article = res.user.article;
