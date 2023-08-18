@@ -27,13 +27,19 @@ export async function getPostPreviews(req: GetPostPreviewsReq) {
           reject(res);
         }
         const data = res.data as GetPostPreviewsResp;
+        const newData: GetPostPreviewsResp = {
+          ...data,
+          posts: []
+        };
         data.posts.forEach((post) => {
+          if (!post.user) return;
           if (post.coverUrl) {
             post.coverUrl += PictureStyle.thumbnail;
           }
           post.user.avatarUrl += PictureStyle.thumbnail;
+          newData.posts.push(post);
         });
-        resolve(data);
+        resolve(newData);
       }
     });
   });
