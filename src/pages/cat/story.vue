@@ -30,7 +30,7 @@ const props = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>
-@import url("../../common/font.css");
+//@import url("../../common/font.css");
 .main {
   margin: 0 6vw;
   background-color: #f8f8f8b5;
