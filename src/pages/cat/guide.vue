@@ -4,6 +4,7 @@
     <text class="text">{{ props.cat.details }}</text>
   </view>
 </template>
+
 <script setup lang="ts">
 import { Icons } from "@/utils/url";
 import { Cat } from "@/apis/schemas";
@@ -19,16 +20,25 @@ const props = defineProps<Props>();
   flex-direction: column;
   justify-content: center;
   background-color: #fafafa;
-  border-radius: 20px;
-  width: 98%;
+  margin-left: 6vw;
+  border-radius: 2vw;
+  width: 88%;
   z-index: 0;
   .image-fill {
     width: 32vw;
-    height: 10vw;
+    height: 8vw;
+    margin-left: 6vw;
+    padding: 1vw;
   }
+
   .text {
-    font-size: 10px;
-    color: gray;
+    font-size: 3.2vw;
+    color: black;
+    margin-top: 2vw;
+    margin-left:6vw;
+    margin-right: 6vw;
+    padding-top: 3vw;
+    padding-bottom: 8vw;
     z-index: 2;
   }
 }
