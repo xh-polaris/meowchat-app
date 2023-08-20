@@ -35,7 +35,7 @@ const props = defineProps<Props>();
     font-size: 3.2vw;
     color: black;
     margin-top: 2vw;
-    margin-left:6vw;
+    margin-left: 6vw;
     margin-right: 6vw;
     padding-top: 3vw;
     padding-bottom: 8vw;
