@@ -41,13 +41,13 @@ const search = () => {
 <style scoped lang="scss">
 .search-bar {
   display: flex;
-  margin: 0 3vw;
+  margin: 0 4vw;
   position: relative;
   .search-box {
     width: 80vw;
     height: 8vw;
     display: flex;
-    border: 0.4vw solid #1fa1ff;
+    border: 0.4vw solid #478ef6;
     border-radius: 4vw 0 0 4vw;
     border-right: none;
     box-sizing: border-box;
@@ -66,11 +66,11 @@ const search = () => {
   .search-button {
     position: absolute;
     right: 0;
-    width: 18vw;
+    width: 16vw;
     height: 8vw;
     border-radius: 4vw;
     box-sizing: border-box;
-    background-color: #1fa1ff;
+    background-color: #478ef6;
     color: #f5f7fa;
     text-align: center;
     line-height: 8vw;

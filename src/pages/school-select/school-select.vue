@@ -2,6 +2,15 @@
   <TopBar :has-go-back="true">
     <template #center>切换社区</template>
   </TopBar>
+  <view
+    style="
+      background-color: #fcfcfc;
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      z-index: -10;
+    "
+  ></view>
   <view style="height: 4vw"></view>
   <SearchBar
     place-holder="输入学校名称"
@@ -122,14 +131,14 @@ const changeCampus = () => {
 <style scoped lang="scss">
 .list-title {
   width: fit-content;
-  margin: 2vw 3vw;
-  font-size: 3.6vw;
+  margin: 2vw 6vw;
+  font-size: 3vw;
   color: #939393;
 }
 .confirm-button {
-  margin-right: 3vw;
+  margin-right: 4vw;
   box-sizing: border-box;
-  background-color: #1fa1ff;
+  background-color: #478ef6;
   width: fit-content;
   height: 8vw;
   text-align: center;

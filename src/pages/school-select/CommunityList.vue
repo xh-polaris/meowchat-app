@@ -7,22 +7,33 @@
       @click="selectCampus(school.campuses[0].id, school.id)"
     >
       <view class="school-name">
-        <view class="name">{{ school.name }} </view>
-        <view v-if="school.id === props.selectedSchoolId" class="current-mark"
-          >当前</view
-        >
-      </view>
-      <view v-if="school.name !== school.campuses[0].name" class="campuses">
-        <template v-for="campus in school.campuses" :key="campus.id">
+        <view class="name">
           <view
-            :class="
-              'campus-name ' +
-              (campus.id === props.selectedCampusId ? 'current' : '')
-            "
-            @click.stop="selectCampus(campus.id, school.id)"
-            >{{ campus.name }}</view
-          >
-        </template>
+            v-if="school.id === props.selectedSchoolId"
+            class="current-mark"
+          />
+          <view style="width: fit-content">{{ school.name }}</view>
+        </view>
+        <!--        <view v-if="school.id === props.selectedSchoolId" class="current-text"-->
+        <!--          >当前</view-->
+        <!--        >-->
+      </view>
+      <view
+        v-if="school.name !== school.campuses[0].name"
+        class="campuses-frame"
+      >
+        <view class="campuses">
+          <template v-for="campus in school.campuses" :key="campus.id">
+            <view
+              :class="
+                'campus-name ' +
+                (campus.id === props.selectedCampusId ? 'current' : '')
+              "
+              @click.stop="selectCampus(campus.id, school.id)"
+              >{{ campus.name }}</view
+            >
+          </template>
+        </view>
       </view>
     </view>
   </template>
@@ -49,50 +60,64 @@ const selectCampus = (campusId: string, schoolId: string) => {
 <style scoped lang="scss">
 .school {
   background-color: white;
-  //border-radius: 2vw;
-  width: 94vw;
+  width: 90vw;
+  border-radius: 4vw;
   box-sizing: border-box;
-  padding: 3vw;
-  margin-bottom: -1px;
-  border-bottom: 1px solid #e0e0e0;
-  border-top: 1px solid #e0e0e0;
-  //margin-bottom: 2vw;
-  margin-left: 3vw;
-  //box-shadow: 0 0 0.4vw #b4b4b4;
+  padding: 3vw 0;
+  margin-bottom: 2vw;
+  margin-left: 5vw;
+  box-shadow: 0.6vw 0.6vw 0.8vw #aaaaaa11;
   &.current {
-    box-shadow: none;
-    //background-color: #a6d9ff;
   }
   .school-name {
     display: flex;
     align-items: center;
+    margin-left: 6vw;
     .name {
       width: fit-content;
       font-size: 4.7vw;
       font-weight: bold;
+      position: relative;
+      .current-mark {
+        position: absolute;
+        width: 0.6vw;
+        height: 5vw;
+        background-color: #407ef6;
+        transform: translate(-2vw, 1vw);
+      }
     }
-    .current-mark {
+    .current-text {
       width: fit-content;
-      color: #1fa1ff;
+      color: #407ef6;
       font-size: 3.6vw;
       margin-left: 2vw;
     }
   }
-  .campuses {
-    margin-top: 2vw;
-    display: flex;
-    .campus-name {
+  .campuses-frame {
+    width: 80vw;
+    margin-left: 5vw;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .campuses {
+      margin-top: 3vw;
+      display: flex;
       width: fit-content;
-      border-radius: 3vw;
-      border: 1px solid #222222;
-      height: 6vw;
-      line-height: 6vw;
-      padding: 0 2vw;
-      margin-right: 2vw;
-      &.current {
-        border-color: #1fa1ff;
-        background-color: #1fa1ff;
-        color: white;
+      .campus-name {
+        width: 30vw;
+        border-radius: 5vw;
+        font-size: 3.4vw;
+        background-color: #ebf3fe;
+        height: 10vw;
+        line-height: 10vw;
+        padding: 0 2vw;
+        margin-right: 2.4vw;
+        text-align: center;
+        &.current {
+          background-color: #407ef6;
+          color: white;
+        }
       }
     }
   }
