@@ -15,7 +15,8 @@ module.exports = {
     uni: "readonly",
     UniNamespace: "readonly",
     uniCloud: true,
-    wx: true
+    wx: true,
+    getCurrentPages: "readonly"
   },
   extends: [
     "eslint:recommended",

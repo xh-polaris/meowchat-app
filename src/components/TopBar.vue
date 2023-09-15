@@ -42,8 +42,6 @@ const props = withDefaults(defineProps<Props>(), {
   hasGoBack: false
 });
 const goBack = () => {
-  // getCurrentPages is not defined不管 能正常运行的
-  // eslint-disable-next-line no-undef
   let pages = getCurrentPages(); // 当前页面
   let beforePage = pages[pages.length - 2]; // 上一页
   uni.navigateBack({
