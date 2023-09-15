@@ -42,19 +42,23 @@ function afterSignIn(signInResp: SignInResp) {
   // console.log("token", signInResp.accessToken);
   uni.setStorageSync(StorageKeys.UserId, signInResp.userId);
   checkCommunityId().then();
-  getUserInfo({}).catch((res: UniNamespace.RequestSuccessCallbackResult) => {
-    if (res.statusCode === 400) {
-      const id = signInResp.userId;
-      updateUserInfo({
-        nickname: "用户_" + id.substring(id.length - 13),
-        avatarUrl: DefaultUserAvatarUrl
-      }).then(() => {
-        uni.navigateTo({
-          url: Pages.SchoolSelect
+  getUserInfo({})
+    .then((getUserInfoResp) => {
+      uni.setStorageSync(StorageKeys.EnabledDebug, getUserInfoResp.enableDebug);
+    })
+    .catch((res: UniNamespace.RequestSuccessCallbackResult) => {
+      if (res.statusCode === 400) {
+        const id = signInResp.userId;
+        updateUserInfo({
+          nickname: "用户_" + id.substring(id.length - 13),
+          avatarUrl: DefaultUserAvatarUrl
+        }).then(() => {
+          uni.navigateTo({
+            url: Pages.SchoolSelect
+          });
         });
-      });
-    }
-  });
+      }
+    });
 }
 
 export async function checkCommunityId() {

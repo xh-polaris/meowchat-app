@@ -1,6 +1,5 @@
 {
   "pages": [
-    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
       "path": "pages/first-page/first-page",
       "style": {
@@ -95,7 +94,7 @@
     {
       "path": "pages/school-select/school-select",
       "style": {
-        "navigationBarTitleText": "切换学校",
+        "navigationBarTitleText": "切换学校"
       }
     },
     {
@@ -142,12 +141,6 @@
         "navigationStyle": "custom"
       }
     },
-//    {
-//      "path": "pages/draft/test",
-//      "style": {
-//        "navigationStyle": "custom"
-//      }
-//    },
     {
       "path": "pages/notification/notification",
       "style": {

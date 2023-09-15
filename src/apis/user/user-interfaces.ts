@@ -4,6 +4,7 @@ export interface GetUserInfoResp {
   code: number;
   msg: string;
   user: User;
+  enableDebug: boolean;
 }
 
 export interface GetUserInfoReq {

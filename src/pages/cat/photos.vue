@@ -30,7 +30,7 @@
               <span
                 class="liked_number"
                 @click.prevent="clickLike(image.id, index)"
-                >{{ image.likeNumber }}</span
+                >{{ image.likeNumber || 0 }}</span
               >
             </view>
           </image>

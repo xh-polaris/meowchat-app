@@ -14,7 +14,7 @@
       <MetaInfo :cat="cat" />
       <Guide :cat="cat" />
       <!--      <Story :cat="cat" />-->
-      <div @click="draftPlan">发起小鱼干计划</div>
+      <!--      <div @click="draftPlan">发起小鱼干计划</div>-->
       <Photos :id="props.id" :cat="cat" />
     </view>
     <!--    <view class="dd">-->

@@ -55,7 +55,7 @@
   </view>
   <UserPublished type="my"></UserPublished>
   <BottomBar id="profile"></BottomBar>
-  <template v-if="userInfo.enableDebug">
+  <template v-if="enableDebug">
     <DebugPanel></DebugPanel>
   </template>
 </template>
@@ -71,6 +71,7 @@ import DebugPanel from "@/components/DebugPanel.vue";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pages, Pictures } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
+import { StorageKeys } from "@/utils/const";
 
 const version = uni.getAccountInfoSync().miniProgram.version;
 const userInfo = reactive<User>({
@@ -83,15 +84,15 @@ const userInfo = reactive<User>({
   following: 0
 });
 
+const enableDebug = uni.getStorageSync(StorageKeys.EnabledDebug);
+
 const refresh = async () => {
   const res = await getUserInfo({});
-  userInfo.enableDebug = res.enableDebug;
-  // userInfo.enableDebug = true;
   userInfo.nickname = res.user.nickname;
   userInfo.avatarUrl = res.user.avatarUrl;
-  userInfo.article = res.user.article;
-  userInfo.follower = res.user.follower;
-  userInfo.following = res.user.following;
+  userInfo.article = res.user.article || 0;
+  userInfo.follower = res.user.follower || 0;
+  userInfo.following = res.user.following || 0;
 };
 onShow(refresh);
 onPullDownRefresh(() => {
@@ -108,7 +109,15 @@ function showToast() {
   });
 }
 
-const userOptions = [
+interface UserOption {
+  title: string;
+  icon: string;
+  des: string;
+  url: string;
+  function: () => void;
+}
+
+const userOptions = <UserOption[]>[
   {
     title: "联系我们",
     icon: "/static/images/quick_contact.png",

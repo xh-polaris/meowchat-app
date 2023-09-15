@@ -13,7 +13,8 @@ export const enum StorageKeys {
   DraftMoment = "draftMoment",
   DraftPost = "draftPost",
   BackendEnv = "backendEnv",
-  BackendLane = "backendLane"
+  BackendLane = "backendLane",
+  EnabledDebug = "enableDebug"
 }
 
 export const enum BackendEnv {
