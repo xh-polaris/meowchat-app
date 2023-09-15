@@ -30,8 +30,8 @@ export const getLikeData = async (likeReq: GetCountReq) => {
   const count = (await getCount(likeReq)).count;
   const isLike = (await getUserLiked(likeReq)).liked;
   return {
-    count: count,
-    isLike: isLike
+    count: count || 0,
+    isLike: isLike || false
   };
 };
 

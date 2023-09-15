@@ -62,7 +62,7 @@
 
 <script lang="ts" setup>
 import BottomBar from "@/components/BottomBar.vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
@@ -84,7 +84,7 @@ const userInfo = reactive<User>({
   following: 0
 });
 
-const enableDebug = uni.getStorageSync(StorageKeys.EnabledDebug);
+const enableDebug = ref(uni.getStorageSync(StorageKeys.EnabledDebug));
 
 const refresh = async () => {
   const res = await getUserInfo({});

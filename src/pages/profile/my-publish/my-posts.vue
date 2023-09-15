@@ -56,7 +56,7 @@
         </view>
       </view>
     </template>
-    <view style="width: 100%; height: 250rpx"></view>
+    <view style="width: 100%; height: 40rpx"></view>
     <view class="nomore">
       <image
         src="/static/images/nomore.png"

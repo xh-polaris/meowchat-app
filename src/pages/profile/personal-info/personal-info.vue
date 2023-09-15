@@ -14,7 +14,7 @@
       <view class="info">粉丝</view>
       <view class="number">{{ userInfo.article }}</view>
       <view class="info">创作</view>
-      <view v-if="followInfo.followed === false">
+      <view v-if="!followInfo.followed">
         <view class="subscribe" @click="onClickFollow()">
           <view class="follow">+关注</view>
         </view>
@@ -77,8 +77,8 @@ const refresh = async () => {
   userInfo.id = res.user.id;
   userInfo.nickname = res.user.nickname;
   userInfo.avatarUrl = res.user.avatarUrl;
-  userInfo.follower = res.user.follower ? res.user.follower : 0;
-  userInfo.following = res.user.following ? res.user.following : 0;
+  userInfo.follower = res.user.follower || 0;
+  userInfo.following = res.user.following || 0;
   userInfo.article = res.user.article;
   let commentLikeReq = {
     targetId: userInfo.id,

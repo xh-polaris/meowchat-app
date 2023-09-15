@@ -43,6 +43,6 @@ function onClickItem(e: any) {
 
 <style>
 .tab {
-  padding-top: 10rpx;
+  padding-top: 20rpx;
 }
 </style>
