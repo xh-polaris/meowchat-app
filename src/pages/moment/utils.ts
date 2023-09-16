@@ -43,7 +43,7 @@ export const localDoLike = async (req: DoLikeReq) => {
 export const getCommentsData = async (req: GetCommentsReq) => {
   const commentsTemp = (await getComments(req)).comments;
   const likeDataTemp = [];
-  if (commentsTemp.length > 0) {
+  if (commentsTemp?.length > 0) {
     for (let i = 0; i < commentsTemp.length; i++) {
       likeDataTemp.push(
         await getLikeData({

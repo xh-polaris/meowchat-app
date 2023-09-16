@@ -63,22 +63,6 @@
         @local-do-like="asyncCommentDoLike(index)"
       />
       <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
-      <!--    <view class="out-write-comment-box">-->
-      <!--      <write-comment-box-->
-      <!--        v-model:placeholder-text="placeholderText"-->
-      <!--        :focus="newCommentFocus"-->
-      <!--        :like-data="post.likeData"-->
-      <!--        :new-comment-req="newCommentReq"-->
-      <!--        @update-text="-->
-      <!--          (newText) => {-->
-      <!--            newCommentReq.text = newText;-->
-      <!--          }-->
-      <!--        "-->
-      <!--        @do-like="asyncDoLike"-->
-      <!--        @after-create-comment="init"-->
-      <!--        @after-blur="afterBlur"-->
-      <!--      />-->
-      <!--    </view>-->
     </view>
   </view>
   <write-comment-box
@@ -154,6 +138,7 @@ import { GetCountReq } from "@/apis/like/like-interface";
 import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
 import CommentBox from "@/pages/moment/CommentBox.vue";
 import { onClickImage } from "@/pages/post/utils";
+import { Pages } from "@/utils/url";
 
 const props = defineProps<{
   id: string;
@@ -259,14 +244,14 @@ const localGetCommentsData = async () => {
     page: page
   }).then((res) => {
     comments.replyNumber = 0;
-    for (let i = 0; i < res.data.length; i++) {
+    for (let i = 0; i < res.data?.length; i++) {
       comments.data.push(res.data[i]);
       comments.likeData.push(res.likeData[i]);
       comments.replyNumber += res.data[i].comments ? res.data[i].comments : 0;
     }
     isCommentsLoaded = true;
     page += 1;
-    if (res.data.length < 10) allCommentsLoaded = true;
+    if (res.data?.length < 10) allCommentsLoaded = true;
   });
 };
 
@@ -344,7 +329,7 @@ const deleteThisPost = () => {
   }).then(
     () => {
       uni.reLaunch({
-        url: "/pages/world/world"
+        url: Pages.World
       });
     },
     (reason) => {
@@ -373,16 +358,6 @@ const init = async () => {
 };
 
 const wcbHeight = ref(81);
-
-onMounted(() => {
-  const query = uni.createSelectorQuery();
-  const dom = query.select(".out-write-comment-box >>> .write-comment-box");
-  dom
-    .boundingClientRect((data) => {
-      wcbHeight.value = data.height;
-    })
-    .exec();
-});
 
 onLoad(() => {
   init();

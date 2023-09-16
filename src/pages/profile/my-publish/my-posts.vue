@@ -11,7 +11,7 @@
               {{ post.text }}
             </view>
             <view v-if="post.tags" class="tags">
-              <template v-if="post.tags.length > 4">
+              <template v-if="post.tags?.length > 4">
                 <view class="tag">
                   {{ post.tags[0] }}
                 </view>

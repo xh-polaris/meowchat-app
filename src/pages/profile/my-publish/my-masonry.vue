@@ -85,6 +85,7 @@ import { displayTime } from "@/utils/time";
 import { onClickMoment } from "./utils";
 import { doLike, getCount, getUserLikes } from "@/apis/like/like";
 import { getComments } from "@/apis/comment/comment";
+import { StorageKeys } from "@/utils/const";
 
 interface Props {
   type?: string;
@@ -157,7 +158,7 @@ const addTile = (tileIndex: number, side: string) => {
 };
 const addBatch = async () => {
   momentsInBatch = [];
-  myUserId.value = uni.getStorageSync("userId");
+  myUserId.value = uni.getStorageSync(StorageKeys.UserId);
   if (props.type === "liked") {
     if (isLikedLoaded.value === false) {
       let targetUser = props.userId;
@@ -170,7 +171,11 @@ const addBatch = async () => {
       ).likes;
       isLikedLoaded.value = true;
     }
+    // 塞入五条消息
     for (let i = 0; i < 5; i++) {
+      if (!LikedList?.length) {
+        continue;
+      }
       await getMomentDetail({
         momentId: LikedList[LikedLoaded].targetId
       })
@@ -193,7 +198,7 @@ const addBatch = async () => {
           getComments({ scope: "moment", page: 0, id: res.moment.id }).then(
             (res2) => {
               momentData.comments += res2.total;
-              for (let i = 0; i < res2.comments.length; i++) {
+              for (let i = 0; i < res2.comments?.length; i++) {
                 momentData.comments += res2.comments[i].comments;
               }
             }
@@ -215,19 +220,19 @@ const addBatch = async () => {
     if (props.type === "my") {
       const res = await getMomentPreviews({
         page: page,
-        communityId: uni.getStorageSync("communityId"),
+        communityId: uni.getStorageSync(StorageKeys.CommunityId),
         onlyUserId: myUserId.value
       });
       moments = res.moments;
     } else {
       const res = await getMomentPreviews({
         page: page,
-        communityId: uni.getStorageSync("communityId"),
+        communityId: uni.getStorageSync(StorageKeys.CommunityId),
         onlyUserId: props.userId
       });
       moments = res.moments;
     }
-    for (let i = 0; i < moments.length; i++) {
+    for (let i = 0; i < moments?.length; i++) {
       let momentData = reactive<MomentData>({
         id: moments[i].id,
         createAt: moments[i].createAt,
@@ -246,7 +251,7 @@ const addBatch = async () => {
       getComments({ scope: "moment", page: 0, id: moments[i].id }).then(
         (res) => {
           momentData.comments += res.total;
-          for (let i = 0; i < res.comments.length; i++) {
+          for (let i = 0; i < res.comments?.length; i++) {
             momentData.comments += res.comments[i].comments;
           }
         }

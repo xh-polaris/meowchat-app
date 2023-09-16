@@ -72,7 +72,7 @@ export async function getMomentPreviews(req: GetMomentPreviewsReq) {
           reject(res);
         }
         const data = res.data as GetMomentPreviewsResp;
-        data.moments.forEach((moment) => {
+        data.moments?.forEach((moment) => {
           moment.photos[0] += PictureStyle.thumbnail;
           moment.user.avatarUrl += PictureStyle.thumbnail;
         });

@@ -105,7 +105,7 @@ onReady(() => {
   uni.hideLoading();
 });
 onBeforeUnmount(() => {
-  if (!followInfo.followed === followInfo.originFollow) {
+  if (Boolean(followInfo.followed) !== Boolean(followInfo.originFollow)) {
     doLike({
       targetId: userInfo.id,
       targetType: 6

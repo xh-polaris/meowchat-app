@@ -97,10 +97,9 @@ let getCatImageReq = reactive<GetImageByCatReq>({
 let number = 0;
 
 const getCatImageHandler = () => {
-  console.log("here");
   if (!noMore.value)
     getCatImage(getCatImageReq).then((res) => {
-      for (let i = 0; i < res.images.length; i++) {
+      for (let i = 0; i < res.images?.length; i++) {
         let imageUrl = reactive<ImageInfo>({
           id: res.images[i].id,
           url: res.images[i].url,
@@ -118,10 +117,9 @@ const getCatImageHandler = () => {
         });
         imgUrlList.push(imageUrl);
       }
-      let arr = Object.keys(res.images);
       //获取得到的images的长度用以判断是否还有尚未加载的照片
-      number += arr.length;
-      if (number === 0 || imgUrlList[number - 1].id === getCatImageReq.prevId) {
+      number += res.images?.length;
+      if (!number || imgUrlList[number - 1].id === getCatImageReq.prevId) {
         noMore.value = true;
       } else getCatImageReq.prevId = imgUrlList[number - 1].id;
     });

@@ -22,17 +22,15 @@ const props = withDefaults(defineProps<Props>(), {
 const page = ref<number>(0); //每往下翻页一次page加1直到没有内容
 
 const isInitialized = ref(false);
-const getPreviews = ref<() => Promise<Moment[]>>();
-if (props.search === "default") {
-  getPreviews.value = async () => {
-    return (
-      await getMomentPreviews({
-        page: page.value++,
-        communityId: uni.getStorageSync(StorageKeys.CommunityId)
-      })
-    ).moments;
-  };
-} else if (props.search === "search") {
+const getPreviews = ref<() => Promise<Moment[]>>(async () => {
+  return (
+    await getMomentPreviews({
+      page: page.value++,
+      communityId: uni.getStorageSync(StorageKeys.CommunityId)
+    })
+  ).moments;
+});
+if (props.search === "search") {
   getPreviews.value = async () => {
     return (
       await searchMomentPreviews({

@@ -31,7 +31,7 @@ export async function getPostPreviews(req: GetPostPreviewsReq) {
           ...data,
           posts: []
         };
-        data.posts.forEach((post) => {
+        data.posts?.forEach((post) => {
           if (!post.user) return;
           if (post.coverUrl) {
             post.coverUrl += PictureStyle.thumbnail;

@@ -1,5 +1,5 @@
 <template>
-  <TopBar has-go-back="true">
+  <TopBar :has-go-back="true">
     <template #center>动态详情</template>
   </TopBar>
   <view class="reply-mask" @click="leaveReply()" />
@@ -41,7 +41,7 @@
             :key="index"
             :mode="chooseImageMode(moment.data.photos.length)"
             :src="item"
-            @click="onClickImage(index, moment.data.photos)"
+            @click="onClickImage(String(index), moment.data.photos)"
           />
           <view
             v-if="moment.data.photos.length > 9"
@@ -65,11 +65,11 @@
           {{ moment.likeData.count }} 位喵友觉得很赞
         </view>
       </view>
-      <view v-if="comments.data.length === 0" class="commentNum"> 评论</view>
+      <view v-if="!comments.data.length" class="commentNum"> 评论</view>
       <view v-else class="commentNum">
         评论 {{ comments.data.length + comments.replyNumber }}
       </view>
-      <view v-if="comments.data.length === 0">
+      <view v-if="!comments.data.length">
         <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
       </view>
       <CommentBox
@@ -83,22 +83,6 @@
         @local-do-like="asyncCommentDoLike(index)"
       />
       <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
-      <!--      <view class="out-write-comment-box">-->
-      <!--        <write-comment-box-->
-      <!--          v-model:placeholder-text="placeholderText"-->
-      <!--          :focus="newCommentFocus"-->
-      <!--          :like-data="moment.likeData"-->
-      <!--          :new-comment-req="newCommentReq"-->
-      <!--          @update-text="-->
-      <!--            (newText) => {-->
-      <!--              newCommentReq.text = newText;-->
-      <!--            }-->
-      <!--          "-->
-      <!--          @do-like="asyncDoLike"-->
-      <!--          @after-create-comment="init"-->
-      <!--          @after-blur="afterBlur"-->
-      <!--        />-->
-      <!--      </view>-->
     </view>
   </view>
   <WriteCommentBox
@@ -179,6 +163,7 @@ import Reply from "@/pages/moment/Reply.vue";
 import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
 import CommentBox from "@/pages/moment/CommentBox.vue";
 import { Pages } from "@/utils/url";
+import NodeInfo = UniNamespace.NodeInfo;
 
 const props = defineProps<{
   id: string;
@@ -247,10 +232,12 @@ const isShowDeleteDialogue = ref(false);
 
 let catName = ref("");
 
-function onClickCatBox(id: string) {
-  uni.navigateTo({
-    url: `${Pages.Cat}?id=${id}`
-  });
+function onClickCatBox(id?: string) {
+  if (id) {
+    uni.navigateTo({
+      url: `${Pages.Cat}?id=${id}`
+    });
+  }
 }
 
 const getData = async () => {
@@ -298,14 +285,14 @@ const localGetCommentsData = async () => {
     page: page
   }).then((res) => {
     comments.replyNumber = 0;
-    for (let i = 0; i < res.data.length; i++) {
+    for (let i = 0; i < res.data?.length; i++) {
       comments.data.push(res.data[i]);
       comments.likeData.push(res.likeData[i]);
       comments.replyNumber += res.data[i].comments ? res.data[i].comments : 0;
     }
     isCommentsLoaded = true;
     page += 1;
-    if (res.data.length < 10) allCommentsLoaded = true;
+    if (res.data?.length < 10) allCommentsLoaded = true;
   });
 };
 
@@ -417,16 +404,6 @@ const init = async () => {
 };
 
 const wcbHeight = ref(81);
-
-onMounted(() => {
-  const query = uni.createSelectorQuery();
-  const dom = query.select(".out-write-comment-box >>> .write-comment-box");
-  dom
-    .boundingClientRect((data) => {
-      wcbHeight.value = data.height;
-    })
-    .exec();
-});
 
 uni.onKeyboardHeightChange((res) => {
   keyboardHeight.value = res.height;

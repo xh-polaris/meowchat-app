@@ -154,7 +154,7 @@ const addBatch = async () => {
     });
     getComments({ scope: "moment", page: 0, id: moments[i].id }).then((res) => {
       momentData.comments += res.total;
-      for (let i = 0; i < res.comments.length; i++) {
+      for (let i = 0; i < res.comments?.length; i++) {
         // eslint-disable-next-line no-prototype-builtins
         if (res.comments[i].hasOwnProperty("comments"))
           momentData.comments += res.comments[i].comments;
