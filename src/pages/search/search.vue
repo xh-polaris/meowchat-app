@@ -77,18 +77,18 @@
           height: 260upx;
         "
       >
-        <view v-show="current === 0">
+        <template v-if="current === 0">
           <!-- 帖子 -->
           <world-posts :keyword="searchText" search="post"></world-posts>
-        </view>
-        <view v-show="current === 1">
+        </template>
+        <template v-else-if="current === 1">
           <!-- 动态 -->
           <MasonryFrame :keyword="searchText" search="search"></MasonryFrame>
-        </view>
-        <view v-show="current === 2">
+        </template>
+        <template v-else-if="current === 2">
           <!-- 图鉴 -->
           <search-cats :keyword="searchText" search="cat"></search-cats>
-        </view>
+        </template>
       </view>
     </view>
   </view>
