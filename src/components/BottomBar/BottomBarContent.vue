@@ -33,11 +33,11 @@ const tabContent = [
     text: "社区"
   },
   {
-    id: "collection",
+    id: "plan",
     icon: "/static/images/collection-grey.png",
     activeIcon: "/static/images/collection-blue.png",
-    url: Pages.Collection,
-    text: "图鉴"
+    url: Pages.Plan,
+    text: "小鱼干"
   },
   {
     id: "draft",

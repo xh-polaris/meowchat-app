@@ -8,6 +8,8 @@
   </TopBar>
 
   <view class="background">
+    <CollectionEntry></CollectionEntry>
+
     <view v-if="!isRefreshing">
       <CarouselFrame />
     </view>
@@ -30,6 +32,7 @@
 </template>
 
 <script lang="ts" setup>
+import CollectionEntry from "@/pages/community/CollectionEntry.vue";
 import BottomBar from "@/components/BottomBar.vue";
 import { reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";

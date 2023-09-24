@@ -32,6 +32,15 @@
       }
     },
     {
+      "path": "pages/plan/plan",
+      "style": {
+        "navigationBarTitleText": "小鱼干",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 150
+      }
+    },
+    {
       "path": "pages/profile/profile",
       "style": {
         "navigationBarTitleText": "个人中心",
@@ -191,10 +200,10 @@
         "text": "社区"
       },
       {
-        "pagePath": "pages/collection/collection",
+        "pagePath": "pages/plan/plan",
         "iconPath": "static/images/collection-grey.png",
         "selectedIconPath": "static/images/collection-blue.png",
-        "text": "图鉴"
+        "text": "小鱼干"
       },
       {
         "pagePath": "pages/world/world",
