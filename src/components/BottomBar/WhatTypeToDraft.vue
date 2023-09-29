@@ -6,20 +6,10 @@
   >
     <view class="choices">
       <view class="choice" @click="goToPage(Pages.DraftMoment)">
-        <view class="text"
-          >社区动态
-          <view v-if="props.current === 'community'" class="current"
-            >当前页</view
-          ></view
-        >
+        <view class="text">社区动态</view>
       </view>
       <view class="choice" @click="goToPage(Pages.DraftPost)">
-        <view class="text"
-          >世界帖子
-          <view v-if="props.current === 'world'" class="current"
-            >当前页</view
-          ></view
-        >
+        <view class="text">世界帖子</view>
       </view>
     </view>
   </view>
@@ -59,32 +49,27 @@ const goToPage = (url: string) => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #ffffff;
     border-radius: 4vw;
     .choice {
       box-sizing: border-box;
-      width: 48vw;
-      height: 10vw;
+      width: 40vw;
+      height: 12vw;
       background-color: #fdfdfd;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 1vw;
+      margin-top: 2vw;
+      border-radius: 8vw;
+      color: #1fa1ff;
+      font-weight: bold;
       .text {
         width: fit-content;
         position: relative;
-        .current {
-          position: absolute;
-          right: -10vw;
-          top: 0.4vw;
-          font-size: 3vw;
-          color: #1fa1ff;
-        }
       }
       &:active {
         background-color: #f3f9fe;
-        width: 45vw;
-        border-radius: 2vw;
+        width: 40vw;
+        border-radius: 8vw;
       }
     }
   }
