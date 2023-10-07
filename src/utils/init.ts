@@ -1,7 +1,7 @@
 import { signIn } from "@/apis/auth/auth";
 import { getUserInfo, updateUserInfo } from "@/apis/user/user";
 import { SignInResp } from "@/apis/auth/auth-interfaces";
-import { StorageKeys } from "@/utils/const";
+import { WxAppId, StorageKeys } from "@/utils/const";
 import { clearCache, listCommunity } from "@/apis/community/community";
 import { Pages } from "@/utils/url";
 
@@ -19,7 +19,7 @@ export async function init() {
             success(res: UniNamespace.LoginRes) {
               signIn({
                 authType: "wechat",
-                authId: "wxd39cebf05e21d3b6",
+                authId: WxAppId,
                 verifyCode: res.code
               })
                 .then((signInRes) => {

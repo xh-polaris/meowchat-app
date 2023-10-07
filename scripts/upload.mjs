@@ -13,7 +13,7 @@ if (!version) {
 
 fs.writeFileSync("upload.key", process.env.UPLOAD_KEY, "utf8");
 const project = new ci.Project({
-  appid: "wxd39cebf05e21d3b6",
+  appid: "wxd7e995c7b9d793b8",
   type: "miniProgram",
   projectPath: "dist/build/mp-weixin",
   privateKeyPath: "upload.key",

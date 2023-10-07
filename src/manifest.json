@@ -1,6 +1,6 @@
 {
-  "name": "MEOW 喵言喵语",
-  "appid": "wxd39cebf05e21d3b6",
+  "name": "喵言喵语 Meow",
+  "appid": "wxd7e995c7b9d793b8",
   "description": "",
   "versionName": "1.0.0",
   "versionCode": "100",
@@ -50,7 +50,7 @@
   "quickapp": {},
   /* 小程序特有相关 */
   "mp-weixin": {
-    "appid": "wxd39cebf05e21d3b6",
+    "appid": "wxd7e995c7b9d793b8",
     "optimization": {
       "subPackages": true
     },

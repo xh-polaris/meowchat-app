@@ -21,3 +21,6 @@ export const enum BackendEnv {
   Product = "pro",
   Test = "test"
 }
+
+// WxAppId在init.ts、upload.mjs、manifest.json里使用
+export const WxAppId = "wxd7e995c7b9d793b8";
