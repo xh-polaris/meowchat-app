@@ -27,15 +27,15 @@ const emits = defineEmits(["toggleShowingDraft"]);
 const tabContent = [
   {
     id: "community",
-    icon: "/static/images/community-grey.png",
-    activeIcon: "/static/images/community-blue.png",
+    icon: "/static/images/bubble_grey.png",
+    activeIcon: "/static/images/bubble_blue.png",
     url: Pages.Community,
     text: "社区"
   },
   {
     id: "plan",
-    icon: "/static/images/collection-grey.png",
-    activeIcon: "/static/images/collection-blue.png",
+    icon: "/static/images/fish_grey.png",
+    activeIcon: "/static/images/fish_blue.png",
     url: Pages.Plan,
     text: "小鱼干"
   },
@@ -48,15 +48,15 @@ const tabContent = [
   },
   {
     id: "world",
-    icon: "/static/images/world-grey.png",
-    activeIcon: "/static/images/world-blue.png",
+    icon: "/static/images/mark_grey.png",
+    activeIcon: "/static/images/mark_blue.png",
     url: Pages.World,
     text: "世界"
   },
   {
     id: "profile",
-    icon: "/static/images/mine-grey.png",
-    activeIcon: "/static/images/mine-blue.png",
+    icon: "/static/images/cat_grey.png",
+    activeIcon: "/static/images/cat_blue.png",
     url: Pages.Profile,
     text: "我的"
   }
@@ -120,8 +120,8 @@ const draft = () => {
   .tab-con {
     will-change: auto;
     width: 70rpx;
-    height: 70rpx;
-    margin: 0 30rpx 0 30rpx;
+    height: 54rpx;
+    margin: 0 30rpx 16rpx 30rpx;
   }
 
   .tab-con0 {
