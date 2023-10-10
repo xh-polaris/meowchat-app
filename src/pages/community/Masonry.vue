@@ -35,10 +35,12 @@
             </view>
             <view class="other-info">
               <view class="user-info">
-                <image :src="moment.user.avatarUrl" class="avatar" />
-                <view class="username font-md">
-                  {{ moment.user.nickname }}
-                </view>
+                <template v-if="moment.user">
+                  <image :src="moment.user.avatarUrl" class="avatar" />
+                  <view class="username font-md">
+                    {{ moment.user.nickname }}
+                  </view>
+                </template>
               </view>
               <view class="time font-sm">
                 {{ displayTime(moment.createAt) }}
