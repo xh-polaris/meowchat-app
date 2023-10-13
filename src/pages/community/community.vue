@@ -8,6 +8,10 @@
   </TopBar>
 
   <view class="background">
+    <view v-if="!isRefreshing">
+      <CarouselTest />
+    </view>
+
     <CollectionEntry></CollectionEntry>
 
     <view v-if="!isRefreshing">
@@ -40,6 +44,7 @@ import SchoolSelectBar from "@/components/SchoolSelectBar.vue";
 import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import Cards from "@/pages/community/cards/cards.vue";
 import CarouselFrame from "@/pages/community/CarouselFrame.vue";
+import CarouselTest from "@/pages/community/CarouselTest.vue";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import { listCommunity } from "@/apis/community/community";
 import { Community } from "@/apis/schemas";
