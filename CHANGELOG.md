@@ -1,5 +1,24 @@
 
 
+## [1.18.0](https://github.com/xh-polaris/meowchat-app/compare/v1.17.5...v1.18.0) (2023-10-17)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复了搜索动态页面中瀑布流左右高度差距过大问题 ([fa4bcb4](https://github.com/xh-polaris/meowchat-app/commit/fa4bcb415523039c80f99c59135d8d77582cc9da))
+* 修复首页动态无用户数据导致整个动态无法加载的bug ([653d947](https://github.com/xh-polaris/meowchat-app/commit/653d9477fbb0ae5d5b6dd0f90bdf7a9fc0e814d3))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 合并http请求，大量用户体验优化、性能优化、可维护性优化 ([f16b650](https://github.com/xh-polaris/meowchat-app/commit/f16b650093e56f7c6e8002ef67de667d9e42fb55))
+
+
+### ✨ Features | 新功能
+
+* 修改选择发布界面的样式 ([#380](https://github.com/xh-polaris/meowchat-app/issues/380)) ([5b86919](https://github.com/xh-polaris/meowchat-app/commit/5b869191f7a40e414f0b949756f60a14d06982e0))
+* 有新版本时提示用户更新 ([4bde929](https://github.com/xh-polaris/meowchat-app/commit/4bde9298e06db1f1bd89e10ea1aee4c19318cb27))
+
 ## [1.17.5](https://github.com/xh-polaris/meowchat-app/compare/v1.17.4...v1.17.5) (2023-09-16)
 
 
