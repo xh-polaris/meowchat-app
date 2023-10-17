@@ -1,5 +1,12 @@
 
 
+## [1.18.2](https://github.com/xh-polaris/meowchat-app/compare/v1.18.1...v1.18.2) (2023-10-17)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复预加载在切换校区或环境时的不一致 ([fc32729](https://github.com/xh-polaris/meowchat-app/commit/fc32729bbe6c908308f1c2c40dcf237e1b03b008))
+
 ## [1.18.1](https://github.com/xh-polaris/meowchat-app/compare/v1.18.0...v1.18.1) (2023-10-17)
 
 
