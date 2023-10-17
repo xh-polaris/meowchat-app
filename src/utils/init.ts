@@ -1,8 +1,7 @@
 import { signIn } from "@/apis/auth/auth";
 import { StorageKeys, AppId, BackendEnvMap } from "@/utils/const";
 import { clearCache, listCommunity } from "@/apis/community/community";
-import { Pages } from "@/utils/url";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 
 export async function init() {
   clearCache();
@@ -28,6 +27,7 @@ export async function init() {
     StorageKeys.EnabledDebug,
     uni.getAppBaseInfo().enableDebug || import.meta.env.VITE_ENABLE_DEBUG
   );
+  checkVersion();
 }
 
 async function refreshToken(appId: string) {
@@ -70,4 +70,18 @@ async function checkCommunityId() {
     }
     uni.setStorageSync(StorageKeys.CommunityId, community.id);
   }
+}
+
+function checkVersion() {
+  const m = uni.getUpdateManager();
+  uni.showModal({
+    title: "更新提示",
+    content: "新版本已经准备好，是否重启应用？",
+    success: function (res) {
+      if (res.confirm) {
+        // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+        m.applyUpdate();
+      }
+    }
+  });
 }
