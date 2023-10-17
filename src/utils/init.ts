@@ -6,6 +6,7 @@ import { ref } from "vue";
 export async function init() {
   clearCache();
   const accountInfo = uni.getAccountInfoSync().miniProgram;
+  console.log(accountInfo.version);
   const tasks: Promise<void>[] = [];
   // 距离token过期不到一天时重新获取token
   const expireTime = uni.getStorageSync(StorageKeys.AccessToken).expireTime;
