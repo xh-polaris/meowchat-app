@@ -5,6 +5,7 @@ import { GetPostPreviewsResp } from "@/apis/post/post-interfaces";
 import { GetMomentPreviewsResp } from "@/apis/moment/moment-components";
 import { GetCatPreviewsResp } from "@/apis/collection/collection-interfaces";
 import { GetNewsResp } from "@/apis/notice/notice-interfaces";
+import { StorageKeys } from "@/utils/const";
 
 export interface PrefetchResp {
   signInResp?: GignInResp;
@@ -27,6 +28,12 @@ interface Token {
 let data: PrefetchResp;
 
 export async function getPrefetchData(expectToken?: Token) {
+  if (!expectToken) {
+    expectToken = {};
+  }
+  if (!expectToken.env) {
+    expectToken.env = uni.getStorageSync(StorageKeys.BackendEnv);
+  }
   if (!data) {
     data = await new Promise<PrefetchResp>((resolve, reject) => {
       uni.getBackgroundFetchData({

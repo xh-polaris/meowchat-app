@@ -84,9 +84,8 @@ const init = async () => {
   // 获取allSchools和selectedSchoolId
   const communities = (await listCommunity({})).communities;
   const campuses: Campus[] = [];
-  const allSchoolsObj = {};
+  const allSchoolsObj: any = {};
   communities.forEach((community) => {
-    // eslint-disable-next-line no-prototype-builtins
     if (community.parentId) {
       campuses.push(community);
       if (community.id === campusId) {
@@ -124,6 +123,13 @@ const changeCampus = () => {
   uni.setStorageSync(StorageKeys.CommunityId, selectedCampusId.value);
   uni.navigateBack({
     delta: 1
+  });
+  uni.setBackgroundFetchToken({
+    token: JSON.stringify({
+      communityId: uni.getStorageSync(StorageKeys.CommunityId),
+      userId: uni.getStorageSync(StorageKeys.UserId),
+      env: uni.getStorageSync(StorageKeys.BackendEnv)
+    })
   });
 };
 </script>

@@ -7,6 +7,11 @@ export async function init() {
   clearCache();
   const accountInfo = uni.getAccountInfoSync().miniProgram;
   console.log(accountInfo.version);
+  let env = uni.getStorageSync(StorageKeys.BackendEnv);
+  if (!env) {
+    env = BackendEnvMap[accountInfo.envVersion];
+    uni.setStorageSync(StorageKeys.BackendEnv, env);
+  }
   const tasks: Promise<void>[] = [];
   // 距离token过期不到一天时重新获取token
   const expireTime = uni.getStorageSync(StorageKeys.AccessToken).expireTime;
@@ -15,15 +20,13 @@ export async function init() {
   }
   tasks.push(checkCommunityId());
   await Promise.all(tasks);
-  const env = uni.getStorageSync(StorageKeys.BackendEnv);
-  if (!env)
-    uni.setBackgroundFetchToken({
-      token: JSON.stringify({
-        communityId: uni.getStorageSync(StorageKeys.CommunityId),
-        userId: uni.getStorageSync(StorageKeys.UserId),
-        env: env || BackendEnvMap[accountInfo.envVersion]
-      })
-    });
+  uni.setBackgroundFetchToken({
+    token: JSON.stringify({
+      communityId: uni.getStorageSync(StorageKeys.CommunityId),
+      userId: uni.getStorageSync(StorageKeys.UserId),
+      env: env
+    })
+  });
   uni.setStorageSync(
     StorageKeys.EnabledDebug,
     uni.getAppBaseInfo().enableDebug || import.meta.env.VITE_ENABLE_DEBUG
