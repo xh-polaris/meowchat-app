@@ -170,25 +170,16 @@ const addBatch = async () => {
     }
     // 塞入五条消息
     for (let i = 0; i < 5; i++) {
-      if (!LikedList?.length) {
+      if (!LikedList?.length || !LikedList[LikedLoaded]?.targetId) {
         continue;
       }
       await getMomentDetail({
         momentId: LikedList[LikedLoaded].targetId
-      })
-        .then((res) => {
-          let moment = reactive<Moment>(res.moment);
-          momentsInBatch.push(moment);
-        })
-        .catch((res: UniNamespace.RequestSuccessCallbackResult) => {
-          if (res.statusCode === 400) {
-            doLike({
-              targetId: LikedList[LikedLoaded].targetId,
-              targetType: 4
-            });
-          }
-        });
-      LikedLoaded++;
+      }).then((res) => {
+        let moment = reactive<Moment>(res.moment);
+        momentsInBatch.push(moment);
+        LikedLoaded++;
+      });
       if (LikedLoaded >= LikedList.length) break;
     }
   } else {

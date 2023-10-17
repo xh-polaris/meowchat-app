@@ -21,7 +21,7 @@ export interface GetAdminsReq {
 export interface GetAdminsResp {
   code: number;
   msg: string;
-  admins: Admin[];
+  Admins: Admin[];
 }
 
 export interface GetNoticesResp {

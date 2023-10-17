@@ -42,7 +42,7 @@
       </view>
     </view>
   </view>
-  <view v-if="managerList.length" class="nomore">
+  <view v-if="!managerList.length" class="nomore">
     <image :src="Pictures.NoMore" style="width: 200rpx; height: 186rpx" />
   </view>
 </template>
@@ -57,7 +57,9 @@ import { Pictures } from "@/utils/url";
 
 const managerList = reactive<Admin[]>([]);
 getAdmins({ communityId: uni.getStorageSync("communityId") }).then((res) => {
-  managerList.push(...res.admins);
+  if (res.Admins) {
+    managerList.push(...res.Admins);
+  }
 });
 </script>
 
@@ -72,16 +74,21 @@ getAdmins({ communityId: uni.getStorageSync("communityId") }).then((res) => {
   z-index: -1;
 }
 
+.nomore {
+  margin-top: 10rpx;
+  line-height: 20rpx;
+  text-align: center;
+}
+
 .managerlist-wrap {
   margin-top: 150rpx;
 
   .manager-wrap {
     box-shadow: 0 0 10rpx #eeeeee;
-    margin: 60rpx;
     padding: 20rpx;
-    margin-top: 30rpx;
-    margin-bottom: 30rpx;
+    margin: 30rpx 60rpx;
     border-radius: 20rpx;
+    border: 5rpx solid #f1f1f1;
     background-color: #ffffff;
 
     .info-wrap {
