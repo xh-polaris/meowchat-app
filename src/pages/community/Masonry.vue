@@ -47,14 +47,14 @@
               </view>
             </view>
             <view
-              v-if="moment.likedNumber || moment.comments"
+              v-if="moment.likeCount || moment.commentCount"
               class="other-info"
             >
-              <view v-if="moment.likedNumber" class="font-sm"
-                >{{ moment.likedNumber }}位喵友觉得很赞
+              <view v-if="moment.likeCount" class="font-sm"
+                >{{ moment.likeCount }}位喵友觉得很赞
               </view>
-              <view v-if="moment.comments" class="comment font-sm"
-                >{{ moment.comments }}条回复</view
+              <view v-if="moment.commentCount" class="comment font-sm"
+                >{{ moment.commentCount }}条回复</view
               >
             </view>
           </view>
@@ -70,13 +70,11 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
-import { Moment, MomentData } from "@/apis/schemas";
+import { Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
-import { getCount } from "@/apis/like/like";
-import { getComments } from "@/apis/comment/comment";
 
 interface Props {
   getPreviews: () => Promise<Moment[]>;
@@ -91,9 +89,9 @@ const props = defineProps<Props>();
 
 const isNoData = ref(true);
 
-let momentsInBatch: MomentData[];
-const leftMoments = reactive<MomentData[]>([]);
-const rightMoments = reactive<MomentData[]>([]);
+let momentsInBatch: Moment[];
+const leftMoments = reactive<Moment[]>([]);
+const rightMoments = reactive<Moment[]>([]);
 
 let leftHeight = 0;
 let rightHeight = 0;
@@ -138,34 +136,9 @@ let isFirstLoadImg = true;
 const addBatch = async () => {
   momentsInBatch = [];
   const moments = await props.getPreviews();
-  for (let i = 0; i < moments.length; i++) {
-    let momentData = reactive<MomentData>({
-      id: moments[i].id,
-      createAt: moments[i].createAt,
-      title: moments[i].title,
-      catId: moments[i].catId,
-      communityId: moments[i].communityId,
-      text: moments[i].text,
-      user: moments[i].user,
-      photos: moments[i].photos,
-      likedNumber: 0,
-      comments: 0
-    });
-    getCount({ targetId: moments[i].id, targetType: 4 }).then((res) => {
-      momentData.likedNumber = res.count;
-    });
-    getComments({ scope: "moment", page: 0, id: moments[i].id }).then((res) => {
-      momentData.comments += res.total;
-      for (let i = 0; i < res.comments?.length; i++) {
-        // eslint-disable-next-line no-prototype-builtins
-        if (res.comments[i].hasOwnProperty("comments"))
-          momentData.comments += res.comments[i].comments;
-      }
-    });
-    momentsInBatch.push(momentData);
+  for (const moment of moments) {
+    momentsInBatch.push(reactive<Moment>(moment));
   }
-
-  // momentsInBatch = await props.getPreviews();
 
   if (momentsInBatch.length > 0) {
     isNoData.value = false;

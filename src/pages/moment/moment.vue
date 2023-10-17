@@ -5,6 +5,7 @@
   <view class="reply-mask" @click="leaveReply()" />
 
   <view
+    v-if="moment"
     :style="{ height: 'calc(100vh - 16vw - ' - keyboardHeight + 'px)' }"
     class="content-frame"
   >
@@ -12,101 +13,90 @@
       <view class="post-info-box">
         <view class="poster-info-box">
           <image
-            :src="moment.data.user.avatarUrl"
+            :src="moment.user.avatarUrl"
             class="poster-profile"
-            @click="toPersonInfo(moment.data.user.id, myUserId)"
+            @click="toPersonInfo(moment.user.id, myUserId)"
           />
           <text
             class="poster-name"
-            @click="toPersonInfo(moment.data.user.id, myUserId)"
+            @click="toPersonInfo(moment.user.id, myUserId)"
           >
-            {{ moment.data.user.nickname }}
+            {{ moment.user.nickname }}
           </text>
-          <text class="post-time">
-            · {{ displayTime(moment.data.createAt) }}
-          </text>
+          <text class="post-time"> · {{ displayTime(moment.createAt) }} </text>
           <view
-            v-if="myUserId && myUserId === moment.data.user.id"
+            v-if="myUserId && myUserId === moment.user.id"
             class="delete"
             @click="showDeleteDialogue"
           ></view>
         </view>
-        <view v-if="moment.data.title" class="post-content font-lg">
-          {{ moment.data.title }}
+        <view v-if="moment.title" class="post-content font-lg">
+          {{ moment.title }}
         </view>
         <!-- 图片区域 -->
-        <view :class="chooseImageClass(moment.data.photos.length)">
+        <view :class="chooseImageClass(moment.photos.length)">
           <image
-            v-for="(item, index) in moment.data.photos.slice(0, 9)"
+            v-for="(url, index) in moment.photos.slice(0, 9)"
             :key="index"
-            :mode="chooseImageMode(moment.data.photos.length)"
-            :src="item"
-            @click="onClickImage(String(index), moment.data.photos)"
+            :mode="chooseImageMode(moment.photos.length)"
+            :src="url"
+            @click="onClickImage(String(index), moment.photos)"
           />
           <view
-            v-if="moment.data.photos.length > 9"
+            v-if="moment.photos.length > 9"
             class="lastImg"
-            @click="onClickImage('8', moment.data.photos)"
-            >+{{ moment.data.photos.length - 9 }}
+            @click="onClickImage('8', moment.photos)"
+            >+{{ moment.photos.length - 9 }}
           </view>
         </view>
         <view
-          v-if="catName"
+          v-for="cat of moment.cats"
+          :key="cat.id"
           class="font-md mb-2"
           style="color: #5272ff; margin: 10rpx 0 0"
-          @click="onClickCatBox(moment.data.catId)"
+          @click="onClickCatBox(cat.id)"
         >
-          @{{ catName }}
+          @{{ cat.name }}
         </view>
-        <view v-if="moment.data.text" class="post-content font-md">
-          {{ moment.data.text }}
+        <view v-if="moment.text" class="post-content font-md">
+          {{ moment.text }}
         </view>
-        <view v-if="moment.likeData.count" class="like-info">
-          {{ moment.likeData.count }} 位喵友觉得很赞
+        <view v-if="moment.likeCount" class="like-info">
+          {{ moment.likeCount }} 位喵友觉得很赞
         </view>
       </view>
-      <view v-if="!comments.data.length" class="commentNum"> 评论</view>
-      <view v-else class="commentNum">
-        评论 {{ comments.data.length + comments.replyNumber }}
-      </view>
-      <view v-if="!comments.data.length">
+      <view v-if="!comments.length" class="commentNum"> 评论</view>
+      <view v-else class="commentNum"> 评论 {{ moment.commentCount }} </view>
+      <view v-if="!comments.length">
         <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
       </view>
       <CommentBox
-        v-for="(item, index) in comments.data"
+        v-for="(comment, index) in comments"
         :key="index"
-        :comment="item"
-        :like="comments.likeData[index]"
+        :comment="comment"
         @after-delete="init()"
-        @interact-with-comment="focusReplyComment(index)"
-        @on-click-replies="onClickReplies(index)"
-        @local-do-like="asyncCommentDoLike(index)"
+        @interact-with-comment="focusReplyComment(comment)"
+        @on-click-replies="onClickReplies(comment)"
+        @local-do-like="likeComment(comment)"
       />
       <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
     </view>
   </view>
   <WriteCommentBox
-    v-model:placeholder-text="placeholderText"
-    :focus="newCommentFocus"
-    :like-data="moment.likeData"
-    :new-comment-req="newCommentReq"
-    @update-text="
-      (newText) => {
-        newCommentReq.text = newText;
-      }
-    "
-    @do-like="asyncDoLike"
+    v-if="moment"
+    :placeholder-text="placeholderText"
+    :like-count="moment.likeCount"
+    :is-liked="moment.isLiked"
+    :parent-id="moment.id"
+    :parent-type="CommentType.Moment"
+    :first-level-id="firstLevelId"
+    @do-like="likeMoment(moment)"
     @after-create-comment="init"
-    @after-blur="afterBlur"
+    @cancel-reply="afterBlur"
   />
 
-  <view v-if="isReplyOpened" class="reply">
-    <Reply
-      :like-data="comments.likeData[selectIndex]"
-      :main-comment="comments.data[selectIndex]"
-      @close-reply="closeReply"
-      @update-like-data="updateLikeData(selectIndex)"
-    />
+  <view v-if="isReplyOpened && selectComment" class="reply">
+    <Reply :main-comment="selectComment" @close-reply="closeReply" />
   </view>
   <view
     v-if="isShowDeleteDialogue"
@@ -127,7 +117,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import {
   chooseImageClass,
@@ -135,35 +125,23 @@ import {
   enterMask,
   enterReply,
   getCommentsData,
-  getLikeData,
-  LikeStruct,
-  localDoLike,
+  likeComment,
+  likeMoment,
   onClickImage
 } from "@/pages/moment/utils";
 import { toPersonInfo } from "@/pages/profile/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
-import { getCatDetail } from "@/apis/collection/collection";
-import { getUserInfo } from "@/apis/user/user";
 import { deleteMoment, getMomentDetail } from "@/apis/moment/moment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
-import { GetCountReq } from "@/apis/like/like-interface";
 import { doLike } from "@/apis/like/like";
-import {
-  GetCommentsReq,
-  NewCommentReq
-} from "@/apis/comment/comment-interfaces";
-import {
-  onLoad,
-  onPullDownRefresh,
-  onReachBottom,
-  onUnload
-} from "@dcloudio/uni-app";
+import { CommentType, GetCommentsReq } from "@/apis/comment/comment-interfaces";
+import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/Reply.vue";
 import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
 import CommentBox from "@/pages/moment/CommentBox.vue";
 import { Pages } from "@/utils/url";
-import NodeInfo = UniNamespace.NodeInfo;
+import { StorageKeys } from "@/utils/const";
 
 const props = defineProps<{
   id: string;
@@ -174,44 +152,9 @@ const keyboardHeight = ref(0);
 const getMomentDetailReq = reactive<GetMomentDetailReq>({
   momentId: props.id
 });
-const moment = reactive<{
-  data: Moment;
-  likeData: LikeStruct;
-}>({
-  data: {
-    id: "",
-    createAt: 0,
-    title: "",
-    catId: "",
-    communityId: "",
-    text: "",
-    user: {
-      id: "",
-      nickname: "",
-      avatarUrl: ""
-    },
-    photos: []
-  },
-  likeData: {
-    isLike: false,
-    count: 0
-  }
-});
+const moment = ref<Moment>();
 
 const commentDoLikeMap = new Map<string, number>();
-const asyncCommentDoLike = (index: number) => {
-  if (commentDoLikeMap.has(comments.data[index].id)) {
-    commentDoLikeMap.delete(comments.data[index].id);
-  } else {
-    commentDoLikeMap.set(comments.data[index].id, index);
-  }
-  if (comments.likeData[index].isLike) {
-    comments.likeData[index].count--;
-  } else {
-    comments.likeData[index].count++;
-  }
-  comments.likeData[index].isLike = !comments.likeData[index].isLike;
-};
 
 const commentDoLike = async (id: string) => {
   let commentLikeReq = {
@@ -221,16 +164,8 @@ const commentDoLike = async (id: string) => {
   await doLike(commentLikeReq);
 };
 
-const myUserId = ref("");
-
-const likeReq = reactive<GetCountReq>({
-  targetId: props.id,
-  targetType: TargetType.Moment
-});
-
+const myUserId = uni.getStorageSync(StorageKeys.UserId);
 const isShowDeleteDialogue = ref(false);
-
-let catName = ref("");
 
 function onClickCatBox(id?: string) {
   if (id) {
@@ -241,35 +176,16 @@ function onClickCatBox(id?: string) {
 }
 
 const getData = async () => {
-  moment.data = (await getMomentDetail(getMomentDetailReq)).moment;
-  moment.likeData = await getLikeData(likeReq);
-  getUserInfo({}).then((res) => {
-    myUserId.value = res.user.id;
-  });
-  if (moment.data.catId) {
-    getCatDetail({
-      catId: moment.data.catId
-    }).then((res) => {
-      catName.value = res.cat.name;
-    });
-  }
+  moment.value = (await getMomentDetail(getMomentDetailReq)).moment;
 };
 
 const getCommentsReq = reactive<GetCommentsReq>({
-  scope: "moment",
+  type: CommentType.Moment,
   page: 0,
   id: props.id
 });
 
-const comments = reactive<{
-  data: Comment[];
-  likeData: LikeStruct[];
-  replyNumber: number;
-}>({
-  data: [],
-  likeData: [],
-  replyNumber: 0
-});
+const comments = ref<Comment[]>([]);
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
 let page = 0;
@@ -281,14 +197,11 @@ const localGetCommentsData = async () => {
   isCommentsLoaded = false;
   getCommentsData({
     id: props.id,
-    scope: "moment",
+    type: CommentType.Moment,
     page: page
   }).then((res) => {
-    comments.replyNumber = 0;
     for (let i = 0; i < res.data?.length; i++) {
-      comments.data.push(res.data[i]);
-      comments.likeData.push(res.likeData[i]);
-      comments.replyNumber += res.data[i].comments ? res.data[i].comments : 0;
+      comments.value.push(res.data[i]);
     }
     isCommentsLoaded = true;
     page += 1;
@@ -296,67 +209,17 @@ const localGetCommentsData = async () => {
   });
 };
 
-let commentReplyIndex = ref(-1);
-const placeholderText = ref("发布评论");
-const newCommentFocus = ref<boolean>(false);
-
-const newCommentReq = reactive<NewCommentReq>({
-  text: "",
-  id: props.id,
-  scope: "moment"
-});
-
-const refreshReplyIndex = (index: number) => {
-  if (index != -1) {
-    commentReplyIndex.value = index;
-    newCommentReq.id = comments.data[commentReplyIndex.value].id;
-    newCommentReq.scope = "comment";
-  } else {
-    newCommentReq.id = props.id;
-    newCommentReq.scope = "moment";
-    commentReplyIndex.value = -1;
-  }
-};
-
+const defaultPlaceholderText = "发布评论";
+const placeholderText = ref(defaultPlaceholderText);
+const firstLevelId = ref();
 const afterBlur = () => {
-  newCommentFocus.value = false;
-  refreshReplyIndex(-1);
+  placeholderText.value = defaultPlaceholderText;
+  firstLevelId.value = undefined;
 };
 
-// 判断是否改变了点赞状态，如果改变了则在onUnload阶段进行提交
-let isDoLike = false;
-const asyncDoLike = () => {
-  isDoLike = !isDoLike;
-  if (moment.likeData.isLike) {
-    moment.likeData.count--;
-  } else {
-    moment.likeData.count++;
-  }
-  moment.likeData.isLike = !moment.likeData.isLike;
-};
-
-onUnload(() => {
-  if (isDoLike) {
-    localDoLike({
-      targetId: props.id,
-      targetType: TargetType.Moment
-    });
-  }
-  Promise.all(
-    Array.from(commentDoLikeMap.keys()).map((id) => commentDoLike(id))
-  ).finally(() => {
-    commentDoLikeMap.clear();
-  });
-});
-
-const focusReplyComment = (index: number) => {
-  placeholderText.value = "回复 @" + comments.data[index].user.nickname + ": ";
-  newCommentFocus.value = true;
-  refreshReplyIndex(index);
-};
-
-const updateLikeData = async (index: number) => {
-  asyncCommentDoLike(index);
+const focusReplyComment = (comment: Comment) => {
+  placeholderText.value = "回复 @" + comment.user.nickname + ": ";
+  firstLevelId.value = comment.id;
 };
 
 const showDeleteDialogue = () => {
@@ -366,8 +229,11 @@ const closeDeleteDialogue = () => {
   isShowDeleteDialogue.value = false;
 };
 const deleteThisMoment = () => {
+  if (!moment.value) {
+    return;
+  }
   deleteMoment({
-    momentId: moment.data.id
+    momentId: moment.value.id
   }).then(
     () => {
       relaunchCurrentPage();
@@ -391,15 +257,10 @@ const init = async () => {
   await getData();
   page = 0;
   getCommentsReq.page = 0;
-  comments.data = [];
-  comments.likeData = [];
+  comments.value = [];
   allCommentsLoaded = false;
   isCommentsLoaded = true;
   await localGetCommentsData();
-  commentReplyIndex.value = -1;
-  newCommentReq.text = "";
-  newCommentReq.scope = "moment";
-  newCommentReq.id = props.id;
   initLock = false;
 };
 
@@ -432,15 +293,15 @@ onPullDownRefresh(() => {
   }
 });
 
-const selectIndex = ref(0);
+const selectComment = ref<Comment>();
 
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
 const isReplyOpened = ref(false);
 
-function onClickReplies(index: number) {
-  selectIndex.value = index;
+function onClickReplies(comment: Comment) {
+  selectComment.value = comment;
   isReplyOpened.value = true;
 }
 

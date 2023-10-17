@@ -27,7 +27,7 @@
         搜索
       </view>
     </view>
-    <view v-if="!isClickSearch">
+    <view v-if="!showContent">
       <view v-if="list.length !== 0">
         <view class="d-flex a-center pl-2 pb-1">
           <image
@@ -79,11 +79,11 @@
       >
         <template v-if="current === 0">
           <!-- 帖子 -->
-          <world-posts :keyword="searchText" search="post"></world-posts>
+          <WorldPosts :keyword="searchText"></WorldPosts>
         </template>
         <template v-else-if="current === 1">
           <!-- 动态 -->
-          <MasonryFrame :keyword="searchText" search="search"></MasonryFrame>
+          <MasonryFrame :keyword="searchText"></MasonryFrame>
         </template>
         <template v-else-if="current === 2">
           <!-- 图鉴 -->
@@ -96,31 +96,34 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
-import WorldPosts from "@/pages/world/world-posts.vue";
+import WorldPosts from "@/pages/world/WorldPosts.vue";
 import MasonryFrame from "@/pages/community/MasonryFrame.vue";
-import SearchCats from "@/pages/search/search-cats.vue";
+import SearchCats from "@/pages/search/SearchCats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
-import { Icons } from "@/utils/url";
+import { Icons, Pages } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
+import { StorageKeys } from "@/utils/const";
+import { onLoad } from "@dcloudio/uni-app";
 
 const items = ["帖子", "动态", "图鉴"];
 
 const searchText = ref("");
 
-searchText.value = uni.getStorageSync("search");
-
 let list = reactive<string[]>([]);
 
 const current = ref(0);
 
-const isClickSearch = ref(false);
+const showContent = ref(false);
 
-isClickSearch.value = uni.getStorageSync("isClickSearch");
+onLoad((query: any) => {
+  showContent.value = query.showContent;
+  searchText.value = query.searchText;
+});
 
-let historyText = uni.getStorageSync("historySearchText");
+let historyText = uni.getStorageSync(StorageKeys.HistorySearchText);
 if (list.length === 0 && historyText) {
   list = JSON.parse(
-    decodeURIComponent(uni.getStorageSync("historySearchText"))
+    decodeURIComponent(uni.getStorageSync(StorageKeys.HistorySearchText))
   );
 }
 
@@ -141,9 +144,6 @@ function onClickSearch() {
     uni.hideLoading();
   }, 1000);
   if (searchText.value !== "") {
-    uni.setStorageSync("search", searchText.value);
-    // 加入搜索历史
-    uni.setStorageSync("isClickSearch", true);
     let index = list.findIndex((v) => v === searchText.value);
     if (index !== -1) {
       if (index !== 0) {
@@ -155,7 +155,7 @@ function onClickSearch() {
     // 保存到本地存储
     if (list.length !== 0) {
       uni.setStorageSync(
-        "historySearchText",
+        StorageKeys.HistorySearchText,
         encodeURIComponent(JSON.stringify(list))
       );
     }
@@ -165,8 +165,8 @@ function onClickSearch() {
       icon: "none"
     });
   }
-  uni.navigateTo({
-    url: "/pages/search/search"
+  uni.redirectTo({
+    url: `${Pages.Search}?showContent=true&searchText=${searchText.value}`
   });
 }
 

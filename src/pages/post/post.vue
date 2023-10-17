@@ -5,44 +5,50 @@
   <view class="reply-mask" @click="leaveReply()" />
 
   <view
+    v-if="post"
     :style="{ height: 'calc(100vh - 16vw - ' - keyboardHeight + 'px)' }"
     class="content-frame"
   >
     <view class="header">
       <view class="title">
-        {{ post.data.title }}
+        {{ post.title }}
         <view
-          v-if="myUserId && myUserId === post.data.user.id"
+          v-if="myUserId && myUserId === post.user.id"
           class="delete"
           @click="showDeleteDialogue"
         ></view>
       </view>
       <view class="head-info">
-        {{ displayTime(post.data.createAt) }} · {{ post.data.comments }}条回复
+        {{ displayTime(post.createAt) }} · {{ post.comments }}条回复
       </view>
-      <view v-if="post.data.tags" class="tags">
-        <image class="tagIcon" src="/static/images/tag.png" />
-        <view v-for="(item, index) in post.data.tags" :key="index" class="tag">
+      <view v-if="post.tags" class="tags">
+        <image class="tagIcon" :src="Icons.Tag" />
+        <view v-for="(item, index) in post.tags" :key="index" class="tag">
           {{ item }}
         </view>
       </view>
     </view>
 
     <view class="post">
-      <view class="user" @click="toPersonInfo(post.data.user.id, myUserId)">
-        <image :src="post.data.user.avatarUrl" class="avatar" />
+      <view
+        v-if="post.user"
+        class="user"
+        @click="toPersonInfo(post.user.id, myUserId)"
+      >
+        <image :src="post.user.avatarUrl" class="avatar" />
         <view class="name">
-          {{ post.data.user.nickname }}
+          {{ post.user.nickname }}
         </view>
       </view>
       <view class="text">
-        {{ post.data.text }}
+        {{ post.text }}
       </view>
       <image
-        :src="post.data.coverUrl"
+        v-if="post.coverUrl"
+        :src="post.coverUrl"
         class="imgs imgs1 clearfix"
         mode="widthFix"
-        @click="onClickImage(post.data.coverUrl)"
+        @click="onClickImage(post.coverUrl)"
       />
       <view v-if="comments.data.length === 0" class="commentNum"> 评论</view>
       <view v-else class="commentNum">
@@ -52,41 +58,33 @@
         <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
       </view>
 
-      <comment-box
-        v-for="(item, index) in comments.data"
+      <CommentBox
+        v-for="(comment, index) in comments.data"
         :key="index"
-        :comment="item"
-        :like="comments.likeData[index]"
+        :comment="comment"
         @after-delete="init"
-        @interact-with-comment="focusReplyComment(index)"
-        @on-click-replies="onClickReplies(index)"
-        @local-do-like="asyncCommentDoLike(index)"
+        @interact-with-comment="focusReplyComment(comment)"
+        @on-click-replies="onClickReplies(comment)"
+        @local-do-like="likeComment(comment)"
       />
       <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
     </view>
   </view>
-  <write-comment-box
+  <WriteCommentBox
+    v-if="post"
     v-model:placeholder-text="placeholderText"
-    :focus="newCommentFocus"
-    :like-data="post.likeData"
-    :new-comment-req="newCommentReq"
-    @update-text="
-      (newText) => {
-        newCommentReq.text = newText;
-      }
-    "
-    @do-like="asyncDoLike"
+    :is-liked="post.isLiked || false"
+    :like-count="post.likes"
+    :parent-type="CommentType.Post"
+    :parent-id="post.id"
+    :first-level-id="firstLevelId"
+    @do-like="likePost(post)"
     @after-create-comment="init"
-    @after-blur="afterBlur"
+    @cancel-reply="afterBlur"
   />
 
-  <view v-if="isReplyOpened" class="reply">
-    <reply
-      :like-data="comments.likeData[selectIndex]"
-      :main-comment="comments.data[selectIndex]"
-      @close-reply="closeReply"
-      @update-like-data="updateLikeData(selectIndex)"
-    />
+  <view v-if="isReplyOpened && selectComment" class="reply">
+    <reply :main-comment="selectComment" @close-reply="closeReply" />
   </view>
   <view
     v-if="isShowDeleteDialogue"
@@ -106,15 +104,13 @@
   </view>
 </template>
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import {
   enterMask,
   enterReply,
   getCommentsData,
-  getLikeData,
-  LikeStruct,
-  localDoLike
+  likeComment
 } from "../moment/utils";
 import Reply from "@/pages/moment/Reply.vue";
 import { toPersonInfo } from "@/pages/profile/utils";
@@ -123,22 +119,13 @@ import { Comment, Post, TargetType } from "@/apis/schemas";
 import { deletePost, getPostDetail } from "@/apis/post/post";
 import { displayTime } from "@/utils/time";
 import { doLike } from "@/apis/like/like";
-import { getUserInfo } from "@/apis/user/user";
-import {
-  GetCommentsReq,
-  NewCommentReq
-} from "@/apis/comment/comment-interfaces";
-import {
-  onLoad,
-  onPullDownRefresh,
-  onReachBottom,
-  onUnload
-} from "@dcloudio/uni-app";
-import { GetCountReq } from "@/apis/like/like-interface";
+import { CommentType, GetCommentsReq } from "@/apis/comment/comment-interfaces";
+import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
 import CommentBox from "@/pages/moment/CommentBox.vue";
-import { onClickImage } from "@/pages/post/utils";
-import { Pages } from "@/utils/url";
+import { likePost, onClickImage } from "@/pages/post/utils";
+import { Icons, Pages } from "@/utils/url";
+import { StorageKeys } from "@/utils/const";
 
 const props = defineProps<{
   id: string;
@@ -151,45 +138,10 @@ const getPostDetailReq = reactive<GetPostDetailReq>({
 });
 
 // Post
-const post = reactive<{ data: Post; likeData: LikeStruct }>({
-  data: {
-    id: "",
-    createAt: 0,
-    title: "",
-    text: "",
-    coverUrl: "",
-    tags: [],
-    likes: 0,
-    user: {
-      id: "",
-      nickname: "",
-      avatarUrl: ""
-    },
-    comments: 0,
-    isAnonymous: false,
-    status: 0
-  },
-  likeData: {
-    isLike: false,
-    count: 0
-  }
-});
-const myUserId = ref("");
+const post = ref<Post>();
+const myUserId = uni.getStorageSync(StorageKeys.UserId);
 
 const commentDoLikeMap = new Map<string, number>();
-const asyncCommentDoLike = (index: number) => {
-  if (commentDoLikeMap.has(comments.data[index].id)) {
-    commentDoLikeMap.delete(comments.data[index].id);
-  } else {
-    commentDoLikeMap.set(comments.data[index].id, index);
-  }
-  if (comments.likeData[index].isLike) {
-    comments.likeData[index].count--;
-  } else {
-    comments.likeData[index].count++;
-  }
-  comments.likeData[index].isLike = !comments.likeData[index].isLike;
-};
 
 const commentDoLike = async (id: string) => {
   let commentLikeReq = {
@@ -199,34 +151,23 @@ const commentDoLike = async (id: string) => {
   await doLike(commentLikeReq);
 };
 
-const likeReq = reactive<GetCountReq>({
-  targetId: props.id,
-  targetType: TargetType.Post
-});
-
 const isShowDeleteDialogue = ref(false);
 
 const getData = async () => {
-  post.data = (await getPostDetail(getPostDetailReq)).post;
-  post.likeData = await getLikeData(likeReq);
-  getUserInfo({}).then((res) => {
-    myUserId.value = res.user.id;
-  });
+  post.value = (await getPostDetail(getPostDetailReq)).post;
 };
 
 const getCommentsReq = reactive<GetCommentsReq>({
-  scope: "post",
+  type: CommentType.Post,
   page: 0,
   id: props.id
 });
 
 const comments = reactive<{
   data: Comment[];
-  likeData: LikeStruct[];
   replyNumber: number;
 }>({
   data: [],
-  likeData: [],
   replyNumber: 0
 });
 let allCommentsLoaded = false;
@@ -240,14 +181,13 @@ const localGetCommentsData = async () => {
   isCommentsLoaded = false;
   getCommentsData({
     id: props.id,
-    scope: "post",
+    type: CommentType.Post,
     page: page
   }).then((res) => {
     comments.replyNumber = 0;
     for (let i = 0; i < res.data?.length; i++) {
       comments.data.push(res.data[i]);
-      comments.likeData.push(res.likeData[i]);
-      comments.replyNumber += res.data[i].comments ? res.data[i].comments : 0;
+      comments.replyNumber += res.data[i].comments || 0;
     }
     isCommentsLoaded = true;
     page += 1;
@@ -255,66 +195,16 @@ const localGetCommentsData = async () => {
   });
 };
 
-let commentReplyIndex = ref(-1);
 const placeholderText = ref("发布评论");
-const newCommentFocus = ref<boolean>(false);
-
-const newCommentReq = reactive<NewCommentReq>({
-  id: props.id,
-  scope: "post",
-  text: ""
-});
-
-const refreshReplyIndex = (index: number) => {
-  if (index != -1) {
-    commentReplyIndex.value = index;
-    newCommentReq.id = comments.data[commentReplyIndex.value].id;
-    newCommentReq.scope = "comment";
-  } else {
-    newCommentReq.id = props.id;
-    commentReplyIndex.value = -1;
-  }
-};
+const firstLevelId = ref<string>();
 
 const afterBlur = () => {
-  newCommentFocus.value = false;
-  refreshReplyIndex(-1);
+  firstLevelId.value = undefined;
 };
 
-// 判断是否改变了点赞状态，如果改变了则在onUnload阶段进行提交
-let isDoLike = false;
-const asyncDoLike = () => {
-  isDoLike = !isDoLike;
-  if (post.likeData.isLike) {
-    post.likeData.count--;
-  } else {
-    post.likeData.count++;
-  }
-  post.likeData.isLike = !post.likeData.isLike;
-};
-
-onUnload(() => {
-  if (isDoLike) {
-    localDoLike({
-      targetId: props.id,
-      targetType: TargetType.Post
-    });
-  }
-  Promise.all(
-    Array.from(commentDoLikeMap.keys()).map((id) => commentDoLike(id))
-  ).finally(() => {
-    commentDoLikeMap.clear();
-  });
-});
-
-const focusReplyComment = (index: number) => {
-  placeholderText.value = "回复 @" + comments.data[index].user.nickname + ": ";
-  newCommentFocus.value = true;
-  refreshReplyIndex(index);
-};
-
-const updateLikeData = async (index: number) => {
-  asyncCommentDoLike(index);
+const focusReplyComment = (comment: Comment) => {
+  placeholderText.value = "回复 @" + comment.user.nickname + ": ";
+  firstLevelId.value = comment.id;
 };
 
 const showDeleteDialogue = () => {
@@ -324,8 +214,11 @@ const closeDeleteDialogue = () => {
   isShowDeleteDialogue.value = false;
 };
 const deleteThisPost = () => {
+  if (!post.value) {
+    return;
+  }
   deletePost({
-    id: post.data.id
+    id: post.value.id
   }).then(
     () => {
       uni.reLaunch({
@@ -346,14 +239,9 @@ const init = async () => {
   page = 0;
   getCommentsReq.page = 0;
   comments.data = [];
-  comments.likeData = [];
   allCommentsLoaded = false;
   isCommentsLoaded = true;
   await localGetCommentsData();
-  commentReplyIndex.value = -1;
-  newCommentReq.text = "";
-  newCommentReq.scope = "post";
-  newCommentReq.id = props.id;
   initLock = false;
 };
 
@@ -380,15 +268,15 @@ uni.onKeyboardHeightChange((res) => {
   keyboardHeight.value = res.height;
 });
 
-const selectIndex = ref(0);
+const selectComment = ref<Comment>();
 
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
 
 const isReplyOpened = ref(false);
 
-function onClickReplies(index: number) {
-  selectIndex.value = index;
+function onClickReplies(comment: Comment) {
+  selectComment.value = comment;
   isReplyOpened.value = true;
 }
 

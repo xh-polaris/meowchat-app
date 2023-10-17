@@ -13,9 +13,10 @@ export interface SignInReq {
   authId: string;
   password?: string;
   verifyCode?: string;
+  appId: number;
 }
 
-export interface SignInResp {
+export interface GignInResp {
   userId: string;
   accessToken: string;
   accessExpire: number;

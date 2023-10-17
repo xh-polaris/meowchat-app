@@ -40,28 +40,21 @@ const userInfo = reactive<User>({
 });
 const isFollowed = ref(false);
 const refresh = async () => {
-  if (props.type === "my") {
-    const res = await getUserInfo({});
-    userInfo.id = res.user.id;
-    userInfo.nickname = res.user.nickname;
-    userInfo.avatarUrl = res.user.avatarUrl;
-    userInfo.follower = res.user.follower;
-    userInfo.motto = res.user.motto;
-    userInfo.following = res.user.following;
-    userInfo.article = res.user.article;
-  } else if (props.type === "other") {
-    const res = await getUserInfo({
-      userId: props.userId
-    });
-    userInfo.id = res.user.id;
-    userInfo.nickname = res.user.nickname;
-    userInfo.avatarUrl = res.user.avatarUrl;
-    userInfo.motto = res.user.motto;
-    userInfo.motto = res.user.motto;
-    userInfo.follower = res.user.follower;
-    userInfo.following = res.user.following;
-    userInfo.article = res.user.article;
-  }
+  const res = await getUserInfo(
+    props.type === "other"
+      ? {
+          userId: props.userId
+        }
+      : {}
+  );
+  userInfo.id = res.user.id;
+  userInfo.nickname = res.user.nickname;
+  userInfo.avatarUrl = res.user.avatarUrl;
+  userInfo.motto = res.user.motto;
+  userInfo.motto = res.user.motto;
+  userInfo.follower = res.user.follower;
+  userInfo.following = res.user.following;
+  userInfo.article = res.user.article;
 };
 onShow(refresh);
 onPullDownRefresh(() => {

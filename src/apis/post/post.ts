@@ -12,12 +12,6 @@ import { PictureStyle } from "@/apis/cos/cos-interface";
 
 export async function getPostPreviews(req: GetPostPreviewsReq) {
   return await new Promise<GetPostPreviewsResp>((resolve, reject) => {
-    req.page = 2;
-    if (!req.paginationOption) {
-      req.paginationOption = { limit: 10 };
-    } else if (!req.paginationOption.limit) {
-      req.paginationOption.limit = 10;
-    }
     uni.request({
       url: "/post/get_post_previews",
       method: "POST",
@@ -27,19 +21,15 @@ export async function getPostPreviews(req: GetPostPreviewsReq) {
           reject(res);
         }
         const data = res.data as GetPostPreviewsResp;
-        const newData: GetPostPreviewsResp = {
-          ...data,
-          posts: []
-        };
         data.posts?.forEach((post) => {
-          if (!post.user) return;
           if (post.coverUrl) {
             post.coverUrl += PictureStyle.thumbnail;
           }
-          post.user.avatarUrl += PictureStyle.thumbnail;
-          newData.posts.push(post);
+          if (post.user?.avatarUrl) {
+            post.user.avatarUrl += PictureStyle.thumbnail;
+          }
         });
-        resolve(newData);
+        resolve(data);
       }
     });
   });
@@ -90,7 +80,9 @@ export async function getPostDetail(req: GetPostDetailReq) {
           reject(res);
         }
         const data = res.data as GetPostDetailResp;
-        data.post.user.avatarUrl += PictureStyle.thumbnail;
+        if (data.post.user?.avatarUrl) {
+          data.post.user.avatarUrl += PictureStyle.thumbnail;
+        }
         resolve(data);
       }
     });

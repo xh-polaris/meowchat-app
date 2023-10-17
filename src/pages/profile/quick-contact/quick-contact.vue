@@ -3,10 +3,7 @@
     <template #center>快速联系</template>
   </TopBar>
   <view class="container">
-    <image
-      class="bg-set"
-      src="https://static.xhpolaris.com/profile_background.png"
-    />
+    <view class="bg-set" />
     <view class="managerlist-wrap">
       <view
         v-for="(item, index) in managerList"
@@ -45,6 +42,9 @@
       </view>
     </view>
   </view>
+  <view v-if="managerList.length" class="nomore">
+    <image :src="Pictures.NoMore" style="width: 200rpx; height: 186rpx" />
+  </view>
 </template>
 
 <script lang="ts" setup>
@@ -53,6 +53,7 @@ import { reactive } from "vue";
 import { Admin } from "@/apis/schemas";
 import { getAdmins } from "@/apis/notice/notice";
 import TopBar from "@/components/TopBar.vue";
+import { Pictures } from "@/utils/url";
 
 const managerList = reactive<Admin[]>([]);
 getAdmins({ communityId: uni.getStorageSync("communityId") }).then((res) => {
@@ -63,6 +64,7 @@ getAdmins({ communityId: uni.getStorageSync("communityId") }).then((res) => {
 <style lang="scss" scoped>
 .bg-set {
   position: fixed;
+  background-color: #fafcff;
   width: 100%;
   height: 100%;
   top: 0;

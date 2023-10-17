@@ -2,24 +2,17 @@
   <view class="write-comment-box">
     <input
       ref="input"
-      :focus="focus"
+      v-model="text"
       :placeholder="placeholderText"
-      :value="newCommentReq.text"
       class="write-comment"
       type="text"
       @blur="blur"
-      @focus="onFocus"
-      @input="$emit('updateText', $event.target.value)"
     />
-    <view class="like-box">
-      <view
-        v-if="likeData.isLike"
-        class="like-icon liked"
-        @click="$emit('doLike')"
-      />
+    <view v-if="likeCount >= 0" class="like-box">
+      <view v-if="isLiked" class="like-icon liked" @click="$emit('doLike')" />
       <view v-else class="like-icon" @click="$emit('doLike')" />
       <view class="like-num">
-        {{ likeData.count }}
+        {{ likeCount }}
       </view>
     </view>
     <view class="send-comment-btn" @click="localCreateComment"> 发布</view>
@@ -27,54 +20,42 @@
 </template>
 
 <script lang="ts" setup>
-import { NewCommentReq } from "@/apis/comment/comment-interfaces";
-import { createComment, LikeStruct } from "@/pages/moment/utils";
-import { reactive } from "vue";
+import { CommentType } from "@/apis/comment/comment-interfaces";
+import { createComment } from "@/pages/moment/utils";
+import { ref } from "vue";
 
-// eslint-disable-next-line no-unused-vars
 const props = defineProps<{
-  newCommentReq: NewCommentReq;
-  likeData: LikeStruct;
+  parentId: string;
+  parentType: CommentType;
+  firstLevelId?: string;
+  likeCount?: number;
+  isLiked: boolean;
   placeholderText: string;
-  focus: boolean;
 }>();
-
+const text = ref("");
 const emit = defineEmits<{
-  (e: "updateText", newText: string): void;
-  (e: "update:placeholderText", newText: string): void;
-  (e: "doLike"): void;
   (e: "afterCreateComment"): void;
-  (e: "afterBlur"): void;
+  (e: "cancelReply"): void;
+  (e: "doLike"): void;
 }>();
-
-const preReq = reactive<NewCommentReq>({
-  id: props.newCommentReq.id,
-  scope: "moment",
-  text: ""
-});
 
 const localCreateComment = async () => {
-  let res = null;
-  if (props.focus) {
-    res = await createComment(props.newCommentReq);
-  } else {
-    res = await createComment({
-      id: preReq.id,
-      scope: preReq.scope,
-      text: props.newCommentReq.text
-    });
-  }
+  const req = {
+    text: text.value,
+    type: props.parentType,
+    firstLevelId: props.firstLevelId,
+    id: props.parentId
+  };
+  text.value = "";
+  const res = await createComment(req);
   if (res) emit("afterCreateComment");
 };
 
-const onFocus = () => {
-  preReq.id = props.newCommentReq.id;
-  preReq.scope = props.newCommentReq.scope;
-};
-
 const blur = () => {
-  emit("update:placeholderText", "发布评论");
-  emit("afterBlur");
+  if (text.value) {
+    return;
+  }
+  emit("cancelReply");
 };
 </script>
 

@@ -4,43 +4,56 @@
 
 <script lang="ts" setup>
 import Masonry from "@/pages/community/Masonry.vue";
-import { getMomentPreviews, searchMomentPreviews } from "@/apis/moment/moment";
+import { getMomentPreviews } from "@/apis/moment/moment";
 import { ref } from "vue";
-import { Moment } from "@/apis/schemas";
 import { StorageKeys } from "@/utils/const";
+import { GetMomentPreviewsReq } from "@/apis/moment/moment-components";
+import { getPrefetchData, PrefetchResp } from "@/apis/prefetch";
 
 interface Props {
-  search?: string;
   keyword?: string;
 }
+const props = defineProps<Props>();
 
-const props = withDefaults(defineProps<Props>(), {
-  search: "default",
-  keyword: "cat"
-});
-
-const page = ref<number>(0); //每往下翻页一次page加1直到没有内容
+let lastToken: string; // 每次记录上个token
 
 const isInitialized = ref(false);
-const getPreviews = ref<() => Promise<Moment[]>>(async () => {
-  return (
-    await getMomentPreviews({
-      page: page.value++,
-      communityId: uni.getStorageSync(StorageKeys.CommunityId)
-    })
-  ).moments;
-});
-if (props.search === "search") {
-  getPreviews.value = async () => {
-    return (
-      await searchMomentPreviews({
-        page: page.value++,
-        communityId: uni.getStorageSync(StorageKeys.CommunityId),
-        keyword: props.keyword
-      })
-    ).moments;
+const communityId = uni.getStorageSync(StorageKeys.CommunityId);
+
+const fetch = async () => {
+  const req: GetMomentPreviewsReq = {
+    communityId: communityId
   };
-}
+  if (lastToken) {
+    req.lastToken = lastToken;
+  }
+  if (props.keyword) {
+    req.keyword = props.keyword;
+  }
+  const res = await getMomentPreviews(req);
+  lastToken = res.token;
+  return res.moments;
+};
+
+const getPreviews = async () => {
+  if (lastToken || props.keyword) {
+    return fetch();
+  }
+  let res: PrefetchResp;
+  try {
+    res = await getPrefetchData({ communityId: communityId });
+  } catch (reason) {
+    return fetch();
+  }
+  if (!res.firstMomentPreviewsResp?.moments) {
+    return fetch();
+  }
+  lastToken = res.firstMomentPreviewsResp.token;
+  const moments = res.firstMomentPreviewsResp.moments;
+  res.firstMomentPreviewsResp = undefined;
+  return moments;
+};
+
 isInitialized.value = true;
 </script>
 

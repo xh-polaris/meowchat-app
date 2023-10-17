@@ -21,6 +21,7 @@ export interface User {
   article: number;
   follower: number;
   following: number;
+  enableDebug?: boolean;
 }
 
 export interface Auth {
@@ -32,12 +33,13 @@ export interface Auth {
 
 export interface Comment {
   id: string;
-  likes: number;
+  likeCount: number;
   createAt: number;
   text: string;
   user: User;
-  comments: number;
-  replyName?: string;
+  comments?: number;
+  replyUser?: User;
+  isLiked?: boolean;
 }
 
 // post
@@ -52,9 +54,10 @@ export interface Post {
   tags: Tag[];
   likes: number;
   comments: number;
-  user: User;
+  user?: User;
   status: number;
   isOfficial: boolean;
+  isLiked?: boolean;
 }
 
 export interface Tag {
@@ -128,24 +131,14 @@ export interface Moment {
   id: string;
   createAt: number;
   title: string;
-  catId?: string;
+  cats?: Array<CatPreview>;
   communityId: string;
   text: string;
   user: User;
   photos: Array<string>;
-}
-
-export interface MomentData {
-  id: string;
-  createAt: number;
-  title: string;
-  catId?: string;
-  communityId: string;
-  text: string;
-  user: User;
-  photos: Array<string>;
-  likedNumber: number;
-  comments: number;
+  likeCount: number;
+  commentCount: number;
+  isLiked: boolean;
 }
 
 export const enum TargetType {

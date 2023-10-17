@@ -15,7 +15,7 @@
     >
       <input v-model="searchText" maxlength="20" placeholder="搜索猫咪" />
       <image
-        src="/static/images/search.png"
+        :src="Icons.Search"
         style="width: 60rpx; height: 60rpx"
         @click="onClickSearch"
       />
@@ -48,17 +48,7 @@
       </view>
     </view>
     <template v-if="!isRefreshing">
-      <search-cats
-        v-if="isClickCollectionSearch"
-        :keyword="searchText"
-        choose="choose"
-        search="cat"
-      ></search-cats>
-      <search-cats
-        v-if="!isClickCollectionSearch"
-        choose="choose"
-        search="default"
-      ></search-cats>
+      <SearchCats :keyword="searchText" choose="choose"></SearchCats>
     </template>
   </view>
 </template>
@@ -70,7 +60,7 @@ import { StorageKeys } from "@/utils/const";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { Community } from "@/apis/schemas";
 import { listCommunity } from "@/apis/community/community";
-import SearchCats from "@/pages/search/search-cats.vue";
+import SearchCats from "@/pages/search/SearchCats.vue";
 import TopBar from "@/components/TopBar.vue";
 
 const switchText = ref("\u00A0 切换学校");
@@ -79,17 +69,6 @@ const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
 let searchText = ref("");
-
-/**
- * isClickSearch为false时显示所有猫咪
- * 为true时显示搜索猫咪
- */
-let isClickCollectionSearch = ref(false);
-
-searchText.value = uni.getStorageSync(StorageKeys.SearchText);
-isClickCollectionSearch.value = uni.getStorageSync(
-  StorageKeys.IsClickCollectionSearch
-);
 
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
@@ -100,12 +79,6 @@ const lists = reactive<{ data: Community[] }>({ data: [] });
 const campuses = reactive<{ data: Community[] }>({ data: [] });
 
 function onClickSearch() {
-  isClickCollectionSearch.value = searchText.value !== "";
-  uni.setStorageSync(StorageKeys.SearchText, searchText.value);
-  uni.setStorageSync(
-    StorageKeys.IsClickCollectionSearch,
-    isClickCollectionSearch.value
-  );
   refresh();
 }
 
@@ -166,8 +139,6 @@ onShow(() => {
   if (uni.getStorageSync(StorageKeys.CommunityId) !== communityId.value) {
     getCampus();
   }
-  isClickCollectionSearch.value = false;
-  searchText.value = "";
   refresh();
 });
 </script>

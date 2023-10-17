@@ -4,27 +4,37 @@ import {
   SetPasswordReq,
   SetPasswordResp,
   SignInReq,
-  SignInResp
+  GignInResp
 } from "./auth-interfaces";
+import { getPrefetchData } from "@/apis/prefetch";
 
 /**
  * @description
  * @param req
  */
 export function signIn(req: SignInReq) {
-  return new Promise<SignInResp>((resolve, reject) => {
-    uni.request({
-      url: "/auth/sign_in",
-      data: req,
-      method: "POST",
-      success(res: UniNamespace.RequestSuccessCallbackResult) {
-        if (res.statusCode !== 200) {
-          reject(res);
+  return new Promise<GignInResp>((resolve, reject) => {
+    getPrefetchData()
+      .then((res) => {
+        if (!res.signInResp) {
+          return Promise.reject();
         }
-        const data = res.data as SignInResp;
-        resolve(data);
-      }
-    });
+        resolve(res.signInResp);
+      })
+      .catch(() => {
+        uni.request({
+          url: "/auth/sign_in",
+          data: req,
+          method: "POST",
+          success(res: UniNamespace.RequestSuccessCallbackResult) {
+            if (res.statusCode !== 200) {
+              reject(res);
+            }
+            const data = res.data as GignInResp;
+            resolve(data);
+          }
+        });
+      });
   });
 }
 

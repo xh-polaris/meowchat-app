@@ -1,7 +1,8 @@
 export const enum Pictures {
   NoData = "https://static.xhpolaris.com/nodata.png",
   ProfileBackground = "https://static.xhpolaris.com/profile_background.png",
-  NoCatHere = "/static/images/no_cat_here.png"
+  NoCatHere = "/static/images/no_cat_here.png",
+  NoMore = "/static/images/nomore.png"
 }
 
 export const enum Icons {
@@ -15,7 +16,8 @@ export const enum Icons {
   Delete = "/static/images/delete.png",
   Guide = "/static/images/guide.png",
   GoBack = "/static/images/left-black.png",
-  Cancel = "/static/images/cancel.png"
+  Cancel = "/static/images/cancel.png",
+  Tag = "/static/images/tag.png"
 }
 
 export const enum Pages {

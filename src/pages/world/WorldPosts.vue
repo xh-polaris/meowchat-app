@@ -10,12 +10,16 @@
                 {{ post.title }}
               </view>
               <view class="user-info">
-                <template v-if="!post.isAnonymous">
-                  <image :src="post.user.avatarUrl" class="avatar" />
+                <template v-if="post.user">
+                  <image
+                    v-if="post.user.avatarUrl"
+                    :src="post.user.avatarUrl"
+                    class="avatar"
+                  />
                   <view
                     :class="post.isOfficial ? 'username-official' : 'username'"
                   >
-                    {{ post.user.nickname }}
+                    {{ post.user?.nickname }}
                   </view>
                 </template>
               </view>
@@ -76,44 +80,49 @@ import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
 import { onClickCover, onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
+import { getPrefetchData, PrefetchResp } from "@/apis/prefetch";
 
 interface Props {
-  search?: string;
   keyword?: string;
   onlyOfficial?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  search: "default",
-  keyword: "post"
-});
+const props = defineProps<Props>();
 
-let postsData: Array<Post> = reactive([]);
+let postsData = reactive<Post[]>([]);
 let token: string;
+const fetch = async () => {
+  const res = await getPostPreviews({
+    paginationOption: {
+      lastToken: token
+    },
+    onlyOfficial: props.onlyOfficial,
+    searchOptions: props.keyword
+      ? {
+          key: props.keyword
+        }
+      : undefined
+  });
+  token = res.token;
+  return res.posts;
+};
+
 const getPostPreviewsAsync = async () => {
-  let posts: Array<Post> = [];
-  if (props.search === "default") {
-    const res = await getPostPreviews({
-      paginationOption: {
-        lastToken: token
-      },
-      onlyOfficial: props.onlyOfficial
-    });
-    token = res.token;
-    posts = res.posts;
-  } else if (props.search === "post") {
-    const res = await getPostPreviews({
-      paginationOption: {
-        lastToken: token
-      },
-      onlyOfficial: props.onlyOfficial,
-      searchOptions: {
-        key: props.keyword
-      }
-    });
-    token = res.token;
-    posts = res.posts;
+  if (token || props.keyword || props.onlyOfficial) {
+    return fetch();
   }
+  let res: PrefetchResp;
+  try {
+    res = await getPrefetchData();
+  } catch (reason) {
+    return fetch();
+  }
+  if (!res?.firstPostPreviewsResp?.posts) {
+    return fetch();
+  }
+  token = res.firstPostPreviewsResp.token;
+  const posts = res.firstPostPreviewsResp.posts;
+  res.firstPostPreviewsResp = undefined;
   return posts;
 };
 

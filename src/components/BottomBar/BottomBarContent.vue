@@ -4,7 +4,7 @@
       v-for="item in tabContent"
       :key="item.id"
       class="tab"
-      @click="item.id === 'draft' ? draft(item.url) : tabChange(item.url)"
+      @click="item.id === 'draft' ? draft() : tabChange(item.url)"
     >
       <image
         :class="chooseIconClass(item.id)"
@@ -33,11 +33,11 @@ const tabContent = [
     text: "社区"
   },
   {
-    id: "plan",
-    icon: "/static/images/fish_grey.png",
-    activeIcon: "/static/images/fish_blue.png",
-    url: Pages.Plan,
-    text: "小鱼干"
+    id: "collection",
+    icon: "/static/images/collection-grey.png",
+    activeIcon: "/static/images/collection-blue.png",
+    url: Pages.Collection,
+    text: "图鉴"
   },
   {
     id: "draft",
@@ -86,15 +86,6 @@ const tabChange = (path: string) => {
 };
 const draft = () => {
   emits("toggleShowingDraft", true);
-  // if (props.id === "draft") {
-  //   uni.navigateTo({
-  //     url: path
-  //   });
-  // } else {
-  //   uni.navigateTo({
-  //     url: momentUrl
-  //   });
-  // }
 };
 </script>
 

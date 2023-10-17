@@ -1,5 +1,5 @@
 <template>
-  <view>新轮播图</view>
+  <view></view>
 </template>
 
 <script setup lang="ts"></script>

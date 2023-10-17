@@ -37,17 +37,20 @@
               src="/static/images/arrow_right_blue.png"
             />
           </view>
-          <view v-if="like" class="like-box">
+          <view
+            v-if="comment?.likeCount || comment?.likeCount === 0"
+            class="like-box"
+          >
             <text class="reply" @click="emit('interactWithComment')">回复</text>
             <view class="d-flex a-center" style="margin-right: 11rpx">
               <view
-                v-if="like.isLike"
+                v-if="comment?.isLiked"
                 class="like-icon liked"
                 @click="emit('localDoLike')"
               />
               <view v-else class="like-icon" @click="$emit('localDoLike')" />
               <text class="like-num">
-                {{ like.count }}
+                {{ comment.likeCount }}
               </text>
             </view>
           </view>
@@ -74,21 +77,17 @@
 </template>
 
 <script lang="ts" setup>
-import { LikeStruct } from "@/pages/moment/utils";
 import { Comment } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
-import { deleteCommment } from "@/apis/comment/comment";
-import { getUserInfo } from "@/apis/user/user";
+import { deleteComment } from "@/apis/comment/comment";
 import { ref } from "vue";
 import { toPersonInfo } from "@/pages/profile/utils";
+import { StorageKeys } from "@/utils/const";
 
 const props = defineProps<{
-  like: LikeStruct;
   comment: Comment;
 }>();
-// console.log(myUserId, props.comment.user.id);
-
-const myUserId = ref("");
+const myUserId = uni.getStorageSync(StorageKeys.UserId);
 const isShowDeleteDialogue = ref(false);
 
 const emit = defineEmits<{
@@ -98,13 +97,6 @@ const emit = defineEmits<{
   (e: "afterDelete"): void;
 }>();
 
-const getData = async () => {
-  getUserInfo({}).then((res) => {
-    myUserId.value = res.user.id;
-  });
-};
-getData();
-
 const showDeleteDialogue = () => {
   isShowDeleteDialogue.value = true;
 };
@@ -112,7 +104,7 @@ const closeDeleteDialogue = () => {
   isShowDeleteDialogue.value = false;
 };
 const deleteThisPost = () => {
-  deleteCommment({
+  deleteComment({
     commentId: props.comment.id
   }).then(
     () => {

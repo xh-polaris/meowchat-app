@@ -5,22 +5,33 @@ import {
   UpdateUserInfoResp
 } from "./user-interfaces";
 import { PictureStyle } from "@/apis/cos/cos-interface";
+import { getPrefetchData } from "@/apis/prefetch";
 
 export async function getUserInfo(req: GetUserInfoReq) {
-  return await new Promise<GetUserInfoResp>((resolve, reject) => {
-    uni.request({
-      url: "/user/get_user_info",
-      data: req,
-      method: "GET",
-      success(res: UniNamespace.RequestSuccessCallbackResult) {
-        if (res.statusCode !== 200) {
-          reject(res);
+  return new Promise<GetUserInfoResp>((resolve, reject) => {
+    getPrefetchData({ userId: req.userId })
+      .then((res) => {
+        if (!res.getUserInfoResp?.user) {
+          return Promise.reject("预拉取数据没有用户信息");
         }
-        const data = res.data as GetUserInfoResp;
-        data.user.avatarUrl += PictureStyle.thumbnail;
-        resolve(data);
-      }
-    });
+        resolve(res.getUserInfoResp);
+        res.getUserInfoResp = undefined;
+      })
+      .catch(() => {
+        uni.request({
+          url: "/user/get_user_info",
+          data: req,
+          method: "GET",
+          success(res: UniNamespace.RequestSuccessCallbackResult) {
+            if (res.statusCode !== 200) {
+              reject(res);
+            }
+            const data = res.data as GetUserInfoResp;
+            data.user.avatarUrl += PictureStyle.thumbnail;
+            resolve(data);
+          }
+        });
+      });
   });
 }
 

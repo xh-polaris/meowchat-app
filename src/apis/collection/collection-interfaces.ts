@@ -3,18 +3,7 @@ import { Cat, CatPreview } from "../schemas";
 export interface GetCatPreviewsReq {
   page: number;
   communityId: string;
-}
-
-export interface SearchCatPreviewsReq {
-  communityId: string;
-  page: number;
-  keyword: string;
-}
-
-export interface SearchCatPreviewsResp {
-  cats: CatPreview[];
-  code: number;
-  msg: string;
+  keyword?: string;
 }
 
 export interface GetCatPreviewsResp {

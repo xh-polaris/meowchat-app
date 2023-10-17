@@ -18,10 +18,6 @@
     >Tips: 点击tag以删除</view
   >
   <view class="add-tags">
-    <!--    <view v-if="isEditingInput" class="button" @click="finishEdit"-->
-    <!--      >确认添加</view-->
-    <!--    >-->
-    <!--    <view v-else class="text-button" @click="startEdit">[无tag]</view>-->
     <input
       v-if="isEditingInput"
       v-model="inputText"

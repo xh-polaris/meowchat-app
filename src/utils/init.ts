@@ -1,67 +1,54 @@
 import { signIn } from "@/apis/auth/auth";
-import { getUserInfo, updateUserInfo } from "@/apis/user/user";
-import { SignInResp } from "@/apis/auth/auth-interfaces";
-import { WxAppId, StorageKeys } from "@/utils/const";
+import { StorageKeys, AppId, BackendEnvMap } from "@/utils/const";
 import { clearCache, listCommunity } from "@/apis/community/community";
 import { Pages } from "@/utils/url";
-
-const DefaultUserAvatarUrl = "https://static.xhpolaris.com/cat_world.jpg";
+import { reactive, ref } from "vue";
 
 export async function init() {
   clearCache();
-  return await new Promise<void>((resolve, reject) => {
-    uni.getProvider({
-      service: "oauth",
-      success(getProviderRes: UniNamespace.GetProviderRes) {
-        if (getProviderRes.provider[0] === "weixin") {
-          uni.login({
-            provider: "weixin",
-            success(res: UniNamespace.LoginRes) {
-              signIn({
-                authType: "wechat",
-                authId: WxAppId,
-                verifyCode: res.code
-              })
-                .then((signInRes) => {
-                  afterSignIn(signInRes);
-                  resolve();
-                })
-                .catch((err) => {
-                  reject(err);
-                });
-            }
-          });
-        }
-      }
+  const accountInfo = uni.getAccountInfoSync().miniProgram;
+  const tasks: Promise<void>[] = [];
+  // 距离token过期不到一天时重新获取token
+  const expireTime = uni.getStorageSync(StorageKeys.AccessToken).expireTime;
+  if (!expireTime || expireTime - new Date().getTime() / 1000 < 86400) {
+    tasks.push(refreshToken(accountInfo.appId));
+  }
+  tasks.push(checkCommunityId());
+  await Promise.all(tasks);
+  const env = uni.getStorageSync(StorageKeys.BackendEnv);
+  if (!env)
+    uni.setBackgroundFetchToken({
+      token: JSON.stringify({
+        communityId: uni.getStorageSync(StorageKeys.CommunityId),
+        userId: uni.getStorageSync(StorageKeys.UserId),
+        env: env || BackendEnvMap[accountInfo.envVersion]
+      })
     });
+  uni.setStorageSync(
+    StorageKeys.EnabledDebug,
+    uni.getAppBaseInfo().enableDebug || import.meta.env.VITE_ENABLE_DEBUG
+  );
+}
+
+async function refreshToken(appId: string) {
+  const res = await uni.login({
+    provider: "weixin"
   });
+  const signInRes = await signIn({
+    authType: "wechat",
+    authId: appId,
+    verifyCode: res.code,
+    appId: AppId
+  });
+  uni.setStorageSync(StorageKeys.AccessToken, {
+    token: signInRes.accessToken,
+    expireTime: signInRes.accessExpire
+  });
+  uni.setStorageSync(StorageKeys.UserId, signInRes.userId);
 }
 
-function afterSignIn(signInResp: SignInResp) {
-  uni.setStorageSync(StorageKeys.AccessToken, signInResp.accessToken);
-  // console.log("token", signInResp.accessToken);
-  uni.setStorageSync(StorageKeys.UserId, signInResp.userId);
-  checkCommunityId().then();
-  getUserInfo({})
-    .then((getUserInfoResp) => {
-      uni.setStorageSync(StorageKeys.EnabledDebug, getUserInfoResp.enableDebug);
-    })
-    .catch((res: UniNamespace.RequestSuccessCallbackResult) => {
-      if (res.statusCode === 400) {
-        const id = signInResp.userId;
-        updateUserInfo({
-          nickname: "用户_" + id.substring(id.length - 13),
-          avatarUrl: DefaultUserAvatarUrl
-        }).then(() => {
-          uni.navigateTo({
-            url: Pages.SchoolSelect
-          });
-        });
-      }
-    });
-}
-
-export async function checkCommunityId() {
+export const needChooseCommunity = ref(false);
+async function checkCommunityId() {
   const res = await listCommunity({});
   const id = uni.getStorageSync(StorageKeys.CommunityId);
 
@@ -71,16 +58,14 @@ export async function checkCommunityId() {
         return;
       }
     }
+  } else {
+    needChooseCommunity.value = true;
   }
 
   // 如果storage里没有id或id无法匹配到任何一个社区，就将id赋值为最早的子社区的id
   for (let i = res.communities.length - 1; i >= 0; i--) {
     const community = res.communities[i];
-    if (
-      community.parentId === "" ||
-      community.parentId === undefined ||
-      community.parentId === null
-    ) {
+    if (!community.parentId) {
       continue;
     }
     uni.setStorageSync(StorageKeys.CommunityId, community.id);

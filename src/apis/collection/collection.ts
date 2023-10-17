@@ -12,9 +12,7 @@ import {
   GetImageByCatReq,
   GetImageByCatResp,
   NewCatReq,
-  NewCatResp,
-  SearchCatPreviewsReq,
-  SearchCatPreviewsResp
+  NewCatResp
 } from "./collection-interfaces";
 import { PictureStyle } from "@/apis/cos/cos-interface";
 
@@ -71,30 +69,6 @@ export async function getCatPreviews(req: GetCatPreviewsReq) {
           reject(res);
         }
         const data = res.data as GetCatPreviewsResp;
-        data.cats.forEach((cat) => {
-          cat.avatarUrl += PictureStyle.thumbnail;
-        });
-        resolve(data);
-      }
-    });
-  });
-}
-
-/**
- * @description
- * @param req
- */
-export async function searchCatPreviews(req: SearchCatPreviewsReq) {
-  return await new Promise<SearchCatPreviewsResp>((resolve, reject) => {
-    uni.request({
-      url: "/collection/search_cat",
-      data: req,
-      method: "GET",
-      success(res: UniNamespace.RequestSuccessCallbackResult) {
-        if (res.statusCode !== 200) {
-          reject(res);
-        }
-        const data = res.data as SearchCatPreviewsResp;
         data.cats.forEach((cat) => {
           cat.avatarUrl += PictureStyle.thumbnail;
         });

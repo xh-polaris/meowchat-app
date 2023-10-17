@@ -48,11 +48,11 @@
               </view>
             </view>
             <view class="other-info">
-              <view v-if="moment.likedNumber" class="font-sm"
-                >{{ moment.likedNumber }}位喵友觉得很赞
+              <view v-if="moment.likeCount" class="font-sm"
+                >{{ moment.likeCount }}位喵友觉得很赞
               </view>
-              <view v-if="moment.comments" class="comment font-sm"
-                >{{ moment.comments }}条回复</view
+              <view v-if="moment.commentCount" class="comment font-sm"
+                >{{ moment.commentCount }}条回复</view
               >
             </view>
           </view>
@@ -61,11 +61,8 @@
     </view>
   </view>
   <view style="width: 100%; height: 40rpx"></view>
-  <view class="nomore">
-    <image
-      src="/static/images/nomore.png"
-      style="width: 200rpx; height: 186rpx"
-    />
+  <view v-if="!leftMoments.length && !rightMoments.length" class="nomore">
+    <image :src="Pictures.NoMore" style="width: 200rpx; height: 186rpx" />
   </view>
   <view style="width: 100%; height: 200rpx"></view>
 </template>
@@ -79,13 +76,13 @@ import {
 } from "@/apis/moment/moment";
 import { DeleteMomentReq } from "@/apis/moment/moment-components";
 import { Like } from "@/apis/like/like-interface";
-import { Moment, MomentData } from "@/apis/schemas";
+import { Moment } from "@/apis/schemas";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickMoment } from "./utils";
-import { doLike, getCount, getUserLikes } from "@/apis/like/like";
-import { getComments } from "@/apis/comment/comment";
+import { doLike, getUserLikes } from "@/apis/like/like";
 import { StorageKeys } from "@/utils/const";
+import { Pictures } from "@/utils/url";
 
 interface Props {
   type?: string;
@@ -99,10 +96,10 @@ const isNoData = ref(true);
 const isLikedLoaded = ref(false);
 let LikedLoaded = 0;
 let LikedList = reactive<Like[]>([]);
-let momentsInBatch: MomentData[];
+let momentsInBatch: Moment[];
 let moments: Moment[];
-const leftMoments = reactive<MomentData[]>([]);
-const rightMoments = reactive<MomentData[]>([]);
+const leftMoments = reactive<Moment[]>([]);
+const rightMoments = reactive<Moment[]>([]);
 const myUserId = ref("");
 let leftHeight = 0;
 let rightHeight = 0;
@@ -180,30 +177,8 @@ const addBatch = async () => {
         momentId: LikedList[LikedLoaded].targetId
       })
         .then((res) => {
-          let momentData = reactive<MomentData>({
-            id: res.moment.id,
-            createAt: res.moment.createAt,
-            title: res.moment.title,
-            catId: res.moment.catId,
-            communityId: res.moment.communityId,
-            text: res.moment.text,
-            user: res.moment.user,
-            photos: res.moment.photos,
-            likedNumber: 0,
-            comments: 0
-          });
-          getCount({ targetId: res.moment.id, targetType: 4 }).then((res1) => {
-            momentData.likedNumber = res1.count;
-          });
-          getComments({ scope: "moment", page: 0, id: res.moment.id }).then(
-            (res2) => {
-              momentData.comments += res2.total;
-              for (let i = 0; i < res2.comments?.length; i++) {
-                momentData.comments += res2.comments[i].comments;
-              }
-            }
-          );
-          momentsInBatch.push(momentData);
+          let moment = reactive<Moment>(res.moment);
+          momentsInBatch.push(moment);
         })
         .catch((res: UniNamespace.RequestSuccessCallbackResult) => {
           if (res.statusCode === 400) {
@@ -232,30 +207,8 @@ const addBatch = async () => {
       });
       moments = res.moments;
     }
-    for (let i = 0; i < moments?.length; i++) {
-      let momentData = reactive<MomentData>({
-        id: moments[i].id,
-        createAt: moments[i].createAt,
-        title: moments[i].title,
-        catId: moments[i].catId,
-        communityId: moments[i].communityId,
-        text: moments[i].text,
-        user: moments[i].user,
-        photos: moments[i].photos,
-        likedNumber: 0,
-        comments: 0
-      });
-      getCount({ targetId: moments[i].id, targetType: 4 }).then((res) => {
-        momentData.likedNumber = res.count;
-      });
-      getComments({ scope: "moment", page: 0, id: moments[i].id }).then(
-        (res) => {
-          momentData.comments += res.total;
-          for (let i = 0; i < res.comments?.length; i++) {
-            momentData.comments += res.comments[i].comments;
-          }
-        }
-      );
+    for (const moment of moments) {
+      let momentData = reactive<Moment>(moment);
       momentsInBatch.push(momentData);
     }
   }

@@ -3,10 +3,6 @@ export const enum StorageKeys {
   UserId = "userId",
   AccessToken = "accessToken",
   HistoryCampuses = "historyCampuses",
-  SearchText = "searchText",
-  IsClickCollectionSearch = "isClickCollectionSearch",
-  Search = "search",
-  IsClickSearch = "isClickSearch",
   IdSelected = "idSelected",
   NameSelected = "nameSelected",
   AvatarSelected = "avatarSelected",
@@ -14,7 +10,8 @@ export const enum StorageKeys {
   DraftPost = "draftPost",
   BackendEnv = "backendEnv",
   BackendLane = "backendLane",
-  EnabledDebug = "enableDebug"
+  EnabledDebug = "enableDebug",
+  HistorySearchText = "historySearchText"
 }
 
 export const enum BackendEnv {
@@ -22,5 +19,10 @@ export const enum BackendEnv {
   Test = "test"
 }
 
-// WxAppId在init.ts、upload.mjs、manifest.json里使用
-export const WxAppId = "wxd7e995c7b9d793b8";
+export const BackendEnvMap = {
+  release: BackendEnv.Product,
+  trial: BackendEnv.Test,
+  develop: BackendEnv.Test
+};
+
+export const AppId = 1;

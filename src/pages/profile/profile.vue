@@ -12,14 +12,14 @@
     <view class="com-item">
       <view class="com-wrap">
         <view class="line-info">
-          <view class="number">{{ userInfo.following }}</view>
+          <view class="number">{{ user.following }}</view>
           <view class="info">关注</view>
-          <view class="number">{{ userInfo.follower }}</view>
+          <view class="number">{{ user.follower }}</view>
           <view class="info">粉丝</view>
-          <view class="number">{{ userInfo.article }}</view>
+          <view class="number">{{ user.article }}</view>
           <view class="info">创作</view>
           <navigator
-            :url="`${Pages.EditInfo}?avatarUrl=${userInfo.avatarUrl}&nickname=${userInfo.nickname}`"
+            :url="`${Pages.EditInfo}?avatarUrl=${user.avatarUrl}&nickname=${user.nickname}`"
             hover-class="none"
           >
             <view class="edit-info">
@@ -73,8 +73,7 @@ import { Pages, Pictures } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
 import { StorageKeys } from "@/utils/const";
 
-const version = uni.getAccountInfoSync().miniProgram.version;
-const userInfo = reactive<User>({
+const user = reactive<User>({
   id: "",
   nickname: "微信用户",
   avatarUrl: "https://static.xhpolaris.com/cat_world.jpg",
@@ -84,15 +83,16 @@ const userInfo = reactive<User>({
   following: 0
 });
 
-const enableDebug = ref(uni.getStorageSync(StorageKeys.EnabledDebug));
+const enableDebug = uni.getStorageSync(StorageKeys.EnabledDebug);
 
 const refresh = async () => {
   const res = await getUserInfo({});
-  userInfo.nickname = res.user.nickname;
-  userInfo.avatarUrl = res.user.avatarUrl;
-  userInfo.article = res.user.article || 0;
-  userInfo.follower = res.user.follower || 0;
-  userInfo.following = res.user.following || 0;
+  user.nickname = res.user.nickname;
+  user.avatarUrl = res.user.avatarUrl;
+  user.motto;
+  user.article = res.user.article || 0;
+  user.follower = res.user.follower || 0;
+  user.following = res.user.following || 0;
 };
 onShow(refresh);
 onPullDownRefresh(() => {

@@ -1,4 +1,6 @@
 import {
+  DeleteCommentReq,
+  DeleteCommentResp,
   GetCommentsReq,
   GetCommentsResp,
   NewCommentReq,
@@ -51,7 +53,7 @@ export async function getComments(req: GetCommentsReq) {
  * @description
  * @param req
  */
-export async function deleteCommment(req: object) {
+export async function deleteComment(req: DeleteCommentReq) {
   return await new Promise<object>((resolve, reject) => {
     uni.request({
       url: "/comment/delete_comment",
@@ -61,7 +63,7 @@ export async function deleteCommment(req: object) {
         if (res.statusCode !== 200) {
           reject(res);
         }
-        const data = res.data as GetCommentsResp;
+        const data = res.data as DeleteCommentResp;
         resolve(data);
       }
     });

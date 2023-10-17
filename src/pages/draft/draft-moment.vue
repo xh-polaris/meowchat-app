@@ -17,8 +17,7 @@
   ></InputArea>
   <view style="height: 4vw"></view>
   <ChooseCat></ChooseCat>
-  <view style="height: 8vw"></view>
-  <view style="height: 36vw"></view>
+  <view style="height: 44vw"></view>
   <BottomPanel
     :can-publish="!isUploadingImages"
     text="发布动态"
@@ -32,7 +31,7 @@ import ChooseCat from "@/pages/draft/ChooseCat.vue";
 import BottomPanel from "@/pages/draft/BottomPanel.vue";
 import InputArea from "@/pages/draft/InputArea.vue";
 import TopBar from "@/components/TopBar.vue";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { StorageKeys } from "@/utils/const";
 import { newMoment } from "@/apis/moment/moment";
 import { Pages } from "@/utils/url";
@@ -45,7 +44,6 @@ const title = ref("");
 const content = ref("");
 const photos = ref([]);
 const changeTitle = (text: string) => {
-  console.log("here");
   title.value = text;
 };
 const changeContent = (text: string) => {
@@ -67,7 +65,6 @@ const publish = () => {
   isPublished.value = true;
   uni.setStorageSync(StorageKeys.DraftMoment, "");
   newMoment({
-    id: "",
     title: title.value,
     communityId: uni.getStorageSync(StorageKeys.CommunityId),
     text: content.value,
@@ -88,12 +85,12 @@ const publish = () => {
       const code = reason.data.Code;
       if (code === 10001) {
         uni.showToast({
-          title: "文本含不合法内容",
+          title: "文本含敏感内容",
           icon: "none"
         });
       } else if (code === 10002) {
         uni.showToast({
-          title: "图片含不合法内容",
+          title: "图片含敏感内容",
           icon: "none"
         });
       } else {
@@ -104,14 +101,6 @@ const publish = () => {
       }
       isPublished.value = false;
     });
-  console.log({
-    id: "",
-    title: title.value,
-    communityId: uni.getStorageSync(StorageKeys.CommunityId),
-    text: content.value,
-    photos: [...photos.value],
-    catId: uni.getStorageSync(StorageKeys.IdSelected)
-  });
 };
 </script>
 

@@ -1,7 +1,8 @@
 <template>
   <view class="panel">
     <button
-      :class="'publish ' + (props.canPublish ? 'can' : 'disabled')"
+      :class="'publish ' + (props.canPublish && !disabled ? 'can' : 'disabled')"
+      :disabled="disabled"
       @click="publish"
     >
       {{ props.text }}
@@ -16,9 +17,15 @@
       ，一旦发布即被视为同意上述协议和政策
     </view>
   </view>
+  <deal v-if="isShow && type === 1"></deal>
+  <policy v-if="isShow && type === 2"></policy>
 </template>
 
 <script setup lang="ts">
+import Policy from "@/components/deal-policy/policy.vue";
+import Deal from "@/components/deal-policy/deal.vue";
+import { ref } from "vue";
+
 interface Props {
   canPublish: boolean;
   text: string;
@@ -29,10 +36,28 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emits = defineEmits(["publish"]);
 
+const isShow = ref(false);
+const type = ref(0);
+const disabled = ref(false);
+
 const publish = () => {
   if (!props.canPublish) return;
+  disabled.value = true;
   emits("publish");
+  setTimeout(() => {
+    disabled.value = false;
+  }, 2000);
 };
+
+function showDeal() {
+  type.value = 1;
+  isShow.value = !isShow.value;
+}
+
+function showPolicy() {
+  type.value = 2;
+  isShow.value = !isShow.value;
+}
 </script>
 
 <style scoped lang="scss">

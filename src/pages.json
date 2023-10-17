@@ -200,10 +200,10 @@
         "text": "社区"
       },
       {
-        "pagePath": "pages/plan/plan",
+        "pagePath": "pages/collection/collection",
         "iconPath": "static/images/collection-grey.png",
         "selectedIconPath": "static/images/collection-blue.png",
-        "text": "小鱼干"
+        "text": "图鉴"
       },
       {
         "pagePath": "pages/world/world",

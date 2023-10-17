@@ -41,7 +41,6 @@ const content = ref("");
 const coverUrl = ref("");
 const tags = ref([]);
 const changeTitle = (text: string) => {
-  console.log("here");
   title.value = text;
 };
 const changeContent = (text: string) => {
@@ -60,7 +59,6 @@ const toggleIsUploadingImages = (bool: boolean) => {
 };
 
 const publish = () => {
-  console.log("publish");
   if (title.value === "") {
     uni.showToast({
       title: "请输入标题",
@@ -77,22 +75,12 @@ const publish = () => {
   }
   uni.setStorageSync(StorageKeys.DraftPost, "");
   isPublished.value = !isPublished.value;
-  console.log([...tags.value]);
-  console.log({
-    title: title.value,
-    text: content.value,
-    coverUrl: coverUrl.value,
-    tags: [...tags.value],
-    isOfficial: false,
-    id: ""
-  });
   newPost({
     title: title.value,
     text: content.value,
     coverUrl: coverUrl.value,
     tags: [...tags.value],
-    isOfficial: false,
-    id: ""
+    isOfficial: false
   })
     .then(() => {
       uni.switchTab({
@@ -108,12 +96,12 @@ const publish = () => {
       const code = reason.data.Code;
       if (code === 10001) {
         uni.showToast({
-          title: "文本含不合法内容",
+          title: "文本含敏感内容",
           icon: "none"
         });
       } else if (code === 10002) {
         uni.showToast({
-          title: "图片含不合法内容",
+          title: "图片含敏感内容",
           icon: "none"
         });
       } else {

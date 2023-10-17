@@ -9,19 +9,6 @@ export interface DeleteMomentResp {
   msg: string;
 }
 
-export interface SearchMomentPreviewsReq {
-  page: number;
-  keyword: string;
-  communityId: string;
-  Authorization?: string;
-}
-
-export interface SearchMomentPreviewsResp {
-  moments: Moment[];
-  code: number;
-  msg: string;
-}
-
 export interface NewMomentReq {
   id?: string; // 留空表示创建
   title: string;
@@ -38,13 +25,16 @@ export interface NewMomentResp {
 }
 
 export interface GetMomentPreviewsReq {
-  backward?: number;
-  communityId: string;
+  communityId?: string;
   isParent?: number;
+  onlyUserId?: string;
+  keyword?: string;
+
+  backward?: number;
   lastToken?: string;
   limit?: number;
-  onlyUserId?: string;
-  page: number;
+  page?: number;
+  offset?: number;
 }
 
 export interface GetMomentPreviewsResp {

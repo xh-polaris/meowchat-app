@@ -1,4 +1,4 @@
-import { StorageKeys } from "@/utils/const";
+import { BackendEnvMap, StorageKeys } from "@/utils/const";
 
 export function createInterceptors() {
   uni.addInterceptor("request", {
@@ -7,18 +7,21 @@ export function createInterceptors() {
         const env = uni.getStorageSync(StorageKeys.BackendEnv);
         const lane = uni.getStorageSync(StorageKeys.BackendLane);
         args.url = import.meta.env.VITE_BASIC_URL + args.url;
-        // console.log({
-        //   Authorization: uni.getStorageSync(StorageKeys.AccessToken),
-        //   "X-Xh-Env": env ? env : import.meta.env.VITE_XH_ENV,
-        //   "X-Xh-Lane": lane ? lane : ""
-        // });
         args.header = {
-          Authorization: uni.getStorageSync(StorageKeys.AccessToken),
-          // "X-Xh-Env": "",
-          // "X-Xh-Lane": ""
-          "X-Xh-Env": env ? env : import.meta.env.VITE_XH_ENV,
+          Authorization: uni.getStorageSync(StorageKeys.AccessToken).token,
+          "X-Xh-Env": env
+            ? env
+            : BackendEnvMap[uni.getAccountInfoSync().miniProgram.envVersion],
           "X-Xh-Lane": lane ? lane : ""
         };
+      }
+    },
+    success(result: any) {
+      if (result.statusCode >= 400) {
+        uni.showToast({
+          title: "请求失败",
+          icon: "error"
+        });
       }
     },
     fail() {

@@ -26,7 +26,7 @@
     <view style="height: 4vw"></view>
 
     <view v-if="!isRefreshing">
-      <MasonryFrame search="default"></MasonryFrame>
+      <MasonryFrame></MasonryFrame>
     </view>
 
     <view style="height: 18vw"></view>
@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import CollectionEntry from "@/pages/community/CollectionEntry.vue";
 import BottomBar from "@/components/BottomBar.vue";
-import { reactive, ref } from "vue";
+import { nextTick, reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import SchoolSelectBar from "@/components/SchoolSelectBar.vue";
 import MasonryFrame from "@/pages/community/MasonryFrame.vue";
@@ -46,58 +46,19 @@ import Cards from "@/pages/community/cards/cards.vue";
 import CarouselFrame from "@/pages/community/CarouselFrame.vue";
 import CarouselTest from "@/pages/community/CarouselTest.vue";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
-import { listCommunity } from "@/apis/community/community";
-import { Community } from "@/apis/schemas";
 import { StorageKeys } from "@/utils/const";
-
-uni.setStorageSync(StorageKeys.SearchText, "");
-
-uni.setStorageSync(StorageKeys.IsClickCollectionSearch, false);
-
-const currentSchool = ref("");
-const currentCampus = ref("");
-const communityId = ref("");
-const parentId = ref("");
+import { needChooseCommunity } from "@/utils/init";
+import { Pages } from "@/utils/url";
+const communityId = ref(uni.getStorageSync(StorageKeys.CommunityId));
 const cardList = reactive(["", "", "", "", "", ""]);
 
-function init() {
-  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
-}
-
-const lists = reactive<{
-  data: Community[];
-}>({
-  data: []
-});
-
-async function schoolList() {
-  lists.data = (await listCommunity({})).communities;
-}
-
-async function getCampus() {
-  await schoolList();
-  init();
-  for (let i = 0; i < lists.data.length; i++) {
-    if (lists.data[i].id === communityId.value) {
-      currentCampus.value = lists.data[i].name;
-      parentId.value = <string>lists.data[i].parentId;
-    }
-  }
-  for (let j = 0; j < lists.data.length; j++) {
-    if (lists.data[j].id === parentId.value) {
-      currentSchool.value = lists.data[j].name;
-    }
-  }
-}
-
-const isRefreshing = ref(false);
+const isRefreshing = ref(true);
 
 function pageRefresh() {
   isRefreshing.value = true;
-  setTimeout(() => {
+  nextTick(() => {
     isRefreshing.value = false;
-  }, 1);
-  getCampus();
+  });
 }
 
 onPullDownRefresh(() => {
@@ -106,9 +67,13 @@ onPullDownRefresh(() => {
 });
 
 onLoad(() => {
+  if (needChooseCommunity.value) {
+    uni.navigateTo({ url: Pages.SchoolSelect });
+  }
   uni.showLoading({
     title: "加载中"
   });
+  isRefreshing.value = false;
 });
 
 onReady(() => {
@@ -116,12 +81,11 @@ onReady(() => {
 });
 
 onShow(() => {
-  getCampus();
-  // getHistories();
   if (
     !communityId.value ||
-    communityId.value != uni.getStorageSync(StorageKeys.CommunityId)
+    communityId.value !== uni.getStorageSync(StorageKeys.CommunityId)
   ) {
+    communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
     pageRefresh();
   }
 });

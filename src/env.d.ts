@@ -14,6 +14,7 @@ declare module "*.vue" {
 interface ImportMetaEnv extends Readonly<Record<string, string>> {
   readonly VITE_BASIC_URL: string;
   readonly VITE_NAME: string;
+  readonly VITE_ENABLE_DEBUG: boolean;
 }
 
 interface ImportMeta {

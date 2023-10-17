@@ -3,7 +3,7 @@
     <template #center>修改个人资料</template>
   </TopBar>
   <view class="container">
-    <image :src="Pictures.ProfileBackground" class="bg-set" />
+    <view class="bg-set" />
     <view class="choose-avatar-row">
       <button
         class="avatar-wrapper"
@@ -111,6 +111,7 @@ function formSubmit(e: any) {
 }
 
 .bg-set {
+  background-color: #fafcff;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -201,13 +202,16 @@ function formSubmit(e: any) {
   margin-left: 30rpx;
   font-size: 30rpx;
   width: 92%;
+  border: 5rpx solid #f1f1f1;
+  border-radius: 25rpx;
   font-size: 30rpx;
   display: flex;
-  background-color: #f8f8f8;
+  background-color: #fafcff;
 }
 
 .textarea-inherit {
   margin-left: 30rpx;
+  margin-top: 30rpx;
   font-size: 32rpx;
   width: 92%;
   overflow: auto;

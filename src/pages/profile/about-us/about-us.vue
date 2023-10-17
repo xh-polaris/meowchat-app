@@ -1,9 +1,6 @@
 <template>
   <view class="container">
-    <image
-      class="bg-set"
-      src="https://static.xhpolaris.com/profile_background.png"
-    />
+    <view class="bg-set" />
     <view class="title"> 欢迎来到喵世界，喵~</view>
     <view class="app-intro">
       华师喵世界是一款致力于校园猫咪保护和管理的小程序，我们希望通过图鉴的方式让大家更直观的了解学校里的猫咪，并鼓励大家为喜欢的猫咪拍下属于ta的美好时刻，希望每一只猫猫都可以被友好对待！
@@ -47,16 +44,20 @@
 import { reactive } from "vue";
 import { Notice } from "@/apis/schemas";
 import { getNotices } from "@/apis/notice/notice";
+import { StorageKeys } from "@/utils/const";
 
 const versionInformation = reactive<Notice[]>([]);
-getNotices().then((res) => {
-  versionInformation.push(...res.notices);
-});
+getNotices({ communityId: uni.getStorageSync(StorageKeys.CommunityId) }).then(
+  (res) => {
+    versionInformation.push(...res.notices);
+  }
+);
 </script>
 
 <style lang="scss" scoped>
 .bg-set {
   position: fixed;
+  background-color: #fafcff;
   width: 100%;
   height: 100%;
   top: 0;

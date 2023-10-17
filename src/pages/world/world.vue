@@ -14,32 +14,19 @@
     <template #center>喵世界</template>
   </TopBar>
   <view class="navbar">
-    <view :class="types[0].className" @click.prevent="types[0].onClick">
-      {{ types[0].name }}
-    </view>
-    |
-    <view :class="types[1].className" @click.prevent="types[1].onClick">
-      {{ types[1].name }}
-    </view>
-    |
-    <view :class="types[2].className" @click.prevent="types[2].onClick">
-      {{ types[2].name }}
-    </view>
-    |
-    <view :class="types[3].className" @click.prevent="types[3].onClick">
-      {{ types[3].name }}
-    </view>
+    <template v-for="(tab, index) of tabs" :key="tab.name">
+      {{ index !== 0 ? "|" : null }}
+      <view :class="tab.className" @click.prevent="tab.onClick">
+        {{ tab.name }}
+      </view>
+    </template>
     <view class="search" @click.prevent="search" />
   </view>
 
   <view class="blue-background">
     <view class="top-padding" />
 
-    <WorldPosts
-      v-if="!isRefreshing"
-      :only-official="onlyOfficial"
-      search="default"
-    />
+    <WorldPosts v-if="!isRefreshing" :only-official="onlyOfficial" />
     <view class="empty-bottom"></view>
   </view>
 
@@ -48,19 +35,27 @@
 
 <script lang="ts" setup>
 import BottomBar from "@/components/BottomBar.vue";
-import { reactive, ref } from "vue";
+import { nextTick, reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import { onLoad, onPullDownRefresh, onReady } from "@dcloudio/uni-app";
 import { Icons, Pages } from "@/utils/url";
-import WorldPosts from "@/pages/world/world-posts.vue";
+import WorldPosts from "@/pages/world/WorldPosts.vue";
 import { search } from "./utils";
 import { StorageKeys } from "@/utils/const";
 
 //搜索界面需要用到的缓存
-uni.removeStorageSync(StorageKeys.Search);
-uni.setStorageSync(StorageKeys.IsClickSearch, false);
 const onlyOfficial = ref(false);
-const types = reactive([
+const tabs = reactive([
+  {
+    name: "最新",
+    isCurrent: true,
+    className: "navbtn current",
+    onClick: () => {
+      toggleSelf("最新");
+      onlyOfficial.value = false;
+      pageRefresh();
+    }
+  },
   {
     name: "官方",
     isCurrent: false,
@@ -70,46 +65,16 @@ const types = reactive([
       onlyOfficial.value = true;
       pageRefresh();
     }
-  },
-  {
-    name: "热度",
-    isCurrent: true,
-    className: "navbtn current",
-    onClick: () => {
-      toggleSelf("热度");
-      onlyOfficial.value = false;
-      pageRefresh();
-    }
-  },
-  {
-    name: "最新",
-    isCurrent: false,
-    className: "navbtn",
-    onClick: () => {
-      toggleSelf("最新");
-      onlyOfficial.value = false;
-      pageRefresh();
-    }
-  },
-  {
-    name: "关注",
-    isCurrent: false,
-    className: "navbtn",
-    onClick: () => {
-      toggleSelf("关注");
-      onlyOfficial.value = false;
-      pageRefresh();
-    }
   }
 ]);
 
 const toggleSelf = (name: string) => {
-  if (!types.filter((type) => type.name === name)[0].isCurrent) {
-    types.map((type) => {
+  if (!tabs.filter((type) => type.name === name)[0].isCurrent) {
+    tabs.map((type) => {
       type.isCurrent = false;
       type.className = "navbtn";
     });
-    const currentType = types.filter((type) => type.name === name)[0];
+    const currentType = tabs.filter((type) => type.name === name)[0];
     currentType.isCurrent = true;
     currentType.className = "navbtn current";
   }
@@ -119,9 +84,9 @@ const isRefreshing = ref(false);
 
 function pageRefresh() {
   isRefreshing.value = true;
-  setTimeout(() => {
+  nextTick(() => {
     isRefreshing.value = false;
-  }, 1);
+  });
 }
 
 onPullDownRefresh(() => {

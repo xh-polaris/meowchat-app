@@ -2,6 +2,7 @@ import {
   ListCommunityReq,
   ListCommunityResp
 } from "@/apis/community/community-interfaces";
+import { getPrefetchData } from "@/apis/prefetch";
 
 let cache: ListCommunityResp | null;
 
@@ -25,19 +26,30 @@ export async function listCommunity(req: ListCommunityReq) {
       return;
     }
 
-    uni.request({
-      url: "/community/list_community",
-      data: req,
-      method: "GET",
-      success(res: UniNamespace.RequestSuccessCallbackResult) {
-        if (res.statusCode !== 200) {
-          reject(res);
+    getPrefetchData()
+      .then((res) => {
+        if (!res.listCommunityResp) {
+          return Promise.reject();
         }
-        const data = res.data as ListCommunityResp;
-        cache = data;
-        resolve(data);
-      }
-    });
+        cache = res.listCommunityResp;
+        resolve(res.listCommunityResp);
+      })
+      .catch((reason) => {
+        console.log(reason);
+        uni.request({
+          url: "/community/list_community",
+          data: req,
+          method: "GET",
+          success(res: UniNamespace.RequestSuccessCallbackResult) {
+            if (res.statusCode !== 200) {
+              reject(res);
+            }
+            const data = res.data as ListCommunityResp;
+            cache = data;
+            resolve(data);
+          }
+        });
+      });
   });
 }
 

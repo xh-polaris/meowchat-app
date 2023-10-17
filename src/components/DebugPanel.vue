@@ -57,6 +57,8 @@ import { Pages } from "@/utils/url";
 import { BackendEnv, StorageKeys } from "@/utils/const";
 
 const reboot = () => {
+  uni.removeStorageSync(StorageKeys.UserId);
+  uni.removeStorageSync(StorageKeys.AccessToken);
   uni.reLaunch({
     url: Pages.FirstPage
   });

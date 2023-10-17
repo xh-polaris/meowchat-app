@@ -12,7 +12,7 @@
         <MyMasonry :type="props.type" :user-id="props.userId"></MyMasonry>
       </view>
       <view v-if="current === 1">
-        <my-posts :type="props.type" :user-id="props.userId"></my-posts>
+        <MyPosts :type="props.type" :user-id="props.userId"></MyPosts>
       </view>
       <view v-if="current === 2">
         <MyMasonry :user-id="props.userId" type="liked"></MyMasonry>

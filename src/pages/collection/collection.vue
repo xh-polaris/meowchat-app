@@ -15,7 +15,7 @@
     >
       <input v-model="searchText" maxlength="20" placeholder="搜索猫咪" />
       <image
-        src="/static/images/search.png"
+        :src="Icons.Search"
         style="width: 60rpx; height: 60rpx"
         @click="onClickSearch"
       />
@@ -48,33 +48,22 @@
       </view>
     </view>
     <template v-if="!isRefreshing">
-      <SearchCats
-        v-if="isClickCollectionSearch"
-        :keyword="searchText"
-        choose="detail"
-        search="cat"
-      ></SearchCats>
-      <search-cats
-        v-if="!isClickCollectionSearch"
-        choose="detail"
-        search="default"
-      ></search-cats>
+      <SearchCats :keyword="searchText" choose="detail"></SearchCats>
     </template>
   </view>
-  <view class="empty-bottom"></view>
   <BottomBar id="collection"></BottomBar>
 </template>
 
 <script lang="ts" setup>
 import BottomBar from "@/components/BottomBar.vue";
 import { Icons, Pages } from "@/utils/url";
-import { reactive, ref } from "vue";
+import { nextTick, reactive, ref } from "vue";
 import { StorageKeys } from "@/utils/const";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import { Community } from "@/apis/schemas";
 import { listCommunity } from "@/apis/community/community";
 import TopBar from "@/components/TopBar.vue";
-import SearchCats from "@/pages/search/search-cats.vue";
+import SearchCats from "@/pages/search/SearchCats.vue";
 
 const switchText = ref("\u00A0 切换学校");
 const currentSchool = ref("");
@@ -82,17 +71,6 @@ const currentCampus = ref("");
 let communityId = ref("");
 let parentId = ref("");
 let searchText = ref("");
-
-/**
- * isClickSearch为false时显示所有猫咪
- * 为true时显示搜索猫咪
- */
-let isClickCollectionSearch = ref(false);
-
-searchText.value = uni.getStorageSync(StorageKeys.SearchText);
-isClickCollectionSearch.value = uni.getStorageSync(
-  StorageKeys.IsClickCollectionSearch
-);
 
 function init() {
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
@@ -105,12 +83,6 @@ const lists = reactive<{ data: Community[] }>({ data: [] });
 const campuses = reactive<{ data: Community[] }>({ data: [] });
 
 function onClickSearch() {
-  isClickCollectionSearch.value = searchText.value !== "";
-  uni.setStorageSync(StorageKeys.SearchText, searchText.value);
-  uni.setStorageSync(
-    StorageKeys.IsClickCollectionSearch,
-    isClickCollectionSearch.value
-  );
   refresh();
 }
 
@@ -148,11 +120,11 @@ onPullDownRefresh(() => {
 });
 
 function refresh() {
-  setTimeout(function () {
-    uni.stopPullDownRefresh();
-    isRefreshing.value = false;
-  }, 1);
   isRefreshing.value = true;
+  nextTick(() => {
+    isRefreshing.value = false;
+  });
+  uni.stopPullDownRefresh();
 }
 
 function setBranch(e: string, index: number) {
@@ -182,8 +154,6 @@ onShow(() => {
     getCampus();
     refresh();
   }
-  isClickCollectionSearch.value = false;
-  searchText.value = "";
 });
 </script>
 
@@ -205,6 +175,7 @@ onShow(() => {
   display: flex;
   flex-direction: column;
   width: 100vw;
+  height: 100vh;
 }
 
 .switch {

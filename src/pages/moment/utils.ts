@@ -1,11 +1,10 @@
-import { DoLikeReq, GetCountReq } from "@/apis/like/like-interface";
-import { doLike, getCount, getUserLiked } from "@/apis/like/like";
+import { doLike } from "@/apis/like/like";
 import {
   GetCommentsReq,
   NewCommentReq
 } from "@/apis/comment/comment-interfaces";
 import { getComments, newComment } from "@/apis/comment/comment";
-import { TargetType } from "@/apis/schemas";
+import { Comment, Moment, TargetType } from "@/apis/schemas";
 
 export const enterReply = uni.createAnimation({
   transformOrigin: "50% 50%",
@@ -26,62 +25,58 @@ export interface LikeStruct {
   isLike: boolean;
 }
 
-export const getLikeData = async (likeReq: GetCountReq) => {
-  const count = (await getCount(likeReq)).count;
-  const isLike = (await getUserLiked(likeReq)).liked;
-  return {
-    count: count || 0,
-    isLike: isLike || false
-  };
+export const likeMoment = async (item: Moment) => {
+  doLike({ targetId: item.id, targetType: TargetType.Moment }).then(() => {
+    if (item.isLiked) {
+      item.likeCount--;
+    } else {
+      item.likeCount++;
+    }
+    item.isLiked = !item.isLiked;
+  });
 };
 
-export const localDoLike = async (req: DoLikeReq) => {
-  await doLike(req);
-  return await getLikeData(req);
+export const likeComment = async (item: Comment) => {
+  doLike({ targetId: item.id, targetType: TargetType.Comment }).then(() => {
+    if (item.isLiked) {
+      item.likeCount--;
+    } else {
+      item.likeCount++;
+    }
+    item.isLiked = !item.isLiked;
+  });
 };
 
 export const getCommentsData = async (req: GetCommentsReq) => {
   const commentsTemp = (await getComments(req)).comments;
-  const likeDataTemp = [];
-  if (commentsTemp?.length > 0) {
-    for (let i = 0; i < commentsTemp.length; i++) {
-      likeDataTemp.push(
-        await getLikeData({
-          targetId: commentsTemp[i].id,
-          targetType: TargetType.Comment
-        })
-      );
-    }
-  }
-  return { data: commentsTemp, likeData: likeDataTemp };
+  return { data: commentsTemp };
 };
 
 export const createComment = async (req: NewCommentReq) => {
-  if (req.text !== "") {
-    newComment(req)
-      .then((res) => {
-        uni.showToast({
-          title: res.msg
-        });
-        return true;
-      })
-      .catch((reason) => {
-        const code = reason.data.Code;
-        if (code === 10001) {
-          uni.showToast({
-            title: "文本含不合法内容",
-            icon: "none"
-          });
-        } else {
-          uni.showToast({
-            title: "评论失败",
-            icon: "none"
-          });
-        }
-        return false;
-      });
+  if (req.text === "") {
+    return false;
   }
-  return false;
+  try {
+    await newComment(req);
+  } catch (reason: any) {
+    const code = reason.data.Code;
+    if (code === 10001) {
+      uni.showToast({
+        title: "文本含敏感内容",
+        icon: "none"
+      });
+    } else {
+      uni.showToast({
+        title: "评论失败",
+        icon: "none"
+      });
+    }
+    return false;
+  }
+  uni.showToast({
+    title: "评论成功"
+  });
+  return true;
 };
 
 export function onClickImage(index: string, photo: Array<string>) {

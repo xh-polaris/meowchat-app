@@ -21,22 +21,19 @@
               <view class="lower">{{ mainComment.text }}</view>
             </view>
             <view class="right">
-              <view class="likes-frame" @click="mainCommentDoLike">
-                <view
-                  v-if="mainCommentLikeData.isLike"
-                  class="thumb liked"
-                ></view>
+              <view class="likes-frame" @click="likeComment(mainComment)">
+                <view v-if="mainComment.isLiked" class="thumb liked"></view>
                 <view v-else class="thumb"></view>
-                <view class="likes">{{ mainCommentLikeData.count }}</view>
+                <view class="likes">{{ mainComment.likeCount }}</view>
               </view>
             </view>
           </view>
         </view>
       </view>
-      <view v-for="(item, index) in comments.data" :key="index" class="reply">
+      <view v-for="(comment, index) in comments" :key="index" class="reply">
         <view
           :style="{
-            backgroundImage: 'url( ' + item.user.avatarUrl + ')'
+            backgroundImage: 'url( ' + comment.user.avatarUrl + ')'
           }"
           class="avatar"
           style="margin-left: calc(42 / 390 * 100vw)"
@@ -45,21 +42,18 @@
           <view class="content">
             <view class="left">
               <view class="upper">
-                <view class="username">{{ item.user.nickname }}</view>
+                <view class="username">{{ comment.user.nickname }}</view>
                 <view class="timestamp"
-                  >· {{ displayTime(item.createAt) }}
+                  >· {{ displayTime(comment.createAt) }}
                 </view>
               </view>
-              <view class="lower">{{ item.text }}</view>
+              <view class="lower">{{ comment.text }}</view>
             </view>
-            <view v-if="comments.likeData[index]" class="right">
-              <view class="likes-frame" @click="asyncReplyDoLike(index)">
-                <view
-                  v-if="comments.likeData[index].isLike"
-                  class="thumb liked"
-                ></view>
+            <view v-if="comment.likeCount >= 0" class="right">
+              <view class="likes-frame" @click="likeComment(comment)">
+                <view v-if="comment.isLiked" class="thumb liked"></view>
                 <view v-else class="thumb"></view>
-                <view class="likes">{{ comments.likeData[index].count }}</view>
+                <view class="likes">{{ comment.likeCount }}</view>
               </view>
             </view>
           </view>
@@ -70,29 +64,18 @@
 </template>
 
 <script lang="ts" setup>
-import { Comment, TargetType } from "@/apis/schemas";
+import { Comment } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
-import { onBeforeUnmount, reactive, toRefs } from "vue";
-import { getCommentsData, LikeStruct } from "@/pages/moment/utils";
+import { ref } from "vue";
+import { getCommentsData, likeComment } from "@/pages/moment/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
-import { doLike } from "@/apis/like/like";
+import { CommentType } from "@/apis/comment/comment-interfaces";
 
 const props = defineProps<{
   mainComment: Comment;
-  likeData: LikeStruct;
 }>();
 
-const mainCommentLikeData = {
-  ...toRefs(props.likeData)
-};
-
-const comments = reactive<{
-  data: Comment[];
-  likeData: LikeStruct[];
-}>({
-  data: [],
-  likeData: []
-});
+const comments = ref<Comment[]>([]);
 
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
@@ -101,45 +84,16 @@ const localGetCommentsData = async () => {
   isCommentsLoaded = false;
   getCommentsData({
     id: props.mainComment.id,
-    scope: "comment",
+    type: CommentType.Comment,
     page: page
   }).then((res) => {
     for (let i = 0; i < res.data.length; i++) {
-      comments.data.push(res.data[i]);
-      comments.likeData.push(res.likeData[i]);
+      comments.value.push(res.data[i]);
     }
     isCommentsLoaded = true;
     page += 1;
     if (res.data.length < 10) allCommentsLoaded = true;
   });
-};
-
-const mainCommentDoLike = async () => {
-  // 延迟到reply父组件中提交，这里只emit
-  emits("updateLikeData");
-};
-
-// also see post.vue/moment.vue
-const replyDoLikeMap = new Map<string, number>();
-const asyncReplyDoLike = (index: number) => {
-  if (replyDoLikeMap.has(comments.data[index].id)) {
-    replyDoLikeMap.delete(comments.data[index].id);
-  } else {
-    replyDoLikeMap.set(comments.data[index].id, index);
-  }
-  if (comments.likeData[index].isLike) {
-    comments.likeData[index].count--;
-  } else {
-    comments.likeData[index].count++;
-  }
-  comments.likeData[index].isLike = !comments.likeData[index].isLike;
-};
-const replyDoLike = async (id: string) => {
-  const likeReq = {
-    targetId: id,
-    targetType: TargetType.Comment
-  };
-  await doLike(likeReq);
 };
 
 localGetCommentsData();
@@ -150,19 +104,11 @@ onReachBottom(() => {
   }
 });
 
-const emits = defineEmits(["closeReply", "updateLikeData"]);
+const emits = defineEmits(["closeReply"]);
 
 function closeSelf() {
   emits("closeReply");
 }
-
-onBeforeUnmount(() => {
-  Promise.all(
-    Array.from(replyDoLikeMap.keys()).map((id) => replyDoLike(id))
-  ).finally(() => {
-    replyDoLikeMap.clear();
-  });
-});
 </script>
 
 <style lang="scss" scoped>

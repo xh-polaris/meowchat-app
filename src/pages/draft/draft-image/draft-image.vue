@@ -1,8 +1,11 @@
 <template>
+  <TopBar :has-go-back="true" :has-shadow="false" bg-color="#ffffff">
+    <template #center>上传猫片</template>
+  </TopBar>
   <view class="all">
     <view class="main">
       <view class="images">
-        <template v-for="(image, index) in imagesData" :key="image.id">
+        <template v-for="(image, index) of imagesData" :key="image.id">
           <view
             :style="{ backgroundImage: 'url(' + image.url + ')' }"
             class="added-image"
@@ -31,45 +34,34 @@
           />
         </template>
       </view>
-      <button :disabled="disablePublish" class="publish" @click="createImage">
-        上传至照片墙
-      </button>
-      <view class="notice">
-        发布前请先阅读
-        <view class="nobody-will-read" @click="showDeal">
-          《用户服务协议》
-        </view>
-        及
-        <view class="nobody-will-read" @click="showPolicy">
-          《个人信息保护政策》
-        </view>
-        ，一旦发布即被视为同意上述协议和政策
-      </view>
+      <BottomPanel
+        :can-publish="!disablePublish"
+        text="发布动态"
+        @publish="createImage"
+      ></BottomPanel>
     </view>
   </view>
-  <deal v-if="isShow && type === 1"></deal>
-  <policy v-if="isShow && type === 2"></policy>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
-import Deal from "@/components/deal-policy/deal.vue";
-import Policy from "@/components/deal-policy/policy.vue";
 import { CatImage } from "@/apis/collection/collection-interfaces";
 import { CreateImage } from "@/apis/collection/collection";
 import { Pages } from "@/utils/url";
 import { onClickImage } from "@/pages/cat/utils";
+import TopBar from "@/components/TopBar.vue";
+import BottomPanel from "@/pages/draft/BottomPanel.vue";
 
 const props = defineProps<{
   catId: string;
   catName: string;
 }>();
-const imagesData = reactive<any>([]);
+const imagesData = reactive<any[]>([]);
 
 const disablePublish = ref(false);
 
-const photos = reactive<any>([]);
+const photos = reactive<any[]>([]);
 
 function addImage() {
   disablePublish.value = true;
@@ -87,7 +79,8 @@ function addImage() {
           url: path
         });
         putObject({
-          filePath: path
+          filePath: path,
+          prefix: `cat/${props.catId}/photo_wall`
         }).then(function (url) {
           const catImage = reactive<CatImage>({
             catId: props.catId,
@@ -112,6 +105,13 @@ function addImage() {
 }
 
 function createImage() {
+  if (!photos.length) {
+    uni.showToast({
+      title: "至少上传一张图片哦",
+      icon: "none"
+    });
+    return;
+  }
   CreateImage({
     images: photos
   }).then(() => {
@@ -132,7 +132,6 @@ const type = ref(0);
 function showDeal() {
   type.value = 1;
   isShow.value = !isShow.value;
-  console.log(isShow.value);
 }
 
 function showPolicy() {
