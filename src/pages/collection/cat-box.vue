@@ -8,8 +8,6 @@
         <view class="info">出没地区： {{ cat.area }}</view>
       </view>
     </view>
-    <!--    <view v-if="cat.isCollected" class="star collected"></view>-->
-    <!--    <view v-else class="star"></view>-->
   </view>
 </template>
 

@@ -51,6 +51,7 @@
       <SearchCats :keyword="searchText" choose="detail"></SearchCats>
     </template>
   </view>
+
   <BottomBar id="collection"></BottomBar>
 </template>
 
@@ -175,7 +176,7 @@ onShow(() => {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 100vh;
+  height: 81vh;
 }
 
 .switch {

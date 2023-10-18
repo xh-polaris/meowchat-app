@@ -1,16 +1,15 @@
 <template>
-  <template v-if="catsData">
-    <view v-if="catsData">
-      <view v-for="cat of catsData" :key="cat.id">
-        <view @click="onClickCatBox(cat.avatarUrl, cat.name, cat.id)">
-          <cat-box :cat="cat" />
-        </view>
+  <view v-if="catsData.length" style="padding-bottom: 10rpx">
+    <view v-for="cat of catsData" :key="cat.id">
+      <view @click="onClickCatBox(cat.avatarUrl, cat.name, cat.id)">
+        <cat-box :cat="cat" />
       </view>
     </view>
-    <view v-if="catsData.length === 0" class="no-cat-here-frame">
-      <image :src="Pictures.NoCatHere" class="no-cat-here" />
-    </view>
-  </template>
+  </view>
+  <view v-else class="no-cat-here-frame">
+    <image :src="Pictures.NoCatHere" class="no-cat-here" />
+  </view>
+  <view style="height: 18vw"></view>
 </template>
 
 <script lang="ts" setup>
