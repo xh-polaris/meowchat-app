@@ -1,5 +1,12 @@
 
 
+## [1.18.3](https://github.com/xh-polaris/meowchat-app/compare/v1.18.2...v1.18.3) (2023-10-18)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复图鉴底部显示问题 ([d813deb](https://github.com/xh-polaris/meowchat-app/commit/d813deb7e69c80dff9d9c42d3a580a0625e31704))
+
 ## [1.18.2](https://github.com/xh-polaris/meowchat-app/compare/v1.18.1...v1.18.2) (2023-10-17)
 
 
