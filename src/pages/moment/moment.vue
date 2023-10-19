@@ -339,6 +339,7 @@ function leaveReply() {
 }
 
 .container {
+  height: 100vh;
   padding: 20px 15px;
   background-color: #fafcff;
 
