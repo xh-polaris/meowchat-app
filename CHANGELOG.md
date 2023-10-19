@@ -1,5 +1,12 @@
 
 
+## [1.18.4](https://github.com/xh-polaris/meowchat-app/compare/v1.18.3...v1.18.4) (2023-10-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复动态详情背景未占满全屏的问题 ([d88d4a1](https://github.com/xh-polaris/meowchat-app/commit/d88d4a16f4b223697f27662c0c2a394dcbb986ae))
+
 ## [1.18.3](https://github.com/xh-polaris/meowchat-app/compare/v1.18.2...v1.18.3) (2023-10-18)
 
 
