@@ -8,15 +8,17 @@
   </TopBar>
 
   <view class="background">
-    <view v-if="!isRefreshing">
-      <CarouselTest />
-    </view>
-
-    <CollectionEntry></CollectionEntry>
+    <!--    <view v-if="!isRefreshing">-->
+    <!--      <CarouselTest />-->
+    <!--    </view>-->
 
     <view v-if="!isRefreshing">
       <CarouselFrame />
     </view>
+
+    <view style="height: 2vw"></view>
+
+    <CollectionEntry></CollectionEntry>
 
     <!--cards是未使用的功能，暂时不管-->
     <view v-if="false">
