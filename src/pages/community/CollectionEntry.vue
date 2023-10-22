@@ -1,14 +1,13 @@
 <template>
   <div class="image-container">
-    <div class="cam">
+    <div class="background">
       <navigator open-type="switchTab" url="/pages/collection/collection">
-        <img :src="Icons.View" class="overlay-image view" />
+        <image :src="Icons.Cam" mode="scaleToFill" class="background-image" />
       </navigator>
     </div>
-
-    <div class="view">
+    <div class="button">
       <navigator open-type="switchTab" url="/pages/collection/collection">
-        <img :src="Icons.Cam" class="overlay-image cam" />
+        <image :src="Icons.View" mode="scaleToFill" class="button-image" />
       </navigator>
     </div>
   </div>
@@ -20,28 +19,31 @@ import { Icons } from "@/utils/url";
 
 <style scoped lang="scss">
 .image-container {
+  margin-left: 3vw;
   position: relative;
-  width: 90vw;
-  height: 40vw;
-
-  .overlay-image {
+  width: 94vw;
+  height: 18vw;
+  .background {
     position: absolute;
-    width: 90vw;
+    left: 0;
+    top: 0;
+    width: 94vw;
     height: 18vw;
-
-    &.cam {
-      top: 16vw;
-      left: 5vw;
-      width: 90vw;
-      z-index: 1;
+    .background-image {
+      width: 94vw;
+      height: 18vw;
     }
-
-    &.view {
-      top: 21vw;
-      left: 68vw;
-      width: 23vw;
-      z-index: 2;
-      height: 8.2vw;
+  }
+  .button {
+    position: absolute;
+    right: 3vw;
+    top: 5vw;
+    width: 26vw;
+    height: 8vw;
+    z-index: 10;
+    .button-image {
+      width: 26vw;
+      height: 8vw;
     }
   }
 }
