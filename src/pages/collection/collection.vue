@@ -1,5 +1,5 @@
 <template>
-  <TopBar>
+  <TopBar :has-go-back="true">
     <template #center>猫咪图鉴</template>
   </TopBar>
   <view class="content">
@@ -51,8 +51,6 @@
       <SearchCats :keyword="searchText" choose="detail"></SearchCats>
     </template>
   </view>
-
-  <BottomBar id="collection"></BottomBar>
 </template>
 
 <script lang="ts" setup>

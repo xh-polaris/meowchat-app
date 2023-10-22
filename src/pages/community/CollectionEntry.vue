@@ -1,12 +1,12 @@
 <template>
   <div class="image-container">
     <div class="background">
-      <navigator open-type="switchTab" url="/pages/collection/collection">
+      <navigator open-type="redirect" url="/pages/collection/collection">
         <image :src="Icons.Cam" mode="scaleToFill" class="background-image" />
       </navigator>
     </div>
     <div class="button">
-      <navigator open-type="switchTab" url="/pages/collection/collection">
+      <navigator open-type="redirect" url="/pages/collection/collection">
         <image :src="Icons.View" mode="scaleToFill" class="button-image" />
       </navigator>
     </div>
