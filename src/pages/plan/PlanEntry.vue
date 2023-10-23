@@ -1,7 +1,7 @@
 <template>
   <view class="">
     <uni-card :cover="cover" class="fa_card" @click="onClick">
-      <image slot="cover" :src="cover"></image>
+      <!--      <image slot="cover" :src="cover"></image>-->
       <image class="tagImage" :src="add"></image>
       <uni-card class="ch_card">
         <text class="card_title">
@@ -71,4 +71,3 @@ const percent_input = 50;
   }
 }
 </style>
-
