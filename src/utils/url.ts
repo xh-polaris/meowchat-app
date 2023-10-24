@@ -20,7 +20,7 @@ export const enum Icons {
   Tag = "/static/images/tag.png",
   Cam = "/static/images/campus_cat.png",
   View = "/static/images/view_the_illustration.png",
-  Health = "/static/images/cat-health.png"
+  Plan_PlanTag = "/static/images/plan/plan_tag.png"
 }
 
 export const enum Pages {
