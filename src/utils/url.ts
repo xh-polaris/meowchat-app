@@ -19,7 +19,8 @@ export const enum Icons {
   Cancel = "/static/images/cancel.png",
   Tag = "/static/images/tag.png",
   Cam = "/static/images/campus_cat.png",
-  View = "/static/images/view_the_illustration.png"
+  View = "/static/images/view_the_illustration.png",
+  Health = "/static/images/cat-health.png"
 }
 
 export const enum Pages {
