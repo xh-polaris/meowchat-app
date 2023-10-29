@@ -1,11 +1,13 @@
 <template>
-  <TopBar>
-    <template #center>喵世界</template>
-  </TopBar>
-  <GoToMyPlans></GoToMyPlans>
-  <Card></Card>
-  <Card2></Card2>
-  <!--  <PlanEntry></PlanEntry>-->
+  <view class="background">
+    <!--上面空白高度还要改动-->
+    <view style="height: 24vw"></view>
+    <GoToMyPlans></GoToMyPlans>
+    <Card></Card>
+    <Card2></Card2>
+    <!--  <PlanEntry></PlanEntry>-->
+  </view>
+
   <BottomBar id="plan"></BottomBar>
 </template>
 
@@ -18,4 +20,9 @@ import Card2 from "@/pages/plan/Card2.vue";
 import PlanEntry from "@/pages/plan/PlanEntry.vue";
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.background {
+  background-color: #f4f9ff;
+  min-height: 90vh;
+}
+</style>

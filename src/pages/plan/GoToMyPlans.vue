@@ -12,7 +12,7 @@ import { Icons } from "@/utils/url";
 
 <style scoped lang="scss">
 .goToMyPlans {
-  border-radius: 6vw;
+  border-radius: 2vw;
   margin: 2.5vw;
   height: 12vw;
   background-color: #feffff;
