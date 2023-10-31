@@ -141,6 +141,30 @@ export interface Moment {
   isLiked: boolean;
 }
 
+export const enum PlanType {
+  feed = 0,
+  castrate,
+  heel,
+}
+
+export interface Plan {
+  id: string;
+  name: string;
+  catId: string;
+  imageUrls: string[];
+  description: string;
+  /**
+   * 枚举类型 0:feed 1:castrate 2:heal
+   */
+  planType: PlanType;
+  initiatorIds: User[];
+  startTime: number;
+  endTime: number;
+  createAt: number;
+  maxFish: number;
+  nowFish: number;
+}
+
 export const enum TargetType {
   Post = 1,
   Comment,
@@ -149,3 +173,4 @@ export const enum TargetType {
   Cat_Photo,
   User
 }
+
