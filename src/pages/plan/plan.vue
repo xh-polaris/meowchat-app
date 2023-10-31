@@ -10,7 +10,7 @@
       <GoToMyPlans></GoToMyPlans>
       <FishAmount></FishAmount>
     </view>
-    <PlanEntry></PlanEntry>
+    <PlanEntries></PlanEntries>
   </view>
 
   <BottomBar id="plan"></BottomBar>
@@ -19,8 +19,9 @@
 <script setup lang="ts">
 import BottomBar from "@/components/BottomBar.vue";
 import GoToMyPlans from "@/pages/plan/GoToMyPlans.vue";
-import PlanEntry from "@/pages/plan/PlanEntry.vue";
+
 import FishAmount from "@/pages/plan/FishAmount.vue";
+import PlanEntries from "@/pages/plan/PlanEntries.vue";
 </script>
 
 <style scoped lang="scss">
