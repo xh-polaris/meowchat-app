@@ -43,8 +43,9 @@ const props = withDefaults(defineProps<Props>(), {
   hasGoBack: false
 });
 const goBack = () => {
-  let pages = getCurrentPages(); // 当前页面
-  let beforePage = pages[pages.length - 2]; // 上一页
+  // let pages = getCurrentPages(); // 当前页面
+  // let beforePage = pages[pages.length - 2]; // 上一页
+  // console.log(pages);
   uni.navigateBack({
     success: function () {
       // beforePage.onLoad(); // 执行上一页的onLoad方法
