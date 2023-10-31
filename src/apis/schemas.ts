@@ -144,7 +144,7 @@ export interface Moment {
 export const enum PlanType {
   feed = 0,
   castrate,
-  heel,
+  heel
 }
 
 export interface Plan {
@@ -173,4 +173,3 @@ export const enum TargetType {
   Cat_Photo,
   User
 }
-
