@@ -22,7 +22,9 @@ export const enum Icons {
   View = "/static/images/view_the_illustration.png",
   Plan_PlanTag = "/static/images/plan/plan_tag.png",
   GoToPath_Tag = "/static/images/plan/GoToPath_heart_tag.png",
-  GoToArrow = "/static/images/plan/GoToPath_right_arrow.png"
+  GoToArrow = "/static/images/plan/GoToPath_right_arrow.png",
+  CatExample = "/static/images/cat-example.png",
+  LittleFish = "/static/images/Little_Fish.png"
 }
 
 export const enum Pages {
