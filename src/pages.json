@@ -41,6 +41,15 @@
       }
     },
     {
+      "path": "pages/plan/helped-plans",
+      "style": {
+        "navigationBarTitleText": "我助力过的小鱼干计划",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 150
+      }
+    },
+    {
       "path": "pages/profile/profile",
       "style": {
         "navigationBarTitleText": "个人中心",

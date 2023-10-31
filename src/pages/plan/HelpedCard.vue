@@ -22,7 +22,7 @@ import { Icons } from "@/utils/url";
   border-radius: 3vw;
   width: 44vw;
   height: 52vw;
-  margin: 10px;
+  margin: 0 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 2vw;
   box-sizing: border-box;
