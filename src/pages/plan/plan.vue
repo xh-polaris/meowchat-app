@@ -4,7 +4,7 @@
     <view style="height: 24vw"></view>
     <GoToMyPlans></GoToMyPlans>
     <Card></Card>
-    <Card2></Card2>
+    <HelpedCard></HelpedCard>
     <!--  <PlanEntry></PlanEntry>-->
   </view>
 
@@ -16,8 +16,8 @@ import TopBar from "@/components/TopBar.vue";
 import BottomBar from "@/components/BottomBar.vue";
 import GoToMyPlans from "@/pages/plan/GoToMyPlans.vue";
 import Card from "@/pages/plan/Card.vue";
-import Card2 from "@/pages/plan/Card2.vue";
 import PlanEntry from "@/pages/plan/PlanEntry.vue";
+import HelpedCard from "@/pages/plan/HelpedCard.vue";
 </script>
 
 <style scoped lang="scss">
