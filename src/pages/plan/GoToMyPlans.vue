@@ -1,7 +1,7 @@
 <template>
   <view class="goToMyPlans">
     <img :src="Icons.GoToPath_Tag" class="small-icon" />
-      <text class="goTo_text">已助力了8个计划</text>
+    <text class="goTo_text">已助力8个计划</text>
     <img :src="Icons.GoToArrow" class="arrow" />
   </view>
 </template>
@@ -18,7 +18,9 @@ import { Icons } from "@/utils/url";
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right: 3.5vw;
+  margin-right: 3vw;
+  justify-content: space-between;
+  width: 48vw;
 
   .small-icon {
     height: 7vw;
@@ -32,7 +34,7 @@ import { Icons } from "@/utils/url";
     font-size: 4vw;
     margin-right: 2vw;
     font-weight: bold;
-    letter-spacing: 0.3vw;
+    letter-spacing: 0.1vw;
   }
 
   .arrow {
