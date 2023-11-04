@@ -41,9 +41,18 @@
       }
     },
     {
-      "path": "pages/plan/helped-plans",
+      "path": "pages/plan/helped-plans/helped-plans",
       "style": {
         "navigationBarTitleText": "我助力过的小鱼干计划",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 150
+      }
+    },
+    {
+      "path": "pages/plan/plan-details/plan-details",
+      "style": {
+        "navigationBarTitleText": "小鱼干计划详情",
         "navigationStyle": "custom",
         "enablePullDownRefresh": true,
         "onReachBottomDistance": 150
