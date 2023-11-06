@@ -24,7 +24,9 @@ export const enum Icons {
   GoToPath_Tag = "/static/images/plan/GoToPath_heart_tag.png",
   GoToArrow = "/static/images/plan/GoToPath_right_arrow.png",
   CatExample = "/static/images/cat-example.png",
-  LittleFish = "/static/images/Little_Fish.png"
+  LittleFish = "/static/images/Little_Fish.png",
+  Frame = "/static/images/Frame.png",
+  DialogBox = "/static/images/dialog-box.png"
 }
 
 export const enum Pages {
