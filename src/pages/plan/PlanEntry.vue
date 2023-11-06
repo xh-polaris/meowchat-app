@@ -1,37 +1,71 @@
 <template>
-  <view class="helping-card">
-    <view class="small-icon">
-      <img :src="Icons.Plan_PlanTag" class="plan-tag" />
-      <text class="content">生理健康</text>
-    </view>
-    <view class="help">
-      <text class="context">帮助猫咪进行绝育</text>
-    </view>
-    <view class="prograss-bar">
-      <view>
-        <view class="bar-content">
-          <text class="txt1">帮助</text>
-          <text class="helped-cat">怂怂</text>
-          <text class="txt2">完成绝育手术</text>
-        </view>
-        <progress
-          class="progress"
-          percent="68"
-          activeColor="#2073fb"
-          backgroundColor="e6e6e6"
-          stroke-width="6"
-          active="true"
-          border-radius="3"
-        />
-        <view class="fish-prograss">已获得68小鱼干助力，还需要32小鱼干</view>
+  <div v-if="props.plan == null">
+    <view class="helping-card">
+      <view class="small-icon">
+        <img :src="Icons.Plan_PlanTag" class="plan-tag" />
+        <text class="content">生理健康</text>
       </view>
-      <view class="help_but"> 去助力 </view>
+      <view class="help">
+        <text class="context">帮助猫咪进行绝育</text>
+      </view>
+      <view class="prograss-bar">
+        <view>
+          <view class="bar-content">
+            <text class="txt1">帮助</text>
+            <text class="helped-cat">怂怂</text>
+            <text class="txt2">完成绝育手术</text>
+          </view>
+          <progress class="progress" percent="68" activeColor="#2073fb" backgroundColor="e6e6e6" stroke-width="6"
+            active="true" border-radius="3" />
+          <view class="fish-prograss">已获得68小鱼干助力，还需要32小鱼干</view>
+        </view>
+        <view class="help_but"> 去助力 </view>
+      </view>
     </view>
-  </view>
+  </div>
+  <div v-else>
+    <view class="helping-card">
+      <view class="small-icon">
+        <img :src="Icons.Plan_PlanTag" class="plan-tag" />
+        <text class="content">{{ planTypeMap.get(props.plan.planType) }}</text>
+      </view>
+      <view class="help">
+        <text class="context">{{ props.plan.summary }}</text>
+      </view>
+      <view class="prograss-bar">
+        <view>
+          <view class="bar-content">
+            <text class="txt1">帮助</text>
+            <text class="helped-cat">{{ props.plan.catId }}</text>
+            <text class="txt2">完成绝育手术</text>
+          </view>
+          <progress class="progress" percent="68" activeColor="#2073fb" backgroundColor="e6e6e6" stroke-width="6"
+            active="true" border-radius="3" />
+          <view class="fish-prograss">已获得{{ props.plan.nowFish }}小鱼干助力，还需要{{ props.plan.maxFish - props.plan.nowFish }}小鱼干
+          </view>
+        </view>
+        <view class="help_but"> 去助力 </view>
+      </view>
+    </view>
+
+  </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { Plan, PlanType } from "@/apis/schemas";
 import { Icons } from "@/utils/url";
+
+const props = defineProps<{
+  plan: Plan;
+}>();
+
+const planTypeMap = new Map<PlanType, string>([
+  [PlanType.feed, "零食奖励"],
+  [PlanType.castrate, "生理健康"],
+  [PlanType.heel, "治愈"]
+]);
+
 </script>
 
 <style scoped lang="scss">
@@ -44,14 +78,17 @@ import { Icons } from "@/utils/url";
   background-color: #a2a4a7;
   display: flex;
   flex-direction: column;
+
   .small-icon {
     transform: translateY(3vw);
+
     .plan-tag {
       position: absolute;
       top: 0;
       height: 8vw;
       width: 28vw;
     }
+
     .content {
       position: absolute;
       color: #ffffff;
@@ -62,11 +99,13 @@ import { Icons } from "@/utils/url";
       top: 1vw;
     }
   }
+
   .help {
     display: flex;
     flex-direction: column;
     margin-top: 28vw;
     margin-left: 4vw;
+
     .context {
       color: #ffffff;
       font-size: 5vw;
@@ -74,6 +113,7 @@ import { Icons } from "@/utils/url";
       letter-spacing: 0.5vw;
     }
   }
+
   .prograss-bar {
     display: flex;
     flex-direction: column;
@@ -84,9 +124,11 @@ import { Icons } from "@/utils/url";
     height: 20vw;
     margin-top: 2vw;
     position: relative;
+
     .bar-content {
       display: flex;
       flex-direction: row;
+
       .txt1 {
         margin-left: 3vw;
         margin-top: 1vw;
@@ -94,6 +136,7 @@ import { Icons } from "@/utils/url";
         font-size: 4.5vw;
         font-weight: bold;
       }
+
       .txt2 {
         margin-left: 0.1vw;
         margin-top: 1vw;
@@ -101,6 +144,7 @@ import { Icons } from "@/utils/url";
         font-size: 4.5vw;
         font-weight: bold;
       }
+
       .helped-cat {
         margin-left: 0.1vw;
         margin-top: 1vw;
@@ -109,6 +153,7 @@ import { Icons } from "@/utils/url";
         font-weight: bold;
       }
     }
+
     .progress {
       margin-top: 2vw;
       margin-left: 3vw;
@@ -116,6 +161,7 @@ import { Icons } from "@/utils/url";
       z-index: 1;
       width: 55vw;
     }
+
     .help_but {
       background-color: #1f6bff;
       color: #ffffff;
@@ -132,6 +178,7 @@ import { Icons } from "@/utils/url";
       margin-left: 65vw;
       top: 6vw;
     }
+
     .fish-prograss {
       color: #aeaeae;
       font-size: 3vw;
