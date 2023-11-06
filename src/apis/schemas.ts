@@ -150,7 +150,7 @@ export const enum PlanType {
 export const enum PlanState {
   raising = 0,
   raised = 1,
-  finished = 2,
+  finished = 2
 }
 
 export interface Plan {
@@ -178,7 +178,6 @@ export interface Plan {
   summary: string;
   [property: string]: any;
 }
-
 
 export const enum TargetType {
   Post = 1,

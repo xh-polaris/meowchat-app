@@ -1,6 +1,6 @@
 <template>
   <view class="frame">
-    <img :src="Icons.LittleFish" class="small-icon"/>
+    <img :src="Icons.LittleFish" class="small-icon" />
     <text class="text"
       >剩余<text style="color: dodgerblue">13</text>小鱼干</text
     >
@@ -14,7 +14,6 @@ import { Icons } from "@/utils/url";
 <style scoped lang="scss">
 .frame {
   border-radius: 2vw;
-  height: 12vw;
   background-color: #feffff;
   display: flex;
   flex-direction: row;
