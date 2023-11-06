@@ -1,6 +1,10 @@
 <template>
   <PlanEntry :plan="null"></PlanEntry>
-  <PlanEntry v-for="(plan, index) in plans" :plan="plan"></PlanEntry>
+  <PlanEntry
+    v-for="(plan, index) in plans"
+    :key="index"
+    :plan="plan"
+  ></PlanEntry>
 </template>
 
 <script lang="ts" setup>
@@ -11,8 +15,8 @@ import PlanEntry from "@/pages/plan/PlanEntry.vue";
 import { ref, reactive } from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
 const getPlanPreviewsReq = reactive<GetPlanPreviewsReq>({
-  page: 0,
-})
+  page: 0
+});
 
 let allPreviewsLoaded = false;
 let isPreviewsLoaded = true;
@@ -20,7 +24,7 @@ let isPreviewsLoaded = true;
 const plans = ref<Plan[]>([]);
 
 const localGetPlanPreviews = async () => {
-  let res = await getPlanPreviews(getPlanPreviewsReq)
+  let res = await getPlanPreviews(getPlanPreviewsReq);
   isPreviewsLoaded = false;
   for (let i = 0; i < res?.total; i++) {
     plans.value.push(res.plans[i]);
@@ -30,14 +34,13 @@ const localGetPlanPreviews = async () => {
   if (res?.total < 10) {
     allPreviewsLoaded = true;
   }
-}
+};
 localGetPlanPreviews();
 onReachBottom(() => {
   if (isPreviewsLoaded && !allPreviewsLoaded) {
     localGetPlanPreviews();
   }
 });
-
 </script>
 
 <style scoped lang="scss"></style>
