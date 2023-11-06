@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import TopBar from "@/components/TopBar.vue";
-import HelpedCard from "@/pages/plan/helped-plans/HelpedCard.vue";
+import HelpedCard from "@/pages/plan/HelpedCard.vue";
 //到时候background的min高度还要修
 </script>
 
