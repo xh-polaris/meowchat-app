@@ -19,6 +19,7 @@ import { Icons } from "@/utils/url";
   flex-direction: row;
   align-items: center;
   width: 44vw;
+  height: 12vw;
 
   .small-icon {
     height: 7vw;
