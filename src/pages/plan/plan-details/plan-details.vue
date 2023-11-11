@@ -4,6 +4,7 @@
   </TopBar>
   <view class="background">
     <Cards></Cards>
+    <view style="height: 20vw"></view>
   </view>
   <BottomBar></BottomBar>
 </template>

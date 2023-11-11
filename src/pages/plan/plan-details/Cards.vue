@@ -1,80 +1,80 @@
 <template>
-    <div class="card1">
-        <div class="title">
-            帮助<text style="color: #1f5eff">怂怂</text>完成绝育手术
-            <img :src="Icons.State_Frame" class="state-frame" />
-            <view class="state">募集中</view>
-        </div>
-
-        <div class="category">
-            <view class="category-style">
-                <text class="category-content">生理健康</text>
-            </view>
-            <view class="category-style">
-                <text class="category-content">绝育手术</text>
-            </view>
-        </div>
-
-        <div class="content">
-            具体说明小鱼干计划的详情介绍，如生病时介绍病情。
-            具体说明小鱼干计划的详情介绍，如生病时介绍病情。具体说明小鱼干计划的详情介绍，如生病时介绍病情。
-        </div>
+  <div class="card1">
+    <div class="title">
+      帮助<text style="color: #1f5eff">怂怂</text>完成绝育手术
+      <img :src="Icons.State_Frame" class="state-frame" />
+      <view class="state">募集中</view>
     </div>
 
-    <div class="card2">
-        <div class="title-target">
-            <text class="target">目标小鱼干： 100</text>
-            <img :src="Icons.LittleFish" class="small-icon" />
-        </div>
-
-        <view class="time">募集时间： 2023/11/03-2023/12/03</view>
-
-        <div class="dialog-box">
-            <img :src="Icons.DialogBox" class="box" />
-            <view class="dialog-content">
-                还差<text style="color: blue">32</text>小鱼干
-            </view>
-        </div>
-
-        <view class="progress-box">
-            <view class="progress" :style="{ width: pogressWitdh + '%' }"></view>
-        </view>
-
-        <view class="implication">已获得68小鱼干助力，还需要32小鱼干</view>
+    <div class="category">
+      <view class="category-style">
+        <text class="category-content">生理健康</text>
+      </view>
+      <view class="category-style">
+        <text class="category-content">绝育手术</text>
+      </view>
     </div>
 
-    <div class="card3">
-        <view>
-            <text class="card3-title">执行说明</text>
-            <text class="card3-state">已完成</text>
-        </view>
-        <br />
-        <text class="card3-details">执行时间：2023年12月15日起</text>
-        <br />
-        <text class="card3-details">执行地点：猫猫狗狗宠物医院</text>
-        <br />
-        <text class="card3-details">执行人员：华东师范大学动物保护社团成员</text>
+    <div class="content">
+      具体说明小鱼干计划的详情介绍，如生病时介绍病情。
+      具体说明小鱼干计划的详情介绍，如生病时介绍病情。具体说明小鱼干计划的详情介绍，如生病时介绍病情。
+    </div>
+  </div>
+
+  <div class="card2">
+    <div class="title-target">
+      <text class="target">目标小鱼干： 100</text>
+      <img :src="Icons.LittleFish" class="small-icon" />
     </div>
 
-    <div class="card4">
-        <view>
-            <text class="card4-title">任务返图</text>
-            <text class="page">1/5</text>
-        </view>
+    <view class="time">募集时间： 2023/11/03-2023/12/03</view>
 
-        <div class="pic-example">
-            <img :src="Icons.Task_Pic" class="task-pic" />
-            <img :src="Icons.Pic_Left" class="pic-left" />
-            <img :src="Icons.Pic_Right" class="pic-right" />
-        </div>
+    <div class="dialog-box">
+      <img :src="Icons.DialogBox" class="box" />
+      <view class="dialog-content">
+        还差<text style="color: blue">32</text>小鱼干
+      </view>
     </div>
 
-    <div class="card5">
-        <view class="card5-title">任务总结</view>
-        <view class="card5-content">
-            完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。
-        </view>
+    <view class="progress-box">
+      <view class="progress" :style="{ width: pogressWitdh + '%' }"></view>
+    </view>
+
+    <view class="implication">已获得68小鱼干助力，还需要32小鱼干</view>
+  </div>
+
+  <div class="card3">
+    <view>
+      <text class="card3-title">执行说明</text>
+      <text class="card3-state">已完成</text>
+    </view>
+    <br />
+    <text class="card3-details">执行时间：2023年12月15日起</text>
+    <br />
+    <text class="card3-details">执行地点：猫猫狗狗宠物医院</text>
+    <br />
+    <text class="card3-details">执行人员：华东师范大学动物保护社团成员</text>
+  </div>
+
+  <div class="card4">
+    <view>
+      <text class="card4-title">任务返图</text>
+      <text class="page">1/5</text>
+    </view>
+
+    <div class="pic-example">
+      <img :src="Icons.Task_Pic" class="task-pic" />
+      <img :src="Icons.Pic_Left" class="pic-left" />
+      <img :src="Icons.Pic_Right" class="pic-right" />
     </div>
+  </div>
+
+  <div class="card5">
+    <view class="card5-title">任务总结</view>
+    <view class="card5-content">
+      完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。
+    </view>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -143,7 +143,7 @@ import { Icons } from "@/utils/url";
       background-clip: padding-box, border-box;
       background-origin: padding-box, border-box;
       background-image: linear-gradient(to right, #fff, #fff),
-      linear-gradient(to right, #0000ff, #1e90ff);
+        linear-gradient(to right, #0000ff, #1e90ff);
     }
 
     .category-content {
