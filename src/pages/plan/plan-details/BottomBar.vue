@@ -22,17 +22,17 @@ function onHelpClick() {
     align-items: center;
     justify-content: center;
     bottom: 0;
-    background-color: #1e97ff;
-    width: 50vw;
-    height: 10vw;
+    background: linear-gradient(to bottom, #1da0ff, #1f6bff);
+    width: 55vw;
+    height: 11vw;
     border-radius: 10vw;
-    margin-left: 25vw;
+    margin-left: 22.5vw;
     margin-top: 2vw;
     .help-text {
       text-align: center;
-      font-weight: bold;
-      font-size: 4.5vw;
-      letter-spacing: 0.5vw;
+      font-weight: bolder;
+      font-size: 4.8vw;
+      letter-spacing: 0.4vw;
       color: #ffffff;
     }
   }
