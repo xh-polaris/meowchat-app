@@ -26,7 +26,11 @@ export const enum Icons {
   CatExample = "/static/images/cat-example.png",
   LittleFish = "/static/images/Little_Fish.png",
   Frame = "/static/images/Frame.png",
-  DialogBox = "/static/images/dialog-box.png"
+  DialogBox = "/static/images/dialog-box.png",
+  State_Frame = "/static/images/state-frame.png",
+  Task_Pic = "/static/images/task-pic.png",
+  Pic_Left = "/static/images/pic-left.png",
+  Pic_Right = "/static/images/pic-right.png"
 }
 
 export const enum Pages {
