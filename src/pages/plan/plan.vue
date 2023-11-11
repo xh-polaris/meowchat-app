@@ -3,9 +3,6 @@
     <!--上面空白高度还要改动-->
 
     <view style="height: 24vw"></view>
-    <navigator url="/pages/plan/helped-plans/helped-plans">
-      进入helped-plans的测试入口
-    </navigator>
     <navigator url="/pages/plan/plan-details/plan-details">
       进入plan-details的测试入口
     </navigator>

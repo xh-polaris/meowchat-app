@@ -10,7 +10,6 @@
 import { Icons } from "@/utils/url";
 
 const goToHelpedPlans = () => {
-  console.log("go to helped plans");
   uni.navigateTo({
     url: "/pages/plan/helped-plans/helped-plans"
   });
