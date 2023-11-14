@@ -56,6 +56,7 @@ const refresh = async () => {
   userInfo.following = res.user.following;
   userInfo.article = res.user.article;
 };
+
 onShow(refresh);
 onPullDownRefresh(() => {
   refresh().then(() => {
@@ -65,39 +66,37 @@ onPullDownRefresh(() => {
 </script>
 
 <style lang="scss" scoped>
-.fot-xh .pic {
-  float: left;
-  height: 160rpx;
-  width: 160rpx;
-  margin-right: 50rpx;
-  margin-left: 38rpx;
-  margin-top: 60rpx;
-}
-
-.fot-xh .txt {
-  overflow: hidden;
-  font-family: sans-serif;
-}
-
-.fot-xh .txt .info {
-  margin-top: 70rpx;
-  position: absolute;
-  display: block;
-}
-
-.fot-xh .txt .info .nickname {
-  height: 30rpx;
-  width: 600rpx;
-  font-size: 40rpx;
-  margin-bottom: 30rpx;
-  font-weight: bold;
-}
-
-.fot-xh .txt .info .motto {
-  height: 34rpx;
-  width: 348rpx;
-  font-size: 24rpx;
-  color: #939393;
-  margin-bottom: 10rpx;
+.fot-xh {
+  .pic {
+    float: left;
+    height: 160rpx;
+    width: 160rpx;
+    margin-right: 50rpx;
+    margin-left: 38rpx;
+    margin-top: 60rpx;
+  }
+  .txt {
+    overflow: hidden;
+    font-family: sans-serif;
+    .info {
+      margin-top: 70rpx;
+      position: absolute;
+      display: block;
+      .nickname {
+        height: 30rpx;
+        width: 600rpx;
+        font-size: 40rpx;
+        margin-bottom: 30rpx;
+        font-weight: bold;
+      }
+      .motto {
+        height: 34rpx;
+        width: 348rpx;
+        font-size: 24rpx;
+        color: #939393;
+        margin-bottom: 10rpx;
+      }
+    }
+  }
 }
 </style>

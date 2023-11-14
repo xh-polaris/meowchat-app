@@ -8,7 +8,9 @@
 
     <div class="category">
       <view class="category-style">
-        <text class="category-content">{{ planTypeMap(props.plan.planType) }}</text>
+        <text class="category-content">{{
+          planTypeMap(props.plan.planType)
+        }}</text>
       </view>
       <view class="category-style">
         <text class="category-content">{{ props.plan.name }}</text>
@@ -33,21 +35,35 @@
     <div class="dialog-box">
       <img :src="Icons.DialogBox" class="box" />
       <view class="dialog-content">
-        还差<text style="color: blue">{{ props.plan.maxFish - props.plan.nowFish }}</text>小鱼干
+        还差<text style="color: blue">{{
+          props.plan.maxFish - props.plan.nowFish
+        }}</text
+        >小鱼干
       </view>
     </div>
 
     <view class="progress-box">
-      <view class="progress" :style="{ width: props.plan.nowFish / props.plan.maxFish + '%' }"></view>
+      <view
+        class="progress"
+        :style="{ width: props.plan.nowFish / props.plan.maxFish + '%' }"
+      ></view>
     </view>
 
-    <view class="implication">已获得{{ props.plan.nowFish }}小鱼干助力，还需要{{ props.plan.maxFish - props.plan.nowFish }}小鱼干</view>
+    <view class="implication"
+      >已获得{{ props.plan.nowFish }}小鱼干助力，还需要{{
+        props.plan.maxFish - props.plan.nowFish
+      }}小鱼干</view
+    >
   </div>
 
   <div class="card3">
     <view>
       <text class="card3-title">执行说明</text>
-      <text class="card3-state" v-if="props.plan.planState === PlanState.StateComplete">已完成</text>
+      <text
+        v-if="props.plan.planState === PlanState.StateComplete"
+        class="card3-state"
+        >已完成</text
+      >
     </view>
     <br />
     <text class="card3-details">执行时间：{{ executionDetails.time }}</text>
@@ -87,29 +103,33 @@ const props = defineProps<{
   plan: Plan;
 }>();
 
-const executionDetails = ref<{ time: string, location: string, executor: string }>({
+const executionDetails = ref<{
+  time: string;
+  location: string;
+  executor: string;
+}>({
   time: "1",
   location: "2",
   executor: "3"
-})
+});
 
 const executionParse = (str: string) => {
-  const words = str.split('\n');
+  const words = str.split("\n");
   if (words.length === 3) {
     executionDetails.value = {
       time: words[0],
       location: words[1],
-      executor: words[2],
-    }
+      executor: words[2]
+    };
   }
-}
+};
 
 const init = () => {
-  executionParse(props.plan.instruction)
-  console.log(props.plan)
-}
+  executionParse(props.plan.instruction);
+  console.log(props.plan);
+};
 
-init()
+init();
 </script>
 
 <style scoped lang="scss">

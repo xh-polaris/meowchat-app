@@ -7,6 +7,9 @@
   <!--  </uni-nav-bar>-->
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
+    <view class="app-version" @click="clickAppVersion">{{
+      clickedTimes < 5 ? appVersion : "ID: " + user.id
+    }}</view>
     <UserInfo type="my"></UserInfo>
     <!-- 功能栏 -->
     <view class="com-item">
@@ -87,6 +90,7 @@ const enableDebug = uni.getStorageSync(StorageKeys.EnabledDebug);
 
 const refresh = async () => {
   const res = await getUserInfo({});
+  user.id = res.user.id;
   user.nickname = res.user.nickname;
   user.avatarUrl = res.user.avatarUrl;
   user.motto;
@@ -94,6 +98,15 @@ const refresh = async () => {
   user.follower = res.user.follower || 0;
   user.following = res.user.following || 0;
 };
+const clickedTimes = ref(0);
+const clickAppVersion = () => {
+  clickedTimes.value++;
+};
+const accountInfo = uni.getAccountInfoSync();
+const appVersion = accountInfo.version
+  ? "version: " + accountInfo.version
+  : "version: 1.18.0";
+
 onShow(refresh);
 onPullDownRefresh(() => {
   refresh().then(() => {
@@ -153,6 +166,18 @@ onReady(() => {
 
 <style lang="scss" scoped>
 @import "@/common/search-input.scss";
+
+.container {
+  position: relative;
+  .app-version {
+    position: absolute;
+    right: 4vw;
+    top: 24vw;
+    user-select: text;
+    font-size: 3vw;
+    color: #8a8a8a;
+  }
+}
 
 .wrap {
   margin-top: 20rpx;
