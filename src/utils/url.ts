@@ -21,6 +21,7 @@ export const enum Icons {
   Cam = "/static/images/campus_cat.png",
   View = "/static/images/view_the_illustration.png",
   Plan_PlanTag = "/static/images/plan/plan_tag.png",
+  Plan_Logo = "/static/images/plan/plan_logo.png",
   GoToPath_Tag = "/static/images/plan/GoToPath_heart_tag.png",
   GoToArrow = "/static/images/plan/GoToPath_right_arrow.png",
   CatExample = "/static/images/cat-example.png",

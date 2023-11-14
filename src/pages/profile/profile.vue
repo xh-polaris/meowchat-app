@@ -171,8 +171,8 @@ onReady(() => {
   position: relative;
   .app-version {
     position: absolute;
-    right: 4vw;
-    top: 24vw;
+    right: 5vw;
+    top: 25vw;
     user-select: text;
     font-size: 3vw;
     color: #8a8a8a;

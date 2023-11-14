@@ -2,13 +2,23 @@
   <view class="frame">
     <img :src="Icons.LittleFish" class="small-icon" />
     <text class="text"
-      >剩余<text style="color: dodgerblue">13</text>小鱼干</text
+      >剩余<text style="color: dodgerblue">{{ fishNum }}</text
+      >小鱼干</text
     >
   </view>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { Icons } from "@/utils/url";
+import { getUserFish } from "@/apis/plan/plan";
+
+const fishNum = ref(0);
+const getFishNum = async () => {
+  const data = await getUserFish({});
+  fishNum.value = data.fish;
+};
+getFishNum();
 </script>
 
 <style scoped lang="scss">

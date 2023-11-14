@@ -53,7 +53,7 @@
         </view>
         <progress
           class="progress"
-          percent="68"
+          :percent="(100 * props.plan.nowFish) / props.plan.maxFish"
           activeColor="#2073fb"
           backgroundColor="e6e6e6"
           stroke-width="6"

@@ -26,11 +26,9 @@ const plans = ref<Plan[]>([]);
 const localGetPlanPreviews = async () => {
   let res = await getPlanPreviews(getPlanPreviewsReq);
   isPreviewsLoaded = false;
-  console.log(res);
   for (let i = 0; i < res?.total; i++) {
     plans.value.push(res.plans[i]);
   }
-  console.log(plans.value);
   isPreviewsLoaded = true;
   getPlanPreviewsReq.page += 1;
   if (res?.total < 10) {

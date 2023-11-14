@@ -1,7 +1,7 @@
 <template>
   <div class="card1">
     <div class="title">
-      帮助<text style="color: #1f5eff">怂怂</text>{{ props.plan.name }}
+      帮助<text style="color: #1f5eff">匿名喵</text>{{ props.plan.name }}
       <img :src="Icons.State_Frame" class="state-frame" />
       <view class="state">{{ planStateMap(props.plan.planState) }}</view>
     </div>
@@ -19,8 +19,6 @@
 
     <div class="content">
       {{ props.plan.description }}
-      具体说明小鱼干计划的详情介绍，如生病时介绍病情。
-      具体说明小鱼干计划的详情介绍，如生病时介绍病情。具体说明小鱼干计划的详情介绍，如生病时介绍病情。
     </div>
   </div>
 
@@ -30,7 +28,9 @@
       <img :src="Icons.LittleFish" class="small-icon" />
     </div>
 
-    <view class="time">募集时间： 2023/11/03-2023/12/03</view>
+    <view class="time"
+      >募集时间： {{ props.plan.startTime }}-{{ props.plan.endTime }}</view
+    >
 
     <div class="dialog-box">
       <img :src="Icons.DialogBox" class="box" />
@@ -45,7 +45,9 @@
     <view class="progress-box">
       <view
         class="progress"
-        :style="{ width: props.plan.nowFish / props.plan.maxFish + '%' }"
+        :style="{
+          width: (83 * props.plan.nowFish) / props.plan.maxFish + 'vw'
+        }"
       ></view>
     </view>
 
@@ -262,11 +264,11 @@ init();
   .dialog-box {
     margin-bottom: 0;
     position: relative;
+    margin-left: 4vw;
 
     .box {
       width: 35vw;
       height: 12vw;
-      margin-left: 38vw;
       z-index: 0;
       margin-top: -2vw;
     }
@@ -276,9 +278,9 @@ init();
       font-weight: bold;
       letter-spacing: 0.4vw;
       z-index: 1;
-      margin-left: 42vw;
       position: relative;
       top: -11.5vw;
+      margin-left: 3vw;
     }
   }
 
