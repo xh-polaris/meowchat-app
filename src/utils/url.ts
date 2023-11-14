@@ -35,6 +35,7 @@ export const enum Icons {
 
 export const enum Pages {
   Plan = "/pages/plan/plan",
+  PlanDetails = "/pages/plan/plan-details/plan-details",
   FirstPage = "/pages/first-page/first-page",
   Cat = "/pages/cat/cat",
   Post = "/pages/post/post",

@@ -1,10 +1,6 @@
 <template>
   <!--  <PlanEntry :plan="null"></PlanEntry>-->
-  <PlanEntry
-    v-for="(plan, index) in plans"
-    :key="index"
-    :plan="plan"
-  ></PlanEntry>
+  <PlanEntry v-for="(plan, index) in plans" :key="index" :plan="plan"></PlanEntry>
 </template>
 
 <script lang="ts" setup>

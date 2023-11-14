@@ -142,15 +142,17 @@ export interface Moment {
 }
 
 export const enum PlanType {
-  feed = 0,
-  castrate,
-  heel
+  TypeOther = 0,
+  TypeCastrate = 1,
+  TypeHeal = 2,
+  TypeFeed = 3
 }
 
 export const enum PlanState {
-  raising = 0,
-  raised = 1,
-  finished = 2
+  StateUnknown = 0,
+  StateFunding = 1,
+  StateDoing = 2,
+  StateComplete = 3
 }
 
 export interface Plan {

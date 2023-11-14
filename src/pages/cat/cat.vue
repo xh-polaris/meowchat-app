@@ -1,11 +1,6 @@
 <template>
   <view v-if="!isRefreshing">
-    <image
-      :src="mainImgUrl"
-      class="cat-image"
-      mode="aspectFill"
-      @click="onClickAvatar(mainImgUrl, cat.avatars)"
-    />
+    <image :src="mainImgUrl" class="cat-image" mode="aspectFill" @click="onClickAvatar(mainImgUrl, cat.avatars)" />
     <view class="goBackButton" @click="goBack">
       <view class="left-arrow"></view>
     </view>
@@ -70,7 +65,7 @@ const goBack = () => {
   let beforePage = pages[pages.length - 2]; // 上一页
   uni.navigateBack({
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    success: function () {}
+    success: function () { }
   });
 };
 const getCatDetailHandler = () => {

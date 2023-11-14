@@ -1,23 +1,56 @@
 <template>
-  <TopBar :has-go-back="true">
-    <template #left>小鱼干计划详情</template>
-  </TopBar>
+  <BackgroundImage :url="plan?.coverUrl" :urls="[plan?.coverUrl]"></BackgroundImage>
+  <BackButton></BackButton>
   <view class="background">
-    <Cards></Cards>
+    <template v-if="isInited">
+      <Cards :plan="plan"></Cards>
+    </template>
     <view style="height: 20vw"></view>
   </view>
   <BottomBar></BottomBar>
 </template>
 
 <script setup lang="ts">
-import TopBar from "@/components/TopBar.vue";
+import { reactive, ref } from "vue";
 import Cards from "@/pages/plan/plan-details/Cards.vue";
 import BottomBar from "@/pages/plan/plan-details/BottomBar.vue";
+import BackButton from "@/components/BackButton.vue"
+import { GetPlanDetailReq } from "@/apis/plan/plan-interfaces";
+import { Plan } from "@/apis/schemas";
+import { getPlanDetail } from "@/apis/plan/plan";
+import BackgroundImage from "@/components/BackgroundImage.vue";
+
+const props = defineProps<{
+  id: string;
+}>();
+
+const getPlanDetailReq = reactive<GetPlanDetailReq>({
+  planId: props.id
+});
+const plan = ref<Plan>();
+
+let isInited = ref<boolean>(false);
+
+const getData = async () => {
+  plan.value = (await getPlanDetail(getPlanDetailReq)).plan;
+  isInited.value = true;
+};
+
+getData()
 </script>
 
 <style scoped lang="scss">
 .background {
+  margin-top: 60vw;
   background-color: #f6f6f6;
   min-height: 80vh;
+}
+
+.cat-image {
+  position: fixed;
+  width: 100vw;
+  height: 68vw;
+  z-index: -1;
+  top: 0;
 }
 </style>

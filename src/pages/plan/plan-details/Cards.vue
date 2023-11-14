@@ -1,21 +1,22 @@
 <template>
   <div class="card1">
     <div class="title">
-      帮助<text style="color: #1f5eff">怂怂</text>完成绝育手术
+      帮助<text style="color: #1f5eff">怂怂</text>{{ props.plan.name }}
       <img :src="Icons.State_Frame" class="state-frame" />
-      <view class="state">募集中</view>
+      <view class="state">{{ planStateMap(props.plan.planState) }}</view>
     </div>
 
     <div class="category">
       <view class="category-style">
-        <text class="category-content">生理健康</text>
+        <text class="category-content">{{ planTypeMap(props.plan.planType) }}</text>
       </view>
       <view class="category-style">
-        <text class="category-content">绝育手术</text>
+        <text class="category-content">{{ props.plan.name }}</text>
       </view>
     </div>
 
     <div class="content">
+      {{ props.plan.description }}
       具体说明小鱼干计划的详情介绍，如生病时介绍病情。
       具体说明小鱼干计划的详情介绍，如生病时介绍病情。具体说明小鱼干计划的详情介绍，如生病时介绍病情。
     </div>
@@ -23,7 +24,7 @@
 
   <div class="card2">
     <div class="title-target">
-      <text class="target">目标小鱼干： 100</text>
+      <text class="target">目标小鱼干： {{ props.plan.maxFish }}</text>
       <img :src="Icons.LittleFish" class="small-icon" />
     </div>
 
@@ -32,28 +33,28 @@
     <div class="dialog-box">
       <img :src="Icons.DialogBox" class="box" />
       <view class="dialog-content">
-        还差<text style="color: blue">32</text>小鱼干
+        还差<text style="color: blue">{{ props.plan.maxFish - props.plan.nowFish }}</text>小鱼干
       </view>
     </div>
 
     <view class="progress-box">
-      <view class="progress" :style="{ width: pogressWitdh + '%' }"></view>
+      <view class="progress" :style="{ width: props.plan.nowFish / props.plan.maxFish + '%' }"></view>
     </view>
 
-    <view class="implication">已获得68小鱼干助力，还需要32小鱼干</view>
+    <view class="implication">已获得{{ props.plan.nowFish }}小鱼干助力，还需要{{ props.plan.maxFish - props.plan.nowFish }}小鱼干</view>
   </div>
 
   <div class="card3">
     <view>
       <text class="card3-title">执行说明</text>
-      <text class="card3-state">已完成</text>
+      <text class="card3-state" v-if="props.plan.planState === PlanState.StateComplete">已完成</text>
     </view>
     <br />
-    <text class="card3-details">执行时间：2023年12月15日起</text>
+    <text class="card3-details">执行时间：{{ executionDetails.time }}</text>
     <br />
-    <text class="card3-details">执行地点：猫猫狗狗宠物医院</text>
+    <text class="card3-details">执行地点：{{ executionDetails.location }}</text>
     <br />
-    <text class="card3-details">执行人员：华东师范大学动物保护社团成员</text>
+    <text class="card3-details">执行人员：{{ executionDetails.executor }}</text>
   </div>
 
   <div class="card4">
@@ -72,13 +73,43 @@
   <div class="card5">
     <view class="card5-title">任务总结</view>
     <view class="card5-content">
-      完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。完成计划后需要上传总结。
+      {{ props.plan.summary }}
     </view>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Plan, PlanState } from "@/apis/schemas";
 import { Icons } from "@/utils/url";
+import { planTypeMap, planStateMap } from "@/pages/plan/utils";
+import { reactive, ref } from "vue";
+const props = defineProps<{
+  plan: Plan;
+}>();
+
+const executionDetails = ref<{ time: string, location: string, executor: string }>({
+  time: "1",
+  location: "2",
+  executor: "3"
+})
+
+const executionParse = (str: string) => {
+  const words = str.split('\n');
+  if (words.length === 3) {
+    executionDetails.value = {
+      time: words[0],
+      location: words[1],
+      executor: words[2],
+    }
+  }
+}
+
+const init = () => {
+  executionParse(props.plan.instruction)
+  console.log(props.plan)
+}
+
+init()
 </script>
 
 <style scoped lang="scss">
