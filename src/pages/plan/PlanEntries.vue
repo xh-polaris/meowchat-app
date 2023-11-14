@@ -1,6 +1,10 @@
 <template>
   <!--  <PlanEntry :plan="null"></PlanEntry>-->
-  <PlanEntry v-for="(plan, index) in plans" :key="index" :plan="plan"></PlanEntry>
+  <PlanEntry
+    v-for="(plan, index) in plans"
+    :key="index"
+    :plan="plan"
+  ></PlanEntry>
 </template>
 
 <script lang="ts" setup>
@@ -22,9 +26,11 @@ const plans = ref<Plan[]>([]);
 const localGetPlanPreviews = async () => {
   let res = await getPlanPreviews(getPlanPreviewsReq);
   isPreviewsLoaded = false;
+  console.log(res);
   for (let i = 0; i < res?.total; i++) {
     plans.value.push(res.plans[i]);
   }
+  console.log(plans.value);
   isPreviewsLoaded = true;
   getPlanPreviewsReq.page += 1;
   if (res?.total < 10) {
