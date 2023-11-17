@@ -38,6 +38,7 @@
 </template>
 
 <script lang="ts" setup>
+import { userCheckIn } from "@/apis/user/user";
 import CollectionEntry from "@/pages/community/CollectionEntry.vue";
 import BottomBar from "@/components/BottomBar.vue";
 import { nextTick, reactive, ref } from "vue";
@@ -80,6 +81,12 @@ onLoad(() => {
 
 onReady(() => {
   uni.hideLoading();
+  //签到获取小鱼干
+  const checkIn = async () => {
+    const xxx = await userCheckIn();
+    console.log(xxx);
+  };
+  checkIn();
 });
 
 onShow(() => {

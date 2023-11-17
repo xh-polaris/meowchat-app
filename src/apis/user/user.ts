@@ -51,3 +51,19 @@ export async function updateUserInfo(req: UpdateUserInfoReq) {
     });
   });
 }
+
+export async function userCheckIn() {
+  return await new Promise<UpdateUserInfoResp>((resolve, reject) => {
+    uni.request({
+      url: "/user/check_in",
+      method: "GET",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as UpdateUserInfoResp;
+        resolve(data);
+      }
+    });
+  });
+}
