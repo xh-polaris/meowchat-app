@@ -1,19 +1,28 @@
 <template>
   <view class="goToMyPlans">
     <img :src="Icons.GoToPath_Tag" class="small-icon" />
-    <text class="goTo_text">已助力0个计划</text>
+    <text class="goTo_text">已助力{{ donateNum }}个计划</text>
     <!--    <img :src="Icons.GoToArrow" class="arrow" />-->
   </view>
 </template>
 
 <script setup lang="ts">
 import { Icons } from "@/utils/url";
-
+import { ref } from "vue";
 const goToHelpedPlans = () => {
   uni.navigateTo({
     url: "/pages/plan/helped-plans/helped-plans"
   });
 };
+import { getCountDonate, getUserFish } from "@/apis/plan/plan";
+const donateNum = ref(0);
+const getDonateCount = async () => {
+  const data = await getCountDonate({});
+  donateNum.value = data.total;
+  console.log(data.total);
+};
+
+getCountDonate();
 </script>
 
 <style scoped lang="scss">

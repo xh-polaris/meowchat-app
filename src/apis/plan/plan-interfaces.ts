@@ -72,3 +72,12 @@ export interface DonateFishReq {
   planId?: string;
   [property: string]: any;
 }
+
+export interface GetUserDonateCountReq {
+  userId?: string;
+  [property: string]: any;
+}
+export interface GetUserDonateCountResp {
+  total: string;
+  [property: string]: any;
+}

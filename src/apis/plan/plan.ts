@@ -5,6 +5,7 @@ import {
   GetPlanDetailResp,
   GetPlanPreviewsReq,
   GetPlanPreviewsResp,
+  GetUserDonateCountReq,
   GetUserFishReq,
   GetUserFishResp,
   ListFishByPlanReq,
@@ -125,6 +126,23 @@ export async function donateFish(req: DonateFishReq) {
           reject(res);
         }
         const data = res.data as object;
+        resolve(data);
+      }
+    });
+  });
+}
+
+export async function getCountDonate(req: GetUserDonateCountReq) {
+  return await new Promise<GetUserDonateCountReq>((resolve, reject) => {
+    uni.request({
+      url: "/plan/count_donate_by_user",
+      data: req,
+      method: "GET",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as GetUserDonateCountReq;
         resolve(data);
       }
     });
