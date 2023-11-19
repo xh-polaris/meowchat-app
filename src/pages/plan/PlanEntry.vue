@@ -1,36 +1,4 @@
 <template>
-  <!--  <div v-if="props.plan == null">-->
-  <!--    <view class="helping-card">-->
-  <!--      <view class="small-icon">-->
-  <!--        <img :src="Icons.Plan_PlanTag" class="plan-tag" />-->
-  <!--        <text class="content">生理健康</text>-->
-  <!--      </view>-->
-  <!--      <view class="help">-->
-  <!--        <text class="context">帮助猫咪进行绝育</text>-->
-  <!--      </view>-->
-  <!--      <view class="prograss-bar">-->
-  <!--        <view>-->
-  <!--          <view class="bar-content">-->
-  <!--            <text class="txt1">帮助</text>-->
-  <!--            <text class="helped-cat">怂怂</text>-->
-  <!--            <text class="txt2">完成绝育手术</text>-->
-  <!--          </view>-->
-  <!--          <progress-->
-  <!--            class="progress"-->
-  <!--            percent="68"-->
-  <!--            activeColor="#2073fb"-->
-  <!--            backgroundColor="e6e6e6"-->
-  <!--            stroke-width="6"-->
-  <!--            active="true"-->
-  <!--            border-radius="3"-->
-  <!--          />-->
-  <!--          <view class="fish-prograss">已获得68小鱼干助力，还需要32小鱼干</view>-->
-  <!--        </view>-->
-  <!--        <view class="help_but"> 去助力 </view>-->
-  <!--      </view>-->
-  <!--    </view>-->
-  <!--  </div>-->
-  <!--  <div v-else>-->
   <view
     class="helping-card"
     :style="`background-image: url('${props.plan.coverUrl}')`"
@@ -86,7 +54,8 @@ const props = defineProps<{
 <style scoped lang="scss">
 .helping-card {
   margin-left: 2.5vw;
-  margin-top: 3vw;
+  margin-top: 1vw;
+  margin-bottom: 2vw;
   border-radius: 2vw;
   width: 95vw;
   height: 60vw;

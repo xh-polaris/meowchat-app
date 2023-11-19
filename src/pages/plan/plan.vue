@@ -1,14 +1,32 @@
 <template>
   <view class="background">
     <!--上面空白高度还要改动-->
-    <view style="height: 15vw"></view>
-    <image :src="Icons.Plan_Logo" class="plan-logo"></image>
+    <!--    <view style="height: 15vw"></view>-->
+    <!--    <image :src="Icons.Plan_Logo" class="plan-logo"></image>-->
+    <TopBar bg-color="#f4f9ff" :has-shadow="false">
+      <template #left>
+        <image :src="Icons.Plan_Logo" class="plan-logo"></image>
+      </template>
+    </TopBar>
     <template v-if="!isRefreshing">
-      <view style="display: flex; margin-left: 2.5vw">
+      <view
+        style="
+          display: flex;
+          z-index: 100;
+          padding-left: 2.5vw;
+          position: fixed;
+          width: 100vw;
+          height: 16vw;
+          align-items: center;
+          background-color: #f4f9ff;
+        "
+      >
         <GoToMyPlans></GoToMyPlans>
         <FishAmount></FishAmount>
       </view>
+      <view style="height: 16vw"></view>
       <PlanEntries></PlanEntries>
+      <view style="height: 20vw"></view>
     </template>
   </view>
 
@@ -18,6 +36,7 @@
 <script setup lang="ts">
 import BottomBar from "@/components/BottomBar.vue";
 import GoToMyPlans from "@/pages/plan/GoToMyPlans.vue";
+import TopBar from "@/components/TopBar.vue";
 
 import FishAmount from "@/pages/plan/FishAmount.vue";
 import PlanEntries from "@/pages/plan/PlanEntries.vue";
@@ -45,8 +64,7 @@ onPullDownRefresh(() => {
   .plan-logo {
     width: 36vw;
     height: 4.5vw;
-    margin-left: 6vw;
-    margin-bottom: 4vw;
+    margin-left: 4vw;
   }
 }
 </style>

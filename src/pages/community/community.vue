@@ -47,7 +47,6 @@ import SchoolSelectBar from "@/components/SchoolSelectBar.vue";
 import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import Cards from "@/pages/community/cards/cards.vue";
 import CarouselFrame from "@/pages/community/CarouselFrame.vue";
-import CarouselTest from "@/pages/community/CarouselTest.vue";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import { StorageKeys } from "@/utils/const";
 import { needChooseCommunity } from "@/utils/init";

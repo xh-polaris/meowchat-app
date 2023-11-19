@@ -18,11 +18,11 @@ import { getCountDonate, getUserFish } from "@/apis/plan/plan";
 const donateNum = ref(0);
 const getDonateCount = async () => {
   const data = await getCountDonate({});
-  donateNum.value = data.total;
-  console.log(data.total);
+  if (data.total) {
+    donateNum.value = data.total;
+  }
 };
-
-getCountDonate();
+getDonateCount();
 </script>
 
 <style scoped lang="scss">
