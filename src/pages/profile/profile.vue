@@ -58,9 +58,9 @@
   </view>
   <UserPublished type="my"></UserPublished>
   <BottomBar id="profile"></BottomBar>
-  <template v-if="enableDebug">
-    <DebugPanel></DebugPanel>
-  </template>
+  <!--  <template v-if="enableDebug">-->
+  <!--    <DebugPanel></DebugPanel>-->
+  <!--  </template>-->
 </template>
 
 <script lang="ts" setup>
