@@ -1,5 +1,21 @@
 
 
+## [1.19.0](https://github.com/xh-polaris/meowchat-app/compare/v1.18.4...v1.19.0) (2023-11-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复首页跳转到图鉴页面无法返回的问题 ([fb50db4](https://github.com/xh-polaris/meowchat-app/commit/fb50db4f49965c3dc463f7987ff6397e54ed9af2))
+
+
+### ✨ Features | 新功能
+
+* 初步添加小鱼干计划预览界面接口 ([#7](https://github.com/xh-polaris/meowchat-app/issues/7)) ([8918a09](https://github.com/xh-polaris/meowchat-app/commit/8918a099c493b78fa4576e1cb7fb98e4dd7883ed))
+* 轮播组件 ([#384](https://github.com/xh-polaris/meowchat-app/issues/384)) ([7dd62ea](https://github.com/xh-polaris/meowchat-app/commit/7dd62ea12d42573948bf5c32ff413783a1406b58))
+* 设置小鱼干卡片跳转链接 ([#13](https://github.com/xh-polaris/meowchat-app/issues/13)) ([5d2b802](https://github.com/xh-polaris/meowchat-app/commit/5d2b802972c62589d06c3b52ad09116ad5ace9dd))
+* 实现用户签到获取小鱼干功能 ([9e3677e](https://github.com/xh-polaris/meowchat-app/commit/9e3677e8f77c82d1bc4ecd75fcbe5844638e2967))
+* 添加小鱼干计划api ([#5](https://github.com/xh-polaris/meowchat-app/issues/5)) ([12d3710](https://github.com/xh-polaris/meowchat-app/commit/12d371028fbe1910a275b3811dc8979c43c24ff1))
+
 ## [1.18.4](https://github.com/xh-polaris/meowchat-app/compare/v1.18.3...v1.18.4) (2023-10-19)
 
 
