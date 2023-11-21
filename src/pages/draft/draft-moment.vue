@@ -3,10 +3,10 @@
     <template #center>编辑动态</template>
   </TopBar>
   <view style="height: 6vw"></view>
-  <Images
+  <ChooseImages
     @toggle-is-uploading-images="toggleIsUploadingImages"
     @change-photos="changePhotos"
-  ></Images>
+  ></ChooseImages>
   <view v-if="isUploadingImages" style="margin: 0 6vw; font-size: 3.8vw"
     >后台上传图片中...</view
   >
@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import Images from "@/pages/draft/ChooseImages.vue";
+import ChooseImages from "@/pages/draft/ChooseImages.vue";
 import ChooseCat from "@/pages/draft/ChooseCat.vue";
 import BottomPanel from "@/pages/draft/BottomPanel.vue";
 import InputArea from "@/pages/draft/InputArea.vue";

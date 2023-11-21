@@ -2,7 +2,8 @@ import {
   GetUserInfoReq,
   GetUserInfoResp,
   UpdateUserInfoReq,
-  UpdateUserInfoResp
+  UpdateUserInfoResp,
+  UserCheckInResp
 } from "./user-interfaces";
 import { PictureStyle } from "@/apis/cos/cos-interface";
 import { getPrefetchData } from "@/apis/prefetch";
@@ -53,7 +54,7 @@ export async function updateUserInfo(req: UpdateUserInfoReq) {
 }
 
 export async function userCheckIn() {
-  return await new Promise<UpdateUserInfoResp>((resolve, reject) => {
+  return await new Promise<UserCheckInResp>((resolve, reject) => {
     uni.request({
       url: "/user/check_in",
       method: "GET",
@@ -61,7 +62,7 @@ export async function userCheckIn() {
         if (res.statusCode !== 200) {
           reject(res);
         }
-        const data = res.data as UpdateUserInfoResp;
+        const data = res.data as UserCheckInResp;
         resolve(data);
       }
     });

@@ -82,8 +82,13 @@ onReady(() => {
   uni.hideLoading();
   //签到获取小鱼干
   const checkIn = async () => {
-    const xxx = await userCheckIn();
-    console.log(xxx);
+    const resp = await userCheckIn();
+    if (resp.isFirst) {
+      uni.showToast({
+        title: "今日签到成功~请查收" + resp.getFishNum + "小鱼干！",
+        icon: "none"
+      });
+    }
   };
   checkIn();
 });

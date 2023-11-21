@@ -20,3 +20,8 @@ export interface UpdateUserInfoResp {
   code: number;
   msg: string;
 }
+
+export interface UserCheckInResp {
+  isFirst: boolean;
+  getFishNum: number;
+}
