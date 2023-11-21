@@ -78,13 +78,33 @@
   <div class="card4">
     <view>
       <text class="card4-title">任务返图</text>
-      <text class="page">1/5</text>
+      <text class="page"
+        >{{ nowPicIndex + 1 }} /
+        {{ props.plan.imageUrls ? props.plan.imageUrls.length : 0 }}</text
+      >
     </view>
 
     <div class="pic-example">
-      <img :src="Icons.Task_Pic" class="task-pic" />
-      <img :src="Icons.Pic_Left" class="pic-left" />
-      <img :src="Icons.Pic_Right" class="pic-right" />
+      <template v-if="props.plan.imageUrls !== null">
+        <img :src="props.plan.imageUrls[nowPicIndex]" class="task-pic" />
+        <img
+          :src="Icons.Pic_Left"
+          class="pic-left"
+          @click="
+            nowPicIndex =
+              (nowPicIndex - 1 + props.plan.imageUrls.length) %
+              props.plan.imageUrls.length
+          "
+        />
+        <img
+          :src="Icons.Pic_Right"
+          class="pic-right"
+          @click="nowPicIndex = (nowPicIndex + 1) % props.plan.imageUrls.length"
+        />
+      </template>
+      <template v-else>
+        <img :src="Icons.Task_Pic" class="task-pic" />
+      </template>
     </div>
   </div>
 
@@ -128,8 +148,9 @@ const executionParse = (str: string) => {
 
 const init = () => {
   executionParse(props.plan.instruction);
-  console.log(props.plan);
 };
+
+const nowPicIndex = ref<number>(0);
 
 init();
 </script>

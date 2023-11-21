@@ -45,6 +45,7 @@ import { ref } from "vue";
 import { Plan, PlanType } from "@/apis/schemas";
 import { Icons } from "@/utils/url";
 import { planTypeMap, onClickPlan } from "@/pages/plan/utils";
+import BackgroundImage from "@/components/BackgroundImage.vue";
 
 const props = defineProps<{
   plan: Plan;
@@ -63,7 +64,7 @@ const props = defineProps<{
   background-size: 100% 100%;
   display: flex;
   flex-direction: column;
-
+  overflow: hidden;
   .small-icon {
     transform: translateY(3vw);
 
@@ -90,6 +91,7 @@ const props = defineProps<{
     flex-direction: column;
     margin-top: 28vw;
     margin-left: 4vw;
+    z-index: 1;
 
     .context {
       color: #ffffff;
@@ -98,7 +100,14 @@ const props = defineProps<{
       letter-spacing: 0.5vw;
     }
   }
-
+  .prograss-bar::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0vw 15vw 5vw rgba(0, 0, 0, 0.8);
+    z-index: 0;
+  }
   .prograss-bar {
     display: flex;
     flex-direction: column;
@@ -109,7 +118,6 @@ const props = defineProps<{
     height: 20vw;
     margin-top: 2vw;
     position: relative;
-
     .bar-content {
       display: flex;
       flex-direction: row;
