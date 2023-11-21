@@ -157,6 +157,7 @@ export const enum PlanState {
 
 export interface Plan {
   catId: string;
+  catName: string;
   coverUrl: string;
   createAt: number;
   description: string;

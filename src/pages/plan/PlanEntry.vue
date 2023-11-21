@@ -16,7 +16,7 @@
         <view class="bar-content">
           <text class="txt1">帮助</text>
           <!--            <text class="helped-cat">{{ props.plan.catId }}</text>-->
-          <text class="helped-cat">匿名喵</text>
+          <text class="helped-cat">{{ props.plan.catName }}</text>
           <text class="txt2">{{ props.plan.name }}</text>
         </view>
         <progress
@@ -50,6 +50,7 @@ import BackgroundImage from "@/components/BackgroundImage.vue";
 const props = defineProps<{
   plan: Plan;
 }>();
+console.log(props.plan);
 </script>
 
 <style scoped lang="scss">

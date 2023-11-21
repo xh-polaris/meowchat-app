@@ -1,7 +1,8 @@
 <template>
   <div class="card1">
     <div class="title">
-      帮助<text style="color: #1f5eff">匿名喵</text>{{ props.plan.name }}
+      帮助<text style="color: #1f5eff">{{ props.plan.catName }}</text
+      >{{ props.plan.name }}
       <img :src="Icons.State_Frame" class="state-frame" />
       <view class="state">{{ planStateMap(props.plan.planState) }}</view>
     </div>
