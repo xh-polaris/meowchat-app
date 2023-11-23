@@ -35,6 +35,15 @@
   </view>
 
   <BottomBar id="community"></BottomBar>
+
+  <template v-if="showToastBox">
+    <ToastBoxWithShadow
+      bold-normal-text="获得小鱼干"
+      bold-blue-text="*20"
+      grey-text="今日首次评论"
+      @close="closeToastBox"
+    ></ToastBoxWithShadow>
+  </template>
 </template>
 
 <script lang="ts" setup>
@@ -51,10 +60,16 @@ import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import { StorageKeys } from "@/utils/const";
 import { needChooseCommunity } from "@/utils/init";
 import { Pages } from "@/utils/url";
+import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
 const communityId = ref(uni.getStorageSync(StorageKeys.CommunityId));
 const cardList = reactive(["", "", "", "", "", ""]);
 
 const isRefreshing = ref(true);
+
+const showToastBox = ref(true);
+const closeToastBox = () => {
+  showToastBox.value = false;
+};
 
 function pageRefresh() {
   isRefreshing.value = true;
