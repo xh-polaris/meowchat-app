@@ -2,18 +2,23 @@
   <div class="card">
     <img :src="Icons.CatExample" class="image-cat" />
 
-    <p class="title">帮助怂怂完成绝育手术</p>
-    <p class="date">2023-9-25</p>
+    <p class="title">帮助{{ props.plan.catName }}完成绝育手术</p>
+    <p class="date">{{ displayTime(props.plan.donateTime) }}</p>
 
     <div class="fish-count">
       <img :src="Icons.LittleFish" class="image-fish" />
-      <p class="count">×15</p>
+      <p class="count">×{{ props.plan.donateNum }}</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Icons } from "@/utils/url";
+import { planpreviews } from "@/apis/schemas";
+import { displayTime } from "../../../utils/time";
+const props = defineProps<{
+  plan: planpreviews;
+}>();
 </script>
 
 <style scoped lang="scss">
@@ -22,7 +27,7 @@ import { Icons } from "@/utils/url";
   border-radius: 3vw;
   width: 44vw;
   height: 52vw;
-  margin: 0 10px;
+  margin-left: 3vw;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 2vw;
   box-sizing: border-box;

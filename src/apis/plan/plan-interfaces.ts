@@ -81,3 +81,16 @@ export interface GetUserDonateCountResp {
   total: string;
   [property: string]: any;
 }
+
+export interface ListDonateByUserReq {
+  limit: 999;
+  page: 0;
+  [property: string]: any;
+}
+
+export interface ListDonateByUserResp {
+  total: number;
+  token: string;
+  planPreviews: object;
+  [property: string]: any;
+}

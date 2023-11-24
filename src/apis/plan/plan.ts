@@ -8,6 +8,8 @@ import {
   GetUserDonateCountReq,
   GetUserFishReq,
   GetUserFishResp,
+  ListDonateByUserReq,
+  ListDonateByUserResp,
   ListFishByPlanReq,
   ListFishByPlanResp,
   NewPlanReq
@@ -143,6 +145,23 @@ export async function getCountDonate(req: GetUserDonateCountReq) {
           reject(res);
         }
         const data = res.data as GetUserDonateCountReq;
+        resolve(data);
+      }
+    });
+  });
+}
+
+export async function list_donate_by_user(req: ListDonateByUserReq) {
+  return await new Promise<ListDonateByUserResp>((resolve, reject) => {
+    uni.request({
+      url: "/plan/list_donate_by_user",
+      data: req,
+      method: "GET",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as ListDonateByUserResp;
         resolve(data);
       }
     });

@@ -1,5 +1,5 @@
 <template>
-  <view class="goToMyPlans">
+  <view class="goToMyPlans" @click="goToHelpedPlans()">
     <img :src="Icons.GoToPath_Tag" class="small-icon" />
     <text class="goTo_text">已助力{{ donateNum }}个计划</text>
     <!--    <img :src="Icons.GoToArrow" class="arrow" />-->
