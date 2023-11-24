@@ -22,6 +22,14 @@
     text="发布帖子"
     @publish="publish"
   ></BottomPanel>
+  <template v-if="showToastBox">
+    <ToastBoxWithShadow
+      bold-normal-text="获得小鱼干"
+      :bold-blue-text="'*' + gottenFishAmount"
+      :grey-text="'今日第' + gottenFishNth + '次发布'"
+      @close="closeToastBox"
+    ></ToastBoxWithShadow>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -30,6 +38,7 @@ import BottomPanel from "@/pages/draft/BottomPanel.vue";
 import InputArea from "@/pages/draft/InputArea.vue";
 import ChooseImage from "@/pages/draft/ChooseImage.vue";
 import EditTags from "@/pages/draft/EditTags.vue";
+import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
 
 import { ref } from "vue";
 import { StorageKeys } from "@/utils/const";
@@ -58,6 +67,25 @@ const toggleIsUploadingImages = (bool: boolean) => {
   isUploadingImages.value = bool;
 };
 
+const refresh = () => {
+  uni.switchTab({
+    url: Pages.World,
+    success() {
+      uni.reLaunch({
+        url: Pages.World
+      });
+    }
+  });
+};
+
+const showToastBox = ref(false);
+const closeToastBox = () => {
+  showToastBox.value = false;
+  refresh();
+};
+const gottenFishAmount = ref(0);
+const gottenFishNth = ref(0);
+
 const publish = () => {
   if (title.value === "") {
     uni.showToast({
@@ -82,15 +110,16 @@ const publish = () => {
     tags: [...tags.value],
     isOfficial: false
   })
-    .then(() => {
-      uni.switchTab({
-        url: Pages.World,
-        success() {
-          uni.reLaunch({
-            url: Pages.World
-          });
-        }
-      });
+    .then((res) => {
+      console.log("newPost");
+      console.log(res);
+      if (res.getFish) {
+        gottenFishNth.value = res.getFishTimes;
+        gottenFishAmount.value = res.getFishNum;
+        showToastBox.value = true;
+      } else {
+        refresh();
+      }
     })
     .catch((reason) => {
       const code = reason.data.Code;

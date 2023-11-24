@@ -39,8 +39,8 @@
   <template v-if="showToastBox">
     <ToastBoxWithShadow
       bold-normal-text="获得小鱼干"
-      bold-blue-text="*20"
-      grey-text="今日首次评论"
+      :bold-blue-text="'*' + gottenFishAmount"
+      grey-text="今日首次上线"
       @close="closeToastBox"
     ></ToastBoxWithShadow>
   </template>
@@ -66,10 +66,11 @@ const cardList = reactive(["", "", "", "", "", ""]);
 
 const isRefreshing = ref(true);
 
-const showToastBox = ref(true);
+const showToastBox = ref(false);
 const closeToastBox = () => {
   showToastBox.value = false;
 };
+const gottenFishAmount = ref(0);
 
 function pageRefresh() {
   isRefreshing.value = true;
@@ -98,11 +99,10 @@ onReady(() => {
   //签到获取小鱼干
   const checkIn = async () => {
     const resp = await userCheckIn();
+    console.log(resp);
     if (resp.isFirst) {
-      uni.showToast({
-        title: "今日签到成功~请查收" + resp.getFishNum + "小鱼干！",
-        icon: "none"
-      });
+      gottenFishAmount.value = resp.getFishNum;
+      showToastBox.value = true;
     }
   };
   checkIn();

@@ -23,6 +23,14 @@
     text="发布动态"
     @publish="publish"
   ></BottomPanel>
+  <template v-if="showToastBox">
+    <ToastBoxWithShadow
+      bold-normal-text="获得小鱼干"
+      :bold-blue-text="'*' + gottenFishAmount"
+      :grey-text="'今日第' + gottenFishNth + '次发布'"
+      @close="closeToastBox"
+    ></ToastBoxWithShadow>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -35,6 +43,7 @@ import { ref } from "vue";
 import { StorageKeys } from "@/utils/const";
 import { newMoment } from "@/apis/moment/moment";
 import { Pages } from "@/utils/url";
+import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
 const isUploadingImages = ref(false);
 const toggleIsUploadingImages = (bool: boolean) => {
   isUploadingImages.value = bool;
@@ -52,6 +61,25 @@ const changeContent = (text: string) => {
 const changePhotos = (data: any) => {
   photos.value = data;
 };
+
+const refresh = () => {
+  uni.switchTab({
+    url: Pages.Community,
+    success() {
+      uni.reLaunch({
+        url: Pages.Community
+      });
+    }
+  });
+};
+
+const showToastBox = ref(false);
+const closeToastBox = () => {
+  showToastBox.value = false;
+  refresh();
+};
+const gottenFishAmount = ref(0);
+const gottenFishNth = ref(0);
 
 const publish = () => {
   if (isPublished.value) return;
@@ -71,15 +99,15 @@ const publish = () => {
     photos: [...photos.value],
     catId: uni.getStorageSync(StorageKeys.IdSelected)
   })
-    .then(() => {
-      uni.switchTab({
-        url: Pages.Community,
-        success() {
-          uni.reLaunch({
-            url: Pages.Community
-          });
-        }
-      });
+    .then((res) => {
+      console.log(res);
+      if (res.getFish) {
+        gottenFishNth.value = res.getFishTimes;
+        gottenFishAmount.value = res.getFishNum;
+        showToastBox.value = true;
+      } else {
+        refresh();
+      }
     })
     .catch((reason) => {
       const code = reason.data.Code;

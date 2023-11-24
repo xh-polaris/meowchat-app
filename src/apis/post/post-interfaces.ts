@@ -49,6 +49,9 @@ export interface NewPostResp {
   code: number;
   msg: string;
   postId: string;
+  getFish: boolean;
+  getFishTimes: number;
+  getFishNum: number;
 }
 
 export interface DeletePostReq {

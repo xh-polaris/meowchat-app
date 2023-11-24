@@ -22,6 +22,9 @@ export interface NewMomentResp {
   code: number;
   msg: string;
   momentId: string;
+  getFish: boolean;
+  getFishTimes: number;
+  getFishNum: number;
 }
 
 export interface GetMomentPreviewsReq {

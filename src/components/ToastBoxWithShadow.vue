@@ -1,6 +1,6 @@
 <template>
   <view class="shadow" @touchmove.stop.prevent>
-    <view class="box">
+    <view class="box" :style="`background-image: url('${toastImageUrl}')`">
       <view class="bold-text">
         <text class="normal">{{ props.boldNormalText }}</text>
         <text class="blue">{{ props.boldBlueText }}</text>
@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+import { Icons } from "@/utils/url";
 const props = defineProps<{
   boldNormalText: string;
   boldBlueText: string;
@@ -21,6 +22,7 @@ const emits = defineEmits(["close"]);
 const close = () => {
   emits("close");
 };
+const toastImageUrl = Icons.Plan_Toast;
 </script>
 
 <style scoped lang="scss">
@@ -40,13 +42,14 @@ const close = () => {
     height: 52vw;
     box-sizing: border-box;
     background-color: #eeeeee;
-    border-radius: 4vw;
+    border-radius: 5vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 4.4vw;
     padding-top: 20vw;
     position: relative;
+    background-size: 100% 100%;
     .bold-text {
       font-weight: bold;
       .blue {
@@ -69,6 +72,9 @@ const close = () => {
       text-align: center;
       line-height: 8vw;
       color: #eeeeee;
+      &:active {
+        filter: brightness(80%);
+      }
     }
   }
 }
