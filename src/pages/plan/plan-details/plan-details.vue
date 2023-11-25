@@ -37,7 +37,9 @@
       @close="closeToastBox"
     ></ToastBoxWithShadow>
   </template>
-  <BottomBar @on-help-click="clickDonateButton"></BottomBar>
+  <template v-if="plan.maxFish > plan.nowFish">
+    <BottomBar @on-help-click="clickDonateButton"></BottomBar>
+  </template>
 </template>
 
 <script setup lang="ts">
