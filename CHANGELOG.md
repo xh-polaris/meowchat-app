@@ -1,5 +1,14 @@
 
 
+## [1.19.1](https://github.com/xh-polaris/meowchat-app/compare/v1.19.0...v1.19.1) (2023-11-25)
+
+
+### ✨ Features | 新功能
+
+* 初步实现助力小鱼干逻辑功能与基本样式 ([#18](https://github.com/xh-polaris/meowchat-app/issues/18)) ([008ba35](https://github.com/xh-polaris/meowchat-app/commit/008ba35b54bcdc520041d16d92d9c6fb389a5839))
+* 实现登录和发布时弹出获得小鱼干提示 ([6033561](https://github.com/xh-polaris/meowchat-app/commit/60335617d201435cf7ef51cc344faa1752e35ee1))
+* 针对planentry添加了阴影效果以及plandetails的点击图片跳转下一张的功能 ([#15](https://github.com/xh-polaris/meowchat-app/issues/15)) ([9e48899](https://github.com/xh-polaris/meowchat-app/commit/9e488990408f0561d94186c5fc9180332942506a))
+
 ## [1.19.0](https://github.com/xh-polaris/meowchat-app/compare/v1.18.4...v1.19.0) (2023-11-19)
 
 
