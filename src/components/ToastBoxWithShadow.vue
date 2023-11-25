@@ -1,6 +1,7 @@
 <template>
   <view class="shadow" @touchmove.stop.prevent>
-    <view class="box" :style="`background-image: url('${toastImageUrl}')`">
+    <view class="box">
+      <img :src="toastImageUrl" class="background-photo" />
       <view class="bold-text">
         <text class="normal">{{ props.boldNormalText }}</text>
         <text class="blue">{{ props.boldBlueText }}</text>
@@ -50,13 +51,23 @@ const toastImageUrl = Icons.Plan_Toast;
     padding-top: 20vw;
     position: relative;
     background-size: 100% 100%;
+    overflow: hidden;
+    .background-photo {
+      position: absolute;
+      width: 64vw;
+      height: 52vw;
+      top: 0;
+      left: 0;
+    }
     .bold-text {
+      z-index: 2;
       font-weight: bold;
       .blue {
         color: #1f5fff;
       }
     }
     .grey-text {
+      z-index: 2;
       color: #9a9a9a;
       font-size: 3.8vw;
     }
