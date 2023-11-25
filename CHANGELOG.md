@@ -1,5 +1,12 @@
 
 
+## [1.19.2](https://github.com/xh-polaris/meowchat-app/compare/v1.19.1...v1.19.2) (2023-11-25)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复小鱼干toast无法正常显示背景图bug ([e3bcf8b](https://github.com/xh-polaris/meowchat-app/commit/e3bcf8b5a3c53be10e5a376b8bd2ee7e50970297))
+
 ## [1.19.1](https://github.com/xh-polaris/meowchat-app/compare/v1.19.0...v1.19.1) (2023-11-25)
 
 
