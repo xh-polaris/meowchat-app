@@ -2,7 +2,7 @@
   <div class="card">
     <img :src="Icons.CatExample" class="image-cat" />
 
-    <p class="title">帮助{{ props.plan.catName }}完成绝育手术</p>
+    <p class="title">帮助{{ props.plan.catName }}</p>
     <p class="date">{{ displayTime(props.plan.donateTime) }}</p>
 
     <div class="fish-count">
@@ -19,6 +19,7 @@ import { displayTime } from "../../../utils/time";
 const props = defineProps<{
   plan: planpreviews;
 }>();
+console.log(props.plan);
 </script>
 
 <style scoped lang="scss">
