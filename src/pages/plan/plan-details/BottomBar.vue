@@ -6,8 +6,11 @@
   </view>
 </template>
 <script setup lang="ts">
+const emit = defineEmits<{
+  (e: "onHelpClick"): void;
+}>();
 function onHelpClick() {
-  console.log("助力按钮被点击");
+  emit("onHelpClick");
 }
 </script>
 <style scoped lang="scss">

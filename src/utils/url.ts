@@ -32,7 +32,9 @@ export const enum Icons {
   State_Frame = "/static/images/state-frame.png",
   Task_Pic = "/static/images/task-pic.png",
   Pic_Left = "/static/images/pic-left.png",
-  Pic_Right = "/static/images/pic-right.png"
+  Pic_Right = "/static/images/pic-right.png",
+  Button_Increment = "/static/images/button-increment.png",
+  Button_Decrement = "/static/images/button-decrement.png"
 }
 
 export const enum Pages {
