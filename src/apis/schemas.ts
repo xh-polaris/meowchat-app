@@ -169,10 +169,7 @@ export interface Plan {
   maxFish: number;
   name: string;
   nowFish: number;
-  /**
-   * 枚举类型 0:募集中 1:实施中 2:已完成
-   */
-  planState: number;
+  planState: PlanState;
   /**
    * 枚举类型 0:feed 1:castrate 2:heal
    */
