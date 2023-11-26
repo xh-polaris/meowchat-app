@@ -114,9 +114,18 @@
       </view>
     </view>
   </view>
+  <template v-if="true">
+    <ToastBoxWithShadow
+      bold-normal-text="获得小鱼干"
+      :bold-blue-text="'*30'"
+      grey-text="获得小鱼干的原因"
+      @close="() => {}"
+    ></ToastBoxWithShadow>
+  </template>
 </template>
 
 <script lang="ts" setup>
+import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
 import { reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import {
