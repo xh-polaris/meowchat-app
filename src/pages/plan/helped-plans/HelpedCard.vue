@@ -1,8 +1,11 @@
 <template>
   <div class="card">
-    <img :src="Icons.CatExample" class="image-cat" />
+    <img :src="props.plan.coverUrl" class="image-cat" />
 
-    <p class="title">帮助{{ props.plan.catName }}</p>
+    <p class="title">
+      帮助<text style="color: #1f6bff">{{ props.plan.catName }} </text
+      >{{ props.plan.name }}
+    </p>
     <p class="date">{{ displayTime(props.plan.donateTime) }}</p>
 
     <div class="fish-count">

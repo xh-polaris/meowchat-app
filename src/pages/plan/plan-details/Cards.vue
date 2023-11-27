@@ -88,7 +88,16 @@
 
       <div class="pic-example">
         <template v-if="props.plan.imageUrls !== null">
-          <img :src="props.plan.imageUrls[nowPicIndex]" class="task-pic" />
+          <img
+            :src="props.plan.imageUrls[nowPicIndex]"
+            class="task-pic"
+            @click="
+              onClickImage(
+                props.plan.imageUrls[nowPicIndex],
+                props.plan.imageUrls
+              )
+            "
+          />
           <img
             :src="Icons.Pic_Left"
             class="pic-left"
@@ -135,6 +144,7 @@ import { Plan, PlanState } from "@/apis/schemas";
 import { Icons } from "@/utils/url";
 import { planTypeMap, planStateMap } from "@/pages/plan/utils";
 import { reactive, ref } from "vue";
+import { onClickImage } from "@/components/utils";
 const props = defineProps<{
   plan: Plan;
 }>();
@@ -309,7 +319,7 @@ init();
     }
 
     .dialog-content {
-      font-size: 4vw;
+      font-size: 3.5vw;
       font-weight: bold;
       letter-spacing: 0.4vw;
       z-index: 1;
