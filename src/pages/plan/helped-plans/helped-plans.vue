@@ -2,19 +2,24 @@
   <TopBar :has-go-back="true">
     <template #left>我助力过的小鱼干计划</template>
   </TopBar>
-  <view class="plans">
-    <HelpedCard
-      v-for="(plan, index) in plansLeft"
-      :key="index"
-      :plan="plan"
-      class="plansLeft"
-    ></HelpedCard>
-    <HelpedCard
-      v-for="(plan, index) in plansRight"
-      :key="index"
-      :plan="plan"
-      class="plansRight"
-    ></HelpedCard>
+  <view class="background" :style="styleStr">
+    <view style="height: 3vw"></view>
+    <view class="plans">
+      <view class="plansColumn">
+        <HelpedCard
+          v-for="(plan, index) in plansLeft"
+          :key="index"
+          :plan="plan"
+        ></HelpedCard>
+      </view>
+      <view class="plansColumn">
+        <HelpedCard
+          v-for="(plan, index) in plansRight"
+          :key="index"
+          :plan="plan"
+        ></HelpedCard>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -25,6 +30,9 @@ import HelpedCard from "@/pages/plan/helped-plans/HelpedCard.vue";
 import { list_donate_by_user } from "@/apis/plan/plan";
 import { ref } from "vue";
 import { planpreviews } from "@/apis/schemas";
+import { navBarHeight } from "@/utils/style";
+const styleStr = `min-height: calc(100vh - ${navBarHeight}px)`;
+console.log(styleStr);
 const plansRight = ref<planpreviews[]>([]);
 const plansLeft = ref<planpreviews[]>([]);
 const ListDonateByUser = async () => {
@@ -43,19 +51,16 @@ ListDonateByUser();
 </script>
 
 <style scoped lang="scss">
-.plans {
+.background {
   background-color: #f4f9ff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.plansLeft {
-  width: 50vw;
-  margin-top: 2vh;
-}
-.plansRight {
-  width: 50vw;
-  margin-top: 2vh;
+  .plans {
+    display: flex;
+    width: 91vw;
+    margin-left: 4.5vw;
+    justify-content: space-between;
+    .plansColumn {
+      width: fit-content;
+    }
+  }
 }
 </style>

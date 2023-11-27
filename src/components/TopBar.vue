@@ -27,11 +27,12 @@
 
 <script lang="ts" setup>
 import { Icons } from "@/utils/url";
-const topBarHeight = uni.getSystemInfoSync().statusBarHeight as number;
-const capsuleData = uni.getMenuButtonBoundingClientRect();
-const capsuleBarHeight =
-  capsuleData.height + (capsuleData.top - topBarHeight) * 2;
-const navBarHeight = topBarHeight + capsuleBarHeight;
+import { topBarHeight, capsuleBarHeight, navBarHeight } from "@/utils/style";
+// const topBarHeight = uni.getSystemInfoSync().statusBarHeight as number;
+// const capsuleData = uni.getMenuButtonBoundingClientRect();
+// const capsuleBarHeight =
+//   capsuleData.height + (capsuleData.top - topBarHeight) * 2;
+// const navBarHeight = topBarHeight + capsuleBarHeight;
 interface Props {
   bgColor: string;
   hasShadow: boolean;

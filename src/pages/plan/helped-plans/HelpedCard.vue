@@ -31,10 +31,10 @@ console.log(props.plan);
   border-radius: 3vw;
   width: 44vw;
   height: 52vw;
-  margin-left: 3vw;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 2vw;
   box-sizing: border-box;
+  margin-bottom: 3vw;
 
   .image-cat {
     width: 40vw;
