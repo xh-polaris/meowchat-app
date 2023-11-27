@@ -9,7 +9,7 @@
       <text class="content">{{ planTypeMap(props.plan.planType) }}</text>
     </view>
     <view class="help">
-      <text class="context">{{ props.plan.summary }}</text>
+      {{ props.plan.summary }}
     </view>
     <view class="prograss-bar">
       <view>
@@ -88,18 +88,17 @@ console.log(props.plan);
   }
 
   .help {
-    display: flex;
-    flex-direction: column;
     margin-top: 28vw;
     margin-left: 4vw;
     z-index: 1;
-
-    .context {
-      color: #ffffff;
-      font-size: 5vw;
-      font-weight: bolder;
-      letter-spacing: 0.5vw;
-    }
+    width: 88vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #ffffff;
+    font-size: 5vw;
+    font-weight: bolder;
+    letter-spacing: 0.5vw;
   }
   .prograss-bar::before {
     content: "";
