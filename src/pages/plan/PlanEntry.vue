@@ -16,7 +16,9 @@
         <view class="bar-content">
           <text class="txt1">帮助</text>
           <!--            <text class="helped-cat">{{ props.plan.catId }}</text>-->
-          <text class="helped-cat">{{ props.plan.catName }}</text>
+          <text class="helped-cat">{{
+            props.plan.catName ? props.plan.catName : "全体猫猫"
+          }}</text>
           <text class="txt2">{{ props.plan.name }}</text>
         </view>
         <progress
