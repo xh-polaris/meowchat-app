@@ -4,7 +4,7 @@
       v-for="item in tabContent"
       :key="item.id"
       class="tab"
-      @click="item.id === 'draft' ? draft() : tabChange(item.url)"
+      @click="tabChange(item.url)"
     >
       <image
         :class="chooseIconClass(item.id)"
@@ -43,7 +43,7 @@ const tabContent = [
     id: "draft",
     icon: "/static/images/plus-bg-blue.png",
     activeIcon: "/static/images/plus-bg-blue.png",
-    url: `${Pages.DraftNav}?type=post`,
+    url: Pages.DraftMoment,
     text: ""
   },
   {
@@ -79,13 +79,15 @@ function chooseTextClass(id: string) {
 }
 
 const tabChange = (path: string) => {
-  emits("toggleShowingDraft", false);
+  if (path === Pages.DraftMoment) {
+    uni.navigateTo({
+      url: Pages.DraftMoment
+    });
+    return;
+  }
   uni.switchTab({
     url: path
   });
-};
-const draft = () => {
-  emits("toggleShowingDraft", true);
 };
 </script>
 

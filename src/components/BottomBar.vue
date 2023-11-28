@@ -3,11 +3,6 @@
     :id="props.id"
     @toggle-showing-draft="toggleShowingDraft"
   ></BottomBarContent>
-  <WhatTypeToDraft
-    v-if="isShowingDraft"
-    :current="props.id"
-    @toggle-showing-draft="toggleShowingDraft"
-  ></WhatTypeToDraft>
 </template>
 
 <script setup lang="ts">
