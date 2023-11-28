@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import { CommentType } from "@/apis/comment/comment-interfaces";
-import { createComment } from "@/pages/moment/utils";
+import { createComment, EventEmitter } from "@/pages/moment/utils";
 import { ref } from "vue";
 
 const props = defineProps<{
@@ -31,6 +31,7 @@ const props = defineProps<{
   likeCount?: number;
   isLiked: boolean;
   placeholderText: string;
+  likeCommentCallback: EventEmitter;
 }>();
 const text = ref("");
 const emit = defineEmits<{
@@ -47,8 +48,8 @@ const localCreateComment = async () => {
     id: props.parentId
   };
   text.value = "";
-  const res = await createComment(req);
-  if (res) emit("afterCreateComment");
+  const res = await createComment(req, props.likeCommentCallback);
+  if (res !== false) emit("afterCreateComment");
 };
 
 const blur = () => {

@@ -6,6 +6,24 @@ import {
 import { getComments, newComment } from "@/apis/comment/comment";
 import { Comment, Moment, TargetType } from "@/apis/schemas";
 
+export interface Callback {
+  (data: any): void;
+}
+
+export class EventEmitter {
+  private callbacks: Callback[] = [];
+
+  addCallback(callback: Callback): void {
+    this.callbacks.push(callback);
+  }
+
+  triggerCallbacks(data: any): void {
+    this.callbacks.forEach((callback) => {
+      callback(data);
+    });
+  }
+}
+
 export const enterReply = uni.createAnimation({
   transformOrigin: "50% 50%",
   duration: 300,
@@ -25,12 +43,13 @@ export interface LikeStruct {
   isLike: boolean;
 }
 
-export const likeMoment = async (item: Moment) => {
-  doLike({ targetId: item.id, type: TargetType.Moment }).then(() => {
+export const likeMoment = async (item: Moment, eventEmitter?: EventEmitter) => {
+  doLike({ targetId: item.id, type: TargetType.Moment }).then((res) => {
     if (item.isLiked) {
       item.likeCount--;
     } else {
       item.likeCount++;
+      if (eventEmitter) eventEmitter.triggerCallbacks(res);
     }
     item.isLiked = !item.isLiked;
   });
@@ -60,12 +79,16 @@ export const getCommentsData = async (req: GetCommentsReq) => {
   return { data: commentsTemp };
 };
 
-export const createComment = async (req: NewCommentReq) => {
+export const createComment = async (
+  req: NewCommentReq,
+  eventEmitter?: EventEmitter
+) => {
   if (req.text === "") {
     return false;
   }
+  let res = undefined;
   try {
-    await newComment(req);
+    res = await newComment(req);
   } catch (reason: any) {
     const code = reason.data.Code;
     if (code === 10001) {
@@ -81,9 +104,13 @@ export const createComment = async (req: NewCommentReq) => {
     }
     return false;
   }
-  uni.showToast({
-    title: "评论成功"
-  });
+  if (!res.getFish) {
+    uni.showToast({
+      title: "评论成功"
+    });
+  } else {
+    if (eventEmitter) eventEmitter.triggerCallbacks(res);
+  }
   return true;
 };
 

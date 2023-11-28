@@ -24,6 +24,9 @@ export interface NewCommentReq {
 export interface NewCommentResp {
   code: number;
   msg: string;
+  getFish: boolean;
+  getFishNum: number;
+  getFishTimes: number;
 }
 
 export interface DeleteCommentReq {
