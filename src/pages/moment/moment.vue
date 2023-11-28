@@ -77,7 +77,7 @@
         @after-delete="init()"
         @interact-with-comment="focusReplyComment(comment)"
         @on-click-replies="onClickReplies(comment)"
-        @local-do-like="likeComment(comment, showToastBox)"
+        @local-do-like="likeComment(comment, setGotFishNum, setShowToastBox)"
       />
       <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
     </view>
@@ -114,12 +114,12 @@
       </view>
     </view>
   </view>
-  <template v-if="showToastBox?.value?.getFish">
+  <template v-if="showToastBox">
     <ToastBoxWithShadow
       bold-normal-text="获得小鱼干"
-      :bold-blue-text="'*' + showToastBox?.value?.getFishNum"
+      :bold-blue-text="'*' + gotFishNum"
       grey-text="每日点评或点赞均可获得小鱼干"
-      @close="closeToastBox"
+      @close="setShowToastBox(false)"
     ></ToastBoxWithShadow>
   </template>
 </template>
@@ -184,10 +184,14 @@ function onClickCatBox(id?: string) {
   }
 }
 
-const showToastBox = ref({getFish: false});
+const showToastBox = ref(false);
+const gotFishNum = ref(0);
 
-const closeToastBox = () => {
-  showToastBox.value.getFish = false;
+const setShowToastBox = (bool: boolean) => {
+  showToastBox.value = bool;
+};
+const setGotFishNum = (num: number) => {
+  gotFishNum.value = num;
 };
 
 const getData = async () => {

@@ -26,7 +26,7 @@ export interface LikeStruct {
 }
 
 export const likeMoment = async (item: Moment) => {
-  doLike({ targetId: item.id, targetType: TargetType.Moment }).then(() => {
+  doLike({ targetId: item.id, type: TargetType.Moment }).then(() => {
     if (item.isLiked) {
       item.likeCount--;
     } else {
@@ -36,15 +36,22 @@ export const likeMoment = async (item: Moment) => {
   });
 };
 
-export const likeComment = async (item: Comment, showToastBox: any) => {
-  doLike({ targetId: item.id, targetType: TargetType.Comment }).then((res) => {
+export const likeComment = async (
+  item: Comment,
+  setGotFishNum: (num: number) => void,
+  setShowToastBox: (bool: boolean) => void
+) => {
+  doLike({ targetId: item.id, type: TargetType.Comment }).then((res) => {
     if (item.isLiked) {
       item.likeCount--;
     } else {
       item.likeCount++;
     }
     item.isLiked = !item.isLiked;
-    showToastBox.value = res;
+    if (res.getFish) {
+      setGotFishNum(res.getFishNum);
+      setShowToastBox(true);
+    }
   });
 };
 

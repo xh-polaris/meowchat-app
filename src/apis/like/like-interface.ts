@@ -2,12 +2,13 @@ import { TargetType } from "@/apis/schemas";
 
 export interface DoLikeReq {
   targetId: string;
-  targetType: TargetType;
+  type: TargetType;
 }
 
 export interface DoLikeResp {
-  code: number;
-  msg: string;
+  getFish: boolean;
+  getFishNum: number;
+  getFishTimes: number;
 }
 
 export interface GetUserLikedReq {
