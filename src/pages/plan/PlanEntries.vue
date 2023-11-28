@@ -17,7 +17,7 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { StorageKeys } from "@/utils/const";
 const getPlanPreviewsReq = reactive<GetPlanPreviewsReq>({
   page: 0,
-  communityId: uni.getStorageSync(StorageKeys.CommunityId)
+  onlyCommunityId: uni.getStorageSync(StorageKeys.CommunityId)
 });
 
 let allPreviewsLoaded = false;

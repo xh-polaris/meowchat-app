@@ -30,7 +30,9 @@
     </div>
 
     <view class="time"
-      >募集时间： {{ displayTime(props.plan.startTime) }}-{{ displayTime(props.plan.endTime) }}</view
+      >募集时间： {{ displayTime(props.plan.startTime) }}-{{
+        displayTime(props.plan.endTime)
+      }}</view
     >
 
     <div class="dialog-box">
