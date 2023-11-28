@@ -30,7 +30,7 @@
     </div>
 
     <view class="time"
-      >募集时间： {{ props.plan.startTime }}-{{ props.plan.endTime }}</view
+      >募集时间： {{ displayTime(props.plan.startTime) }}-{{ displayTime(props.plan.endTime) }}</view
     >
 
     <div class="dialog-box">
@@ -145,6 +145,7 @@ import { Icons } from "@/utils/url";
 import { planTypeMap, planStateMap } from "@/pages/plan/utils";
 import { reactive, ref } from "vue";
 import { onClickImage } from "@/components/utils";
+import { displayTime } from "@/utils/time";
 const props = defineProps<{
   plan: Plan;
 }>();
