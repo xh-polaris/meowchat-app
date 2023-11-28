@@ -14,8 +14,10 @@ import { Plan } from "@/apis/schemas";
 import PlanEntry from "@/pages/plan/PlanEntry.vue";
 import { ref, reactive } from "vue";
 import { onReachBottom } from "@dcloudio/uni-app";
+import { StorageKeys } from "@/utils/const";
 const getPlanPreviewsReq = reactive<GetPlanPreviewsReq>({
-  page: 0
+  page: 0,
+  communityId: uni.getStorageSync(StorageKeys.CommunityId)
 });
 
 let allPreviewsLoaded = false;
