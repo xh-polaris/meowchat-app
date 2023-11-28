@@ -36,14 +36,15 @@ export const likeMoment = async (item: Moment) => {
   });
 };
 
-export const likeComment = async (item: Comment) => {
-  doLike({ targetId: item.id, targetType: TargetType.Comment }).then(() => {
+export const likeComment = async (item: Comment, showToastBox: any) => {
+  doLike({ targetId: item.id, targetType: TargetType.Comment }).then((res) => {
     if (item.isLiked) {
       item.likeCount--;
     } else {
       item.likeCount++;
     }
     item.isLiked = !item.isLiked;
+    showToastBox.value = res;
   });
 };
 
