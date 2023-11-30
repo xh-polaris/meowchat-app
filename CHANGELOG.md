@@ -1,5 +1,23 @@
 
 
+## [1.19.3](https://github.com/xh-polaris/meowchat-app/compare/v1.19.2...v1.19.3) (2023-11-30)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复样式及部分逻辑问题 ([#20](https://github.com/xh-polaris/meowchat-app/issues/20)) ([722ae0e](https://github.com/xh-polaris/meowchat-app/commit/722ae0e305a0bba6e9f244e767fd65acd62020b6))
+
+
+### ✨ Features | 新功能
+
+* 点赞提示小鱼干 ([#21](https://github.com/xh-polaris/meowchat-app/issues/21)) ([a9a070c](https://github.com/xh-polaris/meowchat-app/commit/a9a070cec2c38ce7b814d04c06c0e45d8fbe9277))
+* 请求携带 communityId ([#25](https://github.com/xh-polaris/meowchat-app/issues/25)) ([5912718](https://github.com/xh-polaris/meowchat-app/commit/591271890caa6a82945b58ca49b36844d0d98b9f))
+* 时间处理 ([#24](https://github.com/xh-polaris/meowchat-app/issues/24)) ([53f2aaf](https://github.com/xh-polaris/meowchat-app/commit/53f2aaff94fcb5d60d7dba4965c4e91533725baa))
+* 添加了moment中点赞moment和创建评论获取小鱼干的功能 ([#22](https://github.com/xh-polaris/meowchat-app/issues/22)) ([932cbce](https://github.com/xh-polaris/meowchat-app/commit/932cbce57b08aa20fecbbcb91bbbf040bae36735))
+* 完善计划详情页面在不同状态下的展示 ([#19](https://github.com/xh-polaris/meowchat-app/issues/19)) ([46f301f](https://github.com/xh-polaris/meowchat-app/commit/46f301f37a75a0d4b49d87bb6a81e9d7429d00c2))
+* 隐藏发布世界帖子功能 ([8938adf](https://github.com/xh-polaris/meowchat-app/commit/8938adf978d58ce22b467c6926643bd6afeceab2))
+* onlyCommunityId ([#26](https://github.com/xh-polaris/meowchat-app/issues/26)) ([4fa6820](https://github.com/xh-polaris/meowchat-app/commit/4fa6820fb793a7d4fa63b25556fa8faa206c5370))
+
 ## [1.19.2](https://github.com/xh-polaris/meowchat-app/compare/v1.19.1...v1.19.2) (2023-11-25)
 
 
