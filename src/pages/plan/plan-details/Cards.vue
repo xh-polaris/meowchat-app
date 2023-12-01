@@ -1,7 +1,9 @@
 <template>
   <div class="card1">
     <div class="title">
-      帮助<text style="color: #1f5eff">{{ props.plan.catName }}</text
+      帮助<text style="color: #1f5eff">{{
+        plan.catName ? plan.catName : "全体猫猫"
+      }}</text
       >{{ props.plan.name }}
       <img :src="Icons.State_Frame" class="state-frame" />
       <view class="state">{{ planStateMap(props.plan.planState) }}</view>
@@ -69,12 +71,13 @@
         >已完成</text
       >
     </view>
-    <br />
-    <text class="card3-details">执行时间：{{ executionDetails.time }}</text>
-    <br />
-    <text class="card3-details">执行地点：{{ executionDetails.location }}</text>
-    <br />
-    <text class="card3-details">执行人员：{{ executionDetails.executor }}</text>
+    <text class="card3-details">{{ plan.description }}</text>
+    <!--    <br />-->
+    <!--    <text class="card3-details">执行时间：{{ executionDetails.time }}</text>-->
+    <!--    <br />-->
+    <!--    <text class="card3-details">执行地点：{{ executionDetails.location }}</text>-->
+    <!--    <br />-->
+    <!--    <text class="card3-details">执行人员：{{ executionDetails.executor }}</text>-->
   </div>
   <template v-if="props.plan.planState === PlanState.StateComplete">
     <div class="card4">
@@ -151,6 +154,7 @@ import { displayTime } from "@/utils/time";
 const props = defineProps<{
   plan: Plan;
 }>();
+console.log(props);
 
 const executionDetails = ref<{
   time: string;
@@ -365,17 +369,17 @@ init();
   background-color: white;
   flex-direction: row;
   margin: 4vw;
+  padding-left: 6vw;
   justify-content: space-between;
   box-sizing: border-box;
   padding-top: 5vw;
   padding-bottom: 5vw;
-  padding-left: 0.8vw;
   padding-right: 0.8vw;
 
   .card3-title {
     font-size: 4.5vw;
     letter-spacing: 0.4vw;
-    margin-left: 5vw;
+    //margin-left: 5vw;
     font-weight: bold;
   }
 
@@ -387,14 +391,13 @@ init();
     letter-spacing: 0.3vw;
     border-radius: 1vw;
     padding: 0.5vw 1.7vw;
-    margin-left: 4vw;
+    //margin-left: 4vw;
   }
 
   .card3-details {
     font-size: 3.3vw;
     letter-spacing: 0.3vw;
     color: grey;
-    margin-left: 5vw;
   }
 }
 
