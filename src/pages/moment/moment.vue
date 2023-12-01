@@ -175,11 +175,10 @@ const moment = ref<Moment>();
 const commentDoLikeMap = new Map<string, number>();
 
 const commentDoLike = async (id: string) => {
-  let commentLikeReq = {
+  let res = await doLike({
     targetId: id,
-    type: TargetType.Comment
-  };
-  let res = await doLike(commentLikeReq);
+    targetType: TargetType.Comment
+  });
   if (res.getFish) {
     setGotFishNum(res.getFishNum);
     setShowToastBox(true);

@@ -33,12 +33,12 @@
 import { onBeforeUnmount, reactive } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { doLike, getUserLiked } from "@/apis/like/like";
-import { User } from "@/apis/schemas";
+import { TargetType, User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pictures } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
-import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
+
 const props = defineProps<{
   userId?: string;
 }>();
@@ -108,7 +108,7 @@ onBeforeUnmount(() => {
   if (Boolean(followInfo.followed) !== Boolean(followInfo.originFollow)) {
     doLike({
       targetId: userInfo.id,
-      targetType: 6
+      targetType: TargetType.User
     });
   }
 });

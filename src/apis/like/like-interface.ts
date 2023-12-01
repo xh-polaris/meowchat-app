@@ -2,7 +2,7 @@ import { TargetType } from "@/apis/schemas";
 
 export interface DoLikeReq {
   targetId: string;
-  type: TargetType;
+  targetType: TargetType;
 }
 
 export interface DoLikeResp {

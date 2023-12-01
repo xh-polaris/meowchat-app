@@ -144,11 +144,10 @@ const myUserId = uni.getStorageSync(StorageKeys.UserId);
 const commentDoLikeMap = new Map<string, number>();
 
 const commentDoLike = async (id: string) => {
-  let commentLikeReq = {
+  await doLike({
     targetId: id,
     targetType: TargetType.Comment
-  };
-  await doLike(commentLikeReq);
+  });
 };
 
 const isShowDeleteDialogue = ref(false);

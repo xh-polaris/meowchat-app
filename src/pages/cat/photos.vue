@@ -53,7 +53,7 @@ import {
 } from "@/apis/collection/collection-interfaces";
 import { doLike, getCount, getUserLiked } from "@/apis/like/like";
 import { onClickImage } from "@/pages/cat/utils";
-import { Cat } from "@/apis/schemas";
+import { Cat, TargetType } from "@/apis/schemas";
 import { getCatImage } from "@/apis/collection/collection";
 import { onReachBottom } from "@dcloudio/uni-app";
 
@@ -80,7 +80,7 @@ function clickLike(id: string, index: number) {
     imgUrlList[index].isLiked = true;
     imgUrlList[index].likeNumber++;
   }
-  doLike({ targetId: id, targetType: 5 });
+  doLike({ targetId: id, targetType: TargetType.Cat_Photo });
 }
 
 function draftImage() {

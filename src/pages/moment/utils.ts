@@ -44,7 +44,7 @@ export interface LikeStruct {
 }
 
 export const likeMoment = async (item: Moment, eventEmitter?: EventEmitter) => {
-  doLike({ targetId: item.id, type: TargetType.Moment }).then((res) => {
+  doLike({ targetId: item.id, targetType: TargetType.Moment }).then((res) => {
     if (item.isLiked) {
       item.likeCount--;
     } else {
@@ -60,7 +60,7 @@ export const likeComment = async (
   setGotFishNum: (num: number) => void,
   setShowToastBox: (bool: boolean) => void
 ) => {
-  doLike({ targetId: item.id, type: TargetType.Comment }).then((res) => {
+  doLike({ targetId: item.id, targetType: TargetType.Comment }).then((res) => {
     if (item.isLiked) {
       item.likeCount--;
     } else {

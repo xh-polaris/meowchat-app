@@ -12,7 +12,7 @@ export function onClickImage(photo: string) {
 
 export const likePost = async (item: Post) => {
   console.log({ targetId: item.id, type: TargetType.Comment });
-  doLike({ targetId: item.id, type: TargetType.Comment }).then(() => {
+  doLike({ targetId: item.id, targetType: TargetType.Comment }).then(() => {
     if (item.isLiked) {
       item.likes--;
     } else {
