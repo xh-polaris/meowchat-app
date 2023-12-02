@@ -1,5 +1,17 @@
 
 
+## [1.19.6](https://github.com/xh-polaris/meowchat-app/compare/v1.19.5...v1.19.6) (2023-12-02)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 点击id复制到剪贴板 ([#385](https://github.com/xh-polaris/meowchat-app/issues/385)) ([bcd1373](https://github.com/xh-polaris/meowchat-app/commit/bcd137377d8bc985bf09b5568bad90009f544356))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复小鱼干计划若干问题 ([a3f6ebd](https://github.com/xh-polaris/meowchat-app/commit/a3f6ebd613cd7f1d93b2fb8dc1831a288a3c1493))
+
 ## [1.19.5](https://github.com/xh-polaris/meowchat-app/compare/v1.19.4...v1.19.5) (2023-12-01)
 
 ## [1.19.4](https://github.com/xh-polaris/meowchat-app/compare/v1.19.3...v1.19.4) (2023-12-01)
