@@ -71,7 +71,7 @@
         >已完成</text
       >
     </view>
-    <text class="card3-details">{{ plan.description }}</text>
+    <text class="card3-details">{{ plan.instruction }}</text>
     <!--    <br />-->
     <!--    <text class="card3-details">执行时间：{{ executionDetails.time }}</text>-->
     <!--    <br />-->
