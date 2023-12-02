@@ -14,8 +14,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import { Icons } from "@/utils/url";
-import { onClickSwitch } from "@/pages/community/utils";
+import { Icons, Pages } from "@/utils/url";
 import { listCommunity } from "@/apis/community/community";
 import { StorageKeys } from "@/utils/const";
 import { Community } from "@/apis/schemas";
@@ -54,6 +53,12 @@ async function getCampus() {
     }
   }
 }
+
+const onClickSwitch = () => {
+  uni.navigateTo({
+    url: Pages.SchoolSelect
+  });
+};
 
 getCampus();
 </script>

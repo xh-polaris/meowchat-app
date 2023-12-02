@@ -83,7 +83,7 @@
         </template>
         <template v-else-if="current === 1">
           <!-- 动态 -->
-          <MasonryFrame :keyword="searchText"></MasonryFrame>
+          <Masonry :get-previews="buildLoader(searchText)"></Masonry>
         </template>
         <template v-else-if="current === 2">
           <!-- 图鉴 -->
@@ -97,13 +97,14 @@
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
 import WorldPosts from "@/pages/world/WorldPosts.vue";
-import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import SearchCats from "@/pages/search/SearchCats.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 import { Icons, Pages } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
 import { StorageKeys } from "@/utils/const";
 import { onLoad } from "@dcloudio/uni-app";
+import { buildLoader } from "@/pages/community/utils";
+import Masonry from "@/pages/community/Masonry.vue";
 
 const items = ["帖子", "动态", "图鉴"];
 

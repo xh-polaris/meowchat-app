@@ -1,4 +1,4 @@
-import { TargetType } from "@/apis/schemas";
+import { Comment, Moment, Post, TargetType, User } from "@/apis/schemas";
 
 export interface DoLikeReq {
   targetId: string;
@@ -33,18 +33,22 @@ export interface GetCountResp {
   count: number;
 }
 
-export interface GetUserLikesReq {
+export interface GetLikeContentsReq {
   userId?: string;
   targetType: TargetType;
+  lastToken?: string;
+  limit?: number;
+  backward?: boolean;
+  page?: number;
 }
 
-export interface GetUserLikesResp {
+export interface GetLikeContentsResp {
   code: number;
-  likes: Like[];
   msg: string;
-}
-
-export interface Like {
-  associatedId: string;
-  targetId: string;
+  posts: Post[];
+  moments: Moment[];
+  users: User[];
+  comments: Comment[];
+  total: number;
+  token: string;
 }

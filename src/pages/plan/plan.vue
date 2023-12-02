@@ -8,26 +8,25 @@
         <image :src="Icons.Plan_Logo" class="plan-logo"></image>
       </template>
     </TopBar>
-    <template v-if="!isRefreshing">
-      <view
-        style="
-          display: flex;
-          z-index: 100;
-          padding-left: 2.5vw;
-          position: fixed;
-          width: 100vw;
-          height: 16vw;
-          align-items: center;
-          background-color: #f4f9ff;
-        "
-      >
-        <GoToMyPlans></GoToMyPlans>
-        <FishAmount></FishAmount>
-      </view>
-      <view style="height: 16vw"></view>
-      <PlanEntries></PlanEntries>
-      <view style="height: 20vw"></view>
-    </template>
+    <view
+      v-if="showHeader"
+      style="
+        display: flex;
+        z-index: 100;
+        padding-left: 2.5vw;
+        position: fixed;
+        width: 100vw;
+        height: 16vw;
+        align-items: center;
+        background-color: #f4f9ff;
+      "
+    >
+      <GoToMyPlans></GoToMyPlans>
+      <FishAmount></FishAmount>
+    </view>
+    <view style="height: 16vw"></view>
+    <PlanEntries v-if="showContent"></PlanEntries>
+    <view style="height: 20vw"></view>
   </view>
 
   <BottomBar id="plan"></BottomBar>
@@ -40,19 +39,22 @@ import TopBar from "@/components/TopBar.vue";
 
 import FishAmount from "@/pages/plan/FishAmount.vue";
 import PlanEntries from "@/pages/plan/PlanEntries.vue";
-import { nextTick, ref } from "vue";
-import { onPullDownRefresh } from "@dcloudio/uni-app";
+import { ref } from "vue";
+import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { Icons } from "@/utils/url";
+import { refresh } from "@/utils/utils";
 
-const isRefreshing = ref(false);
-function pageRefresh() {
-  isRefreshing.value = true;
-  nextTick(() => {
-    isRefreshing.value = false;
-  });
-}
+const showHeader = ref(false);
+const showContent = ref(false);
+
+refresh(showContent);
+
+onShow(() => {
+  refresh(showHeader);
+});
+
 onPullDownRefresh(() => {
-  pageRefresh();
+  refresh(showContent);
   uni.stopPullDownRefresh();
 });
 </script>

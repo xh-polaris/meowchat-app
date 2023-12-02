@@ -8,11 +8,11 @@
   </view>
   <view class="com-item">
     <view class="line-info">
-      <view class="number">{{ userInfo.following }}</view>
+      <view class="number">{{ user.following }}</view>
       <view class="info">关注</view>
-      <view class="number">{{ userInfo.follower }}</view>
+      <view class="number">{{ user.follower }}</view>
       <view class="info">粉丝</view>
-      <view class="number">{{ userInfo.article }}</view>
+      <view class="number">{{ user.article }}</view>
       <view class="info">创作</view>
       <view v-if="!followInfo.followed">
         <view class="subscribe" @click="onClickFollow()">
@@ -38,6 +38,7 @@ import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pictures } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
+import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
 
 const props = defineProps<{
   userId?: string;
@@ -52,7 +53,7 @@ const followInfo = reactive<FollowedInfo>({
   followed: true,
   originFollow: true
 });
-const userInfo = reactive<User>({
+const user = reactive<User>({
   id: "",
   nickname: "微信用户",
   avatarUrl: "https://static.xhpolaris.com/cat_world.jpg",
@@ -62,11 +63,14 @@ const userInfo = reactive<User>({
   following: 0
 });
 const onClickFollow = async () => {
+  if (!user.follower) {
+    user.follower = 0;
+  }
   if (followInfo.followed === true) {
-    userInfo.follower--;
+    user.follower--;
     followInfo.followed = false;
   } else {
-    userInfo.follower++;
+    user.follower++;
     followInfo.followed = true;
   }
 };
@@ -74,14 +78,14 @@ const refresh = async () => {
   const res = await getUserInfo({
     userId: props.userId
   });
-  userInfo.id = res.user.id;
-  userInfo.nickname = res.user.nickname;
-  userInfo.avatarUrl = res.user.avatarUrl;
-  userInfo.follower = res.user.follower || 0;
-  userInfo.following = res.user.following || 0;
-  userInfo.article = res.user.article;
+  user.id = res.user.id;
+  user.nickname = res.user.nickname;
+  user.avatarUrl = res.user.avatarUrl;
+  user.follower = res.user.follower || 0;
+  user.following = res.user.following || 0;
+  user.article = res.user.article;
   let commentLikeReq = {
-    targetId: userInfo.id,
+    targetId: user.id,
     targetType: 6
   };
   const userLiked = await getUserLiked(commentLikeReq);
@@ -107,7 +111,7 @@ onReady(() => {
 onBeforeUnmount(() => {
   if (Boolean(followInfo.followed) !== Boolean(followInfo.originFollow)) {
     doLike({
-      targetId: userInfo.id,
+      targetId: user.id,
       targetType: TargetType.User
     });
   }

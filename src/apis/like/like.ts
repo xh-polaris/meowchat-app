@@ -5,8 +5,8 @@ import {
   GetCountResp,
   GetUserLikedReq,
   GetUserLikedResp,
-  GetUserLikesReq,
-  GetUserLikesResp
+  GetLikeContentsReq,
+  GetLikeContentsResp
 } from "@/apis/like/like-interface";
 
 /**
@@ -75,22 +75,17 @@ export async function getCount(req: GetCountReq) {
   });
 }
 
-/**
- * @description
- * 获取点赞内容
- * @param req
- */
-export async function getUserLikes(req: GetUserLikesReq) {
-  return await new Promise<GetUserLikesResp>((resolve, reject) => {
+export async function getLikeContents(req: GetLikeContentsReq) {
+  return await new Promise<GetLikeContentsResp>((resolve, reject) => {
     uni.request({
-      url: "/like/get_user_likes",
+      url: "/like/get_user_like_contents",
       data: req,
       method: "GET",
       success(res: UniNamespace.RequestSuccessCallbackResult) {
         if (res.statusCode !== 200) {
           reject(res);
         }
-        const data = res.data as GetUserLikesResp;
+        const data = res.data as GetLikeContentsResp;
         resolve(data);
       }
     });

@@ -1,26 +1,43 @@
-import { News } from "@/apis/schemas";
-import { Pages } from "@/utils/url";
+import { getMomentPreviews } from "@/apis/moment/moment";
+import { StorageKeys } from "@/utils/const";
+import { GetMomentPreviewsReq } from "@/apis/moment/moment-components";
+import { getPrefetchData, PrefetchResp } from "@/apis/prefetch";
 
-export function onClickCarousel(c: News) {
-  if (c.type === "inner") {
-    uni.navigateTo({
-      url: c.linkUrl
-    });
-  } else if (c.type === "article") {
-    uni.navigateTo({
-      url: `${Pages.WebView}?url=${c.linkUrl}`
-    });
-  }
-}
+export function buildLoader(keyword?: string) {
+  let lastToken: string; // 每次记录上个token
+  const communityId = uni.getStorageSync(StorageKeys.CommunityId);
 
-export function onClickMoment(id: string) {
-  uni.navigateTo({
-    url: `${Pages.Moment}?id=${id}`
-  });
-}
+  const fetch = async (keyword?: string) => {
+    const req: GetMomentPreviewsReq = {
+      communityId: communityId
+    };
+    if (lastToken) {
+      req.lastToken = lastToken;
+    }
+    if (keyword) {
+      req.keyword = keyword;
+    }
+    const res = await getMomentPreviews(req);
+    lastToken = res.token;
+    return res.moments;
+  };
 
-export function onClickSwitch() {
-  uni.navigateTo({
-    url: Pages.SchoolSelect
-  });
+  return async () => {
+    if (lastToken || keyword) {
+      return fetch();
+    }
+    let res: PrefetchResp;
+    try {
+      res = await getPrefetchData({ communityId: communityId });
+    } catch (reason) {
+      return fetch();
+    }
+    if (!res.firstMomentPreviewsResp?.moments) {
+      return fetch();
+    }
+    lastToken = res.firstMomentPreviewsResp.token;
+    const moments = res.firstMomentPreviewsResp.moments;
+    res.firstMomentPreviewsResp = undefined;
+    return moments;
+  };
 }

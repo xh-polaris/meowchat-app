@@ -47,35 +47,26 @@
           <view v-if="post.likes" class="font-sm"
             >{{ post.likes }}位喵友觉得很赞</view
           >
-          <view v-if="post.user.id === myUserId && myUserId">
-            <view class="delete" @click.stop="onClickDelete(post.id)">
-              <image :src="Icons.Delete" class="deletepic" />
-              <view class="font-sm">删除帖子</view>
-            </view>
-          </view>
         </view>
       </view>
     </template>
-    <view style="width: 100%; height: 40rpx"></view>
-    <view class="nomore">
+    <view v-if="!postsData.length" class="nomore">
       <image
         src="/static/images/nomore.png"
         style="width: 200rpx; height: 186rpx"
       />
     </view>
-    <view style="width: 100%; height: 200rpx"></view>
   </template>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { deletePost, getPostPreviews } from "@/apis/post/post";
-import { DeletePostReq } from "@/apis/post/post-interfaces";
+import { DeletePostReq, GetPostPreviewsReq } from "@/apis/post/post-interfaces";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
-import { Icons, Pages } from "@/utils/url";
 
 interface Props {
   type?: string;
@@ -83,54 +74,32 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const deleteID = reactive<DeletePostReq>({ id: "" });
 let userId: string | undefined;
 let postsData = ref<Post[]>([]);
 let token: string;
 const myUserId = ref("");
+const hasMore = ref(true);
 const getPostPreviewsAsync = async () => {
+  if (!hasMore.value) {
+    return <Post[]>[];
+  }
   myUserId.value = uni.getStorageSync("userId");
   userId = props.userId;
-  if (props.type === "my") {
-    const res = await getPostPreviews({
-      paginationOption: {
-        lastToken: token
-      },
-      onlyUserId: myUserId.value
-    });
-    token = res.token;
-    return res.posts;
-  } else {
-    const res = await getPostPreviews({
-      paginationOption: {
-        lastToken: token
-      },
-      onlyUserId: userId
-    });
-    token = res.token;
-    return res.posts;
+  const req: GetPostPreviewsReq = {
+    onlyUserId: props.type === "my" ? myUserId.value : userId
+  };
+  if (token) {
+    req.paginationOption = {
+      lastToken: token
+    };
   }
+  const res = await getPostPreviews(req);
+  if (res.token === token || res.total <= res.posts.length) {
+    hasMore.value = false;
+  }
+  token = res.token;
+  return res.posts;
 };
-
-async function onClickDelete(id: string) {
-  deleteID.id = id;
-  uni.showModal({
-    title: "确认删除",
-    content: "是否删除该帖子",
-    success: function (res) {
-      if (res.confirm) {
-        deletePost(deleteID).then((res) => {
-          uni.showToast({
-            title: res.msg
-          });
-        });
-        uni.reLaunch({
-          url: Pages.MyPublish
-        });
-      }
-    }
-  });
-}
 
 async function createPostsDataBatch() {
   const posts = await getPostPreviewsAsync();
@@ -256,7 +225,8 @@ onReachBottom(() => {
 }
 
 .nomore {
-  margin-top: 10rpx;
+  background-color: #fafcff;
+  padding: 10rpx;
   font-size: 20rpx;
   line-height: 20rpx;
   text-align: center;

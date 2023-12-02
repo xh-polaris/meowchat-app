@@ -7,14 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import { Icons } from "@/utils/url";
+import { Icons, Pages } from "@/utils/url";
 import { ref } from "vue";
 const goToHelpedPlans = () => {
   uni.navigateTo({
-    url: "/pages/plan/helped-plans/helped-plans"
+    url: Pages.HelpedPlans
   });
 };
-import { getCountDonate, getUserFish } from "@/apis/plan/plan";
+import { getCountDonate } from "@/apis/plan/plan";
 const donateNum = ref(0);
 const getDonateCount = async () => {
   const data = await getCountDonate({});

@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <view class="card" @click="onClick">
     <img :src="props.plan.coverUrl" class="image-cat" />
 
     <p class="title">
@@ -8,21 +8,26 @@
     </p>
     <p class="date">{{ displayTime(props.plan.donateTime) }}</p>
 
-    <div class="fish-count">
+    <view class="fish-count">
       <img :src="Icons.LittleFish" class="image-fish" />
       <p class="count">×{{ props.plan.donateNum }}</p>
-    </div>
-  </div>
+    </view>
+  </view>
 </template>
 
 <script setup lang="ts">
-import { Icons } from "@/utils/url";
-import { planpreviews } from "@/apis/schemas";
-import { displayTime } from "../../../utils/time";
+import { Icons, Pages } from "@/utils/url";
+import { PlanPreview } from "@/apis/schemas";
+import { displayTime } from "@/utils/time";
+
 const props = defineProps<{
-  plan: planpreviews;
+  plan: PlanPreview;
 }>();
-console.log(props.plan);
+const onClick = () => {
+  uni.navigateTo({
+    url: `${Pages.PlanDetails}?id=${props.plan.id}`
+  });
+};
 </script>
 
 <style scoped lang="scss">

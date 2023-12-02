@@ -1,17 +1,17 @@
 <template>
-  <template v-if="!isRefreshing">
+  <template v-if="!isRefreshing && plan">
     <BackgroundImage
-      :url="plan?.coverUrl"
-      :urls="[plan?.coverUrl]"
+      :url="plan.coverUrl"
+      :urls="[plan.coverUrl]"
     ></BackgroundImage>
     <BackButton></BackButton>
     <view class="background">
-      <template v-if="isInited">
+      <template v-if="isInited && plan">
         <Cards :plan="plan"></Cards>
       </template>
       <view style="height: 20vw"></view>
     </view>
-    <template v-if="showDonatePanel">
+    <template v-if="showDonatePanel && plan">
       <DonatePanel
         :plan="plan"
         :my-fish="myFish"
@@ -37,7 +37,7 @@
       @close="closeToastBox"
     ></ToastBoxWithShadow>
   </template>
-  <template v-if="plan.maxFish > plan.nowFish">
+  <template v-if="plan?.maxFish > plan?.nowFish">
     <BottomBar @on-help-click="clickDonateButton"></BottomBar>
   </template>
 </template>

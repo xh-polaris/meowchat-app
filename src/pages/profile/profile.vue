@@ -57,6 +57,7 @@
     </view>
   </view>
   <UserPublished type="my"></UserPublished>
+  <view style="width: 100%; height: 18vw"></view>
   <BottomBar id="profile"></BottomBar>
   <template v-if="enableDebug">
     <DebugPanel></DebugPanel>
@@ -93,7 +94,7 @@ const refresh = async () => {
   user.id = res.user.id;
   user.nickname = res.user.nickname;
   user.avatarUrl = res.user.avatarUrl;
-  user.motto;
+  user.motto = res.user.motto;
   user.article = res.user.article || 0;
   user.follower = res.user.follower || 0;
   user.following = res.user.following || 0;
@@ -114,9 +115,9 @@ const clickAppVersion = () => {
   clickedTimes.value++;
 };
 const accountInfo = uni.getAccountInfoSync();
-const appVersion = accountInfo.version
-  ? "version: " + accountInfo.version
-  : "version: 1.18.0";
+const appVersion = accountInfo.miniProgram.version
+  ? "version: " + accountInfo.miniProgram.version
+  : "version: 体验版";
 
 onShow(refresh);
 onPullDownRefresh(() => {

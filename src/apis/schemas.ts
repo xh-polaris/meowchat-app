@@ -17,11 +17,10 @@ export interface User {
   id: string;
   nickname: string;
   avatarUrl: string;
-  motto: string;
-  article: number;
-  follower: number;
-  following: number;
-  enableDebug?: boolean;
+  motto?: string;
+  article?: number;
+  follower?: number;
+  following?: number;
 }
 
 export interface Auth {
@@ -178,13 +177,13 @@ export interface Plan {
   summary: string;
   [property: string]: any;
 }
-export interface planpreviews {
+export interface PlanPreview {
   id: string;
   name: string;
   catName: string;
   donateNum: number;
   donateTime: number;
-  [property: string]: any;
+  coverUrl: string;
 }
 export const enum TargetType {
   Post = 1,

@@ -43,16 +43,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { Plan, PlanType } from "@/apis/schemas";
+import { Plan } from "@/apis/schemas";
 import { Icons } from "@/utils/url";
 import { planTypeMap, onClickPlan } from "@/pages/plan/utils";
-import BackgroundImage from "@/components/BackgroundImage.vue";
 
 const props = defineProps<{
   plan: Plan;
 }>();
-console.log(props.plan);
 </script>
 
 <style scoped lang="scss">

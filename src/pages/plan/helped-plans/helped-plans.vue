@@ -27,19 +27,22 @@
 import TopBar from "@/components/TopBar.vue";
 import HelpedCard from "@/pages/plan/helped-plans/HelpedCard.vue";
 //到时候background的min高度还要修
-import { list_donate_by_user } from "@/apis/plan/plan";
+import { ListDonateByUser } from "@/apis/plan/plan";
 import { ref } from "vue";
-import { planpreviews } from "@/apis/schemas";
+import { PlanPreview } from "@/apis/schemas";
 import { navBarHeight } from "@/utils/style";
+import { ListDonateByUserReq } from "@/apis/plan/plan-interfaces";
+import { onReachBottom } from "@dcloudio/uni-app";
 const styleStr = `min-height: calc(100vh - ${navBarHeight}px)`;
-console.log(styleStr);
-const plansRight = ref<planpreviews[]>([]);
-const plansLeft = ref<planpreviews[]>([]);
-const ListDonateByUser = async () => {
-  const res = await list_donate_by_user({
-    limit: 999,
-    page: 0
-  });
+const plansRight = ref<PlanPreview[]>([]);
+const plansLeft = ref<PlanPreview[]>([]);
+let page = 0;
+const load = async () => {
+  const req: ListDonateByUserReq = {
+    page
+  };
+  page++;
+  const res = await ListDonateByUser(req);
   for (let i = 0; i < res?.total; i = i + 2) {
     plansLeft.value.push(res.planPreviews[i]);
   }
@@ -47,7 +50,11 @@ const ListDonateByUser = async () => {
     plansRight.value.push(res.planPreviews[i]);
   }
 };
-ListDonateByUser();
+load();
+
+onReachBottom(() => {
+  load();
+});
 </script>
 
 <style scoped lang="scss">

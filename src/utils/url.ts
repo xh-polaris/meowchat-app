@@ -30,7 +30,6 @@ export const enum Icons {
   Frame = "/static/images/Frame.png",
   DialogBox = "/static/images/dialog-box.png",
   State_Frame = "/static/images/state-frame.png",
-  Task_Pic = "/static/images/task-pic.png",
   Pic_Left = "/static/images/pic-left.png",
   Pic_Right = "/static/images/pic-right.png",
   Button_Increment = "/static/images/button-increment.png",
@@ -61,5 +60,6 @@ export const enum Pages {
   MyPublish = "/pages/profile/my-publish/my-publish",
   Message = "/pages/message/message",
   Person = "/pages/profile/personal-info/personal-info",
-  EditInfo = "/pages/profile/edit-info/edit-info"
+  EditInfo = "/pages/profile/edit-info/edit-info",
+  HelpedPlans = "/pages/plan/helped-plans/helped-plans"
 }

@@ -1,4 +1,4 @@
-import { Plan, PlanType, User } from "../schemas";
+import { Plan, PlanPreview, PlanType, User } from "../schemas";
 
 export interface DeletePlanReq {
   planId: string;
@@ -70,27 +70,24 @@ export interface GetUserFishResp {
 export interface DonateFishReq {
   fish?: number;
   planId?: string;
-  [property: string]: any;
 }
 
 export interface GetUserDonateCountReq {
   userId?: string;
-  [property: string]: any;
 }
 export interface GetUserDonateCountResp {
-  total: string;
-  [property: string]: any;
+  total: number;
 }
 
 export interface ListDonateByUserReq {
-  limit: 999;
-  page: 0;
-  [property: string]: any;
+  page?: number;
+  lastToken?: string;
+  limit?: number;
+  userId?: string;
 }
 
 export interface ListDonateByUserResp {
   total: number;
   token: string;
-  planPreviews: object;
-  [property: string]: any;
+  planPreviews: PlanPreview[];
 }

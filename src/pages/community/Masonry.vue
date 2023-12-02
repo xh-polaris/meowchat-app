@@ -30,9 +30,7 @@
           </view>
 
           <view class="tile-info">
-            <view class="title">
-              {{ moment.title }}
-            </view>
+            <view class="title">{{ moment.title }}</view>
             <view class="other-info">
               <view class="user-info">
                 <template v-if="moment.user">
@@ -62,16 +60,17 @@
       </template>
     </view>
   </view>
-  <view v-if="isNoData" class="no-cat-here-frame">
-    <image :src="Pictures.NoCatHere" class="no-cat-here" />
+  <view v-if="isNoData">
+    <view class="no-cat-here-frame">
+      <image :src="Pictures.NoCatHere" class="no-cat-here" />
+    </view>
   </view>
-  <view v-else class="blue-background" />
 </template>
 
 <script lang="ts" setup>
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
 import { Moment } from "@/apis/schemas";
-import { onClickMoment } from "@/pages/community/utils";
+import { onClickMoment } from "@/pages/community/event";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
@@ -355,7 +354,7 @@ $avatarWidth: calc(21 / 390 * 100vw);
 
 .no-cat-here-frame {
   width: 100vw;
-  margin-top: 20vh;
+  margin-top: 50rpx;
   display: flex;
   justify-content: center;
 

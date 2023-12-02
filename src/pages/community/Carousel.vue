@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { News } from "@/apis/schemas";
-import { onClickCarousel } from "@/pages/community/utils";
+import { onClickCarousel } from "@/pages/community/event";
 
 const props = defineProps<{
   contents: News[];

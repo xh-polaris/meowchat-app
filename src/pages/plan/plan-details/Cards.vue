@@ -32,9 +32,8 @@
     </div>
 
     <view class="time"
-      >募集时间： {{ displayTime(props.plan.startTime) }}-{{
-        displayTime(props.plan.endTime)
-      }}</view
+      >募集时间： {{ displayDate(props.plan.startTime) }} ~
+      {{ displayDate(props.plan.endTime) }}</view
     >
 
     <div class="dialog-box">
@@ -72,14 +71,12 @@
       >
     </view>
     <text class="card3-details">{{ plan.instruction }}</text>
-    <!--    <br />-->
-    <!--    <text class="card3-details">执行时间：{{ executionDetails.time }}</text>-->
-    <!--    <br />-->
-    <!--    <text class="card3-details">执行地点：{{ executionDetails.location }}</text>-->
-    <!--    <br />-->
-    <!--    <text class="card3-details">执行人员：{{ executionDetails.executor }}</text>-->
   </div>
-  <template v-if="props.plan.planState === PlanState.StateComplete">
+  <template
+    v-if="
+      props.plan.planState === PlanState.StateComplete && props.plan.imageUrls
+    "
+  >
     <div class="card4">
       <view>
         <text class="card4-title">任务返图</text>
@@ -92,37 +89,30 @@
       </view>
 
       <div class="pic-example">
-        <template v-if="props.plan.imageUrls !== null">
-          <img
-            :src="props.plan.imageUrls[nowPicIndex]"
-            class="task-pic"
-            @click="
-              onClickImage(
-                props.plan.imageUrls[nowPicIndex],
-                props.plan.imageUrls
-              )
-            "
-          />
-          <img
-            :src="Icons.Pic_Left"
-            class="pic-left"
-            @click="
-              nowPicIndex =
-                (nowPicIndex - 1 + props.plan.imageUrls.length) %
-                props.plan.imageUrls.length
-            "
-          />
-          <img
-            :src="Icons.Pic_Right"
-            class="pic-right"
-            @click="
-              nowPicIndex = (nowPicIndex + 1) % props.plan.imageUrls.length
-            "
-          />
-        </template>
-        <template v-else>
-          <img :src="Icons.Task_Pic" class="task-pic" />
-        </template>
+        <img
+          :src="props.plan.imageUrls[nowPicIndex]"
+          class="task-pic"
+          @click="
+            onClickImage(
+              props.plan.imageUrls[nowPicIndex],
+              props.plan.imageUrls
+            )
+          "
+        />
+        <img
+          :src="Icons.Pic_Left"
+          class="pic-left"
+          @click="
+            nowPicIndex =
+              (nowPicIndex - 1 + props.plan.imageUrls.length) %
+              props.plan.imageUrls.length
+          "
+        />
+        <img
+          :src="Icons.Pic_Right"
+          class="pic-right"
+          @click="nowPicIndex = (nowPicIndex + 1) % props.plan.imageUrls.length"
+        />
       </div>
     </div>
   </template>
@@ -150,40 +140,12 @@ import { Icons } from "@/utils/url";
 import { planTypeMap, planStateMap } from "@/pages/plan/utils";
 import { reactive, ref } from "vue";
 import { onClickImage } from "@/components/utils";
-import { displayTime } from "@/utils/time";
+import { displayDate, displayTime } from "@/utils/time";
 const props = defineProps<{
   plan: Plan;
 }>();
-console.log(props);
-
-const executionDetails = ref<{
-  time: string;
-  location: string;
-  executor: string;
-}>({
-  time: "1",
-  location: "2",
-  executor: "3"
-});
-
-const executionParse = (str: string) => {
-  const words = str.split("\n");
-  if (words.length === 3) {
-    executionDetails.value = {
-      time: words[0],
-      location: words[1],
-      executor: words[2]
-    };
-  }
-};
-
-const init = () => {
-  executionParse(props.plan.instruction);
-};
 
 const nowPicIndex = ref<number>(0);
-
-init();
 </script>
 
 <style scoped lang="scss">

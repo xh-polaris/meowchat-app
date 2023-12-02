@@ -28,7 +28,7 @@
     <view style="height: 4vw"></view>
 
     <view v-if="!isRefreshing">
-      <MasonryFrame></MasonryFrame>
+      <Masonry :get-previews="buildLoader()"></Masonry>
     </view>
 
     <view style="height: 18vw"></view>
@@ -53,7 +53,6 @@ import BottomBar from "@/components/BottomBar.vue";
 import { nextTick, reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import SchoolSelectBar from "@/components/SchoolSelectBar.vue";
-import MasonryFrame from "@/pages/community/MasonryFrame.vue";
 import Cards from "@/pages/community/cards/cards.vue";
 import CarouselFrame from "@/pages/community/CarouselFrame.vue";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
@@ -61,6 +60,8 @@ import { StorageKeys } from "@/utils/const";
 import { needChooseCommunity } from "@/utils/init";
 import { Pages } from "@/utils/url";
 import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
+import { buildLoader } from "@/pages/community/utils";
+import Masonry from "@/pages/community/Masonry.vue";
 const communityId = ref(uni.getStorageSync(StorageKeys.CommunityId));
 const cardList = reactive(["", "", "", "", "", ""]);
 

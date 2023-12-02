@@ -9,13 +9,17 @@
     </zzx-tabs>
     <view class="wrap tab">
       <view v-if="current === 0">
-        <MyMasonry :type="props.type" :user-id="props.userId"></MyMasonry>
+        <Masonry
+          :get-previews="buildPublishMomentLoader(props.userId)"
+        ></Masonry>
       </view>
-      <view v-if="current === 1">
+      <view v-else-if="current === 1">
         <MyPosts :type="props.type" :user-id="props.userId"></MyPosts>
       </view>
-      <view v-if="current === 2">
-        <MyMasonry :user-id="props.userId" type="liked"></MyMasonry>
+      <view v-else-if="current === 2">
+        <Masonry
+          :get-previews="buildLikingMomentLoader(props.userId)"
+        ></Masonry>
       </view>
     </view>
   </view>
@@ -23,17 +27,25 @@
 
 <script lang="ts" setup>
 import MyPosts from "@/pages/profile/my-publish/my-posts.vue";
-import MyMasonry from "@/pages/profile/my-publish/my-masonry.vue";
 import ZzxTabs from "@/components/third-party/zzx-tabs/zzx-tabs.vue";
 import { ref } from "vue";
+import {
+  buildLikingMomentLoader,
+  buildPublishMomentLoader
+} from "@/pages/profile/profile-components/loader";
+import Masonry from "@/pages/community/Masonry.vue";
+import { onReady } from "@dcloudio/uni-app";
 
 const props = defineProps<{
   type?: string;
   userId?: string;
 }>();
 const items = ["动态", "帖子", "喜欢"];
-let current = ref(0);
-
+let current = ref(-1);
+// 没这几行真不行
+onReady(() => {
+  current.value = 0;
+});
 function onClickItem(e: any) {
   if (current.value !== e.currentIndex) {
     current.value = e.currentIndex;

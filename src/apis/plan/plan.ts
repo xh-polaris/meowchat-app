@@ -6,6 +6,7 @@ import {
   GetPlanPreviewsReq,
   GetPlanPreviewsResp,
   GetUserDonateCountReq,
+  GetUserDonateCountResp,
   GetUserFishReq,
   GetUserFishResp,
   ListDonateByUserReq,
@@ -135,7 +136,7 @@ export async function donateFish(req: DonateFishReq) {
 }
 
 export async function getCountDonate(req: GetUserDonateCountReq) {
-  return await new Promise<GetUserDonateCountReq>((resolve, reject) => {
+  return await new Promise<GetUserDonateCountResp>((resolve, reject) => {
     uni.request({
       url: "/plan/count_donate_by_user",
       data: req,
@@ -144,14 +145,14 @@ export async function getCountDonate(req: GetUserDonateCountReq) {
         if (res.statusCode !== 200) {
           reject(res);
         }
-        const data = res.data as GetUserDonateCountReq;
+        const data = res.data as GetUserDonateCountResp;
         resolve(data);
       }
     });
   });
 }
 
-export async function list_donate_by_user(req: ListDonateByUserReq) {
+export async function ListDonateByUser(req: ListDonateByUserReq) {
   return await new Promise<ListDonateByUserResp>((resolve, reject) => {
     uni.request({
       url: "/plan/list_donate_by_user",
