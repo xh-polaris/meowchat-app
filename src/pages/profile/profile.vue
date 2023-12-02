@@ -100,6 +100,17 @@ const refresh = async () => {
 };
 const clickedTimes = ref(0);
 const clickAppVersion = () => {
+  if (clickedTimes.value >= 5) {
+    uni.setClipboardData({
+      data: user.id,
+      success: () => {
+        uni.showToast({
+          title: "已复制id至剪贴板"
+        });
+      }
+    });
+    return;
+  }
   clickedTimes.value++;
 };
 const accountInfo = uni.getAccountInfoSync();
