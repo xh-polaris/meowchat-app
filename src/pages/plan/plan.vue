@@ -47,13 +47,13 @@ import { refresh } from "@/utils/utils";
 const showHeader = ref(false);
 const showContent = ref(false);
 
-refresh(showContent);
-
 onShow(() => {
   refresh(showHeader);
+  refresh(showContent);
 });
 
 onPullDownRefresh(() => {
+  refresh(showHeader);
   refresh(showContent);
   uni.stopPullDownRefresh();
 });
