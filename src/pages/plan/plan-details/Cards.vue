@@ -136,9 +136,9 @@
 import { Plan, PlanState } from "@/apis/schemas";
 import { Icons } from "@/utils/url";
 import { planTypeMap, planStateMap } from "@/pages/plan/utils";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { onClickImage } from "@/components/utils";
-import { displayDate, displayTime } from "@/utils/time";
+import { displayDate } from "@/utils/time";
 const props = defineProps<{
   plan: Plan;
 }>();

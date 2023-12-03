@@ -8,10 +8,6 @@
   </TopBar>
 
   <view class="background">
-    <!--    <view v-if="!isRefreshing">-->
-    <!--      <CarouselTest />-->
-    <!--    </view>-->
-
     <view v-if="!isRefreshing">
       <CarouselFrame />
     </view>

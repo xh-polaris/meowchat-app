@@ -1,16 +1,15 @@
 <template>
   <image
-    :src="props.url"
+    :src="props.urls?.[0] || ''"
     class="cat-image"
     mode="aspectFill"
-    @click="onClickImage(props.url, props.urls)"
+    @click="onClickImage(props.urls?.[0] || '', props.urls)"
   />
 </template>
 
 <script setup lang="ts">
 import { onClickImage } from "@/components/utils";
 const props = defineProps<{
-  url: string;
   urls: string[];
 }>();
 </script>

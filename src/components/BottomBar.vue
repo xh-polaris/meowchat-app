@@ -7,7 +7,6 @@
 
 <script setup lang="ts">
 import BottomBarContent from "@/components/BottomBar/BottomBarContent.vue";
-import WhatTypeToDraft from "@/components/BottomBar/WhatTypeToDraft.vue";
 import { ref } from "vue";
 interface Props {
   id: string;

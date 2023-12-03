@@ -9,12 +9,13 @@
 <script setup lang="ts">
 import { Icons, Pages } from "@/utils/url";
 import { ref } from "vue";
+import { getCountDonate } from "@/apis/plan/plan";
 const goToHelpedPlans = () => {
   uni.navigateTo({
     url: Pages.HelpedPlans
   });
 };
-import { getCountDonate } from "@/apis/plan/plan";
+
 const donateNum = ref(0);
 const getDonateCount = async () => {
   const data = await getCountDonate({});

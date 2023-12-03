@@ -8,19 +8,7 @@
         <image :src="Icons.Plan_Logo" class="plan-logo"></image>
       </template>
     </TopBar>
-    <view
-      v-if="showHeader"
-      style="
-        display: flex;
-        z-index: 100;
-        padding-left: 2.5vw;
-        position: fixed;
-        width: 100vw;
-        height: 16vw;
-        align-items: center;
-        background-color: #f4f9ff;
-      "
-    >
+    <view v-if="showHeader" class="tool-bar">
       <GoToMyPlans></GoToMyPlans>
       <FishAmount></FishAmount>
     </view>
@@ -60,6 +48,16 @@ onPullDownRefresh(() => {
 </script>
 
 <style scoped lang="scss">
+.tool-bar {
+  display: flex;
+  z-index: 100;
+  padding-left: 2.5vw;
+  position: fixed;
+  width: 100vw;
+  height: 16vw;
+  align-items: center;
+  background-color: #f4f9ff;
+}
 .background {
   background-color: #f4f9ff;
   min-height: 100vh;

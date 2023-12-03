@@ -7,7 +7,7 @@ export function buildLoader(keyword?: string) {
   let lastToken: string; // 每次记录上个token
   const communityId = uni.getStorageSync(StorageKeys.CommunityId);
 
-  const fetch = async (keyword?: string) => {
+  const fetch = async () => {
     const req: GetMomentPreviewsReq = {
       communityId: communityId
     };

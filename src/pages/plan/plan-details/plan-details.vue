@@ -1,45 +1,38 @@
 <template>
   <template v-if="!isRefreshing && plan">
-    <BackgroundImage
-      :url="plan.coverUrl"
-      :urls="[plan.coverUrl]"
-    ></BackgroundImage>
-    <BackButton></BackButton>
+    <BackgroundImage :urls="[plan.coverUrl]" />
+    <BackButton />
     <view class="background">
-      <template v-if="isInited && plan">
-        <Cards :plan="plan"></Cards>
-      </template>
-      <view style="height: 20vw"></view>
+      <Cards v-if="isInited" :plan="plan" />
+      <view style="height: 20vw" />
     </view>
-    <template v-if="showDonatePanel && plan">
-      <DonatePanel
-        :plan="plan"
-        :my-fish="myFish"
-        :fish-i-wanna-donate="fishIWannaDonate"
-        @hide-donate-panel="setShowDonatePanel(false)"
-        @set-fish-i-wanna-donate="setFishIWannaDonate"
-      />
-    </template>
+    <DonatePanel
+      v-if="showDonatePanel"
+      :plan="plan"
+      :my-fish="myFish"
+      :fish-i-wanna-donate="fishIWannaDonate"
+      @hide-donate-panel="setShowDonatePanel(false)"
+      @set-fish-i-wanna-donate="setFishIWannaDonate"
+    />
   </template>
-  <template v-if="toastStatus === ToastStatus.DONATED">
-    <ToastBoxWithShadow
-      bold-normal-text="助力小鱼干"
-      :bold-blue-text="'*' + fishIWannaDonate"
-      grey-text=""
-      @close="closeToastBox"
-    ></ToastBoxWithShadow>
-  </template>
-  <template v-if="toastStatus === ToastStatus.NOT_ENOUGH">
-    <ToastBoxWithShadow
-      bold-normal-text="小鱼干不足"
-      bold-blue-text=""
-      grey-text=""
-      @close="closeToastBox"
-    ></ToastBoxWithShadow>
-  </template>
-  <template v-if="plan?.maxFish > plan?.nowFish">
-    <BottomBar @on-help-click="clickDonateButton"></BottomBar>
-  </template>
+  <ToastBoxWithShadow
+    v-if="toastStatus === ToastStatus.DONATED"
+    bold-normal-text="助力小鱼干"
+    :bold-blue-text="'*' + fishIWannaDonate"
+    grey-text=""
+    @close="closeToastBox"
+  />
+  <ToastBoxWithShadow
+    v-if="toastStatus === ToastStatus.NOT_ENOUGH"
+    bold-normal-text="小鱼干不足"
+    bold-blue-text=""
+    grey-text=""
+    @close="closeToastBox"
+  />
+  <BottomBar
+    v-if="plan?.maxFish > plan?.nowFish"
+    @on-help-click="clickDonateButton"
+  />
 </template>
 
 <script setup lang="ts">
