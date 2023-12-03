@@ -1,5 +1,13 @@
 
 
+## [1.19.8](https://github.com/xh-polaris/meowchat-app/compare/v1.19.7...v1.19.8) (2023-12-03)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 发布动态时要求用户选择是否同意用户协议 ([9c2110d](https://github.com/xh-polaris/meowchat-app/commit/9c2110d16310f8a876fa235ce037155ce9af33fb))
+* 自动刷新小鱼干计划列表 ([850d34e](https://github.com/xh-polaris/meowchat-app/commit/850d34e98990aa57eaa582fb6a4ba490f508a95a))
+
 ## [1.19.7](https://github.com/xh-polaris/meowchat-app/compare/v1.19.6...v1.19.7) (2023-12-03)
 
 
