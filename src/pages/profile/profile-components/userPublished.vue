@@ -8,19 +8,19 @@
     >
     </zzx-tabs>
     <view class="wrap tab">
-      <view v-if="current === 0">
+      <template v-if="current === 0">
         <Masonry
-          :get-previews="buildPublishMomentLoader(props.userId)"
+          :loader-builder="() => buildPublishMomentLoader(props.userId)"
         ></Masonry>
-      </view>
-      <view v-else-if="current === 1">
+      </template>
+      <template v-else-if="current === 1">
         <MyPosts :type="props.type" :user-id="props.userId"></MyPosts>
-      </view>
-      <view v-else-if="current === 2">
+      </template>
+      <template v-else-if="current === 2">
         <Masonry
-          :get-previews="buildLikingMomentLoader(props.userId)"
+          :loader-builder="() => buildLikingMomentLoader(props.userId)"
         ></Masonry>
-      </view>
+      </template>
     </view>
   </view>
 </template>
@@ -34,18 +34,14 @@ import {
   buildPublishMomentLoader
 } from "@/pages/profile/profile-components/loader";
 import Masonry from "@/pages/community/Masonry.vue";
-import { onReady } from "@dcloudio/uni-app";
 
 const props = defineProps<{
   type?: string;
   userId?: string;
 }>();
 const items = ["动态", "帖子", "喜欢"];
-let current = ref(-1);
-// 没这几行真不行
-onReady(() => {
-  current.value = 0;
-});
+let current = ref(0);
+
 function onClickItem(e: any) {
   if (current.value !== e.currentIndex) {
     current.value = e.currentIndex;

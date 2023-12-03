@@ -76,18 +76,13 @@ import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
 
 interface Props {
-  getPreviews: () => Promise<Moment[]>;
+  loader?: () => Promise<Moment[]>;
+  loaderBuilder?: () => () => Promise<Moment[]>;
 }
 
 const props = defineProps<Props>();
-
-/**
- * 在父组件用<masonry :search="{...}"/>
- * search.type --- "default"
- */
-
 const isNoData = ref(true);
-
+const loader = props.loader || props.loaderBuilder?.();
 let momentsInBatch: Moment[];
 const leftMoments = reactive<Moment[]>([]);
 const rightMoments = reactive<Moment[]>([]);
@@ -133,8 +128,11 @@ let isFirstLoadImg = true;
  */
 
 const addBatch = async () => {
+  if (!loader) {
+    return;
+  }
   momentsInBatch = [];
-  const moments = await props.getPreviews();
+  const moments = await loader();
   for (const moment of moments) {
     momentsInBatch.push(reactive<Moment>(moment));
   }

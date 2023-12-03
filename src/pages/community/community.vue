@@ -28,7 +28,7 @@
     <view style="height: 4vw"></view>
 
     <view v-if="!isRefreshing">
-      <Masonry :get-previews="buildLoader()"></Masonry>
+      <Masonry :loader-builder="buildLoader"></Masonry>
     </view>
 
     <view style="height: 18vw"></view>

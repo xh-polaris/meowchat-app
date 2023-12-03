@@ -1,5 +1,5 @@
 <template>
-  <template v-if="postsData">
+  <view v-if="postsData">
     <template v-for="post in postsData" :key="post.id">
       <view class="post" @click="onClickPost(post.id)">
         <view class="upper">
@@ -56,7 +56,7 @@
         style="width: 200rpx; height: 186rpx"
       />
     </view>
-  </template>
+  </view>
 </template>
 
 <script lang="ts" setup>
@@ -226,7 +226,7 @@ onReachBottom(() => {
 
 .nomore {
   background-color: #fafcff;
-  padding: 10rpx;
+  padding: 50rpx;
   font-size: 20rpx;
   line-height: 20rpx;
   text-align: center;

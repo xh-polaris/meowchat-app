@@ -83,7 +83,7 @@
         </template>
         <template v-else-if="current === 1">
           <!-- 动态 -->
-          <Masonry :get-previews="buildLoader(searchText)"></Masonry>
+          <Masonry :loader-builder="() => buildLoader(searchText)"></Masonry>
         </template>
         <template v-else-if="current === 2">
           <!-- 图鉴 -->

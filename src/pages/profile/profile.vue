@@ -2,9 +2,15 @@
   <TopBar>
     <template #center>个人中心</template>
   </TopBar>
-  <!--  <uni-nav-bar :fixed="true" background-color="#f9f9f9" shadow status-bar>-->
-  <!--    <view class="font-weight font-md2" style="margin: auto">个人中心</view>-->
-  <!--  </uni-nav-bar>-->
+  <view
+    style="
+      height: 100vh;
+      width: 100vw;
+      background-color: #fafcff;
+      z-index: -10;
+      position: absolute;
+    "
+  ></view>
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
     <view class="app-version" @click="clickAppVersion">{{
