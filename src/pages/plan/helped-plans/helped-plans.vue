@@ -5,18 +5,15 @@
   <view class="background" :style="styleStr">
     <view style="height: 3vw"></view>
     <view class="plans">
-      <view class="plansColumn">
+      <view
+        v-for="(donations, i) in [donationsLeft, donationsRight]"
+        :key="i"
+        class="plansColumn"
+      >
         <HelpedCard
-          v-for="(plan, index) in plansLeft"
+          v-for="(donation, index) in donations"
           :key="index"
-          :plan="plan"
-        ></HelpedCard>
-      </view>
-      <view class="plansColumn">
-        <HelpedCard
-          v-for="(plan, index) in plansRight"
-          :key="index"
-          :plan="plan"
+          :donation="donation"
         ></HelpedCard>
       </view>
     </view>
@@ -29,13 +26,13 @@ import HelpedCard from "@/pages/plan/helped-plans/HelpedCard.vue";
 //到时候background的min高度还要修
 import { ListDonateByUser } from "@/apis/plan/plan";
 import { ref } from "vue";
-import { PlanPreview } from "@/apis/schemas";
+import { Donation } from "@/apis/schemas";
 import { navBarHeight } from "@/utils/style";
 import { ListDonateByUserReq } from "@/apis/plan/plan-interfaces";
-import { onReachBottom } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 const styleStr = `min-height: calc(100vh - ${navBarHeight}px)`;
-const plansRight = ref<PlanPreview[]>([]);
-const plansLeft = ref<PlanPreview[]>([]);
+const donationsRight = ref<Donation[]>([]);
+const donationsLeft = ref<Donation[]>([]);
 let page = 0;
 const load = async () => {
   const req: ListDonateByUserReq = {
@@ -43,14 +40,22 @@ const load = async () => {
   };
   page++;
   const res = await ListDonateByUser(req);
-  for (let i = 0; i < res?.total; i = i + 2) {
-    plansLeft.value.push(res.planPreviews[i]);
+  for (let i = 0; i < res?.donations?.length; i += 2) {
+    donationsLeft.value.push(res.donations[i]);
   }
-  for (let i = 1; i < res?.total; i = i + 2) {
-    plansRight.value.push(res.planPreviews[i]);
+  for (let i = 1; i < res?.donations?.length; i += 2) {
+    donationsRight.value.push(res.donations[i]);
   }
 };
 load();
+
+onPullDownRefresh(() => {
+  donationsLeft.value = [];
+  donationsRight.value = [];
+  page = 0;
+  load();
+  uni.stopPullDownRefresh();
+});
 
 onReachBottom(() => {
   load();

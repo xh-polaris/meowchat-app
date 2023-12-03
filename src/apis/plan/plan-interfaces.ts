@@ -1,4 +1,4 @@
-import { Plan, PlanPreview, PlanType, User } from "../schemas";
+import { Donation, Plan, PlanType, User } from "../schemas";
 
 export interface DeletePlanReq {
   planId: string;
@@ -89,5 +89,5 @@ export interface ListDonateByUserReq {
 export interface ListDonateByUserResp {
   total: number;
   token: string;
-  planPreviews: PlanPreview[];
+  donations: Donation[];
 }

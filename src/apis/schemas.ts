@@ -155,15 +155,14 @@ export const enum PlanState {
 }
 
 export interface Plan {
-  catId: string;
-  catName: string;
+  cat?: Cat;
   coverUrl: string;
   createAt: number;
   description: string;
   endTime: number;
   id: string;
   imageUrls: string[];
-  initiatorId: string;
+  user: User;
   instruction: string;
   maxFish: number;
   name: string;
@@ -175,16 +174,15 @@ export interface Plan {
   planType: PlanType;
   startTime: number;
   summary: string;
-  [property: string]: any;
 }
-export interface PlanPreview {
+
+export interface Donation {
   id: string;
-  name: string;
-  catName: string;
   donateNum: number;
   donateTime: number;
-  coverUrl: string;
+  plan: Plan;
 }
+
 export const enum TargetType {
   Post = 1,
   Comment,

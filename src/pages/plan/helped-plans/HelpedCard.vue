@@ -1,31 +1,32 @@
 <template>
   <view class="card" @click="onClick">
-    <img :src="props.plan.coverUrl" class="image-cat" />
+    <img :src="props.donation.plan.coverUrl" class="image-cat" />
 
-    <p class="title">
-      帮助<text style="color: #1f6bff">{{ props.plan.catName }} </text
-      >{{ props.plan.name }}
-    </p>
-    <p class="date">{{ displayTime(props.plan.donateTime) }}</p>
+    <text class="title">
+      帮助<text style="color: #1f6bff"
+        >{{ props.donation.plan?.cat?.name || "全体猫猫" }} </text
+      >{{ props.donation.plan.name }}
+    </text>
+    <view class="date">{{ displayTime(props.donation.donateTime) }}</view>
 
     <view class="fish-count">
       <img :src="Icons.LittleFish" class="image-fish" />
-      <p class="count">×{{ props.plan.donateNum }}</p>
+      <text class="count">×{{ props.donation.donateNum }}</text>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
 import { Icons, Pages } from "@/utils/url";
-import { PlanPreview } from "@/apis/schemas";
+import { Donation } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 
 const props = defineProps<{
-  plan: PlanPreview;
+  donation: Donation;
 }>();
 const onClick = () => {
   uni.navigateTo({
-    url: `${Pages.PlanDetails}?id=${props.plan.id}`
+    url: `${Pages.PlanDetails}?id=${props.donation.plan.id}`
   });
 };
 </script>

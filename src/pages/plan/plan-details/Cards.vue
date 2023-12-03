@@ -1,9 +1,7 @@
 <template>
   <div class="card1">
     <div class="title">
-      帮助<text style="color: #1f5eff">{{
-        plan.catName ? plan.catName : "全体猫猫"
-      }}</text
+      帮助<text style="color: #1f5eff">{{ plan?.cat?.name || "全体猫猫" }}</text
       >{{ props.plan.name }}
       <img :src="Icons.State_Frame" class="state-frame" />
       <view class="state">{{ planStateMap(props.plan.planState) }}</view>
