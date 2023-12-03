@@ -1,5 +1,12 @@
 
 
+## [1.19.10](https://github.com/xh-polaris/meowchat-app/compare/v1.19.9...v1.19.10) (2023-12-03)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 刚搞出来的搜索动态失效的问题 ([37c8fae](https://github.com/xh-polaris/meowchat-app/commit/37c8fae8ff3b7bf45528acf40e0223ea521ee5d6))
+
 ## [1.19.9](https://github.com/xh-polaris/meowchat-app/compare/v1.19.8...v1.19.9) (2023-12-03)
 
 
