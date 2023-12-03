@@ -106,7 +106,7 @@ const clickAppVersion = () => {
       data: user.id,
       success: () => {
         uni.showToast({
-          title: "已复制id至剪贴板"
+          title: "已复制至剪贴板"
         });
       }
     });

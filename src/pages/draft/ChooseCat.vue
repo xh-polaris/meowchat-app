@@ -1,10 +1,8 @@
 <template>
   <view class="all">
-    <view class="header">
+    <view class="header" @click="chooseCats">
       <text>关联猫咪：</text>
-      <text class="cat-name" @click="chooseCats">{{
-        catName ? catName : "[无]"
-      }}</text>
+      <text class="cat-name">{{ catName ? catName : "[无]" }}</text>
     </view>
     <!--    <view v-if="!catId" class="button" @click="chooseCats">选择...</view>-->
     <view v-if="catId" class="cat-box">

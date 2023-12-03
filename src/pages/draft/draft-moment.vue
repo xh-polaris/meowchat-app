@@ -8,7 +8,7 @@
     @change-photos="changePhotos"
   ></ChooseImages>
   <view v-if="isUploadingImages" style="margin: 0 6vw; font-size: 3.8vw"
-    >后台上传图片中...</view
+    >上传图片中...</view
   >
   <view style="height: 4vw"></view>
   <InputArea
@@ -81,7 +81,7 @@ const closeToastBox = () => {
 const gottenFishAmount = ref(0);
 const gottenFishNth = ref(0);
 
-const publish = () => {
+const publish = async () => {
   if (isPublished.value) return;
   if (photos.value.length == 0) {
     uni.showToast({
@@ -90,45 +90,51 @@ const publish = () => {
     });
     return;
   }
-  isPublished.value = true;
-  uni.setStorageSync(StorageKeys.DraftMoment, "");
-  newMoment({
-    title: title.value,
-    communityId: uni.getStorageSync(StorageKeys.CommunityId),
-    text: content.value,
-    photos: [...photos.value],
-    catId: uni.getStorageSync(StorageKeys.IdSelected)
-  })
-    .then((res) => {
-      console.log(res);
-      if (res.getFish) {
-        gottenFishNth.value = res.getFishTimes;
-        gottenFishAmount.value = res.getFishNum;
-        showToastBox.value = true;
-      } else {
-        refresh();
-      }
+  const res = await uni.showModal({
+    content: "是否同意《用户服务协议》及《隐私政策》",
+    cancelText: "不同意"
+  });
+  if (res.confirm) {
+    isPublished.value = true;
+    uni.setStorageSync(StorageKeys.DraftMoment, "");
+    newMoment({
+      title: title.value,
+      communityId: uni.getStorageSync(StorageKeys.CommunityId),
+      text: content.value,
+      photos: [...photos.value],
+      catId: uni.getStorageSync(StorageKeys.IdSelected)
     })
-    .catch((reason) => {
-      const code = reason.data.Code;
-      if (code === 10001) {
-        uni.showToast({
-          title: "文本含敏感内容",
-          icon: "none"
-        });
-      } else if (code === 10002) {
-        uni.showToast({
-          title: "图片含敏感内容",
-          icon: "none"
-        });
-      } else {
-        uni.showToast({
-          title: "发送失败",
-          icon: "none"
-        });
-      }
-      isPublished.value = false;
-    });
+      .then((res) => {
+        console.log(res);
+        if (res.getFish) {
+          gottenFishNth.value = res.getFishTimes;
+          gottenFishAmount.value = res.getFishNum;
+          showToastBox.value = true;
+        } else {
+          refresh();
+        }
+      })
+      .catch((reason) => {
+        const code = reason.data.Code;
+        if (code === 10001) {
+          uni.showToast({
+            title: "文本含敏感内容",
+            icon: "none"
+          });
+        } else if (code === 10002) {
+          uni.showToast({
+            title: "图片含敏感内容",
+            icon: "none"
+          });
+        } else {
+          uni.showToast({
+            title: "发送失败",
+            icon: "none"
+          });
+        }
+        isPublished.value = false;
+      });
+  }
 };
 </script>
 
