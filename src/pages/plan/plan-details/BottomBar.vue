@@ -20,6 +20,7 @@ function onHelpClick() {
   background-color: #ffffff;
   width: 100vw;
   height: 20vw;
+  z-index: 2;
   .help-button {
     display: flex;
     align-items: center;
