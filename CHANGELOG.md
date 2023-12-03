@@ -1,5 +1,12 @@
 
 
+## [1.19.7](https://github.com/xh-polaris/meowchat-app/compare/v1.19.6...v1.19.7) (2023-12-03)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 完善助力记录 ([9969199](https://github.com/xh-polaris/meowchat-app/commit/99691997a72f031526e70730876577b46a04dea9))
+
 ## [1.19.6](https://github.com/xh-polaris/meowchat-app/compare/v1.19.5...v1.19.6) (2023-12-02)
 
 
