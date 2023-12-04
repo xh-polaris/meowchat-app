@@ -23,8 +23,8 @@
     @close="closeToastBox"
   />
   <ToastBoxWithShadow
-    v-if="toastStatus === ToastStatus.NOT_ENOUGH"
-    bold-normal-text="小鱼干不足"
+    v-if="toastStatus === ToastStatus.NOT_VALID"
+    :bold-normal-text="notValidText"
     bold-blue-text=""
     grey-text=""
     @close="closeToastBox"
@@ -48,6 +48,7 @@ import { onPullDownRefresh } from "@dcloudio/uni-app";
 import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
 
 import DonatePanel from "@/pages/plan/plan-details/DonatePanel.vue";
+import { isNumberObject } from "util/types";
 
 const props = defineProps<{
   id: string;
@@ -59,12 +60,15 @@ const getPlanDetailReq = reactive<GetPlanDetailReq>({
 
 const plan = ref<Plan>();
 const myFish = ref(0);
-const fishIWannaDonate = ref(10);
+const fishIWannaDonate = ref<number>(10);
+const notValidText = ref("");
 const isInited = ref(false);
 
 const setFishIWannaDonate = (num: number) => {
-  if (num < 0) return;
-  if (num > myFish.value) return;
+  console.log(num);
+  console.log(typeof num);
+  // if (num <= 0) num = 1;
+  // else if (num > myFish.value) num = myFish.value;
   fishIWannaDonate.value = num;
 };
 
@@ -87,8 +91,8 @@ function pageRefresh() {
 
 const enum ToastStatus {
   NO_TOAST,
-  DONATED,
-  NOT_ENOUGH
+  NOT_VALID,
+  DONATED
 }
 
 const toastStatus = ref(ToastStatus.NO_TOAST);
@@ -99,8 +103,15 @@ const setShowDonatePanel = (bool: boolean) => {
 
 const clickDonateButton = () => {
   if (showDonatePanel.value) {
-    if (fishIWannaDonate.value > myFish.value) {
-      toastStatus.value = ToastStatus.NOT_ENOUGH;
+    toastStatus.value = ToastStatus.NOT_VALID;
+    console.log(fishIWannaDonate.value);
+    console.log(typeof fishIWannaDonate.value);
+    if (Number.isNaN(fishIWannaDonate.value)) {
+      notValidText.value = "输入不合法";
+    } else if (fishIWannaDonate.value <= 0) {
+      notValidText.value = "不能助力当前数量的小鱼干哦";
+    } else if (fishIWannaDonate.value > myFish.value) {
+      notValidText.value = "小鱼干不足";
     } else {
       toastStatus.value = ToastStatus.DONATED;
       donateFish({ planId: props.id, fish: fishIWannaDonate.value });
@@ -115,6 +126,7 @@ const closeToastBox = () => {
   if (toastStatus.value === ToastStatus.DONATED) refresh = true;
   toastStatus.value = ToastStatus.NO_TOAST;
   showDonatePanel.value = false;
+  fishIWannaDonate.value = 10;
   if (refresh) pageRefresh();
 };
 
