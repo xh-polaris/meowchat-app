@@ -27,7 +27,7 @@
               :value="fishIWannaDonate"
               type="number"
               class="count-display"
-              @change="(ev) => setFishIWannaDonate(ev.target.value)"
+              @change="(ev) => setFishIWannaDonate(Number(ev.target.value))"
             />
             <image
               :src="Icons.Button_Increment"
