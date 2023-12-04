@@ -16,3 +16,24 @@ export function refresh(show: Ref<boolean>) {
     show.value = true;
   });
 }
+
+export interface Callback<T> {
+  (data: T): void;
+}
+
+export class EventEmitter<T> {
+  private callbacks: Callback<T>[] = [];
+  constructor(...callbacks: Callback<T>[]) {
+    this.callbacks = callbacks;
+  }
+
+  addCallback(callback: Callback<T>): void {
+    this.callbacks.push(callback);
+  }
+
+  triggerCallbacks(data: T): void {
+    this.callbacks.forEach((callback) => {
+      callback(data);
+    });
+  }
+}

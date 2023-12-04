@@ -1,5 +1,6 @@
-import { Post, TargetType } from "@/apis/schemas";
+import { FishAward, Post, TargetType } from "@/apis/schemas";
 import { doLike } from "@/apis/like/like";
+import { EventEmitter } from "@/utils/utils";
 
 export function onClickImage(photo: string) {
   const imgsArray = [];
@@ -10,13 +11,18 @@ export function onClickImage(photo: string) {
   });
 }
 
-export const likePost = async (item: Post) => {
-  console.log({ targetId: item.id, type: TargetType.Comment });
-  doLike({ targetId: item.id, targetType: TargetType.Comment }).then(() => {
+export const likePost = async (
+  item: Post,
+  eventEmitter?: EventEmitter<FishAward>
+) => {
+  doLike({ targetId: item.id, targetType: TargetType.Post }).then((res) => {
     if (item.isLiked) {
       item.likes--;
     } else {
       item.likes++;
+      if (eventEmitter) {
+        eventEmitter.triggerCallbacks(res);
+      }
     }
     item.isLiked = !item.isLiked;
   });

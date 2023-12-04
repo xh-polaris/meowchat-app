@@ -191,3 +191,9 @@ export const enum TargetType {
   Cat_Photo,
   User
 }
+
+export interface FishAward {
+  getFish: boolean;
+  getFishNum: number;
+  getFishTimes: number;
+}

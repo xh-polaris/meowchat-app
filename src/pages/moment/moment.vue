@@ -77,7 +77,7 @@
         @after-delete="init()"
         @interact-with-comment="focusReplyComment(comment)"
         @on-click-replies="onClickReplies(comment)"
-        @local-do-like="likeComment(comment, setGotFishNum, setShowToastBox)"
+        @local-do-like="likeComment(comment, fishAwardEmitter)"
       />
       <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
     </view>
@@ -90,8 +90,8 @@
     :parent-id="moment.id"
     :parent-type="CommentType.Moment"
     :first-level-id="firstLevelId"
-    :like-comment-callback="likeCommentEmitter"
-    @do-like="likeMoment(moment, likeCommentEmitter)"
+    :comment-callback="(res) => fishAwardEmitter.triggerCallbacks(res)"
+    @do-like="likeMoment(moment, fishAwardEmitter)"
     @after-create-comment="init"
     @cancel-reply="afterBlur"
   />
@@ -115,14 +115,17 @@
       </view>
     </view>
   </view>
-  <template v-if="showToastBox">
-    <ToastBoxWithShadow
-      bold-normal-text="获得小鱼干"
-      :bold-blue-text="'*' + gotFishNum"
-      grey-text="每日点评或点赞均可获得小鱼干"
-      @close="setShowToastBox(false)"
-    ></ToastBoxWithShadow>
-  </template>
+  <ToastBoxWithShadow
+    v-if="showToastBox"
+    bold-normal-text="获得小鱼干"
+    :bold-blue-text="'*' + gotFishNum"
+    grey-text="每日点评或点赞均可获得小鱼干"
+    @close="
+      () => {
+        showToastBox = false;
+      }
+    "
+  ></ToastBoxWithShadow>
 </template>
 
 <script lang="ts" setup>
@@ -137,33 +140,33 @@ import {
   getCommentsData,
   likeComment,
   likeMoment,
-  onClickImage,
-  EventEmitter
+  onClickImage
 } from "@/pages/moment/utils";
 import { toPersonInfo } from "@/pages/profile/utils";
 import { GetMomentDetailReq } from "@/apis/moment/moment-components";
 import { deleteMoment, getMomentDetail } from "@/apis/moment/moment";
-import { Comment, Moment, TargetType } from "@/apis/schemas";
+import { Comment, FishAward, Moment, TargetType } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { doLike } from "@/apis/like/like";
-import {
-  CommentType,
-  GetCommentsReq,
-  NewCommentResp
-} from "@/apis/comment/comment-interfaces";
-import { onLoad, onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
+import { CommentType, GetCommentsReq } from "@/apis/comment/comment-interfaces";
+import { onPullDownRefresh, onReachBottom } from "@dcloudio/uni-app";
 import Reply from "@/pages/moment/Reply.vue";
 import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
 import CommentBox from "@/pages/moment/CommentBox.vue";
 import { Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
-import { DoLikeResp } from "@/apis/like/like-interface";
+import { EventEmitter } from "@/utils/utils";
 
 const props = defineProps<{
   id: string;
 }>();
 
-const likeCommentEmitter = new EventEmitter();
+const fishAwardEmitter = new EventEmitter((res: FishAward) => {
+  if (res.getFish) {
+    gotFishNum.value = res.getFishNum;
+    showToastBox.value = true;
+  }
+});
 
 const keyboardHeight = ref(0);
 
@@ -180,8 +183,8 @@ const commentDoLike = async (id: string) => {
     targetType: TargetType.Comment
   });
   if (res.getFish) {
-    setGotFishNum(res.getFishNum);
-    setShowToastBox(true);
+    gotFishNum.value = res.getFishNum;
+    showToastBox.value = true;
   }
 };
 
@@ -198,20 +201,6 @@ function onClickCatBox(id?: string) {
 
 const showToastBox = ref(false);
 const gotFishNum = ref(0);
-
-const setShowToastBox = (bool: boolean) => {
-  showToastBox.value = bool;
-};
-const setGotFishNum = (num: number) => {
-  gotFishNum.value = num;
-};
-
-const likeCommentCallback = (res: DoLikeResp | NewCommentResp) => {
-  if (res.getFish) {
-    setGotFishNum(res.getFishNum);
-    setShowToastBox(true);
-  }
-};
 
 const getData = async () => {
   moment.value = (await getMomentDetail(getMomentDetailReq)).moment;
@@ -308,11 +297,6 @@ uni.onKeyboardHeightChange((res) => {
   keyboardHeight.value = res.height;
 });
 
-onLoad(() => {
-  likeCommentEmitter.addCallback(likeCommentCallback);
-  init();
-});
-
 onReachBottom(() => {
   if (isCommentsLoaded && !allCommentsLoaded) {
     localGetCommentsData();
@@ -331,6 +315,8 @@ onPullDownRefresh(() => {
     uni.stopPullDownRefresh();
   }
 });
+
+init();
 
 const selectComment = ref<Comment>();
 

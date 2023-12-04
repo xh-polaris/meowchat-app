@@ -13,7 +13,7 @@
       <view class="title">
         {{ post.title }}
         <view
-          v-if="myUserId && myUserId === post.user.id"
+          v-if="myUserId && myUserId === post.user?.id"
           class="delete"
           @click="showDeleteDialogue"
         ></view>
@@ -65,7 +65,7 @@
         @after-delete="init"
         @interact-with-comment="focusReplyComment(comment)"
         @on-click-replies="onClickReplies(comment)"
-        @local-do-like="likeComment(comment)"
+        @local-do-like="likeComment(comment, fishAwardEmitter)"
       />
       <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
     </view>
@@ -78,7 +78,8 @@
     :parent-type="CommentType.Post"
     :parent-id="post.id"
     :first-level-id="firstLevelId"
-    @do-like="likePost(post)"
+    :comment-callback="(res) => fishAwardEmitter.triggerCallbacks(res)"
+    @do-like="likePost(post, fishAwardEmitter)"
     @after-create-comment="init"
     @cancel-reply="afterBlur"
   />
@@ -102,6 +103,17 @@
       </view>
     </view>
   </view>
+  <ToastBoxWithShadow
+    v-if="showToastBox"
+    bold-normal-text="获得小鱼干"
+    :bold-blue-text="'*' + gotFishNum"
+    grey-text="每日点评或点赞均可获得小鱼干"
+    @close="
+      () => {
+        showToastBox = false;
+      }
+    "
+  ></ToastBoxWithShadow>
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
@@ -115,7 +127,7 @@ import {
 import Reply from "@/pages/moment/Reply.vue";
 import { toPersonInfo } from "@/pages/profile/utils";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
-import { Comment, Post, TargetType } from "@/apis/schemas";
+import { Comment, FishAward, Post, TargetType } from "@/apis/schemas";
 import { deletePost, getPostDetail } from "@/apis/post/post";
 import { displayTime } from "@/utils/time";
 import { doLike } from "@/apis/like/like";
@@ -126,11 +138,12 @@ import CommentBox from "@/pages/moment/CommentBox.vue";
 import { likePost, onClickImage } from "@/pages/post/utils";
 import { Icons, Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
+import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
+import { EventEmitter } from "@/utils/utils";
 
 const props = defineProps<{
   id: string;
 }>();
-
 const keyboardHeight = ref(0);
 
 const getPostDetailReq = reactive<GetPostDetailReq>({
@@ -142,6 +155,15 @@ const post = ref<Post>();
 const myUserId = uni.getStorageSync(StorageKeys.UserId);
 
 const commentDoLikeMap = new Map<string, number>();
+const showToastBox = ref(false);
+const gotFishNum = ref(0);
+
+const fishAwardEmitter = new EventEmitter<FishAward>((res) => {
+  if (res.getFish) {
+    gotFishNum.value = res.getFishNum;
+    showToastBox.value = true;
+  }
+});
 
 const commentDoLike = async (id: string) => {
   await doLike({
