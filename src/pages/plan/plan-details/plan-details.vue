@@ -65,10 +65,6 @@ const notValidText = ref("");
 const isInited = ref(false);
 
 const setFishIWannaDonate = (num: number) => {
-  console.log(num);
-  console.log(typeof num);
-  // if (num <= 0) num = 1;
-  // else if (num > myFish.value) num = myFish.value;
   fishIWannaDonate.value = num;
 };
 
@@ -104,8 +100,6 @@ const setShowDonatePanel = (bool: boolean) => {
 const clickDonateButton = () => {
   if (showDonatePanel.value) {
     toastStatus.value = ToastStatus.NOT_VALID;
-    console.log(fishIWannaDonate.value);
-    console.log(typeof fishIWannaDonate.value);
     if (Number.isNaN(fishIWannaDonate.value)) {
       notValidText.value = "输入不合法";
     } else if (fishIWannaDonate.value <= 0) {
