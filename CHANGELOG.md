@@ -1,5 +1,13 @@
 
 
+## [1.19.12](https://github.com/xh-polaris/meowchat-app/compare/v1.19.11...v1.19.12) (2023-12-04)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 帖子无法点赞 ([77575c0](https://github.com/xh-polaris/meowchat-app/commit/77575c0045905d360b6d5a17f8d8a46d608e14e2))
+* 完善了小鱼干提交时的校检 ([#386](https://github.com/xh-polaris/meowchat-app/issues/386)) ([62cbedb](https://github.com/xh-polaris/meowchat-app/commit/62cbedb97be02188173c6c3f41a89949c4cee70f))
+
 ## [1.19.11](https://github.com/xh-polaris/meowchat-app/compare/v1.19.10...v1.19.11) (2023-12-03)
 
 
