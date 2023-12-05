@@ -4,6 +4,7 @@
       <image
         :src="userInfo.avatarUrl"
         style="width: 100%; height: 100%; border-radius: 50%"
+        @click="onClickAvatar(userInfo.avatarUrl)"
       />
     </view>
     <view class="txt">
@@ -22,6 +23,7 @@ import { reactive, ref } from "vue";
 import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
+import { onClickAvatar } from "@/pages/cat/utils";
 
 interface Props {
   type?: string;
@@ -56,7 +58,6 @@ const refresh = async () => {
   userInfo.following = res.user.following;
   userInfo.article = res.user.article;
 };
-
 onShow(refresh);
 onPullDownRefresh(() => {
   refresh().then(() => {

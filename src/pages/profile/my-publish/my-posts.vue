@@ -118,7 +118,8 @@ onReachBottom(() => {
 .post {
   background-color: #ffff;
   //border-top: 2px #f4f9ff solid;
-  border-bottom: 15rpx #fafcff solid;
+  margin-bottom: 15rpx;
+  border: 2rpx #eeeeee solid;
   padding: 32rpx;
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.03);
   border-radius: 5px;
@@ -138,6 +139,7 @@ onReachBottom(() => {
 
   .title {
     font-size: 35rpx;
+    letter-spacing: 2rpx;
     font-weight: bold;
     overflow: hidden;
     -webkit-line-clamp: 1;

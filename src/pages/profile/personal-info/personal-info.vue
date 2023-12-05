@@ -130,11 +130,10 @@ onBeforeUnmount(() => {
 
 .bg-set {
   position: fixed;
+  background-size: cover;
   width: 750rpx;
-  height: 600rpx;
-  left: 0;
+  height: 1115rpx;
   z-index: -1;
-  opacity: 0.9; //设置透明度
 }
 
 .com-item {

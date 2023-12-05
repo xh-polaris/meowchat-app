@@ -5,9 +5,9 @@ export function onClickImage(index: number, images: string[]) {
   });
 }
 
-export function onClickAvatar(current: string, images: string[]) {
+export function onClickAvatar(current: string, images?: string[]) {
   uni.previewImage({
-    urls: images,
+    urls: images || [current],
     current: current
   });
 }

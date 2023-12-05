@@ -1,21 +1,11 @@
 <template>
-  <TopBar>
-    <template #center>个人中心</template>
-  </TopBar>
-  <view
-    style="
-      height: 100vh;
-      width: 100vw;
-      background-color: #fafcff;
-      z-index: -10;
-      position: absolute;
-    "
-  ></view>
+  <view class="background"></view>
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
     <view class="app-version" @click="clickAppVersion">{{
       clickedTimes < 5 ? appVersion : "ID: " + user.id
     }}</view>
+    <view style="height: 110rpx; z-index: -999" />
     <UserInfo type="my"></UserInfo>
     <!-- 功能栏 -->
     <view class="com-item">
@@ -184,7 +174,13 @@ onReady(() => {
 
 <style lang="scss" scoped>
 @import "@/common/search-input.scss";
-
+.background {
+  height: 100vh;
+  width: 100vw;
+  background-color: #fafcff;
+  z-index: -10;
+  position: absolute;
+}
 .container {
   position: relative;
   .app-version {
@@ -206,10 +202,10 @@ onReady(() => {
 
 .bg-set {
   position: fixed;
+  background-size: cover;
   width: 750rpx;
-  height: 600rpx;
+  height: 1115rpx;
   z-index: -1;
-  opacity: 0.9; //设置透明度
 }
 
 .com-item {
