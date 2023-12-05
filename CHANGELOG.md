@@ -1,5 +1,12 @@
 
 
+## [1.19.13](https://github.com/xh-polaris/meowchat-app/compare/v1.19.12...v1.19.13) (2023-12-05)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 优化个人页样式，去掉top bar ([e8e7145](https://github.com/xh-polaris/meowchat-app/commit/e8e71454770ce61d216f7ef4e9a91ca9c89639ce))
+
 ## [1.19.12](https://github.com/xh-polaris/meowchat-app/compare/v1.19.11...v1.19.12) (2023-12-04)
 
 

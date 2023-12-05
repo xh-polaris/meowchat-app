@@ -4,7 +4,7 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "version": "1.19.12",
+  "version": "1.19.13",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
