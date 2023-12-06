@@ -184,9 +184,10 @@ onReady(() => {
 .container {
   position: relative;
   .app-version {
+    z-index: 3;
     position: absolute;
     right: 5vw;
-    top: 25vw;
+    top: 310rpx;
     user-select: text;
     font-size: 3vw;
     color: #8a8a8a;
