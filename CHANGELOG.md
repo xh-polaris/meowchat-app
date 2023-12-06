@@ -1,5 +1,12 @@
 
 
+## [1.19.14](https://github.com/xh-polaris/meowchat-app/compare/v1.19.13...v1.19.14) (2023-12-06)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 无法点击版本获取userid的问题 ([3f30d1a](https://github.com/xh-polaris/meowchat-app/commit/3f30d1ac6bee570551704cf40b6e13347fe53c4e))
+
 ## [1.19.13](https://github.com/xh-polaris/meowchat-app/compare/v1.19.12...v1.19.13) (2023-12-05)
 
 
