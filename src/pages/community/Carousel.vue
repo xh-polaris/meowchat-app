@@ -11,13 +11,15 @@
           @click="onClickCarousel(displayContents[i - 1])"
         />
       </template>
-    </view>
-    <view class="pagination-dots">
-      <view
-        v-for="(content, index) in contents"
-        :key="index"
-        :class="'pagination-dot ' + (index === currentContent ? 'current' : '')"
-      />
+      <view class="pagination-dots">
+        <view
+          v-for="(content, index) in contents"
+          :key="index"
+          :class="
+            'pagination-dot ' + (index === currentContent ? 'current' : '')
+          "
+        />
+      </view>
     </view>
   </view>
 </template>
@@ -41,11 +43,11 @@ const touchStart = (ev: any) => {
 
 const touchEnd = (ev: any) => {
   if (!isSlidesMoving) {
-    if (ev.touches[0].clientX - touchStartX > 30) {
+    if (ev.touches[0].clientX - touchStartX > 50) {
       isSlidesMoving = true;
       rightward();
       setTimeout(() => (isSlidesMoving = false), 1000);
-    } else if (ev.touches[0].clientX - touchStartX < -30) {
+    } else if (ev.touches[0].clientX - touchStartX < -50) {
       isSlidesMoving = true;
       leftward();
       setTimeout(() => (isSlidesMoving = false), 1000);
@@ -101,10 +103,8 @@ const currentSlide = ref(2);
 </script>
 
 <style lang="scss" scoped>
-$slideWidthLarge: calc(272 / 390 * 100vw);
-$slideHeightLarge: calc(131 / 390 * 100vw);
-$slideWidthSmall: calc(216 / 390 * 100vw);
-$slideHeightSmall: calc(105 / 390 * 100vw);
+$slideWidthLarge: calc(362 / 390 * 100vw);
+$slideHeightLarge: calc(163 / 390 * 100vw);
 $horizontalMarginOfSlideCenter: calc((100vw - $slideWidthLarge) / 2);
 $verticalPaddingOfCarousel: calc(9 / 390 * 100vw);
 $slideGap: calc(17 / 390 * 100vw);
@@ -120,6 +120,7 @@ $backgroundColor: #f5f5f5;
 }
 
 .slides {
+  overflow-x: hidden;
   display: flex;
   position: relative;
   height: calc($slideHeightLarge + $verticalPaddingOfCarousel * 2);
@@ -132,47 +133,42 @@ $backgroundColor: #f5f5f5;
 
   background-size: 100% 100%;
   position: absolute;
-  width: $slideWidthSmall;
-  height: $slideHeightSmall;
-  top: calc(
-    ($slideHeightLarge - $slideHeightSmall) / 2 + $verticalPaddingOfCarousel
-  );
+  width: $slideWidthLarge;
+  height: $slideHeightLarge;
+  top: $verticalPaddingOfCarousel;
   transition-duration: $transitionDuration;
 
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.25);
-  border-radius: 6px;
+  border-radius: 3px;
+  transition: transform 0.5s ease-in-out, z-index 0.5s ease-in-out;
 }
 
 .slide-leftest {
-  left: calc(
-    $horizontalMarginOfSlideCenter - ($slideWidthSmall + $slideGap) * 2
-  );
+  transform: translateX(-200%);
   z-index: 0;
 }
 
 .slide-left {
-  left: calc($horizontalMarginOfSlideCenter - ($slideWidthSmall + $slideGap));
-  z-index: 2;
+  transform: translateX(-100%);
+  z-index: 1;
 }
 
 .slide-center {
+  transform: translateX(0);
   left: $horizontalMarginOfSlideCenter;
   width: $slideWidthLarge;
   height: $slideHeightLarge;
-  z-index: 2;
   top: $verticalPaddingOfCarousel;
+  z-index: 3;
 }
 
 .slide-right {
-  left: calc($horizontalMarginOfSlideCenter + ($slideWidthLarge + $slideGap));
-  z-index: 2;
+  transform: translateX(110%);
+  z-index: 1;
 }
 
 .slide-rightest {
-  left: calc(
-    $horizontalMarginOfSlideCenter + ($slideWidthLarge + $slideGap) +
-      ($slideWidthSmall + $slideGap)
-  );
+  transform: translateX(200%);
   z-index: 0;
 }
 
@@ -181,7 +177,7 @@ $backgroundColor: #f5f5f5;
   position: absolute;
   width: 100vw;
   height: calc($verticalPaddingOfCarousel * 2 + $slideHeightLarge);
-  z-index: 1;
+  z-index: 2;
 }
 
 .none {
@@ -189,11 +185,14 @@ $backgroundColor: #f5f5f5;
 }
 
 .pagination-dots {
-  background-color: #fafcff;
+  background-color: transparent;
   padding: 0;
   display: flex;
   width: 100vw;
+  margin-top: 40vw;
+  margin-left: -35vw;
   justify-content: center;
+  z-index: 99;
 }
 
 .pagination-dot {
