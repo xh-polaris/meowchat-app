@@ -30,8 +30,8 @@
     </div>
 
     <view class="time"
-      >募集时间： {{ displayDate(props.plan.startTime) }} ~
-      {{ displayDate(props.plan.endTime) }}</view
+      >募集时间： {{ displayDate(props.plan.startTime, "YYYY/MM/DD") }} -
+      {{ displayDate(props.plan.endTime, "YYYY/MM/DD") }}</view
     >
 
     <div class="dialog-box">
@@ -308,7 +308,7 @@ const nowPicIndex = ref<number>(0);
     .progress {
       width: 60vw;
       height: 2vw;
-      background: linear-gradient(to right, #191970, #0000ff, #1e90ff);
+      background: linear-gradient(to right, #0000ff, #1e90ff);
       border-radius: 1vw;
     }
   }
