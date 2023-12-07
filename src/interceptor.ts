@@ -3,7 +3,7 @@ import { BackendEnvMap, StorageKeys } from "@/utils/const";
 export function createInterceptors() {
   uni.addInterceptor("request", {
     invoke(args: UniNamespace.RequestOptions) {
-      if (args.url[0] === "/") {
+      if (args.url.startsWith("/")) {
         const env = uni.getStorageSync(StorageKeys.BackendEnv);
         const lane = uni.getStorageSync(StorageKeys.BackendLane);
         args.url = import.meta.env.VITE_BASIC_URL + args.url;

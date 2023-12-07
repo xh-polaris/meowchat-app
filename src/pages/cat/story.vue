@@ -5,21 +5,21 @@
     <view class="follow-btn">+ 关注</view>
     <!--    <text>{{ props.cat.name }}</text>-->
     <view class="user-info">
-      <image :src="src / common / img / photo2.png" class="head-img"></image>
+      <image :src="src / common / img / photo2.png" class="head-img" />
       <text class="nickname">用户名xxxx</text>
       <text class="time">7天前</text>
     </view>
     <view class="storycontent"
       >这只猫曾经上刀山下火海、无所不能，是天下的祸患。因此被王母娘娘绝育了，绝育后变得乖巧懂事，会主动找人贴贴，但是切记不要让他拿到金箍棒，否则魔头将重现天下。</view
     >
-    <image :src="src / common / img / cat.png" class="decoration"></image>
+    <image :src="src / common / img / cat.png" class="decoration" />
     <view class="addstory">我要添加猫咪故事</view>
   </view>
 </template>
 
 <script lang="ts" setup>
 import { Cat } from "@/apis/schemas";
-import { ref } from "vue/dist/vue";
+import { ref, reactive } from "vue";
 
 interface Props {
   cat: Cat;

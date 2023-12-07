@@ -19,7 +19,7 @@
         />
       </view>
       <view class="image-num"> {{ imagesData.length }}/9</view>
-      <view class="m-2"></view>
+      <view class="m-2" />
     </view>
 
     <view class="panel">
@@ -38,7 +38,7 @@
         :can-publish="!disablePublish"
         text="发布猫片"
         @publish="createImage"
-      ></BottomPanel>
+      />
     </view>
   </view>
 </template>

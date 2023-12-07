@@ -3,7 +3,7 @@
     <view
       class="mx-2 my-2"
       style="height: 200rpx; background-color: #ececec; border-radius: 20rpx"
-    ></view>
+    />
   </view>
   <view
     v-if="props.cardList.length > 1 && props.cardList.length <= 3"
@@ -19,8 +19,7 @@
         width: 50%;
         border-radius: 20rpx;
       "
-    >
-    </view>
+    />
   </view>
   <scroll-view
     v-if="props.cardList.length > 3"
@@ -37,8 +36,7 @@
         width: 40%;
         border-radius: 20rpx;
       "
-    >
-    </view>
+    />
   </scroll-view>
 </template>
 

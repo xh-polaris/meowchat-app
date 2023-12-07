@@ -2,33 +2,30 @@
   <TopBar :has-go-back="true" bg-color="#ffffff" :has-shadow="false">
     <template #center>编辑帖子</template>
   </TopBar>
-  <view style="height: 6vw"></view>
+  <view style="height: 6vw" />
   <ChooseImage
     @toggle-is-uploading-images="toggleIsUploadingImages"
     @change-cover-url="changeCoverUrl"
-  ></ChooseImage>
-  <view style="height: 4vw"></view>
-  <EditTags @change-tags="changeTags"></EditTags>
-  <view style="height: 4vw"></view>
-  <InputArea
-    @change-title="changeTitle"
-    @change-content="changeContent"
-  ></InputArea>
-  <view style="height: 8vw"></view>
-  <view style="height: 36vw"></view>
+  />
+  <view style="height: 4vw" />
+  <EditTags @change-tags="changeTags" />
+  <view style="height: 4vw" />
+  <InputArea @change-title="changeTitle" @change-content="changeContent" />
+  <view style="height: 8vw" />
+  <view style="height: 36vw" />
 
   <BottomPanel
     :can-publish="!isUploadingImages"
     text="发布帖子"
     @publish="publish"
-  ></BottomPanel>
+  />
   <template v-if="showToastBox">
     <ToastBoxWithShadow
       bold-normal-text="获得小鱼干"
       :bold-blue-text="'*' + gottenFishAmount"
       :grey-text="'今日第' + gottenFishNth + '次发布'"
       @close="closeToastBox"
-    ></ToastBoxWithShadow>
+    />
   </template>
 </template>
 

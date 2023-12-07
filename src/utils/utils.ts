@@ -17,9 +17,7 @@ export function refresh(show: Ref<boolean>) {
   });
 }
 
-export interface Callback<T> {
-  (data: T): void;
-}
+export type Callback<T> = (data: T) => void;
 
 export class EventEmitter<T> {
   private callbacks: Callback<T>[] = [];

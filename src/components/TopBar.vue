@@ -3,10 +3,10 @@
     :style="{ height: navBarHeight + 'px', backgroundColor: props.bgColor }"
     :class="'nav-bar ' + (props.hasShadow ? 'shadow' : '')"
   >
-    <view :style="{ height: topBarHeight + 'px' }" class="top-bar"></view>
+    <view :style="{ height: topBarHeight + 'px' }" class="top-bar" />
     <view :style="{ height: capsuleBarHeight + 'px' }" class="capsule-bar">
       <view class="center">
-        <slot name="center"></slot>
+        <slot name="center" />
       </view>
       <view v-if="props.hasGoBack" class="left title">
         <image
@@ -14,15 +14,15 @@
           mode="scaleToFill"
           :src="Icons.GoBack"
           @click="goBack"
-        ></image>
-        <slot name="left"></slot>
+        />
+        <slot name="left" />
       </view>
       <view v-else class="left">
-        <slot name="left"></slot>
+        <slot name="left" />
       </view>
     </view>
   </view>
-  <view :style="{ height: navBarHeight + 'px' }"></view>
+  <view :style="{ height: navBarHeight + 'px' }" />
 </template>
 
 <script lang="ts" setup>

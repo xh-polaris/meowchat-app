@@ -2,34 +2,31 @@
   <TopBar :has-go-back="true" :has-shadow="false" bg-color="#ffffff">
     <template #center>编辑动态</template>
   </TopBar>
-  <view style="height: 6vw"></view>
+  <view style="height: 6vw" />
   <ChooseImages
     @toggle-is-uploading-images="toggleIsUploadingImages"
     @change-photos="changePhotos"
-  ></ChooseImages>
+  />
   <view v-if="isUploadingImages" style="margin: 0 6vw; font-size: 3.8vw"
     >上传图片中...</view
   >
-  <view style="height: 4vw"></view>
-  <InputArea
-    @change-title="changeTitle"
-    @change-content="changeContent"
-  ></InputArea>
-  <view style="height: 4vw"></view>
-  <ChooseCat></ChooseCat>
-  <view style="height: 44vw"></view>
+  <view style="height: 4vw" />
+  <InputArea @change-title="changeTitle" @change-content="changeContent" />
+  <view style="height: 4vw" />
+  <ChooseCat />
+  <view style="height: 44vw" />
   <BottomPanel
     :can-publish="!isUploadingImages"
     text="发布动态"
     @publish="publish"
-  ></BottomPanel>
+  />
   <template v-if="showToastBox">
     <ToastBoxWithShadow
       bold-normal-text="获得小鱼干"
       :bold-blue-text="'*' + gottenFishAmount"
       :grey-text="'今日第' + gottenFishNth + '次发布'"
       @close="closeToastBox"
-    ></ToastBoxWithShadow>
+    />
   </template>
 </template>
 

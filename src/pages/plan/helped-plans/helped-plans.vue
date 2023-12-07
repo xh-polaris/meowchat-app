@@ -3,7 +3,7 @@
     <template #left>我助力过的小鱼干计划</template>
   </TopBar>
   <view class="background" :style="styleStr">
-    <view style="height: 3vw"></view>
+    <view style="height: 3vw" />
     <view class="plans">
       <view
         v-for="(donations, i) in [donationsLeft, donationsRight]"
@@ -14,7 +14,7 @@
           v-for="(donation, index) in donations"
           :key="index"
           :donation="donation"
-        ></HelpedCard>
+        />
       </view>
     </view>
   </view>

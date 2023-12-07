@@ -1,6 +1,6 @@
 import { applySignedUrl } from "../sts/sts";
 import { PutObjectReq, PutObjectResp } from "@/apis/cos/cos-interface";
-import * as mime from "mime";
+import mime from "mime";
 
 export const enum Prefixes {
   Avatar = "avatar",

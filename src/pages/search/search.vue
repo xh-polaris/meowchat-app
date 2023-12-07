@@ -12,8 +12,7 @@
           :src="Icons.Search"
           class="ml-2"
           style="width: 40rpx; height: 40rpx"
-        >
-        </image>
+        />
         <input
           ref="getValue"
           v-model="searchText"
@@ -30,10 +29,7 @@
     <view v-if="!showContent">
       <view v-if="list.length !== 0">
         <view class="d-flex a-center pl-2 pb-1">
-          <image
-            :src="Icons.Collection"
-            style="width: 45rpx; height: 45rpx"
-          ></image>
+          <image :src="Icons.Collection" style="width: 45rpx; height: 45rpx" />
           <view class="ml-1 mb-1" style="color: #999999; font-size: 32rpx"
             >最近搜索
           </view>
@@ -66,8 +62,7 @@
           :current="current"
           :items="items"
           @click-item="onClickItem"
-        >
-        </zzx-tabs>
+        />
       </view>
       <view
         style="
@@ -79,15 +74,15 @@
       >
         <template v-if="current === 0">
           <!-- 帖子 -->
-          <WorldPosts :keyword="searchText"></WorldPosts>
+          <WorldPosts :keyword="searchText" />
         </template>
         <template v-else-if="current === 1">
           <!-- 动态 -->
-          <Masonry :loader-builder="() => buildLoader(searchText)"></Masonry>
+          <Masonry :loader-builder="() => buildLoader(searchText)" />
         </template>
         <template v-else-if="current === 2">
           <!-- 图鉴 -->
-          <search-cats :keyword="searchText" search="cat"></search-cats>
+          <search-cats :keyword="searchText" search="cat" />
         </template>
       </view>
     </view>

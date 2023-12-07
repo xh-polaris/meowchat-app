@@ -54,8 +54,12 @@ const props = defineProps<{
   myFish: number;
 }>();
 const emits = defineEmits(["setFishIWannaDonate", "hideDonatePanel"]);
-const setFishIWannaDonate = (num: number) => emits("setFishIWannaDonate", num);
-const hide = () => emits("hideDonatePanel");
+const setFishIWannaDonate = (num: number) => {
+  emits("setFishIWannaDonate", num);
+};
+const hide = () => {
+  emits("hideDonatePanel");
+};
 
 const count = ref<number>(10); // Initialize the count value
 const increment = () => {

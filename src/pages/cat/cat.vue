@@ -7,7 +7,7 @@
       @click="onClickAvatar(mainImgUrl, cat.avatars)"
     />
     <view class="goBackButton" @click="goBack">
-      <view class="left-arrow"></view>
+      <view class="left-arrow" />
     </view>
     <view class="main">
       <Header :cat="cat" />

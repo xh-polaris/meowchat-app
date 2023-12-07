@@ -2,17 +2,9 @@
   <TopBar :has-go-back="true" bg-color="#ffffff" :has-shadow="false">
     <template #center>小鱼干计划</template>
   </TopBar>
-  <CellBar
-    label="测试"
-    place-holder="写点什么"
-    :has-bottom-line="true"
-  ></CellBar>
-  <CellBar label="测试" place-holder="写点什么"></CellBar>
-  <BottomPanel
-    :can-publish="false"
-    text="发布计划"
-    @publish="() => {}"
-  ></BottomPanel>
+  <CellBar label="测试" place-holder="写点什么" :has-bottom-line="true" />
+  <CellBar label="测试" place-holder="写点什么" />
+  <BottomPanel :can-publish="false" text="发布计划" @publish="() => {}" />
 </template>
 
 <script setup lang="ts">

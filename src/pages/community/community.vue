@@ -12,25 +12,25 @@
       <CarouselFrame />
     </view>
 
-    <view style="height: 2vw"></view>
+    <view style="height: 2vw" />
 
-    <CollectionEntry></CollectionEntry>
+    <CollectionEntry />
 
     <!--cards是未使用的功能，暂时不管-->
     <view v-if="false">
       <Cards :card-list="cardList" />
     </view>
 
-    <view style="height: 4vw"></view>
+    <view style="height: 4vw" />
 
     <view v-if="!isRefreshing">
-      <Masonry :loader-builder="buildLoader"></Masonry>
+      <Masonry :loader-builder="buildLoader" />
     </view>
 
-    <view style="height: 18vw"></view>
+    <view style="height: 18vw" />
   </view>
 
-  <BottomBar id="community"></BottomBar>
+  <BottomBar id="community" />
 
   <template v-if="showToastBox">
     <ToastBoxWithShadow
@@ -38,7 +38,7 @@
       :bold-blue-text="'*' + gottenFishAmount"
       grey-text="今日首次上线"
       @close="closeToastBox"
-    ></ToastBoxWithShadow>
+    />
   </template>
 </template>
 

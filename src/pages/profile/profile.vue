@@ -1,12 +1,12 @@
 <template>
-  <view class="background"></view>
+  <view class="background" />
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
     <view class="app-version" @click="clickAppVersion">{{
       clickedTimes < 5 ? appVersion : "ID: " + user.id
     }}</view>
     <view style="height: 110rpx; z-index: -999" />
-    <UserInfo type="my"></UserInfo>
+    <UserInfo type="my" />
     <!-- 功能栏 -->
     <view class="com-item">
       <view class="com-wrap">
@@ -52,11 +52,11 @@
       </view>
     </view>
   </view>
-  <UserPublished v-if="show" type="my"></UserPublished>
-  <view style="width: 100%; height: 18vw"></view>
-  <BottomBar id="profile"></BottomBar>
+  <UserPublished v-if="show" type="my" />
+  <view style="width: 100%; height: 18vw" />
+  <BottomBar id="profile" />
   <template v-if="enableDebug">
-    <DebugPanel></DebugPanel>
+    <DebugPanel />
   </template>
 </template>
 
@@ -139,7 +139,7 @@ interface UserOption {
   function: () => void;
 }
 
-const userOptions = <UserOption[]>[
+const userOptions = [
   {
     title: "联系我们",
     icon: "/static/images/quick_contact.png",
@@ -160,7 +160,7 @@ const userOptions = <UserOption[]>[
     url: "",
     function: showToast
   }
-];
+] as UserOption[];
 
 onLoad(() => {
   uni.showLoading({

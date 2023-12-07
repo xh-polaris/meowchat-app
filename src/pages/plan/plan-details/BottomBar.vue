@@ -6,9 +6,7 @@
   </view>
 </template>
 <script setup lang="ts">
-const emit = defineEmits<{
-  (e: "onHelpClick"): void;
-}>();
+const emit = defineEmits<(e: "onHelpClick") => void>();
 function onHelpClick() {
   emit("onHelpClick");
 }

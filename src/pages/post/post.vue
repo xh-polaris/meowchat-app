@@ -16,7 +16,7 @@
           v-if="myUserId && myUserId === post.user?.id"
           class="delete"
           @click="showDeleteDialogue"
-        ></view>
+        />
       </view>
       <view class="head-info">
         {{ displayTime(post.createAt) }} · {{ post.comments }}条回复
@@ -67,7 +67,7 @@
         @on-click-replies="onClickReplies(comment)"
         @local-do-like="likeComment(comment, fishAwardEmitter)"
       />
-      <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
+      <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'" />
     </view>
   </view>
   <WriteCommentBox
@@ -113,7 +113,7 @@
         showToastBox = false;
       }
     "
-  ></ToastBoxWithShadow>
+  />
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
@@ -206,9 +206,9 @@ const localGetCommentsData = async () => {
     page: page
   }).then((res) => {
     comments.replyNumber = 0;
-    for (let i = 0; i < res.data?.length; i++) {
-      comments.data.push(res.data[i]);
-      comments.replyNumber += res.data[i].comments || 0;
+    for (const data of res.data) {
+      comments.data.push(data);
+      comments.replyNumber += data.comments || 0;
     }
     isCommentsLoaded = true;
     page += 1;

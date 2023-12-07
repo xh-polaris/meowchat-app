@@ -1,8 +1,5 @@
 <template>
-  <BottomBarContent
-    :id="props.id"
-    @toggle-showing-draft="toggleShowingDraft"
-  ></BottomBarContent>
+  <BottomBarContent :id="props.id" @toggle-showing-draft="toggleShowingDraft" />
 </template>
 
 <script setup lang="ts">

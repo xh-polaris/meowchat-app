@@ -1,5 +1,5 @@
 <template>
-  <web-view :src="props.url"></web-view>
+  <web-view :src="props.url" />
 </template>
 
 <script lang="ts" setup>

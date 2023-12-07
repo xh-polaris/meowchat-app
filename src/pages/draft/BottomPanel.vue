@@ -17,8 +17,8 @@
       ，一旦发布即被视为同意上述协议和政策
     </view>
   </view>
-  <deal v-if="isShow && type === 1"></deal>
-  <policy v-if="isShow && type === 2"></policy>
+  <deal v-if="isShow && type === 1" />
+  <policy v-if="isShow && type === 2" />
 </template>
 
 <script setup lang="ts">

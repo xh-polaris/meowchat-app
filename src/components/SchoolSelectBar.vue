@@ -8,7 +8,7 @@
           : currentSchool
       }}
     </view>
-    <view class="triangle"></view>
+    <view class="triangle" />
   </view>
 </template>
 
@@ -41,15 +41,15 @@ async function schoolList() {
 async function getCampus() {
   await schoolList();
   init();
-  for (let i = 0; i < lists.data.length; i++) {
-    if (lists.data[i].id === communityId.value) {
-      currentCampus.value = lists.data[i].name;
-      parentId.value = <string>lists.data[i].parentId;
+  for (const data of lists.data) {
+    if (data.id === communityId.value) {
+      currentCampus.value = data.name;
+      parentId.value = data.parentId || "";
     }
   }
-  for (let j = 0; j < lists.data.length; j++) {
-    if (lists.data[j].id === parentId.value) {
-      currentSchool.value = lists.data[j].name;
+  for (const data of lists.data) {
+    if (data.id === parentId.value) {
+      currentSchool.value = data.name;
     }
   }
 }

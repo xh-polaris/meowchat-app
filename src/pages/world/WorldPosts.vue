@@ -3,7 +3,7 @@
     <template v-for="post in postsData" :key="post.id">
       <view class="pb-1 first">
         <view class="post" @click="onClickPost(post.id)">
-          <view v-if="post.isOfficial" class="official-mark"></view>
+          <view v-if="post.isOfficial" class="official-mark" />
           <view class="upper">
             <view :class="'main ' + (post.coverUrl ? 'hasImage' : '')">
               <view class="title">
@@ -134,7 +134,7 @@ async function createPostsDataBatch() {
 createPostsDataBatch();
 
 onReachBottom(() => {
-  createPostsDataBatch();
+  void createPostsDataBatch();
 });
 </script>
 

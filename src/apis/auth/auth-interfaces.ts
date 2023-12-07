@@ -16,7 +16,7 @@ export interface SignInReq {
   appId: number;
 }
 
-export interface GignInResp {
+export interface SignInResp {
   userId: string;
   accessToken: string;
   accessExpire: number;

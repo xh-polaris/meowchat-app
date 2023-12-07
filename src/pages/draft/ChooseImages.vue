@@ -19,7 +19,7 @@
       <template #content="{ image, index }">
         <div style="position: relative">
           <image
-            :src="image.url"
+            :src="(image as Image).url"
             class="added-image"
             mode="aspectFill"
             @click="showImage(index)"
@@ -43,8 +43,12 @@ import DraggableItem from "@/components/third-party/draggable-item/draggable-ite
 import { reactive, ref } from "vue";
 import { Prefixes, putObject } from "@/apis/cos/cos";
 import { onClickImage } from "@/pages/cat/utils";
-const photos = reactive<any>([]);
-const imagesData = reactive<any>([]);
+const photos = reactive<string[]>([]);
+interface Image {
+  id: string;
+  url: string;
+}
+const imagesData = reactive<Image[]>([]);
 const windowWidth = ref(uni.getSystemInfoSync().windowWidth);
 // const margin = ref((20.0 / 390) * windowWidth.value);
 // 88 28-2-28-2-28
@@ -56,7 +60,7 @@ const imageMargin = ref(windowWidth.value * 0.02);
 // const imageMargin = ref((imagesWidth.value - 3 * imageWidth.value) / 2);
 const emits = defineEmits(["toggleIsUploadingImages", "changePhotos"]);
 function showImage(index: number) {
-  const imageUrl = imagesData.map((item: any) => item.url);
+  const imageUrl = imagesData.map((item: Image) => item.url);
   onClickImage(index, imageUrl);
 }
 function addImage() {
@@ -68,7 +72,7 @@ function addImage() {
       //成功在文件中选择了图片 在这里
       emits("toggleIsUploadingImages", true);
       let isTooManyImages = false;
-      let tempFilePaths = chooseImageRes.tempFiles as Array<any>;
+      let tempFilePaths = chooseImageRes.tempFiles as any[];
       if (imagesData.length + tempFilePaths.length > 30) {
         isTooManyImages = true;
         tempFilePaths = tempFilePaths.slice(0, 30 - imagesData.length);

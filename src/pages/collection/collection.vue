@@ -48,7 +48,7 @@
       </view>
     </view>
     <template v-if="!isRefreshing">
-      <SearchCats :keyword="searchText" choose="detail"></SearchCats>
+      <SearchCats :keyword="searchText" choose="detail" />
     </template>
   </view>
 </template>
@@ -89,18 +89,18 @@ async function schoolList() {
   lists.data = (await listCommunity({})).communities;
 }
 
-async function getCampus() {
+function getCampus() {
   schoolList().then(async () => {
     init();
-    for (let i = 0; i < lists.data.length; i++) {
-      if (lists.data[i].id === communityId.value) {
-        currentCampus.value = lists.data[i].name;
-        parentId.value = <string>lists.data[i].parentId;
+    for (const data of lists.data) {
+      if (data.id === communityId.value) {
+        currentCampus.value = data.name;
+        parentId.value = data.parentId || "";
       }
     }
-    for (let j = 0; j < lists.data.length; j++) {
-      if (lists.data[j].id === parentId.value) {
-        currentSchool.value = lists.data[j].name;
+    for (const data of lists.data) {
+      if (data.id === parentId.value) {
+        currentSchool.value = data.name;
       }
     }
     campuses.data = (

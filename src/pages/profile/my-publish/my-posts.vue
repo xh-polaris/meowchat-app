@@ -74,19 +74,19 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-let userId: string | undefined;
+let chooseUserId: string | undefined;
 let postsData = ref<Post[]>([]);
 let token: string;
 const myUserId = ref("");
 const hasMore = ref(true);
 const getPostPreviewsAsync = async () => {
   if (!hasMore.value) {
-    return <Post[]>[];
+    return [] as Post[];
   }
   myUserId.value = uni.getStorageSync("userId");
-  userId = props.userId;
+  chooseUserId = props.userId;
   const req: GetPostPreviewsReq = {
-    onlyUserId: props.type === "my" ? myUserId.value : userId
+    onlyUserId: props.type === "my" ? myUserId.value : chooseUserId
   };
   if (token) {
     req.paginationOption = {

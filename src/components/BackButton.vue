@@ -1,6 +1,6 @@
 <template>
   <view class="goBackButton" @click="goBack">
-    <view class="left-arrow"></view>
+    <view class="left-arrow" />
   </view>
 </template>
 

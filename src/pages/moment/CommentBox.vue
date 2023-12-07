@@ -4,7 +4,7 @@
       v-if="myUserId && myUserId === comment.user.id"
       class="delete"
       @click="showDeleteDialogue"
-    ></view>
+    />
     <view class="commenter-info-box">
       <view
         class="d-flex a-start"
@@ -90,12 +90,16 @@ const props = defineProps<{
 const myUserId = uni.getStorageSync(StorageKeys.UserId);
 const isShowDeleteDialogue = ref(false);
 
-const emit = defineEmits<{
-  (e: "interactWithComment"): void;
-  (e: "onClickReplies"): void;
-  (e: "localDoLike"): void;
-  (e: "afterDelete"): void;
-}>();
+const emit =
+  defineEmits<
+    (
+      e:
+        | "interactWithComment"
+        | "onClickReplies"
+        | "localDoLike"
+        | "afterDelete"
+    ) => void
+  >();
 
 const showDeleteDialogue = () => {
   isShowDeleteDialogue.value = true;

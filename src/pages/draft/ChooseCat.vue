@@ -17,7 +17,7 @@
           class="clear"
           mode="scaleToFill"
           @click.stop="clearCat"
-        ></image>
+        />
       </image>
       <!--      <view>-->
       <!--        <view class="button" @click="chooseCats">重选</view>-->

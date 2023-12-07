@@ -1,5 +1,5 @@
 <template>
-  <view class="divider"></view>
+  <view class="divider" />
 </template>
 
 <script></script>

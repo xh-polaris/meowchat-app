@@ -28,7 +28,7 @@
             v-if="myUserId && myUserId === moment.user.id"
             class="delete"
             @click="showDeleteDialogue"
-          ></view>
+          />
         </view>
         <view v-if="moment.title" class="post-content font-lg">
           {{ moment.title }}
@@ -79,7 +79,7 @@
         @on-click-replies="onClickReplies(comment)"
         @local-do-like="likeComment(comment, fishAwardEmitter)"
       />
-      <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
+      <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'" />
     </view>
   </view>
   <WriteCommentBox
@@ -125,7 +125,7 @@
         showToastBox = false;
       }
     "
-  ></ToastBoxWithShadow>
+  />
 </template>
 
 <script lang="ts" setup>
@@ -175,19 +175,6 @@ const getMomentDetailReq = reactive<GetMomentDetailReq>({
 });
 const moment = ref<Moment>();
 
-const commentDoLikeMap = new Map<string, number>();
-
-const commentDoLike = async (id: string) => {
-  let res = await doLike({
-    targetId: id,
-    targetType: TargetType.Comment
-  });
-  if (res.getFish) {
-    gotFishNum.value = res.getFishNum;
-    showToastBox.value = true;
-  }
-};
-
 const myUserId = uni.getStorageSync(StorageKeys.UserId);
 const isShowDeleteDialogue = ref(false);
 
@@ -216,19 +203,15 @@ const comments = ref<Comment[]>([]);
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
 let page = 0;
-const localGetCommentsData = async () => {
-  await Promise.all(
-    Array.from(commentDoLikeMap.keys()).map((id) => commentDoLike(id))
-  );
-  commentDoLikeMap.clear();
+const localGetCommentsData = () => {
   isCommentsLoaded = false;
   getCommentsData({
     id: props.id,
     type: CommentType.Moment,
     page: page
   }).then((res) => {
-    for (let i = 0; i < res.data?.length; i++) {
-      comments.value.push(res.data[i]);
+    for (const data of res.data) {
+      comments.value.push(data);
     }
     isCommentsLoaded = true;
     page += 1;
@@ -278,16 +261,16 @@ const relaunchCurrentPage = () => {
 };
 
 let initLock = false;
-const init = async () => {
+const init = () => {
   if (initLock) return;
   initLock = true;
-  await getData();
+  getData();
   page = 0;
   getCommentsReq.page = 0;
   comments.value = [];
   allCommentsLoaded = false;
   isCommentsLoaded = true;
-  await localGetCommentsData();
+  localGetCommentsData();
   initLock = false;
 };
 

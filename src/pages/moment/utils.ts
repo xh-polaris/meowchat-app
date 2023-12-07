@@ -27,7 +27,7 @@ export interface LikeStruct {
   isLike: boolean;
 }
 
-export const likeMoment = async (
+export const likeMoment = (
   item: Moment,
   eventEmitter?: EventEmitter<FishAward>
 ) => {
@@ -42,7 +42,7 @@ export const likeMoment = async (
   });
 };
 
-export const likeComment = async (
+export const likeComment = (
   item: Comment,
   eventEmitter?: EventEmitter<FishAward>
 ) => {
