@@ -13,7 +13,7 @@
                 <template v-if="post.user">
                   <image
                     v-if="post.user.avatarUrl"
-                    :src="post.user.avatarUrl"
+                    :src="getThumbnail(post.user.avatarUrl)"
                     class="avatar"
                   />
                   <view
@@ -57,7 +57,7 @@
             </view>
             <image
               v-if="post.coverUrl"
-              :src="post.coverUrl"
+              :src="getThumbnail(post.coverUrl)"
               class="image"
               mode="aspectFill"
               @click.stop="onClickCover(post.coverUrl)"
@@ -81,6 +81,7 @@ import { Pictures } from "@/utils/url";
 import { onClickCover, onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
 import { getPrefetchData, PrefetchResp } from "@/apis/prefetch";
+import { getThumbnail } from "@/utils/utils";
 
 interface Props {
   keyword?: string;

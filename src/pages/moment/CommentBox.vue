@@ -10,7 +10,10 @@
         class="d-flex a-start"
         @click="toPersonInfo(comment.user.id, myUserId)"
       >
-        <image :src="comment.user.avatarUrl" class="commenter-profile" />
+        <image
+          :src="getThumbnail(comment.user.avatarUrl)"
+          class="commenter-profile"
+        />
       </view>
       <view style="margin-top: 12rpx; margin-left: 12rpx; width: 100%">
         <view class="d-flex a-center">
@@ -83,6 +86,7 @@ import { deleteComment } from "@/apis/comment/comment";
 import { ref } from "vue";
 import { toPersonInfo } from "@/pages/profile/utils";
 import { StorageKeys } from "@/utils/const";
+import { getThumbnail } from "@/utils/utils";
 
 const props = defineProps<{
   comment: Comment;

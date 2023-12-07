@@ -21,14 +21,6 @@ export async function getPostPreviews(req: GetPostPreviewsReq) {
           reject(res);
         }
         const data = res.data as GetPostPreviewsResp;
-        data.posts?.forEach((post) => {
-          if (post.coverUrl) {
-            post.coverUrl += PictureStyle.thumbnail;
-          }
-          if (post.user?.avatarUrl) {
-            post.user.avatarUrl += PictureStyle.thumbnail;
-          }
-        });
         resolve(data);
       }
     });
@@ -80,9 +72,6 @@ export async function getPostDetail(req: GetPostDetailReq) {
           reject(res);
         }
         const data = res.data as GetPostDetailResp;
-        if (data.post.user?.avatarUrl) {
-          data.post.user.avatarUrl += PictureStyle.thumbnail;
-        }
         resolve(data);
       }
     });

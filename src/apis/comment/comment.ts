@@ -40,9 +40,6 @@ export async function getComments(req: GetCommentsReq) {
           reject(res);
         }
         const data = res.data as GetCommentsResp;
-        data.comments?.forEach((comment) => {
-          comment.user.avatarUrl += PictureStyle.thumbnail;
-        });
         resolve(data);
       }
     });

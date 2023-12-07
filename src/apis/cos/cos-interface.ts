@@ -14,5 +14,5 @@ export interface PutObjectResp {
 }
 
 export enum PictureStyle {
-  thumbnail = "/thumbnail"
+  Thumbnail = "/thumbnail"
 }

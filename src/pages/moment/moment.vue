@@ -13,7 +13,7 @@
       <view class="post-info-box">
         <view class="poster-info-box">
           <image
-            :src="moment.user.avatarUrl"
+            :src="getThumbnail(moment.user.avatarUrl)"
             class="poster-profile"
             @click="toPersonInfo(moment.user.id, myUserId)"
           />
@@ -39,7 +39,7 @@
             v-for="(url, index) in moment.photos.slice(0, 9)"
             :key="index"
             :mode="chooseImageMode(moment.photos.length)"
-            :src="url"
+            :src="moment.photos.length > 1 ? getThumbnail(url) : url"
             @click="onClickImage(String(index), moment.photos)"
           />
           <view
@@ -155,7 +155,7 @@ import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
 import CommentBox from "@/pages/moment/CommentBox.vue";
 import { Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
-import { EventEmitter } from "@/utils/utils";
+import { EventEmitter, getThumbnail } from "@/utils/utils";
 
 const props = defineProps<{
   id: string;

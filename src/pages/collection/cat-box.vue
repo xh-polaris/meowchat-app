@@ -1,6 +1,10 @@
 <template>
   <view class="cats-box">
-    <image :src="cat.avatarUrl" class="avatar" mode="aspectFill" />
+    <image
+      :src="getThumbnail(cat.avatarUrl)"
+      class="avatar"
+      mode="aspectFill"
+    />
     <view class="text">
       <view class="title">{{ cat.name }}</view>
       <view class="details">
@@ -14,6 +18,7 @@
 <script lang="ts" setup>
 import { reactive } from "vue";
 import { CatPreview } from "@/apis/schemas";
+import { getThumbnail } from "@/utils/utils";
 
 const props = defineProps<{ cat: CatPreview }>();
 const cat = reactive(props.cat);
@@ -28,10 +33,9 @@ const cat = reactive(props.cat);
   align-items: center;
   justify-content: left;
   position: relative;
-  margin: 0 auto;
   background-color: #ffffff;
   box-shadow: 0 0 8upx rgba(0, 0, 0, 0.1);
-  margin-bottom: 12upx;
+  margin: 0 auto 12upx;
 
   .avatar {
     width: 174upx;

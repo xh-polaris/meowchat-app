@@ -2,8 +2,9 @@
   <view class="fot-xh">
     <view class="pic">
       <image
-        :src="userInfo.avatarUrl"
+        :src="getThumbnail(userInfo.avatarUrl)"
         style="width: 100%; height: 100%; border-radius: 50%"
+        mode="aspectFill"
         @click="onClickAvatar(userInfo.avatarUrl)"
       />
     </view>
@@ -24,6 +25,7 @@ import { getUserInfo } from "@/apis/user/user";
 import { User } from "@/apis/schemas";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { onClickAvatar } from "@/pages/cat/utils";
+import { getThumbnail } from "@/utils/utils";
 
 interface Props {
   type?: string;
@@ -40,7 +42,7 @@ const userInfo = reactive<User>({
   follower: 0,
   following: 0
 });
-const isFollowed = ref(false);
+
 const refresh = async () => {
   const res = await getUserInfo(
     props.type === "other"

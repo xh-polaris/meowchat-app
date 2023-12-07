@@ -77,7 +77,7 @@ const user = reactive<User>({
   id: "",
   nickname: "微信用户",
   avatarUrl: "https://static.xhpolaris.com/cat_world.jpg",
-  motto: "暂无个性签名",
+  motto: "暂无自我介绍",
   article: 0,
   follower: 0,
   following: 0

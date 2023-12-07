@@ -35,7 +35,7 @@
         class="user"
         @click="toPersonInfo(post.user.id, myUserId)"
       >
-        <image :src="post.user.avatarUrl" class="avatar" />
+        <image :src="getThumbnail(post.user.avatarUrl)" class="avatar" />
         <view class="name">
           {{ post.user.nickname }}
         </view>
@@ -45,7 +45,7 @@
       </view>
       <image
         v-if="post.coverUrl"
-        :src="post.coverUrl"
+        :src="getThumbnail(post.coverUrl)"
         class="imgs imgs1 clearfix"
         mode="widthFix"
         @click="onClickImage(post.coverUrl)"
@@ -139,7 +139,7 @@ import { likePost, onClickImage } from "@/pages/post/utils";
 import { Icons, Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
-import { EventEmitter } from "@/utils/utils";
+import { EventEmitter, getThumbnail } from "@/utils/utils";
 
 const props = defineProps<{
   id: string;

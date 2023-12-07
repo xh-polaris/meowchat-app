@@ -37,7 +37,7 @@
       <BottomPanel
         :can-publish="!disablePublish"
         text="发布猫片"
-        @publish="createImage"
+        @publish="createCatImage"
       />
     </view>
   </view>
@@ -47,7 +47,7 @@
 import { reactive, ref } from "vue";
 import { putObject } from "@/apis/cos/cos";
 import { CatImage } from "@/apis/collection/collection-interfaces";
-import { CreateImage } from "@/apis/collection/collection";
+import { createImage } from "@/apis/collection/collection";
 import { Pages } from "@/utils/url";
 import { onClickImage } from "@/pages/cat/utils";
 import TopBar from "@/components/TopBar.vue";
@@ -104,7 +104,7 @@ function addImage() {
   });
 }
 
-function createImage() {
+function createCatImage() {
   if (!photos.length) {
     uni.showToast({
       title: "至少上传一张图片哦",
@@ -113,7 +113,7 @@ function createImage() {
     return;
   }
   disablePublish.value = true;
-  CreateImage({
+  createImage({
     images: photos
   })
     .then(() => {

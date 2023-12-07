@@ -5,14 +5,11 @@
   <view class="container">
     <view class="bg-set" />
     <view class="choose-avatar-row">
-      <button
-        class="avatar-wrapper"
-        open-type="chooseAvatar"
-        @chooseavatar="onChooseAvatar"
-      >
+      <button class="avatar-wrapper" @click="onChooseAvatar">
         <image
           :src="userInfo.avatarUrl ? userInfo.avatarUrl : props.avatarUrl"
           class="avatar"
+          mode="aspectFill"
         />
       </button>
       <text class="avatar-hint">点击更换头像</text>
@@ -57,6 +54,7 @@ import { Prefixes, putObject } from "@/apis/cos/cos";
 import { reactive, ref } from "vue";
 import { Pages, Pictures } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
+import { CatImage } from "@/apis/collection/collection-interfaces";
 
 const props = defineProps<{
   avatarUrl: string;
@@ -66,18 +64,34 @@ const props = defineProps<{
 const disableConfirm = ref(false);
 const userInfo = reactive<UpdateUserInfoReq>({});
 
-function onChooseAvatar(e: any) {
+function onChooseAvatar() {
   disableConfirm.value = true;
-  putObject({
-    filePath: e.detail.avatarUrl,
-    prefix: Prefixes.Avatar
-  }).then((res) => {
-    disableConfirm.value = false;
-    userInfo.avatarUrl = res.url;
+  uni.chooseImage({
+    count: 1,
+    crop: {
+      width: 500,
+      height: 500,
+      quality: 100,
+      resize: true
+    },
+    success: (chooseImageRes) => {
+      let path = (chooseImageRes.tempFilePaths as string[])[0];
+      putObject({
+        filePath: path,
+        prefix: Prefixes.Avatar
+      }).then((res) => {
+        disableConfirm.value = false;
+        userInfo.avatarUrl = res.url;
+      });
+    },
+    fail: () => {
+      disableConfirm.value = false;
+    }
   });
 }
 
 function formSubmit(e: any) {
+  disableConfirm.value = true;
   userInfo.nickname = e.detail.value.nickname;
   userInfo.motto = e.detail.value.motto;
   updateUserInfo(userInfo)
@@ -85,13 +99,10 @@ function formSubmit(e: any) {
       uni.showToast({
         title: "修改信息成功"
       });
-      setTimeout(() => {
-        uni.reLaunch({
-          url: Pages.Profile
-        });
-      }, 1000);
+      uni.navigateBack({ delta: 1 });
     })
     .catch((res: UniNamespace.RequestSuccessCallbackResult) => {
+      disableConfirm.value = false;
       if (res.statusCode === 400) {
         uni.showToast({
           icon: "error",

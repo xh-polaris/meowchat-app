@@ -33,7 +33,9 @@
           </view>
           <view
             v-if="post.coverUrl"
-            :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
+            :style="{
+              backgroundImage: 'url(' + getThumbnail(post.coverUrl) + ')'
+            }"
             class="image"
           />
         </view>
@@ -67,6 +69,7 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
+import { getThumbnail } from "@/utils/utils";
 
 interface Props {
   type?: string;
