@@ -5,50 +5,93 @@
     @click="onClickPlan(props.plan.id)"
   >
     <view class="small-icon">
-      <img :src="Icons.Plan_PlanTag" class="plan-tag" />
+      <img
+        :src="
+          planTypeMap(props.plan.planType) === '零食奖励'
+            ? Icons.Plan_PlanSnacksTag
+            : Icons.Plan_PlanHealthTag
+        "
+        class="plan-tag"
+      />
       <text class="content">{{ planTypeMap(props.plan.planType) }}</text>
-    </view>
-    <view class="help">
-      {{ props.plan.summary }}
     </view>
     <view class="prograss-bar">
       <view>
         <view class="bar-content">
           <text class="txt1">帮助</text>
-          <text class="helped-cat">{{
+          <text :class="getHelpCatClass(props.plan.planType)">{{
             props.plan?.cat?.name || "全体猫猫"
           }}</text>
           <text class="txt2">{{ props.plan.name }}</text>
         </view>
-        <progress
-          class="progress"
-          :percent="(100 * props.plan.nowFish) / props.plan.maxFish"
-          activeColor="#2073fb"
-          backgroundColor="e6e6e6"
-          stroke-width="6"
-          active="true"
-          border-radius="3"
-        />
+        <view class="progress-out"
+          ><view
+            :class="getProgressClass(props.plan.planType)"
+            :style="{
+              width: (55 * props.plan.nowFish) / props.plan.maxFish + 'vw'
+            }"
+          ></view
+        ></view>
         <view class="fish-prograss"
           >已获得{{ props.plan.nowFish }}小鱼干助力，还需要{{
             props.plan.maxFish - props.plan.nowFish
           }}小鱼干
         </view>
       </view>
-      <view class="help_but"> 去助力 </view>
+      <view :class="getHelpButClass(props.plan.planType)"> 去助力 </view>
     </view>
   </view>
   <!--  </div>-->
 </template>
 
 <script setup lang="ts">
-import { Plan } from "@/apis/schemas";
+import { Plan, PlanType } from "@/apis/schemas";
 import { Icons } from "@/utils/url";
 import { planTypeMap, onClickPlan } from "@/pages/plan/utils";
 
 const props = defineProps<{
   plan: Plan;
 }>();
+const getProgressClass = (planType: PlanType): string => {
+  const typeDescription = planTypeMap(planType);
+
+  switch (typeDescription) {
+    case "零食奖励":
+      return "progress-snacks";
+    case "生理健康":
+      return "progress-health";
+    case "治愈":
+      return "progress-heal";
+    default:
+      return "progress-health";
+  }
+};
+const getHelpButClass = (planType: PlanType): string => {
+  const typeDescription = planTypeMap(planType);
+  switch (typeDescription) {
+    case "零食奖励":
+      return "help-but-snacks";
+    case "生理健康":
+      return "help-but-health";
+    case "治愈":
+      return "help-but-health";
+    default:
+      return "help-but-health";
+  }
+};
+const getHelpCatClass = (planType: PlanType): string => {
+  const typeDescription = planTypeMap(planType);
+  switch (typeDescription) {
+    case "零食奖励":
+      return "helped-cat-snacks";
+    case "生理健康":
+      return "helped-cat-health";
+    case "治愈":
+      return "helped-cat-health";
+    default:
+      return "helped-cat-health";
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -85,25 +128,13 @@ const props = defineProps<{
     }
   }
 
-  .help {
-    margin-top: 28vw;
-    margin-left: 4vw;
-    z-index: 1;
-    width: 88vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #ffffff;
-    font-size: 5vw;
-    font-weight: bolder;
-    letter-spacing: 0.5vw;
-  }
   .prograss-bar::before {
     content: "";
     position: absolute;
     width: 100%;
     height: 100%;
     box-shadow: 0 0vw 15vw 5vw rgba(0, 0, 0, 0.8);
+    border-radius: 2vw;
     z-index: 0;
   }
   .prograss-bar {
@@ -114,7 +145,7 @@ const props = defineProps<{
     border-radius: 2vw;
     width: 88vw;
     height: 20vw;
-    margin-top: 2vw;
+    margin-top: 36.5vw;
     position: relative;
     .bar-content {
       display: flex;
@@ -136,27 +167,50 @@ const props = defineProps<{
         font-weight: bold;
       }
 
-      .helped-cat {
+      .helped-cat-health {
         margin-left: 0.1vw;
         margin-top: 1vw;
         color: #1f6bff;
         font-size: 4.5vw;
         font-weight: bold;
       }
+      .helped-cat-snacks {
+        margin-left: 0.1vw;
+        margin-top: 1vw;
+        color: #1f86ff;
+        font-size: 4.5vw;
+        font-weight: bold;
+      }
     }
 
-    .progress {
-      margin-top: 2vw;
-      margin-left: 3vw;
-      position: relative;
-      z-index: 1;
+    .progress-out {
+      margin-left: 2vw;
+      margin-right: 5vw;
       width: 55vw;
+      height: 2vw;
+      border-radius: 1vw;
+      background: #dcdcdc;
+      margin-top: 2.5vw;
+
+      .progress-health {
+        width: 55vw;
+        height: 2vw;
+        background: linear-gradient(90deg, #1f28ff 10.92%, #1f86ff 84.48%);
+        border-radius: 1vw;
+      }
+      .progress-snacks {
+        width: 55vw;
+        height: 2vw;
+        background: linear-gradient(270deg, #1fc9ff 4.2%, #1f86ff 100%);
+        border-radius: 1vw;
+      }
     }
 
-    .help_but {
+    .help-but-health {
       background-color: #1f6bff;
       color: #ffffff;
-      font-size: 3.5vw;
+      font-size: 3.7vw;
+      font-weight: bolder;
       width: 18vw;
       height: 8vw;
       border-radius: 5vw;
@@ -169,7 +223,23 @@ const props = defineProps<{
       margin-left: 65vw;
       top: 6vw;
     }
-
+    .help-but-snacks {
+      background-color: #1fa1ff;
+      color: #ffffff;
+      font-size: 3.7vw;
+      font-weight: bolder;
+      width: 18vw;
+      height: 8vw;
+      border-radius: 5vw;
+      display: flex;
+      position: absolute;
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.3vw;
+      margin-left: 65vw;
+      top: 6vw;
+    }
     .fish-prograss {
       color: #aeaeae;
       font-size: 3vw;
