@@ -56,18 +56,3 @@ export async function listCommunity(req: ListCommunityReq) {
 export function clearCache() {
   cache = null;
 }
-
-/*export function onLoad() {
-  const checkInInfoStr = uni.getStorageSync('checkInInfo');
-
-  if (checkInInfoStr) {
-    const checkInInfo = JSON.parse(checkInInfoStr);
-
-    if (checkInInfo.isFirst) {
-      this.showToastBox = true;
-      this.gotFishNum += 30;
-      checkInInfo.isFirst = false;
-      checkInInfo.getFishNum += 30;
-      uni.setStorageSync('checkInInfo', JSON.stringify(checkInInfo));
-    }
-  }*/

@@ -94,15 +94,12 @@ onLoad(() => {
 onReady(() => {
   uni.hideLoading();
   //签到获取小鱼干
-  const checkIn = async () => {
-    const resp = await userCheckIn();
-    console.log(resp);
-    if (resp.getFish) {
-      gottenFishAmount.value = resp.getFishNum;
+  userCheckIn().then((res) => {
+    if (res.getFish) {
+      gottenFishAmount.value = res.getFishNum;
       showToastBox.value = true;
     }
-  };
-  checkIn();
+  });
 });
 
 onShow(() => {

@@ -32,8 +32,3 @@ export interface SetPasswordResp {
   code: number;
   msg: string;
 }
-
-export interface CheckIn {
-  isFirst: true;
-  getFishNum: 0;
-}
