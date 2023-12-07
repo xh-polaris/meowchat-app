@@ -160,7 +160,8 @@ const decrement = () => {
     flex-direction: column;
     justify-content: center;
     margin-bottom: 20px;
-    border: 1vw solid skyblue;
+    border: 0.5vw solid dodgerblue;
+    box-shadow: 0 0 2vw rgba(28, 140, 248, 0.5);
     border-radius: 5vw;
     height: 20vh;
     width: 80vw;

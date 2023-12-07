@@ -97,7 +97,7 @@ onReady(() => {
   const checkIn = async () => {
     const resp = await userCheckIn();
     console.log(resp);
-    if (resp.isFirst) {
+    if (resp.getFish) {
       gottenFishAmount.value = resp.getFishNum;
       showToastBox.value = true;
     }

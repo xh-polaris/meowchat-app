@@ -1,12 +1,14 @@
 import {
+  GignInResp,
   SendVerifyCodeReq,
   SendVerifyCodeResp,
   SetPasswordReq,
   SetPasswordResp,
-  SignInReq,
-  GignInResp
+  SignInReq
 } from "./auth-interfaces";
 import { getPrefetchData } from "@/apis/prefetch";
+import { StorageKeys } from "@/utils/const";
+import { UserCheckInResp } from "@/apis/user/user-interfaces";
 
 /**
  * @description
@@ -37,6 +39,22 @@ export function signIn(req: SignInReq) {
       });
   });
 }
+
+/*const signInRes= await signIn({
+  authType: "wechat",
+  authId: appId,
+  verifyCode: res.code,
+  appId: AppId
+});
+uni.setStorageSync(StorageKeys.AccessToken, {
+  token: signInRes.accessToken,
+  expireTime: signInRes.accessExpire
+});
+uni.setStorageSync(StorageKeys.UserId,signInRes.userId);
+if(signInRes.accessToken) {
+  const checkInRes = await checkIn();
+  uni.setStorageSync('checkInInfo',JSON.stringify(checkInRes));
+}*/
 
 /**
  * @description
@@ -79,3 +97,19 @@ export async function sendVerifyCode(req: SendVerifyCodeReq) {
     });
   });
 }
+
+/*async function checkIn(): Promise<string | AnyObject | ArrayBuffer> {
+  try {
+    const response = await uni.request({
+      url: "/api/check_in",
+      data: {
+        token: signInRes.accessToken
+      },
+      method: "GET",
+    });
+    const data: string | AnyObject | ArrayBuffer = response.data;
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}*/

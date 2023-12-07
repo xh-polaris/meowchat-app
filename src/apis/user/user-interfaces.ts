@@ -23,5 +23,6 @@ export interface UpdateUserInfoResp {
 
 export interface UserCheckInResp {
   isFirst: boolean;
+  getFirst: boolean;
   getFishNum: number;
 }
