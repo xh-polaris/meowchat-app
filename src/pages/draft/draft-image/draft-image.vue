@@ -36,7 +36,7 @@
       </view>
       <BottomPanel
         :can-publish="!disablePublish"
-        text="发布动态"
+        text="发布猫片"
         @publish="createImage"
       ></BottomPanel>
     </view>
@@ -112,18 +112,16 @@ function createImage() {
     });
     return;
   }
+  disablePublish.value = true;
   CreateImage({
     images: photos
-  }).then(() => {
-    uni.switchTab({
-      url: Pages.Collection,
-      success() {
-        uni.reLaunch({
-          url: Pages.Collection
-        });
-      }
+  })
+    .then(() => {
+      uni.navigateBack({ delta: 1 });
+    })
+    .catch(() => {
+      disablePublish.value = false;
     });
-  });
 }
 
 const isShow = ref(false);

@@ -52,7 +52,7 @@
       </view>
     </view>
   </view>
-  <UserPublished type="my"></UserPublished>
+  <UserPublished v-if="show" type="my"></UserPublished>
   <view style="width: 100%; height: 18vw"></view>
   <BottomBar id="profile"></BottomBar>
   <template v-if="enableDebug">
@@ -70,8 +70,8 @@ import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
 import DebugPanel from "@/components/DebugPanel.vue";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
 import { Pages, Pictures } from "@/utils/url";
-import TopBar from "@/components/TopBar.vue";
 import { StorageKeys } from "@/utils/const";
+import { refresh } from "@/utils/utils";
 
 const user = reactive<User>({
   id: "",
@@ -82,10 +82,10 @@ const user = reactive<User>({
   follower: 0,
   following: 0
 });
-
+const show = ref(true);
 const enableDebug = uni.getStorageSync(StorageKeys.EnabledDebug);
 
-const refresh = async () => {
+const loadUser = async () => {
   const res = await getUserInfo({});
   user.id = res.user.id;
   user.nickname = res.user.nickname;
@@ -115,9 +115,10 @@ const appVersion = accountInfo.miniProgram.version
   ? "version: " + accountInfo.miniProgram.version
   : "version: 体验版";
 
-onShow(refresh);
+onShow(loadUser);
 onPullDownRefresh(() => {
-  refresh().then(() => {
+  loadUser().then(() => {
+    refresh(show);
     uni.stopPullDownRefresh();
   });
 });

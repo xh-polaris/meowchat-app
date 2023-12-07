@@ -1,5 +1,5 @@
 <template>
-  <view v-if="!isRefreshing">
+  <view v-if="show && cat">
     <image
       :src="mainImgUrl"
       class="cat-image"
@@ -14,20 +14,14 @@
       <MetaInfo :cat="cat" />
       <Guide :cat="cat" />
       <!--      <Story :cat="cat" />-->
-      <!--      <div @click="draftPlan">发起小鱼干计划</div>-->
       <Photos :id="props.id" :cat="cat" />
     </view>
-    <!--    <view class="dd">-->
-    <!--      <image :src="Icons.Guide" class="guide"></image>-->
-    <!--      <view class="detail"> {{ cat.details }} </view>-->
-    <!--    </view>-->
   </view>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 
-import { Pages } from "@/utils/url";
 import Header from "@/pages/cat/header.vue";
 import Guide from "@/pages/cat/guide.vue";
 import Story from "@/pages/cat/story.vue";
@@ -37,80 +31,42 @@ import Photos from "@/pages/cat/photos.vue";
 import { onClickAvatar } from "@/pages/cat/utils";
 import { getCatDetail } from "@/apis/collection/collection";
 import { GetCatDetailReq } from "@/apis/collection/collection-interfaces";
-import { onPullDownRefresh } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
+import { refresh } from "@/utils/utils";
 
-const isRefreshing = ref(false);
+const show = ref(false);
 const props = defineProps<{
   id: string;
 }>();
 const getCatDetailReq = reactive<GetCatDetailReq>({
   catId: props.id
 });
-const cat = reactive<Cat>({
-  id: "",
-  createAt: 0,
-  age: "",
-  communityId: "",
-  color: "",
-  details: "",
-  name: "",
-  popularity: 0,
-  sex: "",
-  status: 0,
-  area: "",
-  isSnipped: true,
-  isSterilized: true,
-  avatars: []
-});
+const cat = ref<Cat>();
 
 const mainImgUrl = ref("");
 const goBack = () => {
-  // eslint-disable-next-line no-undef
-  let pages = getCurrentPages(); // 当前页面
-  let beforePage = pages[pages.length - 2]; // 上一页
   uni.navigateBack({
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    success: function () {}
+    delta: 1
   });
 };
-const getCatDetailHandler = () => {
-  getCatDetail(getCatDetailReq).then((res) => {
-    cat.id = res.cat.id;
-    cat.createAt = res.cat.createAt;
-    cat.age = res.cat.age;
-    cat.communityId = res.cat.communityId;
-    cat.color = res.cat.color;
-    cat.details = res.cat.details;
-    cat.name = res.cat.name;
-    cat.popularity = res.cat.popularity;
-    cat.sex = res.cat.sex;
-    cat.status = res.cat.status;
-    cat.area = res.cat.area;
-    cat.isSnipped = res.cat.isSnipped;
-    cat.isSterilized = res.cat.isSterilized;
-    cat.avatars = res.cat.avatars;
-    mainImgUrl.value = cat.avatars[0];
-    isRefreshing.value = false;
-  });
+const loadCat = async () => {
+  const res = await getCatDetail(getCatDetailReq);
+  cat.value = res.cat;
+  mainImgUrl.value = cat.value.avatars[0];
 };
-getCatDetailHandler();
 
-function pageRefresh() {
-  isRefreshing.value = true;
-  getCatDetailHandler();
-}
-
-onPullDownRefresh(() => {
-  pageRefresh();
-  uni.stopPullDownRefresh();
+onShow(() => {
+  loadCat().then(() => {
+    refresh(show);
+  });
 });
 
-//后面要分离出来
-const draftPlan = () => {
-  uni.navigateTo({
-    url: Pages.DraftPlan
+onPullDownRefresh(() => {
+  loadCat().then(() => {
+    refresh(show);
+    uni.stopPullDownRefresh();
   });
-};
+});
 </script>
 
 <style lang="scss" scoped>
