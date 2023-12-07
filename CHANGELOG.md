@@ -1,5 +1,12 @@
 
 
+## [1.19.15](https://github.com/xh-polaris/meowchat-app/compare/v1.19.14...v1.19.15) (2023-12-07)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 发布猫片自动返回 ([238ce5d](https://github.com/xh-polaris/meowchat-app/commit/238ce5d88758b70f76c44d21d811d5358bdcb5b2))
+
 ## [1.19.14](https://github.com/xh-polaris/meowchat-app/compare/v1.19.13...v1.19.14) (2023-12-06)
 
 
