@@ -1,5 +1,12 @@
 
 
+## [1.20.1](https://github.com/xh-polaris/meowchat-app/compare/v1.20.0...v1.20.1) (2023-12-08)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 优化创建动态时对用户条例的提示 ([a7786fc](https://github.com/xh-polaris/meowchat-app/commit/a7786fc85d91bb0909e3680361dc807ba5bf60b1))
+
 ## [1.20.0](https://github.com/xh-polaris/meowchat-app/compare/v1.19.15...v1.20.0) (2023-12-07)
 
 
