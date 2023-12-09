@@ -144,7 +144,8 @@ export const enum PlanType {
   TypeOther = 0,
   TypeCastrate = 1,
   TypeHeal = 2,
-  TypeFeed = 3
+  TypeFeed = 3,
+  TypeSupply = 4
 }
 
 export const enum PlanState {
@@ -168,9 +169,6 @@ export interface Plan {
   name: string;
   nowFish: number;
   planState: PlanState;
-  /**
-   * 枚举类型 0:feed 1:castrate 2:heal
-   */
   planType: PlanType;
   startTime: number;
   summary: string;

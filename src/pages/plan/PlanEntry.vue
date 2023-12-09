@@ -7,7 +7,8 @@
     <view class="small-icon">
       <img
         :src="
-          planTypeMap(props.plan.planType) === '零食奖励'
+          planTypeMap(props.plan.planType) === '零食奖励' ||
+          planTypeMap(props.plan.planType) === '物资补给'
             ? Icons.Plan_PlanSnacksTag
             : Icons.Plan_PlanHealthTag
         "
@@ -15,7 +16,7 @@
       />
       <text class="content">{{ planTypeMap(props.plan.planType) }}</text>
     </view>
-    <view class="prograss-bar">
+    <view class="progress-bar">
       <view>
         <view class="bar-content">
           <text class="txt1">帮助</text>
@@ -32,7 +33,7 @@
             }"
           ></view
         ></view>
-        <view class="fish-prograss"
+        <view class="fish-progress"
           >已获得{{ props.plan.nowFish }}小鱼干助力，还需要{{
             props.plan.maxFish - props.plan.nowFish
           }}小鱼干
@@ -56,12 +57,14 @@ const getProgressClass = (planType: PlanType): string => {
   const typeDescription = planTypeMap(planType);
 
   switch (typeDescription) {
-    case "零食奖励":
-      return "progress-snacks";
+    case "绝育计划":
+      return "progress-castrate";
     case "生理健康":
       return "progress-health";
-    case "治愈":
-      return "progress-heal";
+    case "零食奖励":
+      return "progress-snacks";
+    case "物资补给":
+      return "progress-supply";
     default:
       return "progress-health";
   }
@@ -69,12 +72,14 @@ const getProgressClass = (planType: PlanType): string => {
 const getHelpButClass = (planType: PlanType): string => {
   const typeDescription = planTypeMap(planType);
   switch (typeDescription) {
-    case "零食奖励":
-      return "help-but-snacks";
+    case "绝育计划":
+      return "help-but-castrate";
     case "生理健康":
       return "help-but-health";
-    case "治愈":
-      return "help-but-health";
+    case "零食奖励":
+      return "help-but-snacks";
+    case "物资补给":
+      return "help-but-supply";
     default:
       return "help-but-health";
   }
@@ -82,12 +87,14 @@ const getHelpButClass = (planType: PlanType): string => {
 const getHelpCatClass = (planType: PlanType): string => {
   const typeDescription = planTypeMap(planType);
   switch (typeDescription) {
-    case "零食奖励":
-      return "helped-cat-snacks";
+    case "绝育计划":
+      return "helped-cat-castrate";
     case "生理健康":
       return "helped-cat-health";
-    case "治愈":
-      return "helped-cat-health";
+    case "零食奖励":
+      return "helped-cat-snacks";
+    case "物资补给":
+      return "helped-cat-supply";
     default:
       return "helped-cat-health";
   }
@@ -128,7 +135,7 @@ const getHelpCatClass = (planType: PlanType): string => {
     }
   }
 
-  .prograss-bar::before {
+  .progress-bar::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -137,7 +144,7 @@ const getHelpCatClass = (planType: PlanType): string => {
     border-radius: 2vw;
     z-index: 0;
   }
-  .prograss-bar {
+  .progress-bar {
     display: flex;
     flex-direction: column;
     margin-left: 3.5vw;
@@ -166,7 +173,13 @@ const getHelpCatClass = (planType: PlanType): string => {
         font-size: 4.5vw;
         font-weight: bold;
       }
-
+      .helped-cat-castrate {
+        margin-left: 0.1vw;
+        margin-top: 1vw;
+        color: #1f6bff;
+        font-size: 4.5vw;
+        font-weight: bold;
+      }
       .helped-cat-health {
         margin-left: 0.1vw;
         margin-top: 1vw;
@@ -175,6 +188,13 @@ const getHelpCatClass = (planType: PlanType): string => {
         font-weight: bold;
       }
       .helped-cat-snacks {
+        margin-left: 0.1vw;
+        margin-top: 1vw;
+        color: #1f86ff;
+        font-size: 4.5vw;
+        font-weight: bold;
+      }
+      .helped-cat-supply {
         margin-left: 0.1vw;
         margin-top: 1vw;
         color: #1f86ff;
@@ -192,6 +212,12 @@ const getHelpCatClass = (planType: PlanType): string => {
       background: #dcdcdc;
       margin-top: 2.5vw;
 
+      .progress-castrate {
+        width: 55vw;
+        height: 2vw;
+        background: linear-gradient(90deg, #1f28ff 10.92%, #1f86ff 84.48%);
+        border-radius: 1vw;
+      }
       .progress-health {
         width: 55vw;
         height: 2vw;
@@ -204,8 +230,31 @@ const getHelpCatClass = (planType: PlanType): string => {
         background: linear-gradient(270deg, #1fc9ff 4.2%, #1f86ff 100%);
         border-radius: 1vw;
       }
+      .progress-supply {
+        width: 55vw;
+        height: 2vw;
+        background: linear-gradient(270deg, #1fc9ff 4.2%, #1f86ff 100%);
+        border-radius: 1vw;
+      }
     }
 
+    .help-but-castrate {
+      background-color: #1f6bff;
+      color: #ffffff;
+      font-size: 3.7vw;
+      font-weight: bolder;
+      width: 18vw;
+      height: 8vw;
+      border-radius: 5vw;
+      display: flex;
+      position: absolute;
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.3vw;
+      margin-left: 65vw;
+      top: 6vw;
+    }
     .help-but-health {
       background-color: #1f6bff;
       color: #ffffff;
@@ -240,7 +289,24 @@ const getHelpCatClass = (planType: PlanType): string => {
       margin-left: 65vw;
       top: 6vw;
     }
-    .fish-prograss {
+    .help-but-supply {
+      background-color: #1fa1ff;
+      color: #ffffff;
+      font-size: 3.7vw;
+      font-weight: bolder;
+      width: 18vw;
+      height: 8vw;
+      border-radius: 5vw;
+      display: flex;
+      position: absolute;
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.3vw;
+      margin-left: 65vw;
+      top: 6vw;
+    }
+    .fish-progress {
       color: #aeaeae;
       font-size: 3vw;
       margin-left: 3vw;
