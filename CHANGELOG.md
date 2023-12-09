@@ -1,5 +1,12 @@
 
 
+## [1.20.3](https://github.com/xh-polaris/meowchat-app/compare/v1.20.2...v1.20.3) (2023-12-09)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复可能导致用户一个月无法调用写接口的问题:D ([40ec289](https://github.com/xh-polaris/meowchat-app/commit/40ec2898ca9c0fe8f57f11a4142548d1c705c5b3))
+
 ## [1.20.2](https://github.com/xh-polaris/meowchat-app/compare/v1.20.1...v1.20.2) (2023-12-09)
 
 
