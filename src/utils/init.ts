@@ -34,7 +34,7 @@ export async function init() {
   checkVersion();
 }
 
-async function refreshToken(appId: string) {
+export async function refreshToken(appId: string) {
   const res = await uni.login({
     provider: "weixin"
   });

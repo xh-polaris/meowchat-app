@@ -1,4 +1,6 @@
 import { BackendEnvMap, StorageKeys } from "@/utils/const";
+import { refreshToken } from "@/utils/init";
+import { Pages } from "@/utils/url";
 
 export function createInterceptors() {
   uni.addInterceptor("request", {
@@ -17,7 +19,11 @@ export function createInterceptors() {
       }
     },
     success(result: any) {
-      if (result.statusCode >= 400) {
+      if (result.statusCode === 401) {
+        refreshToken(uni.getAccountInfoSync().miniProgram.appId).then(() => {
+          uni.reLaunch({ url: Pages.FirstPage });
+        });
+      } else if (result.statusCode >= 400) {
         uni.showToast({
           title: "请求失败",
           icon: "error"
