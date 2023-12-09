@@ -8,7 +8,7 @@
       <view class="qz_imgs qz_imgs3 clearfix">
         <li v-for="(image, index) in imgUrlList" :key="index">
           <image
-            :src="image.url"
+            :src="getThumbnail(image.url)"
             class="cat-image"
             mode="aspectFill"
             @click="onClickImage(index, imgUrls)"
@@ -54,6 +54,7 @@ import { onClickImage } from "@/pages/cat/utils";
 import { Cat, TargetType } from "@/apis/schemas";
 import { getCatImage } from "@/apis/collection/collection";
 import { onReachBottom } from "@dcloudio/uni-app";
+import { getThumbnail } from "@/utils/utils";
 
 const props = defineProps<{
   id: string;

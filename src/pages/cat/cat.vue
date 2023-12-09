@@ -55,10 +55,8 @@ const loadCat = async () => {
   mainImgUrl.value = cat.value.avatars[0];
 };
 
-onShow(() => {
-  loadCat().then(() => {
-    refresh(show);
-  });
+loadCat().then(() => {
+  refresh(show);
 });
 
 onPullDownRefresh(() => {
