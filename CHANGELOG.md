@@ -1,5 +1,47 @@
 
 
+## [1.20.4](https://github.com/xh-polaris/meowchat-app/compare/v1.20.3...v1.20.4) (2023-12-10)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 小优化 ([aaf3794](https://github.com/xh-polaris/meowchat-app/commit/aaf3794ccc1ac1d9004f5f7ea9c8620b2cc0fb4d))
+
+## [1.20.3](https://github.com/xh-polaris/meowchat-app/compare/v1.20.2...v1.20.3) (2023-12-09)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复可能导致用户一个月无法调用写接口的问题:D ([40ec289](https://github.com/xh-polaris/meowchat-app/commit/40ec2898ca9c0fe8f57f11a4142548d1c705c5b3))
+
+## [1.20.2](https://github.com/xh-polaris/meowchat-app/compare/v1.20.1...v1.20.2) (2023-12-09)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 猫片使用预览图 ([22c852f](https://github.com/xh-polaris/meowchat-app/commit/22c852fdfdd41dfe49c25855503d5c438c89e9bf))
+
+## [1.20.1](https://github.com/xh-polaris/meowchat-app/compare/v1.20.0...v1.20.1) (2023-12-08)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 优化创建动态时对用户条例的提示 ([a7786fc](https://github.com/xh-polaris/meowchat-app/commit/a7786fc85d91bb0909e3680361dc807ba5bf60b1))
+
+## [1.20.0](https://github.com/xh-polaris/meowchat-app/compare/v1.19.15...v1.20.0) (2023-12-07)
+
+
+### ✨ Features | 新功能
+
+* 实现了每天第一次登陆奖励小鱼干 ([#389](https://github.com/xh-polaris/meowchat-app/issues/389)) ([1393e64](https://github.com/xh-polaris/meowchat-app/commit/1393e6413df68ba2127d95796691f34fb1875e68))
+* 轮播图改版 ([#390](https://github.com/xh-polaris/meowchat-app/issues/390)) ([bba7c3d](https://github.com/xh-polaris/meowchat-app/commit/bba7c3d1c251416890d2307b204adc7b1e596137))
+
+
+### ⚡ Performance Improvements | 优化
+
+* 优化头像模糊，动态图片加载慢的问题 ([fefe814](https://github.com/xh-polaris/meowchat-app/commit/fefe81408d32f6805a123b935bd7ea68f7f2f072))
+* 信息流提前加载下一刷内容 ([2b5a3cd](https://github.com/xh-polaris/meowchat-app/commit/2b5a3cd3049bfec13423932687ec550d5ec225a1))
+
 ## [1.19.15](https://github.com/xh-polaris/meowchat-app/compare/v1.19.14...v1.19.15) (2023-12-07)
 
 

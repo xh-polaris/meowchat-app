@@ -1,6 +1,6 @@
 <template>
   <view class="header">
-    <view style="height: 1vw"></view>
+    <view style="height: 1vw" />
     <view class="first-line">
       <text>{{ props.cat.name }}</text>
       <!-- <image class="like" mode="widthFix" :src="Icons.Location"/> -->
@@ -8,7 +8,7 @@
     <view class="second-line">
       {{ props.cat.color }}
     </view>
-    <view class="line"></view>
+    <view class="line" />
   </view>
 </template>
 

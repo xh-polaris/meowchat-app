@@ -28,7 +28,6 @@ export async function getUserInfo(req: GetUserInfoReq) {
               reject(res);
             }
             const data = res.data as GetUserInfoResp;
-            data.user.avatarUrl += PictureStyle.thumbnail;
             resolve(data);
           }
         });

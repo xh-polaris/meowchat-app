@@ -1,5 +1,5 @@
 <template>
-  <view class="disable-page" @touchmove.stop.prevent></view>
+  <view class="disable-page" @touchmove.stop.prevent />
 </template>
 
 <script lang="ts" setup></script>

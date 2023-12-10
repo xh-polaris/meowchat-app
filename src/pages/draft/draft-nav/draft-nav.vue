@@ -1,7 +1,7 @@
 <template>
   <view :style="{ height: height + 'px' }" class="outer">
     <view class="inner">
-      <view class="close" @click="close"></view>
+      <view class="close" @click="close" />
       <template v-if="type === 'post'">
         <view class="nav" @click="type = 'moment'">社区动态</view>
         <view class="nav current">世界帖子</view>
@@ -13,10 +13,10 @@
     </view>
   </view>
 
-  <view :style="{ height: height + 'px' }" class="empty"></view>
+  <view :style="{ height: height + 'px' }" class="empty" />
 
-  <draft-post v-if="type === 'post'"></draft-post>
-  <draft-moment v-if="type === 'moment'"></draft-moment>
+  <draft-post v-if="type === 'post'" />
+  <draft-moment v-if="type === 'moment'" />
 </template>
 
 <script setup>
@@ -39,7 +39,7 @@ const res = uni.getSystemInfoSync();
 const menu = uni.getMenuButtonBoundingClientRect();
 let height =
   (menu.top - res.statusBarHeight) * 2 + menu.height + res.statusBarHeight;
-if (res.model.indexOf("iPhone") > -1) {
+if (res.model.includes("iPhone")) {
   height += 4;
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <view class="background" @click="closeSelf" @touchmove.stop.prevent></view>
+  <view class="background" @click="closeSelf" @touchmove.stop.prevent />
   <scroll-view class="frame" scroll-y="true" @touchmove.stop>
     <view class="main">
       <view class="comment">
@@ -8,7 +8,7 @@
             backgroundImage: 'url( ' + mainComment.user.avatarUrl + ')'
           }"
           class="avatar"
-        ></view>
+        />
         <view class="thread">
           <view class="content">
             <view class="left">
@@ -22,8 +22,8 @@
             </view>
             <view class="right">
               <view class="likes-frame" @click="likeComment(mainComment)">
-                <view v-if="mainComment.isLiked" class="thumb liked"></view>
-                <view v-else class="thumb"></view>
+                <view v-if="mainComment.isLiked" class="thumb liked" />
+                <view v-else class="thumb" />
                 <view class="likes">{{ mainComment.likeCount }}</view>
               </view>
             </view>
@@ -37,7 +37,7 @@
           }"
           class="avatar"
           style="margin-left: calc(42 / 390 * 100vw)"
-        ></view>
+        />
         <view class="thread">
           <view class="content">
             <view class="left">
@@ -51,8 +51,8 @@
             </view>
             <view v-if="comment.likeCount >= 0" class="right">
               <view class="likes-frame" @click="likeComment(comment)">
-                <view v-if="comment.isLiked" class="thumb liked"></view>
-                <view v-else class="thumb"></view>
+                <view v-if="comment.isLiked" class="thumb liked" />
+                <view v-else class="thumb" />
                 <view class="likes">{{ comment.likeCount }}</view>
               </view>
             </view>
@@ -80,15 +80,15 @@ const comments = ref<Comment[]>([]);
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
 let page = 0;
-const localGetCommentsData = async () => {
+const localGetCommentsData = () => {
   isCommentsLoaded = false;
   getCommentsData({
     id: props.mainComment.id,
     type: CommentType.Comment,
     page: page
   }).then((res) => {
-    for (let i = 0; i < res.data.length; i++) {
-      comments.value.push(res.data[i]);
+    for (const data of res.data) {
+      comments.value.push(data);
     }
     isCommentsLoaded = true;
     page += 1;

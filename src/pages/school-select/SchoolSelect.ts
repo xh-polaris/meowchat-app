@@ -6,7 +6,9 @@ export const getCurrentSchools = (
   return allSchools.filter((school) => {
     let isCurrent = false;
     school.campuses.forEach((campus) => {
-      if (campus.id === currentCampusId) isCurrent = true;
+      if (campus.id === currentCampusId) {
+        isCurrent = true;
+      }
     });
     return isCurrent;
   });

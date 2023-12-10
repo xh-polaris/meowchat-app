@@ -8,7 +8,7 @@
       <view class="qz_imgs qz_imgs3 clearfix">
         <li v-for="(image, index) in imgUrlList" :key="index">
           <image
-            :src="image.url"
+            :src="getThumbnail(image.url)"
             class="cat-image"
             mode="aspectFill"
             @click="onClickImage(index, imgUrls)"
@@ -19,14 +19,12 @@
                 v-if="image.isLiked"
                 class="like liked"
                 @click.prevent="clickLike(image.id, index)"
-              >
-              </view>
+              />
               <view
                 v-else
                 class="like"
                 @click.prevent="clickLike(image.id, index)"
-              >
-              </view>
+              />
               <span
                 class="liked_number"
                 @click.prevent="clickLike(image.id, index)"
@@ -40,7 +38,7 @@
     <view v-if="noMore">
       <view class="nomore"> 没有更多喵~</view>
     </view>
-    <view style="width: 100%; height: 25rpx"></view>
+    <view style="width: 100%; height: 25rpx" />
   </view>
 </template>
 
@@ -56,6 +54,7 @@ import { onClickImage } from "@/pages/cat/utils";
 import { Cat, TargetType } from "@/apis/schemas";
 import { getCatImage } from "@/apis/collection/collection";
 import { onReachBottom } from "@dcloudio/uni-app";
+import { getThumbnail } from "@/utils/utils";
 
 const props = defineProps<{
   id: string;
@@ -63,7 +62,7 @@ const props = defineProps<{
 }>();
 let imgUrlList = reactive<ImageInfo[]>([]);
 const imgUrls = computed(() => {
-  const tmp = <string[]>[];
+  const tmp = [] as string[];
   for (const img of imgUrlList) {
     tmp.push(img.url);
   }
@@ -99,26 +98,29 @@ let number = 0;
 const getCatImageHandler = () => {
   if (!noMore.value)
     getCatImage(getCatImageReq).then((res) => {
-      for (let i = 0; i < res.images?.length; i++) {
+      for (const image of res.images) {
         let imageUrl = reactive<ImageInfo>({
-          id: res.images[i].id,
-          url: res.images[i].url,
-          catId: res.images[i].catId,
+          id: image.id,
+          url: image.url,
+          catId: image.catId,
           isLiked: false,
           likeNumber: 0
         });
-        getUserLiked({ targetId: res.images[i].id, targetType: 5 }).then(
+        getUserLiked({
+          targetId: image.id,
+          targetType: TargetType.Cat_Photo
+        }).then((res) => {
+          imageUrl.isLiked = res.liked;
+        });
+        getCount({ targetId: image.id, targetType: TargetType.Cat_Photo }).then(
           (res) => {
-            imageUrl.isLiked = res.liked;
+            imageUrl.likeNumber = res.count;
           }
         );
-        getCount({ targetId: res.images[i].id, targetType: 5 }).then((res) => {
-          imageUrl.likeNumber = res.count;
-        });
         imgUrlList.push(imageUrl);
       }
       //获取得到的images的长度用以判断是否还有尚未加载的照片
-      number += res.images?.length;
+      number += res.images.length;
       if (!number || imgUrlList[number - 1].id === getCatImageReq.prevId) {
         noMore.value = true;
       } else getCatImageReq.prevId = imgUrlList[number - 1].id;

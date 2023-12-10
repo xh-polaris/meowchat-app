@@ -7,7 +7,6 @@ export function onClickImage(index: number, images: string[]) {
 
 export function onClickAvatar(current: string, images?: string[]) {
   uni.previewImage({
-    urls: images || [current],
-    current: current
+    urls: images || [current]
   });
 }

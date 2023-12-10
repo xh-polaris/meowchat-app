@@ -34,11 +34,7 @@ const props = defineProps<{
   commentCallback: (res: NewCommentResp) => void;
 }>();
 const text = ref("");
-const emit = defineEmits<{
-  (e: "afterCreateComment"): void;
-  (e: "cancelReply"): void;
-  (e: "doLike"): void;
-}>();
+const emit = defineEmits(["doLike", "afterCreateComment", "cancelReply"]);
 
 const localCreateComment = async () => {
   const req = {

@@ -16,7 +16,7 @@ export interface SignInReq {
   appId: number;
 }
 
-export interface GignInResp {
+export interface SignInResp {
   userId: string;
   accessToken: string;
   accessExpire: number;
@@ -31,9 +31,4 @@ export interface SetPasswordReq {
 export interface SetPasswordResp {
   code: number;
   msg: string;
-}
-
-export interface CheckIn {
-  isFirst: true;
-  getFishNum: 0;
 }

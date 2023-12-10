@@ -20,7 +20,7 @@
                 mode="widthFix"
                 src="/static/images/notice.png"
                 style="width: 80rpx"
-              ></image>
+              />
               <view class="font-lg">公告</view>
             </view>
             <view class="">
@@ -28,7 +28,7 @@
                 mode="widthFix"
                 src="/static/images/arrow-right.png"
                 style="width: 50rpx"
-              ></image>
+              />
             </view>
           </view>
           <view class="font-md px-4 mb-5">{{ item.text }}</view>
@@ -39,7 +39,7 @@
       </view>
     </view>
     <view v-else>
-      <image mode="" src="https://static.xhpolaris.com/nodata.png"></image>
+      <image mode="" src="https://static.xhpolaris.com/nodata.png" />
     </view>
     <!-- 回复 -->
     <view v-for="(item, index) in replyList" v-show="false" :key="index">
@@ -57,7 +57,7 @@
                   border-radius: 100%;
                   flex-shrink: 0;
                 "
-              ></image>
+              />
             </view>
             <!-- 昵称/内容/时间 -->
             <view class="ml-2">
@@ -95,10 +95,10 @@
             class="ml-5"
             mode="aspectFill"
             style="width: 150rpx; height: 150rpx; border-radius: 20rpx"
-          ></image>
+          />
         </view>
       </view>
-      <Divider></Divider>
+      <Divider />
     </view>
   </view>
 </template>

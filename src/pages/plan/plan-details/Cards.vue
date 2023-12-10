@@ -50,7 +50,7 @@
         :style="{
           width: (83 * props.plan.nowFish) / props.plan.maxFish + 'vw'
         }"
-      ></view>
+      />
     </view>
 
     <view class="implication"

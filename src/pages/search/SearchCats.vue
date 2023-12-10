@@ -9,7 +9,7 @@
   <view v-else class="no-cat-here-frame">
     <image :src="Pictures.NoCatHere" class="no-cat-here" />
   </view>
-  <view style="height: 18vw"></view>
+  <view style="height: 18vw" />
 </template>
 
 <script lang="ts" setup>
@@ -58,7 +58,7 @@ const getCatPreviewsAsync = async () => {
   } catch (reason) {
     return fetch();
   }
-  if (!res?.firstCatPreviewsResp?.cats) {
+  if (!res.firstCatPreviewsResp?.cats) {
     return fetch();
   }
   page++;

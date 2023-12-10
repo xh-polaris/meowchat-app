@@ -1,4 +1,4 @@
-import { GignInResp } from "@/apis/auth/auth-interfaces";
+import { SignInResp } from "@/apis/auth/auth-interfaces";
 import { GetUserInfoResp } from "@/apis/user/user-interfaces";
 import { ListCommunityResp } from "@/apis/community/community-interfaces";
 import { GetPostPreviewsResp } from "@/apis/post/post-interfaces";
@@ -8,7 +8,7 @@ import { GetNewsResp } from "@/apis/notice/notice-interfaces";
 import { StorageKeys } from "@/utils/const";
 
 export interface PrefetchResp {
-  signInResp?: GignInResp;
+  signInResp?: SignInResp;
   getUserInfoResp?: GetUserInfoResp;
   listCommunityResp?: ListCommunityResp;
   firstPostPreviewsResp?: GetPostPreviewsResp;

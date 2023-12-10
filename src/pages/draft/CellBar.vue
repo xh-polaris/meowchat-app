@@ -3,7 +3,7 @@
     <div class="label">{{ props.label }}</div>
     <input class="input" type="text" :placeholder="props.placeHolder" />
   </div>
-  <div v-if="props.hasBottomLine" class="bottom-line"></div>
+  <div v-if="props.hasBottomLine" class="bottom-line" />
 </template>
 
 <script setup lang="ts">

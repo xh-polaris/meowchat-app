@@ -8,17 +8,21 @@
       {{ props.text }}
     </button>
     <view class="notice">
-      发布前请先阅读
-      <text class="nobody-will-read" @click="showDeal"> 《用户服务协议》 </text>
-      及
-      <text class="nobody-will-read" @click="showPolicy">
-        《个人信息保护政策》
-      </text>
-      ，一旦发布即被视为同意上述协议和政策
+      <checkbox style="transform: scale(0.7)" @click="emits('agree')" />
+      <view
+        >请先阅读
+        <text class="nobody-will-read" @click="showDeal">
+          《用户服务协议》
+        </text>
+        及
+        <text class="nobody-will-read" @click="showPolicy">
+          《个人信息保护政策》
+        </text>
+      </view>
     </view>
   </view>
-  <deal v-if="isShow && type === 1"></deal>
-  <policy v-if="isShow && type === 2"></policy>
+  <deal v-if="isShow && type === 1" />
+  <policy v-if="isShow && type === 2" />
 </template>
 
 <script setup lang="ts">
@@ -34,7 +38,7 @@ const props = withDefaults(defineProps<Props>(), {
   canPublish: false,
   text: "发布"
 });
-const emits = defineEmits(["publish"]);
+const emits = defineEmits(["publish", "agree"]);
 
 const isShow = ref(false);
 const type = ref(0);
@@ -97,6 +101,9 @@ function showPolicy() {
     }
   }
   .notice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
     font-size: 3vw;
     width: 88vw;

@@ -10,14 +10,14 @@
       position: fixed;
       z-index: -10;
     "
-  ></view>
-  <view style="height: 4vw"></view>
+  />
+  <view style="height: 4vw" />
   <SearchBar
     place-holder="输入学校名称"
     @clear-search="clearSearch"
     @search="search"
-  ></SearchBar>
-  <view style="height: 2vw"></view>
+  />
+  <view style="height: 2vw" />
   <view
     style="display: flex; justify-content: space-between; align-items: center"
   >
@@ -35,8 +35,8 @@
     :selected-campus-id="selectedCampusId"
     :selected-school-id="selectedSchoolId"
     @select-campus="selectCampus"
-  ></CommunityList>
-  <view style="height: 2vw"></view>
+  />
+  <view style="height: 2vw" />
   <template v-if="filterText === ''">
     <view class="list-title">全部社区</view>
     <CommunityList
@@ -44,7 +44,7 @@
       :selected-campus-id="selectedCampusId"
       :selected-school-id="selectedSchoolId"
       @select-campus="selectCampus"
-    ></CommunityList>
+    />
   </template>
   <template v-else>
     <view class="list-title">搜索结果</view>
@@ -53,7 +53,7 @@
       :selected-campus-id="selectedCampusId"
       :selected-school-id="selectedSchoolId"
       @select-campus="selectCampus"
-    ></CommunityList>
+    />
   </template>
 </template>
 

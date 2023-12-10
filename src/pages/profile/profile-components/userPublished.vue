@@ -5,21 +5,20 @@
       :current="current"
       :items="items"
       @click-item="onClickItem"
-    >
-    </zzx-tabs>
+    />
     <view class="wrap tab">
       <template v-if="current === 0">
         <Masonry
           :loader-builder="() => buildPublishMomentLoader(props.userId)"
-        ></Masonry>
+        />
       </template>
       <template v-else-if="current === 1">
-        <MyPosts :type="props.type" :user-id="props.userId"></MyPosts>
+        <MyPosts :type="props.type" :user-id="props.userId" />
       </template>
       <template v-else-if="current === 2">
         <Masonry
           :loader-builder="() => buildLikingMomentLoader(props.userId)"
-        ></Masonry>
+        />
       </template>
     </view>
   </view>

@@ -14,8 +14,7 @@ export function search() {
 }
 
 export function onClickCover(coverUrl: string) {
-  const index = coverUrl.indexOf(PictureStyle.thumbnail);
   uni.previewImage({
-    urls: [index == -1 ? coverUrl : coverUrl.substring(0, index)]
+    urls: [coverUrl]
   });
 }

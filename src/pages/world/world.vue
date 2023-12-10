@@ -2,11 +2,7 @@
   <TopBar>
     <template #left>
       <view style="height: fit-content" @click="enterMessage">
-        <image
-          :src="Icons.Message"
-          mode="scaleToFill"
-          class="message-image"
-        ></image>
+        <image :src="Icons.Message" mode="scaleToFill" class="message-image" />
         <!-- 暂时将数量写为0 -->
         <view v-show="false" class="font-sm px-1 message-count">0</view>
       </view>
@@ -27,10 +23,10 @@
     <view class="top-padding" />
 
     <WorldPosts v-if="!isRefreshing" :only-official="onlyOfficial" />
-    <view class="empty-bottom"></view>
+    <view class="empty-bottom" />
   </view>
 
-  <BottomBar id="world"></BottomBar>
+  <BottomBar id="world" />
 </template>
 
 <script lang="ts" setup>

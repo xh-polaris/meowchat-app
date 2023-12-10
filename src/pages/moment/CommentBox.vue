@@ -4,13 +4,16 @@
       v-if="myUserId && myUserId === comment.user.id"
       class="delete"
       @click="showDeleteDialogue"
-    ></view>
+    />
     <view class="commenter-info-box">
       <view
         class="d-flex a-start"
         @click="toPersonInfo(comment.user.id, myUserId)"
       >
-        <image :src="comment.user.avatarUrl" class="commenter-profile" />
+        <image
+          :src="getThumbnail(comment.user.avatarUrl)"
+          class="commenter-profile"
+        />
       </view>
       <view style="margin-top: 12rpx; margin-left: 12rpx; width: 100%">
         <view class="d-flex a-center">
@@ -83,6 +86,7 @@ import { deleteComment } from "@/apis/comment/comment";
 import { ref } from "vue";
 import { toPersonInfo } from "@/pages/profile/utils";
 import { StorageKeys } from "@/utils/const";
+import { getThumbnail } from "@/utils/utils";
 
 const props = defineProps<{
   comment: Comment;
@@ -90,12 +94,16 @@ const props = defineProps<{
 const myUserId = uni.getStorageSync(StorageKeys.UserId);
 const isShowDeleteDialogue = ref(false);
 
-const emit = defineEmits<{
-  (e: "interactWithComment"): void;
-  (e: "onClickReplies"): void;
-  (e: "localDoLike"): void;
-  (e: "afterDelete"): void;
-}>();
+const emit =
+  defineEmits<
+    (
+      e:
+        | "interactWithComment"
+        | "onClickReplies"
+        | "localDoLike"
+        | "afterDelete"
+    ) => void
+  >();
 
 const showDeleteDialogue = () => {
   isShowDeleteDialogue.value = true;

@@ -1,4 +1,5 @@
 import { nextTick, Ref } from "vue";
+import { PictureStyle } from "@/apis/cos/cos-interface";
 
 export function getVersionCode(versionName: string) {
   const pattern = /(\d+)\.(\d+)\.(\d+)/;
@@ -17,9 +18,7 @@ export function refresh(show: Ref<boolean>) {
   });
 }
 
-export interface Callback<T> {
-  (data: T): void;
-}
+export type Callback<T> = (data: T) => void;
 
 export class EventEmitter<T> {
   private callbacks: Callback<T>[] = [];
@@ -36,4 +35,8 @@ export class EventEmitter<T> {
       callback(data);
     });
   }
+}
+
+export function getThumbnail(url: string) {
+  return url + PictureStyle.Thumbnail;
 }

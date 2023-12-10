@@ -12,7 +12,7 @@
         mode="scaleToFill"
         :src="Icons.Cancel"
         @click="clear"
-      ></image>
+      />
     </view>
     <view class="search-button" @click="search">搜索</view>
   </view>

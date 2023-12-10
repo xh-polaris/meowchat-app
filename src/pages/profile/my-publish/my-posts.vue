@@ -33,7 +33,9 @@
           </view>
           <view
             v-if="post.coverUrl"
-            :style="{ backgroundImage: 'url(' + post.coverUrl + ')' }"
+            :style="{
+              backgroundImage: 'url(' + getThumbnail(post.coverUrl) + ')'
+            }"
             class="image"
           />
         </view>
@@ -67,6 +69,7 @@ import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { onClickPost } from "./utils";
 import { Post } from "@/apis/schemas";
+import { getThumbnail } from "@/utils/utils";
 
 interface Props {
   type?: string;
@@ -74,19 +77,19 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-let userId: string | undefined;
+let chooseUserId: string | undefined;
 let postsData = ref<Post[]>([]);
 let token: string;
 const myUserId = ref("");
 const hasMore = ref(true);
 const getPostPreviewsAsync = async () => {
   if (!hasMore.value) {
-    return <Post[]>[];
+    return [] as Post[];
   }
   myUserId.value = uni.getStorageSync("userId");
-  userId = props.userId;
+  chooseUserId = props.userId;
   const req: GetPostPreviewsReq = {
-    onlyUserId: props.type === "my" ? myUserId.value : userId
+    onlyUserId: props.type === "my" ? myUserId.value : chooseUserId
   };
   if (token) {
     req.paginationOption = {

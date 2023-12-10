@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx eslint . --config .eslintrc.js --ext .js,.ts,.vue --fix
+npx eslint . --config .eslintrc.js --ext .json,.js,.ts,.vue --fix

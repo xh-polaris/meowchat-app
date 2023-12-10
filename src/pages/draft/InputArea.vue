@@ -11,7 +11,7 @@
       placeholder="说点什么吧"
       class="textarea"
       maxlength="2000"
-    ></textarea>
+    />
     <view class="count">{{ content.length }}/2000</view>
   </view>
 </template>

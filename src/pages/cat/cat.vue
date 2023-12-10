@@ -7,7 +7,7 @@
       @click="onClickAvatar(mainImgUrl, cat.avatars)"
     />
     <view class="goBackButton" @click="goBack">
-      <view class="left-arrow"></view>
+      <view class="left-arrow" />
     </view>
     <view class="main">
       <Header :cat="cat" />
@@ -55,10 +55,8 @@ const loadCat = async () => {
   mainImgUrl.value = cat.value.avatars[0];
 };
 
-onShow(() => {
-  loadCat().then(() => {
-    refresh(show);
-  });
+loadCat().then(() => {
+  refresh(show);
 });
 
 onPullDownRefresh(() => {

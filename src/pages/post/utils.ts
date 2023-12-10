@@ -11,7 +11,7 @@ export function onClickImage(photo: string) {
   });
 }
 
-export const likePost = async (
+export const likePost = (
   item: Post,
   eventEmitter?: EventEmitter<FishAward>
 ) => {

@@ -13,7 +13,7 @@
           <view class="img-frame">
             <image
               v-if="i === 1"
-              :src="moment.photos[0]"
+              :src="getThumbnail(moment.photos[0])"
               class="img"
               mode="widthFix"
               @error="onLoad"
@@ -21,7 +21,7 @@
             />
             <image
               v-else
-              :src="moment.photos[0]"
+              :src="getThumbnail(moment.photos[0])"
               class="img"
               mode="widthFix"
               @error="onLoad"
@@ -34,7 +34,10 @@
             <view class="other-info">
               <view class="user-info">
                 <template v-if="moment.user">
-                  <image :src="moment.user.avatarUrl" class="avatar" />
+                  <image
+                    :src="getThumbnail(moment.user.avatarUrl)"
+                    class="avatar"
+                  />
                   <view class="username font-md">
                     {{ moment.user.nickname }}
                   </view>
@@ -74,6 +77,7 @@ import { onClickMoment } from "@/pages/community/event";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
+import { getThumbnail } from "@/utils/utils";
 
 interface Props {
   loader?: () => Promise<Moment[]>;

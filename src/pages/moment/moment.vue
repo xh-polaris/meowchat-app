@@ -13,7 +13,7 @@
       <view class="post-info-box">
         <view class="poster-info-box">
           <image
-            :src="moment.user.avatarUrl"
+            :src="getThumbnail(moment.user.avatarUrl)"
             class="poster-profile"
             @click="toPersonInfo(moment.user.id, myUserId)"
           />
@@ -28,7 +28,7 @@
             v-if="myUserId && myUserId === moment.user.id"
             class="delete"
             @click="showDeleteDialogue"
-          ></view>
+          />
         </view>
         <view v-if="moment.title" class="post-content font-lg">
           {{ moment.title }}
@@ -39,7 +39,7 @@
             v-for="(url, index) in moment.photos.slice(0, 9)"
             :key="index"
             :mode="chooseImageMode(moment.photos.length)"
-            :src="url"
+            :src="moment.photos.length > 1 ? getThumbnail(url) : url"
             @click="onClickImage(String(index), moment.photos)"
           />
           <view
@@ -79,7 +79,7 @@
         @on-click-replies="onClickReplies(comment)"
         @local-do-like="likeComment(comment, fishAwardEmitter)"
       />
-      <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'"></view>
+      <view :style="'padding-bottom:' + wcbHeight.toString() + 'px'" />
     </view>
   </view>
   <WriteCommentBox
@@ -125,7 +125,7 @@
         showToastBox = false;
       }
     "
-  ></ToastBoxWithShadow>
+  />
 </template>
 
 <script lang="ts" setup>
@@ -155,7 +155,7 @@ import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
 import CommentBox from "@/pages/moment/CommentBox.vue";
 import { Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
-import { EventEmitter } from "@/utils/utils";
+import { EventEmitter, getThumbnail } from "@/utils/utils";
 
 const props = defineProps<{
   id: string;
@@ -174,19 +174,6 @@ const getMomentDetailReq = reactive<GetMomentDetailReq>({
   momentId: props.id
 });
 const moment = ref<Moment>();
-
-const commentDoLikeMap = new Map<string, number>();
-
-const commentDoLike = async (id: string) => {
-  let res = await doLike({
-    targetId: id,
-    targetType: TargetType.Comment
-  });
-  if (res.getFish) {
-    gotFishNum.value = res.getFishNum;
-    showToastBox.value = true;
-  }
-};
 
 const myUserId = uni.getStorageSync(StorageKeys.UserId);
 const isShowDeleteDialogue = ref(false);
@@ -216,19 +203,15 @@ const comments = ref<Comment[]>([]);
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
 let page = 0;
-const localGetCommentsData = async () => {
-  await Promise.all(
-    Array.from(commentDoLikeMap.keys()).map((id) => commentDoLike(id))
-  );
-  commentDoLikeMap.clear();
+const localGetCommentsData = () => {
   isCommentsLoaded = false;
   getCommentsData({
     id: props.id,
     type: CommentType.Moment,
     page: page
   }).then((res) => {
-    for (let i = 0; i < res.data?.length; i++) {
-      comments.value.push(res.data[i]);
+    for (const data of res.data) {
+      comments.value.push(data);
     }
     isCommentsLoaded = true;
     page += 1;
@@ -278,16 +261,16 @@ const relaunchCurrentPage = () => {
 };
 
 let initLock = false;
-const init = async () => {
+const init = () => {
   if (initLock) return;
   initLock = true;
-  await getData();
+  getData();
   page = 0;
   getCommentsReq.page = 0;
   comments.value = [];
   allCommentsLoaded = false;
   isCommentsLoaded = true;
-  await localGetCommentsData();
+  localGetCommentsData();
   initLock = false;
 };
 

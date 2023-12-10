@@ -112,7 +112,7 @@ export interface Cat {
   area: string;
   isSnipped: boolean;
   isSterilized: boolean;
-  avatars: Array<string>;
+  avatars: string[];
 }
 
 export interface CatPreview {
@@ -130,11 +130,11 @@ export interface Moment {
   id: string;
   createAt: number;
   title: string;
-  cats?: Array<CatPreview>;
+  cats?: CatPreview[];
   communityId: string;
   text: string;
   user: User;
-  photos: Array<string>;
+  photos: string[];
   likeCount: number;
   commentCount: number;
   isLiked: boolean;

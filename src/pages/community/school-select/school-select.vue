@@ -127,14 +127,10 @@ let history = reactive({
 });
 
 let historyJSON = reactive({
-  histories: reactive<Array<any>>([])
+  histories: reactive<(typeof history)[]>([])
 });
 
 function init() {
-  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
-  if (!uni.getStorageSync(StorageKeys.CommunityId)) {
-    uni.setStorageSync(StorageKeys.CommunityId, "637ce159b15d9764c31f9c84");
-  }
   communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
 }
 
@@ -160,8 +156,8 @@ function getHistories() {
 
 function checkRepeat(id: string) {
   let flag = true;
-  for (let i = 0; i < historyJSON.histories.length; i++) {
-    if (id === historyJSON.histories[i].communityId) {
+  for (const history of historyJSON.histories) {
+    if (id === history.communityId) {
       flag = false;
     }
   }
@@ -201,12 +197,12 @@ async function schoolList() {
 }
 
 // 找所有学校
-async function getSchools() {
-  schoolList().then(async () => {
+function getSchools() {
+  schoolList().then(() => {
     let j = 0;
-    for (let i = 0; i < lists.data.length; i++) {
-      if (!lists.data[i].parentId) {
-        schools.data[j] = lists.data[i];
+    for (const data of lists.data) {
+      if (!data.parentId) {
+        schools.data[j] = data;
         j++;
       }
     }
@@ -227,15 +223,15 @@ async function getCampus() {
   } else {
     schoolList().then(async () => {
       init();
-      for (let i = 0; i < lists.data.length; i++) {
-        if (lists.data[i].id === communityId.value) {
-          currentCampus.value = lists.data[i].name;
-          parentId.value = <string>lists.data[i].parentId;
+      for (const data of lists.data) {
+        if (data.id === communityId.value) {
+          currentCampus.value = data.name;
+          parentId.value = data.parentId || "";
         }
       }
-      for (let j = 0; j < lists.data.length; j++) {
-        if (lists.data[j].id === parentId.value) {
-          currentSchool.value = lists.data[j].name;
+      for (const data of lists.data) {
+        if (data.id === parentId.value) {
+          currentSchool.value = data.name;
         }
       }
       history.campusName = currentCampus.value;

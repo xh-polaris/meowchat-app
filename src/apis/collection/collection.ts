@@ -69,9 +69,6 @@ export async function getCatPreviews(req: GetCatPreviewsReq) {
           reject(res);
         }
         const data = res.data as GetCatPreviewsResp;
-        data.cats.forEach((cat) => {
-          cat.avatarUrl += PictureStyle.thumbnail;
-        });
         resolve(data);
       }
     });
@@ -124,7 +121,7 @@ export async function getCatImage(req: GetImageByCatReq) {
  * @description
  * @param req
  */
-export async function CreateImage(
+export async function createImage(
   req: CreateImageReq
 ): Promise<CreateImageResp> {
   return await new Promise<CreateImageResp>((resolve, reject) => {
@@ -143,7 +140,7 @@ export async function CreateImage(
   });
 }
 
-export async function deletePost(req: DeleteImageReq) {
+export async function deleteImage(req: DeleteImageReq) {
   return await new Promise<DeleteImageResp>((resolve, reject) => {
     uni.request({
       url: "/collection/delete_image",

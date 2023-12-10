@@ -34,7 +34,7 @@ export async function init() {
   checkVersion();
 }
 
-async function refreshToken(appId: string) {
+export async function refreshToken(appId: string) {
   const res = await uni.login({
     provider: "weixin"
   });
@@ -57,8 +57,8 @@ async function checkCommunityId() {
   const id = uni.getStorageSync(StorageKeys.CommunityId);
 
   if (id) {
-    for (let i = 0; i < res.communities.length; i++) {
-      if (res.communities[i].id === id) {
+    for (const community of res.communities) {
+      if (community.id === id) {
         return;
       }
     }

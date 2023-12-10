@@ -202,7 +202,8 @@
     "navigationBarTitleText": "喵世界",
     "navigationStyle": "custom",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "onReachBottomDistance": 100
   },
   "tabBar": {
     "custom": true,

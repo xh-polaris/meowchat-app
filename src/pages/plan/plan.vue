@@ -5,19 +5,19 @@
     <!--    <image :src="Icons.Plan_Logo" class="plan-logo"></image>-->
     <TopBar bg-color="#f4f9ff" :has-shadow="false">
       <template #left>
-        <image :src="Icons.Plan_Logo" class="plan-logo"></image>
+        <image :src="Icons.Plan_Logo" class="plan-logo" />
       </template>
     </TopBar>
     <view v-if="showHeader" class="tool-bar">
-      <GoToMyPlans></GoToMyPlans>
-      <FishAmount></FishAmount>
+      <GoToMyPlans />
+      <FishAmount />
     </view>
-    <view style="height: 16vw"></view>
-    <PlanEntries v-if="showContent"></PlanEntries>
-    <view style="height: 20vw"></view>
+    <view style="height: 16vw" />
+    <PlanEntries v-if="showContent" />
+    <view style="height: 20vw" />
   </view>
 
-  <BottomBar id="plan"></BottomBar>
+  <BottomBar id="plan" />
 </template>
 
 <script setup lang="ts">

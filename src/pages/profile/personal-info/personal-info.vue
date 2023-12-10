@@ -4,7 +4,7 @@
   </TopBar>
   <view class="container">
     <image :src="Pictures.ProfileBackground" class="bg-set" />
-    <UserInfo :user-id="props.userId" type="other"></UserInfo>
+    <UserInfo :user-id="props.userId" type="other" />
   </view>
   <view class="com-item">
     <view class="line-info">
@@ -26,7 +26,7 @@
       </view>
     </view>
   </view>
-  <UserPublished :user-id="props.userId" type="other"></UserPublished>
+  <UserPublished :user-id="props.userId" type="other" />
 </template>
 
 <script lang="ts" setup>
@@ -62,11 +62,11 @@ const user = reactive<User>({
   follower: 0,
   following: 0
 });
-const onClickFollow = async () => {
+const onClickFollow = () => {
   if (!user.follower) {
     user.follower = 0;
   }
-  if (followInfo.followed === true) {
+  if (followInfo.followed) {
     user.follower--;
     followInfo.followed = false;
   } else {

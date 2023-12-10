@@ -1,9 +1,5 @@
 <template>
-  <PlanEntry
-    v-for="(plan, index) in plans"
-    :key="index"
-    :plan="plan"
-  ></PlanEntry>
+  <PlanEntry v-for="(plan, index) in plans" :key="index" :plan="plan" />
 </template>
 
 <script lang="ts" setup>
