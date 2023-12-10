@@ -203,7 +203,7 @@
     "navigationStyle": "custom",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8",
-    "onReachBottomDistance": 300
+    "onReachBottomDistance": 100
   },
   "tabBar": {
     "custom": true,
