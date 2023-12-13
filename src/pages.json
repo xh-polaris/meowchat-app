@@ -7,6 +7,9 @@
       }
     },
     {
+      "path": "pages/profile/user-list/user-list"
+    },
+    {
       "path": "pages/world/world",
       "style": {
         "navigationBarTitleText": "喵世界",

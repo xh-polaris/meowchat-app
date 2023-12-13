@@ -11,7 +11,7 @@
     <view class="com-item">
       <view class="com-wrap">
         <view class="line-info">
-          <view class="number">{{ user.following }}</view>
+          <view class="number" @click="goToUserList">{{ user.following }}</view>
           <view class="info">关注</view>
           <view class="number">{{ user.follower }}</view>
           <view class="info">粉丝</view>
@@ -72,6 +72,13 @@ import UserPublished from "@/pages/profile/profile-components/userPublished.vue"
 import { Pages, Pictures } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import { refresh } from "@/utils/utils";
+
+const goToUserList = () => {
+  console.log("Trying to navigate to UserList");
+  uni.navigateTo({
+    url: Pages.UserList
+  });
+};
 
 const user = reactive<User>({
   id: "",

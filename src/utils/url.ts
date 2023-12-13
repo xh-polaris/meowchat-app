@@ -33,7 +33,8 @@ export const enum Icons {
   Pic_Left = "/static/images/pic-left.png",
   Pic_Right = "/static/images/pic-right.png",
   Button_Increment = "/static/images/button-increment.png",
-  Button_Decrement = "/static/images/button-decrement.png"
+  Button_Decrement = "/static/images/button-decrement.png",
+  Avatar_Example = "/static/images/avatar-example.png"
 }
 
 export const enum Pages {
@@ -61,5 +62,6 @@ export const enum Pages {
   Message = "/pages/message/message",
   Person = "/pages/profile/personal-info/personal-info",
   EditInfo = "/pages/profile/edit-info/edit-info",
-  HelpedPlans = "/pages/plan/helped-plans/helped-plans"
+  HelpedPlans = "/pages/plan/helped-plans/helped-plans",
+  UserList = "/pages/profile/user-list/user-list"
 }
