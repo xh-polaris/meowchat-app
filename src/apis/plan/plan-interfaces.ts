@@ -26,7 +26,7 @@ export interface GetPlanPreviewsReq {
   limit?: number;
   onlyUserId?: string;
   page: number;
-  [property: string]: any;
+  onlyCommunityId?: string;
 }
 
 export interface GetPlanPreviewsResp {

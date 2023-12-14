@@ -15,7 +15,7 @@ export async function init() {
   const tasks: Promise<void>[] = [];
   // 距离token过期不到一天时重新获取token
   const expireTime = uni.getStorageSync(StorageKeys.AccessToken).expireTime;
-  if (!expireTime || expireTime - new Date().getTime() / 1000 < 86400) {
+  if (!expireTime || expireTime - new Date().getTime() / 1000 < 7 * 86400) {
     tasks.push(refreshToken(accountInfo.appId));
   }
   tasks.push(checkCommunityId());

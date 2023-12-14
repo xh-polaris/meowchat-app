@@ -8,9 +8,10 @@ export function buildLoader(keyword?: string) {
   const communityId = uni.getStorageSync(StorageKeys.CommunityId);
 
   const fetch = async () => {
-    const req: GetMomentPreviewsReq = {
-      communityId: communityId
-    };
+    const req: GetMomentPreviewsReq = {};
+    if (communityId) {
+      req.communityId = communityId;
+    }
     if (lastToken) {
       req.lastToken = lastToken;
     }

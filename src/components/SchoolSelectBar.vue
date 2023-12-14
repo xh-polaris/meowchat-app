@@ -3,9 +3,9 @@
     <image :src="Icons.Location" mode="scaleToFill" class="locationIcon" />
     <view class="school-name">
       {{
-        currentSchool !== currentCampus
+        (currentSchool !== currentCampus
           ? currentSchool + currentCampus
-          : currentSchool
+          : currentSchool) || "MeowChat大家庭"
       }}
     </view>
     <view class="triangle" />

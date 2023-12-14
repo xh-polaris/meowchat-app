@@ -94,12 +94,14 @@ onLoad(() => {
 onReady(() => {
   uni.hideLoading();
   //签到获取小鱼干
-  userCheckIn().then((res) => {
-    if (res.getFish) {
-      gottenFishAmount.value = res.getFishNum;
-      showToastBox.value = true;
-    }
-  });
+  if (uni.getStorageSync(StorageKeys.UserId)) {
+    userCheckIn().then((res) => {
+      if (res.getFish) {
+        gottenFishAmount.value = res.getFishNum;
+        showToastBox.value = true;
+      }
+    });
+  }
 });
 
 onShow(() => {
