@@ -8,7 +8,11 @@
       <view class="user-info">
         <view class="user-name">{{ user.nickname }}</view>
       </view>
+      <view class="follow-status" @click="toggleFollowStatus(user)">
+        {{ user.isFollowed ? "关注" : "已关注" }}
+      </view>
     </view>
+    <view class="separator" />
   </view>
 </template>
 
@@ -31,9 +35,26 @@ const load = () => {
         if (!res?.length) {
           hasMore.value = false;
         }
-        users.push(...res);
+        const usersWithDefaultFollowStatus = res.map((user) => ({
+          ...user,
+          isFollowed: true
+        }));
+        users.push(...usersWithDefaultFollowStatus);
       });
     }
+  }
+};
+
+const toggleFollowStatus = (user: User) => {
+  const isCurrentlyFollowed = user.isFollowed;
+  user.isFollowed = !isCurrentlyFollowed;
+  if (!user.isFollowed) {
+    this.$nextTick(() => {
+      const index = users.indexOf(user);
+      if (index !== -1) {
+        users.splice(index, 1);
+      }
+    });
   }
 };
 
@@ -43,27 +64,28 @@ onReachBottom(load);
 
 <style scoped lang="scss">
 .following-users {
-  margin-top: 10px;
+  margin-top: 1vw;
 }
 
 .user-item {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 3vw;
+  border-bottom: 0.3vw solid grey; /* Add this line for the gray horizontal line */
 }
 
 .user-avatar {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 50%;
+  max-width: 12vw;
+  max-height: 12vw;
+  border-radius: 6vw;
   margin-right: 10px;
   overflow: hidden;
   object-fit: contain;
 }
 
 .user-avatar-outside {
-  width: 50px;
-  height: 50px;
+  width: 12vw;
+  height: 12vw;
   object-fit: cover;
 }
 
@@ -73,19 +95,16 @@ onReachBottom(load);
 }
 
 .user-name {
-  margin-bottom: 5px;
+  margin-bottom: 0vw;
   font-size: 4.5vw;
   font-weight: 500;
 }
 
 .follow-status {
-  color: #777;
-  border: 1px solid #777;
+  color: grey; /* Change the text color to white */
   border-radius: 27vw;
   padding: 1vw 4vw;
-}
-
-.user-item + .user-item {
-  border-top: 1px solid #ddd;
+  cursor: pointer;
+  border: 0.3vw solid grey;
 }
 </style>

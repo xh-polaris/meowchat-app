@@ -14,6 +14,7 @@ export interface PaginationOptions {
 // user
 
 export interface User {
+  isFollowed: boolean;
   id: string;
   nickname: string;
   avatarUrl: string;
