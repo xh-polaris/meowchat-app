@@ -9,7 +9,7 @@
         <view class="user-name">{{ user.nickname }}</view>
       </view>
       <view class="follow-status" @click="toggleFollowStatus(user)">
-        {{ user.isFollowed ? "关注" : "已关注" }}
+        {{ user.isFollowed ? "已关注" : "关注" }}
       </view>
     </view>
     <view class="separator" />
@@ -71,7 +71,7 @@ onReachBottom(load);
   display: flex;
   align-items: center;
   padding: 3vw;
-  border-bottom: 0.3vw solid grey; /* Add this line for the gray horizontal line */
+  border-bottom: 0.3vw solid grey;
 }
 
 .user-avatar {
@@ -101,7 +101,7 @@ onReachBottom(load);
 }
 
 .follow-status {
-  color: grey; /* Change the text color to white */
+  color: grey;
   border-radius: 27vw;
   padding: 1vw 4vw;
   cursor: pointer;
