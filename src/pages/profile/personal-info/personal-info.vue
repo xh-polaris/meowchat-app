@@ -43,7 +43,7 @@ import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
 const goToUserList = () => {
   console.log("Trying to navigate to UserList");
   uni.navigateTo({
-    url: Pages.UserList
+    url: Pages.MyFollowing
   });
 };
 

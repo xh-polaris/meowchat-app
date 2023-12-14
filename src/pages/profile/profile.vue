@@ -74,9 +74,8 @@ import { StorageKeys } from "@/utils/const";
 import { refresh } from "@/utils/utils";
 
 const goToUserList = () => {
-  console.log("Trying to navigate to UserList");
   uni.navigateTo({
-    url: Pages.UserList
+    url: Pages.MyFollowing
   });
 };
 

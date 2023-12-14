@@ -34,11 +34,10 @@ export interface GetCountResp {
 }
 
 export interface GetLikeContentsReq {
-  userId?: string;
+  userId: string;
   targetType: TargetType;
   lastToken?: string;
   limit?: number;
-  backward?: boolean;
   page?: number;
 }
 

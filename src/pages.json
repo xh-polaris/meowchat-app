@@ -7,7 +7,7 @@
       }
     },
     {
-      "path": "pages/profile/user-list/user-list"
+      "path": "pages/profile/follow/my-following"
     },
     {
       "path": "pages/world/world",
