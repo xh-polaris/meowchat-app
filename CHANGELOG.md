@@ -1,5 +1,12 @@
 
 
+## [1.20.5](https://github.com/xh-polaris/meowchat-app/compare/v1.20.4...v1.20.5) (2023-12-14)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 分享至朋友圈时可以正确显示内容，范围为所有社区 ([ad5ceca](https://github.com/xh-polaris/meowchat-app/commit/ad5ceca2a52d68308c2a2e696d9030a40c3a9c8f))
+
 ## [1.20.4](https://github.com/xh-polaris/meowchat-app/compare/v1.20.3...v1.20.4) (2023-12-10)
 
 
