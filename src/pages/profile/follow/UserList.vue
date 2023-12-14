@@ -48,14 +48,6 @@ const load = () => {
 const toggleFollowStatus = (user: User) => {
   const isCurrentlyFollowed = user.isFollowed;
   user.isFollowed = !isCurrentlyFollowed;
-  if (!user.isFollowed) {
-    this.$nextTick(() => {
-      const index = users.indexOf(user);
-      if (index !== -1) {
-        users.splice(index, 1);
-      }
-    });
-  }
 };
 
 load();
