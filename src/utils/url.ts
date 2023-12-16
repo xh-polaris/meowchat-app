@@ -61,5 +61,7 @@ export const enum Pages {
   Message = "/pages/message/message",
   Person = "/pages/profile/personal-info/personal-info",
   EditInfo = "/pages/profile/edit-info/edit-info",
-  HelpedPlans = "/pages/plan/helped-plans/helped-plans"
+  HelpedPlans = "/pages/plan/helped-plans/helped-plans",
+  Following = "/pages/profile/follow/following",
+  Follower = "/pages/profile/follow/follower"
 }

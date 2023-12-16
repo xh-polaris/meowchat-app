@@ -78,14 +78,8 @@ export interface Image {
   id: string;
   url: string;
   catId: string;
-}
-
-export interface ImageInfo {
-  id: string;
-  url: string;
-  catId: string;
-  isLiked: boolean;
-  likeNumber: number;
+  isLiked?: boolean;
+  likes?: number;
 }
 
 export interface CreateImageResp {

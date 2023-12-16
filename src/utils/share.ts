@@ -1,4 +1,4 @@
-import { onShareTimeline } from "@dcloudio/uni-app";
+import { Pages } from "@/utils/url";
 
 const shareSuccess = () => {
   uni.showToast({
@@ -15,7 +15,7 @@ const shareFail = () => {
 
 const share = {
   title: "给你分享了一只可爱的猫咪",
-  path: "/pages/community/community", // 默认分享路径
+  path: Pages.FirstPage, // 默认分享路径
   imageUrl: "https://static.xhpolaris.com/static/meowchat/cover.png" // 默认分享图片
 };
 

@@ -11,10 +11,14 @@
     <view class="com-item">
       <view class="com-wrap">
         <view class="line-info">
-          <view class="number">{{ user.following }}</view>
-          <view class="info">关注</view>
-          <view class="number">{{ user.follower }}</view>
-          <view class="info">粉丝</view>
+          <view class="number" @click="onClickFollowing">{{
+            user.following
+          }}</view>
+          <view class="info" @click="onClickFollowing">关注</view>
+          <view class="number" @click="onClickFollower">{{
+            user.follower
+          }}</view>
+          <view class="info" @click="onClickFollower">粉丝</view>
           <view class="number">{{ user.article }}</view>
           <view class="info">创作</view>
           <navigator
@@ -72,6 +76,18 @@ import UserPublished from "@/pages/profile/profile-components/userPublished.vue"
 import { Pages, Pictures } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import { refresh } from "@/utils/utils";
+
+const onClickFollowing = () => {
+  uni.navigateTo({
+    url: Pages.Following
+  });
+};
+
+const onClickFollower = () => {
+  uni.navigateTo({
+    url: Pages.Follower
+  });
+};
 
 const user = reactive<User>({
   id: "",

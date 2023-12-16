@@ -6,7 +6,9 @@ import {
   GetUserLikedReq,
   GetUserLikedResp,
   GetLikeContentsReq,
-  GetLikeContentsResp
+  GetLikeContentsResp,
+  GetLikedUsersReq,
+  GetLikedUsersResp
 } from "@/apis/like/like-interface";
 
 /**
@@ -47,6 +49,23 @@ export async function getUserLiked(req: GetUserLikedReq) {
           reject(res);
         }
         const data = res.data as GetUserLikedResp;
+        resolve(data);
+      }
+    });
+  });
+}
+
+export async function getLikedUsers(req: GetLikedUsersReq) {
+  return await new Promise<GetLikedUsersResp>((resolve, reject) => {
+    uni.request({
+      url: "/like/get_liked_users",
+      data: req,
+      method: "GET",
+      success(res: UniNamespace.RequestSuccessCallbackResult) {
+        if (res.statusCode !== 200) {
+          reject(res);
+        }
+        const data = res.data as GetLikedUsersResp;
         resolve(data);
       }
     });

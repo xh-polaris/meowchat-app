@@ -6,30 +6,24 @@
     </view>
     <view class="imgs">
       <view class="qz_imgs qz_imgs3 clearfix">
-        <li v-for="(image, index) in imgUrlList" :key="index">
+        <li v-for="(image, index) in images" :key="index">
           <image
             :src="getThumbnail(image.url)"
             class="cat-image"
             mode="aspectFill"
-            @click="onClickImage(index, imgUrls)"
+            @click="onClickImage(index, urls)"
           >
             <view class="shadow" />
             <view class="liked-info">
               <view
                 v-if="image.isLiked"
                 class="like liked"
-                @click.prevent="clickLike(image.id, index)"
+                @click.prevent="clickLike(image)"
               />
-              <view
-                v-else
-                class="like"
-                @click.prevent="clickLike(image.id, index)"
-              />
-              <span
-                class="liked_number"
-                @click.prevent="clickLike(image.id, index)"
-                >{{ image.likeNumber || 0 }}</span
-              >
+              <view v-else class="like" @click.prevent="clickLike(image)" />
+              <span class="liked_number" @click.prevent="clickLike(image)">{{
+                image.likes || 0
+              }}</span>
             </view>
           </image>
         </li>
@@ -47,7 +41,7 @@ import { Pages } from "@/utils/url";
 import { computed, reactive, ref } from "vue";
 import {
   GetImageByCatReq,
-  ImageInfo
+  Image
 } from "@/apis/collection/collection-interfaces";
 import { doLike, getCount, getUserLiked } from "@/apis/like/like";
 import { onClickImage } from "@/pages/cat/utils";
@@ -60,26 +54,26 @@ const props = defineProps<{
   id: string;
   cat: Cat;
 }>();
-let imgUrlList = reactive<ImageInfo[]>([]);
-const imgUrls = computed(() => {
-  const tmp = [] as string[];
-  for (const img of imgUrlList) {
-    tmp.push(img.url);
-  }
-  return tmp;
+let images = reactive<Image[]>([]);
+const urls = computed(() => {
+  return images.map((img) => img.url);
 });
 let noMore = ref<boolean>(false);
 
-function clickLike(id: string, index: number) {
-  if (imgUrlList[index].isLiked) {
-    imgUrlList[index].isLiked = false;
-    imgUrlList[index].likeNumber--;
-    if (imgUrlList[index].likeNumber < 0) imgUrlList[index].likeNumber = 0;
-  } else {
-    imgUrlList[index].isLiked = true;
-    imgUrlList[index].likeNumber++;
-  }
-  doLike({ targetId: id, targetType: TargetType.Cat_Photo });
+function clickLike(image: Image) {
+  doLike({ targetId: image.id, targetType: TargetType.Cat_Photo }).then(() => {
+    if (!image.likes) {
+      image.likes = 0;
+    }
+    if (image.isLiked) {
+      image.isLiked = false;
+      image.likes--;
+      if (image.likes < 0) image.likes = 0;
+    } else {
+      image.isLiked = true;
+      image.likes++;
+    }
+  });
 }
 
 function draftImage() {
@@ -98,32 +92,12 @@ let number = 0;
 const getCatImageHandler = () => {
   if (!noMore.value)
     getCatImage(getCatImageReq).then((res) => {
-      for (const image of res.images) {
-        let imageUrl = reactive<ImageInfo>({
-          id: image.id,
-          url: image.url,
-          catId: image.catId,
-          isLiked: false,
-          likeNumber: 0
-        });
-        getUserLiked({
-          targetId: image.id,
-          targetType: TargetType.Cat_Photo
-        }).then((res) => {
-          imageUrl.isLiked = res.liked;
-        });
-        getCount({ targetId: image.id, targetType: TargetType.Cat_Photo }).then(
-          (res) => {
-            imageUrl.likeNumber = res.count;
-          }
-        );
-        imgUrlList.push(imageUrl);
-      }
+      images.push(...res.images);
       //获取得到的images的长度用以判断是否还有尚未加载的照片
       number += res.images.length;
-      if (!number || imgUrlList[number - 1].id === getCatImageReq.prevId) {
+      if (!number || images[number - 1].id === getCatImageReq.prevId) {
         noMore.value = true;
-      } else getCatImageReq.prevId = imgUrlList[number - 1].id;
+      } else getCatImageReq.prevId = images[number - 1].id;
     });
 };
 getCatImageHandler();

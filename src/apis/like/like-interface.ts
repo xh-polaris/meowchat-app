@@ -22,6 +22,17 @@ export interface GetUserLikedResp {
   liked: boolean;
 }
 
+export interface GetLikedUsersReq {
+  targetId: string;
+  targetType: TargetType;
+}
+
+export interface GetLikedUsersResp {
+  code: number;
+  msg: string;
+  users: User[];
+}
+
 export interface GetCountReq {
   targetId: string;
   targetType: TargetType;
@@ -34,11 +45,10 @@ export interface GetCountResp {
 }
 
 export interface GetLikeContentsReq {
-  userId?: string;
+  userId: string;
   targetType: TargetType;
   lastToken?: string;
   limit?: number;
-  backward?: boolean;
   page?: number;
 }
 

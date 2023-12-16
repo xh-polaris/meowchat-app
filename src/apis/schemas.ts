@@ -21,6 +21,7 @@ export interface User {
   article?: number;
   follower?: number;
   following?: number;
+  isFollowing?: boolean;
 }
 
 export interface Auth {

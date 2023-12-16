@@ -7,6 +7,18 @@
       }
     },
     {
+      "path": "pages/profile/follow/following",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/profile/follow/follower",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    },
+    {
       "path": "pages/world/world",
       "style": {
         "navigationBarTitleText": "喵世界",

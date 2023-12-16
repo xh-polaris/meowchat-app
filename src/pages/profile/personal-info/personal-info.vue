@@ -8,10 +8,10 @@
   </view>
   <view class="com-item">
     <view class="line-info">
-      <view class="number">{{ user.following }}</view>
-      <view class="info">关注</view>
-      <view class="number">{{ user.follower }}</view>
-      <view class="info">粉丝</view>
+      <view class="number" @click="onClickFollowing">{{ user.following }}</view>
+      <view class="info" @click="onClickFollowing">关注</view>
+      <view class="number" @click="onClickFollower">{{ user.follower }}</view>
+      <view class="info" @click="onClickFollower">粉丝</view>
       <view class="number">{{ user.article }}</view>
       <view class="info">创作</view>
       <view v-if="!followInfo.followed">
@@ -36,7 +36,7 @@ import { doLike, getUserLiked } from "@/apis/like/like";
 import { TargetType, User } from "@/apis/schemas";
 import { onLoad, onPullDownRefresh, onReady, onShow } from "@dcloudio/uni-app";
 import UserPublished from "@/pages/profile/profile-components/userPublished.vue";
-import { Pictures } from "@/utils/url";
+import { Pictures, Pages } from "@/utils/url";
 import TopBar from "@/components/TopBar.vue";
 import UserInfo from "@/pages/profile/profile-components/userInfo.vue";
 
@@ -62,6 +62,19 @@ const user = reactive<User>({
   follower: 0,
   following: 0
 });
+
+const onClickFollowing = () => {
+  uni.navigateTo({
+    url: `${Pages.Following}?userId=${user.id}`
+  });
+};
+
+const onClickFollower = () => {
+  uni.navigateTo({
+    url: `${Pages.Follower}?userId=${user.id}`
+  });
+};
+
 const onClickFollow = () => {
   if (!user.follower) {
     user.follower = 0;
