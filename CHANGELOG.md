@@ -1,5 +1,12 @@
 
 
+## [1.21.0](https://github.com/xh-polaris/meowchat-app/compare/v1.20.5...v1.21.0) (2023-12-16)
+
+
+### ✨ Features | 新功能
+
+* 新增关注和粉丝列表，优化猫片性能 ([57bc0ab](https://github.com/xh-polaris/meowchat-app/commit/57bc0ab9763435b709992951e1579b8baa9b7d32))
+
 ## [1.20.5](https://github.com/xh-polaris/meowchat-app/compare/v1.20.4...v1.20.5) (2023-12-14)
 
 
