@@ -9,8 +9,11 @@
       </template>
     </TopBar>
     <view v-if="showHeader" class="tool-bar">
-      <GoToMyPlans />
-      <FishAmount />
+      <GetFishTask />
+      <FishAmount style="margin-left: 25vw" />
+      <view class="my-plans">
+        <GoToMyPlans />
+      </view>
     </view>
     <view style="height: 16vw" />
     <PlanEntries v-if="showContent" />
@@ -23,6 +26,7 @@
 <script setup lang="ts">
 import BottomBar from "@/components/BottomBar.vue";
 import GoToMyPlans from "@/pages/plan/GoToMyPlans.vue";
+import GetFishTask from "@/pages/plan/GetFishTask.vue";
 import TopBar from "@/components/TopBar.vue";
 
 import FishAmount from "@/pages/plan/FishAmount.vue";
@@ -61,10 +65,18 @@ onPullDownRefresh(() => {
 .background {
   background-color: #f4f9ff;
   min-height: 100vh;
+  position: relative;
+  z-index: 0;
   .plan-logo {
     width: 36vw;
     height: 4.5vw;
     margin-left: 4vw;
+  }
+  .my-plans {
+    position: fixed;
+    left: 75.64vw; // 固定在右侧
+    top: 43.58vw; // 可以调整 top 的值来控制垂直位置
+    z-index: 99;
   }
 }
 </style>

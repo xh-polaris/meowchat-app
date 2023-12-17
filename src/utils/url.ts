@@ -20,20 +20,27 @@ export const enum Icons {
   Tag = "/static/images/tag.png",
   Cam = "/static/images/campus_cat.png",
   View = "/static/images/view_the_illustration.png",
-  Plan_PlanTag = "/static/images/plan/plan_tag.png",
+  Plan_PlanHealthTag = "/static/images/plan/plan_tag1.png",
+  Plan_PlanSnacksTag = "/static/images/plan/plan_tag2.png",
   Plan_Logo = "/static/images/plan/plan_logo.png",
   Plan_Toast = "/static/images/plan/toast.png",
   GoToPath_Tag = "/static/images/plan/GoToPath_heart_tag.png",
   GoToArrow = "/static/images/plan/GoToPath_right_arrow.png",
   CatExample = "/static/images/cat-example.png",
   LittleFish = "/static/images/Little_Fish.png",
+  LittleFished = "/static/images/plan/checked_in.png",
   Frame = "/static/images/Frame.png",
   DialogBox = "/static/images/dialog-box.png",
   State_Frame = "/static/images/state-frame.png",
   Pic_Left = "/static/images/pic-left.png",
   Pic_Right = "/static/images/pic-right.png",
   Button_Increment = "/static/images/button-increment.png",
-  Button_Decrement = "/static/images/button-decrement.png"
+  Button_Decrement = "/static/images/button-decrement.png",
+  TaskLogo = "/static/images/plan/task_logo.png",
+  HelpedPlans = "/static/images/plan/helped_plan_logo.png",
+  UnFinishedTask = "/static/images/plan/unfinished.png",
+  FinishedTask = "/static/images/plan/finished.png",
+  FinishedTaskIcon = "/static/images/plan/finished_icon.png"
 }
 
 export const enum Pages {
@@ -62,6 +69,5 @@ export const enum Pages {
   Person = "/pages/profile/personal-info/personal-info",
   EditInfo = "/pages/profile/edit-info/edit-info",
   HelpedPlans = "/pages/plan/helped-plans/helped-plans",
-  Following = "/pages/profile/follow/following",
-  Follower = "/pages/profile/follow/follower"
+  CheckInTask = "/pages/plan/CheckInTask"
 }
