@@ -2,17 +2,79 @@
   <view class="moment-task-box">
     <view class="content">
       <text class="title">每日点赞</text>
-      <text class="detail">点赞可以获得3小鱼干，每日共可获得5次</text>
+      <text class="detail"
+        >点赞可以获得{{ userData.LikeFishes[0] }}小鱼干，每日共可获得5次</text
+      >
       <view class="finish-times">
         <text class="times">完成情况：</text>
-        <img :src="Icons.UnFinishedTask" class="unfinished-icon" />
+        <img
+          v-if="userData.LikeTime >= 1"
+          :src="Icons.FinishedTask"
+          class="icon"
+        />
+        <img v-else :src="Icons.UnFinishedTask" class="icon" />
+        <img
+          v-if="userData.LikeTime >= 2"
+          :src="Icons.FinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-else
+          :src="Icons.UnFinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-if="userData.LikeTime >= 3"
+          :src="Icons.FinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-else
+          :src="Icons.UnFinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-if="userData.LikeTime >= 4"
+          :src="Icons.FinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-else
+          :src="Icons.UnFinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-if="userData.LikeTime >= 5"
+          :src="Icons.FinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-else
+          :src="Icons.UnFinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
       </view>
     </view>
     <view class="get-fish-number">
       <img :src="Icons.LittleFish" class="fish-unit" />
-      <text class="fish-num">X3</text>
+      <text class="fish-num">X{{ userData.LikeFishes[0] }}</text>
     </view>
-    <view class="button" @click="goToCommunity()">
+    <view
+      v-if="userData.LikeTime >= 5"
+      class="button"
+      style="background-color: #cccccc"
+    >
+      <view class="option">已完成</view>
+    </view>
+    <view v-else class="button" @click="goToCommunity()">
       <view class="option">去完成</view>
     </view>
   </view>
@@ -20,11 +82,38 @@
 
 <script setup lang="ts">
 import { Icons, Pages } from "@/utils/url";
+import { ref } from "vue";
+import { getMissionResp } from "@/apis/incentive/incentive-interfaces";
+import { getUserMission } from "@/apis/incentive/incentive";
 const goToCommunity = () => {
   uni.navigateTo({
     url: Pages.FirstPage
   });
 };
+const userData = ref<getMissionResp>({
+  SignInTime: 0,
+  LikeTime: 0,
+  CommentTime: 0,
+  ContentTime: 0,
+  SignInFishes: [],
+  LikeFishes: [],
+  CommentFishes: [],
+  ContentFishes: []
+});
+// const a = ref([]);
+// getUserMission().then((res) => {
+//   a.value = res.SignInFishes;
+// });
+
+getUserMission().then((res) => {
+  userData.value.SignInTime = res.SignInTime;
+  userData.value.LikeTime = res.LikeTime;
+  userData.value.CommentTime = res.CommentTime;
+  userData.value.ContentTime = res.ContentTime;
+  userData.value.SignInFishes = res.SignInFishes;
+  userData.value.ContentFishes = res.ContentFishes;
+  userData.value.LikeFishes = res.LikeFishes;
+});
 </script>
 
 <style scoped lang="scss">
@@ -62,7 +151,7 @@ const goToCommunity = () => {
         font-size: 2.8vw;
         font-weight: bold;
       }
-      .unfinished-icon {
+      .icon {
         margin-top: 1vw;
         width: 2.56vw;
         height: 2.56vw;

@@ -2,17 +2,57 @@
   <view class="moment-task-box">
     <view class="content">
       <text class="title">每日评论</text>
-      <text class="detail">评论可以获得5小鱼干，每日可共获得3次</text>
+      <text class="detail"
+        >评论可以获得{{
+          userData.CommentFishes[0]
+        }}小鱼干，每日可共获得3次</text
+      >
       <view class="finish-times">
         <text class="times">完成情况：</text>
-        <img :src="Icons.UnFinishedTask" class="unfinished-icon" />
+        <img
+          v-if="userData.CommentTime >= 1"
+          :src="Icons.FinishedTask"
+          class="icon"
+        />
+        <img v-else :src="Icons.UnFinishedTask" class="icon" />
+        <img
+          v-if="userData.CommentTime >= 2"
+          :src="Icons.FinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-else
+          :src="Icons.UnFinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-if="userData.CommentTime >= 3"
+          :src="Icons.FinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
+        <img
+          v-else
+          :src="Icons.UnFinishedTask"
+          class="icon"
+          style="margin-left: 1vw"
+        />
       </view>
     </view>
     <view class="get-fish-number">
       <img :src="Icons.LittleFish" class="fish-unit" />
-      <text class="fish-num">X5</text>
+      <text class="fish-num">X{{ userData.CommentFishes[0] }}</text>
     </view>
-    <view class="button" @click="goToCommunity()">
+    <view
+      v-if="userData.CommentTime >= 3"
+      class="button"
+      style="background-color: #cccccc"
+    >
+      <view class="option">已完成</view>
+    </view>
+    <view v-else class="button" @click="goToCommunity()">
       <view class="option">去完成</view>
     </view>
   </view>
@@ -20,11 +60,40 @@
 
 <script setup lang="ts">
 import { Icons, Pages } from "@/utils/url";
+import { ref } from "vue";
+import { getMissionResp } from "@/apis/incentive/incentive-interfaces";
+import { getUserMission } from "@/apis/incentive/incentive";
 const goToCommunity = () => {
   uni.navigateTo({
     url: Pages.FirstPage
   });
 };
+
+const userData = ref<getMissionResp>({
+  SignInTime: 0,
+  LikeTime: 0,
+  CommentTime: 0,
+  ContentTime: 0,
+  SignInFishes: [],
+  LikeFishes: [],
+  CommentFishes: [],
+  ContentFishes: []
+});
+// const a = ref([]);
+// getUserMission().then((res) => {
+//   a.value = res.SignInFishes;
+// });
+
+getUserMission().then((res) => {
+  userData.value.SignInTime = res.SignInTime;
+  userData.value.LikeTime = res.LikeTime;
+  userData.value.CommentTime = res.CommentTime;
+  userData.value.ContentTime = res.ContentTime;
+  userData.value.SignInFishes = res.SignInFishes;
+  userData.value.ContentFishes = res.ContentFishes;
+  userData.value.LikeFishes = res.LikeFishes;
+  userData.value.CommentFishes = res.CommentFishes;
+});
 </script>
 
 <style scoped lang="scss">
@@ -62,7 +131,7 @@ const goToCommunity = () => {
         font-size: 2.8vw;
         font-weight: bold;
       }
-      .unfinished-icon {
+      .icon {
         margin-top: 1vw;
         width: 2.56vw;
         height: 2.56vw;

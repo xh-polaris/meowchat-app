@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { userCheckIn } from "@/apis/user/user";
+import { userCheckIn } from "@/apis/incentive/incentive";
 import CollectionEntry from "@/pages/community/CollectionEntry.vue";
 import BottomBar from "@/components/BottomBar.vue";
 import { nextTick, reactive, ref } from "vue";
@@ -58,6 +58,7 @@ import { Pages } from "@/utils/url";
 import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
 import { buildLoader } from "@/pages/community/utils";
 import Masonry from "@/pages/community/Masonry.vue";
+
 const communityId = ref(uni.getStorageSync(StorageKeys.CommunityId));
 const cardList = reactive(["", "", "", "", "", ""]);
 

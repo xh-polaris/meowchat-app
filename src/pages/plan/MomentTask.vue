@@ -2,13 +2,22 @@
   <view class="moment-task-box">
     <view class="content">
       <text class="title">首次发布动态</text>
-      <text class="detail">2023.12.11第二天领取小鱼干</text>
+      <text class="detail"
+        >每次发布首条动态可以获得{{ userData.ContentFishes[0] }}小鱼干</text
+      >
     </view>
     <view class="get-fish-number">
       <img :src="Icons.LittleFish" class="fish-unit" />
-      <text class="fish-num">X30</text>
+      <text class="fish-num">X{{ userData.ContentFishes[0] }}</text>
     </view>
-    <view class="button" @click="goToCommunity()">
+    <view
+      v-if="userData.ContentTime >= 1"
+      class="button"
+      style="background-color: #cccccc"
+    >
+      <view class="option">已完成</view>
+    </view>
+    <view v-else class="button" @click="goToCommunity()">
       <view class="option">去完成</view>
     </view>
   </view>
@@ -16,11 +25,37 @@
 
 <script setup lang="ts">
 import { Icons, Pages } from "@/utils/url";
+import { ref } from "vue";
+import { getMissionResp } from "@/apis/incentive/incentive-interfaces";
+import { getUserMission } from "@/apis/incentive/incentive";
 const goToCommunity = () => {
   uni.navigateTo({
     url: Pages.DraftMoment
   });
 };
+const userData = ref<getMissionResp>({
+  SignInTime: 0,
+  LikeTime: 0,
+  CommentTime: 0,
+  ContentTime: 0,
+  SignInFishes: [],
+  LikeFishes: [],
+  CommentFishes: [],
+  ContentFishes: []
+});
+// const a = ref([]);
+// getUserMission().then((res) => {
+//   a.value = res.SignInFishes;
+// });
+
+getUserMission().then((res) => {
+  userData.value.SignInTime = res.SignInTime;
+  userData.value.LikeTime = res.LikeTime;
+  userData.value.CommentTime = res.CommentTime;
+  userData.value.ContentTime = res.ContentTime;
+  userData.value.SignInFishes = res.SignInFishes;
+  userData.value.ContentFishes = res.ContentFishes;
+});
 </script>
 
 <style scoped lang="scss">
@@ -50,7 +85,7 @@ const goToCommunity = () => {
     }
   }
   .get-fish-number {
-    margin-left: 20vw;
+    margin-left: 11vw;
     margin-top: 6.5vw;
     display: flex;
     flex-direction: row;

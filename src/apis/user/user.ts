@@ -2,8 +2,7 @@ import {
   GetUserInfoReq,
   GetUserInfoResp,
   UpdateUserInfoReq,
-  UpdateUserInfoResp,
-  UserCheckInResp
+  UpdateUserInfoResp
 } from "./user-interfaces";
 import { PictureStyle } from "@/apis/cos/cos-interface";
 import { getPrefetchData } from "@/apis/prefetch";
@@ -46,22 +45,6 @@ export async function updateUserInfo(req: UpdateUserInfoReq) {
           reject(res);
         }
         const data = res.data as UpdateUserInfoResp;
-        resolve(data);
-      }
-    });
-  });
-}
-
-export async function userCheckIn() {
-  return await new Promise<UserCheckInResp>((resolve, reject) => {
-    uni.request({
-      url: "/user/check_in",
-      method: "GET",
-      success(res: UniNamespace.RequestSuccessCallbackResult) {
-        if (res.statusCode !== 200) {
-          reject(res);
-        }
-        const data = res.data as UserCheckInResp;
         resolve(data);
       }
     });

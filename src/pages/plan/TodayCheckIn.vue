@@ -5,61 +5,47 @@
         <view class="progress-out">
           <view
             class="progress"
-            :style="{ width: (userData.getFishTimes + 1) * 14 + 'vw' }"
+            :style="{ width: userData.SignInTime * 14 + 'vw' }"
           />
           <img
             :src="
-              userData.getFishTimes >= 0 && userData.getFish === false
-                ? Icons.LittleFished
-                : Icons.LittleFish
+              userData.SignInTime >= 1 ? Icons.LittleFished : Icons.LittleFish
             "
             class="first-day"
           />
           <img
             :src="
-              userData.getFishTimes >= 1 && userData.getFish
-                ? Icons.LittleFished
-                : Icons.LittleFish
+              userData.SignInTime >= 2 ? Icons.LittleFished : Icons.LittleFish
             "
             class="second-day"
           />
           <img
             :src="
-              userData.getFishTimes >= 2 && userData.getFish
-                ? Icons.LittleFished
-                : Icons.LittleFish
+              userData.SignInTime >= 3 ? Icons.LittleFished : Icons.LittleFish
             "
             class="third-day"
           />
           <img
             :src="
-              userData.getFishTimes >= 3 && userData.getFish
-                ? Icons.LittleFished
-                : Icons.LittleFish
+              userData.SignInTime >= 4 ? Icons.LittleFished : Icons.LittleFish
             "
             class="fourth-day"
           />
           <img
             :src="
-              userData.getFishTimes >= 4 && userData.getFish
-                ? Icons.LittleFished
-                : Icons.LittleFish
+              userData.SignInTime >= 5 ? Icons.LittleFished : Icons.LittleFish
             "
             class="fifth-day"
           />
           <img
             :src="
-              userData.getFishTimes >= 5 && userData.getFish
-                ? Icons.LittleFished
-                : Icons.LittleFish
+              userData.SignInTime >= 6 ? Icons.LittleFished : Icons.LittleFish
             "
             class="sixth-day"
           />
           <img
             :src="
-              userData.getFishTimes >= 6 && userData.getFish
-                ? Icons.LittleFished
-                : Icons.LittleFish
+              userData.SignInTime >= 7 ? Icons.LittleFished : Icons.LittleFish
             "
             class="seventh-day"
           />
@@ -69,28 +55,64 @@
         <view
           class="first-tag"
           :style="{
-            backgroundColor: userData.getFishTimes >= 0 ? '#D3D3D3' : '#6a9dff'
+            backgroundColor: userData.SignInTime >= 1 ? '#D3D3D3' : '#6a9dff'
           }"
         >
-          <text class="number">x 30</text>
+          <text class="number">x {{ userData.SignInFishes[0] }}</text>
         </view>
-        <view class="first-tag" style="margin-left: 5vw">
-          <text class="number">x 30</text>
+        <view
+          class="first-tag"
+          style="margin-left: 5vw"
+          :style="{
+            backgroundColor: userData.SignInTime >= 2 ? '#D3D3D3' : '#6a9dff'
+          }"
+        >
+          <text class="number">x {{ userData.SignInFishes[1] }}</text>
         </view>
-        <view class="first-tag" style="margin-left: 5.5vw">
-          <text class="number">x 50</text>
+        <view
+          class="first-tag"
+          style="margin-left: 5.5vw"
+          :style="{
+            backgroundColor: userData.SignInTime >= 3 ? '#D3D3D3' : '#6a9dff'
+          }"
+        >
+          <text class="number">x {{ userData.SignInFishes[2] }}</text>
         </view>
-        <view class="first-tag" style="margin-left: 5.5vw">
-          <text class="number">x 30</text>
+        <view
+          class="first-tag"
+          style="margin-left: 5.5vw"
+          :style="{
+            backgroundColor: userData.SignInTime >= 4 ? '#D3D3D3' : '#6a9dff'
+          }"
+        >
+          <text class="number">x {{ userData.SignInFishes[3] }}</text>
         </view>
-        <view class="first-tag" style="margin-left: 5vw">
-          <text class="number">x 30</text>
+        <view
+          class="first-tag"
+          style="margin-left: 5vw"
+          :style="{
+            backgroundColor: userData.SignInTime >= 5 ? '#D3D3D3' : '#6a9dff'
+          }"
+        >
+          <text class="number">x {{ userData.SignInFishes[4] }}</text>
         </view>
-        <view class="first-tag" style="margin-left: 5.5vw">
-          <text class="number">x 30</text>
+        <view
+          class="first-tag"
+          style="margin-left: 5.5vw"
+          :style="{
+            backgroundColor: userData.SignInTime >= 6 ? '#D3D3D3' : '#6a9dff'
+          }"
+        >
+          <text class="number">x {{ userData.SignInFishes[5] }}</text>
         </view>
-        <view class="first-tag" style="margin-left: 5vw">
-          <text class="number">x 100</text>
+        <view
+          class="first-tag"
+          style="margin-left: 5vw"
+          :style="{
+            backgroundColor: userData.SignInTime >= 7 ? '#D3D3D3' : '#6a9dff'
+          }"
+        >
+          <text class="number">x {{ userData.SignInFishes[6] }}</text>
         </view>
       </view>
       <view class="data">
@@ -108,15 +130,17 @@
       <view class="content">
         <text class="title">今日签到</text>
         <text class="detail"
-          >2023.12.11第{{ userData.getFishTimes + 1 }}天领取小鱼干</text
+          >{{ dateString }}第{{ userData.SignInTime }}天领取小鱼干</text
         >
       </view>
       <view class="get-fish-number">
         <img :src="Icons.LittleFish" class="fish-unit" />
-        <text class="fish-num">X{{ userData.getFishTimes }}</text>
+        <text class="fish-num"
+          >X{{ userData.SignInFishes[userData.SignInTime - 1] }}</text
+        >
       </view>
       <view class="button">
-        <view class="option">领取</view>
+        <view class="option">已领取</view>
       </view>
     </view>
   </view>
@@ -125,34 +149,42 @@
 <script setup lang="ts">
 import { ref, defineAsyncComponent, onMounted } from "vue";
 import { Icons } from "@/utils/url";
-import { UserCheckInResp } from "@/apis/user/user-interfaces";
-import { userCheckIn } from "@/apis/user/user";
-import { getUserFish } from "@/apis/plan/plan";
+import {
+  getMissionResp,
+  UserCheckInResp
+} from "@/apis/incentive/incentive-interfaces";
+import { getUserMission } from "@/apis/incentive/incentive";
 
-const userData = ref({
-  getFish: false,
-  getFishTimes: 0,
-  getFishNum: 0
+const userData = ref<getMissionResp>({
+  SignInTime: 0,
+  LikeTime: 0,
+  CommentTime: 0,
+  ContentTime: 0,
+  SignInFishes: [],
+  LikeFishes: [],
+  CommentFishes: [],
+  ContentFishes: []
+});
+// const a = ref([]);
+// getUserMission().then((res) => {
+//   a.value = res.SignInFishes;
+// });
+
+getUserMission().then((res) => {
+  userData.value.SignInTime = res.SignInTime;
+  userData.value.LikeTime = res.LikeTime;
+  userData.value.CommentTime = res.CommentTime;
+  userData.value.ContentTime = res.ContentTime;
+  userData.value.SignInFishes = res.SignInFishes;
 });
 
-userCheckIn().then((res) => {
-  userData.value.getFish = res.getFish;
-  userData.value.getFishNum = res.getFishNum;
-  userData.value.getFishTimes = res.getFishTimes;
-});
+const currentDate: Date = new Date();
+const year: number = currentDate.getFullYear();
+const month: number = currentDate.getMonth() + 1; // 月份从0开始，所以要加1
+const day: number = currentDate.getDate();
 
-// const fetchData = () => {
-//   // try {
-//   //   userData.value = await userCheckIn();
-//   // } catch (error) {
-//   //   console.log("Failed to fetch user data");
-//   // }
-//   userCheckIn().then(res);
-// };
-// fetchData();
-
-const fishValues = [30, 30, 50, 30, 30, 30, 100];
-const getFishValue = ref(fishValues[userData.value.getFishTimes]);
+// 构建日期字符串
+const dateString: string = `${year}.${month}.${day}`;
 </script>
 
 <style scoped lang="scss">
@@ -296,7 +328,7 @@ const getFishValue = ref(fishValues[userData.value.getFishTimes]);
       }
     }
     .get-fish-number {
-      margin-left: 20vw;
+      margin-left: 22vw;
       margin-top: 5vw;
       display: flex;
       flex-direction: row;
@@ -319,7 +351,7 @@ const getFishValue = ref(fishValues[userData.value.getFishTimes]);
       margin-left: 2vw;
       width: 16.15vw;
       height: 6.67vw;
-      background-color: #1f6bff;
+      background-color: #cccccc;
       border-radius: 5.89vw;
       .option {
         color: #ffffff;

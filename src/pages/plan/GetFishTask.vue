@@ -98,8 +98,7 @@ const hidePanel = () => {
   position: fixed;
   display: flex;
   flex-direction: column;
-  //top: 73vw;
-  top: 30vw;
+  top: 73vw;
   left: 0;
   background-color: #ffffff;
   width: 100vw;
