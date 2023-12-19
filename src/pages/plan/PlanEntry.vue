@@ -5,10 +5,10 @@
     @click="onClickPlan(props.plan.id)"
   >
     <view class="small-icon">
-      <img
+      <image
         :src="
-          planTypeMap(props.plan.planType) === '零食奖励' ||
-          planTypeMap(props.plan.planType) === '物资补给'
+          props.plan.planType === PlanType.TypeFeed ||
+          props.plan.planType === PlanType.TypeSupply
             ? Icons.Plan_PlanSnacksTag
             : Icons.Plan_PlanHealthTag
         "
@@ -20,14 +20,15 @@
       <view>
         <view class="bar-content">
           <text class="txt1">帮助</text>
-          <text :class="getHelpCatClass(props.plan.planType)">{{
-            props.plan?.cat?.name || "全体猫猫"
-          }}</text>
+          <text
+            :class="`helped-cat-${planKeyMap[props.plan.planType] || 'health'}`"
+            >{{ props.plan?.cat?.name || "全体猫猫" }}</text
+          >
           <text class="txt2">{{ props.plan.name }}</text>
         </view>
         <view class="progress-out"
           ><view
-            :class="getProgressClass(props.plan.planType)"
+            :class="`progress-${planKeyMap[props.plan.planType] || 'health'}`"
             :style="{
               width: (55 * props.plan.nowFish) / props.plan.maxFish + 'vw'
             }"
@@ -38,61 +39,27 @@
           }}小鱼干
         </view>
       </view>
-      <view :class="getHelpButClass(props.plan.planType)"> 去助力 </view>
+      <view :class="`help-but-${planKeyMap[props.plan.planType] || 'health'}`">
+        去助力
+      </view>
     </view>
   </view>
-  <!--  </div>-->
 </template>
 
 <script setup lang="ts">
 import { Plan, PlanType } from "@/apis/schemas";
 import { Icons } from "@/utils/url";
-import { planTypeMap, onClickPlan } from "@/pages/plan/utils";
+import { onClickPlan, planTypeMap } from "@/pages/plan/utils";
 
 const props = defineProps<{
   plan: Plan;
 }>();
-const getProgressClass = (planType: PlanType): string => {
-  switch (planType) {
-    case 1:
-      return "progress-castrate";
-    case 2:
-      return "progress-health";
-    case 3:
-      return "progress-snacks";
-    case 4:
-      return "progress-supply";
-    default:
-      return "progress-health";
-  }
-};
-const getHelpButClass = (planType: PlanType): string => {
-  switch (planType) {
-    case 0:
-      return "help-but-castrate";
-    case 1:
-      return "help-but-health";
-    case 2:
-      return "help-but-snacks";
-    case 3:
-      return "help-but-supply";
-    default:
-      return "help-but-health";
-  }
-};
-const getHelpCatClass = (planType: PlanType): string => {
-  switch (planType) {
-    case 0:
-      return "helped-cat-castrate";
-    case 1:
-      return "helped-cat-health";
-    case 2:
-      return "helped-cat-snacks";
-    case 3:
-      return "helped-cat-supply";
-    default:
-      return "helped-cat-health";
-  }
+
+const planKeyMap: Record<PlanType, string> = {
+  [PlanType.TypeCastrate]: "castrate",
+  [PlanType.TypeHeal]: "health",
+  [PlanType.TypeFeed]: "snacks",
+  [PlanType.TypeSupply]: "supply"
 };
 </script>
 
@@ -104,7 +71,6 @@ const getHelpCatClass = (planType: PlanType): string => {
   border-radius: 2vw;
   width: 95vw;
   height: 60vw;
-  //background-color: #a2a4a7;
   background-size: 100% 100%;
   display: flex;
   flex-direction: column;

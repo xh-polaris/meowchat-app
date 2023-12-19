@@ -1,7 +1,7 @@
 <template>
   <view class="goToMyPlans">
-    <img
-      src="https://static-1308722423.cos.ap-shanghai.myqcloud.com/static/meowchat/helped_plan_logo.png"
+    <image
+      :src="Pictures.HelpedPlanLogo"
       class="small-icon"
       @click="goToHelpedPlans()"
     />
@@ -9,23 +9,12 @@
 </template>
 
 <script setup lang="ts">
-import { Icons, Pages } from "@/utils/url";
-import { ref } from "vue";
-import { getCountDonate } from "@/apis/plan/plan";
+import { Pages, Pictures } from "@/utils/url";
 const goToHelpedPlans = () => {
   uni.navigateTo({
     url: Pages.HelpedPlans
   });
 };
-
-// const donateNum = ref(0);
-// const getDonateCount = async () => {
-//   const data = await getCountDonate({});
-//   if (data.total) {
-//     donateNum.value = data.total;
-//   }
-// };
-// getDonateCount();
 </script>
 
 <style scoped lang="scss">

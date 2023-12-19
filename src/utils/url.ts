@@ -2,7 +2,8 @@ export const enum Pictures {
   NoData = "https://static.xhpolaris.com/nodata.png",
   ProfileBackground = "https://static.xhpolaris.com/static/meowchat/profile_background.png",
   NoCatHere = "/static/images/no_cat_here.png",
-  NoMore = "/static/images/nomore.png"
+  NoMore = "/static/images/nomore.png",
+  HelpedPlanLogo = "https://static.xhpolaris.com/static/meowchat/helped_plan_logo.png"
 }
 
 export const enum Icons {
