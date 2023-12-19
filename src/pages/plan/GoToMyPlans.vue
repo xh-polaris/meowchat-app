@@ -1,7 +1,7 @@
 <template>
   <view class="goToMyPlans">
     <image
-      :src="Pictures.HelpedPlanLogo"
+      :src="Icons.HelpedPlanLogo"
       class="small-icon"
       @click="goToHelpedPlans()"
     />
@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { Pages, Pictures } from "@/utils/url";
+import { Pages, Icons } from "@/utils/url";
 const goToHelpedPlans = () => {
   uni.navigateTo({
     url: Pages.HelpedPlans
