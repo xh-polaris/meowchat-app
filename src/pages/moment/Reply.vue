@@ -347,7 +347,7 @@ const focusReplyComment = (comment: Comment) => {
   }
 
   .reply {
-    margin: calc(5 / 390 * 100vw) 0;
+    margin: 0rpx;
     .avatar {
       width: calc(22 / 390 * 100vw);
       height: calc(22 / 390 * 100vw);
