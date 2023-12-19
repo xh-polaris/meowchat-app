@@ -71,7 +71,7 @@
 
         <!-- 三级评论 -->
         <view
-          v-for="(comment, index) in comments"
+          v-for="(comment3, index) in comments"
           :key="index"
           class="reply"
           @click="focusReplyComment(comment)"
@@ -81,7 +81,7 @@
               backgroundImage: 'url( ' + comment.user.avatarUrl + ')'
             }"
             class="avatar"
-            style="margin-left: calc(42 / 390 * 100vw)"
+            style="margin-left: 0vw"
           />
           <view class="thread">
             <view class="content">
@@ -102,7 +102,7 @@
                 <view class="lower">{{ comment.text }}</view>
               </view>
               <view v-if="comment.likeCount >= 0" class="right">
-                <view class="likes-frame" @click="likeComment(comment3)">
+                <view class="likes-frame" @click="likeComment(comment)">
                   <view v-if="comment.isLiked" class="thumb liked" />
                   <view v-else class="thumb" />
                   <view class="likes">{{ comment.likeCount }}</view>
@@ -347,7 +347,7 @@ const focusReplyComment = (comment: Comment) => {
   }
 
   .reply {
-    margin: 0rpx;
+    margin: 0;
     .avatar {
       width: calc(22 / 390 * 100vw);
       height: calc(22 / 390 * 100vw);
@@ -366,7 +366,7 @@ const focusReplyComment = (comment: Comment) => {
 
   .more-sub-replies {
     color: #696969;
-    margin-left: calc(74 / 390 * 100vw);
+    margin-left: 0;
     display: flex;
     align-items: center;
     font-size: calc(12 / 390 * 100vw);
