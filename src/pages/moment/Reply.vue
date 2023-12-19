@@ -1,78 +1,153 @@
 <template>
   <view class="background" @click="closeSelf" @touchmove.stop.prevent />
   <scroll-view class="frame" scroll-y="true" @touchmove.stop>
-    <view class="main">
-      <view class="comment">
-        <view
-          :style="{
-            backgroundImage: 'url( ' + mainComment.user.avatarUrl + ')'
-          }"
-          class="avatar"
-        />
-        <view class="thread">
-          <view class="content">
-            <view class="left">
-              <view class="upper">
-                <view class="username">{{ mainComment.user.nickname }}</view>
-                <view class="timestamp"
-                  >· {{ displayTime(mainComment.createAt) }}
+    <view class="container">
+      <!-- 主评论 -->
+      <view class="main main-comment">
+        <view class="comment">
+          <view
+            :style="{
+              backgroundImage: 'url( ' + mainComment.user.avatarUrl + ')'
+            }"
+            class="avatar"
+          />
+          <view class="thread">
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">{{ mainComment.user.nickname }}</view>
+                  <view class="timestamp"
+                    >· {{ displayTime(mainComment.createAt) }}
+                  </view>
                 </view>
+                <view class="lower" @click="emit('interactWithComment')">{{
+                  mainComment.text
+                }}</view>
               </view>
-              <view class="lower">{{ mainComment.text }}</view>
-            </view>
-            <view class="right">
-              <view class="likes-frame" @click="likeComment(mainComment)">
-                <view v-if="mainComment.isLiked" class="thumb liked" />
-                <view v-else class="thumb" />
-                <view class="likes">{{ mainComment.likeCount }}</view>
+              <view class="right">
+                <view class="likes-frame" @click="likeComment(mainComment)">
+                  <view v-if="mainComment.isLiked" class="thumb liked" />
+                  <view v-else class="thumb" />
+                  <view class="likes">{{ mainComment.likeCount }}</view>
+                </view>
               </view>
             </view>
           </view>
         </view>
       </view>
-      <view v-for="(comment, index) in comments" :key="index" class="reply">
-        <view
-          :style="{
-            backgroundImage: 'url( ' + comment.user.avatarUrl + ')'
-          }"
-          class="avatar"
-          style="margin-left: calc(42 / 390 * 100vw)"
-        />
-        <view class="thread">
-          <view class="content">
-            <view class="left">
-              <view class="upper">
-                <view class="username">{{ comment.user.nickname }}</view>
-                <view class="timestamp"
-                  >· {{ displayTime(comment.createAt) }}
+
+      <!-- 二级评论 -->
+      <view v-for="(comment, index) in comments" :key="index" class="main">
+        <view class="comment">
+          <view
+            :style="{
+              backgroundImage: 'url( ' + comment.user.avatarUrl + ')'
+            }"
+            class="avatar"
+          />
+          <view class="thread">
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">{{ comment.user.nickname }}</view>
+                  <view class="timestamp"
+                    >· {{ displayTime(comment.createAt) }}
+                  </view>
                 </view>
+                <view class="lower" @click="emit('interactWithComment')">{{
+                  comment.text
+                }}</view>
               </view>
-              <view class="lower">{{ comment.text }}</view>
-            </view>
-            <view v-if="comment.likeCount >= 0" class="right">
-              <view class="likes-frame" @click="likeComment(comment)">
-                <view v-if="comment.isLiked" class="thumb liked" />
-                <view v-else class="thumb" />
-                <view class="likes">{{ comment.likeCount }}</view>
+              <view class="right">
+                <view class="likes-frame" @click="likeComment(comment)">
+                  <view v-if="comment.isLiked" class="thumb liked" />
+                  <view v-else class="thumb" />
+                  <view class="likes">{{ comment.likeCount }}</view>
+                </view>
               </view>
             </view>
           </view>
+        </view>
+
+        <!-- 三级评论 -->
+        <view
+          v-for="(comment, index) in comments"
+          :key="index"
+          class="reply"
+          @click="focusReplyComment(comment)"
+        >
+          <view
+            :style="{
+              backgroundImage: 'url( ' + comment.user.avatarUrl + ')'
+            }"
+            class="avatar"
+            style="margin-left: calc(42 / 390 * 100vw)"
+          />
+          <view class="thread">
+            <view class="content">
+              <view class="left">
+                <view class="upper">
+                  <view class="username">
+                    <view>{{ comment.user.nickname }}</view>
+                    <image
+                      class="right-triangle-grey"
+                      src="/static/images/right-triangle-grey.png"
+                    />
+                    <view>{{ comment.user.nickname }}</view>
+                  </view>
+                  <view class="timestamp"
+                    >· {{ displayTime(comment.createAt) }}
+                  </view>
+                </view>
+                <view class="lower">{{ comment.text }}</view>
+              </view>
+              <view v-if="comment.likeCount >= 0" class="right">
+                <view class="likes-frame" @click="likeComment(comment3)">
+                  <view v-if="comment.isLiked" class="thumb liked" />
+                  <view v-else class="thumb" />
+                  <view class="likes">{{ comment.likeCount }}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="more-sub-replies">
+          展开查看更多 <view class="down-arrow" />
         </view>
       </view>
     </view>
+    <view v-if="firstLevelId && moment" style="height: 16vw" />
+    <WriteCommentBox
+      v-if="firstLevelId && moment"
+      :placeholder-text="placeholderText"
+      :like-count="moment.likeCount"
+      :is-liked="moment.isLiked"
+      :parent-id="moment.id"
+      :parent-type="CommentType.Moment"
+      :first-level-id="firstLevelId"
+      :comment-callback="(res) => fishAwardEmitter.triggerCallbacks(res)"
+      @do-like="likeMoment(moment, fishAwardEmitter)"
+      @cancel-reply="afterBlur"
+    />
   </scroll-view>
 </template>
 
 <script lang="ts" setup>
-import { Comment } from "@/apis/schemas";
+import { Comment, Moment } from "@/apis/schemas";
 import { displayTime } from "@/utils/time";
 import { ref } from "vue";
-import { getCommentsData, likeComment } from "@/pages/moment/utils";
+import { getCommentsData, likeComment, likeMoment } from "@/pages/moment/utils";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { CommentType } from "@/apis/comment/comment-interfaces";
+import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
+import { getMomentDetail } from "@/apis/moment/moment";
+import { GetMomentDetailReq } from "@/apis/moment/moment-components";
 
 const props = defineProps<{
   mainComment: Comment;
+  moment?: Moment;
+  fishAwardEmitter: any;
 }>();
 
 const comments = ref<Comment[]>([]);
@@ -109,6 +184,19 @@ const emits = defineEmits(["closeReply"]);
 function closeSelf() {
   emits("closeReply");
 }
+
+const defaultPlaceholderText = "发布评论";
+const placeholderText = ref(defaultPlaceholderText);
+const firstLevelId = ref();
+const afterBlur = () => {
+  placeholderText.value = defaultPlaceholderText;
+  firstLevelId.value = undefined;
+};
+
+const focusReplyComment = (comment: Comment) => {
+  placeholderText.value = "回复 @" + comment.user.nickname + ": ";
+  firstLevelId.value = comment.id;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -134,9 +222,17 @@ function closeSelf() {
   border-radius: 5vw 5vw 0 0;
 }
 
+.container {
+  padding: calc(10 / 390 * 100vw) 0;
+}
+
 .main {
-  padding: calc(20 / 390 * 100vw);
+  padding: calc(10 / 390 * 100vw) calc(20 / 390 * 100vw);
   box-sizing: border-box;
+
+  &-comment {
+    border-bottom: 5px #eee solid;
+  }
 
   .comment,
   .reply {
@@ -247,11 +343,41 @@ function closeSelf() {
   }
 
   .comment {
-    margin-bottom: calc(20 / 390 * 100vw);
+    // margin-bottom: calc(20 / 390 * 100vw);
   }
 
   .reply {
-    margin: calc(20 / 390 * 100vw) 0;
+    margin: calc(5 / 390 * 100vw) 0;
+    .avatar {
+      width: calc(22 / 390 * 100vw);
+      height: calc(22 / 390 * 100vw);
+    }
+
+    .username {
+      display: flex;
+      align-items: center;
+      .right-triangle-grey {
+        width: 5px;
+        height: 5px;
+        margin: 0 5px;
+      }
+    }
+  }
+
+  .more-sub-replies {
+    color: #696969;
+    margin-left: calc(74 / 390 * 100vw);
+    display: flex;
+    align-items: center;
+    font-size: calc(12 / 390 * 100vw);
+
+    .down-arrow {
+      background-image: url("../../static/images/down-black.png");
+      width: calc(8 / 390 * 100vw);
+      height: calc(5 / 390 * 100vw);
+      background-size: 100% 100%;
+      margin-left: calc(8 / 390 * 100vw);
+    }
   }
 }
 </style>

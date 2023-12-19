@@ -97,7 +97,12 @@
   />
 
   <view v-if="isReplyOpened && selectComment" class="reply">
-    <Reply :main-comment="selectComment" @close-reply="closeReply" />
+    <Reply
+      :main-comment="selectComment"
+      :moment="moment"
+      :fish-award-emitter="fishAwardEmitter"
+      @close-reply="closeReply"
+    />
   </view>
   <view
     v-if="isShowDeleteDialogue"
