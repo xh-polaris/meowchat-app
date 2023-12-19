@@ -1,7 +1,7 @@
 <template>
   <view class="goToMyPlans">
     <img
-      :src="Icons.HelpedPlans"
+      src="https://static-1308722423.cos.ap-shanghai.myqcloud.com/static/meowchat/helped_plan_logo.png"
       class="small-icon"
       @click="goToHelpedPlans()"
     />

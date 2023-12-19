@@ -7,112 +7,29 @@
             class="progress"
             :style="{ width: userData.SignInTime * 14 + 'vw' }"
           />
-          <img
+          <image
+            v-for="day in days"
+            :key="day"
             :src="
-              userData.SignInTime >= 1 ? Icons.LittleFished : Icons.LittleFish
+              userData.SignInTime >= day ? Icons.LittleFished : Icons.LittleFish
             "
-            class="first-day"
-          />
-          <img
-            :src="
-              userData.SignInTime >= 2 ? Icons.LittleFished : Icons.LittleFish
-            "
-            class="second-day"
-          />
-          <img
-            :src="
-              userData.SignInTime >= 3 ? Icons.LittleFished : Icons.LittleFish
-            "
-            class="third-day"
-          />
-          <img
-            :src="
-              userData.SignInTime >= 4 ? Icons.LittleFished : Icons.LittleFish
-            "
-            class="fourth-day"
-          />
-          <img
-            :src="
-              userData.SignInTime >= 5 ? Icons.LittleFished : Icons.LittleFish
-            "
-            class="fifth-day"
-          />
-          <img
-            :src="
-              userData.SignInTime >= 6 ? Icons.LittleFished : Icons.LittleFish
-            "
-            class="sixth-day"
-          />
-          <img
-            :src="
-              userData.SignInTime >= 7 ? Icons.LittleFished : Icons.LittleFish
-            "
-            class="seventh-day"
+            class="fish-icon"
+            :style="{ marginLeft: calculateMarginLeft(day) + 'vw' }"
           />
         </view>
       </view>
       <view class="fish-number">
         <view
+          v-for="(fishCount, index) in userData.SignInFishes"
+          :key="index"
           class="first-tag"
           :style="{
-            backgroundColor: userData.SignInTime >= 1 ? '#D3D3D3' : '#6a9dff'
+            backgroundColor:
+              userData.SignInTime >= index + 1 ? '#D3D3D3' : '#6a9dff',
+            marginLeft: index === 0 ? '0.8vw' : '5vw'
           }"
         >
-          <text class="number">x {{ userData.SignInFishes[0] }}</text>
-        </view>
-        <view
-          class="first-tag"
-          style="margin-left: 5vw"
-          :style="{
-            backgroundColor: userData.SignInTime >= 2 ? '#D3D3D3' : '#6a9dff'
-          }"
-        >
-          <text class="number">x {{ userData.SignInFishes[1] }}</text>
-        </view>
-        <view
-          class="first-tag"
-          style="margin-left: 5.5vw"
-          :style="{
-            backgroundColor: userData.SignInTime >= 3 ? '#D3D3D3' : '#6a9dff'
-          }"
-        >
-          <text class="number">x {{ userData.SignInFishes[2] }}</text>
-        </view>
-        <view
-          class="first-tag"
-          style="margin-left: 5.5vw"
-          :style="{
-            backgroundColor: userData.SignInTime >= 4 ? '#D3D3D3' : '#6a9dff'
-          }"
-        >
-          <text class="number">x {{ userData.SignInFishes[3] }}</text>
-        </view>
-        <view
-          class="first-tag"
-          style="margin-left: 5vw"
-          :style="{
-            backgroundColor: userData.SignInTime >= 5 ? '#D3D3D3' : '#6a9dff'
-          }"
-        >
-          <text class="number">x {{ userData.SignInFishes[4] }}</text>
-        </view>
-        <view
-          class="first-tag"
-          style="margin-left: 5.5vw"
-          :style="{
-            backgroundColor: userData.SignInTime >= 6 ? '#D3D3D3' : '#6a9dff'
-          }"
-        >
-          <text class="number">x {{ userData.SignInFishes[5] }}</text>
-        </view>
-        <view
-          class="first-tag"
-          style="margin-left: 5vw"
-          :style="{
-            backgroundColor: userData.SignInTime >= 7 ? '#D3D3D3' : '#6a9dff'
-          }"
-        >
-          <text class="number">x {{ userData.SignInFishes[6] }}</text>
+          <text class="number">x {{ fishCount }}</text>
         </view>
       </view>
       <view class="data">
@@ -180,11 +97,16 @@ getUserMission().then((res) => {
 
 const currentDate: Date = new Date();
 const year: number = currentDate.getFullYear();
-const month: number = currentDate.getMonth() + 1; // 月份从0开始，所以要加1
+const month: number = currentDate.getMonth() + 1;
 const day: number = currentDate.getDate();
 
 // 构建日期字符串
 const dateString: string = `${year}.${month}.${day}`;
+const days = [1, 2, 3, 4, 5, 6, 7];
+const calculateMarginLeft = (day: number): number => {
+  const margins: number[] = [-1, 12.5, 26.5, 40.5, 54, 67.5, 81];
+  return margins[day - 1] || 0;
+};
 </script>
 
 <style scoped lang="scss">
@@ -214,59 +136,11 @@ const dateString: string = `${year}.${month}.${day}`;
         position: relative;
         z-index: 1;
       }
-      .first-day {
+      .fish-icon {
         width: 6vw;
         height: 6vw;
         margin-top: -3.5vw;
         margin-left: -1vw;
-        position: absolute;
-        z-index: 99;
-      }
-      .second-day {
-        width: 6vw;
-        height: 6vw;
-        margin-top: -3.5vw;
-        margin-left: 12.5vw;
-        position: absolute;
-        z-index: 100;
-      }
-      .third-day {
-        width: 6vw;
-        height: 6vw;
-        margin-top: -3.5vw;
-        margin-left: 26.5vw;
-        position: absolute;
-        z-index: 99;
-      }
-      .fourth-day {
-        width: 6vw;
-        height: 6vw;
-        margin-top: -3.5vw;
-        margin-left: 40.5vw;
-        position: absolute;
-        z-index: 99;
-      }
-      .fifth-day {
-        width: 6vw;
-        height: 6vw;
-        margin-top: -3.5vw;
-        margin-left: 54vw;
-        position: absolute;
-        z-index: 99;
-      }
-      .sixth-day {
-        width: 6vw;
-        height: 6vw;
-        margin-top: -3.5vw;
-        margin-left: 67.5vw;
-        position: absolute;
-        z-index: 99;
-      }
-      .seventh-day {
-        width: 6vw;
-        height: 6vw;
-        margin-top: -3.5vw;
-        margin-left: 81vw;
         position: absolute;
         z-index: 99;
       }

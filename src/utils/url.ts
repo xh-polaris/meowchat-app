@@ -37,7 +37,6 @@ export const enum Icons {
   Button_Increment = "/static/images/button-increment.png",
   Button_Decrement = "/static/images/button-decrement.png",
   TaskLogo = "/static/images/plan/task_logo.png",
-  HelpedPlans = "/static/images/plan/helped_plan_logo.png",
   UnFinishedTask = "/static/images/plan/unfinished.png",
   FinishedTask = "/static/images/plan/finished.png",
   FinishedTaskIcon = "/static/images/plan/finished_icon.png"
@@ -69,5 +68,6 @@ export const enum Pages {
   Person = "/pages/profile/personal-info/personal-info",
   EditInfo = "/pages/profile/edit-info/edit-info",
   HelpedPlans = "/pages/plan/helped-plans/helped-plans",
-  CheckInTask = "/pages/plan/CheckInTask"
+  Following = "/pages/profile/follow/following",
+  Follower = "/pages/profile/follow/follower"
 }

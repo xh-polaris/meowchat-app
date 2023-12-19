@@ -1,6 +1,10 @@
 <template>
   <view class="card" @click="onClick">
-    <img :src="props.donation.plan.coverUrl" class="image-cat" />
+    <image
+      mode="aspectFill"
+      :src="props.donation.plan.coverUrl"
+      class="image-cat"
+    />
 
     <text class="title">
       帮助<text style="color: #1f6bff"
@@ -29,6 +33,7 @@ import { displayTimeTotal } from "@/utils/time";
 import { listCommunity } from "@/apis/community/community";
 import { reactive, ref } from "vue";
 import { StorageKeys } from "@/utils/const";
+import BackgroundImage from "@/components/BackgroundImage.vue";
 let communityId = ref("");
 let parentId = ref("");
 const currentSchool = ref("");
@@ -155,6 +160,3 @@ getCampus();
   }
 }
 </style>
-
-export const enum PlanType { TypeOther = 0, TypeCastrate = 1, TypeHeal = 2,
-TypeFeed = 3, TypeSupply = 4 }

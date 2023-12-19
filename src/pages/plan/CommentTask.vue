@@ -9,35 +9,16 @@
       >
       <view class="finish-times">
         <text class="times">完成情况：</text>
-        <img
-          v-if="userData.CommentTime >= 1"
-          :src="Icons.FinishedTask"
+        <image
+          v-for="commenttime in commentTimes"
+          :key="commenttime"
+          :src="
+            userData.CommentTime >= commenttime
+              ? Icons.FinishedTask
+              : Icons.UnFinishedTask
+          "
           class="icon"
-        />
-        <img v-else :src="Icons.UnFinishedTask" class="icon" />
-        <img
-          v-if="userData.CommentTime >= 2"
-          :src="Icons.FinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-else
-          :src="Icons.UnFinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-if="userData.CommentTime >= 3"
-          :src="Icons.FinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-else
-          :src="Icons.UnFinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
+          :style="{ marginLeft: commenttime === 1 ? '0' : '1vw' }"
         />
       </view>
     </view>
@@ -94,6 +75,8 @@ getUserMission().then((res) => {
   userData.value.LikeFishes = res.LikeFishes;
   userData.value.CommentFishes = res.CommentFishes;
 });
+
+const commentTimes = Array.from({ length: 3 }, (_, index) => index + 1);
 </script>
 
 <style scoped lang="scss">

@@ -53,46 +53,42 @@ const props = defineProps<{
   plan: Plan;
 }>();
 const getProgressClass = (planType: PlanType): string => {
-  const typeDescription = planTypeMap(planType);
-
-  switch (typeDescription) {
-    case "绝育计划":
+  switch (planType) {
+    case 1:
       return "progress-castrate";
-    case "生理健康":
+    case 2:
       return "progress-health";
-    case "零食奖励":
+    case 3:
       return "progress-snacks";
-    case "物资补给":
+    case 4:
       return "progress-supply";
     default:
       return "progress-health";
   }
 };
 const getHelpButClass = (planType: PlanType): string => {
-  const typeDescription = planTypeMap(planType);
-  switch (typeDescription) {
-    case "绝育计划":
+  switch (planType) {
+    case 0:
       return "help-but-castrate";
-    case "生理健康":
+    case 1:
       return "help-but-health";
-    case "零食奖励":
+    case 2:
       return "help-but-snacks";
-    case "物资补给":
+    case 3:
       return "help-but-supply";
     default:
       return "help-but-health";
   }
 };
 const getHelpCatClass = (planType: PlanType): string => {
-  const typeDescription = planTypeMap(planType);
-  switch (typeDescription) {
-    case "绝育计划":
+  switch (planType) {
+    case 0:
       return "helped-cat-castrate";
-    case "生理健康":
+    case 1:
       return "helped-cat-health";
-    case "零食奖励":
+    case 2:
       return "helped-cat-snacks";
-    case "物资补给":
+    case 3:
       return "helped-cat-supply";
     default:
       return "helped-cat-health";

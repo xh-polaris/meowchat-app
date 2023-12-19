@@ -7,59 +7,16 @@
       >
       <view class="finish-times">
         <text class="times">完成情况：</text>
-        <img
-          v-if="userData.LikeTime >= 1"
-          :src="Icons.FinishedTask"
+        <image
+          v-for="liketime in likeTimes"
+          :key="liketime"
+          :src="
+            userData.LikeTime >= liketime
+              ? Icons.FinishedTask
+              : Icons.UnFinishedTask
+          "
           class="icon"
-        />
-        <img v-else :src="Icons.UnFinishedTask" class="icon" />
-        <img
-          v-if="userData.LikeTime >= 2"
-          :src="Icons.FinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-else
-          :src="Icons.UnFinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-if="userData.LikeTime >= 3"
-          :src="Icons.FinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-else
-          :src="Icons.UnFinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-if="userData.LikeTime >= 4"
-          :src="Icons.FinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-else
-          :src="Icons.UnFinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-if="userData.LikeTime >= 5"
-          :src="Icons.FinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
-        />
-        <img
-          v-else
-          :src="Icons.UnFinishedTask"
-          class="icon"
-          style="margin-left: 1vw"
+          :style="{ marginLeft: liketime === 1 ? '0' : '1vw' }"
         />
       </view>
     </view>
@@ -100,10 +57,6 @@ const userData = ref<getMissionResp>({
   CommentFishes: [],
   ContentFishes: []
 });
-// const a = ref([]);
-// getUserMission().then((res) => {
-//   a.value = res.SignInFishes;
-// });
 
 getUserMission().then((res) => {
   userData.value.SignInTime = res.SignInTime;
@@ -114,6 +67,8 @@ getUserMission().then((res) => {
   userData.value.ContentFishes = res.ContentFishes;
   userData.value.LikeFishes = res.LikeFishes;
 });
+
+const likeTimes = Array.from({ length: 5 }, (_, index) => index + 1);
 </script>
 
 <style scoped lang="scss">
