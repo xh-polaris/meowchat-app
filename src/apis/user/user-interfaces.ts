@@ -20,8 +20,3 @@ export interface UpdateUserInfoResp {
   code: number;
   msg: string;
 }
-
-export interface UserCheckInResp {
-  getFish: boolean;
-  getFishNum: number;
-}

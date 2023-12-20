@@ -2,8 +2,10 @@
   <view class="frame">
     <img :src="Icons.LittleFish" class="small-icon" />
     <text class="text"
-      >剩余<text style="color: dodgerblue">{{ fishNum }}</text
-      >小鱼干</text
+      >剩余<text
+        style="color: dodgerblue; font-size: 3.8vw; font-style: italic"
+        >{{ fishNum }}</text
+      ></text
     >
   </view>
 </template>
@@ -23,25 +25,28 @@ getFishNum();
 
 <style scoped lang="scss">
 .frame {
-  border-radius: 2vw;
-  background-color: #feffff;
+  border-radius: 5vw;
+  //border: 0.5px solid;
+  background: #ecf2ff;
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 46vw;
-  height: 12vw;
-
+  width: 26.41vw;
+  height: 9.23vw;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 4px -1px #1f6bff1f;
   .small-icon {
-    height: 7vw;
-    width: 7vw;
-    margin-left: 3vw;
-    margin-right: 2vw;
+    height: 8.46vw;
+    width: 8.46vw;
+    margin-top: -2.5vw;
+    position: absolute;
+    z-index: 2;
   }
-
   .text {
     color: #00365c;
-    font-size: 4vw;
-    margin-right: 2.5vw;
+    font-size: 3.2vw;
+    margin-left: 9vw;
     font-weight: bold;
     letter-spacing: 0.1vw;
   }

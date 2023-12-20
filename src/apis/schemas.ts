@@ -142,10 +142,10 @@ export interface Moment {
 }
 
 export const enum PlanType {
-  TypeOther = 0,
   TypeCastrate = 1,
   TypeHeal = 2,
-  TypeFeed = 3
+  TypeFeed = 3,
+  TypeSupply
 }
 
 export const enum PlanState {
