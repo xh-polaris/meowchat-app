@@ -1,5 +1,12 @@
 
 
+## [1.22.0](https://github.com/xh-polaris/meowchat-app/compare/v1.21.0...v1.22.0) (2023-12-20)
+
+
+### ✨ Features | 新功能
+
+* 修改签到url并完善签到页面功能 ([#392](https://github.com/xh-polaris/meowchat-app/issues/392)) ([7344238](https://github.com/xh-polaris/meowchat-app/commit/7344238bb70ffd955aa95a5e478337dc1230d9fa))
+
 ## [1.21.0](https://github.com/xh-polaris/meowchat-app/compare/v1.20.5...v1.21.0) (2023-12-16)
 
 
