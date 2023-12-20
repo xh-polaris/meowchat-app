@@ -37,51 +37,18 @@
       </view>
 
       <!-- 二级评论 -->
-      <view v-for="(comment, index) in comments" :key="index" class="main">
+      <view
+        v-for="(comment, index) in comments"
+        :key="index"
+        class="main"
+        @click="focusReplyComment(comment)"
+      >
         <view class="comment">
           <view
             :style="{
               backgroundImage: 'url( ' + comment.user.avatarUrl + ')'
             }"
             class="avatar"
-          />
-          <view class="thread">
-            <view class="content">
-              <view class="left">
-                <view class="upper">
-                  <view class="username">{{ comment.user.nickname }}</view>
-                  <view class="timestamp"
-                    >· {{ displayTime(comment.createAt) }}
-                  </view>
-                </view>
-                <view class="lower" @click="emit('interactWithComment')">{{
-                  comment.text
-                }}</view>
-              </view>
-              <view class="right">
-                <view class="likes-frame" @click="likeComment(comment)">
-                  <view v-if="comment.isLiked" class="thumb liked" />
-                  <view v-else class="thumb" />
-                  <view class="likes">{{ comment.likeCount }}</view>
-                </view>
-              </view>
-            </view>
-          </view>
-        </view>
-
-        <!-- 三级评论 -->
-        <view
-          v-for="(comment3, index) in comments"
-          :key="index"
-          class="reply"
-          @click="focusReplyComment(comment)"
-        >
-          <view
-            :style="{
-              backgroundImage: 'url( ' + comment.user.avatarUrl + ')'
-            }"
-            class="avatar"
-            style="margin-left: 0vw"
           />
           <view class="thread">
             <view class="content">
@@ -99,9 +66,11 @@
                     >· {{ displayTime(comment.createAt) }}
                   </view>
                 </view>
-                <view class="lower">{{ comment.text }}</view>
+                <view class="lower" @click="emit('interactWithComment')">{{
+                  comment.text
+                }}</view>
               </view>
-              <view v-if="comment.likeCount >= 0" class="right">
+              <view class="right">
                 <view class="likes-frame" @click="likeComment(comment)">
                   <view v-if="comment.isLiked" class="thumb liked" />
                   <view v-else class="thumb" />
@@ -264,6 +233,13 @@ const focusReplyComment = (comment: Comment) => {
 
             .username {
               margin-right: calc(10 / 390 * 100vw);
+              display: flex;
+              align-items: center;
+              .right-triangle-grey {
+                width: 15rpx;
+                height: 15rpx;
+                margin: 0 5px;
+              }
             }
           }
 
@@ -338,28 +314,6 @@ const focusReplyComment = (comment: Comment) => {
           background-size: 100% 100%;
           margin-left: calc(8 / 390 * 100vw);
         }
-      }
-    }
-  }
-
-  .comment {
-    // margin-bottom: calc(20 / 390 * 100vw);
-  }
-
-  .reply {
-    margin: 0;
-    .avatar {
-      width: calc(22 / 390 * 100vw);
-      height: calc(22 / 390 * 100vw);
-    }
-
-    .username {
-      display: flex;
-      align-items: center;
-      .right-triangle-grey {
-        width: 5px;
-        height: 5px;
-        margin: 0 5px;
       }
     }
   }

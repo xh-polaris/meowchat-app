@@ -86,11 +86,12 @@ const blur = () => {
   }
 
   .like-box {
+    margin-top: 20rpx;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-right: 12px;
+    margin-right: 24rpx;
 
     .like-icon {
       width: calc(20 / 390 * 100vw);
