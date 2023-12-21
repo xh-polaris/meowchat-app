@@ -157,6 +157,7 @@ export const enum PlanState {
 
 export interface Plan {
   cat?: Cat;
+  communityId?: string;
   coverUrl: string;
   createAt: number;
   description: string;
