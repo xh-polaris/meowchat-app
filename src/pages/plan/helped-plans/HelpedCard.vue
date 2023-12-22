@@ -5,23 +5,29 @@
       :src="props.donation.plan.coverUrl"
       class="image-cat"
     />
-
     <text class="title">
       帮助<text style="color: #1f6bff"
         >{{ props.donation.plan?.cat?.name || "全体猫猫" }} </text
       >{{ props.donation.plan.name }}
     </text>
-    <view class="school">
-      <view class="school-name">{{ currentSchool }}</view>
-    </view>
+    <view class="school-box"
+      ><view v-if="currentSchool !== currentCampus" class="school">
+        <view class="school-name">
+          {{ currentSchool }}-{{ currentCampus }}
+        </view>
+      </view>
+      <view v-else class="school">
+        <view class="school-name">{{ currentSchool }}</view>
+      </view></view
+    >
     <view class="bottom">
       <view class="fish-count">
         <img :src="Icons.LittleFish" class="image-fish" />
-        <text class="count">×{{ props.donation.donateNum }}</text>
-        <view class="date">{{
-          displayTimeTotal(props.donation.donateTime)
-        }}</view>
+        <text class="count">x{{ props.donation.donateNum }}</text>
       </view>
+      <view class="date">{{
+        displayTimeTotal(props.donation.donateTime)
+      }}</view>
     </view>
   </view>
 </template>
@@ -32,21 +38,11 @@ import { Donation, Community } from "@/apis/schemas";
 import { displayTimeTotal } from "@/utils/time";
 import { listCommunity } from "@/apis/community/community";
 import { reactive, ref } from "vue";
-import { StorageKeys } from "@/utils/const";
-import BackgroundImage from "@/components/BackgroundImage.vue";
-let communityId = ref("");
 let parentId = ref("");
 const currentSchool = ref("");
 const currentCampus = ref("");
-function init() {
-  communityId.value = uni.getStorageSync(StorageKeys.CommunityId);
-}
-
-init();
 
 const lists = reactive<{ data: Community[] }>({ data: [] });
-
-const campuses = reactive<{ data: Community[] }>({ data: [] });
 
 const props = defineProps<{
   donation: Donation;
@@ -57,31 +53,22 @@ const onClick = () => {
     url: `${Pages.PlanDetails}?id=${props.donation.plan.id}`
   });
 };
-
 async function schoolList() {
   lists.data = (await listCommunity({})).communities;
 }
-
-function getCampus() {
-  schoolList().then(async () => {
-    init();
-    for (let i = 0; i < lists.data.length; i++) {
-      if (lists.data[i].id === communityId.value) {
-        currentCampus.value = lists.data[i].name;
-        parentId.value = <string>lists.data[i].parentId;
-      }
+async function getCampus() {
+  await schoolList();
+  for (const data of lists.data) {
+    if (data.id === props.donation.plan.communityId) {
+      currentCampus.value = data.name;
+      parentId.value = data.parentId || "";
     }
-    for (let j = 0; j < lists.data.length; j++) {
-      if (lists.data[j].id === parentId.value) {
-        currentSchool.value = lists.data[j].name;
-      }
+  }
+  for (const data of lists.data) {
+    if (data.id === parentId.value) {
+      currentSchool.value = data.name;
     }
-    campuses.data = (
-      await listCommunity({
-        parentId: parentId.value
-      })
-    ).communities;
-  });
+  }
 }
 
 getCampus();
@@ -89,12 +76,13 @@ getCampus();
 
 <style scoped lang="scss">
 .card {
-  //display: flex;
-  //flex-direction: column;
+  display: flex;
+  position: relative;
+  flex-direction: column;
   background-color: white;
   border-radius: 3vw;
   width: 44vw;
-  height: 63vw;
+  height: 60vw;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 2vw;
   box-sizing: border-box;
@@ -113,50 +101,50 @@ getCampus();
     font-weight: bold;
     letter-spacing: 0.2vw;
   }
-  .school {
-    display: grid;
-    place-items: center; /* 在容器中居中对齐 */
-    width: 20vw;
-    height: 4.6vw;
-    border-radius: 1vw;
-    margin-top: 1vw;
-    background: #1f6bff36;
-    .school-name {
-      color: #1f6bff;
-      font-size: 2.8vw;
-    }
-  }
   .bottom {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 4vw;
+    flex-direction: row;
+    margin-top: 3vw;
   }
 
   .date {
-    font-size: 3vw;
+    font-size: 2.7vw;
     color: grey;
-    letter-spacing: 0.3vw;
-    margin-left: 4vw;
-    //margin-bottom: 1vw;
+    position: absolute;
+    bottom: 3vw;
+    right: 2vw;
   }
 
   .fish-count {
     display: flex;
     align-items: center;
-    margin-bottom: 1vw;
+    margin-top: 1vw;
+    margin-bottom: 0;
     .image-fish {
-      width: 7vw;
-      height: 7vw;
+      width: 5.89vw;
+      height: 5.89vw;
     }
 
     .count {
       width: fit-content;
-      font-size: 4.5vw;
+      font-size: 3.7vw;
       font-style: italic;
       font-weight: bold;
       color: #48282d;
     }
+  }
+}
+.school {
+  display: inline-block;
+  place-items: center;
+  border-radius: 1vw;
+  margin-top: 2vw;
+  background: #1f6bff36;
+  padding: 0.8vw;
+
+  .school-name {
+    color: #1f6bff;
+    font-size: 2.7vw;
   }
 }
 </style>
