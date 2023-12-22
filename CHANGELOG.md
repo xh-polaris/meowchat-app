@@ -1,5 +1,12 @@
 
 
+## [1.22.1](https://github.com/xh-polaris/meowchat-app/compare/v1.22.0...v1.22.1) (2023-12-22)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修改历史小鱼干卡片 ([#393](https://github.com/xh-polaris/meowchat-app/issues/393)) ([4357de2](https://github.com/xh-polaris/meowchat-app/commit/4357de263397c71a89b43c63141def0a66bb6455))
+
 ## [1.22.0](https://github.com/xh-polaris/meowchat-app/compare/v1.21.0...v1.22.0) (2023-12-20)
 
 
