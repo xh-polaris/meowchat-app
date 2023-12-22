@@ -220,7 +220,7 @@ const localGetCommentsData = () => {
     }
     isCommentsLoaded = true;
     page += 1;
-    if (res.data?.length < 10) allCommentsLoaded = true;
+    if (!res.data?.length) allCommentsLoaded = true;
   });
 };
 

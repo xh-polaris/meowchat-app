@@ -56,11 +56,13 @@
                 <view class="upper">
                   <view class="username">
                     <view>{{ comment.user.nickname }}</view>
-                    <image
-                      class="right-triangle-grey"
-                      src="/static/images/right-triangle-grey.png"
-                    />
-                    <view>{{ comment.user.nickname }}</view>
+                    <template v-if="comment.replyUser">
+                      <image
+                        class="right-triangle-grey"
+                        src="/static/images/right-triangle-grey.png"
+                      />
+                      <view>{{ comment.replyUser?.nickname }}</view>
+                    </template>
                   </view>
                   <view class="timestamp"
                     >· {{ displayTime(comment.createAt) }}
@@ -86,9 +88,9 @@
         </view>
       </view>
     </view>
-    <view v-if="firstLevelId && moment" style="height: 16vw" />
+    <view v-if="moment" style="height: 16vw" />
     <WriteCommentBox
-      v-if="firstLevelId && moment"
+      v-if="moment"
       :placeholder-text="placeholderText"
       :like-count="moment.likeCount"
       :is-liked="moment.isLiked"
@@ -131,9 +133,7 @@ const localGetCommentsData = () => {
     type: CommentType.Comment,
     page: page
   }).then((res) => {
-    for (const data of res.data) {
-      comments.value.push(data);
-    }
+    comments.value.push(...res.data);
     isCommentsLoaded = true;
     page += 1;
     if (res.data.length < 10) allCommentsLoaded = true;
@@ -154,12 +154,11 @@ function closeSelf() {
   emits("closeReply");
 }
 
-const defaultPlaceholderText = "发布评论";
-const placeholderText = ref(defaultPlaceholderText);
-const firstLevelId = ref();
+const placeholderText = ref("回复 @" + props.mainComment.user.nickname + ": ");
+const firstLevelId = ref(props.mainComment.id);
 const afterBlur = () => {
-  placeholderText.value = defaultPlaceholderText;
-  firstLevelId.value = undefined;
+  placeholderText.value = "回复 @" + props.mainComment.user.nickname + ": ";
+  firstLevelId.value = props.mainComment.id;
 };
 
 const focusReplyComment = (comment: Comment) => {
@@ -261,13 +260,13 @@ const focusReplyComment = (comment: Comment) => {
             align-items: center;
 
             .thumb {
-              background-image: url("../../static/images/like_grey_0.png");
+              background-image: url("/static/images/like_grey_0.png");
               width: calc(12 / 390 * 100vw);
               height: calc(12 / 390 * 100vw);
               background-size: 100% 100%;
 
               &.liked {
-                background-image: url("../../static/images/like_grey_1.png");
+                background-image: url("/static/images/like_grey_1.png");
               }
             }
 
@@ -308,7 +307,7 @@ const focusReplyComment = (comment: Comment) => {
         align-items: center;
 
         .down-arrow {
-          background-image: url("../../static/images/down-black.png");
+          background-image: url("/static/images/down-black.png");
           width: calc(8 / 390 * 100vw);
           height: calc(5 / 390 * 100vw);
           background-size: 100% 100%;
@@ -326,7 +325,7 @@ const focusReplyComment = (comment: Comment) => {
     font-size: calc(12 / 390 * 100vw);
 
     .down-arrow {
-      background-image: url("../../static/images/down-black.png");
+      background-image: url("/static/images/down-black.png");
       width: calc(8 / 390 * 100vw);
       height: calc(5 / 390 * 100vw);
       background-size: 100% 100%;
