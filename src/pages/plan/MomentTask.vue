@@ -85,7 +85,7 @@ getUserMission().then((res) => {
     }
   }
   .get-fish-number {
-    margin-left: 11vw;
+    margin-left: 12vw;
     margin-top: 6.5vw;
     display: flex;
     flex-direction: row;

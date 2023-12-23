@@ -10,6 +10,13 @@
         :key="moment.id"
       >
         <view class="tile" @click="onClickMoment(moment.id)">
+          <view class="school-box">
+            <view class="school">
+              <view class="school-name">{{
+                getSchoolName(moment.communityId)
+              }}</view>
+            </view>
+          </view>
           <view class="img-frame">
             <image
               v-if="i === 1"
@@ -28,7 +35,6 @@
               @load.once="onLoadRight"
             />
           </view>
-
           <view class="tile-info">
             <view class="title">{{ moment.title }}</view>
             <view class="other-info">
@@ -72,12 +78,13 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onBeforeMount, reactive, ref } from "vue";
-import { Moment } from "@/apis/schemas";
+import { Community, Moment } from "@/apis/schemas";
 import { onClickMoment } from "@/pages/community/event";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { displayTime } from "@/utils/time";
 import { Pictures } from "@/utils/url";
 import { getThumbnail } from "@/utils/utils";
+import { listCommunity } from "@/apis/community/community";
 
 interface Props {
   loader?: () => Promise<Moment[]>;
@@ -249,6 +256,32 @@ onReachBottom(() => {
     addBatch();
   }
 });
+
+let parentId = ref("");
+const currentSchool = ref("");
+const currentCampus = ref("");
+
+const lists = reactive<{ data: Community[] }>({ data: [] });
+async function schoolList() {
+  lists.data = (await listCommunity({})).communities;
+}
+const getSchoolName = (communityId: string) => {
+  schoolList();
+  for (const data of lists.data) {
+    if (data.id === communityId) {
+      currentCampus.value = data.name;
+      parentId.value = data.parentId || "";
+    }
+  }
+  for (const data of lists.data) {
+    if (data.id === parentId.value) {
+      currentSchool.value = data.name;
+    }
+  }
+  return currentCampus.value != currentSchool.value
+    ? `${currentSchool.value}-${currentCampus.value}`
+    : currentSchool.value;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -287,6 +320,7 @@ $avatarWidth: calc(21 / 390 * 100vw);
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.25);
   border-radius: $radius;
   font-family: sans-serif;
+  position: relative;
 
   .img-frame {
     max-height: calc((50vw - $sideMargin - $horizontalGap / 2) * 1.8);
@@ -297,6 +331,24 @@ $avatarWidth: calc(21 / 390 * 100vw);
       display: block;
       border-radius: $radius $radius 0 0;
       height: 300rpx;
+    }
+  }
+  .school {
+    position: absolute;
+    z-index: 99;
+    display: inline-block;
+    place-items: center;
+    border-radius: 2.82vw;
+    top: 1.5vw;
+    left: 1.5vw;
+    background: #b0b0b0ba;
+    padding: 1vw;
+
+    .school-name {
+      font-weight: bold;
+      letter-spacing: 0.1vw;
+      color: #ffffff;
+      font-size: 2.7vw;
     }
   }
 
