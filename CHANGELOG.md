@@ -1,5 +1,12 @@
 
 
+## [1.22.2](https://github.com/xh-polaris/meowchat-app/compare/v1.22.1...v1.22.2) (2023-12-23)
+
+
+### ✨ Features | 新功能
+
+* 可以回复二级评论 ([#394](https://github.com/xh-polaris/meowchat-app/issues/394)) ([6faa8be](https://github.com/xh-polaris/meowchat-app/commit/6faa8be92731744c8f86a4c1500e97bd57ddb21c))
+
 ## [1.22.1](https://github.com/xh-polaris/meowchat-app/compare/v1.22.0...v1.22.1) (2023-12-22)
 
 
