@@ -3,9 +3,10 @@
     <input
       ref="input"
       v-model="text"
-      :placeholder="placeholderText"
+      :placeholder="placeholder"
       class="write-comment"
       type="text"
+      :focus="focus"
       @blur="blur"
     />
     <view v-if="likeCount >= 0" class="like-box">
@@ -20,27 +21,43 @@
 </template>
 
 <script lang="ts" setup>
-import { CommentType, NewCommentResp } from "@/apis/comment/comment-interfaces";
+import {
+  CommentType,
+  NewCommentReq,
+  NewCommentResp
+} from "@/apis/comment/comment-interfaces";
 import { createComment } from "@/pages/moment/utils";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { Comment, User } from "@/apis/schemas";
 
 const props = defineProps<{
   parentId: string;
   parentType: CommentType;
-  firstLevelId?: string;
+  firstLevelComment?: Comment;
+  replyComment?: Comment;
   likeCount?: number;
   isLiked: boolean;
-  placeholderText: string;
   commentCallback: (res: NewCommentResp) => void;
+  focus: boolean;
 }>();
 const text = ref("");
-const emit = defineEmits(["doLike", "afterCreateComment", "cancelReply"]);
+const placeholder = computed(() => {
+  let placeholder = "";
+  if (props.replyComment) {
+    placeholder = "回复 @" + props.replyComment.user?.nickname + ": ";
+  } else if (props.firstLevelComment) {
+    return "回复 @" + props.firstLevelComment.user?.nickname + ": ";
+  }
+  return placeholder || "发布评论";
+});
+const emit = defineEmits(["doLike", "afterCreateComment", "blur"]);
 
 const localCreateComment = async () => {
-  const req = {
+  const req: NewCommentReq = {
     text: text.value,
     type: props.parentType,
-    firstLevelId: props.firstLevelId,
+    firstLevelId: props.firstLevelComment?.id,
+    replyToUserId: props.replyComment?.user?.id,
     id: props.parentId
   };
   text.value = "";
@@ -52,7 +69,7 @@ const blur = () => {
   if (text.value) {
     return;
   }
-  emit("cancelReply");
+  emit("blur");
 };
 </script>
 
@@ -63,7 +80,7 @@ const blur = () => {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 50;
+  z-index: 102;
   display: flex;
   width: 100vw;
   box-sizing: border-box;
@@ -86,11 +103,12 @@ const blur = () => {
   }
 
   .like-box {
+    margin-top: 20rpx;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-right: 12px;
+    margin-right: 24rpx;
 
     .like-icon {
       width: calc(20 / 390 * 100vw);

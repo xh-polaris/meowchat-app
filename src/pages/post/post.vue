@@ -6,7 +6,7 @@
 
   <view
     v-if="post"
-    :style="{ height: 'calc(100vh - 16vw - ' - keyboardHeight + 'px)' }"
+    :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
     class="content-frame"
   >
     <view class="header">
@@ -30,11 +30,7 @@
     </view>
 
     <view class="post">
-      <view
-        v-if="post.user"
-        class="user"
-        @click="toPersonInfo(post.user.id, myUserId)"
-      >
+      <view v-if="post.user" class="user" @click="toPersonInfo(post.user.id)">
         <image :src="getThumbnail(post.user.avatarUrl)" class="avatar" />
         <view class="name">
           {{ post.user.nickname }}
@@ -51,9 +47,7 @@
         @click="onClickImage(post.coverUrl)"
       />
       <view v-if="comments.data.length === 0" class="commentNum"> 评论</view>
-      <view v-else class="commentNum">
-        评论 {{ comments.data.length + comments.replyNumber }}
-      </view>
+      <view v-else class="commentNum"> 评论 {{ post.comments }} </view>
       <view v-if="comments.data.length === 0">
         <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
       </view>
@@ -72,20 +66,26 @@
   </view>
   <WriteCommentBox
     v-if="post"
-    v-model:placeholder-text="placeholderText"
     :is-liked="post.isLiked || false"
     :like-count="post.likes"
     :parent-type="CommentType.Post"
     :parent-id="post.id"
-    :first-level-id="firstLevelId"
+    :first-level-comment="firstLevelComment"
+    :reply-comment="replyComment"
+    :focus="writeBoxFocus"
     :comment-callback="(res) => fishAwardEmitter.triggerCallbacks(res)"
     @do-like="likePost(post, fishAwardEmitter)"
     @after-create-comment="init"
-    @cancel-reply="afterBlur"
+    @blur="afterBlur"
   />
 
   <view v-if="isReplyOpened && selectComment" class="reply">
-    <reply :main-comment="selectComment" @close-reply="closeReply" />
+    <reply
+      :main-comment="selectComment"
+      :fish-award-emitter="fishAwardEmitter"
+      :on-reply-comment="onReplyComment"
+      @close="closeReply"
+    />
   </view>
   <view
     v-if="isShowDeleteDialogue"
@@ -116,7 +116,7 @@
   />
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { nextTick, reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
 import {
   enterMask,
@@ -216,16 +216,21 @@ const localGetCommentsData = async () => {
   });
 };
 
-const placeholderText = ref("发布评论");
-const firstLevelId = ref<string>();
-
+const firstLevelComment = ref<Comment>();
+const writeBoxFocus = ref(false);
 const afterBlur = () => {
-  firstLevelId.value = undefined;
+  writeBoxFocus.value = false;
+  replyComment.value = undefined;
+  if (!selectComment.value) {
+    firstLevelComment.value = undefined;
+  } else {
+    firstLevelComment.value = selectComment.value;
+  }
 };
 
 const focusReplyComment = (comment: Comment) => {
-  placeholderText.value = "回复 @" + comment.user.nickname + ": ";
-  firstLevelId.value = comment.id;
+  writeBoxFocus.value = true;
+  firstLevelComment.value = comment;
 };
 
 const showDeleteDialogue = () => {
@@ -254,16 +259,23 @@ const deleteThisPost = () => {
 
 let initLock = false;
 const init = async () => {
-  if (initLock) return;
-  initLock = true;
-  await getData();
-  page = 0;
-  getCommentsReq.page = 0;
-  comments.data = [];
-  allCommentsLoaded = false;
-  isCommentsLoaded = true;
-  await localGetCommentsData();
-  initLock = false;
+  if (!isReplyOpened.value) {
+    if (initLock) return;
+    initLock = true;
+    await getData();
+    page = 0;
+    getCommentsReq.page = 0;
+    comments.data = [];
+    allCommentsLoaded = false;
+    isCommentsLoaded = true;
+    await localGetCommentsData();
+    initLock = false;
+  } else {
+    isReplyOpened.value = false;
+    nextTick(() => {
+      isReplyOpened.value = true;
+    });
+  }
 };
 
 const wcbHeight = ref(81);
@@ -290,6 +302,11 @@ uni.onKeyboardHeightChange((res) => {
 });
 
 const selectComment = ref<Comment>();
+const replyComment = ref<Comment>();
+const onReplyComment = (comment: Comment) => {
+  writeBoxFocus.value = true;
+  replyComment.value = comment;
+};
 
 let enterMaskData = ref(null);
 let enterReplyData = ref(null);
@@ -298,10 +315,15 @@ const isReplyOpened = ref(false);
 
 function onClickReplies(comment: Comment) {
   selectComment.value = comment;
+  firstLevelComment.value = comment;
   isReplyOpened.value = true;
 }
 
 function closeReply() {
+  writeBoxFocus.value = false;
+  selectComment.value = undefined;
+  firstLevelComment.value = undefined;
+  replyComment.value = undefined;
   isReplyOpened.value = false;
 }
 
