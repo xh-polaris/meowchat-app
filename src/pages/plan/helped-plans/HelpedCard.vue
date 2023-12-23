@@ -10,16 +10,13 @@
         >{{ props.donation.plan?.cat?.name || "全体猫猫" }} </text
       >{{ props.donation.plan.name }}
     </text>
-    <view class="school-box"
-      ><view v-if="currentSchool !== currentCampus" class="school">
-        <view class="school-name">
-          {{ currentSchool }}-{{ currentCampus }}
-        </view>
+    <view class="school-box">
+      <view class="school">
+        <view class="school-name">{{
+          getSchoolName(props.donation.plan.communityId)
+        }}</view>
       </view>
-      <view v-else class="school">
-        <view class="school-name">{{ currentSchool }}</view>
-      </view></view
-    >
+    </view>
     <view class="bottom">
       <view class="fish-count">
         <img :src="Icons.LittleFish" class="image-fish" />
@@ -34,44 +31,18 @@
 
 <script setup lang="ts">
 import { Icons, Pages } from "@/utils/url";
-import { Donation, Community } from "@/apis/schemas";
+import { Donation } from "@/apis/schemas";
 import { displayTimeTotal } from "@/utils/time";
-import { listCommunity } from "@/apis/community/community";
-import { reactive, ref } from "vue";
-let parentId = ref("");
-const currentSchool = ref("");
-const currentCampus = ref("");
-
-const lists = reactive<{ data: Community[] }>({ data: [] });
+import { getSchoolName } from "@/utils/school";
 
 const props = defineProps<{
   donation: Donation;
-  community: Community;
 }>();
 const onClick = () => {
   uni.navigateTo({
     url: `${Pages.PlanDetails}?id=${props.donation.plan.id}`
   });
 };
-async function schoolList() {
-  lists.data = (await listCommunity({})).communities;
-}
-async function getCampus() {
-  await schoolList();
-  for (const data of lists.data) {
-    if (data.id === props.donation.plan.communityId) {
-      currentCampus.value = data.name;
-      parentId.value = data.parentId || "";
-    }
-  }
-  for (const data of lists.data) {
-    if (data.id === parentId.value) {
-      currentSchool.value = data.name;
-    }
-  }
-}
-
-getCampus();
 </script>
 
 <style scoped lang="scss">
