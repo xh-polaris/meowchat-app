@@ -21,6 +21,17 @@ export function displayTime(timestamp: number) {
     return time.format("MM-DD");
   }
 }
+
+export function displayDetailTime(timestamp: number) {
+  timestamp = adaptTime(timestamp);
+  const now = new Date().getTime();
+  if (now < timestamp) {
+    timestamp = now;
+  }
+  const time = moment(timestamp);
+  return time.fromNow();
+}
+
 export function displayTimeTotal(timestamp: number) {
   timestamp = adaptTime(timestamp);
   const now = new Date().getTime();

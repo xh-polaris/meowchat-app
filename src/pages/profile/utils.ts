@@ -1,4 +1,5 @@
 import { Pages } from "@/utils/url";
+import { StorageKeys } from "@/utils/const";
 
 export function CopyToClipboard(res: string) {
   uni.setClipboardData({
@@ -24,8 +25,8 @@ export function showPage() {
   }, 1500);
 }
 
-export function toPersonInfo(id: string, ownid: string) {
-  if (id === ownid)
+export function toPersonInfo(id: string) {
+  if (id === uni.getStorageSync(StorageKeys.UserId))
     uni.switchTab({
       url: `${Pages.Profile}`
     });

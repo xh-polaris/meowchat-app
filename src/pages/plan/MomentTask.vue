@@ -3,7 +3,7 @@
     <view class="content">
       <text class="title">首次发布动态</text>
       <text class="detail"
-        >每次发布首条动态可以获得{{ userData.ContentFishes[0] }}小鱼干</text
+        >每日发布首条动态可以获得{{ userData.ContentFishes[0] }}小鱼干</text
       >
     </view>
     <view class="get-fish-number">

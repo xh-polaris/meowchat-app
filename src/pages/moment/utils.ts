@@ -59,11 +59,6 @@ export const likeComment = (
   });
 };
 
-export const getCommentsData = async (req: GetCommentsReq) => {
-  const commentsTemp = (await getComments(req)).comments;
-  return { data: commentsTemp };
-};
-
 export const createComment = async (
   req: NewCommentReq,
   callback?: (res: NewCommentResp) => void

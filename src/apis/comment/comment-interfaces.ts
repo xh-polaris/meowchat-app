@@ -18,6 +18,7 @@ export interface NewCommentReq {
   text: string;
   id: string;
   firstLevelId?: string;
+  replyToUserId?: string;
   type: CommentType;
 }
 

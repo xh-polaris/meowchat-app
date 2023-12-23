@@ -1,5 +1,40 @@
 
 
+## [1.22.4](https://github.com/xh-polaris/meowchat-app/compare/v1.22.3...v1.22.4) (2023-12-23)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复动态详情弹出评论输入框时的显示问题 ([7a34ef0](https://github.com/xh-polaris/meowchat-app/commit/7a34ef0d31c2b3c1f1c5053530b9e60b15fa2c91))
+
+## [1.22.3](https://github.com/xh-polaris/meowchat-app/compare/v1.22.2...v1.22.3) (2023-12-23)
+
+
+### ⚡ Performance Improvements | 优化
+
+* 优化“加载更多评论”按钮 ([ba31c76](https://github.com/xh-polaris/meowchat-app/commit/ba31c760f60ed68c90a4495645bb411ebf179e16))
+
+## [1.22.2](https://github.com/xh-polaris/meowchat-app/compare/v1.22.1...v1.22.2) (2023-12-23)
+
+
+### ✨ Features | 新功能
+
+* 可以回复二级评论 ([#394](https://github.com/xh-polaris/meowchat-app/issues/394)) ([6faa8be](https://github.com/xh-polaris/meowchat-app/commit/6faa8be92731744c8f86a4c1500e97bd57ddb21c))
+
+## [1.22.1](https://github.com/xh-polaris/meowchat-app/compare/v1.22.0...v1.22.1) (2023-12-22)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修改历史小鱼干卡片 ([#393](https://github.com/xh-polaris/meowchat-app/issues/393)) ([4357de2](https://github.com/xh-polaris/meowchat-app/commit/4357de263397c71a89b43c63141def0a66bb6455))
+
+## [1.22.0](https://github.com/xh-polaris/meowchat-app/compare/v1.21.0...v1.22.0) (2023-12-20)
+
+
+### ✨ Features | 新功能
+
+* 修改签到url并完善签到页面功能 ([#392](https://github.com/xh-polaris/meowchat-app/issues/392)) ([7344238](https://github.com/xh-polaris/meowchat-app/commit/7344238bb70ffd955aa95a5e478337dc1230d9fa))
+
 ## [1.21.0](https://github.com/xh-polaris/meowchat-app/compare/v1.20.5...v1.21.0) (2023-12-16)
 
 
