@@ -141,7 +141,6 @@ import {
   chooseImageMode,
   enterMask,
   enterReply,
-  getCommentsData,
   likeComment,
   likeMoment,
   onClickImage
@@ -160,6 +159,7 @@ import CommentBox from "@/pages/moment/CommentBox.vue";
 import { Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import { EventEmitter, getThumbnail } from "@/utils/utils";
+import { getComments } from "@/apis/comment/comment";
 
 const props = defineProps<{
   id: string;
@@ -210,17 +210,17 @@ let isCommentsLoaded = true;
 let page = 0;
 const localGetCommentsData = () => {
   isCommentsLoaded = false;
-  getCommentsData({
+  getComments({
     id: props.id,
     type: CommentType.Moment,
     page: page
   }).then((res) => {
-    for (const data of res.data) {
-      comments.value.push(data);
-    }
+    comments.value.push(...res.comments);
     isCommentsLoaded = true;
     page += 1;
-    if (!res.data?.length) allCommentsLoaded = true;
+    if (comments.value.length >= res.total || !res.comments.length) {
+      allCommentsLoaded = true;
+    }
   });
 };
 

@@ -94,10 +94,11 @@
 import { Comment, FishAward, Moment } from "@/apis/schemas";
 import { displayDetailTime, displayTime } from "@/utils/time";
 import { ref } from "vue";
-import { getCommentsData, likeComment, likeMoment } from "@/pages/moment/utils";
+import { likeComment } from "@/pages/moment/utils";
 import { CommentType } from "@/apis/comment/comment-interfaces";
 import { EventEmitter } from "@/utils/utils";
 import { toPersonInfo } from "@/pages/profile/utils";
+import { getComments } from "@/apis/comment/comment";
 
 const props = defineProps<{
   mainComment: Comment;
@@ -113,15 +114,15 @@ let isCommentsLoaded = ref(true);
 let page = 0;
 const localGetCommentsData = () => {
   isCommentsLoaded.value = false;
-  getCommentsData({
+  getComments({
     id: props.mainComment.id,
     type: CommentType.Comment,
     page: page
   }).then((res) => {
-    comments.value.push(...res.data);
+    comments.value.push(...res.comments);
     isCommentsLoaded.value = true;
     page += 1;
-    if (!res.data.length) {
+    if (comments.value.length >= res.total || !res.comments.length) {
       allCommentsLoaded.value = true;
     }
   });

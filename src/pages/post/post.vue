@@ -46,14 +46,14 @@
         mode="widthFix"
         @click="onClickImage(post.coverUrl)"
       />
-      <view v-if="comments.data.length === 0" class="commentNum"> 评论</view>
+      <view v-if="comments.length === 0" class="commentNum"> 评论</view>
       <view v-else class="commentNum"> 评论 {{ post.comments }} </view>
-      <view v-if="comments.data.length === 0">
+      <view v-if="comments.length === 0">
         <view class="nomore">这里还没有评论，快发布第一条评论吧！</view>
       </view>
 
       <CommentBox
-        v-for="(comment, index) in comments.data"
+        v-for="(comment, index) in comments"
         :key="index"
         :comment="comment"
         @after-delete="init"
@@ -118,12 +118,7 @@
 <script lang="ts" setup>
 import { nextTick, reactive, ref } from "vue";
 import TopBar from "@/components/TopBar.vue";
-import {
-  enterMask,
-  enterReply,
-  getCommentsData,
-  likeComment
-} from "../moment/utils";
+import { enterMask, enterReply, likeComment } from "@/pages/moment/utils";
 import Reply from "@/pages/moment/Reply.vue";
 import { toPersonInfo } from "@/pages/profile/utils";
 import { GetPostDetailReq } from "@/apis/post/post-interfaces";
@@ -140,6 +135,7 @@ import { Icons, Pages } from "@/utils/url";
 import { StorageKeys } from "@/utils/const";
 import ToastBoxWithShadow from "@/components/ToastBoxWithShadow.vue";
 import { EventEmitter, getThumbnail } from "@/utils/utils";
+import { getComments } from "@/apis/comment/comment";
 
 const props = defineProps<{
   id: string;
@@ -184,13 +180,7 @@ const getCommentsReq = reactive<GetCommentsReq>({
   id: props.id
 });
 
-const comments = reactive<{
-  data: Comment[];
-  replyNumber: number;
-}>({
-  data: [],
-  replyNumber: 0
-});
+const comments = ref<Comment[]>([]);
 let allCommentsLoaded = false;
 let isCommentsLoaded = true;
 let page = 0;
@@ -200,19 +190,17 @@ const localGetCommentsData = async () => {
   );
   commentDoLikeMap.clear();
   isCommentsLoaded = false;
-  getCommentsData({
+  getComments({
     id: props.id,
     type: CommentType.Post,
     page: page
   }).then((res) => {
-    comments.replyNumber = 0;
-    for (const data of res.data) {
-      comments.data.push(data);
-      comments.replyNumber += data.comments || 0;
-    }
+    comments.value.push(...res.comments);
     isCommentsLoaded = true;
     page += 1;
-    if (res.data?.length < 10) allCommentsLoaded = true;
+    if (!res.comments?.length) {
+      allCommentsLoaded = true;
+    }
   });
 };
 
@@ -265,7 +253,7 @@ const init = async () => {
     await getData();
     page = 0;
     getCommentsReq.page = 0;
-    comments.data = [];
+    comments.value = [];
     allCommentsLoaded = false;
     isCommentsLoaded = true;
     await localGetCommentsData();
