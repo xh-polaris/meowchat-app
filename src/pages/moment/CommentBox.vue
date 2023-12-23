@@ -6,10 +6,7 @@
       @click="showDeleteDialogue"
     />
     <view class="commenter-info-box">
-      <view
-        class="d-flex a-start"
-        @click="toPersonInfo(comment.user.id, myUserId)"
-      >
+      <view class="d-flex a-start" @click="toPersonInfo(comment.user.id)">
         <image
           :src="getThumbnail(comment.user.avatarUrl)"
           class="commenter-profile"
@@ -17,14 +14,11 @@
       </view>
       <view style="margin-top: 12rpx; margin-left: 12rpx; width: 100%">
         <view class="d-flex a-center">
-          <view
-            class="commenter-name"
-            @click="toPersonInfo(comment.user.id, myUserId)"
-          >
+          <view class="commenter-name" @click="toPersonInfo(comment.user.id)">
             {{ comment.user.nickname }}
           </view>
           <view class="comment-time">
-            · {{ displayTime(comment.createAt) }}
+            · {{ displayDetailTime(comment.createAt) }}
           </view>
         </view>
         <view>
@@ -81,7 +75,7 @@
 
 <script lang="ts" setup>
 import { Comment } from "@/apis/schemas";
-import { displayTime } from "@/utils/time";
+import { displayDetailTime, displayTime } from "@/utils/time";
 import { deleteComment } from "@/apis/comment/comment";
 import { ref } from "vue";
 import { toPersonInfo } from "@/pages/profile/utils";

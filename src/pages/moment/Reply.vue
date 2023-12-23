@@ -10,6 +10,7 @@
               backgroundImage: 'url( ' + mainComment.user.avatarUrl + ')'
             }"
             class="avatar"
+            @click="toPersonInfo(mainComment.user.id)"
           />
           <view class="thread">
             <view class="content">
@@ -17,12 +18,10 @@
                 <view class="upper">
                   <view class="username">{{ mainComment.user.nickname }}</view>
                   <view class="timestamp"
-                    >· {{ displayTime(mainComment.createAt) }}
+                    >· {{ displayDetailTime(mainComment.createAt) }}
                   </view>
                 </view>
-                <view class="lower" @click="emit('interactWithComment')">{{
-                  mainComment.text
-                }}</view>
+                <view class="lower">{{ mainComment.text }}</view>
               </view>
               <view class="right">
                 <view class="likes-frame" @click="likeComment(mainComment)">
@@ -37,18 +36,14 @@
       </view>
 
       <!-- 二级评论 -->
-      <view
-        v-for="(comment, index) in comments"
-        :key="index"
-        class="main"
-        @click="focusReplyComment(comment)"
-      >
+      <view v-for="(comment, index) in comments" :key="index" class="main">
         <view class="comment">
           <view
             :style="{
               backgroundImage: 'url( ' + comment.user.avatarUrl + ')'
             }"
             class="avatar"
+            @click="toPersonInfo(comment.user.id)"
           />
           <view class="thread">
             <view class="content">
@@ -65,10 +60,10 @@
                     </template>
                   </view>
                   <view class="timestamp"
-                    >· {{ displayTime(comment.createAt) }}
+                    >· {{ displayDetailTime(comment.createAt) }}
                   </view>
                 </view>
-                <view class="lower" @click="emit('interactWithComment')">{{
+                <view class="lower" @click="onReplyComment(comment)">{{
                   comment.text
                 }}</view>
               </view>
@@ -82,89 +77,63 @@
             </view>
           </view>
         </view>
-
-        <view class="more-sub-replies">
-          展开查看更多 <view class="down-arrow" />
-        </view>
+      </view>
+      <view
+        v-if="isCommentsLoaded && !allCommentsLoaded"
+        class="more-sub-replies"
+        @click="localGetCommentsData"
+      >
+        展开查看更多
+        <view class="down-arrow" />
       </view>
     </view>
-    <view v-if="moment" style="height: 16vw" />
-    <WriteCommentBox
-      v-if="moment"
-      :placeholder-text="placeholderText"
-      :like-count="moment.likeCount"
-      :is-liked="moment.isLiked"
-      :parent-id="moment.id"
-      :parent-type="CommentType.Moment"
-      :first-level-id="firstLevelId"
-      :comment-callback="(res) => fishAwardEmitter.triggerCallbacks(res)"
-      @do-like="likeMoment(moment, fishAwardEmitter)"
-      @cancel-reply="afterBlur"
-    />
   </scroll-view>
 </template>
 
 <script lang="ts" setup>
-import { Comment, Moment } from "@/apis/schemas";
-import { displayTime } from "@/utils/time";
+import { Comment, FishAward, Moment } from "@/apis/schemas";
+import { displayDetailTime, displayTime } from "@/utils/time";
 import { ref } from "vue";
 import { getCommentsData, likeComment, likeMoment } from "@/pages/moment/utils";
-import { onReachBottom } from "@dcloudio/uni-app";
 import { CommentType } from "@/apis/comment/comment-interfaces";
-import WriteCommentBox from "@/pages/moment/WriteCommentBox.vue";
-import { getMomentDetail } from "@/apis/moment/moment";
-import { GetMomentDetailReq } from "@/apis/moment/moment-components";
+import { EventEmitter } from "@/utils/utils";
+import { toPersonInfo } from "@/pages/profile/utils";
 
 const props = defineProps<{
   mainComment: Comment;
   moment?: Moment;
-  fishAwardEmitter: any;
+  fishAwardEmitter: EventEmitter<FishAward>;
+  onReplyComment: (comment: Comment) => void;
 }>();
 
 const comments = ref<Comment[]>([]);
 
-let allCommentsLoaded = false;
-let isCommentsLoaded = true;
+let allCommentsLoaded = ref(false);
+let isCommentsLoaded = ref(true);
 let page = 0;
 const localGetCommentsData = () => {
-  isCommentsLoaded = false;
+  isCommentsLoaded.value = false;
   getCommentsData({
     id: props.mainComment.id,
     type: CommentType.Comment,
     page: page
   }).then((res) => {
     comments.value.push(...res.data);
-    isCommentsLoaded = true;
+    isCommentsLoaded.value = true;
     page += 1;
-    if (res.data.length < 10) allCommentsLoaded = true;
+    if (!res.data.length) {
+      allCommentsLoaded.value = true;
+    }
   });
 };
 
 localGetCommentsData();
 
-onReachBottom(() => {
-  if (isCommentsLoaded && !allCommentsLoaded) {
-    localGetCommentsData();
-  }
-});
-
-const emits = defineEmits(["closeReply"]);
+const emits = defineEmits(["close"]);
 
 function closeSelf() {
-  emits("closeReply");
+  emits("close");
 }
-
-const placeholderText = ref("回复 @" + props.mainComment.user.nickname + ": ");
-const firstLevelId = ref(props.mainComment.id);
-const afterBlur = () => {
-  placeholderText.value = "回复 @" + props.mainComment.user.nickname + ": ";
-  firstLevelId.value = props.mainComment.id;
-};
-
-const focusReplyComment = (comment: Comment) => {
-  placeholderText.value = "回复 @" + comment.user.nickname + ": ";
-  firstLevelId.value = comment.id;
-};
 </script>
 
 <style lang="scss" scoped>
@@ -181,7 +150,7 @@ const focusReplyComment = (comment: Comment) => {
 .frame {
   overflow: scroll;
   position: fixed;
-  bottom: 0;
+  bottom: 16vw;
   left: 0;
   width: 100vw;
   max-height: 75vh;
@@ -299,38 +268,24 @@ const focusReplyComment = (comment: Comment) => {
           }
         }
       }
-
-      .more-sub-replies {
-        color: #696969;
-        margin-left: calc(33 / 390 * 100vw);
-        display: flex;
-        align-items: center;
-
-        .down-arrow {
-          background-image: url("/static/images/down-black.png");
-          width: calc(8 / 390 * 100vw);
-          height: calc(5 / 390 * 100vw);
-          background-size: 100% 100%;
-          margin-left: calc(8 / 390 * 100vw);
-        }
-      }
     }
   }
+}
+.more-sub-replies {
+  position: relative;
+  color: #696969;
+  margin-left: 0;
+  display: flex;
+  left: 50rpx;
+  align-items: center;
+  font-size: calc(12 / 390 * 100vw);
 
-  .more-sub-replies {
-    color: #696969;
-    margin-left: 0;
-    display: flex;
-    align-items: center;
-    font-size: calc(12 / 390 * 100vw);
-
-    .down-arrow {
-      background-image: url("/static/images/down-black.png");
-      width: calc(8 / 390 * 100vw);
-      height: calc(5 / 390 * 100vw);
-      background-size: 100% 100%;
-      margin-left: calc(8 / 390 * 100vw);
-    }
+  .down-arrow {
+    background-image: url("/static/images/down-black.png");
+    width: calc(8 / 390 * 100vw);
+    height: calc(5 / 390 * 100vw);
+    background-size: 100% 100%;
+    margin-left: calc(8 / 390 * 100vw);
   }
 }
 </style>
