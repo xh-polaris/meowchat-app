@@ -4,11 +4,7 @@
   </TopBar>
   <view class="reply-mask" @click="leaveReply()" />
 
-  <view
-    v-if="post"
-    :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
-    class="content-frame"
-  >
+  <view v-if="post" class="content-frame">
     <view class="header">
       <view class="title">
         {{ post.title }}

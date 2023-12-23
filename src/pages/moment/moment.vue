@@ -4,11 +4,7 @@
   </TopBar>
   <view class="reply-mask" @click="leaveReply()" />
 
-  <view
-    v-if="moment"
-    :style="{ height: 'calc(100vh - 16vw - ' + keyboardHeight + 'px)' }"
-    class="content-frame"
-  >
+  <view v-if="moment" class="content-frame">
     <view class="container">
       <view class="post-info-box">
         <view class="poster-info-box">
