@@ -1,5 +1,12 @@
 
 
+## [1.22.4](https://github.com/xh-polaris/meowchat-app/compare/v1.22.3...v1.22.4) (2023-12-23)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复动态详情弹出评论输入框时的显示问题 ([7a34ef0](https://github.com/xh-polaris/meowchat-app/commit/7a34ef0d31c2b3c1f1c5053530b9e60b15fa2c91))
+
 ## [1.22.3](https://github.com/xh-polaris/meowchat-app/compare/v1.22.2...v1.22.3) (2023-12-23)
 
 
