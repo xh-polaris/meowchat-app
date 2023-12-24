@@ -1,51 +1,56 @@
 <template>
-  <view
-    v-if="!isDebugOn"
-    :class="
-      'button ' + (backendEnv === BackendEnv.Product ? 'green' : 'orange')
-    "
-    @click="setIsDebugOn(true)"
-    >{{ laneName !== "" ? laneName : "基准" }}
-  </view>
-  <view v-else class="panel">
-    <view class="header">
-      <view class="title">泳道设置</view>
-      <view class="clickable" @click="setIsDebugOn(false)">最小化</view>
+  <view style="position: relative; z-index: 999">
+    <view
+      v-if="!isDebugOn"
+      :class="
+        'button ' + (backendEnv === BackendEnv.Product ? 'green' : 'orange')
+      "
+      @click="setIsDebugOn(true)"
+      >{{ laneName !== "" ? laneName : "基准" }}
     </view>
-    <view class="env">
-      <view
-        :class="
-          'toggle green ' + (backendEnv === BackendEnv.Product ? 'current' : '')
-        "
-        @click="setEnv(BackendEnv.Product)"
-        >正式环境
+    <view v-else class="panel">
+      <view class="header">
+        <view class="title">泳道设置</view>
+        <view class="clickable" @click="setIsDebugOn(false)">最小化</view>
       </view>
-      <view
-        :class="
-          'toggle orange ' + (backendEnv === BackendEnv.Test ? 'current' : '')
-        "
-        @click="setEnv(BackendEnv.Test)"
-        >测试环境
+      <view class="env">
+        <view
+          :class="
+            'toggle green ' +
+            (backendEnv === BackendEnv.Product ? 'current' : '')
+          "
+          @click="setEnv(BackendEnv.Product)"
+          >正式环境
+        </view>
+        <view
+          :class="
+            'toggle orange ' + (backendEnv === BackendEnv.Test ? 'current' : '')
+          "
+          @click="setEnv(BackendEnv.Test)"
+          >测试环境
+        </view>
       </view>
-    </view>
-    <view class="lane">
-      <view class="label">当前泳道</view>
-      <input
-        v-model="laneName"
-        :class="'laneInput ' + (laneInputEditable ? 'editable' : '')"
-        :disabled="!laneInputEditable"
-        placeholder="基准"
-        type="text"
-      />
-      <view
-        v-if="laneInputEditable"
-        class="clickable"
-        style="transform: translateX(2vw)"
-        @click="emptyInputValue()"
-        >清空
-      </view>
-      <view class="clickable" @click="setLaneInputEditable(!laneInputEditable)"
-        >{{ laneInputEditable ? "确认" : "修改" }}
+      <view class="lane">
+        <view class="label">当前泳道</view>
+        <input
+          v-model="laneName"
+          :class="'laneInput ' + (laneInputEditable ? 'editable' : '')"
+          :disabled="!laneInputEditable"
+          placeholder="基准"
+          type="text"
+        />
+        <view
+          v-if="laneInputEditable"
+          class="clickable"
+          style="transform: translateX(2vw)"
+          @click="emptyInputValue()"
+          >清空
+        </view>
+        <view
+          class="clickable"
+          @click="setLaneInputEditable(!laneInputEditable)"
+          >{{ laneInputEditable ? "确认" : "修改" }}
+        </view>
       </view>
     </view>
   </view>
