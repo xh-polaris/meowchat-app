@@ -144,7 +144,7 @@ const commentTimes = Array.from({ length: 3 }, (_, index) => index + 1);
     align-items: center;
     justify-content: center;
     margin-top: 5.5vw;
-    margin-left: 2vw;
+    margin-left: 2.5vw;
     width: 16.15vw;
     height: 6.67vw;
     background-color: #1f6bff;
