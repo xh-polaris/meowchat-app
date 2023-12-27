@@ -199,7 +199,7 @@ const decrement = () => {
   height: 16vw;
   line-height: 16vw;
   text-align: center;
-  border: 1px solid #000;
-  border-radius: 8vw;
+  //border: 1px solid #000;
+  //border-radius: 8vw;
 }
 </style>

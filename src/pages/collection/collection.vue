@@ -27,24 +27,6 @@
         <view class="school-name">
           {{ currentSchool }}
         </view>
-        <view class="switch-box">
-          <view class="switch" @click="onClickSwitch">
-            <text class="font-md">⇌</text>
-            {{ switchText }}
-          </view>
-        </view>
-      </view>
-      <view v-if="campuses.data.length !== 1" class="school-select-box">
-        <view class="navbar">
-          <view
-            v-for="(item, index) in campuses.data"
-            :key="index"
-            :class="'navbtn ' + (currentCampus === item.name ? 'current' : '')"
-            @click="setBranch(item.name, index)"
-          >
-            {{ item.name }}
-          </view>
-        </view>
       </view>
     </view>
     <template v-if="!isRefreshing">
